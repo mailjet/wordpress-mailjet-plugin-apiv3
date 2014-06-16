@@ -1,4 +1,4 @@
-=== Mailjet for Wordpress ===
+# [API v3] Mailjet for Wordpress
 
 Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Mailjet plugin allows you to reconfigure the wp_mail() function to use Mailjet SMTP and easily manage your contacts lists with signup widgets.
 
 
-== Description ==
+## Description
 
 
 Mailjet's official plugin for WordPress will:
@@ -22,19 +22,19 @@ Mailjet's official plugin for WordPress will:
 * Provide a signup widget, so your visitors can sign up to your Mailjet mailing lists.
 
 
-**Secure & real-time SMTP relay for all your emails**
+### Secure & real-time SMTP relay for all your emails
 - A lot of features and plugins from your WordPress site send email notifications. All these messages are very important for your users, as well as for your business. Therefore, you want to track success and ensure a successful delivery. 
 
 Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMTP instead. This will improve your deliverability. You will also get live and in-depth statistics to track and optimize in real time. Making the choice of Mailjet is the right solution for your [transactional emails](http://www.mailjet.com/features/transactional-email.html) , [bulk emails](http://www.mailjet.com/features/bulk-email.html) and [newsletter emails](https://www.mailjet.com/features/newsletter-service.html).
 
-**Sign up form & contact lists Management**
+### Sign up form & contact lists Management
 -  Another great feature of this plugin is the sign up form Widget. It allows your site visitors to join your Mailjet lists. You can create contact lists directly from the plugin dashboard. The Widget will let you add forms to any post or any page.
 
-**Installing the Plugin**
+### Installing the Plugin
 -  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](http://www.mailjet.com) for free!
 
 
-== Installation ==
+## Installation
 
 
 1. Log in as administrator in Wordpress.
@@ -44,7 +44,7 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 You must have cURL extension enabled.
 
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions
 
 
 = What is Mailjet? =
@@ -69,7 +69,7 @@ This plugin is currently available in English, French, Spanish and German. Suppo
 Once your Mailjet plugin is installed, click on "Appearance" in the left-side menu  and then choose the "Widgets" section. Just drag  the "Subscribe to Our Newsletter" widget and drop it where you want it to appear (i.e. the sidebar). For more precisions, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
 
 
-== Screenshots ==
+## Screenshots
 
 1. Simply change a few parameters to get started.
 2. Manage your lists and contacts in no time!
@@ -77,7 +77,7 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 4. View detailed statistics about your account
 
 
-== Changelog ==
+## Changelog
 
 = 3.0.0 =
 * The pluging is switched to v3 mailjet's users, and also the communication with mailjet is mainly executed with iframes
