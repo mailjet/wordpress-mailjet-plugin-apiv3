@@ -92,66 +92,28 @@ class MailjetSubscribeWidget extends WP_Widget
 		$email = $_POST['email'];
 		$list_id = $_POST['list_id'];
 		
-		// Check if this is a valid email address
-		if($this->validate_email($email) === false) {
-			echo '<p class="error">';
-			echo sprintf(__("Enter a valid e-mail address", 'wp-mailjet'));
-			echo '</p>';
-			die();
-		}
-		
-		// Check if contact exists
 		$params = array(
-			'akid'          => $this->api->_akid,
-			'method'        => 'GET',
-			'ContactEmail'  => $email
+			'method'	=> 'POST',
+			'Action'	=> 'Add',
+			'Addresses'	=> array($email),
+			'ListID'	=> $list_id
 		);		
-		$result = $this->api->listrecipient($params);
+		$result = $this->api->manycontacts($params);
 
-		if(isset($result->Data) && count($result->Data) > 0) {
-			$contact_id = $result->Data[0]->ContactID;
-		} else {	
-			// Add the contact
-			$params = array(
-				'method' => 'POST',
-				'Email' => $email
-			);		
-			$result = $this->api->contact($params);
-
-			// There is an error
-			if(isset($result->StatusCode) && $result->StatusCode == '400') {
+		if(isset($result->Data['0']->Errors->Items)) {
+			if( strpos($result->Data['0']->Errors->Items[0]->ErrorMessage, 'duplicate') !== false ){
+				echo '<p class="error">';
+				echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet'), $email);
+				echo '</p>';
+				die();
+			}
+			else{
 				echo '<p class="error">';
 				echo sprintf(__("Sorry %s we couldn't subscribe at this time", 'wp-mailjet'), $email);
 				echo '</p>';
 				die();
 			}
 			
-			// If no error, get the ID of the contact
-			$contact_id = $result->Data[0]->ID;
-		}
-		
-		// Add the contact to a contact list
-		$params = array(
-			'method'	=> 'POST',
-			'ContactID'	=> $contact_id,
-			'ListID'	=> $list_id
-		);		
-		$result = $this->api->listrecipient($params);
-
-		// Check if this contact is already subscribed
-		if(isset($result->ErrorMessage) && strpos($result->ErrorMessage, 'duplicate') !== false) {
-			echo '<p class="error">';
-			echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet'), $email);
-			echo '</p>';
-			die();
-		}
-
-		// Check if there is any error
-		if(isset($result->StatusCode) && $result->StatusCode == '400') {
-			echo '<p class="error">';
-			echo sprintf(__("Sorry %s we couldn't subscribe at this time", 'wp-mailjet'), $email);
-			echo '</p>';
-			die();
 		}
 		
 		// Adding was successful
