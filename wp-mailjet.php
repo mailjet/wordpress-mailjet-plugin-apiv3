@@ -33,7 +33,7 @@ require('mailjet-options.php');
 require('mailjet-widget.php');
 require('views/options-form.php');
 
-define ('MJ_HOST', 'in.mailjet.com');
+define ('MJ_HOST', 'in-v3.mailjet.com');
 define ('MJ_MAILER', 'X-Mailer:WP-Mailjet/0.1');
 
 $options = new WPMailjet_Options();
