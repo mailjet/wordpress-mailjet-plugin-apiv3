@@ -14,13 +14,13 @@ The Mailjet plugin allows you to reconfigure the wp_mail() function to use Mailj
 ## Description
 
 
-Mailjet's official plugin for WordPress will:
+Mailjet's official plugin for WordPress will allow you to:
 
 * Reconfigure your wp_mail() function to use Mailjet's SMTP instead of mail() for enhanced deliverability and tracking;
-* Create an "Options" page to manage your email settings, to manage contacts and personalisation variables;
+* Create an "Options" page to manage your email settings; 
+* To manage contacts, lists and personalisation variables;
 * Easily create and send marketing campaigns using drag and drop Newsletter builder or selecting from our template library;
 * Have the insight you need from a real-time dashboard showing opens, clicks, geographies, time to click, user agents, etc; 
-* Display a dashboard for your contact lists management;
 * Provide a signup widget, so your visitors can sign up to your Mailjet mailing lists.
 
 
