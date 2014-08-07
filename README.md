@@ -85,7 +85,7 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 ## Changelog
 
 = 3.0.3=
-* Add tracking of signups on the WordPress plugin by passing GET param p=integration when we click Sign up link
+* Add tracking of signups on the WordPress plugin
 
 = 3.0.2=
 * Fix MailJet host
