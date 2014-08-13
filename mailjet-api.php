@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Mailjet Public API / The real-time Cloud Emailing platform
  *
  * Connect your Apps and Make our product yours with our powerful API
  * http://www.mailjet.com/ Mailjet SAS Website
  *
- * @package		API v0.3
  * @author		David Coullet
  * @author		Mailjet Dev team
  * @copyright	Copyright (c) 2012-2013, Mailjet SAS, http://www.mailjet.com/Terms-of-use.htm
@@ -30,7 +28,7 @@
  * @author		Mailjet Dev team
  * @version		0.1
  */
-class WP_Mailjet_Api_V3
+class Mailjet
 {
     /**
      * Mailjet API Key to use.
@@ -745,7 +743,7 @@ class WP_Mailjet_Api_V3
             200 => 'OK - Everything went fine.',
             201 => 'OK - Created : The POST request was successfully executed.',
             204 => 'OK - No Content : The Delete request was successful.',
-            304 => 'OK - Not Modified : The PUT request didn’t affect any record.',
+            304 => 'OK - Not Modified : The PUT request didnвЂ™t affect any record.',
             400 => 'KO - Bad Request : Please check the parameters.',
             401 => 'KO - Unauthorized : A problem occurred with the apiKey/secretKey. You may be not authorized to access the API or your apiKey may have expired.',
             403 => 'KO - Forbidden : You are not authorized to call that function.',

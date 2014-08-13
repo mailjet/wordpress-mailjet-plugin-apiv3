@@ -8,7 +8,7 @@
  *
  */
 
-class WP_Mailjet
+class WPMailjet
 {
 	protected $api;
 	protected $phpmailer;
@@ -21,7 +21,7 @@ class WP_Mailjet
 		// Set Plugin URL
 		$this->pluginUrl = WP_PLUGIN_URL . dirname(__FILE__);
 
-		$this->api = (is_object($api)) ? $api : new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
+		$this->api = $api;
 		$this->phpmailer = $phpMailer;
 
 		add_action('phpmailer_init', array($this, 'phpmailer_init_smtp'));
@@ -31,7 +31,7 @@ class WP_Mailjet
 
 	public function enqueue_scripts()
 	{
-		wp_register_script('mailjet_js', plugins_url('/assets/js/mailjet.js', __FILE__), array('jquery'));
+		wp_register_script('mailjet_js', plugins_url('/js/mailjet.js', __FILE__), array('jquery'));
 		wp_enqueue_script( 'mailjet_js');
 	}
 
@@ -68,41 +68,54 @@ class WP_Mailjet
 
 	private function _get_auth_token()
 	{
-		// Get the
-		$token = $this->api->getAuthToken(array(
-			'APIKey'		=> get_option('mailjet_username'), // Use any API Key from your Sub-accounts
-			'SecretKey'		=> get_option('mailjet_password'),
-			'MailjetToken'	=> get_option('mailjet_token' . $_SERVER['REMOTE_ADDR'])
-		));
-
-		// Return FALSE if there is token
-		if(isset($token->Status) && $token->Status == 'ERROR')
-			return FALSE;
-
-		return $token;
+		$MailjetApiObject = new Mailjet(get_option('mailjet_username'), get_option('mailjet_password'));
+		
+		$params = array(
+			'method' => 'GET',
+			'APIKey' => get_option('mailjet_username'), // Use any API Key from your Sub-accounts
+		);
+		 
+		$api_key_response = $MailjetApiObject->apikey($params);
+		$result = $api_key_response->Data[0]->ID;
+		 
+		$params = array(
+			'AllowedAccess' =>  'campaigns,contacts,reports,stats,preferences,pricing,account',
+			'method' => 'POST',
+			'APIKeyID' => $result,
+			'TokenType' => 'url',
+			'CatchedIp'  => $_SERVER['REMOTE_ADDR'],
+			'log_once' => true
+		);
+		 
+		$response = $MailjetApiObject->apitoken($params);
+	 
+		if(isset($response->Data) && count($response->Data) > 0)
+			return $response->Data[0]->Token;
+		
+		return false;
 	}
 
 	public function show_campaigns_menu()
 	{
-		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
+		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Campaigns', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/campaigns?t=' . $this->_get_auth_token() . (($this->api->version == 'REST')?'&show_menu=none':'') . '"></iframe>';
+		echo '<iframe width="980px" height="1200" src="https://app.mailjet.com/campaigns?t=' . $this->_get_auth_token() . '&show_menu=none"></iframe>';
 	}
 
 	public function show_stats_menu()
 	{
-		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
+		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Statistics', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/stats?t=' . $this->_get_auth_token() . (($this->api->version == 'REST')?'&show_menu=none':'') . '"></iframe>';		
+		echo '<iframe width="980px" height="1200" src="https://app.mailjet.com/stats?t=' . $this->_get_auth_token() . '&show_menu=none"></iframe>';
 	}
 
 	public function show_contacts_menu()
 	{
-		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
+		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Contacts', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/contacts/lists?t=' . $this->_get_auth_token() . (($this->api->version == 'REST')?'&show_menu=none':'') .'"></iframe>';
+		echo '<iframe width="980px" height="1200" src="https://app.mailjet.com/contacts/lists?t=' . $this->_get_auth_token() . '&show_menu=none"></iframe>';
 	}
 }

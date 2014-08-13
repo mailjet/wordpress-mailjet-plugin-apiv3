@@ -1,15 +1,9 @@
 <?php
-
- /**
- * Mailjet Wordpress Plugin
+/**
  * This class allows the creation of Wordpress admin forms
- *
- * @author		Mailjet
- * @link		http://www.mailjet.com/
- *
  */
 
-class WP_Mailjet_Options_Form
+class Mailjet_Options_Form
 {
 	protected $fieldsets;
 	protected $action;
@@ -47,7 +41,7 @@ class WP_Mailjet_Options_Form
 		echo '</form>';
 	}
 
-	public function addFieldset(WP_Mailjet_Options_Form_Fieldset $fieldset)
+	public function addFieldset(Options_Form_Fieldset $fieldset)
 	{
 		$this->fieldsets[] = $fieldset;
 	}
@@ -63,7 +57,7 @@ class WP_Mailjet_Options_Form
 	}
 }
 
-class WP_Mailjet_Options_Form_Option
+class Options_Form_Option
 {
 	protected $id;
 	protected $label;
@@ -73,7 +67,7 @@ class WP_Mailjet_Options_Form_Option
 	protected $required;
 	protected $options;
 
-	public function __construct($id, $label, $type, $value = "", $desc="", $required = FALSE, $options = null)
+	public function __construct($id, $label, $type, $value = "", $desc="", $required = false, $options = null)
 	{
 		$this->id =		$id;
 		$this->label =	$label;
@@ -212,7 +206,7 @@ class WP_Mailjet_Options_Form_Option
 	}
 }
 
-class WP_Mailjet_Options_Form_Fieldset
+class Options_Form_Fieldset
 {
 	protected $title;
 	protected $options;
