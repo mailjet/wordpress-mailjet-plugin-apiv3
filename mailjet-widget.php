@@ -40,8 +40,11 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 	function getLists()
 	{
 		if ($this->lists === FALSE)		
-			if ($this->lists = $this->api->getContactLists(array('limit' => 0)) && isset($this->lists->Status) && $this->lists->Status == 'ERROR')
+		{
+			$this->lists = $this->api->getContactLists(array('limit' => 0));
+			if (isset($this->lists->Status) && $this->lists->Status == 'ERROR')
 				$this->lists = array();		
+		}
 
 		return $this->lists;
 	}
@@ -70,7 +73,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 			<?php echo __('List:', 'wp-mailjet') ?>
 			<select class="widefat" id="<?php echo $this->get_field_id('list_id'); ?>" name="<?php echo $this->get_field_name('list_id'); ?>">
 				<?php foreach ($this->getLists() as $list) { ?>
-					<option value="<?php echo $list->value?>"<?php echo ($list->value == esc_attr($list_id) ? ' selected="selected"' : '') ?>><?php echo $list->label?></option>
+					<option value="<?php echo $list['value']?>"<?php echo ($list['value'] == esc_attr($list_id) ? ' selected="selected"' : '') ?>><?php echo $list['label']?></option>
 				<?php } ?>
 			</select>
 		</label>
