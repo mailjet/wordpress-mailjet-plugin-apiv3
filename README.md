@@ -84,6 +84,9 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 ## Changelog
 
+= 3.1.1=
+* Add tracking of the Plugin name and the plugin version 
+
 = 3.1.0=
 * Supports V1 and V3 Mailjet's users
 
