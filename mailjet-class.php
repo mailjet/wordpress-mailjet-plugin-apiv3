@@ -84,7 +84,8 @@ class WPMailjet
 			'APIKeyID' => $result,
 			'TokenType' => 'url',
 			'CatchedIp'  => $_SERVER['REMOTE_ADDR'],
-			'log_once' => true
+			'log_once' => true,
+			'IsActive'		=> TRUE
 		);
 		 
 		$response = $MailjetApiObject->apitoken($params);
