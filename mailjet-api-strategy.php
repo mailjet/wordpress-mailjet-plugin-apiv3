@@ -490,7 +490,8 @@
 			'APIKeyID' 		=> $api_key_response->Data[0]->ID,
 			'TokenType' 	=> 'url',
 			'CatchedIp'  	=> $_SERVER['REMOTE_ADDR'],
-			'log_once' 		=> TRUE
+			'log_once' 		=> TRUE,
+			'IsActive'		=> TRUE
 		));
 	 
 	 	// Get and return the token
