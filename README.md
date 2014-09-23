@@ -84,6 +84,9 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 ## Changelog
 
+= 3.1.1=
+* Adjustments related to the subscription widget
+
 = 3.1.0=
 * Supports V1 and V3 Mailjet's users, Add use tracking on the WordPress plugin, Fix IsActive parameter for token creation
 
