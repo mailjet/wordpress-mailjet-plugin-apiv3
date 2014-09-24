@@ -505,7 +505,7 @@
 			} 
 			else {
 				// Get the version of the API
-				$this->version = $this->context->_version;
+				$this->version = $this->context->version;
 				
 				// Some contacts
 				define ('MJ_HOST', 'in.mailjet.com');
@@ -513,7 +513,7 @@
 			}
 		} else {
 			// Get the version of the API
-			$this->version = $this->context->version;
+			$this->version = $this->context->_version;
 			
 			// Some contacts
 			define ('MJ_HOST', 'in-v3.mailjet.com');
