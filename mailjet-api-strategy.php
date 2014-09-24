@@ -11,7 +11,6 @@
  interface WP_Mailjet_Api_Interface 
  {
  	public function getContactLists($params);
-	public function getUser($params);
  	public function addContact($params);
 	public function removeContact($params);
 	public function unsubContact($params);
@@ -57,17 +56,6 @@
 			return $lists;
 		}		
 		
-		return (object) array('Status' => 'ERROR');
-	}
-	
-	/**
-	 * Get user
-	 * 
-	 * @param (array) $param = array('limit', ...) 
-	 * @return (object)
-	 */
-	public function getUser($params)
-	{
 		return (object) array('Status' => 'ERROR');
 	}
 	
@@ -264,7 +252,7 @@
 		
 		// Get the list
 		$response = $this->liststatistics($input);
-		
+
 		// Check if the list exists
 		if(isset($response->Data) && count($response->Data) > 0)
 		{
@@ -278,28 +266,6 @@
 			}
 			return $lists;
 		}		
-		
-		return (object) array('Status' => 'ERROR');
-	}
-	
-	/**
-	 * Get user
-	 * 
-	 * @param (array) $param = array('limit', ...) 
-	 * @return (object)
-	 */
-	public function getUser($params)
-	{
-		// Set input parameters
-		$input = array();
-		if(isset($params['limit'])) $input['limit'] = $params['limit'];
-		
-		// Get user
-		$response = $this->user($input);
-		
-		// Return the user
-		if(isset($response->Data[0]->ID))
-			return $response;
 		
 		return (object) array('Status' => 'ERROR');
 	}
@@ -472,7 +438,7 @@
 		// Check if the input data is OK
 		if(strlen(trim($params['APIKey'])) == 0 || strlen(trim($params['SecretKey'])) == 0 || strlen(trim($params['MailjetToken'])) == 0)
 			return (object) array('Status' => 'ERROR');	
-		
+
 		// Get the ID of the Api Key
 	 	$api_key_response = $this->apikey(array(
 			'method' => 'GET',
@@ -525,14 +491,14 @@
 	public function __construct($mailjet_username, $mailjet_password)
   	{
   		# Check the type of the user and set the corresponding Context/Strategy
-		// Set API V1 context and get the contact lists of this user and check if it's V1
-		$this->setContext(new WP_Mailjet_Api_Strategy_V1($mailjet_username, $mailjet_password));	
-		$response = $this->context->getContactLists(array('limit' => 1));			
+  		// Set API V3 context and get the user and check if it's V3   		
+		$this->setContext(new WP_Mailjet_Api_Strategy_V3($mailjet_username, $mailjet_password));
+		$response = $this->context->getContactLists(array('limit' => 1));
 		if(isset($response->Status) && $response->Status == 'ERROR')
 		{
-			// Set API V3 context and get the user and check if it's V3 
-			$this->setContext(new WP_Mailjet_Api_Strategy_V3($mailjet_username, $mailjet_password));
-			$response = $this->context->getUser(array('limit' => 1));						
+			// Set API V1 context and get the contact lists of this user and check if it's V1
+			$this->setContext(new WP_Mailjet_Api_Strategy_V1($mailjet_username, $mailjet_password));	
+			$response = $this->context->getContactLists(array('limit' => 1));
 			if(isset($response->Status) && $response->Status == 'ERROR')
 			{				
 				$this->clearContext();			
@@ -542,7 +508,7 @@
 				$this->version = $this->context->_version;
 				
 				// Some contacts
-				define ('MJ_HOST', 'in-v3.mailjet.com');
+				define ('MJ_HOST', 'in.mailjet.com');
 				define ('MJ_MAILER', 'X-Mailer:WP-Mailjet/0.1');
 			}
 		} else {
@@ -550,7 +516,7 @@
 			$this->version = $this->context->version;
 			
 			// Some contacts
-			define ('MJ_HOST', 'in.mailjet.com');
+			define ('MJ_HOST', 'in-v3.mailjet.com');
 			define ('MJ_MAILER', 'X-Mailer:WP-Mailjet/0.1');
 		}		
 	}
@@ -593,21 +559,6 @@
 			
 		return $this->context->getContactLists($params);
 	}
-	
-	/**
-	 * Get user
-	 * 
-	 * @param (array) $param = array('limit', ...) 
-	 * @return (object)
-	 */
-	 public function getUser($params)
-	 {
-	 	// Check if we have context, if no, return error
-        if($this->context === FALSE)
-			return (object) array('Status' => 'ERROR');
-		
-	 	return $this->context->getUser($params);
-	 }
 	
 	/**
 	 * Add a contact to a contact list with ID = ListID
