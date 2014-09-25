@@ -508,16 +508,16 @@
 				$this->version = $this->context->version;
 				
 				// Some contacts
-				define ('MJ_HOST', 'in.mailjet.com');
-				define ('MJ_MAILER', 'X-Mailer:WP-Mailjet/0.1');
+				$_SESSION['MJ_HOST'] = 'in.mailjet.com';
+				$_SESSION['MJ_MAILER'] = 'X-Mailer:WP-Mailjet/0.1';
 			}
 		} else {
 			// Get the version of the API
 			$this->version = $this->context->_version;
 			
 			// Some contacts
-			define ('MJ_HOST', 'in-v3.mailjet.com');
-			define ('MJ_MAILER', 'X-Mailer:WP-Mailjet/0.1');
+			$_SESSION['MJ_HOST'] = 'in-v3.mailjet.com';
+			$_SESSION['MJ_MAILER'] = 'X-Mailer:WP-Mailjet/0.1';
 		}		
 	}
 	
