@@ -48,6 +48,7 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 
 You must have cURL extension enabled.
 
+We are recommending all users having accounts created before August 2014 to reset their Api/Secret keys from their Mailjet's account and update it in the WordPress.
 
 ## Frequently Asked Questions
 
