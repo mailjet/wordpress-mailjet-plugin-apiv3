@@ -53,7 +53,7 @@ class WP_Mailjet
 		$phpmailer->Mailer = 'smtp';
 		$phpmailer->SMTPSecure = get_option('mailjet_ssl');
 
-		$phpmailer->Host = MJ_HOST;
+		$phpmailer->Host = $_SESSION['MJ_HOST'];
 		$phpmailer->Port = get_option('mailjet_port');
 
 		$phpmailer->SMTPAuth = TRUE;
@@ -63,7 +63,7 @@ class WP_Mailjet
 		$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 		$phpmailer->From = $from_email;
 		$phpmailer->Sender = $from_email;
-		$phpmailer->AddCustomHeader(MJ_MAILER);
+		$phpmailer->AddCustomHeader($_SESSION['MJ_MAILER']);
 	}
 
 	private function _get_auth_token()
