@@ -37,8 +37,7 @@ class WP_Mailjet_Options
 			'manage_options',
 			'wp_mailjet_options_top_menu',
 			array($this, 'show_settings_menu'),
-			plugin_dir_url( __FILE__ ) . '/assets/images/mj_logo_small.png',
-			101);
+			plugin_dir_url( __FILE__ ) . '/assets/images/mj_logo_small.png');
 
 		if (function_exists('add_submenu_page'))
 			add_submenu_page('wp_mailjet_options_top_menu', __('Change your mailjet settings', 'wp-mailjet'), __('Settings', 'wp-mailjet'), 'manage_options', 'wp_mailjet_options_top_menu', array($this, 'show_settings_menu'));
