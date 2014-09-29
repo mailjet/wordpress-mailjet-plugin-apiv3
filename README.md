@@ -48,7 +48,7 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 
 You must have cURL extension enabled.
 
-We are recommending all users having accounts created before August 2014 to reset their Api/Secret keys from their Mailjet's account and update it in the WordPress.
+** SECURITY UPDATE ** if you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics"  and the login form appears AND your Mailjet account was created prior to August 2014, please go to https://www.mailjet.com/account/api_keys to regenerate a new Secret Key for the plug-in.
 
 ## Frequently Asked Questions
 
