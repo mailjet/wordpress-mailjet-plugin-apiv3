@@ -86,7 +86,7 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 = 3.1.3=
 * Prevent plugin from hiding other plugin's page
-* The position of the main Mailjet's menu takes a default value instead of
+* The position of the main Mailjet's menu takes a default value instead of value 101
 * AKID is no necessary if we want to execute calls to APIv3 from the
 * Prevent plugin from hiding other plugin's page #10
 * Correction in the README file
