@@ -246,7 +246,7 @@
 	{
 		// Set input parameters
 		$input = array(
-			'akid'	=> $this->_akid
+			//'akid'	=> $this->_akid
 		);
 		if(isset($params['limit'])) $input['limit'] = $params['limit'];
 		
@@ -316,7 +316,7 @@
 			
 		// Get the contact	
 		$result = $this->listrecipient(array(
-			'akid'          => $this->_akid,
+			//'akid'          => $this->_akid,
 			'method'        => 'GET',
 			'ListID'		=> $params['ListID'],
 			'ContactEmail'  => $params['Email']
@@ -327,7 +327,7 @@
 			{
 				// Remove the contact
 				$response = $this->listrecipient(array(
-					'akid'				=> $this->_akid,
+					//'akid'				=> $this->_akid,
 					'method'			=> 'delete',
 					'ID'				=> $contact->ID
 				));
@@ -355,7 +355,7 @@
 		
 		// Get the contact	
 		$result = $this->listrecipient(array(
-			'akid'          => $this->_akid,
+			//'akid'          => $this->_akid,
 			'method'        => 'GET',
 			'ListID'		=> $params['ListID'],
 			'ContactEmail'  => $params['Email']
@@ -367,7 +367,7 @@
                 if($contact->IsUnsubscribed !== TRUE)
                 {
                       $response = $this->listrecipient(array(
-                            'akid'    			=> $this->_akid,
+                            //'akid'    			=> $this->_akid,
                             'method'   			=> 'PUT',
                             'ID'       			=> $contact->ID,
                             'IsUnsubscribed' 	=> 'true',
@@ -398,7 +398,7 @@
 		
 		// Get the contact	
 		$result = $this->listrecipient(array(
-			'akid'          => $this->_akid,
+			//'akid'          => $this->_akid,
 			'method'        => 'GET',
 			'ListID'		=> $params['ListID'],
 			'ContactEmail'  => $params['Email']
@@ -411,7 +411,7 @@
                 if($contact->IsUnsubscribed === TRUE)
                 {
 	                  $response = $this->listrecipient(array(
-	                        'akid'    			=> $this->_akid,
+	                        //'akid'    			=> $this->_akid,
 	                        'method'   			=> 'PUT',
 	                        'ID'       			=> $contact->ID,
 	                        'IsUnsubscribed' 	=> 'false',	                        
