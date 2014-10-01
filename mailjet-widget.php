@@ -27,7 +27,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 		wp_enqueue_script('ajax-example', plugin_dir_url( __FILE__ ) . 'assets/js/ajax.js', array( 'jquery' ));
 		wp_localize_script('ajax-example', 'WPMailjet', array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
-			'nonce' => wp_create_nonce('ajax-example-nonce')
+			'nonce' => wp_create_nonce('ajax-example-nonce'),
+			'loadingImg'	=> plugin_dir_url( __FILE__ ) . 'assets/images/loading.gif'
 		));
 	}
 
