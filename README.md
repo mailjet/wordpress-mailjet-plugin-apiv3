@@ -8,7 +8,7 @@ Stable tag: 3.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Mailjet plugin allows you to Send both transactional and marketing emails from your Wordpress site by reconfiguring the wp_mail() function to use Mailjet’s enhanced SMTP relay in conjunction with signup widgets that sync new user subscriptions directly to Mailjet as well as provide an easy drag-and-drop marketing newsletter tool to send marketing emails directly from with your site.
+The Mailjet plugin allows you to Send both transactional and marketing emails from your Wordpress site by reconfiguring the wp_mail() function to use Mailjetâ€™s enhanced SMTP relay in conjunction with signup widgets that sync new user subscriptions directly to Mailjet as well as provide an easy drag-and-drop marketing newsletter tool to send marketing emails directly from with your site.
 
 
 ## Description
@@ -33,8 +33,8 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 ### Sign up form & contact lists Management
 -  Another great feature of this plugin is the sign up form Widget. It allows your site visitors to join your Mailjet lists. You can create contact lists directly from the plugin dashboard. The Widget will let you add forms to any post or any page.
 
-### Mailjet’s latest generation v3 iframes
--  Last but not least, the plugin features Mailjet’s latest v3 iframes to manage contacts, create drag-and-drop marketing campaigns and view in depth sending statistics directly from within the plug-in.
+### Mailjetâ€™s latest generation v3 iframes
+-  Last but not least, the plugin features Mailjetâ€™s latest v3 iframes to manage contacts, create drag-and-drop marketing campaigns and view in depth sending statistics directly from within the plug-in.
 
 ### Installing the Plugin
 -  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](http://www.mailjet.com) for free!
@@ -84,8 +84,15 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 ## Changelog
 
+= 3.1.3=
+* Prevent plugin from hiding other plugin's page
+* The position of the main Mailjet's menu takes a default value instead of
+* AKID is no necessary if we want to execute calls to APIv3 from the
+* Prevent plugin from hiding other plugin's page #10
+* Correction in the README file
+
 = 3.1.2=
-* README update
+* README update with security issue
 
 = 3.1.1=
 * Adjustments related to the subscription widget
