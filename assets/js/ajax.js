@@ -11,4 +11,13 @@ jQuery(document).ready(function($)
 			$res.html(data);
 		});
 	})
+	
+	$('.widget-control-close').click(function(e)
+	{
+		var $res = $(this).closest('form').find(".mailjet_subscribe_response");
+		if(jQuery.type($res.html()) !== undefined)
+		{
+			$res.hide();
+		}
+	})
 });
