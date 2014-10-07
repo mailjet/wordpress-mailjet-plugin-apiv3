@@ -27,7 +27,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 		wp_enqueue_script('ajax-example', plugin_dir_url( __FILE__ ) . 'assets/js/ajax.js', array( 'jquery' ));
 		wp_localize_script('ajax-example', 'WPMailjet', array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
-			'nonce' => wp_create_nonce('ajax-example-nonce')
+			'nonce' => wp_create_nonce('ajax-example-nonce'),
+			'loadingImg'	=> plugin_dir_url( __FILE__ ) . 'assets/images/loading.gif'
 		));
 	}
 
@@ -71,13 +72,16 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 	<p>
 		<label for="<?php echo $this->get_field_id('list_id'); ?>">
 			<?php echo __('List:', 'wp-mailjet') ?>
-			<select class="widefat" id="<?php echo $this->get_field_id('list_id'); ?>" name="<?php echo $this->get_field_name('list_id'); ?>">
+			<select class="widefat" <?php echo (isset($_POST) && count($_POST) > 0 && !is_numeric($list_id))?'style="border:1px solid red;':'' ?> id="<?php echo $this->get_field_id('list_id'); ?>" name="<?php echo $this->get_field_name('list_id'); ?>">
 				<?php foreach ($this->getLists() as $list) { ?>
 					<option value="<?php echo $list['value']?>"<?php echo ($list['value'] == esc_attr($list_id) ? ' selected="selected"' : '') ?>><?php echo $list['label']?></option>
 				<?php } ?>
 			</select>
 		</label>
 	</p>
+	<?php if(isset($_POST) && count($_POST) > 0 && is_numeric($list_id)): ?>
+		<div class="mailjet_subscribe_response"><?php echo __('Success! Please go to your wordpress site to see your widget in action.'); ?></div>
+	<?php endif; ?>
 <?php
 	}
 
@@ -140,7 +144,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 		echo $before_widget;
 		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 		$list_id = get_option('mailjet_auto_subscribe_list_id');
-		$button_text = $instance['button_text'];
+		$button_text = trim($instance['button_text']);
 
 		// If contact list is not selected then we just don't display the widget!
 		if(!is_numeric($list_id))

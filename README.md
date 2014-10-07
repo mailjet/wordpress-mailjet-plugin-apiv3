@@ -4,11 +4,11 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.2.1
 Tested up to: 4.0.0
-Stable tag: 3.1.2
+Stable tag: 3.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Mailjet Wordpress plugin allows you to send newsletter marketing and transactional emails directly from your Wordpress site by reconfiguring the wp_mail() function to use Mailjetâ€™s enhanced SMTP relay in conjunction with signup widgets that sync new user subscriptions directly to Mailjet as well as provide an easy drag-and-drop marketing newsletter tool to send marketing emails directly from with your site.
+The Mailjet Wordpress plugin allows you to send newsletter marketing and transactional emails directly from your Wordpress site by reconfiguring the wp_mail() function to use Mailjet’s enhanced SMTP relay in conjunction with signup widgets that sync new user subscriptions directly to Mailjet as well as provide an easy drag-and-drop marketing newsletter tool to send marketing emails directly from with your site.
 
 
 ## Description
@@ -83,6 +83,10 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 ## Changelog
+
+= 3.1.4=
+* Add a confirmation message  when an user activates his/her contact widget on his/her Wordpress admin
+* In the admin panel of WordPress, when a user try to add a "subscribe to our newsletter widget"  we have add a validation if he/she has choosen a contact list
 
 = 3.1.3=
 * The position of the main Mailjet's menu takes a default value instead of value 101
