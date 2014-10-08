@@ -486,7 +486,9 @@
  class WP_Mailjet_Api
  {
  	private $context;
-	public $version; 
+	public $version;
+	public $mj_host; 
+	public $mj_mailer;  
 	
 	public function __construct($mailjet_username, $mailjet_password)
   	{
@@ -508,16 +510,16 @@
 				$this->version = $this->context->version;
 				
 				// Some contacts
-				$_SESSION['MJ_HOST'] = 'in.mailjet.com';
-				$_SESSION['MJ_MAILER'] = 'X-Mailer:WP-Mailjet/0.1';
+				$this->mj_host = 'in.mailjet.com';
+				$this->mj_mailer = 'X-Mailer:WP-Mailjet/0.1';
 			}
 		} else {
 			// Get the version of the API
 			$this->version = $this->context->_version;
 			
 			// Some contacts
-			$_SESSION['MJ_HOST'] = 'in-v3.mailjet.com';
-			$_SESSION['MJ_MAILER'] = 'X-Mailer:WP-Mailjet/0.1';
+			$this->mj_host = 'in-v3.mailjet.com';
+			$this->mj_mailer = 'X-Mailer:WP-Mailjet/0.1';
 		}		
 	}
 	
