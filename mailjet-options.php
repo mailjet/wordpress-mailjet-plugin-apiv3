@@ -31,17 +31,29 @@ class WP_Mailjet_Options
 	 */
 	public function display_menu()
 	{
-		add_menu_page(
-			__('Manage your mailjet lists and settings', 'wp-mailjet'),
-			'Mailjet',
-			'manage_options',
-			'wp_mailjet_options_top_menu',
-			array($this, 'show_settings_menu'),
-			plugin_dir_url( __FILE__ ) . '/assets/images/mj_logo_small.png'
-		);
-
-		if (function_exists('add_submenu_page'))
-			add_submenu_page('wp_mailjet_options_top_menu', __('Change your mailjet settings', 'wp-mailjet'), __('Settings', 'wp-mailjet'), 'manage_options', 'wp_mailjet_options_top_menu', array($this, 'show_settings_menu'));
+		if (
+			current_user_can('administrator') 
+				|| 
+			(current_user_can('editor') && get_option('mailjet_access_editor') == 1)
+				||
+			(current_user_can('author') && get_option('mailjet_access_author') == 1)
+				||
+			(current_user_can('contributor') && get_option('mailjet_access_contributor') == 1)
+				||
+			(current_user_can('subscriber') && get_option('mailjet_access_subscriber') == 1)
+		) {
+			add_menu_page(
+				__('Manage your mailjet lists and settings', 'wp-mailjet'),
+				'Mailjet',
+				'read',
+				'wp_mailjet_options_top_menu',
+				array($this, 'show_settings_menu'),
+				plugin_dir_url( __FILE__ ) . '/assets/images/mj_logo_small.png'
+			);
+	
+			if (function_exists('add_submenu_page'))
+				add_submenu_page('wp_mailjet_options_top_menu', __('Change your mailjet settings', 'wp-mailjet'), __('Settings', 'wp-mailjet'), 'read', 'wp_mailjet_options_top_menu', array($this, 'show_settings_menu'));
+		}
 	}
 
 	/**
@@ -87,6 +99,8 @@ class WP_Mailjet_Options
 
 		$form->addFieldset($generalFieldset);
 
+
+		/* General field set */
 		$generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_enabled', ' ' . __('Enabled', 'wp-mailjet'), 'checkbox', get_option('mailjet_enabled'), __('Enable email through <b>Mailjet</b>', 'wp-mailjet'));
 
 		$generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_ssl', ' ' . __('SSL Enabled', 'wp-mailjet'), 'checkbox', get_option('mailjet_ssl'), __('Enable <b>SSL</b> communication with mailjet.com', 'wp-mailjet'));
@@ -131,7 +145,10 @@ class WP_Mailjet_Options
 		);
 
 		$form->addFieldset($generalFieldset);
-
+		/* END - General field set */
+		
+		
+		/* Api field set */
 		$apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_username', __('API key', 'wp-mailjet'), 'text', get_option('mailjet_username'), null, TRUE);
 		$apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_password', __('API secret', 'wp-mailjet'), 'text', get_option('mailjet_password'), null, TRUE);
 		
@@ -142,9 +159,29 @@ class WP_Mailjet_Options
 		);
 
 		$form->addFieldset($apiFieldset);
-
+		/* END - Api field set */
+		
+		
+		/* Add access field set */
+		if (current_user_can('administrator'))
+		{
+			$accessOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_access_administrator', ' ' . __('Administrator', 'wp-mailjet'), 'checkbox', TRUE, __('User roles able to access the plugin', 'wp-mailjet'), TRUE, null, TRUE);
+			$accessOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_access_editor', ' ' . __('Editor', 'wp-mailjet'), 'checkbox', get_option('mailjet_access_editor'), '');
+			$accessOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_access_author', ' ' . __('Author', 'wp-mailjet'), 'checkbox', get_option('mailjet_access_author'), '');
+			$accessOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_access_contributor', ' ' . __('Contributor', 'wp-mailjet'), 'checkbox', get_option('mailjet_access_contributor'), '');
+			$accessOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_access_subscriber', ' ' . __('Subscriber', 'wp-mailjet'), 'checkbox', get_option('mailjet_access_subscriber'), '');
+			
+			$accessFieldset = new WP_Mailjet_Options_Form_Fieldset(
+				__('Acccess Settings', 'wp-mailjet'),
+				$accessOptions,
+				__('Set the user roles which will be able to access the Mailjet\'s plugin', 'wp-mailjet')
+			);
+	
+			$form->addFieldset($accessFieldset);
+		}
+		/* END - Add access field set */
+		
 		$form->display();
-
 		echo '</div></div>';		
 	}
 
@@ -168,6 +205,14 @@ class WP_Mailjet_Options
 		$fields['mailjet_auto_subscribe_list_id'] = ($fields['mailjet_username'] != get_option('mailjet_username') || $fields['mailjet_password'] != get_option('mailjet_password'))
 													? false
 													: strip_tags(filter_var($_POST['mailjet_auto_subscribe_list_id'], FILTER_SANITIZE_NUMBER_INT));
+		if (current_user_can('administrator'))
+		{
+			$fields['mailjet_access_editor'] =	(isset($_POST['mailjet_access_editor']) ? 1 : 0);
+			$fields['mailjet_access_author'] =	(isset($_POST['mailjet_access_author']) ? 1 : 0);
+			$fields['mailjet_access_contributor'] =	(isset($_POST['mailjet_access_contributor']) ? 1 : 0);
+			$fields['mailjet_access_subscriber'] =	(isset($_POST['mailjet_access_subscriber']) ? 1 : 0);
+		}
+		
 		// Set error messages if we've any										
 		$errors = array();
 		if ($fields['mailjet_test'] && empty($fields['mailjet_test_address']))
@@ -201,8 +246,15 @@ class WP_Mailjet_Options
 			update_option('mailjet_password',		$fields['mailjet_password']);
 			update_option('mailjet_ssl',			$fields['mailjet_ssl']);
 			update_option('mailjet_port',			$fields['mailjet_port']);
-			update_option('mailjet_auto_subscribe_list_id', $fields['mailjet_auto_subscribe_list_id']);
-
+			update_option('mailjet_auto_subscribe_list_id', $fields['mailjet_auto_subscribe_list_id']);			
+			if (current_user_can('administrator'))
+			{
+				update_option('mailjet_access_editor',			$fields['mailjet_access_editor']);
+				update_option('mailjet_access_author',			$fields['mailjet_access_author']);
+				update_option('mailjet_access_contributor',		$fields['mailjet_access_contributor']);
+				update_option('mailjet_access_subscriber',		$fields['mailjet_access_subscriber']);
+			}
+			
 			// Extablish API connection because we will need it to check if the API Key and Secrect Key are correct
 			$this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
 			

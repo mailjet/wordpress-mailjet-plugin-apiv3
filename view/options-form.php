@@ -73,7 +73,7 @@ class WP_Mailjet_Options_Form_Option
 	protected $required;
 	protected $options;
 
-	public function __construct($id, $label, $type, $value = "", $desc="", $required = FALSE, $options = null)
+	public function __construct($id, $label, $type, $value = "", $desc="", $required = FALSE, $options = null, $disabled = FALSE)
 	{
 		$this->id =		$id;
 		$this->label =	$label;
@@ -85,6 +85,7 @@ class WP_Mailjet_Options_Form_Option
 		$this->desc =		$desc;
 		$this->required =	$required;
 		$this->options =	$options;
+		$this->disabled = $disabled;
 	}
 
 	public function display()
@@ -106,7 +107,7 @@ class WP_Mailjet_Options_Form_Option
 						<fieldset>
 						<legend class="screen-reader-text"><span>' . $this->getLabel() . '</span></legend>
 						<label for="'.$this->getId().'">
-						<input name="'.$this->getId().'" type="' . $this->getType() . '" id="' . $this->getId() . '" value="1"' . (get_option($this->getId()) ? ' checked="checked"' : '').'">' . $this->getLabel() . '
+						<input '.($this->getDisabled() ? ' disabled="disabled" ' : '').' name="'.$this->getId().'" type="' . $this->getType() . '" id="' . $this->getId() . '" value="1"' . (get_option($this->getId()) ? ' checked="checked"' : '').'">' . $this->getLabel() . '
 						</label>
 						</fieldset>
 					</td>
@@ -199,6 +200,16 @@ class WP_Mailjet_Options_Form_Option
 	public function getOptions()
 	{
 		return $this->options;
+	}
+	
+	public function setDisabled($disabled)
+	{
+		$this->disabled = $disabled;
+	}
+
+	public function getDisabled()
+	{
+		return $this->disabled;
 	}
 
 	public function setRequired($required)
