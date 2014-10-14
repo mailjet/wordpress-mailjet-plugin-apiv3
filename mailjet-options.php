@@ -217,7 +217,7 @@ class WP_Mailjet_Options
 				array('', 80),
 			);
 
-			$host = $_SESSION['MJ_HOST'];
+			$host = $this->api->mj_host;
 			$connected = FALSE;
 
 			if (get_option('mailjet_ssl'))
