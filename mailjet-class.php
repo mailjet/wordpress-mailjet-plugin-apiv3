@@ -39,9 +39,21 @@ class WP_Mailjet
 	{
 		if (function_exists('add_submenu_page'))
 		{
-			add_submenu_page('wp_mailjet_options_top_menu', __('Manage your Mailjet lists', 'wp-mailjet'), __('Lists', 'wp-mailjet'), 'manage_options', 'wp_mailjet_options_contacts_menu', array($this, 'show_contacts_menu'));
-			add_submenu_page('wp_mailjet_options_top_menu', __('Manage your Mailjet campaigns', 'wp-mailjet'), __('Campaigns', 'wp-mailjet'), 'manage_options', 'wp_mailjet_options_campaigns_menu', array($this, 'show_campaigns_menu'));
-			add_submenu_page('wp_mailjet_options_top_menu', __('View your Mailjet statistics', 'wp-mailjet'), __('Statistics', 'wp-mailjet'), 'manage_options', 'wp_mailjet_options_stats_menu', array($this, 'show_stats_menu'));
+			if (
+				current_user_can('administrator') 
+					|| 
+				(current_user_can('editor') && get_option('mailjet_access_editor') == 1)
+					||
+				(current_user_can('author') && get_option('mailjet_access_author') == 1)
+					||
+				(current_user_can('contributor') && get_option('mailjet_access_contributor') == 1)
+					||
+				(current_user_can('subscriber') && get_option('mailjet_access_subscriber') == 1)
+			) {
+				add_submenu_page('wp_mailjet_options_top_menu', __('Manage your Mailjet lists', 'wp-mailjet'), __('Lists', 'wp-mailjet'), 'read', 'wp_mailjet_options_contacts_menu', array($this, 'show_contacts_menu'));
+				add_submenu_page('wp_mailjet_options_top_menu', __('Manage your Mailjet campaigns', 'wp-mailjet'), __('Campaigns', 'wp-mailjet'), 'read', 'wp_mailjet_options_campaigns_menu', array($this, 'show_campaigns_menu'));
+				add_submenu_page('wp_mailjet_options_top_menu', __('View your Mailjet statistics', 'wp-mailjet'), __('Statistics', 'wp-mailjet'), 'read', 'wp_mailjet_options_stats_menu', array($this, 'show_stats_menu'));
+			}
 		}
 	}
 
