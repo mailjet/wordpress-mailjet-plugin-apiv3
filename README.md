@@ -65,7 +65,7 @@ Yes. You can create one for free: it's easy and it only takes a few minutes.
 Once you have a Mailjet account, an installation Wizard will guide you through. You want to use Mailjet as an SMTP relay, so you will need to change these parameters in your WordPress email configuration: username and password. These credentials are provided in your 'My Account > API Keys' section [HERE](https://app.mailjet.com/account/api_keys)
 
 ### How do I get synchronize my lists?
-Synchronization is automatic, that's the beauty of this plugin! It doesn't matter whether your lists were uploaded on your Wordpress interface or on your Mailjet account: they will always remain up-to-date on both sides.
+Synchronization is automatic, that's the beauty of this plugin! It doesn't matter whether your lists were uploaded on your WordPress interface or on your Mailjet account: they will always remain up-to-date on both sides.
 
 ### In which languages is this plugin available?
 This plugin is currently available in English, French, Spanish and German. Support is also provided in each of these languages at via our [online Helpdesk](https://www.mailjet.com/support/ticket)
