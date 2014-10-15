@@ -103,7 +103,7 @@ class WP_Mailjet_Options
 		/* General field set */
 		$generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_enabled', ' ' . __('Enabled', 'wp-mailjet'), 'checkbox', get_option('mailjet_enabled'), __('Enable email through <b>Mailjet</b>', 'wp-mailjet'));
 
-		$generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_ssl', ' ' . __('SSL Enabled', 'wp-mailjet'), 'checkbox', get_option('mailjet_ssl'), __('Enable <b>SSL</b> communication with mailjet.com', 'wp-mailjet'));
+		$generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_ssl', ' ' . __('SSL Enabled (only with port 465)', 'wp-mailjet'), 'checkbox', get_option('mailjet_ssl'), __('Enable <b>SSL</b> communication with mailjet.com', 'wp-mailjet'));
 
 		$ports = array(
 			array('value' => 25,	'label' => 25),
