@@ -121,8 +121,8 @@ class WP_Mailjet_Options_Form_Option
 							<fieldset>
 							<legend class="screen-reader-text"><span>' . $this->getLabel() . '</span></legend>
 							<label for="' . $this->getId() . '">
-							<select name="' . $this->getId() . '" type="' . $this->getType().'" id="' . $this->getId() . '">';
-
+							<select name="' . $this->getId() . '" type="' . $this->getType().'">';
+			// id="' . $this->getId() . '"
 			if ($this->getOptions())
 			{
 				foreach ($this->getOptions() as $option)
