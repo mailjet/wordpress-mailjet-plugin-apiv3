@@ -23,13 +23,6 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 		parent::__construct(FALSE, 'Subscribe to our newsletter', $widget_ops);
 		add_action('wp_ajax_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
 		add_action('wp_ajax_nopriv_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
-
-		wp_enqueue_script('ajax-example', plugin_dir_url( __FILE__ ) . 'assets/js/ajax.js', array( 'jquery' ));
-		wp_localize_script('ajax-example', 'WPMailjet', array(
-			'ajaxurl' => admin_url('admin-ajax.php'),
-			'nonce' => wp_create_nonce('ajax-example-nonce'),
-			'loadingImg'	=> plugin_dir_url( __FILE__ ) . 'assets/images/loading.gif'
-		));
 	}
 
 	/**
@@ -138,7 +131,17 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 	}
 
 	function widget($args, $instance)
-	{			
+	{
+		// enqueue the scripts required for the widget (only if the widget is active)
+		// scripts will appear in the footer which is good for speed
+		wp_enqueue_script('ajax-example', plugin_dir_url( __FILE__ ) . 'assets/js/ajax.js', array( 'jquery' ));
+		wp_localize_script('ajax-example', 'WPMailjet', array(
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('ajax-example-nonce'),
+			'loadingImg'	=> plugin_dir_url( __FILE__ ) . 'assets/images/loading.gif'
+		));
+
+		// output the widget itself
 		extract($args, EXTR_SKIP);
 
 		echo $before_widget;
