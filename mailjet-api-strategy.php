@@ -254,7 +254,7 @@
 		$response = $this->liststatistics($input);
 
 		// Check if the list exists
-		if(isset($response->Data) && count($response->Data) > 0)
+		if(isset($response->Data))
 		{
 			$lists = array();
 			foreach ($response->Data as $list)
