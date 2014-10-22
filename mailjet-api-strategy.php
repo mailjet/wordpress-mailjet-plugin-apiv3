@@ -515,7 +515,7 @@
 			}
 		} else {
 			// Get the version of the API
-			$this->version = $this->context->_version;
+			$this->version = $this->context->getVersion();
 			
 			// Some contacts
 			$this->mj_host = 'in-v3.mailjet.com';
