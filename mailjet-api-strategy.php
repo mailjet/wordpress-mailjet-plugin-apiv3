@@ -254,7 +254,7 @@
 		$response = $this->liststatistics($input);
 
 		// Check if the list exists
-		if(isset($response->Data) && count($response->Data) > 0)
+		if(isset($response->Data))
 		{
 			$lists = array();
 			foreach ($response->Data as $list)
@@ -515,7 +515,7 @@
 			}
 		} else {
 			// Get the version of the API
-			$this->version = $this->context->_version;
+			$this->version = $this->context->getVersion();
 			
 			// Some contacts
 			$this->mj_host = 'in-v3.mailjet.com';
