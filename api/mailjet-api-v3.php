@@ -515,7 +515,7 @@ class WP_Mailjet_Api_V3
             break;
 
             case 'POST':
-                if($params['Action']=='Add'){
+                if(isset($params['Action']) && $params['Action']=='Add'){
                     curl_setopt($this->_curl_handle, CURLOPT_POST, count($params));
                     curl_setopt($this->_curl_handle, CURLOPT_POSTFIELDS, json_encode($params));
                     curl_setopt($this->_curl_handle, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
