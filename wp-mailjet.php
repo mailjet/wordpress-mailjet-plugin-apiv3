@@ -157,8 +157,8 @@ function my_show_extra_profile_fields($user)
 }
 
 
-add_action ( 'personal_options_update', 'my_save_extra_profile_fields' );
-add_action ( 'edit_user_profile_update', 'my_save_extra_profile_fields' );
+add_action ( 'personal_options_update', 'mailjet_my_save_extra_profile_fields' );
+add_action ( 'edit_user_profile_update', 'mailjet_my_save_extra_profile_fields' );
 
 
 /* Add cutom field to registration form */
@@ -230,7 +230,7 @@ function mailjet_subscribe_unsub_user_to_list($subscribe, $user_id)
 /**
  *  Update extra profile fields when the profile is saved
  */
-function my_save_extra_profile_fields( $user_id )
+function mailjet_my_save_extra_profile_fields( $user_id )
 {
 	if ( !current_user_can( 'edit_user', $user_id ) )
 		return FALSE;
