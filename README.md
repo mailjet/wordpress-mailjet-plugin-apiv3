@@ -83,6 +83,9 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 ## Changelog
+= 3.1.10=
+* Rename function my_save_extra_profile_fields to mailjet_my_save_extra_profile_fields
+
 = 3.1.9=
 * Bug fix related to the compatibility of the plugin for v1 and v3 users
 
