@@ -10,6 +10,7 @@
  # ============================================== Interface ============================================== #
  interface WP_Mailjet_Api_Interface 
  {
+ 	public function getSenders($params);
  	public function getContactLists($params);
  	public function addContact($params);
 	public function removeContact($params);
@@ -27,6 +28,44 @@
  # Strategy ApiV1
  class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet_Api_Interface
  {
+ 	/**
+	 * Get full list of senders
+	 * 
+	 * @param (array) $param = array('limit', ...) 
+	 * @return (object)
+	 */
+ 	public function getSenders($params)
+	{
+		// Set input parameters
+		$input = array();
+		if(isset($params['limit'])) $input['limit'] = $params['limit'];
+
+		// Get the list
+		$response = $this->userSenderList()->senders;
+		
+		// Check if the list exists
+		if(isset($response))
+		{
+			$senders = array();
+			$senders['domain'] = array();
+			$senders['email'] = array();
+			
+			foreach ($response as $sender)
+			{
+				if($sender->status == 'active')
+				{
+					if(substr($sender->email, 0, 2) == '*@') 
+						$senders['domain'][] = substr($sender->email, 2, strlen($sender->email)); // This is domain
+					else						
+						$senders['email'][] = $sender->email; // This is email
+				}
+			}
+			return $senders;
+		}		
+		
+		return (object) array('Status' => 'ERROR');
+	}
+	
  	/**
 	 * Get full list of contact lists
 	 * 
@@ -236,6 +275,45 @@
  # Strategy ApiV3
  class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet_Api_Interface
  {
+
+	/**
+	 * Get full list of senders
+	 * 
+	 * @param (array) $param = array('limit', ...) 
+	 * @return (object)
+	 */
+ 	public function getSenders($params)
+	{
+		// Set input parameters
+		$input = array();
+		if(isset($params['limit'])) $input['limit'] = $params['limit'];
+
+		// Get the list
+		$response = $this->sender($input);
+
+		// Check if the list exists
+		if(isset($response->Data))
+		{
+			$senders = array();
+			$senders['domain'] = array();
+			$senders['email'] = array();
+			
+			foreach ($response->Data as $sender)
+			{
+				if($sender->Status == 'Active')
+				{
+					if(substr($sender->Email, 0, 2) == '*@') 
+						$senders['domain'][] = substr($sender->Email, 2, strlen($sender->Email)); // This is domain
+					else						
+						$senders['email'][] = $sender->Email; // This is email
+				}
+			}
+			return $senders;
+		}		
+		
+		return (object) array('Status' => 'ERROR');
+	}
+	
  	/**
 	 * Get full list of contact lists
 	 * 
@@ -545,8 +623,22 @@
         $this->context = FALSE;
     }
 	
-	
-	
+
+	/**
+	 * Get full list of senders
+	 * 
+	 * @param (array) $param = array('limit', ...) 
+	 * @return (object)
+	 */
+	public function getSenders($params)
+	{	
+		// Check if we have context, if no, return error
+        if($this->context === FALSE)
+			return (object) array('Status' => 'ERROR');
+			
+		return $this->context->getSenders($params);
+	}
+
 	/**
 	 * Get full list of contact lists
 	 * 
@@ -651,4 +743,3 @@
 		return $this->context->validateEmail($email);
 	  }
  }
- 

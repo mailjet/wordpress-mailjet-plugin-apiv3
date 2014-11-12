@@ -131,13 +131,14 @@ class WP_Mailjet_Options
 			$this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
 			// If there is connection with the API, then check and for the sender 	
 			if ($this->api->version != NULL)
-			{
+			{				
 				// Get all senders
 				$senders = $this->api->getSenders(array('limit' => 0));	
+				
 				// Get sender 
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 				// Check if the local sender matches any of the senders part of this account 
-				if(!in_array($from_email, $senders))
+				if(!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
 				{
 					// Error message			
 					WP_Mailjet_Utils::custom_notice('error', __('Please make sure that you are using the correct API key and secret key associated to your mailjet account (from email).', 'wp-mailjet'));
@@ -333,7 +334,7 @@ class WP_Mailjet_Options
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 					
 				$test_sent = FALSE;
-				if ($fields['mailjet_test'] && in_array($from_email, $senders))
+				if ($fields['mailjet_test'] && (in_array($from_email, $senders['email']) || in_array(array_pop(explode('@', $from_email)), $senders['domain'])))
 				{
 					// Send a test mail
 					$subject = __('Your test mail from Mailjet', 'wp-mailjet');
@@ -350,7 +351,7 @@ class WP_Mailjet_Options
 
 				if ($connected === TRUE)
 				{	
-					if(!in_array($from_email, $senders))
+					if(!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
 						WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved successfully', 'wp-mailjet').'.');
 					else
 						WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved successfully', 'wp-mailjet').$sent);
