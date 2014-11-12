@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.2.1
 Tested up to: 4.0.0
-Stable tag: 3.1.9
+Stable tag: 3.1.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,12 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 ## Changelog
+= 3.1.11=
+* We display more human readable messages for those cases when we enter wrong API/Secret Key and also our "from email" does not match with any of the sender part of our Mailjet's account
+
+= 3.1.10=
+* Rename function my_save_extra_profile_fields to mailjet_my_save_extra_profile_fields
+
 = 3.1.9=
 * Bug fix related to the compatibility of the plugin for v1 and v3 users
 
