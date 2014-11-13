@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-06 17:42+0200\n"
-"PO-Revision-Date: 2014-11-13 14:17+0200\n"
+"PO-Revision-Date: 2014-11-13 14:30+0200\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "MIME-Version: 1.0\n"
@@ -131,9 +131,8 @@ msgid "SSL Enabled (only with port 465)"
 msgstr "SSL Enabled (only with port 465)"
 
 #: mailjet-options.php:77
-#, fuzzy
 msgid "SSL Enabled"
-msgstr "Enabled"
+msgstr "SSL Enabled"
 
 #: mailjet-options.php:77
 msgid "Enable <b>SSL</b> communication with mailjet.com"
@@ -330,9 +329,15 @@ msgid ""
 "API keys (<a href=\"%s\" target=\"_blank\">%s</a>) to regenerate a new "
 "Secret Key for the plug-in."
 msgstr ""
+"Please verify that you have entered your API and secret key correctly. If "
+"this is the case and you have still this error message, please go to Account "
+"API keys (<a href=\"%s\" target=\"_blank\">%s</a>) to regenerate a new "
+"Secret Key for the plug-in."
 
 #: views/options-form.php:40
 msgid ""
 "Please make sure that you are using the correct API key and secret key "
 "associated to your mailjet account (from email)."
 msgstr ""
+"Please make sure that you are using the correct API key and secret key "
+"associated to your mailjet account (from email)."
