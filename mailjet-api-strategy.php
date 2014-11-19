@@ -573,12 +573,13 @@
   		# Check the type of the user and set the corresponding Context/Strategy
   		// Set API V3 context and get the user and check if it's V3   		
 		$this->setContext(new WP_Mailjet_Api_Strategy_V3($mailjet_username, $mailjet_password));
-		$response = $this->context->getContactLists(array('limit' => 1));
+		//$response = $this->context->getContactLists(array('limit' => 1));
+		$response = $this->context->getSenders(array('limit' => 1));
 		if(isset($response->Status) && $response->Status == 'ERROR')
 		{
 			// Set API V1 context and get the contact lists of this user and check if it's V1
 			$this->setContext(new WP_Mailjet_Api_Strategy_V1($mailjet_username, $mailjet_password));	
-			$response = $this->context->getContactLists(array('limit' => 1));
+			$response = $this->context->getSenders(array('limit' => 1));
 			if(isset($response->Status) && $response->Status == 'ERROR')
 			{				
 				$this->clearContext();			
