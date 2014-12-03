@@ -321,15 +321,17 @@ class WP_Mailjet_Options
 					}
 				}
 			}
-			
-			// If there is connection, display successfull message
-			if ($connected !== FALSE)
+
+            // Get all senders
+            $senders = $this->api->getSenders(array('limit' => 0));
+
+            // If there is connection, display successfull message
+			if ($connected !== FALSE && is_array($senders))
 			{
 				update_option('mailjet_ssl', $ssl);
 				update_option('mailjet_port', $port);
 	
-				// Get all senders
-				$senders = $this->api->getSenders(array('limit' => 0));	
+
 				// Get sender 
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 					
