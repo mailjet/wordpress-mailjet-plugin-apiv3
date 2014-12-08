@@ -188,7 +188,7 @@ class WP_Mailjet_Options
 			$accessOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_access_subscriber', ' ' . __('Subscriber', 'wp-mailjet'), 'checkbox', get_option('mailjet_access_subscriber'), '');
 			
 			$accessFieldset = new WP_Mailjet_Options_Form_Fieldset(
-				__('Acccess Settings', 'wp-mailjet'),
+				__('Access Settings', 'wp-mailjet'),
 				$accessOptions,
 				__('Set the user roles which will be able to access the Mailjet\'s plugin', 'wp-mailjet')
 			);
