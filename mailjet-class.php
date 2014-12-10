@@ -94,12 +94,25 @@ class WP_Mailjet
 		return $token;
 	}
 
-	public function show_campaigns_menu()
+	/**
+	* This method returns the current locale of the wordpress' user
+	*/
+	private function get_locale()
 	{
+		$locale = get_locale();
+		if(!in_array($locale, array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES'))) {
+			$locale = 'en_US';
+		}
+		
+		return $locale;
+	}
+		
+	public function show_campaigns_menu()
+	{		
 		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Campaigns', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/campaigns?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc"></iframe>';
+		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/campaigns?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';
 	}
 
 	public function show_stats_menu()
@@ -107,7 +120,7 @@ class WP_Mailjet
 		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Statistics', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/stats?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc"></iframe>';		
+		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/stats?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';		
 	}
 
 	public function show_contacts_menu()
@@ -115,6 +128,6 @@ class WP_Mailjet
 		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Contacts', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/contacts/lists?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc"></iframe>';		
+		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/contacts/lists?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';		
 	}
 }

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-06 17:42+0200\n"
-"PO-Revision-Date: 2014-11-13 14:30+0200\n"
+"PO-Revision-Date: 2014-12-08 12:18+0200\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "MIME-Version: 1.0\n"
@@ -190,15 +190,15 @@ msgstr "API Settings"
 
 #: mailjet-options.php:134
 msgid ""
-"You can get your API keys from <a href=\"https://www.mailjet.com/account/"
-"api_keys\">your mailjet account</a>. Please also make sure the sender "
-"address %s is active in <a href=\"https://www.mailjet.com/account/sender"
-"\">your account</a>"
+"You can get your API keys from <a target=\"_blank\" href=\"https://www."
+"mailjet.com/account/api_keys\">your mailjet account</a>. Please also make "
+"sure the sender address %s is active in <a target=\"_blank\" href=\"https://"
+"www.mailjet.com/account/sender\">your account</a>"
 msgstr ""
-"You can get your API keys from <a href=\"https://www.mailjet.com/account/"
-"api_keys\">your mailjet account</a>. Please also make sure the sender "
-"address %s is active in <a href=\"https://www.mailjet.com/account/sender"
-"\">your account</a>"
+"You can get your API keys from <a target=\"_blank\" href=\"https://www."
+"mailjet.com/account/api_keys\">your mailjet account</a>. Please also make "
+"sure the sender address %s is active in <a target=\"_blank\" href=\"https://"
+"www.mailjet.com/account/sender\">your account</a>"
 
 #: mailjet-options.php:132
 msgid "Administrator"
@@ -225,8 +225,8 @@ msgid "Subscriber"
 msgstr "Subscriber"
 
 #: mailjet-options.php:132
-msgid "Acccess Settings"
-msgstr "Acccess Settings"
+msgid "Access Settings"
+msgstr "Access Settings"
 
 #: mailjet-options.php:132
 msgid "Set the user roles which will be able to access the Mailjet's plugin"
