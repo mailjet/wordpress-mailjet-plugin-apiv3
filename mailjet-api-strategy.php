@@ -535,7 +535,8 @@
 			'TokenType' 	=> 'url',
 			'CatchedIp'  	=> $_SERVER['REMOTE_ADDR'],
 			'log_once' 		=> TRUE,
-			'IsActive'		=> TRUE
+			'IsActive'		=> TRUE,
+			'SentData'		=> serialize(array('plugin' => 'wordpress-3.0')),
 		));
 	 
 	 	// Get and return the token
