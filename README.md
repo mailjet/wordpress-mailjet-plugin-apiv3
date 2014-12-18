@@ -3,8 +3,8 @@
 Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.2.1
-Tested up to: 4.0.0
-Stable tag: 3.1.16
+Tested up to: 4.1.0
+Stable tag: 3.1.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,9 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 ## Changelog
+= 3.1.17=
+* When we create a TOKEN we also send SentData containing plugin name
+
 = 3.1.16=
 * Translation of the iframe and also some small corrections are executed for the translations from i18n folder;
 
