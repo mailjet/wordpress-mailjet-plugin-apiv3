@@ -75,6 +75,7 @@ class WP_Mailjet
 		$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 		$phpmailer->From = $from_email;
 		$phpmailer->Sender = $from_email;
+		$phpmailer->addReplyTo(get_option('admin_email'));
 		$phpmailer->AddCustomHeader($this->api->mj_mailer);
 	}
 
