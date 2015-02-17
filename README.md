@@ -48,6 +48,7 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 3. Activate the Mailjet extension through the 'Plugins' menu in WordPress.
 
 You must have cURL extension enabled.
+Please make sure that in settings of your browser you have activated JavaScript. 
 
 ## Frequently Asked Questions
 
