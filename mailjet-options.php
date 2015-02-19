@@ -84,7 +84,7 @@ class WP_Mailjet_Options
 		$form = new WP_Mailjet_Options_Form('admin.php?page=wp_mailjet_options_top_menu&action=save_options');
 
 		$desc = '<ol>';
-		$desc .= '<li>' . sprintf(__('<a target="_blank" href="https://www.mailjet.com/signup?p=$s">Create your Mailjet account</a> if you don\'t have any.', 'wp-mailjet'), 'wordpress-3.0').'</li>';
+		$desc .= '<li>' . sprintf(__('<a target="_blank" href="https://www.mailjet.com/signup?p=%s">Create your Mailjet account</a> if you don\'t have any.', 'wp-mailjet'), 'wordpress-3.0').'</li>';
 		$desc .= '<li>' . __('Log in with your account through the login form below or visit your <a target="_blank" href="https://www.mailjet.com/account/api_keys">account page</a> to get your API keys and set up them below.', 'wp-mailjet') . '</li>';	
 		$desc .= '<li>' . __('<a href="admin.php?page=wp_mailjet_options_contacts_menu">Create a new list</a> if you don\'t have one or need a new one.', 'wp-mailjet') . '</li>';	
 		$desc .= '<li>' . __('<a href="widgets.php">Add</a> the email collection widget to your sidebar or footer.', 'wp-mailjet') . '</li>';
