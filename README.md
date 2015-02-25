@@ -37,7 +37,7 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 -  Last but not least, the plugin features Mailjet’s latest v3 iframes to manage contacts, create drag-and-drop marketing campaigns and view in depth sending statistics directly from within the plug-in.
 
 ### Installing the Plugin
--  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](https://app.mailjet.com/signup) for free!
+-  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](https://app.mailjet.com/signup?p=wordpress-3.0) for free!
 
 
 ## Installation
