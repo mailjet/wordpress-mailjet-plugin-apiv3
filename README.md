@@ -39,6 +39,8 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 ### Installing the Plugin
 -  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](https://app.mailjet.com/signup?p=wordpress-3.0) for free!
 
+Known issue : if you see the "Sign in" screen when clicking on List/Campaign/Statistics please make sure that you have entered your Mailjet API/Secret key in Parameters and click on "Save" button. Clicking on 'Save' will generate a new token for your specific IP address and give you access to Mailjet via the Plugin.
+
 
 ## Installation
 
@@ -74,6 +76,9 @@ This plugin is currently available in English, French, Spanish and German. Suppo
 ### How do I create a signup form?
 Once your Mailjet plugin is installed, click on "Appearance" in the left-side menu  and then choose the "Widgets" section. Just drag  the "Subscribe to Our Newsletter" widget and drop it where you want it to appear (i.e. the sidebar). For more precisions, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
 
+### What do I do if I see a "Sign-in" page when I click on List/Campaign/Statistics?
+
+Please go to the plug-in "Parameters" page and verify that you have entered your Mailjet API/Secret key combination and click on "Save" button. This will generate a new token for your specific IP address and give you access to Mailjet via the Plugin.
 
 ## Screenshots
 
