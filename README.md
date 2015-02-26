@@ -39,10 +39,7 @@ Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMT
 ### Installing the Plugin
 -  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](https://app.mailjet.com/signup?p=wordpress-3.0) for free!
 
-Known issue : if you see the "Sign in" screen when clicking on List/Campaign/Statistics please make sure that you have entered your Mailjet API/Secret key in Parameters and click on "Save" button. Clicking on 'Save' will generate a new token for your specific IP address and give you access to Mailjet via the Plugin.
-
-
-## Installation
+### Installation
 
 
 1. Log in as administrator in WordPress.
@@ -51,6 +48,8 @@ Known issue : if you see the "Sign in" screen when clicking on List/Campaign/Sta
 
 You must have cURL extension enabled.
 Please make sure that in settings of your browser you have activated JavaScript. 
+
+Known issue : if you see the "Sign in" screen when clicking on List/Campaign/Statistics please make sure that you have entered your Mailjet API/Secret key in Parameters and click on "Save" button. Clicking on 'Save' will generate a new token for your specific IP address and give you access to Mailjet via the Plugin.
 
 ## Frequently Asked Questions
 
