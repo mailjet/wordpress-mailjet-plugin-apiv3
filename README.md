@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.2.1
 Tested up to: 4.1.0
-Stable tag: 3.1.17
+Stable tag: 3.1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,72 +88,75 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 
 
 ## Changelog
-= 3.1.17=
+= 3.1.18 =
+* Servers with PHP version 5.3 would be able to check if headers for ReplyTo already exist and add the Mailjet headers only if no ReplyTo headers are set.
+
+= 3.1.17 =
 * When we create a TOKEN we also send SentData containing plugin name
 
-= 3.1.16=
+= 3.1.16 =
 * Translation of the iframe and also some small corrections are executed for the translations from i18n folder;
 
-= 3.1.15=
+= 3.1.15 =
 * All strings are translated in german, french and spanish.
 
-= 3.1.14=
+= 3.1.14 =
 * Changed checking for correct sender.
 
-= 3.1.13=
+= 3.1.13 =
 * Modification of how to detect v1 and v3 users.
 
-= 3.1.12=
+= 3.1.12 =
 * Part of the translations are translated.
 
-= 3.1.11=
+= 3.1.11 =
 * We display more human readable messages for those cases when we enter wrong API/Secret Key and also our "from email" does not match with any of the sender part of our Mailjet's account
 
-= 3.1.10=
+= 3.1.10 =
 * Rename function my_save_extra_profile_fields to mailjet_my_save_extra_profile_fields
 
-= 3.1.9=
+= 3.1.9 =
 * Bug fix related to the compatibility of the plugin for v1 and v3 users
 
-= 3.1.8=
+= 3.1.8 =
 * Stop scripts from being output unnecessarily when we load the widget on the front-end.
 
-= 3.1.7=
+= 3.1.7 =
 * The user can set the port from the settings page.
 
-= 3.1.6=
+= 3.1.6 =
 * The administrator of the website is able to give access to the plugin for other user roles. 
 
-= 3.1.5=
+= 3.1.5 =
 * MJ_HOST and MJ_MAILER variables are moved to the api strategy patter class as public properties of the class. From now on, they are
 accessable from there.
 
-= 3.1.4=
+= 3.1.4 =
 * Add a confirmation message  when an user activates his/her contact widget on his/her WordPress admin
 * In the admin panel of WordPress, when a user try to add a "subscribe to our newsletter widget"  we have add a validation if he/she has choosen a contact list
 
-= 3.1.3=
+= 3.1.3 =
 * The position of the main Mailjet's menu takes a default value instead of value 101
 * Removed AKID from APIv3 calls from the plugin
 * Prevent plugin from hiding other plugin's page #10
 * README update
 
-= 3.1.2=
+= 3.1.2 =
 * README update with security issue
 
-= 3.1.1=
+= 3.1.1 =
 * Adjustments related to the subscription widget
 
-= 3.1.0=
+= 3.1.0 =
 * Supports V1 and V3 Mailjet's users, Add use tracking on the WordPress plugin, Fix IsActive parameter for token creation
 
-= 3.0.3=
+= 3.0.3 =
 * Add tracking of signups on the WordPress plugin, Fix IsActive parameter for token creation
 
-= 3.0.2=
+= 3.0.2 =
 * Fix MailJet host
 
-= 3.0.1=
+= 3.0.1 =
 * Bug fix on connecting contact to a list
 
 = 3.0.0 =
