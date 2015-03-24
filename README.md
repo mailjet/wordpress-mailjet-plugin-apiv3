@@ -88,7 +88,7 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 
 
 ## Changelog
-= 3.1.18 =
+= 3.1.19 =
 * Widget button translation fix
 
 = 3.1.18 =
