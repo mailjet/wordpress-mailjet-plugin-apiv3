@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.2.1
 Tested up to: 4.1.0
-Stable tag: 3.1.18
+Stable tag: 3.1.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,9 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 
 
 ## Changelog
+= 3.1.18 =
+* Widget button translation fix
+
 = 3.1.18 =
 * Servers with PHP version 5.3 would be able to check if headers for ReplyTo already exist and add the Mailjet headers only if no ReplyTo headers are set.
 
