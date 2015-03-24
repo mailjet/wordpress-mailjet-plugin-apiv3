@@ -162,7 +162,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 			<input id="email" name="email" value="" type="email" placeholder="' . __('your@email.com', 'wp-mailjet') . '" />
 			<input name="action" type="hidden" value="mailjet_subscribe_ajax_hook" />
 			<input name="list_id" type="hidden" value="' . $list_id . '" />
-			<input name="submit" type="submit" class="mailjet-subscribe" value="' . $button_text . '">
+			<input name="submit" type="submit" class="mailjet-subscribe" value="' . __($button_text) . '">
 		</form>
 		<div class="response">
 		</div>';
