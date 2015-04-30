@@ -78,19 +78,12 @@ class WP_Mailjet
 
         // Add reply to header only if one does not already exist in the PhpMailer properties CustomerHeader and ReplyTo
         // This check would work only for php >= 5.3
-        if (!$this->_customHeaderHasReplyTo($this->_getPhpMailerProperties($phpmailer, 'CustomHeader')) &&
-            !$this->_hasReplyTo($this->_getPhpMailerProperties($phpmailer, 'ReplyTo'))){
+        $hasReplyTo = $this->_getPhpMailerProperties($phpmailer, 'ReplyTo');
+        if (!$this->_customHeaderHasReplyTo($this->_getPhpMailerProperties($phpmailer, 'CustomHeader')) && empty($hasReplyTo)){
             $phpmailer->addReplyTo(get_option('admin_email'));
         }
 		$phpmailer->AddCustomHeader($this->api->mj_mailer);
 	}
-
-    private function _hasReplyTo($prop){
-        if(!empty($prop)){
-            return true;
-        }
-        return false;
-    }
 
     private function _customHeaderHasReplyTo($propArr){
         foreach($propArr as $prop){
