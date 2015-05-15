@@ -38,7 +38,7 @@ require('mailjet-utils.php');
 
 
 # Define mailjet options object
-$options = new WP_Mailjet_Options();
+$optionsMj = new WP_Mailjet_Options();
 
 
 # Check if the plugin is setted up properly
