@@ -2,7 +2,7 @@
 
 /*
 Plugin Name:	Mailjet for Wordpress
-Version:		3.1.21
+Version:		3.2.1
 Plugin URI:		https://www.mailjet.com/plugin/wordpress.htm
 Description:	Use mailjet SMTP to send email, manage lists and contacts within wordpress
 Author:			Mailjet SAS
