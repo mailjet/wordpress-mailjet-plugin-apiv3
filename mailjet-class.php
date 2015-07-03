@@ -15,7 +15,10 @@ class WP_Mailjet
 
 	public function __construct($api, $phpMailer)
 	{
-		// Set Plugin Path
+        global $locale;
+        $locale = $this->get_locale();
+
+        // Set Plugin Path
 		$this->pluginPath = dirname(__FILE__);
 
 		// Set Plugin URL
@@ -100,7 +103,13 @@ class WP_Mailjet
 	*/
 	private function get_locale()
 	{
-		$locale = get_locale();
+        if (isset($_COOKIE['pls_language']) && $_COOKIE['pls_language']) {
+            $locale = $_COOKIE['pls_language'];
+        } elseif(defined('WPLANG')) {
+            $locale = WPLANG;
+        } else {
+            $locale = get_locale();
+        }
 		if(!in_array($locale, array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES'))) {
 			$locale = 'en_US';
 		}
