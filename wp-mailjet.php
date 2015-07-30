@@ -2,7 +2,7 @@
 
 /*
 Plugin Name:	Mailjet for Wordpress
-Version:		3.2.1
+Version:		3.2.2
 Plugin URI:		https://www.mailjet.com/plugin/wordpress.htm
 Description:	Use mailjet SMTP to send email, manage lists and contacts within wordpress
 Author:			Mailjet SAS
@@ -191,7 +191,7 @@ function show_mailjet_subscribe_field()
 function register_extra_fields( $user_id, $password = "", $meta = array() )
 {
 	$subscribe = filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-	
+
 	update_user_meta( $user_id, 'mailjet_subscribe_ok', $subscribe);
 	mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
 }
@@ -208,11 +208,11 @@ function mailjet_subscribe_unsub_user_to_list($subscribe, $user_id)
 		$MailjetApi = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
 
 		if ($subscribe && $list_id = get_option('mailjet_auto_subscribe_list_id'))
-		{			
-			// Add the user to a contact list			
+		{
+			// Add the user to a contact list
 			$response = $MailjetApi->addContact(array(
 				'Email'		=> (isset($_POST['email']))?$_POST['email']:$user->data->user_email,
-				'ListID'	=> $list_id				
+				'ListID'	=> $list_id
 			));
 		}
 		elseif (!$subscribe && $list_id = get_option('mailjet_auto_subscribe_list_id'))
@@ -221,7 +221,7 @@ function mailjet_subscribe_unsub_user_to_list($subscribe, $user_id)
 			$MailjetApi->removeContact(array(
 				'Email'		=> (isset($_POST['email']))?$_POST['email']:$user->data->user_email,
 				'ListID'	=> $list_id
-			));	
+			));
 		}
 	}
 }
