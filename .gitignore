@@ -6,6 +6,3 @@ app/[Cc]onfig/core.php
 app/[Cc]onfig/database.php
 !empty
 .idea
-/nbproject/private/private.properties
-/nbproject/project.properties
-/nbproject/project.xml
