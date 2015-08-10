@@ -15,7 +15,10 @@ class WP_Mailjet
 
 	public function __construct($api, $phpMailer)
 	{
-		// Set Plugin Path
+        global $locale;
+        $locale = $this->get_locale();
+
+        // Set Plugin Path
 		$this->pluginPath = dirname(__FILE__);
 
 		// Set Plugin URL
@@ -40,8 +43,8 @@ class WP_Mailjet
 		if (function_exists('add_submenu_page'))
 		{
 			if (
-				current_user_can('administrator') 
-					|| 
+				current_user_can('administrator')
+					||
 				(current_user_can('editor') && get_option('mailjet_access_editor') == 1)
 					||
 				(current_user_can('author') && get_option('mailjet_access_author') == 1)
@@ -64,7 +67,7 @@ class WP_Mailjet
 
 		$phpmailer->Mailer = 'smtp';
 		$phpmailer->SMTPSecure = get_option('mailjet_ssl');
-	
+
 		$phpmailer->Host = $this->api->mj_host;
 		$phpmailer->Port = get_option('mailjet_port');
 
@@ -76,34 +79,8 @@ class WP_Mailjet
 		$phpmailer->From = $from_email;
 		$phpmailer->Sender = $from_email;
 
-        // Add reply to header only if one does not already exist in the PhpMailer properties CustomerHeader and ReplyTo
-        // This check would work only for php >= 5.3
-        $hasReplyTo = $this->_getPhpMailerProperties($phpmailer, 'ReplyTo');
-        if (!$this->_customHeaderHasReplyTo($this->_getPhpMailerProperties($phpmailer, 'CustomHeader')) && empty($hasReplyTo)){
-            $phpmailer->addReplyTo(get_option('admin_email'));
-        }
 		$phpmailer->AddCustomHeader($this->api->mj_mailer);
 	}
-
-    private function _customHeaderHasReplyTo($propArr){
-        foreach($propArr as $prop){
-            if($prop[0] === 'Reply-To' && $prop[1] !== ''){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private function _getPhpMailerProperties(PHPMailer $phpmailer, $property)
-    {
-        $class = new ReflectionClass("PHPMailer");
-        $property = $class->getProperty($property);
-        if (method_exists($property, 'setAccessible')) {
-            $property->setAccessible(true);
-            return $property->getValue($phpmailer);
-        }
-        return array();
-    }
 
 	private function _get_auth_token()
 	{
@@ -126,20 +103,26 @@ class WP_Mailjet
 	*/
 	private function get_locale()
 	{
-		$locale = get_locale();
+        if (isset($_COOKIE['pls_language']) && $_COOKIE['pls_language']) {
+            $locale = $_COOKIE['pls_language'];
+        } elseif(defined('WPLANG')) {
+            $locale = WPLANG;
+        } else {
+            $locale = get_locale();
+        }
 		if(!in_array($locale, array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES'))) {
 			$locale = 'en_US';
 		}
-		
+
 		return $locale;
 	}
-		
+
 	public function show_campaigns_menu()
-	{		
+	{
 		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Campaigns', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/campaigns?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';
+		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/campaigns?t='.$this->_get_auth_token().'&show_menu=none&sp=display&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';
 	}
 
 	public function show_stats_menu()
@@ -147,7 +130,7 @@ class WP_Mailjet
 		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Statistics', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/stats?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';		
+		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/stats?t='.$this->_get_auth_token().'&show_menu=none&sp=display&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';
 	}
 
 	public function show_contacts_menu()
@@ -155,6 +138,6 @@ class WP_Mailjet
 		echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/assets/images/mj_logo_med.png' . '" /></div><h2>';
 		echo __('Contacts', 'wp-mailjet');
 		echo'</h2></div>';
-		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/contacts/lists?t='.$this->_get_auth_token().'&show_menu=none&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';		
+		echo '<iframe width="980px" height="1200" src="https://'.(($this->api->version == '0.1')?'www':(($this->api->version == 'REST')?'app':'www')).'.mailjet.com/contacts/lists?t='.$this->_get_auth_token().'&show_menu=none&sp=display&u=WordPress-3.1&f=amc&locale='.$this->get_locale().'"></iframe>';
 	}
 }
