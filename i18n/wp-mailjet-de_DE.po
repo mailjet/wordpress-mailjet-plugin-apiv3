@@ -270,39 +270,6 @@ msgstr ""
 "Es gibt ein Problem mit Ihren Einstellungen. Bitte überprüfen Sie diese und "
 "probieren es erneut. "
 
-#: mailjet-widget.php:21
-msgid "Allows your visitors to subscribe to one of your lists"
-msgstr "Ermöglicht es Ihren Besuchern, sich bei einer Ihrer Listen anzumelden"
-
-#: mailjet-widget.php:56
-msgid "Title:"
-msgstr "Titel:"
-
-#: mailjet-widget.php:62
-msgid "Button text:"
-msgstr "Schaltflächentext:"
-
-#: mailjet-widget.php:68
-msgid "List:"
-msgstr "Liste:"
-
-#: mailjet-widget.php:106
-msgid "Sorry %s we couldn't subscribe at this time"
-msgstr ""
-"Es tut uns leid %s Wir konnten die Anmeldung dieses Mal nicht ausführen"
-
-#: mailjet-widget.php:106
-msgid "The contact %s is already subscribed"
-msgstr "Der Kontakt %s ist bereits angemeldet"
-
-#: mailjet-widget.php:106
-msgid "Thanks for subscribing with %s"
-msgstr "Wir danken für die Anmeldung mit %s"
-
-#: mailjet-widget.php:126
-msgid "your@email.com"
-msgstr "deine@email.com"
-
 #: wp-mailjet.php:88
 msgid ""
 "The mailjet plugin is enabled but your credentials are not set. Please <a "

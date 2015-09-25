@@ -75,12 +75,9 @@ msgid "Tweet"
 msgstr "Tweet"
 
 #: mailjet-options.php:48
-msgid ""
-"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=$s\">Create "
-"your Mailjet account</a> if you don't have any."
-msgstr ""
-"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=$s\">Cree su "
-"cuenta en Mailjet </a> si todavía no lo ha hecho."
+msgid "<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=%s\">Create your Mailjet account</a> if you don\'t have any."
+msgstr "<a target=\"_blank\" href=\"https://es.mailjet.com/signup?p=%s\">Crea tu cuenta</a> "
+"Mailjet si no tienes una abierta ya"
 
 #: mailjet-options.php:62
 msgid ""
@@ -270,38 +267,6 @@ msgstr ""
 msgid "There is an error with your settings. please correct and try again"
 msgstr ""
 "Hay un problema con su configuración. Por favor corríjalo y pruebe de nuevo"
-
-#: mailjet-widget.php:21
-msgid "Allows your visitors to subscribe to one of your lists"
-msgstr "Permite que sus usuarios suscriban a una de sus listas"
-
-#: mailjet-widget.php:56
-msgid "Title:"
-msgstr "Título:"
-
-#: mailjet-widget.php:62
-msgid "Button text:"
-msgstr "Texto del botón:"
-
-#: mailjet-widget.php:68
-msgid "List:"
-msgstr "Lista:"
-
-#: mailjet-widget.php:106
-msgid "Sorry %s we couldn't subscribe at this time"
-msgstr "Lo sentimos %s. No hemos podido suscribirle"
-
-#: mailjet-widget.php:106
-msgid "The contact %s is already subscribed"
-msgstr "El contacto %s ya está suscrito."
-
-#: mailjet-widget.php:106
-msgid "Thanks for subscribing with %s"
-msgstr "Gracias por suscribirse a %s"
-
-#: mailjet-widget.php:126
-msgid "your@email.com"
-msgstr "su@email.com"
 
 #: wp-mailjet.php:88
 msgid ""
