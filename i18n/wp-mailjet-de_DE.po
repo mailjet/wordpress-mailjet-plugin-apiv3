@@ -74,12 +74,10 @@ msgid "Tweet"
 msgstr "Tweet"
 
 #: mailjet-options.php:48
-msgid ""
-"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=$s\">Create "
+msgid "<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=%s\">Create "
 "your Mailjet account</a> if you don't have any."
-msgstr ""
-"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=$s\">Erstellen "
-"Sie Ihr Mailjet Konto,</a> falls Sie noch keines haben."
+msgstr "<a target=\"_blank\" href=\"https://de.mailjet.com/signup?p=%s\">Erstellen Sie Ihr Mailjet-Konto,</a> "
+"wenn Sie keines haben.."
 
 #: mailjet-options.php:62
 msgid ""
