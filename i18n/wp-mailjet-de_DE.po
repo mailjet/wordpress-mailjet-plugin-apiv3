@@ -228,7 +228,7 @@ msgid "Access Settings"
 msgstr "Zugriffseinstellungen"
 
 #: mailjet-options.php:132
-msgid "Set the user roles which will be able to access the Mailjet's plugin"
+msgid "Select which WordPress admin user roles (in addition to Administrator) will also have access to the Mailjet Plug-in"
 msgstr ""
 "Stellen Sie die Benutzerrollen ein, die Zugriff auf das Mailjet Plugin haben "
 "können"
