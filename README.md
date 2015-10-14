@@ -91,6 +91,7 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 
 = 3.2.5 =
 * Typo fix
+* Fixed WP localization issue
 
 = 3.2.4 =
 * Fixed sign up link translations
