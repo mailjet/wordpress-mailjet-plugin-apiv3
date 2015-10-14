@@ -87,6 +87,7 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 = 3.2.5 =
 * Typo fix
+* Fixed WP localization issue
 
 = 3.2.4 =
 * Fixed sign up link translations
