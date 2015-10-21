@@ -37,7 +37,7 @@ Last but not least, the plugin features Mailjet's latest v3 iframes to manage co
 
 
 ### Installing the Plugin
-You can enable Mailjet's plugin like you would do for any other WordPress plugin. Enter your Mailjet credentials and refer to the [FAQs](https://github.com/mailjet/wordpress-mailjet-plugin-apiv3#frequently-asked-questions) for any other information. If you don't have a Mailjet account yet,[signup now](https://app.mailjet.com/signup?p=wordpress-3.0) for free!
+You can enable Mailjet's plugin like you would do for any other WordPress plugin. Enter your Mailjet credentials and refer to the [FAQs](https://github.com/mailjet/wordpress-mailjet-plugin-apiv3#frequently-asked-questions) for any other information. If you don't have a Mailjet account yet, [signup now](https://app.mailjet.com/signup?p=wordpress-3.0) for free!
 
 *** SECURITY UPDATE *** - If you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics" and the login form appears AND your Mailjet account was created prior to August 2014, please go to [Account API keys](https://app.mailjet.com/account/api_keys) to regenerate a new Secret Key for the plug-in.
 
