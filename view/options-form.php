@@ -25,6 +25,9 @@ class WP_Mailjet_Options_Form
 
 		foreach ($this->fieldsets as $fieldset)
 		{
+			if ($fieldset->block === true) {
+				echo '<div style="color: #000; background: #fff; padding: 10px; margin: 10px 0;">';
+			}
 			echo '<h3>' . $fieldset->getTitle() . '</h3>';
 
 			if ($fieldset->getDescription())
@@ -40,6 +43,9 @@ class WP_Mailjet_Options_Form
 					$option->display();
 
 				echo '</tbody></table>';
+			}
+			if ($fieldset->block === true) {
+				echo '</div>';
 			}
 		}
 
@@ -228,12 +234,14 @@ class WP_Mailjet_Options_Form_Fieldset
 	protected $title;
 	protected $options;
 	protected $description;
+	public $block = false;
 
-	public function __construct($title, array $options, $description = "")
+	public function __construct($title, array $options, $description = "", $block = false)
 	{
 		$this->title =		$title;
 		$this->options =	$options;
-		$this->description =$description;
+		$this->description = $description;
+		$this->block = $block;
 	}
 
 	public function setDescription($description)
@@ -264,5 +272,15 @@ class WP_Mailjet_Options_Form_Fieldset
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	public function setBlock($block)
+	{
+		$this->block = $block;
+	}
+
+	public function getBlock()
+	{
+		return $this->block;
 	}
 }

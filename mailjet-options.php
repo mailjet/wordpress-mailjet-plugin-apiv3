@@ -94,7 +94,8 @@ class WP_Mailjet_Options
 		$generalFieldset = new WP_Mailjet_Options_Form_Fieldset(
 			__('Mailjet Plugin', 'wp-mailjet'),
 			array(),
-			$desc
+			$desc,
+			true
 		);
 
 		$form->addFieldset($generalFieldset);
@@ -157,7 +158,8 @@ class WP_Mailjet_Options
 		$generalFieldset = new WP_Mailjet_Options_Form_Fieldset(
 			__('General Settings', 'wp-mailjet'),
 			$generalOptions,
-			__('Enable or disable the sending of your emails through your Mailjet account', 'wp-mailjet')
+			__('Enable or disable the sending of your emails through your Mailjet account', 'wp-mailjet'),
+			true
 		);
 
 		$form->addFieldset($generalFieldset);
@@ -171,7 +173,8 @@ class WP_Mailjet_Options
 		$apiFieldset = new WP_Mailjet_Options_Form_Fieldset(
 			__('API Settings', 'wp-mailjet'),
 			$apiOptions,
-			sprintf(__('You can get your API keys from <a target="_blank" href="https://www.mailjet.com/account/api_keys">your mailjet account</a>. Please also make sure the sender address %s is active in <a target="_blank" href="https://www.mailjet.com/account/sender">your account</a>', 'wp-mailjet'), get_option('admin_email'))
+			sprintf(__('You can get your API keys from <a target="_blank" href="https://www.mailjet.com/account/api_keys">your mailjet account</a>. Please also make sure the sender address %s is active in <a target="_blank" href="https://www.mailjet.com/account/sender">your account</a>', 'wp-mailjet'), get_option('admin_email')),
+			true
 		);
 
 		$form->addFieldset($apiFieldset);
@@ -190,7 +193,8 @@ class WP_Mailjet_Options
 			$accessFieldset = new WP_Mailjet_Options_Form_Fieldset(
 				__('Access Settings', 'wp-mailjet'),
 				$accessOptions,
-				__('Select which WordPress admin user roles (in addition to Administrator) will also have access to the Mailjet Plug-in', 'wp-mailjet')
+				__('Select which WordPress admin user roles (in addition to Administrator) will also have access to the Mailjet Plug-in', 'wp-mailjet'),
+				true
 			);
 
 			$form->addFieldset($accessFieldset);
