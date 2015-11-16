@@ -107,28 +107,25 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 			'ListID'	=> $list_id
 		));
 		
-		// Check what is the response and display proper message
-		if(isset($result->Status)) {
-			if($result->Status == 'DUPLICATE'){
-				echo '<p class="error">';
-				echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet'), $email);
-				echo '</p>';
-				die();
-			}
-			else if($result->Status == 'ERROR'){
-				echo '<p class="error">';
-				echo sprintf(__("Sorry %s we couldn't subscribe at this time", 'wp-mailjet'), $email);
-				echo '</p>';
-				die();
-			}			
-		}
-		
-		// Adding was successful
-		echo '<p class="success">';
-		echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet'), $email);
-		echo '</p>';
-		die();
-	}
+        // Check what is the response and display proper message
+        if (isset($result->Status)) {
+            if ($result->Status == 'DUPLICATE') {
+                echo '<p class="error" listId="' . $_GET['list_id'] . '">';
+                echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $email);
+                echo '</p>';
+            } else if ($result->Status == 'ERROR') {
+                echo '<p class="error" listId="' . $_GET['list_id'] . '">';
+                echo sprintf(__("Sorry %s we were not able to complete your subscription because it appears that you are already subscribed.",
+                    'wp-mailjet-subscription-widget'), $email);
+                echo '</p>';
+            }
+        } else {
+            // Adding was successful
+            echo '<p class="success" listId="' . $_GET['list_id'] . '">';
+            echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
+            echo '</p>';
+        }
+    }
 
 	function widget($args, $instance)
 	{
