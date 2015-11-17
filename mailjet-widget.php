@@ -125,6 +125,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
             echo '</p>';
         }
+        die();
     }
 
 	function widget($args, $instance)
