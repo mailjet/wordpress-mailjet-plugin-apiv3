@@ -18,7 +18,8 @@ class WP_Mailjet_Options
 		$this->pluginPath = dirname(__FILE__);
 
 		// Set Plugin URL
-		$this->pluginUrl = WP_PLUGIN_URL . '/wp-mailjet';
+		$chunks = explode((string)DIRECTORY_SEPARATOR,dirname(__FILE__));
+		$this->pluginUrl = WP_PLUGIN_URL . '/' . end($chunks);
 
 		add_action('admin_menu', array($this, 'display_menu'));
 	}
@@ -27,19 +28,19 @@ class WP_Mailjet_Options
 	 * Display the Mailjet's plugin menu
 	 *
 	 * @param void
-     * @return void
+	 * @return void
 	 */
 	public function display_menu()
 	{
 		if (
 			current_user_can('administrator')
-				||
+			||
 			(current_user_can('editor') && get_option('mailjet_access_editor') == 1)
-				||
+			||
 			(current_user_can('author') && get_option('mailjet_access_author') == 1)
-				||
+			||
 			(current_user_can('contributor') && get_option('mailjet_access_contributor') == 1)
-				||
+			||
 			(current_user_can('subscriber') && get_option('mailjet_access_subscriber') == 1)
 		) {
 			add_menu_page(
@@ -60,7 +61,7 @@ class WP_Mailjet_Options
 	 * Define the content of the Settings page
 	 *
 	 * @param void
-     * @return void
+	 * @return void
 	 */
 	public function show_settings_menu()
 	{
@@ -128,20 +129,20 @@ class WP_Mailjet_Options
 
 		if (get_option('mailjet_password') && get_option('mailjet_username'))
 		{
-			// Get the list of contact lists and order them in a properly setted list
+			// Get the list of contact lists and order them in a properly setted list	
 			$this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
-			// If there is connection with the API, then check and for the sender
+			// If there is connection with the API, then check and for the sender 	
 			if ($this->api->version != NULL)
 			{
 				// Get all senders
 				$senders = $this->api->getSenders(array('limit' => 0));
 
-				// Get sender
+				// Get sender 
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
-				// Check if the local sender matches any of the senders part of this account
+				// Check if the local sender matches any of the senders part of this account 
 				if(!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
 				{
-					// Error message
+					// Error message			
 					WP_Mailjet_Utils::custom_notice('error', __('Please make sure that you are using the correct API key and secret key associated to your mailjet account (from email).', 'wp-mailjet'));
 				}
 			}
@@ -209,11 +210,11 @@ class WP_Mailjet_Options
 	 * Save the Mailjet's plugin settings when we click "Save options" button
 	 *
 	 * @param void
-     * @return void
+	 * @return void
 	 */
 	public function save_settings()
 	{
-		// Get the variables which we'll save
+		// Get the variables which we'll save		
 		$fields['mailjet_enabled'] =	(isset($_POST['mailjet_enabled']) ? 1 : 0);
 		$fields['mailjet_test'] =		(isset($_POST['mailjet_test']) ? 1 : 0);
 		$fields['mailjet_ssl'] = 		(isset($_POST['mailjet_ssl']) ? 'ssl' : '');
@@ -223,8 +224,8 @@ class WP_Mailjet_Options
 		$fields['mailjet_password'] =	trim(strip_tags(filter_var($_POST['mailjet_password'], FILTER_SANITIZE_STRING)));
 		$fields['mailjet_port'] =		strip_tags(filter_var($_POST['mailjet_port'], FILTER_SANITIZE_NUMBER_INT));
 		$fields['mailjet_auto_subscribe_list_id'] = ($fields['mailjet_username'] != get_option('mailjet_username') || $fields['mailjet_password'] != get_option('mailjet_password'))
-													? false
-													: strip_tags(filter_var($_POST['mailjet_auto_subscribe_list_id'], FILTER_SANITIZE_NUMBER_INT));
+			? false
+			: strip_tags(filter_var($_POST['mailjet_auto_subscribe_list_id'], FILTER_SANITIZE_NUMBER_INT));
 		if (current_user_can('administrator'))
 		{
 			$fields['mailjet_access_editor'] =	(isset($_POST['mailjet_access_editor']) ? 1 : 0);
@@ -233,7 +234,7 @@ class WP_Mailjet_Options
 			$fields['mailjet_access_subscriber'] =	(isset($_POST['mailjet_access_subscriber']) ? 1 : 0);
 		}
 
-		// Set error messages if we've any
+		// Set error messages if we've any										
 		$errors = array();
 		if ($fields['mailjet_test'] && empty($fields['mailjet_test_address']))
 			$errors[] = 'mailjet_test_address';
@@ -326,21 +327,22 @@ class WP_Mailjet_Options
 				}
 			}
 
-            // Get all senders
-            $senders = $this->api->getSenders(array('limit' => 0));
+			// Get all senders
+			$senders = $this->api->getSenders(array('limit' => 0));
 
-            // If there is connection, display successfull message
+			// If there is connection, display successfull message
 			if ($connected !== FALSE && is_array($senders))
 			{
 				update_option('mailjet_ssl', $ssl);
 				update_option('mailjet_port', $port);
 
 
-				// Get sender
+				// Get sender 
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 
 				$test_sent = FALSE;
-				if ($fields['mailjet_test'] && (in_array($from_email, $senders['email']) || in_array(array_pop(explode('@', $from_email)), $senders['domain'])))
+				if ($fields['mailjet_test'] && (in_array($from_email, $senders['email']) ||
+						in_array(array_pop(explode('@', $from_email)), $senders['domain'])))
 				{
 					// Send a test mail
 					$subject = __('Your test mail from Mailjet', 'wp-mailjet');
@@ -370,12 +372,12 @@ class WP_Mailjet_Options
 				// Error message
 				$link = 'https://www.mailjet.com/account/api_keys';
 				WP_Mailjet_Utils::custom_notice('error', sprintf( __('Please verify that you have entered your API and secret key correctly. If this is the case and you have still this error message, please go to Account API keys (<a href="%s" target="_blank">%s</a>) to regenerate a new Secret Key for the plug-in.', 'wp-mailjet'), $link, $link));
-			    //WP_Mailjet_Utils::custom_notice('error', sprintf (__ ('Please contact Mailjet support to sort this out.<br /><br />%d - %s', 'wp-mailjet'), $errno, $errstr));
+				//WP_Mailjet_Utils::custom_notice('error', sprintf (__ ('Please contact Mailjet support to sort this out.<br /><br />%d - %s', 'wp-mailjet'), $errno, $errstr));
 			}
 		}
 		else
 		{
-			// Error message
+			// Error message			
 			WP_Mailjet_Utils::custom_notice('error', __('There is an error with your settings. please correct and try again', 'wp-mailjet'));
 		}
 	}

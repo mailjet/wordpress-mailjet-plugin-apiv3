@@ -1,0 +1,43 @@
+#: 
+msgid "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
+msgstr "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
+
+#: 
+msgid "Confirm your mailing list subscription"
+msgstr "Confirm your mailing list subscription"
+
+#: 
+msgid "Email field is empty"
+msgstr "Email field is empty"
+
+#: mailjet-widget.php:126
+msgid "your@email.com"
+msgstr "your@email.com"
+
+#: mailjet-widget.php:106
+msgid "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
+msgstr "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
+
+#: mailjet-widget.php:106
+msgid "The contact %s is already subscribed"
+msgstr "The contact %s is already subscribed"
+
+#: mailjet-widget.php:106
+msgid "Thanks for subscribing with %s"
+msgstr "Thanks for subscribing with %s"
+
+#: 
+msgid "Subscription Confirmation"
+msgstr "Subscription Confirmation"
+
+#: 
+msgid "Please Confirm Your Subscription To"
+msgstr "Please Confirm Your Subscription To"
+
+#: 
+msgid "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
+msgstr "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
+
+#: 
+msgid "Thanks,"
+msgstr "Thanks,"

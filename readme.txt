@@ -2,9 +2,9 @@
 
 Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
-Requires at least: 3.2.1
-Tested up to: 4.3.0
-Stable tag: 3.2.5
+Requires at least: 3.3.0
+Tested up to: 4.1.0
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,15 +85,11 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 == Changelog ==
 
-= 3.2.5 =
-* Typo fix
-* Fixed WP localization issue
+= 4.0.0 =
+* Subscription widget for v3 users can now include contact meta properties from the client e.g. first name, last name, age, location, industry etc, allowing up to 3 properties.
 
 = 3.2.4 =
 * Fixed sign up link translations
-
-= 3.2.3 =
-* minor change - "Tested up to" notification set to the newest WP version 4.3
 
 = 3.2.2 =
 * Added new iFrame param - sp=display - to display sending policy block
