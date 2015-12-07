@@ -1,0 +1,46 @@
+#:
+msgid "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
+msgstr "Abonnement Bestätigungsmail gesendet. Bitte überprüfen Sie Ihren Posteingang, und bestätigen Sie das Abonnement."
+
+#:
+msgid "Confirm your mailing list subscription"
+msgstr "Confirm your mailing list subscription"
+
+#:
+msgid "Email field is empty"
+msgstr "Email field is empty"
+
+#: mailjet-widget.php:126
+msgid "your@email.com"
+msgstr "deine@email.com"
+
+msgid "Error. Token verification failed."
+msgstr "Error. Token verification failed."
+
+#: mailjet-widget.php:106
+msgid "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
+msgstr "Es tut uns leid %s Wir konnten die Anmeldung dieses Mal nicht ausführen"
+
+#: mailjet-widget.php:106
+msgid "The contact %s is already subscribed"
+msgstr "Der Kontakt %s ist bereits angemeldet"
+
+#: mailjet-widget.php:106
+msgid "Thanks for subscribing with %s"
+msgstr "Wir danken für die Anmeldung mit %s"
+
+#:
+msgid "Subscription Confirmation"
+msgstr "Abonnement Bestätigung"
+
+#:
+msgid "Please Confirm Your Subscription"
+msgstr "Please Confirm Your Subscription"
+
+#:
+msgid "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
+msgstr "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
+
+#:
+msgid "Thanks,"
+msgstr "Thanks,"
