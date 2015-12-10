@@ -91,7 +91,7 @@ $this->locale = 'en_EN';
         $this->_userVersion = 3;
         if (empty($response)) {
             echo '<p class="error">';
-            echo 'You are either v1 user or we could not fetch user contact properties. Please contact our <a target=\"_blank\" href=\"https://www.mailjet.com/support\">support</a> team to discuss migrating to v3 user where you will have contact properties available.', 'wp-mailjet-subscription-widget';
+            echo __('You are either v1 user or we could not fetch user contact properties. Please contact our <a target=\"_blank\" href=\"https://www.mailjet.com/support\">support</a> team to discuss migrating to v3 user where you will have contact properties available.', 'wp-mailjet-subscription-widget');
             echo '</p>';
             $this->_userVersion = 1;
         }
@@ -148,12 +148,16 @@ $this->locale = 'en_EN';
                 ${$prop} = $instance[$prop];
             }
         }
+
+        $contactMetaProperties = $this->getContactMetaProperties();
+
 ?>
         <div class="accordion">
+
+            <?php if ($this->_userVersion === 3): ?>
             <h3>Step 1 - Choose up to 3 contact properties</h3>
             <div>
                 <?php
-                $contactMetaProperties = $this->getContactMetaProperties();
                 $metaPropertyFields = array('metaPropertyName1','metaPropertyName2','metaPropertyName3');
                 foreach($metaPropertyFields as $prop){
                     ${$prop} = empty(${$prop}) ? null : ${$prop};
@@ -227,7 +231,7 @@ $this->locale = 'en_EN';
                 </p>
 
             </div>
-
+<?php endif; ?>
             <h3>Step 2 - Define your widget labels</h3>
             <div>
                 <div class="tabs-container">
@@ -243,6 +247,7 @@ $this->locale = 'en_EN';
                             <div class="fontSizeSmall">Please enter specific labels for your subscription widget and
                                 they will be displayed on the front end of your website.
                             </div>
+                            <?php if ($this->_userVersion === 3): ?>
                             <div class="clear map-meta-properties">
                                 <?php for ($i = 1; $i <= 3; $i++): ?>
                                     <div class="<?php echo $this->get_field_id('metaProperty' . $i); ?>">
@@ -260,6 +265,7 @@ $this->locale = 'en_EN';
                                     </div>
                                 <?php endfor; ?>
                             </div>
+                            <?php endif; ?>
                             <p>
                                 <label for="<?php echo $this->get_field_id('title'); ?>"
                                        title="This is the title of your subscription widget which will be displayed on your website">Title:
