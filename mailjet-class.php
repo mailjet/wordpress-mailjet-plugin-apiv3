@@ -42,7 +42,7 @@ class WP_Mailjet
         wp_enqueue_script('jquery-ui');
         wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tooltip');
-        wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css');
+        wp_enqueue_style('mailjet-jquery-ui', plugins_url('/assets/mailjet-jquery-ui.css', __FILE__));
         wp_enqueue_style('mailjet_css', plugins_url('/assets/mailjet.css', __FILE__));
         wp_register_script('mailjet_js', plugins_url('/assets/js/mailjet.js', __FILE__), array('jquery'));
         wp_enqueue_script('mailjet_js');

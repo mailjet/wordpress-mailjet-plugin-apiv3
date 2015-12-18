@@ -75,7 +75,7 @@ jQuery(document).ready(function ($) {
     validateState();
     
     if (typeof $(document).tooltip === 'function') {
-        $(document).tooltip();
+        $('.tab-content').tooltip();
     }
    
     // on add widget to widget area
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
 
     // on widget save
     $(document).on('widget-updated', function (e, widget) {
-        $(document).tooltip();
+        $('.tab-content').tooltip();
         initAccordion();
         initStringTranslations();
         initNewPropertyForm();

@@ -149,8 +149,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         }
 
         $fields = array('new_meta_name', 'new_meta_data_type');
-        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2', 'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
-        foreach($fields as $prop){
+        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2',
+            'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
+        foreach ($fields as $prop) {
             ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
         }
         foreach($langFields as $prop){
@@ -159,19 +160,14 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             }
         }
 
-
-?>
+        ?>
+        <div class="mailjet-widget-container">
         <div class="accordion">
-
             <h3>Step 1 - Choose up to 3 contact properties</h3>
             <div>
                 <?php
-
                 $contactMetaProperties = $this->getContactMetaProperties();
-
                 if ($this->_userVersion === 3): ?>
-
-
                 <?php
                 if (empty($contactMetaProperties->Data)): ?>
                     <div class="fontSizeSmall noProperties"><?php echo sprintf('No contact properties have been defined yet. Please create one by clicking on "Add New Property" below or by logging into your Mailjet account.'); ?></div>
@@ -181,39 +177,38 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     <div class="fontSizeSmall yesProperties"><?php echo sprintf('Drag and drop up to %d contact properties from "Available contact properties" to "Selected contact properties" (besides email which is mandatory).', self::MAX_META_PROPERTIES); ?></div>
                     <div class="label">Available contact properties</div>
                 <?php endif; ?>
-                    <div class="sortable" <?php  if (empty($contactMetaProperties->Data)): ?> style="display:none;"  <?php endif; ?> >
-                        <div>
-                            <ul class="connectedSortable sortable1">
-                                <?php foreach ($contactMetaProperties->Data as $prop):
-                                    $lang = 'en';
-                                        //foreach($this->langs as $lang => $langProps): ?>
-                                            <?php if (!in_array($prop->Name, array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang}, ${'metaPropertyName3' . $lang}))): ?>
-                                                <li class="ui-state-default"><div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop->Name; ?></li>
-                                            <?php endif; ?>
-                                        <?php //endforeach; ?>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="label">Selected properties</div>
-                            <div class="fontSizeSmall">Arrange and sort the properties you selected to determine the way they will be shown in the widget.</div>
-                            <ul class="connectedSortable sortable2">
-                                <li class="ui-state-disabled">Email address (mandatory)</li>
-                                <?php $selectedProps = array();
-                                    foreach ($instance as $prop):
-                                        if (empty($prop) || in_array($prop, $selectedProps)) {
-                                            continue;
-                                        }
-                                        $lang = 'en'; ?>
-                                        <?php if (in_array($prop, array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang}, ${'metaPropertyName3' . $lang}))): ?>
-                                            <li class="ui-state-default"><div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop; ?></li>
-                                            <?php $selectedProps[] = $prop; ?>
+                <div class="sortable" <?php  if (empty($contactMetaProperties->Data)): ?> style="display:none;"  <?php endif; ?> >
+                    <div>
+                        <ul class="connectedSortable sortable1">
+                            <?php foreach ($contactMetaProperties->Data as $prop):
+                                $lang = 'en';
+                                    //foreach($this->langs as $lang => $langProps): ?>
+                                        <?php if (!in_array($prop->Name, array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang}, ${'metaPropertyName3' . $lang}))): ?>
+                                            <li class="ui-state-default"><div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop->Name; ?></li>
                                         <?php endif; ?>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
+                                    <?php //endforeach; ?>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-
+                    <div>
+                        <div class="label">Selected properties</div>
+                        <div class="fontSizeSmall">Arrange and sort the properties you selected to determine the way they will be shown in the widget.</div>
+                        <ul class="connectedSortable sortable2">
+                            <li class="ui-state-disabled">Email address (mandatory)</li>
+                            <?php $selectedProps = array();
+                                foreach ($instance as $prop):
+                                    if (empty($prop) || in_array($prop, $selectedProps)) {
+                                        continue;
+                                    }
+                                    $lang = 'en'; ?>
+                                    <?php if (in_array($prop, array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang}, ${'metaPropertyName3' . $lang}))): ?>
+                                        <li class="ui-state-default"><div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop; ?></li>
+                                        <?php $selectedProps[] = $prop; ?>
+                                    <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
 
                 <div class="new-meta-contact-form">
                     <div class="label">Add New Property</div>
@@ -375,7 +370,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 </div>
             </div>
         </div>
-        <?php if (isset($_POST) && count($_POST) > 0 && is_numeric($list_id)): ?>
+        </div>
+        <?php if (isset($_POST) && count($_POST) > 0): ?>
         <div class="mailjet_subscribe_response"><?php
             echo 'Success! Please go to your wordpress site to see your widget in action.' ?></div>
     <?php endif;
