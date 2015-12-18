@@ -864,12 +864,17 @@ body .ui-tooltip {
 
 /* Interaction states
 ----------------------------------*/
-.mailjet-widget-container .ui-state-default,
+.mailjet-widget-container .sortable1 .ui-state-default,
 .mailjet-widget-container .ui-widget-content .ui-state-default,
 .mailjet-widget-container .ui-widget-header .ui-state-default {
 	border: 1px solid #d3d3d3;
-	font-weight: normal;
+	font-weight: bold;
 	color: #555555;
+}
+.mailjet-widget-container .sortable2 .ui-state-default {
+	border: 1px solid #d3d3d3;
+	color: #ffffff;
+	font-weight: bold;
 }
 .mailjet-widget-container .ui-state-default a,
 .mailjet-widget-container .ui-state-default a:link,
