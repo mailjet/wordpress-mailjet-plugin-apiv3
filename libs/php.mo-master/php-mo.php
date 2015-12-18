@@ -75,6 +75,9 @@ function phpmo_parse_po_file($in) {
 		if ($line === '')
 			continue;
 
+		if (count(preg_split('/\s/', $line, 2)) < 2){
+			continue;
+		}
 		list ($key, $data) = preg_split('/\s/', $line, 2);
 
 		switch ($key) {
