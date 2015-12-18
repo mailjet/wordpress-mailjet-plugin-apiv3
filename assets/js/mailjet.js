@@ -283,7 +283,11 @@ function showMetaInputFields(k, v) {
         inputDiv.find('input[type="hidden"]').val(metaProperty.text().trim());
         inputDiv.find('input').prop('disabled', false);
 
-        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('-')
+        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id');
+        if (typeof arr === 'undefined') {
+            return;
+        }
+        arr = arr.split('-');
         var widgetId = arr[2];
 
         var langs = ['en', 'fr', 'de', 'es'];
@@ -323,7 +327,11 @@ function showMetaInputFieldsOnUpdate(k, v) {
         inputDiv.find('input[type="hidden"]').val(metaProperty.text().trim());
         inputDiv.find('input').prop('disabled', false);
 
-        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('-');
+        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id');
+        if (typeof arr === 'undefined') {
+            return;
+        }
+        arr = arr.split('-');
         var widgetId = arr[2];
 
         inputDiv.find('input[type="hidden"]').each(function(){
