@@ -1,6 +1,6 @@
 /* Widget */
 
-.accordion input, .accordion select {
+.accordion input[type="text"], .accordion select {
     height: 37px;
 }
 
@@ -93,12 +93,14 @@ ul.newPropertyBtn li {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
-
 .ui-widget-content {
     border: 1px solid #eeeeee;
 }
 
 /* Language tabs */
+.ui-widget-content {
+    border: 1px solid #eeeeee;
+}
 
 .tabs-menu {
     height: 16px;
@@ -144,9 +146,14 @@ ul.newPropertyBtn li {
     display: none;
 }
 
-#tab-1 {
+.tab-en {
     display: block;
 }
+
+div.tabs-container .tabActivator {
+    margin: 0 0 10px 0;
+}
+/*end of tabs*/
 
 .clear {
     clear: both;

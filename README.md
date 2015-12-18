@@ -1,11 +1,11 @@
 # [API v3] Mailjet for WordPress
 
-Contributors: mailjet
-Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
-Requires at least: 3.3.0
-Tested up to: 4.1.0
-Stable tag: 4.0.0
-License: GPLv2 or later
+Contributors: mailjet <br />
+Tags: email, marketing, signup, newsletter, widget, smtp, mailjet <br />
+Requires at least: 3.3.0 <br />
+Tested up to: 4.4 <br />
+Stable tag: 4.1.0 <br />
+License: GPLv2 or later <br />
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 The Mailjet WordPress plugin allows you to send newsletter marketing and transactional emails directly from your WordPress site by reconfiguring the wp_mail() function to use Mailjet’s enhanced SMTP relay in conjunction with signup widgets that sync new user subscriptions directly to Mailjet as well as provide an easy drag-and-drop marketing newsletter tool to send marketing emails directly from with your site.
@@ -88,6 +88,13 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 
 
 ## Changelog
+
+= 4.1.0 =
+* Subscription widget - added multilanguage support - EN, FR, ES, DE
+* Display issue fix
+
+= 4.0.1 =
+* Updated 'Tested up to' version to include WordPress 4.4
 
 = 4.0.0 =
 * Subscription widget for v3 users can now include contact meta properties from the client e.g. first name, last name, age, location, industry etc, allowing up to 3 properties.

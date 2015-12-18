@@ -139,7 +139,7 @@ class WP_Mailjet_Options
 
 				// Get sender 
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
-				// Check if the local sender matches any of the senders part of this account 
+				// Check if the local sender matches any of the senders part of this account
 				if(!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
 				{
 					// Error message			

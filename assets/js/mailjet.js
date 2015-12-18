@@ -7,6 +7,7 @@
  */
 
 jQuery(document).ready(function ($) {
+
     showPorts = function ($el) {
         $('#mailjet_port').empty()
 
@@ -59,40 +60,54 @@ jQuery(document).ready(function ($) {
     initStringTranslations();
     initNewPropertyForm();
     initSortable();
-
+    
+    // init tabs with translations
+    initTabsWithTranslations();
+    // hide content of disabled tabs
+    hideTabActivatorSiblings();
+    // change Step3 content depending on language activations on Step2
+    chamgeStep3DependingOnStep2ActiveTabs();
     $(document).on('focus', ':input', function () {
         $(this).attr('autocomplete', 'off');
     });
 
+    // Validates current user inputs
+    validateState();
+    
     if (typeof $(document).tooltip === 'function') {
         $(document).tooltip();
     }
-    // TODO Uncomment the code bellow for the next release for the tabs to function properly
-    // catch next button click and check for correct number of properties and create a form with input text fields and meta properties as labels
-    /*$(".tabs-menu a").click(function (event) {
-     event.preventDefault();
-     $(this).parent().addClass("current");
-     $(this).parent().siblings().removeClass("current");
-     var tab = $(this).attr("href");
-     $(".tabcontent").not(tab).css("display", "none");
-     $(tab).fadeIn();
-     });*/
-
+   
     // on add widget to widget area
     $(document).on('widget-added', function () {
         initAccordion();
         initStringTranslations();
         initNewPropertyForm();
         initSortable();
+        // hide content of disabled tabs
+        hideTabActivatorSiblings();
+        // init tabs with translations
+        initTabsWithTranslations();
+        // change Step3 content depending on language activations on Step2
+        chamgeStep3DependingOnStep2ActiveTabs();
         $(".accordion").accordion('enable');
+        // Validates current user inputs
+        validateState();        
     });
 
     // on widget save
     $(document).on('widget-updated', function (e, widget) {
         $(document).tooltip();
+        initAccordion();
         initStringTranslations();
         initNewPropertyForm();
         initSortable();
+        // init tabs with translations
+        initTabsWithTranslations();
+        // hide content of disabled tabs
+        hideTabActivatorSiblings();
+        // change Step3 content depending on language activations on Step2
+        chamgeStep3DependingOnStep2ActiveTabs();
         $('.accordion').accordion({
             active: false,
             collapsible: true,
@@ -100,23 +115,98 @@ jQuery(document).ready(function ($) {
         });
         $('.accordion').accordion('enable');
         registerAccordionNavButtons();
+        // Validates current user inputs
+        validateState();        
     });
 
+
 });
+
+// init tabs with translations
+function initTabsWithTranslations() 
+{
+    jQuery(".tabs-menu a").click(function(event) {
+        event.preventDefault();
+        var className = jQuery(this).attr("href");
+        jQuery(className).each(function(){
+            jQuery(this).parent().parent().find('li a[href="' + className + '"]').parent()
+                .addClass("current").siblings().removeClass("current");
+        });
+        jQuery(".tab-content").not(className).css("display", "none");
+        jQuery(className).fadeIn();
+    });    
+}
+
+
+
+function hideTabActivatorSiblings()
+{
+    jQuery('.tabActivator').each(function(){
+        if (typeof jQuery(this).find('input').attr('checked') !== 'undefined') {
+            jQuery(this).siblings().show();
+        } else {
+            jQuery(this).siblings().hide();
+        }
+    });
+    
+    jQuery('.tabActivator').on('click', function(){
+        if (typeof jQuery(this).find('input').attr('checked') !== 'undefined') {
+            jQuery(this).siblings().show();
+        } else {
+            jQuery(this).siblings().hide();
+        }
+        validateState();
+    });
+    
+}
+
+
+
+function chamgeStep3DependingOnStep2ActiveTabs()
+{
+    jQuery('.tabActivator').each(function(){
+        if (typeof jQuery(this).attr('id') !== 'undefined') {
+            var arr = jQuery(this).attr('id').split('-');
+            var lang = arr[4];
+            var widgetId = arr[2];
+            var widgetName = arr[0] + '-' + arr[1] + '-' + arr[2];
+            
+            if (typeof jQuery(this).find('input').attr('checked') !== 'undefined') {
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).show();
+                jQuery('#' + widgetName + '-mj-string-translations-' + lang).show();
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).parent().find('div').hide();
+            } else {
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).hide();
+                jQuery('#' + widgetName + '-mj-string-translations-' + lang).hide();
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).parent().find('div').show();
+            }
+        } 
+    });
+    
+    jQuery('.tabActivator').on('click', function(){
+        if (typeof jQuery(this).attr('id') !== 'undefined') {
+            var arr = jQuery(this).attr('id').split('-');
+            var lang = arr[4];
+            var widgetId = arr[2];
+            var widgetName = arr[0] + '-' + arr[1] + '-' + arr[2];
+            
+            if (typeof jQuery(this).find('input').attr('checked') !== 'undefined') {
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).show();
+                jQuery('#' + widgetName + '-mj-string-translations-' + lang).show();
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).parent().find('div').hide();
+            } else {
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).hide();
+                jQuery('#' + widgetName + '-mj-string-translations-' + lang).hide();
+                jQuery('a#' + widgetName + '-tabLinkStep3-' + lang).parent().find('div').show();
+            }
+        } 
+    });
+}
+
 
 function registerAccordionNavButtons() {
     jQuery('.accordion .next, .accordion .previous').unbind('click').live('click', (function (e) {
         e.preventDefault();
-        jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').each(function () {
-            if (checkRequiredFields(this) === false) {
-                return false;
-            }
-        });
-        jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').unbind('keyup')
-            .on('keyup', function (e) {
-                e.preventDefault();
-                checkRequiredFields(this);
-            });
         jQuery(e.currentTarget).closest('.accordion').accordion(
             'option',
             'active',
@@ -154,14 +244,13 @@ function initSortable() {
             },
             // Triggered when the user stopped sorting and the DOM position has changed.
             update: function (event, ui) {
-                checkRequiredFields();
                 var children = jQuery(this).children();
                 var sortable = jQuery(children.context);
                 var newElements = jQuery(sortable[sortable.length - 1]);
                 if (newElements.hasClass('sortable2')) {
                     hideMetaInputFields(ui);
                     jQuery.each(newElements[0].children, function (k, v) {
-                        showMetaInputFields(k, v);
+                        showMetaInputFieldsOnUpdate(k, v);
                     });
                 }
             }
@@ -194,20 +283,68 @@ function showMetaInputFields(k, v) {
         inputDiv.find('input[type="hidden"]').val(metaProperty.text().trim());
         inputDiv.find('input').prop('disabled', false);
 
-        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('-'),
-            widgetId = arr[2];
+        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('-')
+        var widgetId = arr[2];
 
-        for (var i = 1; i <= 3; i++) {
-            if (typeof mjGlobalVars[widgetId]['metaPropertyName' + i] !== 'undefined' &&
-                mjGlobalVars[widgetId]['metaPropertyName' + i] === metaProperty.text().trim()) {
-                inputDiv.find('input[type="text"]').val(mjGlobalVars[widgetId]['metaProperty' + i]);
-                return;
-            } else {
-                inputDiv.find('input[type="text"]').val('');
+        var langs = ['en', 'fr', 'de', 'es'];
+
+        jQuery.each(langs, function (kk, language) {
+            for (var i = 1; i <= 3; i++) {
+                if (typeof mjGlobalVars !== 'undefined' 
+                        && typeof mjGlobalVars[widgetId] !== 'undefined' 
+                        && typeof mjGlobalVars[widgetId]['metaPropertyName' + i + language] !== 'undefined' 
+                        && mjGlobalVars[widgetId]['metaProperty' + i + language] !== '' 
+                        && mjGlobalVars[widgetId]['metaPropertyName' + i + language] === metaProperty.text().trim()) { 
+                    inputDiv.find('input[type="text"]').val(mjGlobalVars[widgetId]['metaProperty' + i + language]);
+                    return;
+                } else {
+                    //inputDiv.find('input[type="text"]').val('');
+                }
             }
-        }
+        });
     }
 }
+
+
+
+function showMetaInputFieldsOnUpdate(k, v) {
+    if (k === 0) {
+        return;
+    }
+    var metaProperty = jQuery(v);
+    if (metaProperty.parent().hasClass('sortable2')) {
+        var inputDiv = metaProperty.parent().parent().parent().parent().parent()
+            .find('.map-meta-properties div:nth-child(' + k + ')');
+        if (jQuery(inputDiv.context).attr('class') === 'ui-state-disabled') {
+            return;
+        }
+        inputDiv.show();
+        inputDiv.find('label').html(metaProperty.text().trim() + ':');
+        inputDiv.find('input[type="hidden"]').val(metaProperty.text().trim());
+        inputDiv.find('input').prop('disabled', false);
+
+        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('-');
+        var widgetId = arr[2];
+
+        inputDiv.find('input[type="hidden"]').each(function(){
+            var arrHiddenInput = jQuery(this).attr('id').split('-');
+            var widgetId = arrHiddenInput[2];
+            var widgetName = arrHiddenInput[0] + '-' + arrHiddenInput[1] + '-' + arrHiddenInput[2];
+            var arrHiddenInputName = arrHiddenInput[3].split('metaPropertyName');
+                    
+            var lang = arrHiddenInputName[1].substring(1);
+            if (typeof mjGlobalVarsProps !== 'undefined' 
+                && typeof mjGlobalVarsProps[widgetId] !== 'undefined' 
+                && typeof mjGlobalVarsProps[widgetId][metaProperty.text().trim() + lang] !== 'undefined' 
+                && mjGlobalVarsProps[widgetId][metaProperty.text().trim() + lang] !== '') { 
+                jQuery('#' + widgetName + '-metaProperty' + arrHiddenInputName[1]).val(mjGlobalVarsProps[widgetId][metaProperty.text().trim() + lang]);
+            } else {
+                jQuery('#' + widgetName + '-metaProperty' + arrHiddenInputName[1]).val('');
+            }
+        });
+    }
+}
+
 
 function initNewPropertyForm() {
     jQuery('.new-meta-submit').on('click', function (e) {
@@ -251,24 +388,34 @@ function initStringTranslations() {
     });
 }
 
-function checkRequiredFields(o) {
-    if (jQuery(o).val() === '') {
-        jQuery(o).addClass('borderRed');
-        jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
-            jQuery(this).prop('disabled', true);
-        });
-        jQuery('.widget-control-actions input[type="submit"]').hide();
-        return false;
-    } else {
+function checkRequiredField(o) {
+    if(Boolean(jQuery(o).val())){
         jQuery(o).removeClass('borderRed');
         jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
             jQuery(this).prop('disabled', false);
         });
+    } else {
+        jQuery(o).addClass('borderRed');
+        jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
+            jQuery(this).prop('disabled', true);
+        });
     }
-    jQuery('.widget-control-actions input[type="submit"]').show();
-    return true;
+    // check for empty siblings input fields; check each input field for each activated language tab
+    jQuery(o).closest('.tabs-container').find('.tab-content').each(function(){
+        if(jQuery(this).find('.tabActivator input[type="checkbox"]').prop('checked') === true){
+            jQuery(this).find('input:enabled[type="text"], input:enabled[type="select"]').each(function(){
+                if(!Boolean(jQuery(this).val())){
+                    jQuery(this).addClass('borderRed');
+                    jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
+                        jQuery(this).prop('disabled', true);
+                    });
+                    //return false;
+                }
+            });
+        }
+    });
+    //return true;
 }
-
 function initAccordion() {
     if (jQuery(".accordion").accordion !== undefined) {
         jQuery(".accordion").accordion({
@@ -277,21 +424,26 @@ function initAccordion() {
         });
         jQuery('.accordion .next,.accordion .previous').click(function (e) {
             e.preventDefault();
-            jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').each(function () {
-                if (checkRequiredFields(this) === false) {
-                    return false;
-                }
-            });
-            jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').on('keyup', function (e) {
-                e.preventDefault();
-                checkRequiredFields(this);
-            });
-            var delta = (jQuery(this).is('.next') ? 1 : -1);
+            validateState();
             jQuery(e.currentTarget).closest('.accordion').accordion(
                 'option',
                 'active',
-                (jQuery(e.currentTarget).closest('.accordion').accordion('option', 'active') + delta)
+                (jQuery(e.currentTarget).closest('.accordion').accordion('option', 'active') +
+                    (jQuery(this).is('.next') ? 1 : -1))
             );
         });
     }
+}
+
+
+function validateState()
+{
+    jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').each(function () {
+        checkRequiredField(this);
+    });
+    jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').unbind('keyup').on('keyup', function (e) {
+        e.preventDefault();
+        checkRequiredField(this);
+    });
+     
 }

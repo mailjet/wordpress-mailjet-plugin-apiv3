@@ -12,6 +12,13 @@ class WP_Mailjet
     protected $api;
     protected $phpmailer;
 
+    public $langs = array(
+        'en' => array('locale' => 'en_US', 'label' => 'English'),
+        'fr' => array('locale' => 'fr_FR', 'label' => 'French'),
+        'de' => array('locale' => 'de_DE', 'label' => 'German'),
+        'es' => array('locale' => 'es_ES', 'label' => 'Spanish'),
+    );
+
     public function __construct($api, $phpMailer)
     {
 
@@ -43,9 +50,39 @@ class WP_Mailjet
     }
 
     public function addMjJsGlobalVar() {
+        $mjGlobalVars = array();
+        $mjGlobalVarsProps = array();
+        $mjWidgetDb = get_option('widget_wp_mailjet_subscribe_widget');
+        foreach ($this->langs as $lang => $langProps) {
+            foreach (array('metaProperty1'.$lang, 'metaPropertyName1'.$lang, 'metaProperty2'.$lang, 'metaPropertyName2'.$lang, 'metaProperty3'.$lang, 'metaPropertyName3'.$lang) as $prop) {
+                if($mjWidgetDb === false){
+                    return;
+                }
+
+                foreach($mjWidgetDb as $widgetId => $instance){
+                    if (!empty($instance[$prop])) {
+                        $mjGlobalVars[$widgetId] = $instance[$prop];
+                    }
+                }
+            }
+        }
+
+
+        foreach($mjWidgetDb as $widgetId => $instance){
+            foreach ($instance as $instanceKey => $prop){
+                if (stristr($instanceKey, 'metaPropertyName')) {
+                    $iLang = explode('metaPropertyName', $instanceKey);
+                    if(!empty($instance['metaProperty'. $iLang[1]])) {
+                        $mjGlobalVarsProps[$widgetId][$prop. substr($iLang[1], 1)] = $instance['metaProperty'. $iLang[1]];
+                    }
+                }
+            }
+        }
+
         ?>
             <script type="text/javascript">
-                var mjGlobalVars = <?php echo json_encode(get_option('widget_wp_mailjet_subscribe_widget')); ?>;
+                var mjGlobalVars = <?php echo json_encode($mjGlobalVars); ?>;
+                var mjGlobalVarsProps = <?php echo json_encode($mjGlobalVarsProps); ?>;
             </script>
         <?php
     }

@@ -234,6 +234,7 @@ class WP_Mailjet_Options_Form_Fieldset
 	protected $options;
 	protected $description;
 	public $block = false;
+
 	public function __construct($title, array $options, $description = "", $block = false)
 	{
 		$this->title =		$title;
@@ -271,10 +272,12 @@ class WP_Mailjet_Options_Form_Fieldset
 	{
 		return $this->title;
 	}
+
 	public function setBlock($block)
 	{
 		$this->block = $block;
 	}
+
 	public function getBlock()
 	{
 		return $this->block;
