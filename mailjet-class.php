@@ -69,6 +69,9 @@ class WP_Mailjet
 
 
         foreach($mjWidgetDb as $widgetId => $instance){
+            if (!is_array($instance)) {
+                continue;
+            }
             foreach ($instance as $instanceKey => $prop){
                 if (stristr($instanceKey, 'metaPropertyName')) {
                     $iLang = explode('metaPropertyName', $instanceKey);
