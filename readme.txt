@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.4
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,10 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 == Changelog ==
+
+= 4.1.1 =
+* JavaScript fixes of the widget
+* CSS fixes for jquery accordion ui plugin
 
 = 4.1.0 =
 * Subscription widget - added multilanguage support - EN, FR, ES, DE
