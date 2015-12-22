@@ -1,46 +1,47 @@
-#:
+#: mailjet-widget.php
 msgid "Subscription Confirmation"
 msgstr "Confirmation abonnement"
 
-#:
+#: mailjet-widget.php
 msgid "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
 msgstr "Abonnement courriel de confirmation envoyé. S'il vous plaît vérifier votre boîte de réception et de confirmer la souscription."
 
-#:
+#: mailjet-widget.php
 msgid "Email field is empty"
 msgstr "Email field is empty"
 
-#: mailjet-widget.php:126
+#: mailjet-widget.php
 msgid "your@email.com"
 msgstr "votre@email.com"
 
+#: mailjet-widget.php
 msgid "Error. Token verification failed."
 msgstr "Error. Token verification failed."
 
-#: mailjet-widget.php:106
+#: mailjet-widget.php
 msgid "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
 msgstr "%s, l'abonnement est malheureusement impossible pour le moment"
 
-#: mailjet-widget.php:106
+#: mailjet-widget.php
 msgid "The contact %s is already subscribed"
 msgstr "Le contact %s est déjà abonné"
 
-#: mailjet-widget.php:106
+#: mailjet-widget.php
 msgid "Thanks for subscribing with %s"
 msgstr "Merci d'avoir choisi %s pour votre abonnement"
 
-#:
+#: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
 msgstr "Confirm your mailing list subscription"
 
-#:
+#: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
 msgstr "Please Confirm Your Subscription To"
 
-#:
+#: mailjet-widget.php
 msgid "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
 msgstr "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
 
-#:
+#: mailjet-widget.php
 msgid "Thanks,"
 msgstr "Thanks,"

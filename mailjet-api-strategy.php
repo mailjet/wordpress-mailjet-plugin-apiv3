@@ -118,6 +118,26 @@ class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet
         return array();
     }
 
+    public function findRecipient($params){
+        $params['method'] = 'GET';
+        $params['id'] = $params['ContactsList'];
+        unset($params['ContactsList']);
+        $email = $params['ContactEmail'];
+        unset($params['ContactEmail']);
+        $response = $this->listsContacts($params);
+        if (empty($response->result)) {
+            return false;
+        }
+        $contactExists = false;
+        foreach($response->result as $contact) {
+            if ($contact->email === $email) {
+                $contactExists = true;
+                break;
+            }
+        }
+        return $contactExists;
+    }
+
     /**
      * Add a contact to a contact list with ID = ListID
      *
@@ -511,7 +531,6 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
 
         // Get the contact
         $result = $this->listrecipient(array(
-            //'akid'          => $this->_akid,
             'method' => 'GET',
             'ListID' => $params['ListID'],
             'ContactEmail' => $params['Email']
@@ -551,7 +570,6 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
 
         // Get the contact
         $result = $this->listrecipient(array(
-            //'akid'          => $this->_akid,
             'method' => 'GET',
             'ListID' => $params['ListID'],
             'ContactEmail' => $params['Email']

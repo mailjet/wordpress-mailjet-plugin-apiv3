@@ -406,7 +406,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             'ContactsList' => $_POST['list_id'],
             'ContactEmail' => $_POST['email'],
         ));
-        if (isset($recipient->Count) && $recipient->Count !== 0) {
+
+        if (!empty($recipient->Count) || $recipient === true) {
             echo '<p class="error" listId="' . $_POST['list_id'] . '">';
             echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $_POST['email']);
             echo '</p>';
@@ -441,7 +442,6 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
      */
     function subscribeUser()
     {
-
         // validate token
         $token = $_GET['token'];
         unset($_GET['token']);
@@ -454,14 +454,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         $email = $_GET['email'];
 
-        // Add the contact to the contact list
-        $result = $this->api->addContact(array(
-            'Email' => $email,
-            'ListID' => $_GET['list_id']
-        ));
-
         $metaProperties = $this->getContactMetaProperties(false);
-
         $properties = array();
         if (is_object($metaProperties)) {
             foreach ($metaProperties->Data as $i => $prop) {
@@ -473,15 +466,17 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     'Value' => $_GET[$prop->Name]
                 );
             }
-        }
-
-        if (!empty($result->Response->Data)) {
-            $result = $this->api->updateContactData(array(
+            $this->api->updateContactData(array(
                 'method' => 'JSON',
                 'ID' => $email,
                 'Data' => $properties
             ));
         }
+
+        $result = $this->api->addContact(array(
+            'Email' => $email,
+            'ListID' => $_GET['list_id']
+        ));
 
         // Check what is the response and display proper message
         if (isset($result->Status)) {
@@ -489,17 +484,15 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 echo '<p class="error" listId="' . $_GET['list_id'] . '">';
                 echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $email);
                 echo '</p>';
-            } else if ($result->Status == 'ERROR') {
+            } else if ($result->Status == 'OK') {
+                echo '<p class="success" listId="' . $_GET['list_id'] . '">';
+                echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
+                echo '</p>';
+            } else {
                 echo '<p class="error" listId="' . $_GET['list_id'] . '">';
-                echo sprintf(__("Sorry %s we were not able to complete your subscription because it appears that you are already subscribed.",
-                    'wp-mailjet-subscription-widget'), $email);
+                echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $email);
                 echo '</p>';
             }
-        } else {
-            // Adding was successful
-            echo '<p class="success" listId="' . $_GET['list_id'] . '">';
-            echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
-            echo '</p>';
         }
     }
 
@@ -520,14 +513,16 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         echo $before_widget;
 
-        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2', 'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
+        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2',
+            'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
         if(isset($fields) && is_array($fields))
         foreach($fields as $prop){
             ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
         }
 
-        foreach($this->langs as $lang => $langProps){
-            if(get_locale() != $langProps['locale']) {
+
+        foreach($this->langs as $lang => $langProps) {
+            if (get_locale() !== $langProps['locale']) {
                 continue;
             }
             $currentLang = $lang;
@@ -537,15 +532,15 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 }
             }
         }
+        // if the widget is not configured for the current WP language, the English widget configuration is taken
+        $currentLang = empty($currentLang) ? 'en' : $currentLang;
 
-        $title = empty($instance['title' . $currentLang]) ? ' ' : apply_filters('widget_title', $instance['title' . $currentLang]);
-        $list_id = empty($instance['list_id' . $currentLang]) ? get_option('mailjet_auto_subscribe_list_id') : $instance['list_id' . $currentLang];
+        $title = apply_filters('widget_title', $instance['title' . $currentLang]);
+        $list_id = $instance['list_id' . $currentLang];
         $button_text = trim($instance['button_text' . $currentLang]);
-
 
         // If contact list is not selected then we just don't display the widget!
         if (!is_numeric($list_id)) {
-            //echo $after_widget;
             return FALSE;
         }
 
@@ -566,8 +561,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     <input name="<?php echo ${'metaPropertyName3' . $currentLang}; ?>" type="text" placeholder="<?php echo ${'metaProperty3' . $currentLang}; ?>"/>
                 <?php endif; ?>
             <?php endif; ?>
-            <input id="email" name="email" value="" type="email"
-                   placeholder="<?php echo __('your@email.com', 'wp-mailjet'); ?>"/>
+
+            <input id="email" name="email" type="text"
+                   placeholder="<?php _e('your@email.com', 'wp-mailjet-subscription-widget'); ?>"/>
             <input name="list_id" type="hidden" value="<?php echo $list_id; ?>"/>
             <input name="action" type="hidden" value="mailjet_subscribe_ajax_hook"/>
             <input name="submit" type="submit" class="mailjet-subscribe" value="<?php echo __($button_text); ?>">
