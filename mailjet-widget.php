@@ -352,8 +352,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                                     $i++;
                                     if($i === 1):
                                 ?>
-                                        <h4>Errors/Website notifications</h4>
-                                    <?php elseif($i === 8): ?>
+                                    <h4>Errors/Website notifications</h4>
+                                    <!--The 1st 10 messages are for website notifications, the rest are for the email-->
+                                    <?php elseif($i === 10): ?>
                                         <h4>Subscription confirmation mail</h4>
                                     <?php endif; ?>
                                     <div class="mj-translation-entry">
@@ -389,6 +390,33 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     }
 
     /**
+     * Checks if the string argument is integer.
+     * @param string $input
+     * @return bool
+     */
+    function mj_is_int($input) {
+        return ctype_digit(strval($input));
+    }
+
+    /**
+     * Checks if the string argument is float.
+     * @param string $input
+     * @return bool
+     */
+    function mj_is_float($input) {
+        return $input === (string)(float)$input;
+    }
+
+    /**
+     * Checks if the string argument is boolean.
+     * @param string $input
+     * @return bool
+     */
+    function mj_is_bool($input) {
+        return in_array(strtolower($input), array('1', 't', 'true', 'y', '0', 'f', 'false', 'n'));
+    }
+
+    /**
      * Email the collected widget data to the customer with a verification token
      * @param void
      * @return void
@@ -402,6 +430,11 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             die;
         }
 
+        if (!$this->validate_email($_POST['email'])) {
+            _e('Invalid email', 'wp-mailjet-subscription-widget');
+            die;
+        }
+
         $recipient = $this->api->findRecipient(array(
             'ContactsList' => $_POST['list_id'],
             'ContactEmail' => $_POST['email'],
@@ -412,6 +445,35 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $_POST['email']);
             echo '</p>';
             die;
+        }
+
+        $metaProperties = $this->getContactMetaProperties(false);
+
+        if (!empty($metaProperties->Count) && !empty($metaProperties->Data)) {
+            // check if the input from contact meta properties matches the data type of each property
+            // apiDataType => phpCheckFunction
+            $dataTypes = array(
+                'int' => 'mj_is_int',
+                'float' => 'mj_is_float',
+                'bool' => 'mj_is_bool'
+            );
+            $error = false;
+            $submittedProperties = array_diff(array_keys($_POST), array('email', 'list_id', 'action'));
+            foreach ($metaProperties->Data as $accountProperty) {
+                foreach ($submittedProperties as $submittedProperty) {
+                    if ($accountProperty->Datatype === 'str') {
+                        continue;
+                    }
+                    if ($accountProperty->Name === $submittedProperty &&
+                        $this->$dataTypes[$accountProperty->Datatype]($_POST[$submittedProperty]) !== true) {
+                        $error = 'You have entered a contact property with wrong data type, for example a string instead of a number.';
+                    }
+                }
+            }
+            if (false !== $error) {
+                _e($error, 'wp-mailjet-subscription-widget');
+                die;
+            }
         }
 
         $params = http_build_query($_POST);
@@ -454,6 +516,11 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         $email = $_GET['email'];
 
+        $result = $this->api->addContact(array(
+            'Email' => $email,
+            'ListID' => $_GET['list_id']
+        ));
+
         $metaProperties = $this->getContactMetaProperties(false);
         $properties = array();
         if (is_object($metaProperties)) {
@@ -473,10 +540,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             ));
         }
 
-        $result = $this->api->addContact(array(
-            'Email' => $email,
-            'ListID' => $_GET['list_id']
-        ));
+
 
         // Check what is the response and display proper message
         if (isset($result->Status)) {
@@ -520,20 +584,21 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
         }
 
-
         foreach($this->langs as $lang => $langProps) {
             if (get_locale() !== $langProps['locale']) {
                 continue;
             }
             $currentLang = $lang;
-            foreach($langFields as $prop){
-                if (!empty($instance[$prop . $currentLang])) {
-                    ${$prop . $currentLang} = $instance[$prop . $currentLang];
-                }
-            }
         }
+
         // if the widget is not configured for the current WP language, the English widget configuration is taken
         $currentLang = empty($currentLang) ? 'en' : $currentLang;
+
+        foreach($langFields as $prop){
+            if (!empty($instance[$prop . $currentLang])) {
+                ${$prop . $currentLang} = $instance[$prop . $currentLang];
+            }
+        }
 
         $title = apply_filters('widget_title', $instance['title' . $currentLang]);
         $list_id = $instance['list_id' . $currentLang];

@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.4
-Stable tag: 4.1.2
+Stable tag: 4.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,11 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 == Changelog ==
+
+= 4.1.3 =
+* Widget - meta property fix
+* Widget - on subscription, the code will check for valid input data types
+* Widget - the input contact meta properties now appear correctly in the front end when the site is in language other than the 4 languages supported (EN, FR, DE, ES)
 
 = 4.1.2 =
 * Translations fixes
