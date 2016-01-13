@@ -2,7 +2,7 @@
 
 /*
 Plugin Name:	Mailjet for Wordpress
-Version:		4.1.3
+Version:		4.1.4
 Plugin URI:		https://www.mailjet.com/plugin/wordpress.htm
 Description:	Use mailjet SMTP to send email, manage lists and contacts within wordpress
 Author:			Mailjet SAS
@@ -121,6 +121,8 @@ add_filter('plugin_action_links', 'mailjet_settings_link', 10, 2);
 /* Add additional custom field */
 add_action('show_user_profile', 'my_show_extra_profile_fields');
 add_action('edit_user_profile', 'my_show_extra_profile_fields');
+add_action('register_form', 'my_show_extra_profile_fields');
+add_action('user_new_form', 'my_show_extra_profile_fields');
 
 
 function my_show_extra_profile_fields($user)
@@ -128,7 +130,9 @@ function my_show_extra_profile_fields($user)
     // If contact list is not selected, then do not show the extra fields
     if (get_option('mailjet_auto_subscribe_list_id')) {
         // Update the extra fields
-        mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
+        if (is_object($user) && intval($user->ID) > 0) {
+            mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
+        }
         ?>
         <h3>Extra profile information</h3>
         <table class="form-table">
@@ -139,7 +143,7 @@ function my_show_extra_profile_fields($user)
                         <legend class="screen-reader-text"><span><?php _e('Subscribe') ?></span></legend>
                         <label for="admin_bar_front">
                             <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
-                                <?php echo(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
+                                <?php echo(is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
                                 class="checkbox" />Mailjet Subscription widget</label>
                     </fieldset>
                 </td>

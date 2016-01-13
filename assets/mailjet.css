@@ -126,7 +126,7 @@ ul.newPropertyBtn li {
     width: 100%;
 }
 
-.tab-content {
+.mj-tab-content {
     padding: 20px;
     display: none;
 }
@@ -135,7 +135,7 @@ ul.newPropertyBtn li {
     display: block;
 }
 
-div.tabs-container .tabActivator {
+div.mj-tabs-container .tabActivator {
     margin: 0 0 10px 0;
 }
 /*end of tabs*/
@@ -257,7 +257,7 @@ input, select, textarea {
     padding: 15px;
 }
 
-.tabs-container p {
+.mj-tabs-container p {
     clear: both;
     padding: 10px 0 0;
 }

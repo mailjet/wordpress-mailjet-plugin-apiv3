@@ -75,7 +75,7 @@ jQuery(document).ready(function ($) {
     validateState();
     
     if (typeof $(document).tooltip === 'function') {
-        $('.tab-content').tooltip();
+        $('.mj-tab-content').tooltip();
     }
    
     // on add widget to widget area
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
 
     // on widget save
     $(document).on('widget-updated', function (e, widget) {
-        $('.tab-content').tooltip();
+        $('.mj-tab-content').tooltip();
         initAccordion();
         initStringTranslations();
         initNewPropertyForm();
@@ -132,7 +132,7 @@ function initTabsWithTranslations()
             jQuery(this).parent().parent().find('li a[href="' + className + '"]').parent()
                 .addClass("current").siblings().removeClass("current");
         });
-        jQuery(".tab-content").not(className).css("display", "none");
+        jQuery(".mj-tab-content").not(className).css("display", "none");
         jQuery(className).fadeIn();
     });    
 }
@@ -283,12 +283,12 @@ function showMetaInputFields(k, v) {
         inputDiv.find('input[type="hidden"]').val(metaProperty.text().trim());
         inputDiv.find('input').prop('disabled', false);
 
-        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id');
+        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id');
         if (typeof arr === 'undefined') {
             return;
         }
         arr = arr.split('-');
-        var widgetId = arr[2];
+        var widgetId = arr[1];
 
         var langs = ['en', 'fr', 'de', 'es'];
 
@@ -327,13 +327,15 @@ function showMetaInputFieldsOnUpdate(k, v) {
         inputDiv.find('input[type="hidden"]').val(metaProperty.text().trim());
         inputDiv.find('input').prop('disabled', false);
 
-        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id');
+        var arr = jQuery(v.firstChild).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id');
         if (typeof arr === 'undefined') {
             return;
         }
         arr = arr.split('-');
-        var widgetId = arr[2];
+        var widgetId = arr[1];
 
+        //var widgetId = metaProperty.closest(".widget").find(".widget_number").val();
+        
         inputDiv.find('input[type="hidden"]').each(function(){
             var arrHiddenInput = jQuery(this).attr('id').split('-');
             var widgetId = arrHiddenInput[2];
@@ -409,7 +411,7 @@ function checkRequiredField(o) {
         });
     }
     // check for empty siblings input fields; check each input field for each activated language tab
-    jQuery(o).closest('.tabs-container').find('.tab-content').each(function(){
+    jQuery(o).closest('.mj-tabs-container').find('.mj-tab-content').each(function(){
         if(jQuery(this).find('.tabActivator input[type="checkbox"]').prop('checked') === true){
             jQuery(this).find('input:enabled[type="text"], input:enabled[type="select"]').each(function(){
                 if(!Boolean(jQuery(this).val())){

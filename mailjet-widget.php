@@ -249,7 +249,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
             <h3>Step 2 - Define your widget labels</h3>
             <div>
-                <div class="tabs-container">
+                <div class="mj-tabs-container">
                     <ul class="tabs-menu">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
                             <li class="<?php echo $lang === 'en' ? 'current' : ''; ?>">
@@ -259,7 +259,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     </ul>
                     <div class="tab">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
-                            <div class="tab-content tab-<?php echo $lang; ?>">
+                            <div class="mj-tab-content tab-<?php echo $lang; ?>">
                                 <div class="tabActivator<?php echo $lang === 'en' ? ' ninja' : ''; ?>" id="<?php echo $this->get_field_id('tabActivator-' . $lang); ?>">
                                     <input type="checkbox" name="<?php echo $this->get_field_name('enableTab' . $lang); ?>"
                                            class="enable-tab enable-tab-<?php echo $lang; ?>" id="<?php echo $this->get_field_id('enableTab' . $lang); ?>"
@@ -330,7 +330,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
             <h3>Step 3 - Customize your widget notifications</h3>
             <div>
-                <div class="tabs-container">
+                <div class="mj-tabs-container">
                     <ul class="tabs-menu">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
                             <li class="<?php echo $lang === 'en' ? 'current' : ''; ?>">
@@ -340,7 +340,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     </ul>
                     <div class="tab">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
-                        <div class="tab-content tab-<?=$lang?>">
+                        <div class="mj-tab-content tab-<?=$lang?>">
                             <div class="mj-translations-title margin-top-bottom-10 arrow_box" id="mj-translations-title-<?=$lang?>">
                                 <div style="display:none;">Widget notifications for this language are deactivated in previous step</div>
                                 <a id="<?php echo $this->get_field_id('tabLinkStep3-' . $lang); ?>" href="javascript:">Customize your widget notifications</a></div>
