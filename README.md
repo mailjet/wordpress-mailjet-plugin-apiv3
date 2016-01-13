@@ -90,6 +90,7 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 ## Changelog
 
 = 4.1.4 =
+* Replaced jQuery .live() with .on()
 * CSS conflict with a specific 3rd party plugin fix
 * auto-subscribe improvement
 * Updated 'Tested up to' version to include WordPress 4.4.1

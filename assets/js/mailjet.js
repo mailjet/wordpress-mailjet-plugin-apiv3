@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
     });
 
     showPorts($('#mailjet_ssl'));
-    $('.newPropertyBtn').live('click', function () {
+    $('.newPropertyBtn').on('click', function () {
         $('.newPropertyForm').toggle();
     });
 
@@ -205,7 +205,7 @@ function chamgeStep3DependingOnStep2ActiveTabs()
 
 
 function registerAccordionNavButtons() {
-    jQuery('.accordion .next, .accordion .previous').unbind('click').live('click', (function (e) {
+    jQuery('.accordion .next, .accordion .previous').unbind('click').on('click', (function (e) {
         e.preventDefault();
         jQuery(e.currentTarget).closest('.accordion').accordion(
             'option',
