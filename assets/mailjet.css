@@ -1,10 +1,10 @@
 /* Widget */
 
-.accordion input[type="text"], .accordion select {
+.mj-accordion input[type="text"], .mj-accordion select {
     height: 37px;
 }
 
-.accordion .sortable {
+.mj-accordion .sortable {
     width: 100%;
     display: inline-block;
 }
@@ -15,7 +15,7 @@
     width: 99%;
 }
 
-.accordion .sortable1, .accordion .sortable2 {
+.mj-accordion .sortable1, .mj-accordion .sortable2 {
     cursor: move;
     width: 102%;
     min-height: 207px;
@@ -26,16 +26,16 @@
     font-size: x-small;
 }
 
-.accordion .sortable1 {
+.mj-accordion .sortable1 {
     border: none;
 }
 
-.accordion .sortable1 li:hover {
+.mj-accordion .sortable1 li:hover {
     background-color: #d7d7d7;
     color: white;
 }
 
-.accordion .sortable1 li, .accordion .sortable2 li {
+.mj-accordion .sortable1 li, .mj-accordion .sortable2 li {
     height: 43px;
     line-height: 43px;
     font-weight: bold;
@@ -49,7 +49,7 @@
     padding: 0 0 0 10px;
 }
 
-.accordion .sortable2 li {
+.mj-accordion .sortable2 li {
     width: 95%;
     background-color: #009fd4;
     border: none;
@@ -87,13 +87,13 @@ ul.newPropertyBtn li {
     border: 1px solid #eeeeee;
 }
 
-.tabs-menu {
+.mj-tabs-menu {
     height: 16px;
     float: left;
     clear: both;
 }
 
-.tabs-menu li {
+.mj-tabs-menu li {
     height: 29px;
     line-height: 30px;
     float: left;
@@ -103,23 +103,23 @@ ul.newPropertyBtn li {
     border-top-right-radius: 5px;
 }
 
-.tabs-menu li.current {
+.mj-tabs-menu li.current {
     position: relative;
     background-color: #009fd4;
     border-bottom: 1px solid #009fd4;
     z-index: 5;
 }
 
-.tabs-menu li a {
+.mj-tabs-menu li a {
     padding: 10px;
     text-decoration: none;
 }
 
-.tabs-menu .current a {
+.mj-tabs-menu .current a {
     color: #ffffff;
 }
 
-.tab {
+.mj-tab {
     border: 1px solid #d4d4d1;
     background-color: #fff;
     float: left;
@@ -210,7 +210,7 @@ input, select, textarea {
     margin-left: -11px;
 }
 
-.accordion div{
+.mj-accordion div{
     font-size: small;
 }
 
@@ -246,7 +246,7 @@ input, select, textarea {
     padding: 10px;
 }
 
-.accordion div .label {
+.mj-accordion div .label {
     display: inline-block;
     width: 100%;
     margin: 10px 0;

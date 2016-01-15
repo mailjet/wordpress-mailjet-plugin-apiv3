@@ -90,7 +90,7 @@ jQuery(document).ready(function ($) {
         initTabsWithTranslations();
         // change Step3 content depending on language activations on Step2
         chamgeStep3DependingOnStep2ActiveTabs();
-        $(".accordion").accordion('enable');
+        $(".mj-accordion").accordion('enable');
         // Validates current user inputs
         validateState();        
     });
@@ -108,12 +108,12 @@ jQuery(document).ready(function ($) {
         hideTabActivatorSiblings();
         // change Step3 content depending on language activations on Step2
         chamgeStep3DependingOnStep2ActiveTabs();
-        $('.accordion').accordion({
+        $('.mj-accordion').accordion({
             active: false,
             collapsible: true,
             heightStyle: 'content'
         });
-        $('.accordion').accordion('enable');
+        $('.mj-accordion').accordion('enable');
         registerAccordionNavButtons();
         // Validates current user inputs
         validateState();        
@@ -125,7 +125,7 @@ jQuery(document).ready(function ($) {
 // init tabs with translations
 function initTabsWithTranslations() 
 {
-    jQuery(".tabs-menu a").click(function(event) {
+    jQuery(".mj-tabs-menu a").click(function(event) {
         event.preventDefault();
         var className = jQuery(this).attr("href");
         jQuery(className).each(function(){
@@ -205,9 +205,9 @@ function chamgeStep3DependingOnStep2ActiveTabs()
 
 
 function registerAccordionNavButtons() {
-    jQuery('.accordion .next, .accordion .previous').unbind('click').on('click', (function (e) {
+    jQuery('.mj-accordion .next, .mj-accordion .previous').unbind('click').on('click', (function (e) {
         e.preventDefault();
-        jQuery(e.currentTarget).closest('.accordion').accordion(
+        jQuery(e.currentTarget).closest('.mj-accordion').accordion(
             'option',
             'active',
             Math.round((jQuery(this).is('.next') === true ? 1 : -1) +
@@ -401,12 +401,12 @@ function initStringTranslations() {
 function checkRequiredField(o) {
     if(Boolean(jQuery(o).val())){
         jQuery(o).removeClass('borderRed');
-        jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
+        jQuery('.mj-accordion .next, .mj-accordion .previous, input[type="submit"]').each(function () {
             jQuery(this).prop('disabled', false);
         });
     } else {
         jQuery(o).addClass('borderRed');
-        jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
+        jQuery('.mj-accordion .next, .mj-accordion .previous, input[type="submit"]').each(function () {
             jQuery(this).prop('disabled', true);
         });
     }
@@ -416,7 +416,7 @@ function checkRequiredField(o) {
             jQuery(this).find('input:enabled[type="text"], input:enabled[type="select"]').each(function(){
                 if(!Boolean(jQuery(this).val())){
                     jQuery(this).addClass('borderRed');
-                    jQuery('.accordion .next,.accordion .previous, input[type="submit"]').each(function () {
+                    jQuery('.mj-accordion .next, .mj-accordion .previous, input[type="submit"]').each(function () {
                         jQuery(this).prop('disabled', true);
                     });
                     //return false;
@@ -427,18 +427,18 @@ function checkRequiredField(o) {
     //return true;
 }
 function initAccordion() {
-    if (jQuery(".accordion").accordion !== undefined) {
-        jQuery(".accordion").accordion({
+    if (jQuery(".mj-accordion").accordion !== undefined) {
+        jQuery(".mj-accordion").accordion({
             disabled: true,
             heightStyle: "content"
         });
-        jQuery('.accordion .next,.accordion .previous').click(function (e) {
+        jQuery('.mj-accordion .next, .mj-accordion .previous').click(function (e) {
             e.preventDefault();
             validateState();
-            jQuery(e.currentTarget).closest('.accordion').accordion(
+            jQuery(e.currentTarget).closest('.mj-accordion').accordion(
                 'option',
                 'active',
-                (jQuery(e.currentTarget).closest('.accordion').accordion('option', 'active') +
+                (jQuery(e.currentTarget).closest('.mj-accordion').accordion('option', 'active') +
                     (jQuery(this).is('.next') ? 1 : -1))
             );
         });
@@ -448,10 +448,10 @@ function initAccordion() {
 
 function validateState()
 {
-    jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').each(function () {
+    jQuery('.widget.open .mj-tab input[type="text"]:enabled, .widget.open .mj-tab select').each(function () {
         checkRequiredField(this);
     });
-    jQuery('.widget.open .tab input[type="text"]:enabled, .widget.open .tab select').unbind('keyup').on('keyup', function (e) {
+    jQuery('.widget.open .mj-tab input[type="text"]:enabled, .widget.open .mj-tab select').unbind('keyup').on('keyup', function (e) {
         e.preventDefault();
         checkRequiredField(this);
     });

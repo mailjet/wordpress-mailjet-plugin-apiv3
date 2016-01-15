@@ -32,7 +32,7 @@ msgstr "Merci d'avoir choisi %s pour votre abonnement"
 
 #: mailjet-widget.php
 msgid "You have entered a contact property with wrong data type, for example a string instead of a number."
-msgstr "You have entered a contact property with wrong data type, for example a string instead of a number."
+msgstr "mauvaise format"
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
@@ -41,6 +41,10 @@ msgstr "Confirm your mailing list subscription"
 #: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
 msgstr "Please Confirm Your Subscription To"
+
+#: mailjet-widget.php
+msgid "Click here to confirm"
+msgstr "TEST"
 
 #: mailjet-widget.php
 msgid "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"

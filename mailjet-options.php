@@ -129,20 +129,21 @@ class WP_Mailjet_Options
 
 		if (get_option('mailjet_password') && get_option('mailjet_username'))
 		{
-			// Get the list of contact lists and order them in a properly setted list	
+			// Get the list of contact lists and order them in a properly setted list
 			$this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
-			// If there is connection with the API, then check and for the sender 	
+			// If there is connection with the API, then check and for the sender
 			if ($this->api->version != NULL)
 			{
 				// Get all senders
 				$senders = $this->api->getSenders(array('limit' => 0));
 
-				// Get sender 
+				// Get sender
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
+                $fromDomainArr = explode('@', $from_email);
 				// Check if the local sender matches any of the senders part of this account
-				if(!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
+				if(!in_array($from_email, $senders['email']) && isset($fromDomainArr[1]) && !in_array($fromDomainArr[1], $senders['domain']))
 				{
-					// Error message			
+					// Error message
 					WP_Mailjet_Utils::custom_notice('error', __('Please make sure that you are using the correct API key and secret key associated to your mailjet account (from email).', 'wp-mailjet'));
 				}
 			}
@@ -214,7 +215,7 @@ class WP_Mailjet_Options
 	 */
 	public function save_settings()
 	{
-		// Get the variables which we'll save		
+		// Get the variables which we'll save
 		$fields['mailjet_enabled'] =	(isset($_POST['mailjet_enabled']) ? 1 : 0);
 		$fields['mailjet_test'] =		(isset($_POST['mailjet_test']) ? 1 : 0);
 		$fields['mailjet_ssl'] = 		(isset($_POST['mailjet_ssl']) ? 'ssl' : '');
@@ -234,7 +235,7 @@ class WP_Mailjet_Options
 			$fields['mailjet_access_subscriber'] =	(isset($_POST['mailjet_access_subscriber']) ? 1 : 0);
 		}
 
-		// Set error messages if we've any										
+		// Set error messages if we've any
 		$errors = array();
 		if ($fields['mailjet_test'] && empty($fields['mailjet_test_address']))
 			$errors[] = 'mailjet_test_address';
@@ -254,8 +255,16 @@ class WP_Mailjet_Options
 		// If there are no errors, then update the new settings
 		if (!count($errors))
 		{
-			if ($fields['mailjet_ssl'] == 'ssl')
-				$fields['mailjet_port'] = 465;
+			if ($fields['mailjet_ssl'] == 'ssl') {
+                $fields['mailjet_port'] = 465;
+            }
+
+            /*
+             * Delete existing mj widget configuration if the Mj API user is changed
+             */
+            if ($fields['mailjet_username'] != get_option('mailjet_username')) {
+                delete_option('widget_wp_mailjet_subscribe_widget');
+            }
 
 			// Update the new settings
 			update_option('mailjet_enabled',		$fields['mailjet_enabled']);
@@ -337,12 +346,14 @@ class WP_Mailjet_Options
 				update_option('mailjet_port', $port);
 
 
-				// Get sender 
+				// Get sender
 				$from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
 
 				$test_sent = FALSE;
+                $fromDomainArr = explode('@', $from_email);
+				// Check if the local sender matches any of the senders part of this account
 				if ($fields['mailjet_test'] && (in_array($from_email, $senders['email']) ||
-						in_array(array_pop(explode('@', $from_email)), $senders['domain'])))
+                    isset($fromDomainArr[1]) && !in_array($fromDomainArr[1], $senders['domain'])))
 				{
 					// Send a test mail
 					$subject = __('Your test mail from Mailjet', 'wp-mailjet');
@@ -359,7 +370,8 @@ class WP_Mailjet_Options
 
 				if ($connected === TRUE)
 				{
-					if(!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
+                    $fromDomainArr = explode('@', $from_email);
+					if(!in_array($from_email, $senders['email']) && !(isset($fromDomainArr[1]) && !in_array($fromDomainArr[1], $senders['domain'])))
 						WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved successfully', 'wp-mailjet').'.');
 					else
 						WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved successfully', 'wp-mailjet').$sent);
@@ -377,7 +389,7 @@ class WP_Mailjet_Options
 		}
 		else
 		{
-			// Error message			
+			// Error message
 			WP_Mailjet_Utils::custom_notice('error', __('There is an error with your settings. please correct and try again', 'wp-mailjet'));
 		}
 	}

@@ -43,6 +43,10 @@ msgid "Please Confirm Your Subscription To"
 msgstr "Please Confirm Your Subscription To"
 
 #: mailjet-widget.php
+msgid "Click here to confirm"
+msgstr "TEST"
+
+#: mailjet-widget.php
 msgid "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
 msgstr "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
 

@@ -52,7 +52,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         add_action('wp_ajax_mailjet_subscribe_ajax_add_meta_property', array($this, 'wp_ajax_mailjet_subscribe_ajax_add_meta_property'));
 
         // if user clicks on the email confirm subscription link, verify the token and subscribe them
-        if (!empty($_GET['token'])) {
+        if (!empty($_GET['mj_sub_token'])) {
             $this->subscribeUser();
         }
 
@@ -162,7 +162,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         ?>
         <div class="mailjet-widget-container">
-        <div class="accordion">
+        <div class="mj-accordion">
             <h3>Step 1 - Choose up to 3 contact properties</h3>
             <div>
                 <?php
@@ -250,14 +250,14 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             <h3>Step 2 - Define your widget labels</h3>
             <div>
                 <div class="mj-tabs-container">
-                    <ul class="tabs-menu">
+                    <ul class="mj-tabs-menu">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
                             <li class="<?php echo $lang === 'en' ? 'current' : ''; ?>">
                                 <a href=".tab-<?php echo $lang; ?>"><?php echo $langProps['label']; ?></a>
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <div class="tab">
+                    <div class="mj-tab">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
                             <div class="mj-tab-content tab-<?php echo $lang; ?>">
                                 <div class="tabActivator<?php echo $lang === 'en' ? ' ninja' : ''; ?>" id="<?php echo $this->get_field_id('tabActivator-' . $lang); ?>">
@@ -331,14 +331,14 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             <h3>Step 3 - Customize your widget notifications</h3>
             <div>
                 <div class="mj-tabs-container">
-                    <ul class="tabs-menu">
+                    <ul class="mj-tabs-menu">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
                             <li class="<?php echo $lang === 'en' ? 'current' : ''; ?>">
                                 <a href=".tab-<?php echo $lang; ?>"><?php echo $langProps['label']; ?></a>
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <div class="tab">
+                    <div class="mj-tab">
                         <?php foreach ($this->langs as $lang => $langProps): ?>
                         <div class="mj-tab-content tab-<?=$lang?>">
                             <div class="mj-translations-title margin-top-bottom-10 arrow_box" id="mj-translations-title-<?=$lang?>">
@@ -482,7 +482,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet-subscription-widget'),
             '__EMAIL_HEADER__' => __('Please Confirm Your Subscription To', 'wp-mailjet-subscription-widget'),
             '__WP_URL__' => sprintf('<a href="%s" target="_blank">%s</a>', get_site_url(), get_site_url()),
-            '__CONFIRM_URL__' => get_site_url() . '?' . $params . '&token=' . sha1($params . self::WIDGET_HASH),
+            '__CONFIRM_URL__' => get_site_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'),
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('Didn\'t ask to subscribe to this list? Or maybe you\'ve changed your mind? Then simply ignore this email and you won\'t be subscribed', 'wp-mailjet-subscription-widget'),
@@ -505,9 +505,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     function subscribeUser()
     {
         // validate token
-        $token = $_GET['token'];
-        unset($_GET['token']);
-        if (sha1(http_build_query($_GET) . self::WIDGET_HASH) !== $token) {
+        $mj_sub_token = $_GET['mj_sub_token'];
+        unset($_GET['mj_sub_token']);
+        if (sha1(http_build_query($_GET) . self::WIDGET_HASH) !== $mj_sub_token) {
             echo '<p class="error" listId="' . $_GET['list_id'] . '">';
             echo __('Error. Token verification failed.', 'wp-mailjet-subscription-widget');
             echo '</p>';
