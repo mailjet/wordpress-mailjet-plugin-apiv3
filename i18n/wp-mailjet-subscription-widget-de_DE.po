@@ -47,8 +47,8 @@ msgid "Click here to confirm"
 msgstr "Click here to confirm"
 
 #: mailjet-widget.php
-msgid "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed"
-msgstr "Didn't ask to subscribe to this list? Or maybe you've changed your mind? Then simply ignore this email and you won't be subscribed\n"
+msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
+msgstr "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
 
 #: mailjet-widget.php
 msgid "Thanks,"

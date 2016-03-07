@@ -485,7 +485,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             '__CONFIRM_URL__' => get_site_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'),
             '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => __('Didn\'t ask to subscribe to this list? Or maybe you\'ve changed your mind? Then simply ignore this email and you won\'t be subscribed', 'wp-mailjet-subscription-widget'),
+            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'wp-mailjet-subscription-widget'),
             '__THANKS__' => __('Thanks,', 'wp-mailjet-subscription-widget')
         );
         foreach ($emailParams as $key => $value) {
