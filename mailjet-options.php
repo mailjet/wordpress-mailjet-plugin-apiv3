@@ -200,7 +200,9 @@ class WP_Mailjet_Options
         if (!empty($senders->Status) && $senders->Status === 'ERROR') {
             return false;
         }
-        return in_array($from_email, $senders['email']) || in_array(array_pop(explode('@', $from_email)), $senders['domain']);
+        $domainArr = explode('@', $from_email);
+        $domainName = array_pop($domainArr);
+        return (in_array($from_email, $senders['email']) || in_array($domainName, $senders['domain']));
     }
 
     /**
@@ -348,7 +350,9 @@ class WP_Mailjet_Options
                 }
 
                 if ($connected === TRUE) {
-                    if (!in_array($from_email, $senders['email']) && !in_array(array_pop(explode('@', $from_email)), $senders['domain']))
+                    $domainsArray = explode('@', $from_email);
+                    $domainName = array_pop($domainsArray);
+                    if (!in_array($from_email, $senders['email']) && !in_array($domainName, $senders['domain']))
                         WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved successfully', 'wp-mailjet') . '.');
                     else
                         WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved successfully', 'wp-mailjet') . $sent);
