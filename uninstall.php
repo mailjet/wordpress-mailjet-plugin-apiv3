@@ -20,6 +20,7 @@ foreach(array(
             'mailjet_test',
             'mailjet_test_address',
             'mailjet_auto_subscribe_list_id',
+            'mailjet_user_api_version'
         ) as $option) {
     delete_option($option);
 }

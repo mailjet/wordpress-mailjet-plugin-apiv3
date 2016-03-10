@@ -164,7 +164,9 @@ class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet
         return (object)array('Status' => 'ERROR');
     }
 
-    public function updateContactData($params){}
+    public function updateContactData($params)
+    {
+    }
 
     /**
      * Remove a contact from a contact list with ID = ListID
@@ -239,7 +241,7 @@ class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet
         ));
 
         // Check if the contact is added
-        if ($response){
+        if ($response) {
             return (object)array(
                 'Status' => 'OK',
                 'Response' => $response
@@ -321,6 +323,11 @@ class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet
 # Strategy ApiV3
 class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet_Api_Interface
 {
+
+    public function getMetaDataContact()
+    {
+        return $this->{'metadata/contact'}();
+    }
 
     /**
      * Get full list of senders
@@ -415,10 +422,10 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
             'Name' => $params['name'],
             'NameSpace' => 'static',
         ));
-        if((empty($response->ErrorMessage) && !empty($response))) {
+        if ((empty($response->ErrorMessage) && !empty($response))) {
             $status = 'OK';
             $msg = 'Property created.  Please drag your new contact property to the Selected Properties section above.';
-        } elseif((!empty($response->ErrorMessage) && strpos($response->ErrorMessage, 'already exists'))) {
+        } elseif ((!empty($response->ErrorMessage) && strpos($response->ErrorMessage, 'already exists'))) {
             $status = 'Error';
             $msg = 'Property already exists';
         } else {
@@ -431,9 +438,10 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
         );
     }
 
-    public function updateContactData($params){
+    public function updateContactData($params)
+    {
         $response = $this->contactdata($params);
-        if(empty($response->Data) || empty($response->Count)){
+        if (empty($response->Data) || empty($response->Count)) {
             return $response;
         }
         return $response;
@@ -475,7 +483,8 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
         );
     }
 
-    public function findRecipient($params){
+    public function findRecipient($params)
+    {
         $params['method'] = 'GET';
         return $this->listrecipient($params);
     }
@@ -659,33 +668,63 @@ class WP_Mailjet_Api
 
     public function __construct($mailjet_username, $mailjet_password)
     {
-        # Check the type of the user and set the corresponding Context/Strategy
-        // Set API V3 context and get the user and check if it's V3
-        $this->setContext(new WP_Mailjet_Api_Strategy_V3($mailjet_username, $mailjet_password));
-        //$response = $this->context->getContactLists(array('limit' => 1));
+        // Is user API version recorded in DB?
+        $userApiVersion = get_option('mailjet_user_api_version');
+        if ($userApiVersion === false) {
+            $userApiVersion = $this->findUserApiVersion($mailjet_username, $mailjet_password);
+            update_option('mailjet_user_api_version', $userApiVersion);
+        }
+        $userApiVersion = (int)$userApiVersion;
+
+        switch ($userApiVersion) {
+            case 1:
+                $this->setContext(new WP_Mailjet_Api_Strategy_V1($mailjet_username, $mailjet_password));
+                $this->mj_host = 'in.mailjet.com';
+                break;
+            case 3:
+                $this->setContext(new WP_Mailjet_Api_Strategy_V3($mailjet_username, $mailjet_password));
+                $this->mj_host = 'in-v3.mailjet.com';
+                break;
+            default:
+                $this->clearContext();
+        }
+
+        if (false !== $this->context) {
+            $this->mj_mailer = 'X-Mailer:WP-Mailjet/0.1';
+            $this->version = $this->context->getVersion();
+        }
+    }
+
+    /**
+     * @param $mailjet_username
+     * @param $mailjet_password
+     * @return bool|int
+     */
+    public function findUserApiVersion($mailjet_username, $mailjet_password)
+    {
+        if ($this->isV3User($mailjet_username, $mailjet_password)) {
+            return 3;
+        } elseif ($this->isV1User($mailjet_username, $mailjet_password)) {
+            return 1;
+        }
+        return false;
+    }
+
+    public function isV1User($mailjet_username, $mailjet_password)
+    {
+        $this->setContext(new WP_Mailjet_Api_Strategy_V1($mailjet_username, $mailjet_password));
         $response = $this->context->getSenders(array('limit' => 1));
         if (isset($response->Status) && $response->Status == 'ERROR') {
-            // Set API V1 context and get the contact lists of this user and check if it's V1
-            $this->setContext(new WP_Mailjet_Api_Strategy_V1($mailjet_username, $mailjet_password));
-            $response = $this->context->getSenders(array('limit' => 1));
-            if (isset($response->Status) && $response->Status == 'ERROR') {
-                $this->clearContext();
-            } else {
-                // Get the version of the API
-                $this->version = $this->context->version;
-
-                // Some contacts
-                $this->mj_host = 'in.mailjet.com';
-                $this->mj_mailer = 'X-Mailer:WP-Mailjet/0.1';
-            }
-        } else {
-            // Get the version of the API
-            $this->version = $this->context->getVersion();
-
-            // Some contacts
-            $this->mj_host = 'in-v3.mailjet.com';
-            $this->mj_mailer = 'X-Mailer:WP-Mailjet/0.1';
+            return false;
         }
+        return true;
+    }
+
+    public function isV3User($mailjet_username, $mailjet_password)
+    {
+        $v3api = new WP_Mailjet_Api_Strategy_V3($mailjet_username, $mailjet_password);
+        $response = $v3api->getMetaDataContact();
+        return !empty($response->Count);
     }
 
     /**
@@ -710,7 +749,8 @@ class WP_Mailjet_Api
         $this->context = FALSE;
     }
 
-    public function findRecipient($params){
+    public function findRecipient($params)
+    {
         return $this->context->findRecipient($params);
     }
 
@@ -730,7 +770,8 @@ class WP_Mailjet_Api
     }
 
 
-    public function updateContactData($params) {
+    public function updateContactData($params)
+    {
         // Check if we have context, if no, return error
         if ($this->context === FALSE)
             return (object)array('Status' => 'ERROR');

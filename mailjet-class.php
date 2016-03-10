@@ -21,17 +21,11 @@ class WP_Mailjet
 
     public function __construct($api, $phpMailer)
     {
-
-        // Set Plugin Path
         $this->pluginPath = dirname(__FILE__);
-
-        // Set Plugin URL
         $chunks = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
         $this->pluginUrl = WP_PLUGIN_URL . '/' . end($chunks);
-
-        $this->api = (is_object($api)) ? $api : new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
+        $this->api = $api;
         $this->phpmailer = $phpMailer;
-
         add_action('phpmailer_init', array($this, 'phpmailer_init_smtp'));
         add_action('admin_menu', array($this, 'display_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
@@ -49,24 +43,24 @@ class WP_Mailjet
         $this->addMjJsGlobalVar();
     }
 
-    public function addMjJsGlobalVar() {
+    public function addMjJsGlobalVar()
+    {
         $mjGlobalVars = array();
         $mjGlobalVarsProps = array();
         $mjWidgetDb = get_option('widget_wp_mailjet_subscribe_widget');
+        if ($mjWidgetDb === false) {
+            return;
+        }
         foreach ($this->langs as $lang => $langProps) {
-            foreach (array('metaProperty1'.$lang, 'metaPropertyName1'.$lang, 'metaProperty2'.$lang, 'metaPropertyName2'.$lang, 'metaProperty3'.$lang, 'metaPropertyName3'.$lang) as $prop) {
-                if($mjWidgetDb === false){
-                    return;
-                }
-
-                foreach($mjWidgetDb as $widgetId => $instance){
+            foreach (array('metaProperty1' . $lang, 'metaPropertyName1' . $lang, 'metaProperty2' . $lang, 'metaPropertyName2' . $lang,
+                         'metaProperty3' . $lang, 'metaPropertyName3' . $lang) as $prop) {
+                foreach ($mjWidgetDb as $widgetId => $instance) {
                     if (!empty($instance[$prop])) {
                         $mjGlobalVars[$widgetId] = $instance[$prop];
                     }
                 }
             }
         }
-
 
         foreach($mjWidgetDb as $widgetId => $instance){
             if (!is_array($instance)) {
@@ -75,18 +69,18 @@ class WP_Mailjet
             foreach ($instance as $instanceKey => $prop){
                 if (stristr($instanceKey, 'metaPropertyName')) {
                     $iLang = explode('metaPropertyName', $instanceKey);
-                    if(!empty($instance['metaProperty'. $iLang[1]])) {
-                        $mjGlobalVarsProps[$widgetId][$prop. substr($iLang[1], 1)] = $instance['metaProperty'. $iLang[1]];
+                    if (!empty($instance['metaProperty' . $iLang[1]])) {
+                        $mjGlobalVarsProps[$widgetId][$prop . substr($iLang[1], 1)] = $instance['metaProperty' . $iLang[1]];
                     }
                 }
             }
         }
 
         ?>
-            <script type="text/javascript">
-                var mjGlobalVars = <?php echo json_encode($mjGlobalVars); ?>;
-                var mjGlobalVarsProps = <?php echo json_encode($mjGlobalVarsProps); ?>;
-            </script>
+        <script type="text/javascript">
+            var mjGlobalVars = <?php echo json_encode($mjGlobalVars); ?>;
+            var mjGlobalVarsProps = <?php echo json_encode($mjGlobalVarsProps); ?>;
+        </script>
         <?php
     }
 

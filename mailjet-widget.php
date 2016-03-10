@@ -516,12 +516,14 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         $email = $_GET['email'];
 
+        // Add the contact to the contact list
         $result = $this->api->addContact(array(
             'Email' => $email,
             'ListID' => $_GET['list_id']
         ));
 
         $metaProperties = $this->getContactMetaProperties(false);
+
         $properties = array();
         if (is_object($metaProperties)) {
             foreach ($metaProperties->Data as $i => $prop) {
@@ -533,7 +535,10 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     'Value' => $_GET[$prop->Name]
                 );
             }
-            $this->api->updateContactData(array(
+        }
+
+        if (!empty($result->Response->Data)) {
+            $result = $this->api->updateContactData(array(
                 'method' => 'JSON',
                 'ID' => $email,
                 'Data' => $properties

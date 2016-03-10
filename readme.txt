@@ -3,8 +3,8 @@
 Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
-Tested up to: 4.4.1
-Stable tag: 4.1.4
+Tested up to: 4.4
+Stable tag: 4.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 == Changelog ==
+
+= 4.1.5 =
+* API call improvements
 
 = 4.1.4 =
 * Replaced jQuery .live() with .on()
@@ -204,7 +207,7 @@ accessible from there.
 * Bug fix on connecting contact to a list
 
 = 3.0.0 =
-* The pluging is switched to v3 mailjet's users, and also the communication with mailjet is mainly executed with iframes
+* The plugin is switched to v3 mailjet's users, and also the communication with mailjet is mainly executed with iframes
 
 = 1.2.8 =
 * Added cURL warning and missing translations
