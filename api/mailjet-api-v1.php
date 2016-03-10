@@ -21,7 +21,7 @@ class WP_Mailjet_Api_V1
 
 	// Mode debug ? 0 none / 1 errors only / 2 all
 	var $debug = 0;
-	
+
 	// Edit with your Mailjet Infos
 	var $apiKey = '';
 	var $secretKey = '';
@@ -99,7 +99,7 @@ class WP_Mailjet_Api_V1
 		curl_setopt($curl_handle, CURLOPT_USERPWD, $this->apiKey . ':' . $this->secretKey);
 		curl_setopt($curl_handle, CURLOPT_VERBOSE, true);
 		curl_setopt($curl_handle, CURLINFO_HEADER_OUT, true);
-        	curl_setopt($curl_handle, CURLOPT_USERAGENT, 'wordpress-1.0');
+        	curl_setopt($curl_handle, CURLOPT_USERAGENT, 'wordpress-v1.4.1.5');
 
 
 		$this->_request_post = false;

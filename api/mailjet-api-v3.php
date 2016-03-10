@@ -126,35 +126,35 @@ class WP_Mailjet_Api_V3
     private $_curl_handle = NULL;
 
     /**
-     * 
+     *
      * @var Boolean
      */
     protected $_log_allowed = false;
-    
+
     /**
-     * 
+     *
      * @var Boolean
      */
     protected $_log = false;
-    
+
     /**
-     * 
+     *
      * @var Boolean
      */
     protected $_log_once = false;
-    
+
     /**
      *
      * @var Boolean
      */
     protected $_extra_err = false;
-    
+
     /**
-     * 
+     *
      * @var String
      */
     protected $_log_path = 'logs/api/current.log';
-    
+
     /**
      * Singleton pattern : Current instance
      *
@@ -183,9 +183,9 @@ class WP_Mailjet_Api_V3
             $this->_secretKey = $secretKey;
         $this->_apiUrl = 'http://'.$this->_apiUrl.$this->_version.'/';
         $this->secure($secure);
-        
+
         $this->_log_allowed = get_cfg_var('MAILJET_ENVIRONMENT') == 'dev';
-        
+
         $this->_fixLogPath();
     }
 
@@ -263,7 +263,7 @@ class WP_Mailjet_Api_V3
     }
 
     /**
-     * 
+     *
      * @param Boolean $flag
      * @return mailjetapi
      */
@@ -272,18 +272,18 @@ class WP_Mailjet_Api_V3
     	$this->_log = (boolean) $flag;
     	return $this;
     }
-    
+
     /**
-     * 
+     *
      * @return boolean
      */
     public function getLog()
     {
     	return $this->_log;
     }
-    
+
     /**
-     * 
+     *
      * @param Boolean $flag
      * @return mailjetapi
      */
@@ -292,25 +292,25 @@ class WP_Mailjet_Api_V3
     	$this->_log_once = (boolean) $flag;
     	return $this;
     }
-    
+
     /**
-     * 
+     *
      * @return boolean
      */
     public function getLogOnce()
     {
     	return $this->_log_once;
     }
-    
+
 	/**
-     * 
+     *
      * @return string
      */
     public function getVersion()
     {
     	return $this->_version;
     }
-	
+
     /**
      *
      * @param Boolean $flag
@@ -321,7 +321,7 @@ class WP_Mailjet_Api_V3
     	$this->_extra_err = (boolean) $flag;
     	return $this;
     }
-    
+
     /**
      *
      * @return boolean
@@ -339,9 +339,9 @@ class WP_Mailjet_Api_V3
     {
     	return $this->_log_allowed;
     }
-    
+
     /**
-     * 
+     *
      * @param String $path
      * @return mailjetapi
      */
@@ -352,18 +352,18 @@ class WP_Mailjet_Api_V3
     	}
     	return $this;
     }
-    
+
     /**
-     * 
+     *
      * @return String
      */
     public function getLogPath()
     {
     	return $this->_log_path;
     }
-    
+
     /**
-     * 
+     *
      * @return mailjetapi
      */
     protected function _fixLogPath()
@@ -375,7 +375,7 @@ class WP_Mailjet_Api_V3
     	$this->_log_path = str_replace('current.log', $logFilename, $this->_log_path);
 		return $this;
     }
-    
+
     /**
      * Secure or not the transaction through https
      *
@@ -426,7 +426,7 @@ class WP_Mailjet_Api_V3
             $this->_debug_info = $params['debug_info'];
             unset($params['debug_info']);
         }
-        
+
         /**
          * Logging
          */
@@ -434,23 +434,23 @@ class WP_Mailjet_Api_V3
         	$this->setLog($params['log']);
         	unset($params['log']);
         }
-        
+
         if (isset($params['log_once'])) {
         	$this->setLogOnce($params['log_once']);
         	unset($params['log_once']);
         }
-        
+
         if (isset($params['log_path'])) {
         	$this->setLogPath($params['log_path']);
         	unset($params['log_path']);
         }
-        
+
         // Extra Error
         if (isset($params['extra_err'])) {
         	$this->setExtraError($params['extra_err']);
         	unset($params['extra_err']);
         }
-        
+
         /**
          * Fallback logging when debug is true
          */
@@ -491,7 +491,7 @@ class WP_Mailjet_Api_V3
 
     	// Log if this is a JSON call with an ID inside params
     	$is_json_put = (isset($params['ID']) && !empty($params['ID']));
-    
+
         list($url, $params) = $this->buildURL($object, $params, $method);
 
         if ($this->_cache != 0 && $method == 'GET' && !$this->_akid) {
@@ -507,8 +507,8 @@ class WP_Mailjet_Api_V3
         curl_setopt($this->_curl_handle, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($this->_curl_handle, CURLOPT_USERPWD, $this->_apiKey.':'.$this->_secretKey);
         curl_setopt($this->_curl_handle, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($this->_curl_handle, CURLOPT_USERAGENT, 'wordpress-3.0');
-    	
+        curl_setopt($this->_curl_handle, CURLOPT_USERAGENT, 'wordpress-4.1.5');
+
         switch ($method) {
             case 'GET' :
                 curl_setopt($this->_curl_handle, CURLOPT_HTTPGET, TRUE);
@@ -530,13 +530,13 @@ class WP_Mailjet_Api_V3
             case 'PUT':
                 curl_setopt($this->_curl_handle, CURLOPT_POSTFIELDS, $this->curl_build_query($params));
             break;
-            
+
             case 'JSON':
             	if($is_json_put)
-            		curl_setopt($this->_curl_handle, CURLOPT_CUSTOMREQUEST, "PUT");            		
+            		curl_setopt($this->_curl_handle, CURLOPT_CUSTOMREQUEST, "PUT");
             	else
             		curl_setopt($this->_curl_handle, CURLOPT_CUSTOMREQUEST, "POST");
-            	
+
             	$params = json_encode($params);
 				curl_setopt($this->_curl_handle, CURLOPT_POSTFIELDS, $params);
 				curl_setopt($this->_curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
@@ -545,17 +545,17 @@ class WP_Mailjet_Api_V3
 				    'Content-Length: ' . strlen($params))
 				);
             break;
-            	
+
         }
 
         $buffer = curl_exec($this->_curl_handle);
 
         $this->_info = curl_getinfo($this->_curl_handle);
         $this->_response_code = $this->_info['http_code'];
-        
+
 		curl_close($this->_curl_handle);
 		$this->_curl_handle = null;
-        
+
         if ($this->_debug) {
             $this->_buffer = $buffer;
             $this->_method = $method;
@@ -565,12 +565,12 @@ class WP_Mailjet_Api_V3
         if ($this->_cache != 0 && $method == 'GET' && !$this->_akid) {
             $data = array('timestamp' => time(), 'result' => $buffer, 'http_code' => $this->_info['http_code']);
         }
-        
+
         if( $this->getExtraError() ){
         	$this->getExtraErr( $buffer );
         	$this->setExtraError( false );
         }
-        
+
         if ($this->logAllowed() && ($this->getLog() || $this->getLogOnce())) {
 
         	if ($this->_info) {
@@ -583,17 +583,17 @@ class WP_Mailjet_Api_V3
         	} else {
         		$moreInfo = 'none';
         	}
-        	
+
         	$date = DateTime::createFromFormat('U.u', microtime(true));
-        	
+
             if (is_array($params)) {
         		$jsonParams = json_encode($params);
         	} else {
         		$jsonParams = $params;
         	}
-        	        	
+
         	$logLines = array();
-        	
+
 			$logLines[] = '';
         	$logLines[] = $date->format('Y-m-d H:i:s.u')." > {$object} :: {$method}";
 			$logLines[] = '';
@@ -610,15 +610,15 @@ class WP_Mailjet_Api_V3
 			$logLines[] = '';
 			$logLines[] = str_repeat("=", 100);
 			$logLines[] = '';
-				
+
 			$logText = implode(PHP_EOL, $logLines);
 
 			file_put_contents($this->getLogPath(), $logText, FILE_APPEND);
-        	
+
 			$this->setLogOnce(false);
-			
+
         }
-        
+
         return $buffer;
     }
 
@@ -659,8 +659,8 @@ class WP_Mailjet_Api_V3
                 }
             if(count($query))
             	$url .= '?'.http_build_query($query, '', '&');
-            	
-        } 
+
+        }
 
         return (array($url, $params));
     }
@@ -794,16 +794,16 @@ class WP_Mailjet_Api_V3
 
         return $res;
     }
-    
+
     protected function getExtraErr( &$buffer )
-    {   
+    {
     	$bufferCheck = json_decode($buffer);
-    	
+
     	if( is_null( $bufferCheck ) )
     		return;
-    	
-    	$buffer = $bufferCheck;   	
-    	
+
+    	$buffer = $bufferCheck;
+
     	if( $this->_info['http_code'] < 400 )
     	{
     		$response = array( (object)array( "ExtraErrCode" => $this->_info['http_code'], "ExtraErrKey" => "", "ExtraErrMsg" => "" ) );
@@ -811,8 +811,8 @@ class WP_Mailjet_Api_V3
     		$buffer = json_encode( $buffer );
     		return;
     	}
-    	
-    	$internalErrors = array(  
+
+    	$internalErrors = array(
     			'MJ01' => 'Could not determine APIKey', 								// SERRCouldNotDetermineAPIKey
     			'MJ02' => 'No persister object found for class: "%s"', 					// SErrNoPersister
     			'MJ03' => 'A non-empty value is required', 								// SErrValueRequired
@@ -832,7 +832,7 @@ class WP_Mailjet_Api_V3
     			'MJ17' => '(%s) Cannot search unique key: unique key value is empty.',	// SErrNoAlternateKeyValue
     			'MJ18' => 'A %s resource with value "%s" for %s already exists.',		// SErrDuplicateKey
     			'MJ19' => 'Setting a value for property "%s" is not allowed',			// SErrCannotWriteProperty
-    			'MJ20' => 'Setting a value for properties is not allowed',				// SErrCannotWriteProperties   			
+    			'MJ20' => 'Setting a value for properties is not allowed',				// SErrCannotWriteProperties
     			// ContactMetadata
     			'CM01' => 'Property "%s" already exists',								// sERRCMPropertyAlreadyExists
     			'CM02' => 'Unknown namespace : %s',										// SERRCMUnknownNamespace
@@ -842,23 +842,23 @@ class WP_Mailjet_Api_V3
     			'CM06' => 'Length of value (%d bytes) exceeds maximum data length (%d bytes) ',	// SERRCMLengthOfValueExceedsMaxDataLength
     			'CM07' => 'Internal error: invalid data type %d',						// SERRCMInternalErrorInvalidDataType
     			'CM08' => '"%s" is not a valid datatype'								// SERRCMNotAValidDataType
-    	); 	
-    	
+    	);
+
     	$response = array();
-    	
-    		// We expect here $this->_info['http_code']  to be >= 400   	
+
+    		// We expect here $this->_info['http_code']  to be >= 400
     	if ( isset($buffer->StatusCode) ) {
     		if( ( isset($buffer->ErrorInfo) && !empty($buffer->ErrorInfo) ) || ( isset($buffer->ErrorMessage) && !empty($buffer->ErrorMessage) ) )
-    		{	
+    		{
     			$comeFromString = false;
     			if( !empty( $buffer->ErrorInfo ) )
-    			{  	
+    			{
     				$info = json_decode( $buffer->ErrorInfo );
     				if( empty( $info) ) // message is type=string
-    				{   	
+    				{
     					$comeFromString = true ;
     					$errInfos = array( (object)$buffer->ErrorInfo );
-    				}else{   					
+    				}else{
     					$errInfos =  $info;
     				}
     			}else{  // ( !empty( $buffer->ErrorMessage ) )
@@ -867,51 +867,51 @@ class WP_Mailjet_Api_V3
     				{
     					$comeFromString = true ;
     					$errInfos = array( (object)$buffer->ErrorMessage );
-    				}else{   					
+    				}else{
     					$errInfos = $info;
     				}
-    			}	
+    			}
     			/**
     			*  Default response. Most of the ErrorInfo/ErrorMessage will come as they are - without specific err code in front!
-    			*  We keep the ExtraErrors = ErrorInfo/ErrorMessage. 
-    			*  
+    			*  We keep the ExtraErrors = ErrorInfo/ErrorMessage.
+    			*
     			*  In the feature all the responses will consist these special codes.
     			*  When this happen (!!! ToDo !!!) -> we have to override coming StatusCode and ErrorInfo with parsed error results. And remove this ExtraError from the buffer
-    			*  $internalErrors array and preg_match -> should be removed. We should catch the first 4 symbols from the string (this will be StatusCode), 
-    			*  all the remaining string will be ErrorInfo 
-    			*/  			   			 			 			    			
-    			$errCodes = array_keys( $internalErrors );   			
-    			$regexp = '/^(' . implode( '|',array_values( $errCodes ) ).')/i';   
+    			*  $internalErrors array and preg_match -> should be removed. We should catch the first 4 symbols from the string (this will be StatusCode),
+    			*  all the remaining string will be ErrorInfo
+    			*/
+    			$errCodes = array_keys( $internalErrors );
+    			$regexp = '/^(' . implode( '|',array_values( $errCodes ) ).')/i';
     			foreach( $errInfos as $errInfoObj )
-    			{    
-    				foreach( $errInfoObj as $key => $errInfo )	
-    				{			
+    			{
+    				foreach( $errInfoObj as $key => $errInfo )
+    				{
 	    				$tempResp = array();
 	    				$tempResp["ExtraErrCode"] = $buffer->StatusCode;
 	    				$tempResp["ExtraErrKey"] = "";
 	    				$tempResp["ExtraErrMsg"] = $errInfo;
-	    				
-	    				preg_match($regexp, $errInfo, $matches);   	
+
+	    				preg_match($regexp, $errInfo, $matches);
 	    				if( !empty( $matches ))
 	    				{
 	    					$tempResp["ExtraErrCode"] = $matches[1];
 	    					if( $comeFromString )
 	    						$tempResp["ExtraErrKey"] = '';
-	    					else 
+	    					else
 	    						$tempResp["ExtraErrKey"] = $key;
 	    					$tempResp["ExtraErrMsg"] = $internalErrors[$matches[1]];
 	    				}
 	    				$response[] = $tempResp ;
     				}
-    			}   			 			   			
+    			}
     		}
     	}
-    		// Check if is $response empty !    
+    		// Check if is $response empty !
     	if( empty( $response ) )
     	{
     		$response = array( (object)array( "ExtraErrCode" => $this->_info['http_code'], "ExtraErrKey" => "", "ExtraErrMsg" => "" ) );
-    	}	
-    	
+    	}
+
     	$buffer->ExtraError = $response ;
     	$buffer = json_encode( $buffer );
     }
