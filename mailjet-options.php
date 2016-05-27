@@ -322,7 +322,11 @@ class WP_Mailjet_Options
             $from_email = $fields['mailjet_from_email'] ? $fields['mailjet_from_email'] : get_option('admin_email');
 
             // If there is connection, display successful message
-            if ($connected !== FALSE && $this->hasValidSender($from_email, $senders)) {
+            if ($connected !== FALSE) {
+
+                if(!$this->hasValidSender($from_email, $senders)) {
+                    WP_Mailjet_Utils::custom_notice('error', __('Please make sure that you are using the correct API key and secret key associated to your mailjet account (from email).', 'wp-mailjet'));
+                }
                 // Record API and secret keys in WP DB only on successful connect
                 update_option('mailjet_ssl', $ssl);
                 update_option('mailjet_port', $port);

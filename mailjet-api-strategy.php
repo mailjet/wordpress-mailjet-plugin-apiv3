@@ -50,7 +50,10 @@ class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet
         if (isset($params['limit'])) $input['limit'] = $params['limit'];
 
         // Get the list
-        $response = $this->userSenderList()->senders;
+        $userSenderList = $this->userSenderList();
+        if($userSenderList) {
+            $response = $userSenderList->senders;
+        }
 
         // Check if the list exists
         if (isset($response)) {
