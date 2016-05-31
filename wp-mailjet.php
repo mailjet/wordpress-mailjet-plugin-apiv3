@@ -2,7 +2,7 @@
 
 /*
 Plugin Name:	Mailjet for Wordpress
-Version:		4.1.6
+Version:		4.1.7
 Plugin URI:		https://www.mailjet.com/plugin/wordpress.htm
 Description:	Use mailjet SMTP to send email, manage lists and contacts within wordpress
 Author:			Mailjet SAS
@@ -160,24 +160,7 @@ add_action('edit_user_profile_update', 'mailjet_my_save_extra_profile_fields');
 
 /* Add custom field to registration form */
 if (get_option('mailjet_auto_subscribe_list_id')) {
-    add_action('register_form', 'show_mailjet_subscribe_field');
     add_action('user_register', 'register_extra_fields');
-}
-
-
-/**
- *  Show the Mailjet's subscribe form (this is part of a Widget)
- */
-function show_mailjet_subscribe_field()
-{
-    ?>
-    <p>
-        <label>
-            <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
-               <?php echo(esc_attr(get_the_author_meta('mailjet_subscribe_ok')) ?
-                   'checked="checked" ' : ''); ?>class="checkbox"/>Mailjet Subscription widget</label>
-    </p>
-    <?php
 }
 
 
