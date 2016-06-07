@@ -7,6 +7,10 @@ msgid "Confirm your mailing list subscription"
 msgstr "Confirm your mailing list subscription"
 
 #: mailjet-widget.php
+msgid "You may copy/paste this link into your browser:"
+msgstr "Wenn Sie mit dieser Schaltfläche Schwierigkeiten haben, geben Sie den folgenden URL mit Hilfe der Funktion Kopieren/Einfügen in Ihrem Browser ein:"
+
+#: mailjet-widget.php
 msgid "Email field is empty"
 msgstr "Email field is empty"
 

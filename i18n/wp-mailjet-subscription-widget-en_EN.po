@@ -11,6 +11,10 @@ msgid "Confirm your mailing list subscription"
 msgstr "Confirm your mailing list subscription"
 
 #: mailjet-widget.php
+msgid "You may copy/paste this link into your browser:"
+msgstr "You may copy/paste this link into your browser:"
+
+#: mailjet-widget.php
 msgid "Email field is empty"
 msgstr "Email field is empty"
 

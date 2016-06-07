@@ -51,11 +51,6 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         add_action('wp_ajax_nopriv_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
         add_action('wp_ajax_mailjet_subscribe_ajax_add_meta_property', array($this, 'wp_ajax_mailjet_subscribe_ajax_add_meta_property'));
 
-        // if user clicks on the email confirm subscription link, verify the token and subscribe them
-        if (!empty($_GET['mj_sub_token'])) {
-            $this->subscribeUser();
-        }
-
         require_once dirname(__FILE__) . '/libs/PHP-po-parser-master/src/Sepia/InterfaceHandler.php';
         require_once dirname(__FILE__) . '/libs/PHP-po-parser-master/src/Sepia/FileHandler.php';
         require_once dirname(__FILE__) . '/libs/PHP-po-parser-master/src/Sepia/PoParser.php';
@@ -64,6 +59,11 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             $fileHandler = new FileHandler(dirname(__FILE__) . '/i18n/wp-mailjet-subscription-widget-' . $langProps['locale'] . '.po');
             $this->{'poParser' . $lang} = new PoParser($fileHandler);
             $this->{'entries' . $lang}  = $this->{'poParser' . $lang}->parse();
+        }
+
+        // if user clicks on the email confirm subscription link, verify the token and subscribe them
+        if (!empty($_GET['mj_sub_token'])) {
+            $this->subscribeUser();
         }
     }
 
@@ -484,6 +484,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             '__WP_URL__' => sprintf('<a href="%s" target="_blank">%s</a>', get_site_url(), get_site_url()),
             '__CONFIRM_URL__' => get_site_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'),
+            '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet-subscription-widget'),
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'wp-mailjet-subscription-widget'),
             '__THANKS__' => __('Thanks,', 'wp-mailjet-subscription-widget')
@@ -538,14 +539,12 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         }
 
         if (!empty($result->Response->Data)) {
-            $result = $this->api->updateContactData(array(
+            $result2 = $this->api->updateContactData(array(
                 'method' => 'JSON',
                 'ID' => $email,
                 'Data' => $properties
             ));
         }
-
-
 
         // Check what is the response and display proper message
         if (isset($result->Status)) {
@@ -562,6 +561,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $email);
                 echo '</p>';
             }
+            die();
         }
     }
 

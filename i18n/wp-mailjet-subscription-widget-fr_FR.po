@@ -7,6 +7,10 @@ msgid "Subscription confirmation email sent. Please check your inbox and confirm
 msgstr "Abonnement courriel de confirmation envoyé. S'il vous plaît vérifier votre boîte de réception et de confirmer la souscription."
 
 #: mailjet-widget.php
+msgid "You may copy/paste this link into your browser:"
+msgstr "Si le bouton ne fonctionne pas, veuillez copier/coller l'URL suivante dans votre navigateur :"
+
+#: mailjet-widget.php
 msgid "Email field is empty"
 msgstr "Email field is empty"
 
