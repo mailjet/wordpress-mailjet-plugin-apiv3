@@ -148,6 +148,23 @@ class WP_Mailjet_Options
                 get_option('mailjet_auto_subscribe_list_id'), __('Autosubscribe new users to this list', 'wp-mailjet'), FALSE, $lists);
         }
 
+
+        //custom page
+
+        // Pull all the pages into an array
+        $options_pages = array();
+        $options_pages_obj = get_pages();
+        //$options_pages[] = 'Select a page:';
+        foreach ($options_pages_obj as $page) {
+            //$options_pages[$page->ID] = $page->post_title;
+            $options_pages[] = array('value' => $page->ID, 'label' => $page->post_title);
+        }
+        $generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_custom_page', '', 'select',
+            get_option('mailjet_custom_page'), __('Custom Page', 'wp-mailjet'), TRUE, $options_pages);
+
+        //end custom page
+
+
         $generalFieldset = new WP_Mailjet_Options_Form_Fieldset(
             __('General Settings', 'wp-mailjet'),
             $generalOptions,
@@ -225,6 +242,7 @@ class WP_Mailjet_Options
         $fields['mailjet_auto_subscribe_list_id'] = ($fields['mailjet_username'] != get_option('mailjet_username') || $fields['mailjet_password'] != get_option('mailjet_password'))
             ? false
             : strip_tags(filter_var($_POST['mailjet_auto_subscribe_list_id'], FILTER_SANITIZE_NUMBER_INT));
+        $fields['mailjet_custom_page'] = trim(strip_tags(filter_var($_POST['mailjet_custom_page'], FILTER_SANITIZE_STRING)));
         if (current_user_can('administrator')) {
             $fields['mailjet_access_editor'] = (isset($_POST['mailjet_access_editor']) ? 1 : 0);
             $fields['mailjet_access_author'] = (isset($_POST['mailjet_access_author']) ? 1 : 0);
@@ -262,6 +280,7 @@ class WP_Mailjet_Options
             update_option('mailjet_ssl', $fields['mailjet_ssl']);
             update_option('mailjet_port', $fields['mailjet_port']);
             update_option('mailjet_auto_subscribe_list_id', $fields['mailjet_auto_subscribe_list_id']);
+            update_option('mailjet_custom_page', $fields['mailjet_custom_page']);
             if (current_user_can('administrator')) {
                 update_option('mailjet_access_editor', $fields['mailjet_access_editor']);
                 update_option('mailjet_access_author', $fields['mailjet_access_author']);
@@ -324,7 +343,7 @@ class WP_Mailjet_Options
             // If there is connection, display successful message
             if ($connected !== FALSE) {
 
-                if(!$this->hasValidSender($from_email, $senders)) {
+                if (!$this->hasValidSender($from_email, $senders)) {
                     WP_Mailjet_Utils::custom_notice('error', __('Please make sure that you are using the correct API key and secret key associated to your mailjet account (from email).', 'wp-mailjet'));
                 }
                 // Record API and secret keys in WP DB only on successful connect
