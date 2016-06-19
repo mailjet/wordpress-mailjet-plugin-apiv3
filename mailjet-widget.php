@@ -150,7 +150,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         }
 
         $fields = array('new_meta_name', 'new_meta_data_type');
-        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2',
+        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'button_class', 'metaPropertyName1', 'metaPropertyName2',
             'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
         foreach ($fields as $prop) {
             ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
@@ -337,6 +337,19 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                                                    value="<?php echo esc_attr(${'button_text' . $lang}); ?>"/>
                                         </label>
                                     </p>
+
+                                    <p>
+                                        <label for="<?php echo $this->get_field_id('button_class' . $lang); ?>"
+                                               title="This will be the css class of your subscription button which will be displayed on your website">Button
+                                            text
+                                            <input class="widefat"
+                                                   id="<?php echo $this->get_field_id('button_class' . $lang); ?>"
+                                                   name="<?php echo $this->get_field_name('button_class' . $lang); ?>"
+                                                   type="text"
+                                                   value="<?php echo esc_attr(${'button_class' . $lang}); ?>"/>
+                                        </label>
+                                    </p>
+
                                     <p>
                                         <label for="<?php echo $this->get_field_id('list_id' . $lang); ?>"
                                                title="Please chose a contact list where all new subscribers will be added">List:
@@ -654,7 +667,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         echo $before_widget;
 
-        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2',
+        $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'button_class', 'metaPropertyName1', 'metaPropertyName2',
             'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
         if (isset($fields) && is_array($fields))
             foreach ($fields as $prop) {
@@ -680,6 +693,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         $title = apply_filters('widget_title', $instance['title' . $currentLang]);
         $list_id = $instance['list_id' . $currentLang];
         $button_text = trim($instance['button_text' . $currentLang]);
+        $button_class = trim($instance['button_class' . $currentLang]);
 
         // If contact list is not selected then we just don't display the widget!
         if (!is_numeric($list_id)) {
@@ -711,7 +725,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                    placeholder="<?php _e('your@email.com', 'wp-mailjet-subscription-widget'); ?>"/>
             <input name="list_id" type="hidden" value="<?php echo $list_id; ?>"/>
             <input name="action" type="hidden" value="mailjet_subscribe_ajax_hook"/>
-            <input name="submit" type="submit" class="mailjet-subscribe" value="<?php echo __($button_text); ?>">
+            <input name="submit" type="submit" class="mailjet-subscribe <?php echo $button_class; ?>"
+                   value="<?php echo __($button_text); ?>">
         </form>
         <div class="response"></div>
         <?php
