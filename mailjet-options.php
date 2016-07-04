@@ -101,6 +101,21 @@ class WP_Mailjet_Options
 
         $form->addFieldset($generalFieldset);
 
+        /* Api field set */
+        $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_username', __('API key', 'wp-mailjet'), 'text', get_option('mailjet_username'), null, TRUE);
+        $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_password', __('Secret key', 'wp-mailjet'), 'text', get_option('mailjet_password'), null, TRUE);
+
+        $apiFieldset = new WP_Mailjet_Options_Form_Fieldset(
+            __('API Settings', 'wp-mailjet'),
+            $apiOptions,
+            sprintf(__('You can get your API keys from <a target="_blank" href="https://www.mailjet.com/account/api_keys">your mailjet account</a>. Please also make sure the sender address %s is active in <a target="_blank" href="https://www.mailjet.com/account/sender">your account</a>', 'wp-mailjet'), get_option('admin_email')),
+            true
+        );
+
+        $form->addFieldset($apiFieldset);
+        /* END - Api field set */
+
+
         /* General field set */
         $generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_enabled', ' ' . __('Enabled', 'wp-mailjet'),
             'checkbox', get_option('mailjet_enabled'), __('Enable email through <b>Mailjet</b>', 'wp-mailjet'));
@@ -158,19 +173,6 @@ class WP_Mailjet_Options
         $form->addFieldset($generalFieldset);
         /* END - General field set */
 
-        /* Api field set */
-        $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_username', __('API key', 'wp-mailjet'), 'text', get_option('mailjet_username'), null, TRUE);
-        $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_password', __('Secret key', 'wp-mailjet'), 'text', get_option('mailjet_password'), null, TRUE);
-
-        $apiFieldset = new WP_Mailjet_Options_Form_Fieldset(
-            __('API Settings', 'wp-mailjet'),
-            $apiOptions,
-            sprintf(__('You can get your API keys from <a target="_blank" href="https://www.mailjet.com/account/api_keys">your mailjet account</a>. Please also make sure the sender address %s is active in <a target="_blank" href="https://www.mailjet.com/account/sender">your account</a>', 'wp-mailjet'), get_option('admin_email')),
-            true
-        );
-
-        $form->addFieldset($apiFieldset);
-        /* END - Api field set */
 
         /* Add access field set */
         if (current_user_can('administrator')) {
