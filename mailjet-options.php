@@ -160,7 +160,7 @@ class WP_Mailjet_Options
 
         /* Api field set */
         $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_username', __('API key', 'wp-mailjet'), 'text', get_option('mailjet_username'), null, TRUE);
-        $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_password', __('API secret', 'wp-mailjet'), 'text', get_option('mailjet_password'), null, TRUE);
+        $apiOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_password', __('Secret key', 'wp-mailjet'), 'text', get_option('mailjet_password'), null, TRUE);
 
         $apiFieldset = new WP_Mailjet_Options_Form_Fieldset(
             __('API Settings', 'wp-mailjet'),
@@ -234,24 +234,29 @@ class WP_Mailjet_Options
 
         // Set error messages if we've any
         $errors = array();
-        if ($fields['mailjet_test'] && empty($fields['mailjet_test_address']))
+        if ($fields['mailjet_test'] && empty($fields['mailjet_test_address'])) {
             $errors[] = 'mailjet_test_address';
-
-        if (!empty($fields['mailjet_test_address'])) {
-            if (!filter_var($fields['mailjet_test_address'], FILTER_VALIDATE_EMAIL))
-                $errors[] = 'mailjet_test_address';
         }
 
-        if (empty($fields['mailjet_username']))
-            $errors[] = 'mailjet_username';
+        if (!empty($fields['mailjet_test_address'])) {
+            if (!filter_var($fields['mailjet_test_address'], FILTER_VALIDATE_EMAIL)) {
+                $errors[] = 'mailjet_test_address';
+            }
+        }
 
-        if (empty($fields['mailjet_password']))
+        if (empty($fields['mailjet_username'])) {
+            $errors[] = 'mailjet_username';
+        }
+
+        if (empty($fields['mailjet_password'])) {
             $errors[] = 'mailjet_password';
+        }
 
         // If there are no errors, then update the new settings
         if (!count($errors)) {
-            if ($fields['mailjet_ssl'] == 'ssl')
+            if ($fields['mailjet_ssl'] == 'ssl') {
                 $fields['mailjet_port'] = 465;
+            }
 
             // Update the new settings
             update_option('mailjet_enabled', $fields['mailjet_enabled']);

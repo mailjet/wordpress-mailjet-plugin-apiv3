@@ -1,3 +1,16 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"X-Generator: Poedit 1.8.8\n"
+
 #: mailjet-widget.php
 msgid "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
 msgstr "Email de confirmación suscripción envió. Por favor revise su bandeja de entrada y confirmar la suscripción."

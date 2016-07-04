@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-06 17:42+0200\n"
-"PO-Revision-Date: 2014-12-11 14:24+0200\n"
+"PO-Revision-Date: 2016-07-04 15:07+0300\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
-"X-Poedit-Basepath: ../\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: en\n"
+"Language: de\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: mailjet-class.php:42
@@ -66,53 +66,46 @@ msgstr "Die Liebe teilen!"
 
 #: mailjet-options.php:48
 msgid "Improve your email deliverability and monitor action in real time."
-msgstr ""
-"Ihre E-Mail-Zustellbarkeit verbessern und die Aktion in Echtzeit überwachen."
+msgstr "Ihre E-Mail-Zustellbarkeit verbessern und die Aktion in Echtzeit überwachen."
 
 #: mailjet-options.php:48
 msgid "Tweet"
 msgstr "Tweet"
 
 #: mailjet-options.php:48
-msgid "<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=%s\">Create "
-"your Mailjet account</a> if you don't have any."
-msgstr "<a target=\"_blank\" href=\"https://de.mailjet.com/signup?p=%s\">Erstellen Sie Ihr Mailjet-Konto,</a> "
-"wenn Sie keines haben.."
+msgid ""
+"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=%s\">Create your Mailjet account</a> if you don't have any."
+msgstr ""
+"<a target=\"_blank\" href=\"https://de.mailjet.com/signup?p=%s\">Erstellen Sie Ihr Mailjet-Konto,</a> wenn Sie keines "
+"haben.."
 
 #: mailjet-options.php:62
 msgid ""
-"Log in with your account through the login form below or visit your <a "
-"target=\"_blank\" href=\"https://www.mailjet.com/account/api_keys\">account "
-"page</a> to get your API keys and set up them below."
+"Log in with your account through the login form below or visit your <a target=\"_blank\" href=\"https://www.mailjet.com/"
+"account/api_keys\">account page</a> to get your API keys and set up them below."
 msgstr ""
-"Loggen Sie sich über das Login-Formular in Ihr Konto ein oder besuchen Sie "
-"Ihre <a target=\"_blank\" href=\"https://www.mailjet.com/account/api_keys"
-"\">Kontoseite,</a> um Ihre API-Schlüssel zu erhalten und sie unten zu "
-"konfigurieren."
+"Loggen Sie sich über das Login-Formular in Ihr Konto ein oder besuchen Sie Ihre <a target=\"_blank\" href=\"https://www."
+"mailjet.com/account/api_keys\">Kontoseite,</a> um Ihre API-Schlüssel zu erhalten und sie unten zu konfigurieren."
 
 #: mailjet-options.php:63
 msgid ""
-"<a href=\"admin.php?page=wp_mailjet_options_contacts_menu\">Create a new "
-"list</a> if you don't have one or need a new one."
+"<a href=\"admin.php?page=wp_mailjet_options_contacts_menu\">Create a new list</a> if you don't have one or need a new "
+"one."
 msgstr ""
-"<a href=\"https://de.mailjet.com/contacts/lists/add\">Neue Liste erstellen</"
-"a> falls sie noch keine haben oder eine neue erstellen wollen. "
+"<a href=\"https://de.mailjet.com/contacts/lists/add\">Neue Liste erstellen</a> falls sie noch keine haben oder eine neue "
+"erstellen wollen. "
+
+#: mailjet-options.php:64
+msgid "<a href=\"widgets.php\">Add</a> the email collection widget to your sidebar or footer."
+msgstr "<a href=\"widgets.php\">Fügen Sie unser E-Mail Collection Widget zu Ihrer Sidebar oder Ihrem Fotter hinzu. "
 
 #: mailjet-options.php:64
 msgid ""
-"<a href=\"widgets.php\">Add</a> the email collection widget to your sidebar "
-"or footer."
+"<a href=\"admin.php?page=wp_mailjet_options_campaigns_menu\">Create a campaign</a> on mailjet.com to send your "
+"newsletter."
 msgstr ""
-"<a href=\"widgets.php\">Fügen Sie unser E-Mail Collection Widget zu Ihrer "
-"Sidebar oder Ihrem Fotter hinzu. "
-
-#: mailjet-options.php:64
-msgid ""
-"<a href=\"admin.php?page=wp_mailjet_options_campaigns_menu\">Create a "
-"campaign</a> on mailjet.com to send your newsletter."
-msgstr ""
-"<a href=\"https://de.mailjet.com/campaigns/create\">Erstellen Sie Ihre "
-"Kampagne</a>auf mailjet.com, um Ihre Newsletter zu verschicken. "
+"<a href=\"https://de.mailjet.com/campaigns/create\">Erstellen Sie Ihre Kampagne</a>auf mailjet.com, um Ihre Newsletter "
+"zu verschicken. "
 
 #: mailjet-options.php:68
 msgid "Mailjet Plugin"
@@ -171,8 +164,7 @@ msgid "General Settings"
 msgstr "Einstellungen "
 
 #: mailjet-options.php:123
-msgid ""
-"Enable or disable the sending of your emails through your Mailjet account"
+msgid "Enable or disable the sending of your emails through your Mailjet account"
 msgstr "Senden der E-Mails durch Mailjet zulassen oder verweigern "
 
 #: mailjet-options.php:128
@@ -183,21 +175,23 @@ msgstr "API Schlüssel "
 msgid "API secret"
 msgstr "API Secret "
 
+#: mailjet-options.php
+msgid "Secret key"
+msgstr "Geheimer Key"
+
 #: mailjet-options.php:132
 msgid "API Settings"
 msgstr "API Einstellungen "
 
 #: mailjet-options.php:134
 msgid ""
-"You can get your API keys from <a target=\"_blank\" href=\"https://www."
-"mailjet.com/account/api_keys\">your mailjet account</a>. Please also make "
-"sure the sender address %s is active in <a target=\"_blank\" href=\"https://"
-"www.mailjet.com/account/sender\">your account</a>"
+"You can get your API keys from <a target=\"_blank\" href=\"https://www.mailjet.com/account/api_keys\">your mailjet "
+"account</a>. Please also make sure the sender address %s is active in <a target=\"_blank\" href=\"https://www.mailjet."
+"com/account/sender\">your account</a>"
 msgstr ""
-"Ihren API Schlüssel erhalten Sie hier: <a target=\"_blank\" href=\"https://"
-"de.mailjet.com/account/api_keys\">your mailjet account</a>. Bitte stellen "
-"Sie sicher, dass die Sender Adresse %s aktiviert ist <a target=\"_blank\" "
-"href=\"https://de.mailjet.com/account/sender\">Ihr Account</a>"
+"Ihren API Schlüssel erhalten Sie hier: <a target=\"_blank\" href=\"https://de.mailjet.com/account/api_keys\">your "
+"mailjet account</a>. Bitte stellen Sie sicher, dass die Sender Adresse %s aktiviert ist <a target=\"_blank\" href="
+"\"https://de.mailjet.com/account/sender\">Ihr Account</a>"
 
 #: mailjet-options.php:132
 msgid "Administrator"
@@ -229,9 +223,7 @@ msgstr "Zugriffseinstellungen"
 
 #: mailjet-options.php:132
 msgid "Select which WordPress admin user roles (in addition to Administrator) will also have access to the Mailjet Plug-in"
-msgstr ""
-"Stellen Sie die Benutzerrollen ein, die Zugriff auf das Mailjet Plugin haben "
-"können"
+msgstr "Stellen Sie die Benutzerrollen ein, die Zugriff auf das Mailjet Plugin haben können"
 
 #: mailjet-options.php:242
 msgid "Your test mail from Mailjet"
@@ -250,12 +242,10 @@ msgid "Your settings have been saved successfully"
 msgstr "Ihre Einstellungen wurden erfolgreich gespeichert"
 
 #: mailjet-options.php:257
-msgid ""
-"Your settings have been saved, but your port and SSL settings were changed "
-"as follows to ensure delivery"
+msgid "Your settings have been saved, but your port and SSL settings were changed as follows to ensure delivery"
 msgstr ""
-"Ihre Einstellungen wurden gespeichert, aber Ihr Port und Ihre SSL-"
-"Einstellungen wurden wie folgt geändert, um die Lieferung zu gewährleisten"
+"Ihre Einstellungen wurden gespeichert, aber Ihr Port und Ihre SSL-Einstellungen wurden wie folgt geändert, um die "
+"Lieferung zu gewährleisten"
 
 #: mailjet-options.php:261
 #, php-format
@@ -264,22 +254,17 @@ msgstr "Bitte kontaktieren Sie unser Support Team <br /><br />%d - %s"
 
 #: mailjet-options.php:267
 msgid "There is an error with your settings. please correct and try again"
-msgstr ""
-"Es gibt ein Problem mit Ihren Einstellungen. Bitte überprüfen Sie diese und "
-"probieren es erneut. "
+msgstr "Es gibt ein Problem mit Ihren Einstellungen. Bitte überprüfen Sie diese und probieren es erneut. "
 
 #: wp-mailjet.php:88
 msgid ""
-"The mailjet plugin is enabled but your credentials are not set. Please <a "
-"href=\"admin.php?page=wp_mailjet_options_top_menu\" title=\"enable Mailjet "
-"plugin\">do so now</a> to send your emails through <b>Mailjet</b> <a href="
-"\"%1$s\" style=\"display:block; float:right;\">Hide Notice</a>"
+"The mailjet plugin is enabled but your credentials are not set. Please <a href=\"admin.php?"
+"page=wp_mailjet_options_top_menu\" title=\"enable Mailjet plugin\">do so now</a> to send your emails through <b>Mailjet</"
+"b> <a href=\"%1$s\" style=\"display:block; float:right;\">Hide Notice</a>"
 msgstr ""
-"Das Mailjet Plugin is aktiviert aber Ihre E-Mails wurden noch nicht "
-"versendet. Bitte klicken Sie<a href=\"admin.php?"
-"page=wp_mailjet_options_top_menu\" title=\"enable Mailjet plugin\">jetzt "
-"versenden</a>um Ihre E-Mails jetzt via <b>Mailjet</b> zu versenden<a href="
-"\"%1$s\" style=\"display:block; float:right;\">Nachricht überspringen</a>"
+"Das Mailjet Plugin is aktiviert aber Ihre E-Mails wurden noch nicht versendet. Bitte klicken Sie<a href=\"admin.php?"
+"page=wp_mailjet_options_top_menu\" title=\"enable Mailjet plugin\">jetzt versenden</a>um Ihre E-Mails jetzt via "
+"<b>Mailjet</b> zu versenden<a href=\"%1$s\" style=\"display:block; float:right;\">Nachricht überspringen</a>"
 
 #: wp-mailjet.php:130 wp-mailjet.php:132
 msgid "Subscribe"
@@ -291,27 +276,21 @@ msgstr "Speicher Optionen"
 
 #: views/options-form.php:40
 msgid "Success! Please go to your wordpress site to see your widget in action."
-msgstr ""
-"Erfolgreich! Bitte gehen Sie zu Ihrer Wordpressseite um Ihr Widget in Action "
-"zu sehen."
+msgstr "Erfolgreich! Bitte gehen Sie zu Ihrer Wordpressseite um Ihr Widget in Action zu sehen."
 
 #: views/options-form.php:40
 msgid ""
-"Please verify that you have entered your API and secret key correctly. If "
-"this is the case and you have still this error message, please go to Account "
-"API keys (<a href=\"%s\" target=\"_blank\">%s</a>) to regenerate a new "
-"Secret Key for the plug-in."
+"Please verify that you have entered your API and secret key correctly. If this is the case and you have still this error "
+"message, please go to Account API keys (<a href=\"%s\" target=\"_blank\">%s</a>) to regenerate a new Secret Key for the "
+"plug-in."
 msgstr ""
-"Überprüfen Sie, ob Sie Ihre API und den Geheimschlüssel korrekt eingegeben "
-"haben. Falls dies der Fall ist und Sie weiterhin diese Fehlermeldung "
-"erhalten, rufen Sie die API-Schlüsseln des Kontos auf, (<a href=\"%s\" "
-"target=\"_blank\">%s</a>) um einen neuen Geheimschlüssel für das Plug-in zu "
-"erstellen."
+"Überprüfen Sie, ob Sie Ihre API und den Geheimschlüssel korrekt eingegeben haben. Falls dies der Fall ist und Sie "
+"weiterhin diese Fehlermeldung erhalten, rufen Sie die API-Schlüsseln des Kontos auf, (<a href=\"%s\" target=\"_blank\">"
+"%s</a>) um einen neuen Geheimschlüssel für das Plug-in zu erstellen."
 
 #: views/options-form.php:40
 msgid ""
-"Please make sure that you are using the correct API key and secret key "
-"associated to your mailjet account (from email)."
+"Please make sure that you are using the correct API key and secret key associated to your mailjet account (from email)."
 msgstr ""
-"Vergewissern Sie sich, dass Sie den richtigen API-Schlüssel und den zu Ihrem "
-"Mailjet Konto gehörigen Geheimschlüssel (aus dem E-Mail) verwenden."
+"Vergewissern Sie sich, dass Sie den richtigen API-Schlüssel und den zu Ihrem Mailjet Konto gehörigen Geheimschlüssel "
+"(aus dem E-Mail) verwenden."
