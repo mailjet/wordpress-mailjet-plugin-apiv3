@@ -90,6 +90,7 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 ## Changelog
 
 = 4.1.10 =
+* Add the link to the user guide
 * UX change in settings page
 
 = 4.1.9 =

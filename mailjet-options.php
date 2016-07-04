@@ -90,6 +90,7 @@ class WP_Mailjet_Options
         $desc .= '<li>' . __('<a href="admin.php?page=wp_mailjet_options_contacts_menu">Create a new list</a> if you don\'t have one or need a new one.', 'wp-mailjet') . '</li>';
         $desc .= '<li>' . __('<a href="widgets.php">Add</a> the email collection widget to your sidebar or footer.', 'wp-mailjet') . '</li>';
         $desc .= '<li>' . __('<a href="admin.php?page=wp_mailjet_options_campaigns_menu">Create a campaign</a> on mailjet.com to send your newsletter.', 'wp-mailjet') . '</li>';
+        $desc .= '<li>' . __('Should you have any questions or encounter any difficulties, please consult our <a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">User Guide</a> or contact our <a target="_blank" href="https://www.mailjet.com/support/ticket">technical Support Team</a>', 'wp-mailjet') . '</li>';
         $desc .= '</ol>';
 
         $generalFieldset = new WP_Mailjet_Options_Form_Fieldset(
