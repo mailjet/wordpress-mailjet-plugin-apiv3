@@ -86,7 +86,7 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 == Changelog ==
 
 = 4.1.10 =
-* Add the link to the user guide
+* Add the link to the user guide & Support Ticket
 * UX change in settings page
 
 = 4.1.9 =
