@@ -1,5 +1,10 @@
 /* Widget */
 
+.mailjet-widget-container, .mj-accordion h3 {
+    min-width: 340px;
+    overflow: auto;
+}
+
 .mj-accordion input[type="text"], .mj-accordion select {
     height: 37px;
 }
@@ -114,7 +119,6 @@ ul.newPropertyBtn li {
     padding: 5px;
     text-decoration: none;
 }
-
 .mj-tabs-menu .current a {
     color: #ffffff;
 }
