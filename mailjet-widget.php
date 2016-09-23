@@ -614,8 +614,13 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             return FALSE;
         }
 
+        do_action('before_title_widget_mailjet');
+
         if (!empty($title))
             echo $before_title . $title . $after_title;;
+
+        do_action('after_title_widget_mailjet');
+
         ?>
 
         <!--WIDGET CODE GOES HERE-->
