@@ -3,8 +3,8 @@
 Contributors: mailjet <br />
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet <br />
 Requires at least: 3.3.0 <br />
-Tested up to: 4.5 <br />
-Stable tag: 4.1.11 <br />
+Tested up to: 4.7 <br />
+Stable tag: 4.1.12 <br />
 License: GPLv2 or later <br />
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,9 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 
 
 ## Changelog
+
+= 4.1.12 =
+* Updated 'Tested up to' version to include WordPress 4.7
 
 = 4.1.11 =
 * Updating widget CSS for better displaying on lower resolutions
