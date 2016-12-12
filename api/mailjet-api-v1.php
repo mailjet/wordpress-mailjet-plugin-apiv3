@@ -99,7 +99,7 @@ class WP_Mailjet_Api_V1
 		curl_setopt($curl_handle, CURLOPT_USERPWD, $this->apiKey . ':' . $this->secretKey);
 		curl_setopt($curl_handle, CURLOPT_VERBOSE, true);
 		curl_setopt($curl_handle, CURLINFO_HEADER_OUT, true);
-        	curl_setopt($curl_handle, CURLOPT_USERAGENT, 'wordpress-v1.4.1.12');
+        	curl_setopt($curl_handle, CURLOPT_USERAGENT, 'wordpress-v1.4.1.13');
 
 
 		$this->_request_post = false;
