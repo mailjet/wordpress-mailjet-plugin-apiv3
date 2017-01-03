@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.7
-Stable tag: 4.1.13
+Stable tag: 4.1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ Once your Mailjet plugin is installed, click on "Appearance" in the left-side me
 
 
 == Changelog ==
+
+= 4.1.14 =
+* Widget - disabled rewrite of subscription confirmation link
 
 = 4.1.13 =
 * Slight visual modifications - changed iframe left margin and width

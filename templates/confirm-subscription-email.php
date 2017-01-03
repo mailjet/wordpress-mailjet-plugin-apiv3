@@ -10,14 +10,14 @@
             <td style="height: 75px; line-height: 75px; width: 100%; vertical-align: middle; padding: 0 60px;">
                 <div id="opt-in-display-text" class="paint-area paint-area--text" style="text-align: center; color: grey; margin-bottom: 25px; line-height: normal;" contenteditable="true">__WP_URL__</div></td></tr>
         <tr>
-            <td><a class="subscribe" href="__CONFIRM_URL__" style="text-align: center;display: block;color: white;font-weight: 500;
+            <td><a rel="notrack" class="subscribe" href="__CONFIRM_URL__" style="text-align: center;display: block;color: white;font-weight: 500;
                 font-size: 15px;background-color: #3da7ea;text-transform: uppercase;text-decoration: none;width: 260px;margin:
                 auto;border-radius: 5px;padding: 16px;">__CLICK_HERE__</a></td>
         </tr>
         <tr>
             <td style="padding: 30px;" >
                 <span style="text-align: center;display: block; font-weight:bold; font-size:14px; text-decoration: none;">__COPY_PASTE_LINK__</span> <br />
-                <a class="subscribe" href="__CONFIRM_URL__" style="text-align: center;display: block;color: black; font-size: 12px; text-decoration: underline; margin: auto;">
+                <a rel="notrack" class="subscribe" href="__CONFIRM_URL__" style="text-align: center;display: block;color: black; font-size: 12px; text-decoration: underline; margin: auto;">
                     __CONFIRM_URL__
                 </a>
             </td>
