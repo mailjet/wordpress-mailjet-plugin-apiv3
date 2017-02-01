@@ -1,93 +1,100 @@
-# [API v3] Mailjet for WordPress
+=== Mailjet Email Newsletter Marketing ===
 
-Contributors: mailjet <br />
-Tags: email, marketing, signup, newsletter, widget, smtp, mailjet <br />
-Requires at least: 3.3.0 <br />
-Tested up to: 4.7 <br />
-Stable tag: 4.1.14 <br />
-License: GPLv2 or later <br />
+Contributors: mailjet
+Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
+Requires at least: 3.3.0
+Tested up to: 4.7
+Stable tag: 4.1.15
+License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Mailjet WordPress plugin allows you to send newsletter marketing and transactional emails directly from your WordPress site by reconfiguring the wp_mail() function to use Mailjet’s enhanced SMTP relay in conjunction with signup widgets that sync new user subscriptions directly to Mailjet as well as provide an easy drag-and-drop marketing newsletter tool to send marketing emails directly from with your site.
+Use Mailjet to create, send and track beautiful and engaging marketing and transactional emails directly from within your WordPress admin. 
 
+Includes customizable contact widget that automatically adds and syncs your website visitors’ into dedicated Mailjet contact lists. 
 
-## Description
+== Description ==
 
-Mailjet's official plugin for WordPress will allow you to:
+Mailjet’s official plugin on WordPress gives you  access to:
 
-* Send both transactional and marketing emails from your WordPress site;
-* Reconfigure your wp_mail() function to use Mailjet's SMTP instead of mail() for enhanced deliverability and tracking;
-* To easily create contact lists and manage personalisation variables;
-* Have the insight you need from a real-time dashboard showing opens, clicks, geographies, average time to click, user agents, etc;
-* Easily create and send marketing campaigns using drag and drop Newsletter builder or selecting from our template library;
-* Provide a signup widget, so your visitors can sign up to your Mailjet mailing lists.
+* Easy Email Management: 
+Create and manage all of your marketing and transactional email campaigns directly from your WordPress Admin. 
 
+* Sign Up Form & Contact Lists Management: 
+Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
 
-### Secure & real-time SMTP relay for all your emails
-- A lot of features and plugins from your WordPress site send email notifications. All these messages are very important for your users, as well as for your business. Therefore, you want to track success and ensure a successful delivery.
+* Automated Contact Synchronization: 
+Automatically synchronize your WordPress contacts into their own separate Mailjet email lists. With ongoing synchronization, you never have to think about contact management again. 
 
-Our plugin simply extends the WordPress wp_mail() function, to use Mailjet's SMTP instead. This will improve your deliverability. You will also get live and in-depth statistics to track and optimize in real time. Making the choice of Mailjet is the right solution for your [transactional emails](http://www.mailjet.com/features/transactional-email.html) , [bulk emails](http://www.mailjet.com/features/bulk-email.html) and [newsletter emails](https://www.mailjet.com/features/newsletter-service.html).
+* Campaign Builder Tool: 
+Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress Admin.
 
-### Sign up form & contact lists Management
--  Another great feature of this plugin is the sign up form Widget. It allows your site visitors to join your Mailjet lists. You can create contact lists directly from the plugin dashboard. The Widget will let you add forms to any post or any page.
+* World Class Deliverability: 
+Hit your subscribers’ inboxes every time with our global deliverability and routing infrastructure
 
-### Mailjet’s latest generation v3 iframes
--  Last but not least, the plugin features Mailjet’s latest v3 iframes to manage contacts, create drag-and-drop marketing campaigns and view in depth sending statistics directly from within the plug-in.
+* Insight and analytics: 
+Access real-time statistics on your campaigns showing opens, clicks, geographies, average time to click and more to optimize your email performance. 
 
-### Installing the Plugin
--  Enable Mailjet's Plugin like you would do for any other Wordpress plugin. Enter your Mailjet credentials and refer to the FAQs for any other information. If you don't have a Mailjet account yet, [signup now](https://app.mailjet.com/signup?p=wordpress-3.0) for free!
+* Data Compliance: 
+Mailjet is EU-data compliant, meaning that it guarantees an optimal level of email data privacy. 
 
-*** SECURITY UPDATE *** if you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics" and the login form appears AND your Mailjet account was created prior to August 2014, please go to [Account API keys](https://www.mailjet.com/account/api_keys) to regenerate a new Secret Key for the plug-in.
+* International UI and Support: 
+Mailjet offers user interfaces, documentation and 24/7 customer support in 4 languages (English, Spanish, French and German).
 
-### Installation
+*** SECURITY UPDATE *** if you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics"  and the login form appears AND your Mailjet account was created prior to August 2014, please go to [Account API keys](https://www.mailjet.com/account/api_keys) to regenerate a new Secret Key for the plug-in.
 
-
-1. Log in as administrator in WordPress.
+== Installation ==
+ 
+1. Log in as administrator in Wordpress.
 2. Go to Extensions > Add and send `mailjet-for-wordpress.zip`.
 3. Activate the Mailjet extension through the 'Plugins' menu in WordPress.
 
 You must have cURL extension enabled.
-Please make sure that in settings of your browser you have activated JavaScript. 
 
-Known issue : if you see the "Sign in" screen when clicking on List/Campaign/Statistics please make sure that you have entered your Mailjet API/Secret key in Parameters and click on "Save" button. Clicking on 'Save' will generate a new token for your specific IP address and give you access to Mailjet via the Plugin.
+*** SECURITY UPDATE *** if you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics"  and the login form appears AND your Mailjet account was created prior to August 2014, please go to [Account API keys](https://www.mailjet.com/account/api_keys) to regenerate a new Secret Key for the plug-in.
 
 ## Frequently Asked Questions
 
+= What is Mailjet? =
+[Mailjet](http://www.mailjet.com?aff=wordpressmj) is an all-in-one solution to send, track and deliver both marketing and transactional emails. Its cloud-based infrastructure is unique and highly scalable with a proprietary technology that optimizes email deliverability. Mailjet can be accessed either via an easy-to-use online drag-and-drop interface or via APIs that allow developers to integrate its features within their online app or service, or its sophisticated SMTP relay. 
 
-### What is Mailjet?
-[Mailjet](http://www.mailjet.com) is an all-in-one solution to send, track and deliver both marketing and transactional emails. Its Cloud-Based infrastructure is unique and highly scalable. A proprietary technology optimizes the sending and the deliverability of your messages.
+= Why use Mailjet on Wordpress? =
+Because you don’t have time to build a global leading email infrastructure and have a product or service to build and grow
+Because you want to compose responsive Newsletters that engage your users and boost your traffic or revenue without having to code
+Because you want the latest in email tracking technology that shows you which users open and click on your newsletters, when, on what device, on which links, etc.
+Because you want to contact a Support Helpdesk that works when you do whether you’re a morning person or a night owl. 
+Because you want to easily subscribe new users to your contact lists and not have to worry about keeping them in sync
+Because you want to make sure your emails get delivered to the inbox!
 
-### Why use Mailjet as an SMTP relay for WordPress?
-1 in 4 legitimate email gets lost or ends up a the spam folder. By Sending your email through Mailjet's SMTP relay, you will avoid this and make sure that your recipients receive your messages in real time, straight into their inbox. You will also be able to track the delivery (opens, bounces, etc.) as well as the activity of your emails (clicks, opens, etc.). On top of that, tools such as our Newsletter editor will let you create and send a beautiful marketing campaign in only a few minutes. All this added value comes with no engagement and very low prices.  
+= Do I need a Mailjet Account? =
+Yes. You can [create one for free](https://app.mailjet.com/signup?aff=wordpressmj): it's easy and it only takes a few minutes.
 
-### Do I need a Mailjet Account?
-Yes. You can create one for free: it's easy and it only takes a few minutes.
+= How to get started with this plugin? =
+Once you have a Mailjet account, an installation Wizard will guide you through. You want to use Mailjet as an SMTP relay, so you will need to change these parameters in your Wordpress email configuration: username and password. These credentials are provided in your 'My Account > API Keys' section [HERE](https://app.mailjet.com/account/api_keys).
+For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj). 
 
-### How to get started with this plugin?
-Once you have a Mailjet account, an installation Wizard will guide you through. You want to use Mailjet as an SMTP relay, so you will need to change these parameters in your WordPress email configuration: username and password. These credentials are provided in your 'My Account > API Keys' section [HERE](https://app.mailjet.com/account/api_keys)
+= How do I create a signup form or use the contact widget? =
+Once your Mailjet plugin is installed, click on "Appearance" in the left-side menu and then choose the "Widgets" section. Just drag the "Subscribe to Our Newsletter" widget and drop it where you want it to appear (i.e. the sidebar). For more precisions, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
 
-### How do I get synchronize my lists?
+= How do  I synchronize my contact lists? =
 Synchronization is automatic, that's the beauty of this plugin! It doesn't matter whether your lists were uploaded on your WordPress interface or on your Mailjet account: they will always remain up-to-date on both sides.
 
-### In which languages is this plugin available?
-This plugin is currently available in English, French, Spanish and German. Support is also provided in each of these languages at via our [online Helpdesk](https://www.mailjet.com/support/ticket)
+= In which languages is this plugin available? =
+The Mailjet Plugin is available in English, Spanish, French and German. 
+Need help? Our multilingual support team is here to answer your questions in any of these languages, any day of the week, at any time via our [online helpdesk](https://www.mailjet.com/support). 
 
-### How do I create a signup form?
-Once your Mailjet plugin is installed, click on "Appearance" in the left-side menu  and then choose the "Widgets" section. Just drag  the "Subscribe to Our Newsletter" widget and drop it where you want it to appear (i.e. the sidebar). For more precisions, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
-
-### What do I do if I see a "Sign-in" page when I click on List/Campaign/Statistics?
-
-Please go to the plug-in "Parameters" page and verify that you have entered your Mailjet API/Secret key combination and click on "Save" button. This will generate a new token for your specific IP address and give you access to Mailjet via the Plugin.
-
-## Screenshots
+== Screenshots ==
 
 1. Simply change a few parameters to get started.
 2. Manage your lists and contacts in no time!
 3. Create and send beautiful email campaigns
-4. View detailed statistics about your account
+4. Get instant insight on your campaign's performance with detailed statistics
 
+== Changelog ==
 
-## Changelog
+= 4.1.15 =
+* Updated screenshots
+* Updated header image
+* Updated Readme file
 
 = 4.1.14 =
 * Widget - disabled rewrite of subscription confirmation link
@@ -129,7 +136,7 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 = 4.1.3 =
 * Widget - meta property fix
 * Widget - on subscription, the code will check for valid input data types
-* Widget - the input contact meta properties now appear correctly in the front end when the site is in language other than the 4 languages supported (EN, FR, DE, ES)  
+* Widget - the input contact meta properties now appear correctly in the front end when the site is in language other than the 4 languages supported (EN, FR, DE, ES)
 
 = 4.1.2 =
 * Translations fixes
@@ -170,61 +177,61 @@ Please go to the plug-in "Parameters" page and verify that you have entered your
 = 3.1.18 =
 * Servers with PHP version 5.3 would be able to check if headers for ReplyTo already exist and add the Mailjet headers only if no ReplyTo headers are set.
 
-= 3.1.17 =
+= 3.1.17=
 * When we create a TOKEN we also send SentData containing plugin name
 
-= 3.1.16 =
+= 3.1.16=
 * Translation of the iframe and also some small corrections are executed for the translations from i18n folder;
 
-= 3.1.15 =
+= 3.1.15=
 * All strings are translated in german, french and spanish.
 
-= 3.1.14 =
+= 3.1.14=
 * Changed checking for correct sender.
 
-= 3.1.13 =
+= 3.1.13=
 * Modification of how to detect v1 and v3 users.
 
-= 3.1.12 =
+= 3.1.12=
 * Part of the translations are translated.
 
-= 3.1.11 =
+= 3.1.11=
 * We display more human readable messages for those cases when we enter wrong API/Secret Key and also our "from email" does not match with any of the sender part of our Mailjet's account
 
-= 3.1.10 =
+= 3.1.10=
 * Rename function my_save_extra_profile_fields to mailjet_my_save_extra_profile_fields
 
-= 3.1.9 =
+= 3.1.9=
 * Bug fix related to the compatibility of the plugin for v1 and v3 users
 
-= 3.1.8 =
+= 3.1.8=
 * Stop scripts from being output unnecessarily when we load the widget on the front-end.
 
-= 3.1.7 =
+= 3.1.7=
 * The user can set the port from the settings page.
 
-= 3.1.6 =
-* The administrator of the website is able to give access to the plugin for other user roles. 
+= 3.1.6=
+* The administrator of the website is able to give access to the plugin for other user roles.
 
-= 3.1.5 =
+= 3.1.5=
 * MJ_HOST and MJ_MAILER variables are moved to the api strategy patter class as public properties of the class. From now on, they are
 accessible from there.
 
-= 3.1.4 =
-* Add a confirmation message  when an user activates his/her contact widget on his/her WordPress admin
-* In the admin panel of WordPress, when a user try to add a "subscribe to our newsletter widget"  we have add a validation if he/she has choosen a contact list
+= 3.1.4=
+* Add a confirmation message  when an user activates his/her contact widget on his/her Wordpress admin
+* In the admin panel of WordPress, when a user try to add a "subscribe to our newsletter widget"  we have add a validation if he/she has chosen a contact list
 
-= 3.1.3 =
+= 3.1.3=
 * The position of the main Mailjet's menu takes a default value instead of value 101
 * Removed AKID from APIv3 calls from the plugin
 * Prevent plugin from hiding other plugin's page #10
 * README update
 
 = 3.1.2 =
-* README update with security issue
+* Updated readme
 
 = 3.1.1 =
-* Adjustments related to the subscription widget
+* Tag bug fix for V1 & V3 compatible plugin
 
 = 3.1.0 =
 * Supports V1 and V3 Mailjet's users, Add use tracking on the WordPress plugin, Fix IsActive parameter for token creation
@@ -239,7 +246,7 @@ accessible from there.
 * Bug fix on connecting contact to a list
 
 = 3.0.0 =
-* The pluging is switched to v3 mailjet's users, and also the communication with mailjet is mainly executed with iframes
+* The plugin is switched to v3 mailjet's users, and also the communication with mailjet is mainly executed with iframes
 
 = 1.2.8 =
 * Added cURL warning and missing translations
@@ -280,5 +287,5 @@ accessible from there.
 = 1.0.1 =
 * Bug fix on install.
 
-= 1.0 =
+= 1.0=
 * First stable release.
