@@ -10,7 +10,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Use Mailjet to create, send and track beautiful and engaging marketing and transactional emails directly from within your WordPress admin. 
 
-Includes customizable contact widget that automatically adds and syncs your website visitors’ into dedicated Mailjet contact lists. 
 
 == Description ==
 
@@ -90,6 +89,9 @@ Need help? Our multilingual support team is here to answer your questions in any
 4. Get instant insight on your campaign's performance with detailed statistics
 
 == Changelog ==
+
+= 4.1.16 =
+* Updated Readme file
 
 = 4.1.15 =
 * Updated screenshots
