@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.8
-Stable tag: 4.1.16
+Stable tag: 4.1.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,8 +39,6 @@ Mailjet is EU-data compliant, meaning that it guarantees an optimal level of ema
 * International UI and Support: 
 Mailjet offers user interfaces, documentation and 24/7 customer support in 4 languages (English, Spanish, French and German).
 
-*** SECURITY UPDATE *** if you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics"  and the login form appears AND your Mailjet account was created prior to August 2014, please go to [Account API keys](https://www.mailjet.com/account/api_keys) to regenerate a new Secret Key for the plug-in.
-
 == Installation ==
  
 1. Log in as administrator in Wordpress.
@@ -48,8 +46,6 @@ Mailjet offers user interfaces, documentation and 24/7 customer support in 4 lan
 3. Activate the Mailjet extension through the 'Plugins' menu in WordPress.
 
 You must have cURL extension enabled.
-
-*** SECURITY UPDATE *** if you connect your Mailjet account and get a "php_network_getaddresses: getaddrinfo failed" or if you try to open "contacts", "statistics"  and the login form appears AND your Mailjet account was created prior to August 2014, please go to [Account API keys](https://www.mailjet.com/account/api_keys) to regenerate a new Secret Key for the plug-in.
 
 ## Frequently Asked Questions
 
@@ -89,6 +85,15 @@ Need help? Our multilingual support team is here to answer your questions in any
 4. Get instant insight on your campaign's performance with detailed statistics
 
 == Changelog ==
+
+= 4.1.19 =
+* Updated text description, icon, screenshots and style
+
+= 4.1.18 =
+* Updated text description, icon, screenshots and style
+
+= 4.1.17 =
+* Updated Readme file
 
 = 4.1.16 =
 * Updated Readme file
