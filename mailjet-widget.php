@@ -570,7 +570,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         $this->getContactMetaProperties(false);
         // enqueue the scripts required for the widget (only if the widget is active)
         // scripts will appear in the footer which is good for speed
-        wp_enqueue_script('ajax-example', $this->pluginUrl . '/assets/js/ajax.js', array('jquery'));
+        wp_enqueue_script('ajax-example', plugins_url('/assets/js/ajax.js', __FILE__), array('jquery'));
         wp_localize_script('ajax-example', 'WPMailjet', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('ajax-example-nonce'),
