@@ -163,12 +163,11 @@ function my_show_extra_comment_fields($user)
     // Display the checkbox only for NOT-logged in users
     if (!$user_id && get_option('mailjet_comment_authors_list_id')) {
         ?>
-        <h4>Extra options</h4>
-            <fieldset>
-                <legend class="screen-reader-text"><span><?php _e('Subscribe to our mailing list') ?></span></legend>
-                <label for="admin_bar_front">
-                    <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" /> Subscribe to our mailing list</label>
-            </fieldset>
+            <label for="admin_bar_front">
+                <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
+                <?php _e('Subscribe to our mailing list', 'wp-mailjet') ?>
+            </label>
+            <br>
         <?php
     }
 }
