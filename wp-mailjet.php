@@ -117,13 +117,11 @@ function mailjet_settings_link($links, $file)
 
 add_filter('plugin_action_links', 'mailjet_settings_link', 10, 2);
 
-
 /* Add additional custom field */
 add_action('show_user_profile', 'my_show_extra_profile_fields');
 add_action('edit_user_profile', 'my_show_extra_profile_fields');
 add_action('register_form', 'my_show_extra_profile_fields');
 add_action('user_new_form', 'my_show_extra_profile_fields');
-
 
 function my_show_extra_profile_fields($user)
 {
@@ -152,7 +150,6 @@ function my_show_extra_profile_fields($user)
         <?php
     }
 }
-
 
 
 function my_show_extra_comment_fields($user)
@@ -187,7 +184,6 @@ if (get_option('mailjet_comment_authors_list_id')) {
     add_action('comment_form_after_fields', 'my_show_extra_comment_fields');
     add_action('wp_insert_comment','subscribe_comment_author');
 }
-
 
 function subscribe_comment_author($id){
 

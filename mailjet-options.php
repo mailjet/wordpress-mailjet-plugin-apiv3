@@ -247,9 +247,7 @@ class WP_Mailjet_Options
             );
 
             $form->addFieldset($commentAuthorsFieldset);
-
         }
-
 
 
         /* Add access field set */
