@@ -144,11 +144,31 @@ function my_show_extra_profile_fields($user)
                         <label for="admin_bar_front">
                             <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
                                 <?php echo(is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
-                                class="checkbox" />Mailjet Subscription widget</label>
+                                   class="checkbox" />Mailjet Subscription widget</label>
                     </fieldset>
                 </td>
             </tr>
         </table>
+        <?php
+    }
+}
+
+
+
+function my_show_extra_comment_fields($user)
+{
+    global $current_user;
+    $user_id = $current_user->ID;
+
+    // Display the checkbox only for NOT-logged in users
+    if (!$user_id && get_option('mailjet_comment_authors_list_id')) {
+        ?>
+        <h4>Extra options</h4>
+            <fieldset>
+                <legend class="screen-reader-text"><span><?php _e('Subscribe to our mailing list') ?></span></legend>
+                <label for="admin_bar_front">
+                    <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" /> Subscribe to our mailing list</label>
+            </fieldset>
         <?php
     }
 }
@@ -163,6 +183,69 @@ if (get_option('mailjet_auto_subscribe_list_id')) {
     add_action('user_register', 'register_extra_fields');
 }
 
+/* Add custom field to comment form and process it on form submit */
+if (get_option('mailjet_comment_authors_list_id')) {
+    add_action('comment_form_after_fields', 'my_show_extra_comment_fields');
+    add_action('wp_insert_comment','subscribe_comment_author');
+}
+
+
+function subscribe_comment_author($id){
+
+    $comment = get_comment($id);
+    $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
+    $userId = filter_var($comment->user_id, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!validate_email($authorEmail)) {
+        _e('Invalid email', 'wp-mailjet');
+        die;
+    }
+
+    $subscribe = filter_var($_POST['mailjet_comment_authors_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
+    mailjet_subscribe_confirmation_from_comment_form($subscribe, $authorEmail);
+}
+function validate_email($email)
+{
+    return (preg_match("/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/", $email) ||
+        !preg_match("/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/", $email)) ? FALSE : TRUE;
+}
+
+/**
+ *  Subscribe or unsubscribe a wordpress comment author in/from a Mailjet's contact list when the comment is saved
+ */
+function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
+{
+    if (get_option('mailjet_password') && get_option('mailjet_username') && isset($user_email)) {
+        $MailjetApi = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
+        if ($subscribe && $list_id = get_option('mailjet_comment_authors_list_id')) {
+            // Add the user to a contact list
+            $contacts[] = array(
+                'Email' => $user_email
+            );
+
+            $MailjetApi->addContact(array(
+                'action' => 'addforce',
+                'ListID' => $list_id,
+                'contacts' => $contacts
+            ));
+
+            echo '<p class="success" listId="' . get_option('mailjet_comment_authors_list_id') . '">';
+            echo sprintf(__("Thanks for subscribing with %s to contact list %s", 'wp-mailjet-subscription-widget'), $user_email, $list_id);
+            echo '</p>';
+        } elseif (!$subscribe && $list_id = get_option('mailjet_comment_authors_list_id')) {
+            // Remove a user from a contact lists
+            $MailjetApi->removeContact(array(
+                'Email' => $user_email,
+                'ListID' => $list_id
+            ));
+            echo '<p class="error" listId="' . get_option('mailjet_comment_authors_list_id') . '">';
+            echo sprintf(__("The contact %s is removed from contact list %s", 'wp-mailjet-subscription-widget'), $user_email, $list_id);
+            echo '</p>';
+        }
+        die();
+    }
+}
+
 
 /**
  *  Set extra profile fields when the profile is saved
@@ -173,6 +256,44 @@ function register_extra_fields($user_id, $password = "", $meta = array())
 
     update_user_meta($user_id, 'mailjet_subscribe_ok', $subscribe);
     mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
+}
+
+/**
+ * Email the collected widget data to the customer with a verification token
+ * @param void
+ * @return void
+ */
+function mailjet_subscribe_confirmation_from_comment_form($subscribe, $user_email)
+{
+    $error = empty($user_email) ? 'Email field is empty' : false;
+    if (false !== $error) {
+        _e($error, 'wp-mailjet-subscription-widget');
+        die;
+    }
+
+    if (!validate_email($user_email)) {
+        _e('Invalid email', 'wp-mailjet-subscription-widget');
+        die;
+    }
+
+    $message = file_get_contents(dirname(__FILE__) . '/templates/confirm-subscription-email.php');
+    $emailParams = array(
+        '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet-subscription-widget'),
+        '__EMAIL_HEADER__' => __('Please Confirm Your Subscription To', 'wp-mailjet-subscription-widget'),
+        '__WP_URL__' => sprintf('<a href="%s" target="_blank">%s</a>', get_site_url(), get_site_url()),
+        '__CONFIRM_URL__' => get_site_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email),
+        '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'),
+        '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet-subscription-widget'),
+        '__FROM_NAME__' => get_option('blogname'),
+        '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'wp-mailjet-subscription-widget'),
+        '__THANKS__' => __('Thanks,', 'wp-mailjet-subscription-widget')
+    );
+    foreach ($emailParams as $key => $value) {
+        $message = str_replace($key, $value, $message);
+    }
+    add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+    wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet-subscription-widget'), $message,
+        array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
 }
 
 
@@ -187,10 +308,29 @@ function mailjet_subscribe_unsub_user_to_list($subscribe, $user_id)
 
         if ($subscribe && $list_id = get_option('mailjet_auto_subscribe_list_id')) {
             // Add the user to a contact list
-            $MailjetApi->addContact(array(
-                'Email' => (isset($_POST['email'])) ? $_POST['email'] : $user->data->user_email,
-                'ListID' => $list_id
+
+            $MailjetApi->createMetaContactProperty(array(
+                'name' => 'wp_user_role',
+                'dataType' => 'str'
             ));
+
+            $userInfo = get_userdata($user_id);
+            $userRoles = $userInfo->roles;
+
+            if (!empty($userRoles[0])) {
+                $contactProperties['wp_user_role'] = $userRoles[0];
+            }
+            $contacts[] = array(
+                'Email' => (isset($_POST['email'])) ? $_POST['email'] : $user->data->user_email,
+                'Properties' => $contactProperties
+            );
+
+            $MailjetApi->addContact(array(
+                'action' => 'addforce',
+                'ListID' => $list_id,
+                'contacts' => $contacts
+            ));
+
         } elseif (!$subscribe && $list_id = get_option('mailjet_auto_subscribe_list_id')) {
             // Remove a user from a contact lists
             $MailjetApi->removeContact(array(
@@ -218,3 +358,9 @@ function mailjet_my_save_extra_profile_fields($user_id)
 
 load_plugin_textdomain('wp-mailjet', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
 load_plugin_textdomain('wp-mailjet-subscription-widget', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
+
+if (!empty($_GET['mj_sub_comment_author_token'])
+    &&
+    $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+    mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
+}
