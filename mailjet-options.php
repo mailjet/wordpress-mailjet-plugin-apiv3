@@ -174,7 +174,7 @@ class WP_Mailjet_Options
 
 // Initial Sync
             // get the name of the preselected contact list
-            $selectedContactListName = 'Not yet subscribed, chose list and save settings';
+            $selectedContactListName = __('Not yet subscribed, chose list and save settings', 'wp-mailjet');
             if (is_array($resp)) {
                 foreach ($resp as $contactList) {
                     if ($contactList['value'] == get_option('mailjet_initial_sync_list_id')) {
@@ -218,7 +218,7 @@ class WP_Mailjet_Options
 
 
             // get the name of the preselected contact list
-            $selectedContactListName = 'Not yet selected, chose list and save settings';
+            $selectedContactListName = __('Not yet selected, chose list and save settings', 'wp-mailjet');
             if (is_array($resp)) {
                 foreach ($resp as $contactList) {
                     if ($contactList['value'] == get_option('mailjet_comment_authors_list_id')) {
