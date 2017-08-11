@@ -132,21 +132,12 @@ function my_show_extra_profile_fields($user)
             mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
         }
         ?>
-        <h3>Extra profile information</h3>
-        <table class="form-table">
-            <tr>
-                <th><label for="mailjet_subscribe_ok"><?php _e('Subscribe') ?></label></th>
-                <td>
-                    <fieldset>
-                        <legend class="screen-reader-text"><span><?php _e('Subscribe') ?></span></legend>
-                        <label for="admin_bar_front">
-                            <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
-                                <?php echo(is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
-                                   class="checkbox" />Mailjet Subscription widget</label>
-                    </fieldset>
-                </td>
-            </tr>
-        </table>
+            <label for="admin_bar_front">
+                <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
+                    <?php echo(is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
+                       class="checkbox" /> <?php _e('Subscribe to our mailing list', 'wp-mailjet') ?></label>
+        </br>
+        </br>
         <?php
     }
 }
@@ -225,7 +216,7 @@ function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
             ));
 
             echo '<p class="success" listId="' . get_option('mailjet_comment_authors_list_id') . '">';
-            echo sprintf(__("Thanks for subscribing with %s to contact list %s", 'wp-mailjet-subscription-widget'), $user_email, $list_id);
+            echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $user_email);
             echo '</p>';
         } elseif (!$subscribe && $list_id = get_option('mailjet_comment_authors_list_id')) {
             // Remove a user from a contact lists
@@ -234,7 +225,7 @@ function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
                 'ListID' => $list_id
             ));
             echo '<p class="error" listId="' . get_option('mailjet_comment_authors_list_id') . '">';
-            echo sprintf(__("The contact %s is removed from contact list %s", 'wp-mailjet-subscription-widget'), $user_email, $list_id);
+            echo sprintf(__("The contact %s is unsubscribed", 'wp-mailjet-subscription-widget'), $user_email);
             echo '</p>';
         }
         die();

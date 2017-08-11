@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-10 11:51+0300\n"
-"PO-Revision-Date: 2017-08-10 11:52+0300\n"
+"POT-Creation-Date: 2017-08-11 16:27+0300\n"
+"PO-Revision-Date: 2017-08-11 16:28+0300\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "Language: fr\n"
@@ -204,7 +204,7 @@ msgid ""
 msgstr "Activer ou désactiver l'envoi de vos emails via votre compte Mailjet"
 
 #: mailjet-options.php:177
-msgid "Not yet subscribed, chose list and save settings"
+msgid "Not yet subscribed, choose list and save settings"
 msgstr ""
 
 #: mailjet-options.php:187
@@ -241,7 +241,7 @@ msgid "Subscribe Wordpress users"
 msgstr ""
 
 #: mailjet-options.php:221
-msgid "Not yet selected, chose list and save settings"
+msgid "Not yet selected, choose list and save settings"
 msgstr ""
 
 #: mailjet-options.php:231
@@ -272,42 +272,42 @@ msgstr "Ajouter les nouveaux utilisateurs à cette liste"
 msgid "Subscribe comment authors"
 msgstr ""
 
-#: mailjet-options.php:257
+#: mailjet-options.php:255
 msgid "Administrator"
 msgstr "Administrateur"
 
-#: mailjet-options.php:257
+#: mailjet-options.php:255
 msgid "User roles able to access the plugin"
 msgstr "Rôles d'utilisateur ayant accès au plug-in"
 
-#: mailjet-options.php:258
+#: mailjet-options.php:256
 msgid "Editor"
 msgstr "Editeur"
 
-#: mailjet-options.php:259
+#: mailjet-options.php:257
 msgid "Author"
 msgstr "Auteur"
 
-#: mailjet-options.php:260
+#: mailjet-options.php:258
 msgid "Contributor"
 msgstr "Contributeur"
 
-#: mailjet-options.php:261
+#: mailjet-options.php:259
 msgid "Subscriber"
 msgstr "Abonné"
 
-#: mailjet-options.php:264
+#: mailjet-options.php:262
 msgid "Access Settings"
 msgstr "Paramètres d'accès"
 
-#: mailjet-options.php:266
+#: mailjet-options.php:264
 msgid ""
 "Select which WordPress admin user roles (in addition to Administrator) will "
 "also have access to the Mailjet Plug-in"
 msgstr ""
 "Spécifiez les rôles d'utilisateur qui peuvent accéder au plug-in Mailjet"
 
-#: mailjet-options.php:421
+#: mailjet-options.php:419
 msgid ""
 "Please make sure that you are using the correct API key and secret key "
 "associated to your mailjet account (from email)."
@@ -315,24 +315,24 @@ msgstr ""
 "Veillez à utiliser la bonne clé d'API et la clé secrète associée à votre "
 "compte Mailjet (qui vous a été envoyée par e-mail)."
 
-#: mailjet-options.php:436
+#: mailjet-options.php:434
 msgid "Your test mail from Mailjet"
 msgstr "Votre email test depuis Mailjet"
 
-#: mailjet-options.php:437
+#: mailjet-options.php:435
 #, php-format
 msgid "Your Mailjet configuration is ok!SSL: %s Port: %s"
 msgstr "Votre configuration Mailjet est OK !SSL: %s Port: %s"
 
-#: mailjet-options.php:446
+#: mailjet-options.php:444
 msgid " and your test message was sent."
 msgstr " et votre message test a été envoyé."
 
-#: mailjet-options.php:453 mailjet-options.php:455
+#: mailjet-options.php:451 mailjet-options.php:453
 msgid "Your settings have been saved successfully"
 msgstr "Vos paramètres ont été sauvegardés avec succès"
 
-#: mailjet-options.php:457
+#: mailjet-options.php:455
 msgid ""
 "Your settings have been saved, but your port and SSL settings were changed "
 "as follows to ensure delivery"
@@ -340,7 +340,7 @@ msgstr ""
 "Vos paramètres on été changés, mais vos options SSL on été modifiées pour "
 "garantir le fonctionnement du plugin."
 
-#: mailjet-options.php:467
+#: mailjet-options.php:465
 #, php-format
 msgid ""
 "Please verify that you have entered your API and secret key correctly. If "
@@ -354,7 +354,7 @@ msgstr ""
 "compte ») (<a href=\"%s\" target=\"_blank\">%s</a>) pour générer un nouvelle "
 "clé secrète pour le plug-in."
 
-#: mailjet-options.php:471
+#: mailjet-options.php:469
 msgid "There is an error with your settings. please correct and try again"
 msgstr "Il y a une erreur avec vos paramètres. Merci de corriger et réessayer"
 
@@ -371,7 +371,7 @@ msgid ""
 "widget by clicking on \"Next\" button and complete step2 and step3."
 msgstr ""
 
-#: mailjet-widget.php:434 wp-mailjet.php:200 wp-mailjet.php:275
+#: mailjet-widget.php:434 wp-mailjet.php:195 wp-mailjet.php:270
 msgid "Invalid email"
 msgstr ""
 
@@ -380,33 +380,33 @@ msgstr ""
 msgid "The contact %s is already subscribed"
 msgstr ""
 
-#: mailjet-widget.php:482 wp-mailjet.php:281
+#: mailjet-widget.php:482 wp-mailjet.php:276
 msgid "Confirm your mailing list subscription"
 msgstr ""
 
-#: mailjet-widget.php:483 wp-mailjet.php:282
+#: mailjet-widget.php:483 wp-mailjet.php:277
 msgid "Please Confirm Your Subscription To"
 msgstr ""
 
-#: mailjet-widget.php:486 wp-mailjet.php:285
+#: mailjet-widget.php:486 wp-mailjet.php:280
 msgid "Click here to confirm"
 msgstr ""
 
-#: mailjet-widget.php:487 wp-mailjet.php:286
+#: mailjet-widget.php:487 wp-mailjet.php:281
 msgid "You may copy/paste this link into your browser:"
 msgstr ""
 
-#: mailjet-widget.php:489 wp-mailjet.php:288
+#: mailjet-widget.php:489 wp-mailjet.php:283
 msgid ""
 "Did not ask to subscribe to this list? Or maybe you have changed your mind? "
 "Then simply ignore this email and you will not be subscribed"
 msgstr ""
 
-#: mailjet-widget.php:490 wp-mailjet.php:289
+#: mailjet-widget.php:490 wp-mailjet.php:284
 msgid "Thanks,"
 msgstr ""
 
-#: mailjet-widget.php:496 wp-mailjet.php:295
+#: mailjet-widget.php:496 wp-mailjet.php:290
 msgid "Subscription Confirmation"
 msgstr ""
 
@@ -447,20 +447,20 @@ msgstr ""
 "cela dès maintenant</a> ? <a href=\"%1$s\" style=\"display:block; float:"
 "right;\">Cacher ce message</a>"
 
-#: wp-mailjet.php:140 wp-mailjet.php:143
+#: wp-mailjet.php:138 wp-mailjet.php:141
 msgid "Subscribe"
 msgstr "S'abonner"
 
-#: wp-mailjet.php:168
+#: wp-mailjet.php:165
 msgid "Subscribe to our mailing list"
 msgstr "Abonnez-vous à notre liste de diffusion"
 
-#: wp-mailjet.php:233
+#: wp-mailjet.php:228
 #, php-format
 msgid "Thanks for subscribing with %s to contact list %s"
 msgstr ""
 
-#: wp-mailjet.php:242
+#: wp-mailjet.php:237
 #, php-format
 msgid "The contact %s is removed from contact list %s"
 msgstr ""

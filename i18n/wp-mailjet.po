@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-10 11:44+0300\n"
-"PO-Revision-Date: 2017-08-10 11:46+0300\n"
+"POT-Creation-Date: 2017-08-11 16:26+0300\n"
+"PO-Revision-Date: 2017-08-11 16:26+0300\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "Language: en\n"
@@ -203,7 +203,9 @@ msgstr ""
 "Enable or disable the sending of your emails through your Mailjet account"
 
 #: mailjet-options.php:177
-msgid "Not yet subscribed, chose list and save settings"
+#, fuzzy
+#| msgid "Not yet subscribed, chose list and save settings"
+msgid "Not yet subscribed, choose list and save settings"
 msgstr "Not yet subscribed, chose list and save settings"
 
 #: mailjet-options.php:187
@@ -224,7 +226,6 @@ msgid "Disable initial sync"
 msgstr "Disable initial sync"
 
 #: mailjet-options.php:196
-#| msgid "Autosubscribe new users to this list"
 msgid "Subscribe existing users to this list"
 msgstr "Subscribe existing users to this list"
 
@@ -233,7 +234,6 @@ msgid "Disable autosubscribe"
 msgstr "Disable autosubscribe"
 
 #: mailjet-options.php:204
-#| msgid "Autosubscribe new users to this list"
 msgid "Auto subscribe new users to this list"
 msgstr "Auto subscribe new users to this list"
 
@@ -242,8 +242,9 @@ msgid "Subscribe Wordpress users"
 msgstr "Subscribe Wordpress users"
 
 #: mailjet-options.php:221
-msgid "Not yet selected, chose list and save settings"
-msgstr "Not yet selected, chose list and save settings"
+#| msgid "Not yet selected, chose list and save settings"
+msgid "Not yet selected, choose list and save settings"
+msgstr "Not yet selected, choose list and save settings"
 
 #: mailjet-options.php:231
 msgid ""
@@ -261,12 +262,10 @@ msgid "Currently selected contact list:  <b>%s</b>"
 msgstr "Currently selected contact list:  <b>%s</b>"
 
 #: mailjet-options.php:235
-#| msgid "Disable autosubscribe"
 msgid "Disable comment authors subscription"
 msgstr "Disable comment authors subscription"
 
 #: mailjet-options.php:240
-#| msgid "Autosubscribe new users to this list"
 msgid "Allow comment authors to subscribe to this list"
 msgstr "Allow comment authors to subscribe to this list"
 
@@ -274,35 +273,35 @@ msgstr "Allow comment authors to subscribe to this list"
 msgid "Subscribe comment authors"
 msgstr "Subscribe comment authors"
 
-#: mailjet-options.php:257
+#: mailjet-options.php:255
 msgid "Administrator"
 msgstr "Administrator"
 
-#: mailjet-options.php:257
+#: mailjet-options.php:255
 msgid "User roles able to access the plugin"
 msgstr "User roles able to access the plugin"
 
-#: mailjet-options.php:258
+#: mailjet-options.php:256
 msgid "Editor"
 msgstr "Editor"
 
-#: mailjet-options.php:259
+#: mailjet-options.php:257
 msgid "Author"
 msgstr "Author"
 
-#: mailjet-options.php:260
+#: mailjet-options.php:258
 msgid "Contributor"
 msgstr "Contributor"
 
-#: mailjet-options.php:261
+#: mailjet-options.php:259
 msgid "Subscriber"
 msgstr "Subscriber"
 
-#: mailjet-options.php:264
+#: mailjet-options.php:262
 msgid "Access Settings"
 msgstr "Access Settings"
 
-#: mailjet-options.php:266
+#: mailjet-options.php:264
 msgid ""
 "Select which WordPress admin user roles (in addition to Administrator) will "
 "also have access to the Mailjet Plug-in"
@@ -310,7 +309,7 @@ msgstr ""
 "Select which WordPress admin user roles (in addition to Administrator) will "
 "also have access to the Mailjet Plug-in"
 
-#: mailjet-options.php:421
+#: mailjet-options.php:419
 msgid ""
 "Please make sure that you are using the correct API key and secret key "
 "associated to your mailjet account (from email)."
@@ -318,24 +317,24 @@ msgstr ""
 "Please make sure that you are using the correct API key and secret key "
 "associated to your mailjet account (from email)."
 
-#: mailjet-options.php:436
+#: mailjet-options.php:434
 msgid "Your test mail from Mailjet"
 msgstr "Your test mail from Mailjet"
 
-#: mailjet-options.php:437
+#: mailjet-options.php:435
 #, php-format
 msgid "Your Mailjet configuration is ok!SSL: %s Port: %s"
 msgstr "Your Mailjet configuration is ok!SSL: %s Port: %s"
 
-#: mailjet-options.php:446
+#: mailjet-options.php:444
 msgid " and your test message was sent."
 msgstr " and your test message was sent."
 
-#: mailjet-options.php:453 mailjet-options.php:455
+#: mailjet-options.php:451 mailjet-options.php:453
 msgid "Your settings have been saved successfully"
 msgstr "Your settings have been saved successfully"
 
-#: mailjet-options.php:457
+#: mailjet-options.php:455
 msgid ""
 "Your settings have been saved, but your port and SSL settings were changed "
 "as follows to ensure delivery"
@@ -343,7 +342,7 @@ msgstr ""
 "Your settings have been saved, but your port and SSL settings were changed "
 "as follows to ensure delivery"
 
-#: mailjet-options.php:467
+#: mailjet-options.php:465
 #, php-format
 msgid ""
 "Please verify that you have entered your API and secret key correctly. If "
@@ -356,7 +355,7 @@ msgstr ""
 "API keys (<a href=\"%s\" target=\"_blank\">%s</a>) to regenerate a new "
 "Secret Key for the plug-in."
 
-#: mailjet-options.php:471
+#: mailjet-options.php:469
 msgid "There is an error with your settings. please correct and try again"
 msgstr "There is an error with your settings. please correct and try again"
 
@@ -378,7 +377,7 @@ msgstr ""
 "contact properties available. You can still configure a Mailjet subscription "
 "widget by clicking on \"Next\" button and complete step2 and step3."
 
-#: mailjet-widget.php:434 wp-mailjet.php:200 wp-mailjet.php:275
+#: mailjet-widget.php:434 wp-mailjet.php:195 wp-mailjet.php:270
 msgid "Invalid email"
 msgstr "Invalid email"
 
@@ -387,23 +386,23 @@ msgstr "Invalid email"
 msgid "The contact %s is already subscribed"
 msgstr "The contact %s is already subscribed"
 
-#: mailjet-widget.php:482 wp-mailjet.php:281
+#: mailjet-widget.php:482 wp-mailjet.php:276
 msgid "Confirm your mailing list subscription"
 msgstr "Confirm your mailing list subscription"
 
-#: mailjet-widget.php:483 wp-mailjet.php:282
+#: mailjet-widget.php:483 wp-mailjet.php:277
 msgid "Please Confirm Your Subscription To"
 msgstr "Please Confirm Your Subscription To"
 
-#: mailjet-widget.php:486 wp-mailjet.php:285
+#: mailjet-widget.php:486 wp-mailjet.php:280
 msgid "Click here to confirm"
 msgstr "Click here to confirm"
 
-#: mailjet-widget.php:487 wp-mailjet.php:286
+#: mailjet-widget.php:487 wp-mailjet.php:281
 msgid "You may copy/paste this link into your browser:"
 msgstr "You may copy/paste this link into your browser:"
 
-#: mailjet-widget.php:489 wp-mailjet.php:288
+#: mailjet-widget.php:489 wp-mailjet.php:283
 msgid ""
 "Did not ask to subscribe to this list? Or maybe you have changed your mind? "
 "Then simply ignore this email and you will not be subscribed"
@@ -411,11 +410,11 @@ msgstr ""
 "Did not ask to subscribe to this list? Or maybe you have changed your mind? "
 "Then simply ignore this email and you will not be subscribed"
 
-#: mailjet-widget.php:490 wp-mailjet.php:289
+#: mailjet-widget.php:490 wp-mailjet.php:284
 msgid "Thanks,"
 msgstr "Thanks,"
 
-#: mailjet-widget.php:496 wp-mailjet.php:295
+#: mailjet-widget.php:496 wp-mailjet.php:290
 msgid "Subscription Confirmation"
 msgstr "Subscription Confirmation"
 
@@ -457,20 +456,20 @@ msgstr ""
 "plugin\">do so now</a> to send your emails through <b>Mailjet</b> <a href="
 "\"%1$s\" style=\"display:block; float:right;\">Hide Notice</a>"
 
-#: wp-mailjet.php:140 wp-mailjet.php:143
+#: wp-mailjet.php:138 wp-mailjet.php:141
 msgid "Subscribe"
 msgstr "Subscribe"
 
-#: wp-mailjet.php:168
+#: wp-mailjet.php:165
 msgid "Subscribe to our mailing list"
 msgstr "Subscribe to our mailing list"
 
-#: wp-mailjet.php:233
+#: wp-mailjet.php:228
 #, php-format
 msgid "Thanks for subscribing with %s to contact list %s"
 msgstr "Thanks for subscribing with %s to contact list %s"
 
-#: wp-mailjet.php:242
+#: wp-mailjet.php:237
 #, php-format
 msgid "The contact %s is removed from contact list %s"
 msgstr "The contact %s is removed from contact list %s"

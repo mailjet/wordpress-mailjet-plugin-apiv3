@@ -11,9 +11,6 @@ jQuery(document).ready(function ($) {
     $('select[name=mailjet_initial_sync_list_id]').ready(function (e) {
         $('select[name=mailjet_initial_sync_list_id]').val('');
     });
-    $('select[name=mailjet_comment_authors_list_id]').ready(function (e) {
-        $('select[name=mailjet_comment_authors_list_id]').val('');
-    });
 
     removeSpaces = function ($el) {
         $el.val($el.val().split(' ').join(''));
