@@ -190,18 +190,20 @@ class WP_Mailjet_Options
 
             $lists = array(array('value' => '', 'label' => __('Disable initial sync', 'wp-mailjet')));
             if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
+                usort($resp, array($this, 'sortByLabel'));
                 $lists = array_merge($lists, $resp);
             }
-            usort($lists, array($this, 'sortByLabel'));
+
             $syncOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_initial_sync_list_id', '', 'select',
                 get_option('mailjet_initial_sync_list_id'), __('Subscribe existing users to this list', 'wp-mailjet'), FALSE, $lists);
 
 // Auto subscribe
             $lists = array(array('value' => '', 'label' => __('Disable autosubscribe', 'wp-mailjet')));
             if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
+                usort($resp, array($this, 'sortByLabel'));
                 $lists = array_merge($lists, $resp);
             }
-            usort($lists, array($this, 'sortByLabel'));
+
             $syncOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_auto_subscribe_list_id', '', 'select',
                 get_option('mailjet_auto_subscribe_list_id'), __('Auto subscribe new users to this list', 'wp-mailjet'), FALSE, $lists);
 
@@ -236,10 +238,10 @@ class WP_Mailjet_Options
 
             $lists = array(array('value' => '', 'label' => __('Disable comment authors subscription', 'wp-mailjet')));
             if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
+                usort($resp, array($this, 'sortByLabel'));
                 $lists = array_merge($lists, $resp);
             }
 
-            usort($lists, array($this, 'sortByLabel'));
             $commentAuthorsOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_comment_authors_list_id', '', 'select',
                 get_option('mailjet_comment_authors_list_id'), __('Allow comment authors to subscribe to this list', 'wp-mailjet'), FALSE, $lists);
 
