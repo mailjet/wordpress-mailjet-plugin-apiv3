@@ -252,7 +252,7 @@ class WP_Mailjet_Options
                     $commentAuthorsSyncStatus = 'Active';
                 }
                 if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate) && !empty($commentAuthorsSyncStatus)) {
-                    $lastSyncMessage = sprintf(__('Comment authors sync is <b>%s</b>! Previously comment authors sync was activated on <b>%s</b> and used contact list <b>%s</b>', 'wp-mailjet'), $commentAuthorsSyncStatus, $lastSyncedDate, $lastSyncedContactListName);
+                    $lastSyncMessage = sprintf(__('Comment authors sync is <b>%s</b>!', 'wp-mailjet'), $commentAuthorsSyncStatus);
                 }
             }
 
@@ -393,12 +393,12 @@ class WP_Mailjet_Options
             update_option('mailjet_port', $fields['mailjet_port']);
             if (!empty($fields['mailjet_initial_sync_list_id'])) {
                 update_option('mailjet_initial_sync_last_list_id', $fields['mailjet_initial_sync_list_id']);
-                update_option('mailjet_initial_sync_last_date', date("Y-m-d\TH:i:s\Z", time()));
+                update_option('mailjet_initial_sync_last_date', current_time("Y-m-d H:i:s "));
             }
             update_option('mailjet_initial_sync_list_id', $fields['mailjet_initial_sync_list_id']);
             if (!empty($fields['mailjet_comment_authors_list_id'])) {
                 update_option('mailjet_comment_authors_last_list_id', $fields['mailjet_comment_authors_list_id']);
-                update_option('mailjet_comment_authors_list_date', date("Y-m-d\TH:i:s\Z", time()));
+                update_option('mailjet_comment_authors_list_date', current_time("Y-m-d H:i:s "));
             }
             update_option('mailjet_comment_authors_list_id', $fields['mailjet_comment_authors_list_id']);
             update_option('mailjet_auto_subscribe_list_id', $fields['mailjet_auto_subscribe_list_id']);
