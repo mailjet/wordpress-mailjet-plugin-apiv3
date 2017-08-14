@@ -174,18 +174,31 @@ class WP_Mailjet_Options
 
 // Initial Sync
             // get the name of the preselected contact list
-            $selectedContactListName = __('Not yet subscribed, choose list and save settings', 'wp-mailjet');
+            $lastSyncMessage = __('Initial sync not yet executed, choose a list and save settings to start it', 'wp-mailjet');
+            $lastSyncedContactListName = '';
+            $lastSyncedDate = '';
+            $initialSyncStatus = 'Inactive';
             if (is_array($resp)) {
                 foreach ($resp as $contactList) {
-                    if ($contactList['value'] == get_option('mailjet_initial_sync_list_id')) {
-                        $selectedContactListName = $contactList['label'];
+                    if ($contactList['value'] == get_option('mailjet_initial_sync_last_list_id')) {
+                        $lastSyncedContactListName = $contactList['label'];
                     }
+                }
+                if (get_option('mailjet_initial_sync_last_date')) {
+                    $lastSyncedDate = get_option('mailjet_initial_sync_last_date');
+                }
+                if (get_option('mailjet_initial_sync_list_id')) {
+                    $initialSyncStatus = 'Active';
+                }
+
+                if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate && !empty($initialSyncStatus))) {
+                    $lastSyncMessage = sprintf(__('Initial users sync is <b>%s</b>! Existing contacts subscribed to <b>%s</b> on  <b>%s</b>', 'wp-mailjet'), $initialSyncStatus, $lastSyncedContactListName, $lastSyncedDate);
                 }
             }
 
             $desc = '<ul>';
             $desc .= '<li>' . sprintf(__('Choose a Mailjet contact list which you would like to subscribe your Wordpress users to.', 'wp-mailjet')) . '</li>';
-            $desc .= '<li>' . sprintf(__('Existing contacts already subscribed to contact list:  <b>%s</b>', 'wp-mailjet'), $selectedContactListName) . '</li>';
+            $desc .= '<li>' . $lastSyncMessage . '</li>';
             $desc .= '</ul>';
 
             $lists = array(array('value' => '', 'label' => __('Disable initial sync', 'wp-mailjet')));
@@ -222,18 +235,31 @@ class WP_Mailjet_Options
 
 
             // get the name of the preselected contact list
-            $selectedContactListName = __('Not yet selected, choose list and save settings', 'wp-mailjet');
+            $lastSyncMessage = __('Comment author sync not yet activated, choose a list and save settings to activate it', 'wp-mailjet');
+            $lastSyncedContactListName = '';
+            $lastSyncedDate = '';
+            $commentAuthorsSyncStatus = 'Inactive';
             if (is_array($resp)) {
                 foreach ($resp as $contactList) {
-                    if ($contactList['value'] == get_option('mailjet_comment_authors_list_id')) {
-                        $selectedContactListName = $contactList['label'];
+                    if ($contactList['value'] == get_option('mailjet_comment_authors_last_list_id')) {
+                        $lastSyncedContactListName = $contactList['label'];
                     }
+                }
+                if (get_option('mailjet_comment_authors_list_date')) {
+                    $lastSyncedDate = get_option('mailjet_comment_authors_list_date');
+                }
+                if (get_option('mailjet_comment_authors_list_id')) {
+                    $commentAuthorsSyncStatus = 'Active';
+                }
+                if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate) && !empty($commentAuthorsSyncStatus)) {
+                    $lastSyncMessage = sprintf(__('Comment authors sync is <b>%s</b>! Previously comment authors sync was activated on <b>%s</b> and used contact list <b>%s</b>', 'wp-mailjet'), $commentAuthorsSyncStatus, $lastSyncedDate, $lastSyncedContactListName);
                 }
             }
 
+
             $desc = '<ul>';
             $desc .= '<li>' . sprintf(__('This feature adds a "Subscribe to our mailing list" checkbox in the "Leave a reply" form, so that comment authors can automatically join a contact list of your choice.', 'wp-mailjet')) . '</li>';
-            $desc .= '<li>' . sprintf(__('Currently selected contact list:  <b>%s</b>', 'wp-mailjet'), $selectedContactListName) . '</li>';
+            $desc .= '<li>' . $lastSyncMessage . '</li>';
             $desc .= '</ul>';
 
             $lists = array(array('value' => '', 'label' => __('Disable comment authors subscription', 'wp-mailjet')));
@@ -365,7 +391,15 @@ class WP_Mailjet_Options
             update_option('mailjet_from_email', $fields['mailjet_from_email']);
             update_option('mailjet_ssl', $fields['mailjet_ssl']);
             update_option('mailjet_port', $fields['mailjet_port']);
+            if (!empty($fields['mailjet_initial_sync_list_id'])) {
+                update_option('mailjet_initial_sync_last_list_id', $fields['mailjet_initial_sync_list_id']);
+                update_option('mailjet_initial_sync_last_date', date("Y-m-d\TH:i:s\Z", time()));
+            }
             update_option('mailjet_initial_sync_list_id', $fields['mailjet_initial_sync_list_id']);
+            if (!empty($fields['mailjet_comment_authors_list_id'])) {
+                update_option('mailjet_comment_authors_last_list_id', $fields['mailjet_comment_authors_list_id']);
+                update_option('mailjet_comment_authors_list_date', date("Y-m-d\TH:i:s\Z", time()));
+            }
             update_option('mailjet_comment_authors_list_id', $fields['mailjet_comment_authors_list_id']);
             update_option('mailjet_auto_subscribe_list_id', $fields['mailjet_auto_subscribe_list_id']);
             if (current_user_can('administrator')) {
