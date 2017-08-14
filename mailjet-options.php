@@ -488,44 +488,45 @@ class WP_Mailjet_Options
 
     public function syncAllWpUsers()
     {
+        $this->api->createMetaContactProperty(array(
+            'name' => 'first_name',
+            'dataType' => 'str'
+        ));
+        $this->api->createMetaContactProperty(array(
+            'name' => 'last_name',
+            'dataType' => 'str'
+        ));
+        $resp = $this->api->createMetaContactProperty(array(
+            'name' => 'wp_user_role',
+            'dataType' => 'str'
+        ));
+
         $contacts = [];
-        $users = get_users( array('fields' => array('ID', 'user_email')));
-        foreach($users as $user){
+        $users = get_users(array('fields' => array('ID', 'user_email')));
 
-            $userInfo = get_userdata($user->ID);
-            $userRoles = $userInfo->roles;
-            $userMetadata = get_user_meta($user->ID);
+        if ($users) {
+            foreach ($users as $user) {
+                $userInfo = get_userdata($user->ID);
+                $userRoles = $userInfo->roles;
+                $userMetadata = get_user_meta($user->ID);
 
-            $this->api->createMetaContactProperty(array(
-                'name' => 'first_name',
-                'dataType' => 'str'
-            ));
-            $this->api->createMetaContactProperty(array(
-                'name' => 'last_name',
-                'dataType' => 'str'
-            ));
-            $resp = $this->api->createMetaContactProperty(array(
-                'name' => 'wp_user_role',
-                'dataType' => 'str'
-            ));
+                $contactProperties = [];
+                if (!empty($userMetadata['first_name'][0])) {
+                    $contactProperties['first_name'] = $userMetadata['first_name'][0];
+                }
+                if (!empty($userMetadata['last_name'][0])) {
+                    $contactProperties['last_name'] = $userMetadata['last_name'][0];
+                }
+                if (!empty($userRoles[0])) {
+                    $contactProperties['wp_user_role'] = $userRoles[0];
+                }
 
-            $contactProperties = [];
-            if (!empty($userMetadata['first_name'][0])) {
-                $contactProperties['first_name'] = $userMetadata['first_name'][0];
+                $contacts[] = array(
+                    'Email' => $user->user_email,
+                    'Properties' => $contactProperties
+                );
             }
-            if (!empty($userMetadata['last_name'][0])) {
-                $contactProperties['last_name'] = $userMetadata['last_name'][0];
-            }
-            if (!empty($userRoles[0])) {
-                $contactProperties['wp_user_role'] = $userRoles[0];
-            }
-
-            $contacts[] = array(
-                'Email' => $user->user_email,
-                'Properties' => $contactProperties
-            );
         }
-
 
         $this->asyncManageContactsToList($contacts, get_option('mailjet_initial_sync_list_id'), 'addnoforce');
     }
