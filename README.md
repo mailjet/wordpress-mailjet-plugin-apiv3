@@ -10,6 +10,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Use Mailjet to create, send and track beautiful and engaging marketing and transactional emails directly from within your WordPress admin. 
 
+== What's new ==
+* Now it is possible to subscribe all existing Wordpress users to a selected Mailjet contact list
+* The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group
+* New feature to subscribe comment authors to a selected Mailjet contact list provides a second channel for collection of subscribers
 
 == Description ==
 
