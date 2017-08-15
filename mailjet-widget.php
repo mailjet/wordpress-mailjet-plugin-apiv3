@@ -517,10 +517,15 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         $email = $_GET['email'];
 
+        $contacts[] = array(
+            'Email' => $email
+        );
+
         // Add the contact to the contact list
         $result = $this->api->addContact(array(
-            'Email' => $email,
-            'ListID' => $_GET['list_id']
+            'action' => 'addforce',
+            'listId' => $_GET['list_id'],
+            'contacts' => $contacts
         ));
 
         $metaProperties = $this->getContactMetaProperties(false);

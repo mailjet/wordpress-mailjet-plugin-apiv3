@@ -27,6 +27,8 @@ interface WP_Mailjet_Api_Interface
 
     public function subContact($params);
 
+    public function manageManyContacts($params);
+
     public function getAuthToken($params);
 
     public function validateEmail($email);
@@ -257,6 +259,14 @@ class WP_Mailjet_Api_Strategy_V1 extends WP_Mailjet_Api_V1 implements WP_Mailjet
         );
     }
 
+    public function manageManyContacts($params)
+    {
+
+    }
+
+
+
+
     /**
      * Get the authentication token for the iframes
      *
@@ -433,7 +443,7 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
             $msg = 'Property already exists';
         } else {
             $status = 'Error';
-            $msg = 'Property could not be created';
+            $msg = 'Property could not be created - ' . $response->ErrorMessage;
         }
         return array(
             'status' => $status,
@@ -460,8 +470,16 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
     {
 
         // Check if the input data is OK
-        if (!is_numeric($params['ListID']) || !$this->validateEmail($params['Email']))
+        if (!is_numeric($params['ListID'])) {
             return (object)array('Status' => 'ERROR');
+        }
+
+        return $this->manageManyContacts(array(
+            'listId' => $params['ListID'],
+            'action' => $params['action'],
+            'contacts' => $params['contacts']
+        ));
+
 
         // Add the contact
         $result = $this->manycontacts(array(
@@ -473,10 +491,12 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
 
         // Check if any error
         if (isset($result->Data['0']->Errors->Items)) {
-            if (strpos($result->Data['0']->Errors->Items[0]->ErrorMessage, 'duplicate') !== FALSE)
+            if (strpos($result->Data['0']->Errors->Items[0]->ErrorMessage, 'duplicate') !== FALSE) {
                 return (object)array('Status' => 'DUPLICATE');
-            else
+            }
+            else {
                 return (object)array('Status' => 'ERROR');
+            }
         }
 
         $this->subContact($params);
@@ -501,8 +521,9 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
     public function removeContact($params)
     {
         // Check if the input data is OK
-        if (!is_numeric($params['ListID']) || !$this->validateEmail($params['Email']))
+        if (!is_numeric($params['ListID']) || !$this->validateEmail($params['Email'])) {
             return (object)array('Status' => 'ERROR');
+        }
 
         // Get the contact
         $result = $this->listrecipient(array(
@@ -522,8 +543,9 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
             }
 
             // Check if the unsubscribe is done correctly
-            if (isset($response->Data[0]->ID))
+            if (isset($response->Data[0]->ID)) {
                 return (object)array('Status' => 'OK');
+            }
         }
 
         return (object)array('Status' => 'ERROR');
@@ -606,6 +628,21 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
 
         return (object)array('Status' => 'ERROR');
     }
+
+
+    public function manageManyContacts($params)
+    {
+        $response = $this->{'contactslist/' . $params['listId'] . '/managemanycontacts'} (
+            array(
+                'method' => 'JSON',
+                'Action' => $params['action'],
+                'Contacts' => $params['contacts']
+            )
+        );
+
+        return $response;
+    }
+
 
     /**
      * Get the authentication token for the iframes
@@ -898,6 +935,19 @@ class WP_Mailjet_Api
 
         return $this->context->getAuthToken($params);
     }
+
+
+
+
+    public function manageManyContacts($params)
+    {
+        // Check if we have context, if no, return error
+        if ($this->context === FALSE)
+            return (object)array('Status' => 'ERROR');
+
+        return $this->context->manageManyContacts($params);
+    }
+
 
     /**
      * Validate if $email is real email
