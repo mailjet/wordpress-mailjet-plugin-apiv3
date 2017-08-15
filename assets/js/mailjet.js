@@ -8,6 +8,21 @@
 
 jQuery(document).ready(function ($) {
 
+    $('select[name=mailjet_initial_sync_list_id]').ready(function (e) {
+        $('select[name=mailjet_initial_sync_list_id]').val('');
+    });
+
+    removeSpaces = function ($el) {
+        $el.val($el.val().split(' ').join(''));
+    };
+
+    $('#mailjet_username').on('blur', function () {
+        removeSpaces($(this));
+    });
+    $('#mailjet_password').on('blur', function () {
+        removeSpaces($(this));
+    });
+
     showPorts = function ($el) {
         $('#mailjet_port').empty()
 

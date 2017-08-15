@@ -152,18 +152,10 @@ class WP_Mailjet_Options
         $generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_from_email', __('<code>From:</code> email address',
             'wp-mailjet'), 'email', $from_email);
 
-        if (get_option('mailjet_password') && get_option('mailjet_username')) {
-            // Get the list of contact lists and order them in a properly set list
-            $this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
-            $resp = $this->api->getContactLists(array('limit' => 0));
-            $lists = array(array('value' => '', 'label' => __('Disable autosubscribe', 'wp-mailjet')));
-            if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
-                $lists = array_merge($lists, $resp);
-            }
-            $generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_auto_subscribe_list_id', '', 'select',
-                get_option('mailjet_auto_subscribe_list_id'), __('Autosubscribe new users to this list', 'wp-mailjet'), FALSE, $lists);
-        }
 
+
+
+// General settings
         $generalFieldset = new WP_Mailjet_Options_Form_Fieldset(
             __('General Settings', 'wp-mailjet'),
             $generalOptions,
@@ -173,6 +165,121 @@ class WP_Mailjet_Options
 
         $form->addFieldset($generalFieldset);
         /* END - General field set */
+
+
+        if (get_option('mailjet_password') && get_option('mailjet_username')) {
+            // Get the list of contact lists and order them in a properly set list
+            $this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
+            $resp = $this->api->getContactLists(array('limit' => 0));
+
+// Initial Sync
+            // get the name of the preselected contact list
+            $lastSyncMessage = __('Initial sync not yet executed, choose a list and save settings to start it', 'wp-mailjet');
+            $lastSyncedContactListName = '';
+            $lastSyncedDate = '';
+            $initialSyncStatus = 'Inactive';
+            if (is_array($resp)) {
+                foreach ($resp as $contactList) {
+                    if ($contactList['value'] == get_option('mailjet_initial_sync_last_list_id')) {
+                        $lastSyncedContactListName = $contactList['label'];
+                    }
+                }
+                if (get_option('mailjet_initial_sync_last_date')) {
+                    $lastSyncedDate = get_option('mailjet_initial_sync_last_date');
+                }
+                if (get_option('mailjet_initial_sync_list_id')) {
+                    $initialSyncStatus = 'Active';
+                }
+
+                if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate && !empty($initialSyncStatus))) {
+                    $lastSyncMessage = sprintf(__('Initial users sync is <b>%s</b>! Existing contacts subscribed to <b>%s</b> on  <b>%s</b>', 'wp-mailjet'), $initialSyncStatus, $lastSyncedContactListName, $lastSyncedDate);
+                }
+            }
+
+            $desc = '<ul>';
+            $desc .= '<li>' . sprintf(__('Choose a Mailjet contact list which you would like to subscribe your Wordpress users to.', 'wp-mailjet')) . '</li>';
+            $desc .= '<li>' . $lastSyncMessage . '</li>';
+            $desc .= '</ul>';
+
+            $lists = array(array('value' => '', 'label' => __('Disable initial sync', 'wp-mailjet')));
+            if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
+                usort($resp, array($this, 'sortByLabel'));
+                $lists = array_merge($lists, $resp);
+            }
+
+            $syncOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_initial_sync_list_id', '', 'select',
+                get_option('mailjet_initial_sync_list_id'), __('Subscribe existing users to this list', 'wp-mailjet'), FALSE, $lists);
+
+// Auto subscribe
+            $lists = array(array('value' => '', 'label' => __('Disable autosubscribe', 'wp-mailjet')));
+            if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
+                usort($resp, array($this, 'sortByLabel'));
+                $lists = array_merge($lists, $resp);
+            }
+
+            $syncOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_auto_subscribe_list_id', '', 'select',
+                get_option('mailjet_auto_subscribe_list_id'), __('Auto subscribe new users to this list', 'wp-mailjet'), FALSE, $lists);
+
+
+            $syncFieldset = new WP_Mailjet_Options_Form_Fieldset(
+                __('Subscribe Wordpress users', 'wp-mailjet'),
+                $syncOptions,
+                $desc,
+                true
+            );
+
+            $form->addFieldset($syncFieldset);
+
+
+// Comment Authors
+
+
+            // get the name of the preselected contact list
+            $lastSyncMessage = __('Comment author sync not yet activated, choose a list and save settings to activate it', 'wp-mailjet');
+            $lastSyncedContactListName = '';
+            $lastSyncedDate = '';
+            $commentAuthorsSyncStatus = 'Inactive';
+            if (is_array($resp)) {
+                foreach ($resp as $contactList) {
+                    if ($contactList['value'] == get_option('mailjet_comment_authors_last_list_id')) {
+                        $lastSyncedContactListName = $contactList['label'];
+                    }
+                }
+                if (get_option('mailjet_comment_authors_list_date')) {
+                    $lastSyncedDate = get_option('mailjet_comment_authors_list_date');
+                }
+                if (get_option('mailjet_comment_authors_list_id')) {
+                    $commentAuthorsSyncStatus = 'Active';
+                }
+                if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate) && !empty($commentAuthorsSyncStatus)) {
+                    $lastSyncMessage = sprintf(__('Comment authors sync is <b>%s</b>!', 'wp-mailjet'), $commentAuthorsSyncStatus);
+                }
+            }
+
+
+            $desc = '<ul>';
+            $desc .= '<li>' . sprintf(__('This feature adds a "Subscribe to our mailing list" checkbox in the "Leave a reply" form, so that comment authors can automatically join a contact list of your choice.', 'wp-mailjet')) . '</li>';
+            $desc .= '<li>' . $lastSyncMessage . '</li>';
+            $desc .= '</ul>';
+
+            $lists = array(array('value' => '', 'label' => __('Disable comment authors subscription', 'wp-mailjet')));
+            if (!(isset($resp->Status) && $resp->Status == 'ERROR') && count($resp) > 0) {
+                usort($resp, array($this, 'sortByLabel'));
+                $lists = array_merge($lists, $resp);
+            }
+
+            $commentAuthorsOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_comment_authors_list_id', '', 'select',
+                get_option('mailjet_comment_authors_list_id'), __('Allow comment authors to subscribe to this list', 'wp-mailjet'), FALSE, $lists);
+
+            $commentAuthorsFieldset = new WP_Mailjet_Options_Form_Fieldset(
+                __('Subscribe comment authors', 'wp-mailjet'),
+                $commentAuthorsOptions,
+                $desc,
+                true
+            );
+
+            $form->addFieldset($commentAuthorsFieldset);
+        }
 
 
         /* Add access field set */
@@ -196,6 +303,15 @@ class WP_Mailjet_Options
 
         $form->display();
         echo '</div></div>';
+    }
+
+    private function sortByLabel($a, $b)
+    {
+        $a = $a['label'];
+        $b = $b['label'];
+
+        if ($a == $b) return 0;
+        return ($a < $b) ? -1 : 1;
     }
 
     public function hasValidSender($from_email, $senders)
@@ -225,6 +341,12 @@ class WP_Mailjet_Options
         $fields['mailjet_username'] = trim(strip_tags(filter_var($_POST['mailjet_username'], FILTER_SANITIZE_STRING)));
         $fields['mailjet_password'] = trim(strip_tags(filter_var($_POST['mailjet_password'], FILTER_SANITIZE_STRING)));
         $fields['mailjet_port'] = strip_tags(filter_var($_POST['mailjet_port'], FILTER_SANITIZE_NUMBER_INT));
+        $fields['mailjet_initial_sync_list_id'] = ($fields['mailjet_username'] != get_option('mailjet_username') || $fields['mailjet_password'] != get_option('mailjet_password'))
+            ? false
+            : strip_tags(filter_var($_POST['mailjet_initial_sync_list_id'], FILTER_SANITIZE_NUMBER_INT));
+        $fields['mailjet_comment_authors_list_id'] = ($fields['mailjet_username'] != get_option('mailjet_username') || $fields['mailjet_password'] != get_option('mailjet_password'))
+            ? false
+            : strip_tags(filter_var($_POST['mailjet_comment_authors_list_id'], FILTER_SANITIZE_NUMBER_INT));
         $fields['mailjet_auto_subscribe_list_id'] = ($fields['mailjet_username'] != get_option('mailjet_username') || $fields['mailjet_password'] != get_option('mailjet_password'))
             ? false
             : strip_tags(filter_var($_POST['mailjet_auto_subscribe_list_id'], FILTER_SANITIZE_NUMBER_INT));
@@ -269,6 +391,16 @@ class WP_Mailjet_Options
             update_option('mailjet_from_email', $fields['mailjet_from_email']);
             update_option('mailjet_ssl', $fields['mailjet_ssl']);
             update_option('mailjet_port', $fields['mailjet_port']);
+            if (!empty($fields['mailjet_initial_sync_list_id'])) {
+                update_option('mailjet_initial_sync_last_list_id', $fields['mailjet_initial_sync_list_id']);
+                update_option('mailjet_initial_sync_last_date', current_time("Y-m-d H:i:s "));
+            }
+            update_option('mailjet_initial_sync_list_id', $fields['mailjet_initial_sync_list_id']);
+            if (!empty($fields['mailjet_comment_authors_list_id'])) {
+                update_option('mailjet_comment_authors_last_list_id', $fields['mailjet_comment_authors_list_id']);
+                update_option('mailjet_comment_authors_list_date', current_time("Y-m-d H:i:s "));
+            }
+            update_option('mailjet_comment_authors_list_id', $fields['mailjet_comment_authors_list_id']);
             update_option('mailjet_auto_subscribe_list_id', $fields['mailjet_auto_subscribe_list_id']);
             if (current_user_can('administrator')) {
                 update_option('mailjet_access_editor', $fields['mailjet_access_editor']);
@@ -371,6 +503,11 @@ class WP_Mailjet_Options
                 } elseif ($connected >= 0) {
                     WP_Mailjet_Utils::custom_notice('updated', __('Your settings have been saved, but your port and SSL settings were changed as follows to ensure delivery', 'wp-mailjet') . $sent);
                 }
+
+                if (intval(get_option('mailjet_initial_sync_list_id')) > 0) {
+                    $this->syncAllWpUsers();
+                }
+
             } else {
                 // Error message
                 $link = 'https://www.mailjet.com/account/api_keys';
@@ -380,5 +517,68 @@ class WP_Mailjet_Options
             // Error message
             WP_Mailjet_Utils::custom_notice('error', __('There is an error with your settings. please correct and try again', 'wp-mailjet'));
         }
+    }
+
+
+    public function syncAllWpUsers()
+    {
+        $this->api->createMetaContactProperty(array(
+            'name' => 'first_name',
+            'dataType' => 'str'
+        ));
+        $this->api->createMetaContactProperty(array(
+            'name' => 'last_name',
+            'dataType' => 'str'
+        ));
+        $resp = $this->api->createMetaContactProperty(array(
+            'name' => 'wp_user_role',
+            'dataType' => 'str'
+        ));
+
+        $contacts = [];
+        $users = get_users(array('fields' => array('ID', 'user_email')));
+
+        if ($users) {
+            foreach ($users as $user) {
+                $userInfo = get_userdata($user->ID);
+                $userRoles = $userInfo->roles;
+                $userMetadata = get_user_meta($user->ID);
+
+                $contactProperties = [];
+                if (!empty($userMetadata['first_name'][0])) {
+                    $contactProperties['first_name'] = $userMetadata['first_name'][0];
+                }
+                if (!empty($userMetadata['last_name'][0])) {
+                    $contactProperties['last_name'] = $userMetadata['last_name'][0];
+                }
+                if (!empty($userRoles[0])) {
+                    $contactProperties['wp_user_role'] = $userRoles[0];
+                }
+
+                $contacts[] = array(
+                    'Email' => $user->user_email,
+                    'Properties' => $contactProperties
+                );
+            }
+        }
+
+        $this->asyncManageContactsToList($contacts, get_option('mailjet_initial_sync_list_id'), 'addnoforce');
+    }
+
+
+
+
+    public function asyncManageContactsToList($contacts, $list_id, $action = 'addnoforce')
+    {
+        $params = array(
+            "listId" => $list_id,
+            "action" => $action,
+            "contacts" => $contacts
+        );
+
+        $asyncJobResponse = $this->api->manageManyContacts($params);
+
+        return $asyncJobResponse;
+
     }
 }
