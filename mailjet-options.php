@@ -191,7 +191,7 @@ class WP_Mailjet_Options
                     $initialSyncStatus = 'Active';
                 }
 
-                if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate && !empty($initialSyncStatus))) {
+                if (!empty($lastSyncedContactListName) && !empty($lastSyncedDate) && !empty($initialSyncStatus)) {
                     $lastSyncMessage = sprintf(__('Initial users sync is <b>%s</b>! Existing contacts subscribed to <b>%s</b> on  <b>%s</b>', 'wp-mailjet'), $initialSyncStatus, $lastSyncedContactListName, $lastSyncedDate);
                 }
             }

@@ -2,7 +2,7 @@
 
 /*
 Plugin Name:	Mailjet for Wordpress
-Version:		4.2.1
+Version:		4.2.2
 Plugin URI:		https://www.mailjet.com/plugin/wordpress.htm
 Description:	Use mailjet SMTP to send email, manage lists and contacts within wordpress
 Author:			Mailjet SAS
@@ -118,12 +118,12 @@ function mailjet_settings_link($links, $file)
 add_filter('plugin_action_links', 'mailjet_settings_link', 10, 2);
 
 /* Add additional custom field */
-add_action('show_user_profile', 'my_show_extra_profile_fields');
-add_action('edit_user_profile', 'my_show_extra_profile_fields');
-add_action('register_form', 'my_show_extra_profile_fields');
-add_action('user_new_form', 'my_show_extra_profile_fields');
+add_action('show_user_profile', 'mailjet_show_extra_profile_fields');
+add_action('edit_user_profile', 'mailjet_show_extra_profile_fields');
+add_action('register_form', 'mailjet_show_extra_profile_fields');
+add_action('user_new_form', 'mailjet_show_extra_profile_fields');
 
-function my_show_extra_profile_fields($user)
+function mailjet_show_extra_profile_fields($user)
 {
     // If contact list is not selected, then do not show the extra fields
     if (get_option('mailjet_auto_subscribe_list_id')) {
@@ -143,7 +143,7 @@ function my_show_extra_profile_fields($user)
 }
 
 
-function my_show_extra_comment_fields($user)
+function mailjet_show_extra_comment_fields($user)
 {
     global $current_user;
     $user_id = $current_user->ID;
@@ -167,22 +167,22 @@ add_action('edit_user_profile_update', 'mailjet_my_save_extra_profile_fields');
 
 /* Add custom field to registration form */
 if (get_option('mailjet_auto_subscribe_list_id')) {
-    add_action('user_register', 'register_extra_fields');
+    add_action('user_register', 'mailjet_register_extra_fields');
 }
 
 /* Add custom field to comment form and process it on form submit */
 if (get_option('mailjet_comment_authors_list_id')) {
-    add_action('comment_form_after_fields', 'my_show_extra_comment_fields');
-    add_action('wp_insert_comment','subscribe_comment_author');
+    add_action('comment_form_after_fields', 'mailjet_show_extra_comment_fields');
+    add_action('wp_insert_comment','mailjet_subscribe_comment_author');
 }
 
-function subscribe_comment_author($id){
+function mailjet_subscribe_comment_author($id){
 
     $comment = get_comment($id);
     $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
     $userId = filter_var($comment->user_id, FILTER_SANITIZE_NUMBER_INT);
 
-    if (!validate_email($authorEmail)) {
+    if (!mailjet_validate_email($authorEmail)) {
         _e('Invalid email', 'wp-mailjet');
         die;
     }
@@ -190,7 +190,7 @@ function subscribe_comment_author($id){
     $subscribe = filter_var($_POST['mailjet_comment_authors_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
     mailjet_subscribe_confirmation_from_comment_form($subscribe, $authorEmail);
 }
-function validate_email($email)
+function mailjet_validate_email($email)
 {
     return (preg_match("/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/", $email) ||
         !preg_match("/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/", $email)) ? FALSE : TRUE;
@@ -236,7 +236,7 @@ function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
 /**
  *  Set extra profile fields when the profile is saved
  */
-function register_extra_fields($user_id, $password = "", $meta = array())
+function mailjet_register_extra_fields($user_id, $password = "", $meta = array())
 {
     $subscribe = filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
 
@@ -257,7 +257,7 @@ function mailjet_subscribe_confirmation_from_comment_form($subscribe, $user_emai
         die;
     }
 
-    if (!validate_email($user_email)) {
+    if (!mailjet_validate_email($user_email)) {
         _e('Invalid email', 'wp-mailjet-subscription-widget');
         die;
     }
