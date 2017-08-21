@@ -39,6 +39,31 @@ require('mailjet-utils.php');
 # Define mailjet options object
 $optionsMj = new WP_Mailjet_Options();
 
+// Check the PHP version and display warning message if it is < 5.3
+// (we may also deactivate automatically the plugin, but for now that code is commented)
+if (version_compare(PHP_VERSION, '5.3', '<')) {
+    add_action('admin_notices', 'wp_mailjet_check_php_version');
+   /*
+    add_action('admin_init', 'wp_mailjet_deactivate_self');
+    function wp_mailjet_deactivate_self() {
+        deactivate_plugins(plugin_basename(__FILE__));
+    }
+   */
+    return;
+}
+
+function wp_mailjet_check_php_version()
+{
+    echo '<div class="error"><p>';
+    _e('Mailjet plugin requires PHP 5.3 to function properly. Please upgrade PHP', 'wp-mailjet');
+    echo "</p></div>";
+/*
+    if (isset($_GET['activate'])) {
+        unset($_GET['activate']);
+    }
+*/
+}
+
 
 # Check if the plugin is set up properly
 if (get_option('mailjet_password') && get_option('mailjet_username')) {

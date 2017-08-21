@@ -49,7 +49,7 @@ Mailjet offers user interfaces, documentation and 24/7 customer support in 4 lan
 2. Go to Extensions > Add and send `mailjet-for-wordpress.zip`.
 3. Activate the Mailjet extension through the 'Plugins' menu in WordPress.
 
-You must have cURL extension enabled.
+You must have cURL extension enabled. PHP 5.3 or later version is required.
 
 ## Frequently Asked Questions
 
