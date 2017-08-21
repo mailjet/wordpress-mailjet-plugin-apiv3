@@ -535,7 +535,7 @@ class WP_Mailjet_Options
             'dataType' => 'str'
         ));
 
-        $contacts = [];
+        $contacts = array();
         $users = get_users(array('fields' => array('ID', 'user_email')));
 
         if ($users) {
@@ -544,7 +544,7 @@ class WP_Mailjet_Options
                 $userRoles = $userInfo->roles;
                 $userMetadata = get_user_meta($user->ID);
 
-                $contactProperties = [];
+                $contactProperties = array();
                 if (!empty($userMetadata['first_name'][0])) {
                     $contactProperties['first_name'] = $userMetadata['first_name'][0];
                 }
