@@ -524,7 +524,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         // Add the contact to the contact list
         $result = $this->api->addContact(array(
             'action' => 'addforce',
-            'listId' => $_GET['list_id'],
+            'ListID' => $_GET['list_id'],
             'contacts' => $contacts
         ));
 
@@ -551,23 +551,10 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             ));
         }
 
-        // Check what is the response and display proper message
-        if (isset($result->Status)) {
-            if ($result->Status == 'DUPLICATE') {
-                echo '<p class="error" listId="' . $_GET['list_id'] . '">';
-                echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $email);
-                echo '</p>';
-            } else if ($result->Status == 'OK') {
-                echo '<p class="success" listId="' . $_GET['list_id'] . '">';
-                echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
-                echo '</p>';
-            } else {
-                echo '<p class="error" listId="' . $_GET['list_id'] . '">';
-                echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $email);
-                echo '</p>';
-            }
-            die();
-        }
+        echo '<p class="success" listId="' . $_GET['list_id'] . '">';
+        echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
+        echo '</p>';
+        die();
     }
 
     function widget($args, $instance)
