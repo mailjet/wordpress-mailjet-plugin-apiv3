@@ -468,7 +468,6 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
      */
     public function addContact($params)
     {
-
         // Check if the input data is OK
         if (!is_numeric($params['ListID'])) {
             return (object)array('Status' => 'ERROR');
@@ -479,31 +478,6 @@ class WP_Mailjet_Api_Strategy_V3 extends WP_Mailjet_Api_V3 implements WP_Mailjet
             'action' => $params['action'],
             'contacts' => $params['contacts']
         ));
-
-
-        // Add the contact
-        $result = $this->manycontacts(array(
-            'method' => 'POST',
-            'Action' => 'Add',
-            'Addresses' => array($params['Email']),
-            'ListID' => $params['ListID'],
-        ));
-
-        // Check if any error
-        if (isset($result->Data['0']->Errors->Items)) {
-            if (strpos($result->Data['0']->Errors->Items[0]->ErrorMessage, 'duplicate') !== FALSE) {
-                return (object)array('Status' => 'DUPLICATE');
-            }
-            else {
-                return (object)array('Status' => 'ERROR');
-            }
-        }
-
-        $this->subContact($params);
-        return (object)array(
-            'Status' => 'OK',
-            'Response' => $result
-        );
     }
 
     public function findRecipient($params)
