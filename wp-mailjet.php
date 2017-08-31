@@ -291,8 +291,8 @@ function mailjet_subscribe_confirmation_from_comment_form($subscribe, $user_emai
     $emailParams = array(
         '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet-subscription-widget'),
         '__EMAIL_HEADER__' => __('Please Confirm Your Subscription To', 'wp-mailjet-subscription-widget'),
-        '__WP_URL__' => sprintf('<a href="%s" target="_blank">%s</a>', get_site_url(), get_site_url()),
-        '__CONFIRM_URL__' => get_site_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email),
+        '__WP_URL__' => sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url()),
+        '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email),
         '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'),
         '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet-subscription-widget'),
         '__FROM_NAME__' => get_option('blogname'),
