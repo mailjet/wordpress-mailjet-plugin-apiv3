@@ -407,6 +407,15 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         return $input === (string)(float)$input;
     }
 
+    function mj_is_datetime($input) {
+        return (((string) (int) $input === $input) && ($input <= PHP_INT_MAX) && ($input >= ~PHP_INT_MAX)) // check for unix timestamp
+            || (preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/", $input)) // check for "dd/mm/YYYY" format
+            || (preg_match("/^[0-9]{4}\/[0-9]{1,2}\/[0-9]{1,2}$/", $input)) // check for "YYYY/mm/dd" format
+            || (preg_match("/^[0-9]{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[1-2][0-9]|3[0-1])$/", $input)) // check for "YYYY-mm-dd" | "YYYY-m-d" format
+            || (preg_match("/^(0?[1-9]|[1-2][0-9]|3[0-1])-(0?[1-9]|1[0-2])-[0-9]{4}$/", $input)); // check for "dd-mm-YYYY" | "d-m-YYYY" format
+    }
+
+
     /**
      * Checks if the string argument is boolean.
      * @param string $input
@@ -455,7 +464,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             $dataTypes = array(
                 'int' => 'mj_is_int',
                 'float' => 'mj_is_float',
-                'bool' => 'mj_is_bool'
+                'bool' => 'mj_is_bool',
+                'datetime' => 'mj_is_datetime'
             );
             $error = false;
             $submittedProperties = array_diff(array_keys($_POST), array('email', 'list_id', 'action'));
