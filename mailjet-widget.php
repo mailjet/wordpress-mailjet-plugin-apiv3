@@ -408,11 +408,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     }
 
     function mj_is_datetime($input) {
-        return (((string) (int) $input === $input) && ($input <= PHP_INT_MAX) && ($input >= ~PHP_INT_MAX)) // check for unix timestamp
-            || (preg_match("/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/", $input)) // check for "dd/mm/YYYY" format
-            || (preg_match("/^[0-9]{4}\/[0-9]{1,2}\/[0-9]{1,2}$/", $input)) // check for "YYYY/mm/dd" format
-            || (preg_match("/^[0-9]{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[1-2][0-9]|3[0-1])$/", $input)) // check for "YYYY-mm-dd" | "YYYY-m-d" format
-            || (preg_match("/^(0?[1-9]|[1-2][0-9]|3[0-1])-(0?[1-9]|1[0-2])-[0-9]{4}$/", $input)); // check for "dd-mm-YYYY" | "d-m-YYYY" format
+       return (((string) (int) $input === $input) && ($input <= PHP_INT_MAX) && ($input >= ~PHP_INT_MAX)) // check for unix timestamp
+           || (preg_match("/^(0?[1-9]|[1-2][0-9]|3[0-1])-(0?[1-9]|1[0-2])-[0-9]{4}$/", $input)) // check for "dd-mm-YYYY"
+           || (preg_match("/^(0?[1-9]|[1-2][0-9]|3[0-1])\/(0?[1-9]|1[0-2])\/[0-9]{4}$/", $input)); // check for "dd/mm/YYYY"
     }
 
 
@@ -474,9 +472,19 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     if ($accountProperty->Datatype === 'str') {
                         continue;
                     }
+
                     if ($accountProperty->Name === $submittedProperty &&
                         $this->$dataTypes[$accountProperty->Datatype]($_POST[$submittedProperty]) !== true) {
                         $error = 'You have entered a contact property with wrong data type, for example a string instead of a number.';
+                        if($accountProperty->Datatype === 'datetime') {
+                            $error = 'You have entered a contact property with wrong data type. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".';
+                        }
+
+                    }
+
+                    // convert inserted date time property to unix timestamp
+                    if ($accountProperty->Name === $submittedProperty && $accountProperty->Datatype === 'datetime') {
+                        $_POST[$submittedProperty] = strtotime($_POST[$submittedProperty]);
                     }
                 }
             }
@@ -503,7 +511,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
-        wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet-subscription-widget'), $message,
+        $result = wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet-subscription-widget'), $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
         echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.',
                 'wp-mailjet-subscription-widget') . '</p>';
@@ -553,13 +561,17 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             }
         }
 
-        if (!empty($result->Response->Data)) {
-            $result2 = $this->api->updateContactData(array(
-                'method' => 'JSON',
-                'ID' => $email,
-                'Data' => $properties
-            ));
+        if (is_object($result)) {
+            if (!empty($result->Data)) {
+                $result2 = $this->api->updateContactData(array(
+                    'method' => 'JSON',
+                    'ID' => $email,
+                    'Data' => $properties
+                ));
+
+            }
         }
+
 
         echo '<p class="success" listId="' . $_GET['list_id'] . '">';
         echo sprintf(__("Thanks for subscribing with %s", 'wp-mailjet-subscription-widget'), $email);
