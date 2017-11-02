@@ -484,7 +484,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
                     // convert inserted date time property to unix timestamp
                     if ($accountProperty->Name === $submittedProperty && $accountProperty->Datatype === 'datetime') {
-                        $_POST[$submittedProperty] = strtotime($_POST[$submittedProperty]);
+                        // Fix for strtotime() when parsing format dd/mm/yyyy
+                        $_POST[$submittedProperty] = strtotime(str_replace('/', '-', $_POST[$submittedProperty]));
                     }
                 }
             }

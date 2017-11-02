@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.8
-Stable tag: 4.2.8
+Stable tag: 4.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,9 @@ Need help? Our multilingual support team is here to answer your questions in any
 4. Get instant insight on your campaign's performance with detailed statistics
 
 == Changelog ==
+
+= 4.2.9 =
+* Fix strtotime() function when format is dd/mm/YYYY
 
 = 4.2.8 =
 * Added conversion to timestamp for date time contact properties before send them to the API
