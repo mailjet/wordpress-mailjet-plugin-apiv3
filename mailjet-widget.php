@@ -425,7 +425,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     {
         try {
             new \DateTime($string);
-            return \DateTime::getLastErrors()['warning_count'] == 0 && \DateTime::getLastErrors()['error_count'] == 0;
+            $lastError = \DateTime::getLastErrors();
+            return $lastError['warning_count'] == 0 && $lastError['error_count'] == 0;
         } catch(\Exception $e) {
             return false;
         }
