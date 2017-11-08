@@ -394,7 +394,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
      * @param string $input
      * @return bool
      */
-    function mj_is_int($input) {
+    function mj_is_int($input)
+    {
         return ctype_digit(strval($input));
     }
 
@@ -403,23 +404,41 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
      * @param string $input
      * @return bool
      */
-    function mj_is_float($input) {
+    function mj_is_float($input)
+    {
         return $input === (string)(float)$input;
     }
 
-    function mj_is_datetime($input) {
-       return (((string) (int) $input === $input) && ($input <= PHP_INT_MAX) && ($input >= ~PHP_INT_MAX)) // check for unix timestamp
-           || (preg_match("/^(0?[1-9]|[1-2][0-9]|3[0-1])-(0?[1-9]|1[0-2])-[0-9]{4}$/", $input)) // check for "dd-mm-YYYY"
-           || (preg_match("/^(0?[1-9]|[1-2][0-9]|3[0-1])\/(0?[1-9]|1[0-2])\/[0-9]{4}$/", $input)); // check for "dd/mm/YYYY"
+
+    function mj_is_datetime($input)
+    {
+        return true; // skip that check since we perform DateTime validation
     }
 
+    /**
+     * Check if given date is a valid one
+     *
+     * @param $string
+     * @return bool
+     */
+    function mj_isValidDate($string)
+    {
+        try {
+            new \DateTime($string);
+            return \DateTime::getLastErrors()['warning_count'] == 0 && \DateTime::getLastErrors()['error_count'] == 0;
+        } catch(\Exception $e) {
+            return false;
+        }
+        return false;
+    }
 
     /**
      * Checks if the string argument is boolean.
      * @param string $input
      * @return bool
      */
-    function mj_is_bool($input) {
+    function mj_is_bool($input) 
+    {
         return in_array(strtolower($input), array('1', 't', 'true', 'y', '0', 'f', 'false', 'n'));
     }
 
@@ -476,16 +495,16 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     if ($accountProperty->Name === $submittedProperty &&
                         $this->$dataTypes[$accountProperty->Datatype]($_POST[$submittedProperty]) !== true) {
                         $error = 'You have entered a contact property with wrong data type, for example a string instead of a number.';
-                        if($accountProperty->Datatype === 'datetime') {
-                            $error = 'You have entered a contact property with wrong data type. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".';
-                        }
-
                     }
 
                     // convert inserted date time property to unix timestamp
                     if ($accountProperty->Name === $submittedProperty && $accountProperty->Datatype === 'datetime') {
                         // Fix for strtotime() when parsing format dd/mm/yyyy
-                        $_POST[$submittedProperty] = strtotime(str_replace('/', '-', $_POST[$submittedProperty]));
+                        $_POST[$submittedProperty] = str_replace('/', '-', $_POST[$submittedProperty]);
+                        if (false === $this->mj_isValidDate($_POST[$submittedProperty])) {
+                            $error = 'You have entered a Datetime contact property with Invalid date value. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".';
+                        }
+                        $_POST[$submittedProperty] = strtotime($_POST[$submittedProperty]);
                     }
                 }
             }
