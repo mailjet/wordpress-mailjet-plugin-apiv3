@@ -3,8 +3,8 @@
 Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
-Tested up to: 4.8
-Stable tag: 4.2.10
+Tested up to: 4.9
+Stable tag: 4.2.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,9 @@ Need help? Our multilingual support team is here to answer your questions in any
 4. Get instant insight on your campaign's performance with detailed statistics
 
 == Changelog ==
+
+= 4.2.11 =
+* Updated 'Tested up to' version to include WordPress 4.9
 
 = 4.2.10 =
 * Translations update
