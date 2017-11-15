@@ -40,13 +40,14 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         //No dependency injection possible, so we have to use this:
         $this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
-
+        $widget_description = __('Allows your visitors to subscribe to one of your lists', 'wp-mailjet');
+        
         $widget_ops = array(
             'classname' => 'WP_Mailjet_Subscribe_Widget',
-            'description' => 'Allows your visitors to subscribe to one of your lists'
+            'description' => $widget_description
         );
-
-        parent::__construct(FALSE, __('Mailjet Subscription widget'), $widget_ops);
+        $mailjet_widget_name = __('Mailjet Subscription widget', 'wp-mailjet');
+        parent::__construct(FALSE, $mailjet_widget_name, $widget_ops);
         add_action('wp_ajax_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
         add_action('wp_ajax_nopriv_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
         add_action('wp_ajax_mailjet_subscribe_ajax_add_meta_property', array($this, 'wp_ajax_mailjet_subscribe_ajax_add_meta_property'));
@@ -88,8 +89,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     {
         if ($this->lists === FALSE) {
             $this->lists = $this->api->getContactLists(array('limit' => 0));
-            if (isset($this->lists->Status) && $this->lists->Status == 'ERROR')
+            if (isset($this->lists->Status) && $this->lists->Status == 'ERROR') {
                 $this->lists = array();
+            }
         }
         return $this->lists;
     }
@@ -104,7 +106,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         if (empty($response)) {
             if ($showMsg === true) {
                 echo '<p class="error">';
-                echo __('You are either v1 user or we could not fetch user contact properties. Please contact our <a target="_blank" href="https://www.mailjet.com/support">support</a> team to discuss migrating to v3 user where you will have contact properties available. You can still configure a Mailjet subscription widget by clicking on "Next" button and complete step2 and step3.', 'wp-mailjet-subscription-widget');
+                echo __('You are either v1 user or we could not fetch user contact properties. Please contact our <a target="_blank" href="https://www.mailjet.com/support">support</a> team to discuss migrating to v3 user where you will have contact properties available. You can still configure a Mailjet subscription widget by clicking on "Next" button and complete step2 and step3.', 'wp-mailjet');
                 echo '</p>';
             }
             $this->_userVersion = 1;
@@ -438,7 +440,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         }
 
         if (!$this->validate_email($_POST['email'])) {
-            _e('Invalid email', 'wp-mailjet-subscription-widget');
+            _e('Invalid email', 'wp-mailjet');
             die;
         }
 
@@ -446,7 +448,6 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             'ContactsList' => $_POST['list_id'],
             'ContactEmail' => $_POST['email'],
         ));
-
         if (!empty($recipient->Count) || $recipient === true) {
             echo '<p class="error" listId="' . $_POST['list_id'] . '">';
             echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $_POST['email']);

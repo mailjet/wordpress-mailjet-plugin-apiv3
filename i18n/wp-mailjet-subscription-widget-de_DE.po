@@ -17,7 +17,7 @@ msgstr "Abonnement BestÃ¤tigungsmail gesendet. Bitte Ã¼berprÃ¼fen Sie Ihren Post
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
-msgstr "Bestätigen Sie Ihre Anmeldung für die Mailing-Liste"
+msgstr "Bestï¿½tigen Sie Ihre Anmeldung fï¿½r die Mailing-Liste"
 
 #: mailjet-widget.php
 msgid "You may copy/paste this link into your browser:"
@@ -33,7 +33,7 @@ msgstr "deine@email.com"
 
 #: mailjet-widget.php
 msgid "Error. Token verification failed."
-msgstr "Fehler. Tokenüberprüfung konnte nicht durchgeführt werden."
+msgstr "Fehler. Tokenï¿½berprï¿½fung konnte nicht durchgefï¿½hrt werden."
 
 #: mailjet-widget.php
 msgid "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
@@ -61,11 +61,11 @@ msgstr "Bitte Abonnement BestÃ¤tigung"
 
 #: mailjet-widget.php
 msgid "Click here to confirm"
-msgstr "Klicken Sie hier, um zu bestätigen"
+msgstr "Klicken Sie hier, um zu bestï¿½tigen"
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
-msgstr "Sie haben sich nicht bei dieser Liste angemeldet? Oder haben Sie vielleicht Ihre Meinung geändert? Dann ignorieren Sie diese E-Mail einfach, und Sie werden nicht angemeldet"
+msgstr "Sie haben sich nicht bei dieser Liste angemeldet? Oder haben Sie vielleicht Ihre Meinung geï¿½ndert? Dann ignorieren Sie diese E-Mail einfach, und Sie werden nicht angemeldet"
 
 #: mailjet-widget.php
 msgid "Thanks,"

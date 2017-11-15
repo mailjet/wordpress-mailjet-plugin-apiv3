@@ -250,7 +250,7 @@ function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
                 'ListID' => $list_id
             ));
             echo '<p class="error" listId="' . get_option('mailjet_comment_authors_list_id') . '">';
-            echo sprintf(__("The contact %s is unsubscribed", 'wp-mailjet-subscription-widget'), $user_email);
+            echo sprintf(__("The contact %s is unsubscribed", 'wp-mailjet-subscription-widget'), $user_email);// No translation key
             echo '</p>';
         }
         die();
