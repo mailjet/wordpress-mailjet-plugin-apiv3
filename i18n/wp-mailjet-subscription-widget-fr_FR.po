@@ -25,7 +25,7 @@ msgstr "Si le bouton ne fonctionne pas, veuillez copier/coller l'URL suivante da
 
 #: mailjet-widget.php
 msgid "Email field is empty"
-msgstr "Le champ << Email >> est vide"
+msgstr "Le champ \"e-mail\" est vide"
 
 #: mailjet-widget.php
 msgid "your@email.com"
@@ -49,7 +49,7 @@ msgstr "Merci d'avoir choisi %s pour votre abonnement"
 
 #: mailjet-widget.php
 msgid "You have entered a contact property with wrong data type, for example a string instead of a number."
-msgstr "Mauvaise format"
+msgstr "Vous avez entré une propriété de contact avec un type de données incorrect, par exemple une chaîne au lieu d'un nombre."
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"

@@ -25,7 +25,7 @@ msgstr "Puedes copiar y pegar este enlace en el navegador:"
 
 #: mailjet-widget.php
 msgid "Email field is empty"
-msgstr "El campo email está vacío"
+msgstr "El campo \"e-mail\" está vacío"
 
 #: mailjet-widget.php
 msgid "your@email.com"
@@ -49,7 +49,7 @@ msgstr "Gracias por suscribirse a %s"
 
 #: mailjet-widget.php
 msgid "You have entered a contact property with wrong data type, for example a string instead of a number."
-msgstr "You have entered a contact property with wrong data type, for example a string instead of a number."
+msgstr "Has introducido una propiedad de contacto con el tipo de dato incorrecto, por ejemplo una cadena de caracteres en vez de un número."
 
 #: mailjet-widget.php
 msgid "Subscription Confirmation"
