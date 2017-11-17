@@ -25,7 +25,7 @@ msgstr "Si le bouton ne fonctionne pas, veuillez copier/coller l'URL suivante da
 
 #: mailjet-widget.php
 msgid "Email field is empty"
-msgstr "Le champ \"e-mail\" est vide"
+msgstr "Le champ e-mail est vide"
 
 #: mailjet-widget.php
 msgid "your@email.com"

@@ -25,7 +25,7 @@ msgstr "Puedes copiar y pegar este enlace en el navegador:"
 
 #: mailjet-widget.php
 msgid "Email field is empty"
-msgstr "El campo \"e-mail\" está vacío"
+msgstr "El campo e-mail está vacío"
 
 #: mailjet-widget.php
 msgid "your@email.com"
