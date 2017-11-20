@@ -6,10 +6,10 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr_FR\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: mailjet-widget.php
 msgid "Subscription Confirmation"
@@ -17,7 +17,7 @@ msgstr "Confirmation abonnement"
 
 #: mailjet-widget.php
 msgid "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
-msgstr "Abonnement courriel de confirmation envoyé. S'il vous plaît vérifier votre boîte de réception et de confirmer la souscription."
+msgstr "Un email de confirmation d'inscription a été envoyé. Veuillez vérifier votre boîte de réception et confirmer votre inscription."
 
 #: mailjet-widget.php
 msgid "You may copy/paste this link into your browser:"
@@ -25,7 +25,7 @@ msgstr "Si le bouton ne fonctionne pas, veuillez copier/coller l'URL suivante da
 
 #: mailjet-widget.php
 msgid "Email field is empty"
-msgstr "Email field is empty"
+msgstr "Le champ e-mail est vide"
 
 #: mailjet-widget.php
 msgid "your@email.com"
@@ -33,7 +33,7 @@ msgstr "votre@email.com"
 
 #: mailjet-widget.php
 msgid "Error. Token verification failed."
-msgstr "Error. Token verification failed."
+msgstr "Erreur. Échec de vérification du jeton."
 
 #: mailjet-widget.php
 msgid "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
@@ -49,24 +49,24 @@ msgstr "Merci d'avoir choisi %s pour votre abonnement"
 
 #: mailjet-widget.php
 msgid "You have entered a contact property with wrong data type, for example a string instead of a number."
-msgstr "Mauvaise format"
+msgstr "Vous avez entré une propriété de contact avec un type de données incorrect, par exemple une chaîne au lieu d'un nombre."
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
-msgstr "Confirm your mailing list subscription"
+msgstr "Confirmez votre inscription à la liste de diffusion"
 
 #: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
-msgstr "Please Confirm Your Subscription To"
+msgstr "Veuillez confirmer votre inscription à"
 
 #: mailjet-widget.php
 msgid "Click here to confirm"
-msgstr "Click here to confirm"
+msgstr "Cliquez ici pour confirmer"
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
-msgstr "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
+msgstr "Si vous n'avez pas effectué de demande d'inscription à cette liste ou avez changé d'avis, veuillez ignorer cet email."
 
 #: mailjet-widget.php
 msgid "Thanks,"
-msgstr "Thanks,"
+msgstr "Merci,"
