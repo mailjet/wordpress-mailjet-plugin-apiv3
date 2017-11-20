@@ -90,6 +90,9 @@ Need help? Our multilingual support team is here to answer your questions in any
 
 == Changelog ==
 
+= 4.2.12 =
+* Translation update
+
 = 4.2.11 =
 * Updated 'Tested up to' version to include WordPress 4.9
 
