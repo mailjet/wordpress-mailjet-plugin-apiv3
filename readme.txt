@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.9
-Stable tag: 4.2.12
+Stable tag: 4.2.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,8 +90,11 @@ Need help? Our multilingual support team is here to answer your questions in any
 
 == Changelog ==
 
-= 4.2.12 =
+= 4.2.13 =
 * Added support for de_DE_formal locale
+
+= 4.2.12 =
+* Translation update
 
 = 4.2.11 =
 * Updated 'Tested up to' version to include WordPress 4.9
