@@ -36,8 +36,14 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         $chunks = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
         $this->pluginUrl = WP_PLUGIN_URL . '/' . end($chunks);
 
-        $this->locale = get_locale() === 'en_US' ? 'en_EN' : get_locale();
+        $this->locale = get_locale();
 
+        if (in_array($this->locale, array('en_US', 'en_EN'))) {
+            $this->locale = 'en_EN';
+        }
+        if (in_array($this->locale, array('de_DE', 'de_DE_formal'))) {
+            $this->locale = 'de_DE';
+        }
         //No dependency injection possible, so we have to use this:
         $this->api = new WP_Mailjet_Api(get_option('mailjet_username'), get_option('mailjet_password'));
 
@@ -624,8 +630,12 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
         }
 
+        $locale = get_locale();
+        if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
+            $locale = 'de_DE';
+        }
         foreach($this->langs as $lang => $langProps) {
-            if (get_locale() !== $langProps['locale']) {
+            if ($locale !== $langProps['locale']) {
                 continue;
             }
             $currentLang = $lang;
