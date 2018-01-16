@@ -149,6 +149,9 @@ class WP_Mailjet
     private function _get_locale()
     {
         $locale = get_locale();
+        if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
+            $locale = 'de_DE';
+        }
         if (!in_array($locale, array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES'))) {
             $locale = 'en_US';
         }
