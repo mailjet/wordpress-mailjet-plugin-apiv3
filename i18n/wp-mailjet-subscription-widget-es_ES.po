@@ -6,26 +6,26 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es_ES\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: mailjet-widget.php
 msgid "Subscription confirmation email sent. Please check your inbox and confirm the subscription."
-msgstr "Email de confirmación suscripción envió. Por favor revise su bandeja de entrada y confirmar la suscripción."
+msgstr "Se ha enviado un email de confirmación de suscripción. Consulta tu bandeja de entrada y confirma la suscripción."
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
-msgstr "Confirm your mailing list subscription"
+msgstr "Confirma tu suscripción a la lista de email"
 
 #: mailjet-widget.php
 msgid "You may copy/paste this link into your browser:"
-msgstr "Si tiene problemas con el botón, copie y pegue la siguiente dirección URL en el navegador:"
+msgstr "Puedes copiar y pegar este enlace en el navegador:"
 
 #: mailjet-widget.php
 msgid "Email field is empty"
-msgstr "Email field is empty"
+msgstr "El campo e-mail está vacío"
 
 #: mailjet-widget.php
 msgid "your@email.com"
@@ -33,15 +33,15 @@ msgstr "su@email.com"
 
 #: mailjet-widget.php
 msgid "Error. Token verification failed."
-msgstr "Error. Token verification failed."
+msgstr "Error. Ha fallado la verificación del token."
 
 #: mailjet-widget.php
 msgid "Sorry %s we were not able to complete your subscription because it appears that you are already subscribed."
-msgstr "Lo sentimos %s. No hemos podido suscribirle"
+msgstr "Lo sentimos %s. No hemos podido suscribirle."
 
 #: mailjet-widget.php
 msgid "The contact %s is already subscribed"
-msgstr "El contacto %s ya está suscrito."
+msgstr "El contacto %s ya está suscrito"
 
 #: mailjet-widget.php
 msgid "Thanks for subscribing with %s"
@@ -49,24 +49,24 @@ msgstr "Gracias por suscribirse a %s"
 
 #: mailjet-widget.php
 msgid "You have entered a contact property with wrong data type, for example a string instead of a number."
-msgstr "You have entered a contact property with wrong data type, for example a string instead of a number."
+msgstr "Has introducido una propiedad de contacto con el tipo de dato incorrecto, por ejemplo una cadena de caracteres en vez de un número."
 
 #: mailjet-widget.php
 msgid "Subscription Confirmation"
-msgstr "Confirmación Suscripción"
+msgstr "Confirmación de suscripción"
 
 #: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
-msgstr "Please Confirm Your Subscription To"
+msgstr "Confirma tu suscripción a"
 
 #: mailjet-widget.php
 msgid "Click here to confirm"
-msgstr "TEST"
+msgstr "Haz clic aquí para confirmar"
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
-msgstr "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
+msgstr "¿No te suscribiste a esta lista? ¿O quizá has cambiado de opinión? En ese caso, basta con que ignores este email."
 
 #: mailjet-widget.php
 msgid "Thanks,"
-msgstr "Thanks,"
+msgstr "Gracias."
