@@ -36,6 +36,23 @@ require('mailjet-widget.php');
 require('mailjet-api-strategy.php');
 require('mailjet-utils.php');
 
+
+/**
+ * Change plugin locale to de_DE if the current locale is de_DE_formal
+ *
+ * @param $locale
+ * @return string
+ */
+function mailjet_change_language($locale)
+{
+    if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
+        $locale = 'de_DE';
+    }
+    return $locale;
+}
+add_filter('plugin_locale', 'mailjet_change_language');
+
+
 # Define mailjet options object
 $optionsMj = new WP_Mailjet_Options();
 
