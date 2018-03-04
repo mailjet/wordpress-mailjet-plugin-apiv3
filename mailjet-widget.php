@@ -500,8 +500,9 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                         continue;
                     }
 
+                    $dataTypeFunction = $dataTypes[$accountProperty->Datatype];
                     if ($accountProperty->Name === $submittedProperty &&
-                        $this->$dataTypes[$accountProperty->Datatype]($_POST[$submittedProperty]) !== true) {
+                        $this->$dataTypeFunction($_POST[$submittedProperty]) !== true) {
                         $error = 'You have entered a contact property with wrong data type, for example a string instead of a number.';
                     }
 
