@@ -507,7 +507,7 @@ class WP_Mailjet_Api_V3
         curl_setopt($this->_curl_handle, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($this->_curl_handle, CURLOPT_USERPWD, $this->_apiKey.':'.$this->_secretKey);
         curl_setopt($this->_curl_handle, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($this->_curl_handle, CURLOPT_USERAGENT, 'wordpress-4.2.13');
+        curl_setopt($this->_curl_handle, CURLOPT_USERAGENT, 'wordpress-4.2.14');
 
         switch ($method) {
             case 'GET' :
