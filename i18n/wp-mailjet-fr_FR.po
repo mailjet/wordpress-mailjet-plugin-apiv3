@@ -75,7 +75,7 @@ msgstr "Tweeter"
 #: mailjet-options.php:88
 #, php-format
 msgid ""
-"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?p=%s\">Create "
+"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?aff=%s\">Create "
 "your Mailjet account</a> if you don't have any."
 msgstr ""
 "Si vous ne l'avez pas encore fait, <a target=\"_blank\" href=\"https://fr."
