@@ -50,7 +50,8 @@ function mailjet_change_language($locale)
     }
     return $locale;
 }
-add_filter('plugin_locale', 'mailjet_change_language');
+// commented as it change the locale for other plugins as well, which sometimes is not the desired solution. - we have local logic for locale for widget and plugin
+//add_filter('plugin_locale', 'mailjet_change_language');
 
 
 # Define mailjet options object
