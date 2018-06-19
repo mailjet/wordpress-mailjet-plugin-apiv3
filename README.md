@@ -85,6 +85,7 @@ Add the following code to your template functions.php file. Uncomment the messag
 <pre><code>
 add_filter( 'mailjet_subscription_widget_email_params', 'updateMailjetSubscriptionEmailParameters' );
 function example_callback($emailData) {
+    // $emailData['__EMAIL_TITLE__'] = 'Please confirm your subscription';
     // $emailData['__EMAIL_HEADER__'] = 'To receive newsletters from __WP_URL__ please confirm your subscription by clicking the following button:';
     // $emailData['__CLICK_HERE__'] = 'Yes, subscribe me to this list';
     // $emailData['__COPY_PASTE_LINK__'] = 'You may copy/paste this link into your browser:';
