@@ -124,6 +124,8 @@ class WP_Mailjet
         $phpmailer->From = $from_email;
         $phpmailer->Sender = $from_email;
 
+        $phpmailer->FromName = get_option('mailjet_from_name') ? get_option('mailjet_from_name') : get_bloginfo('name');
+
         $phpmailer->AddCustomHeader($this->api->mj_mailer);
     }
 
