@@ -17,7 +17,7 @@ msgstr "Bestätigungsmail für die Anmeldung wurde gesendet. Bitte überprüfen 
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
-msgstr "Bestätigen Sie Ihre Anmeldung für die Mailing-Liste"
+msgstr "Bitte bestätigen Sie Ihr Abonnement"
 
 #: mailjet-widget.php
 msgid "You may copy/paste this link into your browser:"
@@ -57,15 +57,15 @@ msgstr "Bestätigung für die Anmeldung"
 
 #: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
-msgstr "Bitte bestätigen Sie Ihre Anmeldung für"
+msgstr "Um den Newsletter von %s zu erhalten, bestätigen Sie bitte Ihr Abonnement, indem Sie auf den folgenden Button klicken:"
 
 #: mailjet-widget.php
 msgid "Click here to confirm"
-msgstr "Klicken Sie hier, um zu bestätigen"
+msgstr "Ja, ich möchte diesen Newsletter abonnieren"
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
-msgstr "Sie haben sich nicht bei dieser Liste angemeldet? Oder haben Sie vielleicht Ihre Meinung geändert? Dann ignorieren Sie diese E-Mail einfach, und Sie werden nicht angemeldet"
+msgstr "Wenn Sie diese E-Mail versehentlich erhalten haben oder sich nicht mehr anmelden möchten, ignorieren Sie diese E-Mail einfach."
 
 #: mailjet-widget.php
 msgid "Thanks,"

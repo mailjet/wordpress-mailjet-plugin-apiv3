@@ -53,19 +53,19 @@ msgstr "Vous avez entré une propriété de contact avec un type de données inc
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
-msgstr "Confirmez votre inscription à la liste de diffusion"
+msgstr "Veuillez confirmer votre abonnement"
 
 #: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
-msgstr "Veuillez confirmer votre inscription à"
+msgstr "Pour recevoir la newsletter de %s, veuillez confirmer votre abonnement en cliquant sur le bouton suivant :"
 
 #: mailjet-widget.php
 msgid "Click here to confirm"
-msgstr "Cliquez ici pour confirmer"
+msgstr "Oui, abonnez-moi à cette liste"
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
-msgstr "Si vous n'avez pas effectué de demande d'inscription à cette liste ou avez changé d'avis, veuillez ignorer cet email."
+msgstr "Si vous recevez cet email par erreur ou si vous ne souhaitez plus vous abonner, ignorer simplement cet email."
 
 #: mailjet-widget.php
 msgid "Thanks,"
