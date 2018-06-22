@@ -17,7 +17,7 @@ msgstr "Se ha enviado un email de confirmación de suscripción. Consulta tu ban
 
 #: mailjet-widget.php
 msgid "Confirm your mailing list subscription"
-msgstr "Confirma tu suscripción a la lista de email"
+msgstr "Por favor, confirme su suscripción"
 
 #: mailjet-widget.php
 msgid "You may copy/paste this link into your browser:"
@@ -57,15 +57,15 @@ msgstr "Confirmación de suscripción"
 
 #: mailjet-widget.php
 msgid "Please Confirm Your Subscription To"
-msgstr "Confirma tu suscripción a"
+msgstr "Para recibir boletines de: %s, por favor confirme su suscripción haciendo clic en el siguiente botón:"
 
 #: mailjet-widget.php
 msgid "Click here to confirm"
-msgstr "Haz clic aquí para confirmar"
+msgstr "Sí, suscribirme a esta lista."
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
-msgstr "¿No te suscribiste a esta lista? ¿O quizá has cambiado de opinión? En ese caso, basta con que ignores este email."
+msgstr "Si usted recibió este correo electrónico por error o no desea suscribirse más, simplemente ignore este correo electrónico."
 
 #: mailjet-widget.php
 msgid "Thanks,"
