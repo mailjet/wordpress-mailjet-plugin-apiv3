@@ -152,8 +152,9 @@ class WP_Mailjet_Options
         $generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_from_email', __('<code>From:</code> email address',
             'wp-mailjet'), 'email', $from_email);
 
+        $from_name = (get_option('mailjet_from_name') ? get_option('mailjet_from_name') : '');
 
-
+        $generalOptions[] = new WP_Mailjet_Options_Form_Option('mailjet_from_name', __('<code>From:</code> Name', 'wp-mailjet'), 'text', $from_name, null, TRUE);
 
 // General settings
         $generalFieldset = new WP_Mailjet_Options_Form_Fieldset(
@@ -338,6 +339,7 @@ class WP_Mailjet_Options
         $fields['mailjet_ssl'] = (isset($_POST['mailjet_ssl']) ? 'ssl' : '');
         $fields['mailjet_test_address'] = strip_tags(filter_var($_POST['mailjet_test_address'], FILTER_VALIDATE_EMAIL));
         $fields['mailjet_from_email'] = strip_tags(filter_var($_POST['mailjet_from_email'], FILTER_VALIDATE_EMAIL));
+        $fields['mailjet_from_name'] = strip_tags(filter_var($_POST['mailjet_from_name'], FILTER_SANITIZE_STRING));
         $fields['mailjet_username'] = trim(strip_tags(filter_var($_POST['mailjet_username'], FILTER_SANITIZE_STRING)));
         $fields['mailjet_password'] = trim(strip_tags(filter_var($_POST['mailjet_password'], FILTER_SANITIZE_STRING)));
         $fields['mailjet_port'] = strip_tags(filter_var($_POST['mailjet_port'], FILTER_SANITIZE_NUMBER_INT));
@@ -389,6 +391,7 @@ class WP_Mailjet_Options
             update_option('mailjet_test', $fields['mailjet_test']);
             update_option('mailjet_test_address', $fields['mailjet_test_address']);
             update_option('mailjet_from_email', $fields['mailjet_from_email']);
+            update_option('mailjet_from_name', $fields['mailjet_from_name']);
             update_option('mailjet_ssl', $fields['mailjet_ssl']);
             update_option('mailjet_port', $fields['mailjet_port']);
             if (!empty($fields['mailjet_initial_sync_list_id'])) {
