@@ -58,7 +58,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         parent::__construct(FALSE, $mailjet_widget_name, $widget_ops);
         add_action('wp_ajax_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
         add_action('wp_ajax_nopriv_mailjet_subscribe_ajax_hook', array($this, 'mailjet_subscribe_from_widget'));
-        add_action('wp_ajax_mailjet_subscribe_ajax_add_meta_property', array($this, 'wp_ajax_mailjet_subscribe_ajax_add_meta_property'));
+        add_action('wp_ajax_mailjet_subscribe_ajax_add_meta_property',
+            array($this, 'wp_ajax_mailjet_subscribe_ajax_add_meta_property'));
 
         require_once dirname(__FILE__) . '/libs/PHP-po-parser-master/src/Sepia/InterfaceHandler.php';
         require_once dirname(__FILE__) . '/libs/PHP-po-parser-master/src/Sepia/FileHandler.php';
@@ -80,8 +81,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     {
         if (!empty($_REQUEST['name']) && !empty($_REQUEST['type'])) {
             echo json_encode($this->api->createMetaContactProperty(array(
-                        'name' => $_REQUEST['name'],
-                        'dataType' => $_REQUEST['type']
+                'name' => $_REQUEST['name'],
+                'dataType' => $_REQUEST['type']
             )));
         }
         die;
@@ -114,7 +115,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         if (empty($response)) {
             if ($showMsg === true) {
                 echo '<p class="error">';
-                echo __('You are either v1 user or we could not fetch user contact properties. Please contact our <a target="_blank" href="https://www.mailjet.com/support">support</a> team to discuss migrating to v3 user where you will have contact properties available. You can still configure a Mailjet subscription widget by clicking on "Next" button and complete step2 and step3.', 'wp-mailjet');
+                echo __('You are either v1 user or we could not fetch user contact properties. Please contact our <a target="_blank" href="https://www.mailjet.com/support">support</a> team to discuss migrating to v3 user where you will have contact properties available. You can still configure a Mailjet subscription widget by clicking on "Next" button and complete step2 and step3.',
+                    'wp-mailjet');
                 echo '</p>';
             }
             $this->_userVersion = 1;
@@ -124,7 +126,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
     function preg_array_key_exists($pattern, $array)
     {
-        return (int) preg_grep($pattern, array_keys($array));
+        return (int)preg_grep($pattern, array_keys($array));
     }
 
     function form($instance)
@@ -160,7 +162,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
         $fields = array('new_meta_name', 'new_meta_data_type');
         $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2',
-            'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
+            'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3'
+        );
         foreach ($fields as $prop) {
             ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
         }
@@ -176,62 +179,81 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 <div>
                     <?php
                     $contactMetaProperties = $this->getContactMetaProperties();
-                    if ($this->_userVersion === 3):
+                    if ($this->_userVersion === 3) {
                         ?>
-            <?php if (empty($contactMetaProperties->Data)): ?>
+                        <?php if (empty($contactMetaProperties->Data)) { ?>
                             <div class="fontSizeSmall noProperties"><?php echo sprintf('No contact properties have been defined yet. Please create one by clicking on "Add New Property" below or by logging into your Mailjet account.'); ?></div>
-                            <div class="fontSizeSmall yesProperties" style="display:none;"><?php echo sprintf('Drag and drop up to %d contact properties from "Available contact properties" to "Selected contact properties" (besides email which is mandatory).', self::MAX_META_PROPERTIES); ?></div>
+                            <div class="fontSizeSmall yesProperties"
+                                 style="display:none;"><?php echo sprintf('Drag and drop up to %d contact properties from "Available contact properties" to "Selected contact properties" (besides email which is mandatory).',
+                                    self::MAX_META_PROPERTIES); ?></div>
                             <div class="label yesProperties" style="display:none;">Available contact properties</div>
-            <?php else: ?>
-                            <div class="fontSizeSmall yesProperties"><?php echo sprintf('Drag and drop up to %d contact properties from "Available contact properties" to "Selected contact properties" (besides email which is mandatory).', self::MAX_META_PROPERTIES); ?></div>
+                        <?php } else { ?>
+                            <div class="fontSizeSmall yesProperties"><?php echo sprintf('Drag and drop up to %d contact properties from "Available contact properties" to "Selected contact properties" (besides email which is mandatory).',
+                                    self::MAX_META_PROPERTIES); ?></div>
                             <div class="label">Available contact properties</div>
-            <?php endif; ?>
-                        <div class="sortable" <?php if (empty($contactMetaProperties->Data)): ?> style="display:none;"  <?php endif; ?> >
+                        <?php } ?>
+                        <div class="sortable" <?php if (empty($contactMetaProperties->Data)) { ?> style="display:none;"  <?php } ?> >
                             <div>
                                 <ul class="connectedSortable sortable1">
                                     <?php
-                                    foreach ($contactMetaProperties->Data as $prop):
+                                    foreach ($contactMetaProperties->Data as $prop) {
                                         $lang = 'en';
-                                        //foreach($this->langs as $lang => $langProps): 
-                                        ?>
-                                        <?php if (!in_array($prop->Name, array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang}, ${'metaPropertyName3' . $lang}))): ?>
-                                            <li class="ui-state-default"><div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop->Name; ?></li>
-                <?php endif; ?>
-                <?php //endforeach;  ?>
-            <?php endforeach; ?>
+                                        //foreach($this->langs as $lang => $langProps) {
+                                        if (!in_array($prop->Name,
+                                            array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang},
+                                                ${'metaPropertyName3' . $lang}
+                                            ))
+                                        ) { ?>
+                                            <li class="ui-state-default">
+                                                <div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop->Name; ?>
+                                            </li>
+                                        <?php }
+                                        // }
+                                    } ?>
                                 </ul>
                             </div>
                             <div>
                                 <div class="label">Selected properties</div>
-                                <div class="fontSizeSmall">Arrange and sort the properties you selected to determine the way they will be shown in the widget.</div>
+                                <div class="fontSizeSmall">Arrange and sort the properties you selected to determine the
+                                    way they will be shown in the widget.
+                                </div>
                                 <ul class="connectedSortable sortable2">
                                     <li class="ui-state-disabled">Email address (mandatory)</li>
                                     <?php
                                     $selectedProps = array();
-                                    foreach ($instance as $prop):
+                                    foreach ($instance as $prop) {
                                         if (empty($prop) || in_array($prop, $selectedProps)) {
                                             continue;
                                         }
                                         $lang = 'en';
                                         ?>
-                <?php if (in_array($prop, array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang}, ${'metaPropertyName3' . $lang}))): ?>
-                                            <li class="ui-state-default"><div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop; ?></li>
-                    <?php $selectedProps[] = $prop; ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
+                                        <?php if (in_array($prop,
+                                            array(${'metaPropertyName1' . $lang}, ${'metaPropertyName2' . $lang},
+                                                ${'metaPropertyName3' . $lang}
+                                            ))) { ?>
+                                            <li class="ui-state-default">
+                                                <div class="cursorMoveImg"></div>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $prop; ?>
+                                            </li>
+                                            <?php $selectedProps[] = $prop; ?>
+                                        <?php } ?>
+                                    <?php } ?>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="new-meta-contact-form">
                             <div class="label">Add New Property</div>
-                            <div>Click on the button below to dynamically add a new contact property to your contact list and widget.</div>
+                            <div>Click on the button below to dynamically add a new contact property to your contact
+                                list and widget.
+                            </div>
                             <ul class="newPropertyBtn">
                                 <li>Add a new property</li>
                             </ul>
-            <?php if (isset($metaAdded)): ?>
-                                <div class="success">Property created. Please drag your new contact property to the Selected Properties section above.</div>
-            <?php endif; ?>
+                            <?php if (isset($metaAdded)) { ?>
+                                <div class="success">Property created. Please drag your new contact property to the
+                                    Selected Properties section above.
+                                </div>
+                            <?php } ?>
                             <div class="newPropertyForm ninja">
                                 <div class="new-meta-property-response"></div>
                                 <div>
@@ -250,11 +272,12 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                                 </div>
                                 <p>
                                     <input type="submit" name="submit" class="button new-meta-submit" value="Add"/>
-                                    <input name="action" type="hidden" value="mailjet_subscribe_ajax_add_meta_property"/>
+                                    <input name="action" type="hidden"
+                                           value="mailjet_subscribe_ajax_add_meta_property"/>
                                 </p>
                             </div>
                         </div>
-        <?php endif; ?>
+                    <?php } ?>
                     <p>
                         <input type="submit" class="next floatRight button" value="Next"/>
                     </p>
@@ -264,57 +287,69 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 <div>
                     <div class="mj-tabs-container">
                         <ul class="mj-tabs-menu">
-        <?php foreach ($this->langs as $lang => $langProps): ?>
+                            <?php foreach ($this->langs as $lang => $langProps) { ?>
                                 <li class="<?php echo $lang === 'en' ? 'current' : ''; ?>">
                                     <a href=".tab-<?php echo $lang; ?>"><?php echo $langProps['label']; ?></a>
                                 </li>
-        <?php endforeach; ?>
+                            <?php } ?>
                         </ul>
                         <div class="mj-tab">
-                                           <?php foreach ($this->langs as $lang => $langProps): ?>
+                            <?php foreach ($this->langs as $lang => $langProps) { ?>
                                 <div class="mj-tab-content tab-<?php echo $lang; ?>">
-                                    <div class="tabActivator<?php echo $lang === 'en' ? ' ninja' : ''; ?>" id="<?php echo $this->get_field_id('tabActivator-' . $lang); ?>">
-                                        <input type="checkbox" name="<?php echo $this->get_field_name('enableTab' . $lang); ?>"
-                                               class="enable-tab enable-tab-<?php echo $lang; ?>" id="<?php echo $this->get_field_id('enableTab' . $lang); ?>"
-            <?php echo $lang === 'en' ? 'checked="checked"' :
-                    (empty(${'enableTab' . $lang}) ? '' : 'checked="checked"');
-            ?> />
-                                        <label for="<?php echo $this->get_field_id('enableTab' . $lang); ?>">Activate tab</label>
+                                    <div class="tabActivator<?php echo $lang === 'en' ? ' ninja' : ''; ?>"
+                                         id="<?php echo $this->get_field_id('tabActivator-' . $lang); ?>">
+                                        <input type="checkbox"
+                                               name="<?php echo $this->get_field_name('enableTab' . $lang); ?>"
+                                               class="enable-tab enable-tab-<?php echo $lang; ?>"
+                                               id="<?php echo $this->get_field_id('enableTab' . $lang); ?>"
+                                            <?php echo $lang === 'en' ? 'checked="checked"' :
+                                                (empty(${'enableTab' . $lang}) ? '' : 'checked="checked"');
+                                            ?> />
+                                        <label for="<?php echo $this->get_field_id('enableTab' . $lang); ?>">Activate
+                                            tab</label>
                                     </div>
                                     <!-- This element will be populated with input text fields for each selected meta property -->
-                                    <div class="fontSizeSmall">Please enter specific labels for your subscription widget and they
-                                        will be displayed on the front end of your website.</div>
-            <?php if ($this->_userVersion === 3): ?>
+                                    <div class="fontSizeSmall">Please enter specific labels for your subscription widget
+                                        and they
+                                        will be displayed on the front end of your website.
+                                    </div>
+                                    <?php if ($this->_userVersion === 3) { ?>
                                         <div class="clear map-meta-properties">
-                <?php for ($i = 1; $i <= 3; $i++): ?>
+                                            <?php for ($i = 1; $i <= 3; $i++) { ?>
                                                 <div class="<?php echo $this->get_field_id('metaProperty' . $i . $lang); ?>">
                                                     <label for="<?php echo $this->get_field_id('metaProperty' . $i . $lang); ?>"><?php echo esc_attr(${'metaPropertyName' . $i . $lang}); ?></label>
-                                                    <input type="hidden" id="<?php echo $this->get_field_id('metaPropertyName' . $i . $lang); ?>"
+                                                    <input type="hidden"
+                                                           id="<?php echo $this->get_field_id('metaPropertyName' . $i . $lang); ?>"
                                                            name="<?php echo $this->get_field_name('metaPropertyName' . $i . $lang); ?>"
-                                                           value="<?php echo esc_attr(${'metaPropertyName' . $i . $lang}); ?>" />
+                                                           value="<?php echo esc_attr(${'metaPropertyName' . $i . $lang}); ?>"/>
                                                     <input class="widefat"
                                                            id="<?php echo $this->get_field_id('metaProperty' . $i . $lang); ?>"
                                                            name="<?php echo $this->get_field_name('metaProperty' . $i . $lang); ?>"
                                                            type="text"
                                                            value="<?php echo empty(${'metaProperty' . $i . $lang}) ? '' : esc_attr(${'metaProperty' . $i . $lang}); ?>"
-                                                           size="28" />
+                                                           size="28"/>
                                                 </div>
-                <?php endfor; ?>
+                                            <?php } ?>
                                         </div>
-            <?php endif; ?>
+                                    <?php } ?>
                                     <p>
                                         <label for="<?php echo $this->get_field_id('title' . $lang); ?>"
                                                title="This is the title of your subscription widget which will be displayed on your website">Title:
-                                            <input class="widefat" id="<?php echo $this->get_field_id('title' . $lang); ?>"
-                                                   name="<?php echo $this->get_field_name('title' . $lang); ?>" type="text"
+                                            <input class="widefat"
+                                                   id="<?php echo $this->get_field_id('title' . $lang); ?>"
+                                                   name="<?php echo $this->get_field_name('title' . $lang); ?>"
+                                                   type="text"
                                                    value="<?php echo esc_attr(${'title' . $lang}); ?>"/>
                                         </label>
                                     </p>
                                     <p>
                                         <label for="<?php echo $this->get_field_id('button_text' . $lang); ?>"
-                                               title="This will be the label of your subscription button which will be displayed on your website">Button text
-                                            <input class="widefat" id="<?php echo $this->get_field_id('button_text' . $lang); ?>"
-                                                   name="<?php echo $this->get_field_name('button_text' . $lang); ?>" type="text"
+                                               title="This will be the label of your subscription button which will be displayed on your website">Button
+                                            text
+                                            <input class="widefat"
+                                                   id="<?php echo $this->get_field_id('button_text' . $lang); ?>"
+                                                   name="<?php echo $this->get_field_name('button_text' . $lang); ?>"
+                                                   type="text"
                                                    value="<?php echo esc_attr(${'button_text' . $lang}); ?>"/>
                                         </label>
                                     </p>
@@ -322,19 +357,19 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                                         <label for="<?php echo $this->get_field_id('list_id' . $lang); ?>"
                                                title="Please chose a contact list where all new subscribers will be added">List:
                                             <select class="widefat" <?php echo (isset($_POST) && count($_POST) > 0 && !is_numeric(${'list_id' . $lang})) ?
-                                                    'style="border:1px solid red;' : ''
-            ?> id="<?php echo $this->get_field_id('list_id' . $lang); ?>"
+                                                'style="border:1px solid red;' : ''
+                                            ?> id="<?php echo $this->get_field_id('list_id' . $lang); ?>"
                                                     name="<?php echo $this->get_field_name('list_id' . $lang); ?>">
-            <?php foreach ($this->getLists() as $list) { ?>
+                                                <?php foreach ($this->getLists() as $list) { ?>
                                                     <option value="<?php echo $list['value'] ?>"<?php echo($list['value'] == esc_attr(${'list_id' . $lang}) ?
-                        ' selected="selected"' : '')
-                ?>><?php echo $list['label'] ?></option>
-            <?php } ?>
+                                                        ' selected="selected"' : '')
+                                                    ?>><?php echo $list['label'] ?></option>
+                                                <?php } ?>
                                             </select>
                                         </label>
                                     </p>
                                 </div>
-        <?php endforeach; ?>
+                            <?php } ?>
                         </div>
                         <p>
                             <input type="submit" class="previous button" value="Back"/>
@@ -347,56 +382,65 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                 <div>
                     <div class="mj-tabs-container">
                         <ul class="mj-tabs-menu">
-                            <?php foreach ($this->langs as $lang => $langProps): ?>
+                            <?php foreach ($this->langs as $lang => $langProps) { ?>
                                 <li class="<?php echo $lang === 'en' ? 'current' : ''; ?>">
                                     <a href=".tab-<?php echo $lang; ?>"><?php echo $langProps['label']; ?></a>
                                 </li>
-        <?php endforeach; ?>
+                            <?php } ?>
                         </ul>
                         <div class="mj-tab">
-                                    <?php foreach ($this->langs as $lang => $langProps): ?>
+                            <?php foreach ($this->langs as $lang => $langProps) { ?>
                                 <div class="mj-tab-content tab-<?= $lang ?>">
-                                    <div class="mj-translations-title margin-top-bottom-10 arrow_box" id="mj-translations-title-<?= $lang ?>">
-                                        <div style="display:none;">Widget notifications for this language are deactivated in previous step</div>
-                                        <a id="<?php echo $this->get_field_id('tabLinkStep3-' . $lang); ?>" href="javascript:">Customize your widget notifications</a></div>
-                                    <div class="mj-string-translations" id="<?php echo $this->get_field_id('mj-string-translations-' . $lang); ?>">
-            <?php
-            $i = 0;
-            foreach ($this->{'entries' . $lang} as $msgid => $msg):
-                $id = $this->entryStrToId($msgid);
-                $i++;
-                if ($i === 1):
-                    ?>
+                                    <div class="mj-translations-title margin-top-bottom-10 arrow_box"
+                                         id="mj-translations-title-<?= $lang ?>">
+                                        <div style="display:none;">Widget notifications for this language are
+                                            deactivated in
+                                            previous step
+                                        </div>
+                                        <a id="<?php echo $this->get_field_id('tabLinkStep3-' . $lang); ?>"
+                                           href="javascript:">Customize
+                                            your widget notifications</a></div>
+                                    <div class="mj-string-translations"
+                                         id="<?php echo $this->get_field_id('mj-string-translations-' . $lang); ?>">
+                                        <?php
+                                        $i = 0;
+                                        foreach ($this->{'entries' . $lang} as $msgid => $msg) {
+                                            $id = $this->entryStrToId($msgid);
+                                            $i++;
+                                            if ($i === 1) {
+                                                ?>
                                                 <h4>Errors/Website notifications</h4>
                                                 <!--The 1st 10 messages are for website notifications, the rest are for the email-->
-                                            <?php elseif ($i === 10): ?>
+                                            <?php } elseif ($i === 10) { ?>
                                                 <h4>Subscription confirmation mail</h4>
-                <?php endif; ?>
+                                            <?php } ?>
                                             <div class="mj-translation-entry">
                                                 <h6><?php echo $msgid; ?></h6>
-                                                <textarea name="msgstr-<?php echo $lang; ?>-<?php echo $id; ?>" id="msgstr-<?php echo $lang; ?>-<?php echo $id; ?>"
+                                                <textarea name="msgstr-<?php echo $lang; ?>-<?php echo $id; ?>"
+                                                          id="msgstr-<?php echo $lang; ?>-<?php echo $id; ?>"
                                                           rows="5" cols="30"><?php echo $msg['msgstr'][0]; ?></textarea>
                                             </div>
-            <?php endforeach; ?>
+                                        <?php } ?>
                                     </div>
                                 </div>
-        <?php endforeach; ?>
+                            <?php } ?>
                         </div>
                         <p><input type="submit" class="previous button" value="Back"/></p>
                     </div>
                 </div>
             </div>
         </div>
-        <?php if (isset($_POST) && count($_POST) > 0): ?>
-            <div class="mailjet_subscribe_response"><?php echo 'Success! Please go to your wordpress site to see your widget in action.' ?></div>
+        <?php if (isset($_POST) && count($_POST) > 0) { ?>
+        <div class="mailjet_subscribe_response"><?php echo 'Success! Please go to your wordpress site to see your widget in action.' ?></div>
         <?php
-        endif;
+    }
         $WPMailjet->addMjJsGlobalVar();
     }
 
     function entryStrToId($str)
     {
-        return substr(str_replace(array(' ', '%', ':', '/', '<', '>', '"', '\\', '@', '.', '!', '?'), array('-'), $str), 0, 20);
+        return substr(str_replace(array(' ', '%', ':', '/', '<', '>', '"', '\\', '@', '.', '!', '?'), array('-'), $str),
+            0, 20);
     }
 
     function update($new_instance, $old_instance)
@@ -421,7 +465,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
      */
     function mj_is_float($input)
     {
-        return $input === (string) (float) $input;
+        return $input === (string)(float)$input;
     }
 
     function mj_is_datetime($input)
@@ -465,7 +509,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     public function mailjet_subscribe_from_widget()
     {
         load_plugin_textdomain('wp-mailjet', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
-       // load_plugin_textdomain('wp-mailjet-subscription-widget', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
+        // load_plugin_textdomain('wp-mailjet-subscription-widget', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
 
         $error = empty($_POST['email']) ? 'Email field is empty' : false;
         if (empty($_POST['email'])) {
@@ -515,8 +559,10 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
 
                     $dataTypeFunction = $dataTypes[$accountProperty->Datatype];
                     if ($accountProperty->Name === $submittedProperty &&
-                            $this->$dataTypeFunction($_POST[$submittedProperty]) !== true) {
-                        _e('You have entered a contact property with wrong data type, for example a string instead of a number.', 'wp-mailjet');
+                        $this->$dataTypeFunction($_POST[$submittedProperty]) !== true
+                    ) {
+                        _e('You have entered a contact property with wrong data type, for example a string instead of a number.',
+                            'wp-mailjet');
                         die;
                     }
 
@@ -525,7 +571,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                         // Fix for strtotime() when parsing format dd/mm/yyyy
                         $_POST[$submittedProperty] = str_replace('/', '-', $_POST[$submittedProperty]);
                         if (false === $this->mj_isValidDate($_POST[$submittedProperty])) {
-                            _e('You have entered a Datetime contact property with Invalid date value. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".', 'wp-mailjet');
+                            _e('You have entered a Datetime contact property with Invalid date value. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".',
+                                'wp-mailjet');
                             die;
                         }
                         $_POST[$submittedProperty] = strtotime($_POST[$submittedProperty]);
@@ -535,7 +582,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         }
 
         $params = http_build_query($_POST);
-        $filename = apply_filters('mailjet_confirmation_email_filename', dirname(__FILE__) . '/templates/confirm-subscription-email.php');
+        $filename = apply_filters('mailjet_confirmation_email_filename',
+            dirname(__FILE__) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($filename);
         $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
         $emailData = array(
@@ -546,7 +594,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet'),
             '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet'),
             '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'wp-mailjet'),
+            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed',
+                'wp-mailjet'),
             '__THANKS__' => __('Thanks,', 'wp-mailjet')
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
@@ -554,8 +603,10 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
-        $result = wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet'), $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
-        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'wp-mailjet') . '</p>';
+        $result = wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet'), $message,
+            array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.',
+                'wp-mailjet') . '</p>';
         die;
     }
 
@@ -637,11 +688,13 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         echo $before_widget;
 
         $langFields = array('enableTab', 'title', 'list_id', 'button_text', 'metaPropertyName1', 'metaPropertyName2',
-            'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3');
-        if (isset($fields) && is_array($fields))
+            'metaPropertyName3', 'metaProperty1', 'metaProperty2', 'metaProperty3'
+        );
+        if (isset($fields) && is_array($fields)) {
             foreach ($fields as $prop) {
                 ${$prop} = empty($instance[$prop]) ? '' : $instance[$prop];
             }
+        }
 
         $locale = get_locale();
         if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
@@ -672,23 +725,27 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
             return FALSE;
         }
 
-        if (!empty($title))
-            echo $before_title . $title . $after_title;;
+        if (!empty($title)) {
+            echo $before_title . $title . $after_title;
+        };
         ?>
 
         <!--WIDGET CODE GOES HERE-->
         <form class="subscribe-form">
-            <?php if ($this->_userVersion === 3): ?>
-                <?php if (!empty(${'metaProperty1' . $currentLang})): ?>
-                    <input name="<?php echo ${'metaPropertyName1' . $currentLang}; ?>" type="text" placeholder="<?php echo ${'metaProperty1' . $currentLang}; ?>"/>
-                <?php endif; ?>
-                <?php if (!empty(${'metaProperty2' . $currentLang})): ?>
-                    <input name="<?php echo ${'metaPropertyName2' . $currentLang}; ?>" type="text" placeholder="<?php echo ${'metaProperty2' . $currentLang}; ?>"/>
-                <?php endif; ?>
-                <?php if (!empty(${'metaProperty3' . $currentLang})): ?>
-                    <input name="<?php echo ${'metaPropertyName3' . $currentLang}; ?>" type="text" placeholder="<?php echo ${'metaProperty3' . $currentLang}; ?>"/>
-            <?php endif; ?>
-        <?php endif; ?>
+            <?php if ($this->_userVersion === 3) { ?>
+                <?php if (!empty(${'metaProperty1' . $currentLang})) { ?>
+                    <input name="<?php echo ${'metaPropertyName1' . $currentLang}; ?>" type="text"
+                           placeholder="<?php echo ${'metaProperty1' . $currentLang}; ?>"/>
+                <?php } ?>
+                <?php if (!empty(${'metaProperty2' . $currentLang})) { ?>
+                    <input name="<?php echo ${'metaPropertyName2' . $currentLang}; ?>" type="text"
+                           placeholder="<?php echo ${'metaProperty2' . $currentLang}; ?>"/>
+                <?php } ?>
+                <?php if (!empty(${'metaProperty3' . $currentLang})) { ?>
+                    <input name="<?php echo ${'metaPropertyName3' . $currentLang}; ?>" type="text"
+                           placeholder="<?php echo ${'metaProperty3' . $currentLang}; ?>"/>
+                <?php } ?>
+            <?php } ?>
 
             <input id="email" name="email" type="text"
                    placeholder="<?php _e('your@email.com', 'wp-mailjet-subscription-widget'); ?>"/>
@@ -706,7 +763,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
     function validate_email($email)
     {
         return (preg_match("/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/", $email) ||
-                !preg_match("/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/", $email)) ? FALSE : TRUE;
+            !preg_match("/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/", $email)) ? FALSE : TRUE;
     }
 
 }
