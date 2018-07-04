@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 14:54+0300\n"
-"PO-Revision-Date: 2018-06-20 14:54+0300\n"
+"POT-Creation-Date: 2018-07-03 17:54+0300\n"
+"PO-Revision-Date: 2018-07-03 17:54+0300\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "Language: en\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -369,17 +369,17 @@ msgstr ""
 msgid "There is an error with your settings. please correct and try again"
 msgstr "There is an error with your settings. please correct and try again"
 
-#: mailjet-widget.php:49
+#: mailjet-widget.php:51
 #, fuzzy
 #| msgid "Allow comment authors to subscribe to this list"
 msgid "Allows your visitors to subscribe to one of your lists"
 msgstr "Allow comment authors to subscribe to this list"
 
-#: mailjet-widget.php:55
+#: mailjet-widget.php:57
 msgid "Mailjet Subscription widget"
 msgstr "Mailjet Subscription widget"
 
-#: mailjet-widget.php:115
+#: mailjet-widget.php:117
 msgid ""
 "You are either v1 user or we could not fetch user contact properties. Please "
 "contact our <a target=\"_blank\" href=\"https://www.mailjet.com/support"
@@ -393,53 +393,56 @@ msgstr ""
 "contact properties available. You can still configure a Mailjet subscription "
 "widget by clicking on \"Next\" button and complete step2 and step3."
 
-#: mailjet-widget.php:469 wp-mailjet.php:229 wp-mailjet.php:304
+#: mailjet-widget.php:472
+msgid "Email field is empty"
+msgstr ""
+
+#: mailjet-widget.php:477
+msgid "Missing list id"
+msgstr ""
+
+#: mailjet-widget.php:482 wp-mailjet.php:229 wp-mailjet.php:304
 msgid "Invalid email"
 msgstr "Invalid email"
 
-#: mailjet-widget.php:479
+#: mailjet-widget.php:492
 #, php-format
 msgid "The contact %s is already subscribed"
 msgstr "The contact %s is already subscribed"
 
-#: mailjet-widget.php:531
-#, fuzzy
-#| msgid "Please Confirm Your Subscription To"
-msgid "Please confirm your subscription"
+#: mailjet-widget.php:545 wp-mailjet.php:310
+msgid "Confirm your mailing list subscription"
+msgstr "Confirm your mailing list subscription"
+
+#: mailjet-widget.php:546 wp-mailjet.php:311
+msgid "Please Confirm Your Subscription To"
 msgstr "Please Confirm Your Subscription To"
 
-#: mailjet-widget.php:532
-#, php-format
-msgid ""
-"To receive newsletters from: %s, please confirm your subscription by "
-"clicking the following button."
-msgstr ""
+#: mailjet-widget.php:549 wp-mailjet.php:314
+msgid "Click here to confirm"
+msgstr "Click here to confirm"
 
-#: mailjet-widget.php:535
-#, fuzzy
-#| msgid "Auto subscribe new users to this list"
-msgid "Yes, subscribe me to this list"
-msgstr "Auto subscribe new users to this list"
-
-#: mailjet-widget.php:536 wp-mailjet.php:315
+#: mailjet-widget.php:550 wp-mailjet.php:315
 msgid "You may copy/paste this link into your browser:"
 msgstr "You may copy/paste this link into your browser:"
 
-#: mailjet-widget.php:538
+#: mailjet-widget.php:552 wp-mailjet.php:317
 msgid ""
-"If you received this email by mistake or don't wish to subscribe anymore, "
-"simply ignore this email."
+"Did not ask to subscribe to this list? Or maybe you have changed your mind? "
+"Then simply ignore this email and you will not be subscribed"
 msgstr ""
+"Did not ask to subscribe to this list? Or maybe you have changed your mind? "
+"Then simply ignore this email and you will not be subscribed"
 
-#: mailjet-widget.php:539 wp-mailjet.php:318
+#: mailjet-widget.php:553 wp-mailjet.php:318
 msgid "Thanks,"
 msgstr "Thanks,"
 
-#: mailjet-widget.php:546 wp-mailjet.php:324
+#: mailjet-widget.php:560 wp-mailjet.php:324
 msgid "Subscription Confirmation"
 msgstr "Subscription Confirmation"
 
-#: mailjet-widget.php:548
+#: mailjet-widget.php:561
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "the subscription."
@@ -447,16 +450,16 @@ msgstr ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "the subscription."
 
-#: mailjet-widget.php:563
+#: mailjet-widget.php:575
 msgid "Error. Token verification failed."
 msgstr "Error. Token verification failed."
 
-#: mailjet-widget.php:609 wp-mailjet.php:262
+#: mailjet-widget.php:620 wp-mailjet.php:262
 #, php-format
 msgid "Thanks for subscribing with %s"
 msgstr "Thanks for subscribing with %s"
 
-#: mailjet-widget.php:686
+#: mailjet-widget.php:697
 msgid "your@email.com"
 msgstr "your@email.com"
 
@@ -492,25 +495,15 @@ msgstr "Subscribe to our mailing list"
 msgid "The contact %s is unsubscribed"
 msgstr "The contact %s is already subscribed"
 
-#: wp-mailjet.php:310
-msgid "Confirm your mailing list subscription"
-msgstr "Confirm your mailing list subscription"
+#, fuzzy
+#~| msgid "Please Confirm Your Subscription To"
+#~ msgid "Please confirm your subscription"
+#~ msgstr "Please Confirm Your Subscription To"
 
-#: wp-mailjet.php:311
-msgid "Please Confirm Your Subscription To"
-msgstr "Please Confirm Your Subscription To"
-
-#: wp-mailjet.php:314
-msgid "Click here to confirm"
-msgstr "Click here to confirm"
-
-#: wp-mailjet.php:317
-msgid ""
-"Did not ask to subscribe to this list? Or maybe you have changed your mind? "
-"Then simply ignore this email and you will not be subscribed"
-msgstr ""
-"Did not ask to subscribe to this list? Or maybe you have changed your mind? "
-"Then simply ignore this email and you will not be subscribed"
+#, fuzzy
+#~| msgid "Auto subscribe new users to this list"
+#~ msgid "Yes, subscribe me to this list"
+#~ msgstr "Auto subscribe new users to this list"
 
 #, fuzzy
 #~| msgid "Not yet subscribed, chose list and save settings"

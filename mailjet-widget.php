@@ -464,11 +464,17 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
      */
     public function mailjet_subscribe_from_widget()
     {
+        load_plugin_textdomain('wp-mailjet', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
+       // load_plugin_textdomain('wp-mailjet-subscription-widget', FALSE, dirname(plugin_basename(__FILE__)) . '/i18n');
 
         $error = empty($_POST['email']) ? 'Email field is empty' : false;
-        $error = empty($_POST['list_id']) ? 'Missing list id' : $error;
-        if (false !== $error) {
-            _e($error, 'wp-mailjet-subscription-widget');
+        if (empty($_POST['email'])) {
+            echo __('Email field is empty', 'wp-mailjet');
+            die;
+        }
+
+        if (empty($_POST['list_id'])) {
+            echo __('Missing list id', 'wp-mailjet');
             die;
         }
 
@@ -483,7 +489,7 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         ));
         if (!empty($recipient->Count) || $recipient === true) {
             echo '<p class="error" listId="' . $_POST['list_id'] . '">';
-            echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet-subscription-widget'), $_POST['email']);
+            echo sprintf(__("The contact %s is already subscribed", 'wp-mailjet'), $_POST['email']);
             echo '</p>';
             die;
         }
@@ -510,7 +516,8 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                     $dataTypeFunction = $dataTypes[$accountProperty->Datatype];
                     if ($accountProperty->Name === $submittedProperty &&
                             $this->$dataTypeFunction($_POST[$submittedProperty]) !== true) {
-                        $error = 'You have entered a contact property with wrong data type, for example a string instead of a number.';
+                        _e('You have entered a contact property with wrong data type, for example a string instead of a number.', 'wp-mailjet');
+                        die;
                     }
 
                     // convert inserted date time property to unix timestamp
@@ -518,15 +525,12 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
                         // Fix for strtotime() when parsing format dd/mm/yyyy
                         $_POST[$submittedProperty] = str_replace('/', '-', $_POST[$submittedProperty]);
                         if (false === $this->mj_isValidDate($_POST[$submittedProperty])) {
-                            $error = 'You have entered a Datetime contact property with Invalid date value. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".';
+                            _e('You have entered a Datetime contact property with Invalid date value. Valid format for date time property is "dd-mm-YYYY" or "dd/mm/YYYY".', 'wp-mailjet');
+                            die;
                         }
                         $_POST[$submittedProperty] = strtotime($_POST[$submittedProperty]);
                     }
                 }
-            }
-            if (false !== $error) {
-                _e($error, 'wp-mailjet-subscription-widget');
-                die;
             }
         }
 
@@ -535,23 +539,23 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         $message = file_get_contents($filename);
         $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
         $emailData = array(
-            '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet-subscription-widget'),
-            '__EMAIL_HEADER__' => sprintf(__('Please Confirm Your Subscription To', 'wp-mailjet-subscription-widget'), $wpUrl), 
+            '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet'),
+            '__EMAIL_HEADER__' => sprintf(__('Please Confirm Your Subscription To', 'wp-mailjet'), $wpUrl),
             '__WP_URL__' => $wpUrl,
             '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
-            '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'),
-            '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet-subscription-widget'),
+            '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet'),
+            '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet'),
             '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'wp-mailjet-subscription-widget'),
-            '__THANKS__' => __('Thanks,', 'wp-mailjet-subscription-widget')
+            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'wp-mailjet'),
+            '__THANKS__' => __('Thanks,', 'wp-mailjet')
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
         foreach ($emailParams as $key => $value) {
             $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
-        $result = wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet-subscription-widget'), $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
-        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'wp-mailjet-subscription-widget') . '</p>';
+        $result = wp_mail($_POST['email'], __('Subscription Confirmation', 'wp-mailjet'), $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'wp-mailjet') . '</p>';
         die;
     }
 
