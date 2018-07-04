@@ -20,10 +20,6 @@ msgid "Confirm your mailing list subscription"
 msgstr "Por favor, confirme su suscripción"
 
 #: mailjet-widget.php
-msgid "You may copy/paste this link into your browser:"
-msgstr "Puedes copiar y pegar este enlace en el navegador:"
-
-#: mailjet-widget.php
 msgid "Email field is empty"
 msgstr "El campo e-mail está vacío"
 
@@ -62,6 +58,10 @@ msgstr "Para recibir boletines de: %s, por favor confirme su suscripción hacien
 #: mailjet-widget.php
 msgid "Click here to confirm"
 msgstr "Sí, suscribirme a esta lista."
+
+#: mailjet-widget.php
+msgid "You may copy/paste this link into your browser:"
+msgstr "Puedes copiar y pegar este enlace en el navegador:"
 
 #: mailjet-widget.php
 msgid "Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed"
