@@ -17,6 +17,7 @@ foreach(array(
             'mailjet_ssl',
             'mailjet_port',
             'mailjet_from_email',
+            'mailjet_from_name',
             'mailjet_test',
             'mailjet_test_address',
             'mailjet_auto_subscribe_list_id',
