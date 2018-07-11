@@ -587,18 +587,22 @@ class WP_Mailjet_Subscribe_Widget extends WP_Widget
         $message = file_get_contents($filename);
         $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
         $emailData = array(
-            '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet'),
-            '__EMAIL_HEADER__' => sprintf(__('Please Confirm Your Subscription To', 'wp-mailjet'), $wpUrl),
+            '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'wp-mailjet-subscription-widget'), // OK
+            '__EMAIL_HEADER__' => sprintf(__('Please Confirm Your Subscription To', 'wp-mailjet-subscription-widget'), $wpUrl),// OK
             '__WP_URL__' => $wpUrl,
             '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
-            '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet'),
+            '__CLICK_HERE__' => __('Click here to confirm', 'wp-mailjet-subscription-widget'), // ?
             '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'wp-mailjet'),
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed',
-                'wp-mailjet'),
+                'wp-mailjet-subscription-widget'),
             '__THANKS__' => __('Thanks,', 'wp-mailjet')
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
+//        echo "<pre>";
+//        echo __('Click here to confirm', 'wp-mailjet'); // != EN
+//        echo "<br>";
+//        echo __('Click here to confirm', 'wp-mailjet-subscription-widget');exit; // == EN
         foreach ($emailParams as $key => $value) {
             $message = str_replace($key, $value, $message);
         }
