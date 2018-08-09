@@ -1,0 +1,134 @@
+<?php
+
+namespace MailjetPlugin\Includes;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+
+/**
+ * Register all actions and filters for the plugin.
+ *
+ * Maintain a list of all hooks that are registered throughout
+ * the plugin, and register them with the WordPress API. Call the
+ * run function to execute the list of actions and filters.
+ *
+ * @package    Mailjet
+ * @subpackage Mailjet/includes
+ * @author     Your Name <email@example.com>
+ */
+class MailjetMail
+{
+    const MJ_HOST = 'in-v3.mailjet.com';
+    const MJ_MAILER = 'X-Mailer:WP-Mailjet/0.1';
+
+    public function __construct()
+    {
+        return new PHPMailer(true);
+    }
+
+    public function sendMail($mailTransport)
+    {
+        try {
+            //Server settings
+            $mailTransport->SMTPDebug = 2;                                 // Enable verbose debug output
+            $mailTransport->isSMTP();                                      // Set mailer to use SMTP
+            $mailTransport->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
+            $mailTransport->SMTPAuth = true;                               // Enable SMTP authentication
+            $mailTransport->Username = 'user@example.com';                 // SMTP username
+            $mailTransport->Password = 'secret';                           // SMTP password
+            $mailTransport->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            //Recipients
+            $mailTransport->setFrom('from@example.com', 'Mailer');
+            $mailTransport->addAddress('joe@example.net', 'Joe User');     // Add a recipient
+            $mailTransport->addAddress('ellen@example.com');               // Name is optional
+            $mailTransport->addReplyTo('info@example.com', 'Information');
+            $mailTransport->addCC('cc@example.com');
+            $mailTransport->addBCC('bcc@example.com');
+
+            //Attachments
+            $mailTransport->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+            $mailTransport->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+            //Content
+            $mailTransport->isHTML(true);                                  // Set email format to HTML
+            $mailTransport->Subject = 'Here is the subject';
+            $mailTransport->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mailTransport->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mailTransport->send();
+            echo 'Message has been sent';
+        } catch (PHPMailerException $e) {
+            echo 'Message could not be sent. Mailer Error: ', $mailTransport->ErrorInfo;
+        }
+    }
+
+    public function phpmailer_init_smtp(\PHPMailer $phpmailer)
+    {
+        if (!get_option('mailjet_enabled') || 0 == get_option('mailjet_enabled')) {
+            return;
+        }
+
+        $phpmailer->Mailer = 'smtp';
+        $phpmailer->SMTPSecure = get_option('mailjet_ssl');
+
+        $phpmailer->Host = self::MJ_HOST;
+        $phpmailer->Port = get_option('mailjet_port');
+
+        $phpmailer->SMTPAuth = TRUE;
+        $phpmailer->Username = get_option('mailjet_apikey');
+        $phpmailer->Password = get_option('mailjet_apisecret');
+
+        $from_email = (get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email'));
+        $phpmailer->From = $from_email;
+        $phpmailer->Sender = $from_email;
+
+        $phpmailer->FromName = get_option('mailjet_from_name') ? get_option('mailjet_from_name') : get_bloginfo('name');
+
+        $phpmailer->AddCustomHeader(self::MJ_MAILER);
+    }
+
+    public function wp_mail_failed_cb($wpError)
+    {
+        echo "<pre>";
+        print_r($wpError);
+        echo "</pre>";
+        add_settings_error('mailjet_messages', 'mailjet_message', 'ERROR - '. $wpError->get_error_message(), 'error');
+    }
+
+
+
+    public static function sendTestEmail()
+    {
+        $test_sent = false;
+
+
+        update_option('mailjet_enabled', 1);
+        update_option('mailjet_test', 1);
+        update_option('mailjet_test_address', 'fismailov@mailjet.com');
+        update_option('mailjet_from_email', 'fismailov@mailjet.com');
+        update_option('mailjet_port', 465);
+        update_option('mailjet_ssl', 'ssl');
+
+        if (!empty(get_option('mailjet_test_address')) && !empty(get_option('mailjet_test'))) {
+            // Send a test mail
+            $subject = __('Your test mail from Mailjet', 'mailjet');
+            $message = sprintf(__('Your Mailjet configuration is ok!' . 'SSL: %s Port: %s', 'mailjet'), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
+            $test_sent = wp_mail(get_option('mailjet_test_address'), $subject, $message);
+        }
+
+        if (!$test_sent) {
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was NOT sent, please review your settings', 'mailjet'), 'error');
+        }
+    }
+
+    public function wp_sender_email($original_email_address) {
+        return get_option('mailjet_from_email');
+    }
+
+    public function wp_sender_name($original_email_from) {
+        return 'Feri';
+    }
+
+}
