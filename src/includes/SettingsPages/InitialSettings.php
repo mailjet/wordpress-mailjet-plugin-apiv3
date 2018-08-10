@@ -94,6 +94,7 @@ class InitialSettings
         }
 
 
+
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_section_initial_settings',
@@ -133,8 +134,8 @@ class InitialSettings
             }
 
             // Update From Email and Name
-            add_filter('wp_mail_from', array('MailjetMail', 'wp_sender_email'));
-            add_filter('wp_mail_from_name', array('MailjetMail', 'wp_sender_name'));
+            add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));
+            add_filter('wp_mail_from_name', array(new MailjetMail(), 'wp_sender_name'));
 
             // add settings saved message with the class of "updated"
             add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
@@ -145,15 +146,15 @@ class InitialSettings
 
         ?>
 
-        <div class="split left">
+        <div class="split left"">
             <div class="centered">
                 <h1>Jane Flex</h1>
                 <p>Some text.</p>
-                <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" alt="Welcome to the Mailjet">
+                <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" alt="Welcome to the Mailjet" />
             </div>
         </div>
 
-        <div class="split right">
+        <div class="split right"">
             <div class="centered">
                 <div class="wrap">
                     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -165,7 +166,7 @@ class InitialSettings
                         // (sections are registered for "mailjet", each field is registered to a specific section)
                         do_settings_sections('mailjet_initial_settings_page');
                         // output save settings button
-                        submit_button('Save Settings');
+                        submit_button('Save');
                         ?>
                     </form>
                 </div>

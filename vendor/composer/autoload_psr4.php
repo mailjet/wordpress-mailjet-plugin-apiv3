@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
-    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'MailjetPlugin\\' => array($baseDir . '/src'),
     'MailjetIframe\\' => array($vendorDir . '/mailjet/Mailjet-iframe-v3/src'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),

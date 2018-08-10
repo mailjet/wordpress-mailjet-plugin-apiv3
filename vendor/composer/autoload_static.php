@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita4104846c5857f4be3e240c9f163057f
+class ComposerStaticInita8fdd522937ce6ecc70019b518258c9f
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -17,7 +17,6 @@ class ComposerStaticInita4104846c5857f4be3e240c9f163057f
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
-            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -36,10 +35,6 @@ class ComposerStaticInita4104846c5857f4be3e240c9f163057f
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'PHPMailer\\PHPMailer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'MailjetPlugin\\' => 
         array (
@@ -83,9 +78,9 @@ class ComposerStaticInita4104846c5857f4be3e240c9f163057f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita4104846c5857f4be3e240c9f163057f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita4104846c5857f4be3e240c9f163057f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInita4104846c5857f4be3e240c9f163057f::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita8fdd522937ce6ecc70019b518258c9f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita8fdd522937ce6ecc70019b518258c9f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita8fdd522937ce6ecc70019b518258c9f::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

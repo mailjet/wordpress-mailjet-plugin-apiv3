@@ -3,13 +3,12 @@
 namespace MailjetPlugin\Includes;
 
 use MailjetIframe\MailjetIframe;
-use MailjetPlugin\Includes\SettingsPages\ApiSettings;
 use MailjetPlugin\Includes\SettingsPages\ConnectAccountSettings;
+use MailjetPlugin\Includes\SettingsPages\Dashboard;
 use MailjetPlugin\Includes\SettingsPages\EnableSendingSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
-use MailjetPlugin\Includes\SettingsPages\Dashboard;
 
 /**
  * Register all actions and filters for the plugin.
@@ -75,8 +74,6 @@ class MailjetMenu
 
 
                 // Settings pages
-                add_submenu_page('mailjet_settings_page', __('Mailjet API settings', 'mailjet'), null, 'read', 'mailjet_api_settings_page',
-                    array(new ApiSettings(), 'mailjet_api_settings_page_html'));
                 add_submenu_page('mailjet_settings_page', __('Connect your Mailjet account', 'mailjet'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
                 add_submenu_page('mailjet_settings_page', __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page',
@@ -99,7 +96,7 @@ class MailjetMenu
 
         $desc = '<ol>';
         $desc .= '<li>' . sprintf(__('<a target="_blank" href="https://www.mailjet.com/signup?aff=%s">Create your Mailjet account</a> if you don\'t have any.', 'mailjet'), 'wordpress-3.0') . '</li>';
-        $desc .= '<li>' . __('Log in with your account through the login form below or visit your <a target="_blank" href="https://www.mailjet.com/account/api_keys">account page</a> to get your API keys and set up them below.', 'wp-mailjet') . '</li>';
+        $desc .= '<li>' . __('Log in with your account through the login form below or visit your <a target="_blank" href="https://www.mailjet.com/account/api_keys">account page</a> to get your API keys and set up them below.', 'mailjet') . '</li>';
         $desc .= '<li>' . __('<a href="admin.php?page=mailjet_settings_contacts_menu">Create a new list</a> if you don\'t have one or need a new one.', 'mailjet') . '</li>';
         $desc .= '<li>' . __('<a href="widgets.php">Add</a> the email collection widget to your sidebar or footer.', 'mailjet') . '</li>';
         $desc .= '<li>' . __('<a href="admin.php?page=mailjet_settings_campaigns_menu">Create a campaign</a> on mailjet.com to send your newsletter.', 'mailjet') . '</li>';

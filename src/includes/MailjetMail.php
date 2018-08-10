@@ -2,9 +2,6 @@
 
 namespace MailjetPlugin\Includes;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception as PHPMailerException;
-
 /**
  * Register all actions and filters for the plugin.
  *
@@ -23,7 +20,9 @@ class MailjetMail
 
     public function __construct()
     {
-        return new PHPMailer(true);
+        require_once ABSPATH . WPINC . '/class-phpmailer.php';
+        require_once ABSPATH . WPINC . '/class-smtp.php';
+        return new \PHPMailer(true);
     }
 
     public function sendMail($mailTransport)
@@ -59,7 +58,7 @@ class MailjetMail
 
             $mailTransport->send();
             echo 'Message has been sent';
-        } catch (PHPMailerException $e) {
+        } catch (\PHPMailer\PHPMailer\Exception $e) {
             echo 'Message could not be sent. Mailer Error: ', $mailTransport->ErrorInfo;
         }
     }
@@ -89,11 +88,9 @@ class MailjetMail
         $phpmailer->AddCustomHeader(self::MJ_MAILER);
     }
 
+
     public function wp_mail_failed_cb($wpError)
     {
-        echo "<pre>";
-        print_r($wpError);
-        echo "</pre>";
         add_settings_error('mailjet_messages', 'mailjet_message', 'ERROR - '. $wpError->get_error_message(), 'error');
     }
 
@@ -102,16 +99,7 @@ class MailjetMail
     public static function sendTestEmail()
     {
         $test_sent = false;
-
-
-        update_option('mailjet_enabled', 1);
-        update_option('mailjet_test', 1);
-        update_option('mailjet_test_address', 'fismailov@mailjet.com');
-        update_option('mailjet_from_email', 'fismailov@mailjet.com');
-        update_option('mailjet_port', 465);
-        update_option('mailjet_ssl', 'ssl');
-
-        if (!empty(get_option('mailjet_test_address')) && !empty(get_option('mailjet_test'))) {
+        if (!empty(get_option('mailjet_test_address'))) {
             // Send a test mail
             $subject = __('Your test mail from Mailjet', 'mailjet');
             $message = sprintf(__('Your Mailjet configuration is ok!' . 'SSL: %s Port: %s', 'mailjet'), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
@@ -120,7 +108,10 @@ class MailjetMail
 
         if (!$test_sent) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was NOT sent, please review your settings', 'mailjet'), 'error');
+        } else {
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was sent succesfully', 'mailjet'), 'updated');
         }
+
     }
 
     public function wp_sender_email($original_email_address) {
@@ -128,7 +119,7 @@ class MailjetMail
     }
 
     public function wp_sender_name($original_email_from) {
-        return 'Feri';
+        return get_option('mailjet_from_name');
     }
 
 }

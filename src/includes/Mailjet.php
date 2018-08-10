@@ -162,7 +162,8 @@ class Mailjet
     {
         $plugin_settings = new MailjetSettings();
 
-        $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_init');
+//        $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_init');
+        $this->loader->add_action('init', $plugin_settings, 'mailjet_settings_init');
     }
 
 

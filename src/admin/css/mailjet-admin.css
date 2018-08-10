@@ -8,7 +8,7 @@
     height: 100%;
     width: 50%;
     position: fixed;
-    z-index: 1;
+    /*z-index: 1;*/
     top: 0;
     overflow-x: hidden;
     padding-top: 20px;
@@ -16,36 +16,88 @@
 
 /* Control the left side */
 .left {
+    width: 40%;
     left: 0;
+
     /*background-color: #111;*/
 }
 
 /* Control the right side */
 .right {
+    width: 80%;
     right: 0;
     /*background-color: red;*/
 }
 
 /* If you want the content centered horizontally and vertically */
 .centered {
+    border-right: double 1px #6f6f6f;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: left;
-    padding: 20px;
 }
 
 .split.right .centered {
+    padding: 10px;
     background-color: #ffffff;
 }
 
-/* Style the image inside the centered container, if needed */
-.centered img {
-    width: 150px;
-    border-radius: 50%;
+.centered h1 {
+    padding: 20px;
 }
 
 input[type="submit"].button {
     float: right;
+}
+
+.bottom_links {
+    padding-top: 50px;
+}
+
+.centered ul li .settingsMenuLink {
+    color: #000000;
+}
+.centered ul li .settingsMenuLink a {
+    color: #000000;
+    width: 100%;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.centered ul li .settingsMenuLink a:hover {
+    font-weight: bold;
+    background-color: #c6c6ca;
+}
+.centered ul li .settingsMenuLink a.active {
+    font-weight: bold;
+    background-color: #c6c6ca;
+}
+
+
+
+/* Send test email popup */
+.test_email_popup {
+    background-color:#FFFFFF;
+    border:1px solid #999999;
+    cursor:default;
+    display:none;
+    margin-top: 15px;
+    position:absolute;
+    text-align:left;
+    width:394px;
+    z-index:50;
+    padding: 25px 25px 20px;
+}
+.test_email_popup label {
+    display: block;
+    margin-bottom: 3px;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+.test_email_popup p, .test_email_popup.div {
+    border-bottom: 1px solid #EFEFEF;
+    margin: 8px 0;
+    padding-bottom: 8px;
 }

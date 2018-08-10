@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+
 /**
  * Register all actions and filters for the plugin.
  *
@@ -19,7 +21,9 @@ class UserAccessSettings
     public function mailjet_section_user_access_cb($args)
     {echo get_option('settings_step');
         ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'mailjet' ); ?></p>
+        <p id="<?php echo esc_attr( $args['id'] ); ?>">
+            <?php echo __('Select which WordPress user roles (in addition to Administrator) will also have access to the Mailjet Plug-in', 'mailjet' ); ?>
+        </p>
         <?php
     }
 
@@ -37,7 +41,7 @@ class UserAccessSettings
 
         <fieldset>
             <legend class="screen-reader-text"><span><?php echo  __('User Access', 'mailjet'); ?></span></legend>
-            <label for="mailjet_access_administrator"><input name="mailjet_access_administrator" type="checkbox" id="mailjet_access_administrator" value="1" <?=($mailjetAccessAdministrator == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Enable email through <b>Mailjet</b>', 'mailjet'); ?></label><br />
+            <label for="mailjet_access_administrator"><input name="mailjet_access_administrator" type="checkbox" id="mailjet_access_administrator" value="1" <?=( TRUE || $mailjetAccessAdministrator == 1 ? ' checked="checked" disabled' : '') ?> > <?php echo __('Administrator', 'mailjet'); ?></label><br />
             <label for="mailjet_access_editor"><input name="mailjet_access_editor" type="checkbox" id="mailjet_access_editor" value="1" <?=($mailjetAccessEditor == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Editor', 'mailjet'); ?></label><br />
             <label for="mailjet_access_author"><input name="mailjet_access_author" type="checkbox" id="mailjet_access_author" value="1" <?=($mailjetAccessAuthor == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Author', 'mailjet'); ?></label><br />
             <label for="mailjet_access_contributor"><input name="mailjet_access_contributor" type="checkbox" id="mailjet_access_contributor" value="1" <?=($mailjetAccessContributor == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Contributor', 'mailjet'); ?></label><br />
@@ -103,20 +107,34 @@ class UserAccessSettings
         settings_errors('mailjet_messages');
 
         ?>
-        <div class="wrap">
-            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-            <form action="options.php" method="post">
+
+        <div class="split left">
+            <div class="centered">
                 <?php
-                // output security fields for the registered setting "mailjet"
-                settings_fields('mailjet_user_access_page');
-                // output setting sections and their fields
-                // (sections are registered for "mailjet", each field is registered to a specific section)
-                do_settings_sections('mailjet_user_access_page');
-                // output save settings button
-                submit_button('Save Settings');
+                    MailjetAdminDisplay::getSettingsLeftMenu();
                 ?>
-            </form>
+            </div>
         </div>
+
+        <div class="split right">
+            <div class="centered">
+                <div class="wrap">
+                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                    <form action="options.php" method="post">
+                        <?php
+                        // output security fields for the registered setting "mailjet"
+                        settings_fields('mailjet_user_access_page');
+                        // output setting sections and their fields
+                        // (sections are registered for "mailjet", each field is registered to a specific section)
+                        do_settings_sections('mailjet_user_access_page');
+                        // output save settings button
+                        submit_button('Save');
+                        ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <?php
     }
 
