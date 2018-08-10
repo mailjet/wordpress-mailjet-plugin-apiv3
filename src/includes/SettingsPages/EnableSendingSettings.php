@@ -114,7 +114,11 @@ class EnableSendingSettings
         $mailjetApiSecret = get_option('mailjet_apisecret');
         $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
 
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Sender);
+        $filters = [
+            'Limit' => '0'
+        ];
+
+        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Sender, ['filters' => $filters]);
         if ($responseSenders->success()) {
             return $responseSenders->getData();
         } else {

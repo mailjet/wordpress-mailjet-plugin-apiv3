@@ -6,6 +6,7 @@ use MailjetIframe\MailjetIframe;
 use MailjetPlugin\Includes\SettingsPages\ConnectAccountSettings;
 use MailjetPlugin\Includes\SettingsPages\Dashboard;
 use MailjetPlugin\Includes\SettingsPages\EnableSendingSettings;
+use MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
@@ -66,6 +67,11 @@ class MailjetMenu
                 add_submenu_page('mailjet_settings_page', __('View your Mailjet statistics', 'mailjet'),
                     __('Statistics', 'mailjet'), 'read', 'mailjet_settings_stats_menu',
                     array($this, 'show_stats_page'));
+
+
+                // Initial configuration pages
+                add_submenu_page('mailjet_settings_page', __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
+                    array(new InitialContactListsSettings(), 'mailjet_initial_contact_lists_page_html'));
 
 
                 // Dashboard page

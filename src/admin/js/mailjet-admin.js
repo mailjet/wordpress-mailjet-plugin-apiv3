@@ -79,12 +79,17 @@
         });
 
 
+
         // Send test email popup
         function deselect(e) {
             $('.pop').slideFadeToggle(function() {
                 e.removeClass('selected');
             });
         }
+        $.fn.slideFadeToggle = function(easing, callback) {
+            return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
+        };
+
         $(function() {
             $('#mailjet_test').on('click', function() {
                 if($(this).hasClass('selected')) {
@@ -101,12 +106,28 @@
                 return false;
             });
         });
-        $.fn.slideFadeToggle = function(easing, callback) {
-            return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
-        };
+
+
+		// Create new Contact List popup
+	   	$(function() {
+            $('#create_contact_list').on('click', function() {
+                if($(this).hasClass('selected')) {
+                    deselect($(this));
+                } else {
+                    $(this).addClass('selected');
+                    $('.pop').slideFadeToggle();
+                }
+                return false;
+            });
+            $('.closeCreateList').on('click', function() {
+                deselect($('#create_contact_list'));
+                return false;
+            });
+
+        });
 
 
 
 
-	});
+    });
 })( jQuery );
