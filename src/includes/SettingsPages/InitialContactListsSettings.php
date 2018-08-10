@@ -19,10 +19,11 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 class InitialContactListsSettings
 {
     public function mailjet_section_initial_contact_lists_cb($args)
-    {echo get_option('settings_step');
+    {
         ?>
+        <h2><?php echo __('Choose a list so synchronize', 'mailjet' ); ?></h2>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('Choose a list so synchronize', 'mailjet' ); ?>
+            <?php echo __('You can choose to add your Wordpress subscribers to an existing list or create a new list', 'mailjet' ); ?>
         </p>
         <?php
     }
@@ -93,7 +94,7 @@ class InitialContactListsSettings
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_initial_contact_lists_settings',
-            __( 'The Matrix has you.', 'mailjet' ),
+            __( 'Configure your lists.', 'mailjet' ),
             array($this, 'mailjet_section_initial_contact_lists_cb'),
             'mailjet_initial_contact_lists_page'
         );
@@ -168,13 +169,15 @@ class InitialContactListsSettings
                     // output save settings button
                     submit_button('Save');
                     ?>
+
+                    <?php
+                    if (!empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) { ?>
+                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_dashboard_page'" value="<?=__('Next', 'mailjet')?>">
+                    <?php }
+                    ?>
+
                 </form>
 
-        <?php
-                if (!empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) { ?>
-                    <input name="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_dashboard_page'" value="<?=__('Next', 'mailjet')?>">
-        <?php }
-        ?>
             </div>
         </div>
         </div>

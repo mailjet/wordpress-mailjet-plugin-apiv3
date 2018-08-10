@@ -19,7 +19,7 @@ class UserAccessSettings
 {
 
     public function mailjet_section_user_access_cb($args)
-    {echo get_option('settings_step');
+    {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('Select which WordPress user roles (in addition to Administrator) will also have access to the Mailjet Plug-in', 'mailjet' ); ?>

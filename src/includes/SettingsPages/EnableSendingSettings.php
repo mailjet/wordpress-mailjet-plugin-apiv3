@@ -19,7 +19,7 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 class EnableSendingSettings
 {
     public function mailjet_section_enable_sending_cb($args)
-    {echo get_option('settings_step');
+    {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('Enable or disable the sending of your emails through your Mailjet account', 'mailjet' ); ?>

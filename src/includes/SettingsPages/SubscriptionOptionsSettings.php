@@ -19,7 +19,7 @@ class SubscriptionOptionsSettings
 {
 
     public function mailjet_section_subscription_options_cb($args)
-    {echo get_option('settings_step');
+    {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Subscription options', 'mailjet' ); ?></p>
         <?php

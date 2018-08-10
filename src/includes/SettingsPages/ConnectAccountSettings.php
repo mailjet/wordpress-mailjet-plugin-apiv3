@@ -19,7 +19,7 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 class ConnectAccountSettings
 {
     public function mailjet_section_connect_account_cb($args)
-    {echo get_option('settings_step');
+    {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('In your Mailjet account, go to <a target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials bellow', 'mailjet'); ?>

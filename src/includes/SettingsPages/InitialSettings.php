@@ -29,7 +29,7 @@ class InitialSettings
     // $args have the following keys defined: title, id, callback.
     // the values are defined at the add_settings_section() function.
     public function mailjet_section_initial_settings_cb($args)
-    {echo get_option('settings_step');
+    {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'mailjet' ); ?></p>
         <?php
