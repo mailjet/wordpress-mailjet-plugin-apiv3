@@ -356,28 +356,15 @@ class SubscriptionOptionsSettings
 
 
     /**
-     *  Set extra profile fields when the profile is saved
-     */
-    public function mailjet_register_extra_fields($user_id, $password = "", $meta = array())
-    {
-        $subscribe = filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-
-        update_user_meta($user_id, 'mailjet_subscribe_ok', $subscribe);
-        $this->mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
-    }
-
-
-    /**
      *  Update extra profile fields when the profile is saved
      */
-    public function mailjet_my_save_extra_profile_fields($user_id)
+    public function mailjet_save_extra_profile_fields($user_id)
     {
         if (!current_user_can('edit_user', $user_id)) {
             return FALSE;
         }
 
         $subscribe = filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-
         update_user_meta($user_id, 'mailjet_subscribe_ok', $subscribe);
         $this->mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
     }
@@ -399,8 +386,6 @@ class SubscriptionOptionsSettings
             }
         }
     }
-
-
 
 
 

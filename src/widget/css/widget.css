@@ -1,0 +1,8 @@
+/* This stylesheet is used to style the public view of the widget. */
+
+.mailjet_widget_admin_container {
+    background-color: #00a0d2;
+}
+.mailjet_widget_front_container {
+    background-color: #5F862F;
+}

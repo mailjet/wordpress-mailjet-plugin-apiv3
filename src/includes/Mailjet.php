@@ -9,6 +9,7 @@ use MailjetPlugin\Front\MailjetPublic;
 use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\MailjetMail;
+use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
 /**
  * The core plugin class.
@@ -79,6 +80,7 @@ class Mailjet
         $this->addMailjetMenu();
         $this->addMailjetSettings();
         $this->addMailjetPHPMailer();
+        $this->registerMailjetWidget();
 
 	}
 
@@ -176,6 +178,16 @@ class Mailjet
 
     }
 
+
+    private function registerMailjetWidget()
+    {
+        $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
+
+    }
+    function wp_mailjet_register_widgets()
+    {
+        register_widget(new WP_Mailjet_Subscribe_Widget());
+    }
 
     /**
 	 * Run the loader to execute all of the hooks with WordPress.

@@ -94,15 +94,27 @@ class MailjetSettings
         if (!empty(get_option('activate_mailjet_sync')) && !empty(get_option('mailjet_sync_list'))) {
 
             $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
-            add_action('show_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+
+            // When user is viewing another users profile page (not their own).
             add_action('edit_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            // - If you want to apply your hook to ALL profile pages (including the current user) then you also need to use this one.
+            add_action('show_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+
+            // Runs just before the end of the new user registration form.
             add_action('register_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            // Runs near the end of the "Add New" user screen.
             add_action('user_new_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
 
+            // Runs when a user updates personal options from the admin screen.
             add_action('personal_options_update', array($subscriptionOptionsSettings, 'mailjet_my_save_extra_profile_fields'));
+            // Runs at the end of the Personal Options section of the user profile editing screen.
+            add_action('profile_personal_options ', array($subscriptionOptionsSettings, 'mailjet_my_save_extra_profile_fields'));
+            //
             add_action('edit_user_profile_update', array($subscriptionOptionsSettings, 'mailjet_my_save_extra_profile_fields'));
-
-            add_action('user_register', array($this, array($subscriptionOptionsSettings, 'mailjet_register_extra_fields')));
+            // Runs when a user's profile is updated. Action function argument: user ID.
+            add_action('profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
+            // Runs immediately after the new user is added to the database.
+            add_action('user_register', array($this, array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields')));
         }
 
 
@@ -112,6 +124,7 @@ class MailjetSettings
             add_action('wp_insert_comment',array($subscriptionOptionsSettings, 'mailjet_subscribe_comment_author'));
 
 
+            // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             if (!empty($_GET['mj_sub_comment_author_token'])
                 &&
                 $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
@@ -119,6 +132,31 @@ class MailjetSettings
             }
         }
 
+
+        // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
+        add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
+
     }
+
+
+
+    /**
+     * Display settings link on plugins page
+     *
+     * @param array $links
+     * @param string $file
+     * @return array
+     */
+    public function mailjet_settings_link($links, $file)
+    {
+        if ($file != plugin_basename(dirname(dirname(dirname(__FILE__)))) . '/mailjet.php') {
+            return $links;
+        }
+
+        $settings_link = '<a href="admin.php?page=mailjet_dashboard_page">' . __('Settings', 'mailjet') . '</a>';
+        array_unshift($links, $settings_link);
+        return $links;
+    }
+
 
 }
