@@ -10,7 +10,6 @@ use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
-use Analog\Analog;
 
 /**
  * The core plugin class.

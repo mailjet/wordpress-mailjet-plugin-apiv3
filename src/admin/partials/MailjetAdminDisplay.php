@@ -1,8 +1,6 @@
 <?php
 namespace MailjetPlugin\Admin\Partials;
 
-use Analog\Analog;
-
 /**
  * Provide a admin area view for the plugin
  *

@@ -55,14 +55,8 @@ use Analog\Analog;
 //Analog::handler(\Analog\Handler\File::init(dirname(__FILE__) . '/logs.txt'));
 Analog::handler(\Analog\Handler\ChromeLogger::init());
 
-// debug-level message
-Analog::debug($_SERVER);
-// an info message
-Analog::info('An error message');
-// a warning message
-Analog::warning('Turn back before it\'s too late');
-// an error with no file/line #'s
-Analog::log('Another error message');
+\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet - Start ]');
+
 
 /**
  * Currently plugin version.
@@ -75,6 +69,7 @@ define('MAILJET_VERSION', '5.0.0');
  */
 function activate_mailjet() {
 	MailjetActivator::activate();
+    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ]  [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ activate_mailjet ]');
 }
 
 /**
@@ -83,6 +78,7 @@ function activate_mailjet() {
  */
 function deactivate_mailjet() {
 	MailjetDeactivator::deactivate();
+    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ]  [ ' . plugin_basename(__FILE__) . ' ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ deactivate_mailjet ]');
 }
 
 register_activation_hook( __FILE__, 'activate_mailjet' );
@@ -99,6 +95,9 @@ register_deactivation_hook( __FILE__, 'deactivate_mailjet' );
  */
 function run_mailjet() {
 	$plugin = new Mailjet();
+    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet class initialized ]');
 	$plugin->run();
 }
 run_mailjet();
+
+\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ]  [ ' . plugin_basename(__FILE__) . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet - End ]');

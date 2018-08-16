@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Includes;
 
-use Analog\Analog;
-
 /**
  * Fired during plugin deactivation.
  *

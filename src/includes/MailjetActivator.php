@@ -1,8 +1,6 @@
 <?php
 namespace MailjetPlugin\Includes;
 
-use Analog\Analog;
-
 class MailjetActivator
 {
 	/**

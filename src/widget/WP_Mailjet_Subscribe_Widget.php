@@ -1,8 +1,6 @@
 <?php
 namespace MailjetPlugin\Widget;
 
-use Analog\Analog;
-
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
     /**

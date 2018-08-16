@@ -3,7 +3,6 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetMail;
-use Analog\Analog;
 
 /**
  * Register all actions and filters for the plugin.
@@ -48,6 +47,7 @@ class InitialSettings
         // get the value of the setting we've registered with register_setting()
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
+        $mailjetActivateLogger = get_option('mailjet_activate_logger');
 
         // output the field
         ?>
@@ -72,6 +72,12 @@ class InitialSettings
         </fieldset>
 
         <hr>
+        <label for="mailjet_activate_logger">
+            <input name="mailjet_activate_logger" type="checkbox" id="mailjet_activate_logger" value="1" <?=($mailjetActivateLogger == 1 ? ' checked="checked"' : '') ?> >
+            <?php echo __('Also activate Mailjet plugin logger, to track your expirience', 'mailjet'); ?></label>
+        <br />
+
+        <hr>
         <p>
             <h2><?php esc_html_e('Dont have a Mailjet account yet?' , 'mailjet'); ?></h2>
             <?php echo sprintf('<a target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
@@ -91,6 +97,7 @@ class InitialSettings
 
         // check user capabilities
         if (!current_user_can('manage_options')) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
 
@@ -126,12 +133,14 @@ class InitialSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
+            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
             // Initialize PhpMailer
             //
             if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
                 require_once ABSPATH . WPINC . '/class-phpmailer.php';
                 require_once ABSPATH . WPINC . '/class-smtp.php';
                 $phpmailer = new \PHPMailer();
+                \MailjetPlugin\Includes\MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
             }
 
             // Update From Email and Name
@@ -140,6 +149,7 @@ class InitialSettings
 
             // add settings saved message with the class of "updated"
             add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
         }
 
         //// show error/update messages

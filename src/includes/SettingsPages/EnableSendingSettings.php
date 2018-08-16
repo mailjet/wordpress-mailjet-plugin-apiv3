@@ -2,9 +2,8 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
-use Analog\Analog;
+use MailjetPlugin\Includes\MailjetMail;
 
 /**
  * Register all actions and filters for the plugin.
@@ -162,6 +161,7 @@ class EnableSendingSettings
 
         // check user capabilities
         if (!current_user_can('manage_options')) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
 

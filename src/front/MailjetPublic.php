@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Front;
 
-use Analog\Analog;
-
 /**
  * The public-facing functionality of the plugin.
  *

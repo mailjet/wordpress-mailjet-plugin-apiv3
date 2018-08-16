@@ -67,7 +67,10 @@ class MailjetMail
 
     public function phpmailer_init_smtp(\PHPMailer $phpmailer)
     {
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - Start ]');
+
         if (!get_option('mailjet_enabled') || 0 == get_option('mailjet_enabled')) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet not enabled ]');
             return;
         }
 
@@ -88,6 +91,8 @@ class MailjetMail
         $phpmailer->FromName = get_option('mailjet_from_name') ? get_option('mailjet_from_name') : get_bloginfo('name');
 
         $phpmailer->AddCustomHeader(self::MJ_MAILER);
+
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - End ]');
     }
 
 
@@ -101,16 +106,20 @@ class MailjetMail
     public static function sendTestEmail()
     {
         $test_sent = false;
-        if (!empty(get_option('mailjet_test_address'))) {
-            // Send a test mail
-            $subject = __('Your test mail from Mailjet', 'mailjet');
-            $message = sprintf(__('Your Mailjet configuration is ok!' . 'SSL: %s Port: %s', 'mailjet'), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
-            $test_sent = wp_mail(get_option('mailjet_test_address'), $subject, $message);
+        if (empty(get_option('mailjet_test_address'))) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Missing email address to send test email to ]');
+            return;
         }
+        // Send a test mail
+        $subject = __('Your test mail from Mailjet', 'mailjet');
+        $message = sprintf(__('Your Mailjet configuration is ok!' . 'SSL: %s Port: %s', 'mailjet'), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
+        $test_sent = wp_mail(get_option('mailjet_test_address'), $subject, $message);
 
         if (!$test_sent) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was NOT sent, please review your settings', 'mailjet'), 'error');
         } else {
+            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was sent succesfully', 'mailjet'), 'updated');
         }
 

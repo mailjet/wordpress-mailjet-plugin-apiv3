@@ -3,7 +3,6 @@
 namespace MailjetPlugin\Includes;
 
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
-use Analog\Analog;
 
 /**
  * Register all actions and filters for the plugin.
@@ -24,15 +23,7 @@ class MailjetSettings
      */
     public function mailjet_settings_init()
     {
-
-// debug-level message
-        Analog::debug($_REQUEST);
-// an info message
-        Analog::info('An error message' . __FILE__);
-// a warning message
-        Analog::warning('Turn back before it\'s too late' . __FILE__);
-// an error with no file/line #'s
-        Analog::log('Another error message' . __FILE__);
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
 
 
         // Redirect the user to the Dashboard if he already configured his initial settings
@@ -52,6 +43,7 @@ class MailjetSettings
         // register a new setting for "mailjet" page
         register_setting('mailjet_initial_settings_page', 'mailjet_apikey');
         register_setting('mailjet_initial_settings_page', 'mailjet_apisecret');
+        register_setting('mailjet_initial_settings_page', 'mailjet_activate_logger');
         register_setting('mailjet_initial_settings_page', 'settings_step');
 
         register_setting('mailjet_initial_contact_lists_page', 'activate_mailjet_sync');
@@ -95,6 +87,7 @@ class MailjetSettings
         register_setting('mailjet_user_access_page', 'settings_step');
 
 
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init End ]');
     }
 
 
@@ -103,6 +96,8 @@ class MailjetSettings
      */
     private function addMailjetActions()
     {
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - Start ]');
+
         if (!empty(get_option('activate_mailjet_sync')) && !empty(get_option('mailjet_sync_list'))) {
 
             $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
@@ -135,11 +130,13 @@ class MailjetSettings
             add_action('comment_form_after_fields', array($subscriptionOptionsSettings, 'mailjet_show_extra_comment_fields'));
             add_action('wp_insert_comment',array($subscriptionOptionsSettings, 'mailjet_subscribe_comment_author'));
 
+            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custome actions to sync them ]');
 
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             if (!empty($_GET['mj_sub_comment_author_token'])
                 &&
                 $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
                 $subscriptionOptionsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
             }
         }
@@ -147,6 +144,8 @@ class MailjetSettings
 
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
         add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
+
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - End ]');
 
     }
 

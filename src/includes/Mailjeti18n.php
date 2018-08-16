@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Includes;
 
-use Analog\Analog;
-
 /**
  * Define the internationalization functionality.
  *
@@ -29,6 +27,6 @@ class Mailjeti18n
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
-	}
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
+    }
 }

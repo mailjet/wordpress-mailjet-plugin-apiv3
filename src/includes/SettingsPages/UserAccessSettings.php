@@ -3,7 +3,6 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
-use Analog\Analog;
 
 /**
  * Register all actions and filters for the plugin.
@@ -66,6 +65,7 @@ class UserAccessSettings
     {
         // check user capabilities
         if (!current_user_can('manage_options')) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
 
@@ -99,7 +99,6 @@ class UserAccessSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
-            echo get_option('mailjet_access_editor');
             // add settings saved message with the class of "updated"
             add_settings_error('mailjet_messages', 'mailjet_message', __('User Access Settings Saved', 'mailjet'), 'updated');
         }
