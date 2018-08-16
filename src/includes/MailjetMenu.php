@@ -10,6 +10,7 @@ use MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
+use Analog\Analog;
 
 /**
  * Register all actions and filters for the plugin.

@@ -19,13 +19,19 @@
         {
             "type": "vcs",
             "url": "git@github.com:mailjet/Mailjet-iframe-v3.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:jbroadway/analog.git"
         }
+
     ],
     "require": {
         "php": ">=5.4",
         "composer/installers": "v1.0.6",
         "mailjet/mailjet-apiv3-php": "dev-master",
-        "mailjet/Mailjet-iframe-v3": "dev-master"
+        "mailjet/Mailjet-iframe-v3": "dev-master",
+        "analog/analog" : "dev-master"
     },
     "autoload": {
         "psr-4": {

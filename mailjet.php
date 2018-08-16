@@ -49,7 +49,20 @@ require_once __DIR__ . '/vendor/autoload.php';
 use MailjetPlugin\Includes\Mailjet;
 use MailjetPlugin\Includes\MailjetActivator;
 use MailjetPlugin\Includes\MailjetDeactivator;
+use Analog\Analog;
 
+// Change the handler to any other if you need to.
+//Analog::handler(\Analog\Handler\File::init(dirname(__FILE__) . '/logs.txt'));
+Analog::handler(\Analog\Handler\ChromeLogger::init());
+
+// debug-level message
+Analog::debug($_SERVER);
+// an info message
+Analog::info('An error message');
+// a warning message
+Analog::warning('Turn back before it\'s too late');
+// an error with no file/line #'s
+Analog::log('Another error message');
 
 /**
  * Currently plugin version.

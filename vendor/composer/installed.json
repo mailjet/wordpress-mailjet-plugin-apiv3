@@ -1,5 +1,59 @@
 [
     {
+        "name": "analog/analog",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jbroadway/analog.git",
+            "reference": "08ec5a01769fbebeb13df4900ecdd48914b1dc42"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jbroadway/analog/zipball/08ec5a01769fbebeb13df4900ecdd48914b1dc42",
+            "reference": "08ec5a01769fbebeb13df4900ecdd48914b1dc42",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "psr/log": "1.*"
+        },
+        "time": "2017-09-17T02:33:46+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Analog": "lib/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Johnny Broadway",
+                "email": "johnny@johnnybroadway.com",
+                "homepage": "http://www.johnnybroadway.com/"
+            }
+        ],
+        "description": "PHP logging class that can be extended via closures. Includes several pre-built handlers including file, mail, syslog, HTTP post, and MongoDB.",
+        "homepage": "https://github.com/jbroadway/analog",
+        "keywords": [
+            "alerts",
+            "debug",
+            "debugging",
+            "error",
+            "log",
+            "logger",
+            "logging",
+            "syslog"
+        ],
+        "support": {
+            "source": "https://github.com/jbroadway/analog/tree/master",
+            "issues": "https://github.com/jbroadway/analog/issues"
+        }
+    },
+    {
         "name": "composer/installers",
         "version": "v1.0.6",
         "version_normalized": "1.0.6.0",
@@ -269,18 +323,18 @@
         "source": {
             "type": "git",
             "url": "git@github.com:mailjet/Mailjet-iframe-v3.git",
-            "reference": "7c47c7aad01e561379b0a1fed1915c059b812340"
+            "reference": "3818d1d7f51848ec29669eecd716b484d0a64343"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mailjet/Mailjet-iframe-v3/zipball/7c47c7aad01e561379b0a1fed1915c059b812340",
-            "reference": "7c47c7aad01e561379b0a1fed1915c059b812340",
+            "url": "https://api.github.com/repos/mailjet/Mailjet-iframe-v3/zipball/3818d1d7f51848ec29669eecd716b484d0a64343",
+            "reference": "3818d1d7f51848ec29669eecd716b484d0a64343",
             "shasum": ""
         },
         "require": {
             "php": ">=5.4.0"
         },
-        "time": "2018-08-08T10:16:27+00:00",
+        "time": "2018-08-15T11:33:36+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -419,6 +473,55 @@
             "psr-7",
             "request",
             "response"
+        ]
+    },
+    {
+        "name": "psr/log",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "3490ba5925e6dcbe6de950c5c6b8dce9f6e96eda"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/3490ba5925e6dcbe6de950c5c6b8dce9f6e96eda",
+            "reference": "3490ba5925e6dcbe6de950c5c6b8dce9f6e96eda",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2018-04-03T15:59:15+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Log\\": "Psr/Log/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "homepage": "https://github.com/php-fig/log",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
         ]
     },
     {

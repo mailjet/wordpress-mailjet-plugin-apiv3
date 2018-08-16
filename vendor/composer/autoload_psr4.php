@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'MailjetPlugin\\' => array($baseDir . '/src'),
     'MailjetIframe\\' => array($vendorDir . '/mailjet/Mailjet-iframe-v3/src'),

@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use Analog\Analog;
 
 /**
  * Register all actions and filters for the plugin.
@@ -333,9 +334,6 @@ class SubscriptionOptionsSettings
     /**
      *  Adding checkboxes and extra fields for subscribing user and comment authors
      */
-
-
-
     public function mailjet_show_extra_profile_fields($user)
     {
         // If contact list is not selected, then do not show the extra fields

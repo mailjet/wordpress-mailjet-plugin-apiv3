@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Admin;
 
+use Analog\Analog;
+
 /**
  * The admin-specific functionality of the plugin.
  *

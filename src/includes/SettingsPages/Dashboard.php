@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use Analog\Analog;
+
 /**
  * Register all actions and filters for the plugin.
  *

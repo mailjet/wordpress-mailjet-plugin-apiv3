@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes;
 
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+use Analog\Analog;
 
 /**
  * Register all actions and filters for the plugin.
@@ -23,6 +24,17 @@ class MailjetSettings
      */
     public function mailjet_settings_init()
     {
+
+// debug-level message
+        Analog::debug($_REQUEST);
+// an info message
+        Analog::info('An error message' . __FILE__);
+// a warning message
+        Analog::warning('Turn back before it\'s too late' . __FILE__);
+// an error with no file/line #'s
+        Analog::log('Another error message' . __FILE__);
+
+
         // Redirect the user to the Dashboard if he already configured his initial settings
         $currentPage = $_REQUEST['page'];
         if ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {

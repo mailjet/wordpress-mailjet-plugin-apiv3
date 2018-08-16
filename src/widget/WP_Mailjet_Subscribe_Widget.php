@@ -1,12 +1,11 @@
 <?php
 namespace MailjetPlugin\Widget;
- 
+
+use Analog\Analog;
 
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
-
     /**
-     * @TODO - Rename "widget-name" to the name your your widget
      *
      * Unique identifier for your widget.
      *
@@ -29,8 +28,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	 * Specifies the classname and description, instantiates the widget,
 	 * loads localization files, and includes necessary stylesheets and JavaScript.
 	 */
-	public function __construct() {
-
+	public function __construct()
+    {
 		// load plugin text domain
 		add_action( 'init', array( $this, 'widget_textdomain' ) );		
 
@@ -42,6 +41,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 				'description' => __( 'Allows your visitors to subscribe to one of your lists', $this->get_widget_slug() )
 			)
 		);
+
+var_dump($this->get_settings());
 
 		// Register site styles and scripts
         add_action('admin_print_styles', array($this, 'register_widget_styles'));
@@ -64,7 +65,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      *
      * @return    Plugin slug variable.
      */
-    public function get_widget_slug() {
+    public function get_widget_slug()
+    {
         return $this->widget_slug;
     }
 
@@ -78,38 +80,37 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	 * @param array args  The array of form elements
 	 * @param array instance The current instance of the widget
 	 */
-	public function widget( $args, $instance ) {
-
-		
+	public function widget($args, $instance)
+    {
 		// Check if there is a cached output
-		$cache = wp_cache_get( $this->get_widget_slug(), 'widget' );
+		$cache = wp_cache_get($this->get_widget_slug(),'widget');
 
-		if ( !is_array( $cache ) )
+		if (!is_array($cache))
 			$cache = array();
 
-		if ( ! isset ( $args['widget_id'] ) )
+		if (!isset($args['widget_id']))
 			$args['widget_id'] = $this->id;
 
-		if ( isset ( $cache[ $args['widget_id'] ] ) )
-			return print $cache[ $args['widget_id'] ];
+		if (isset($cache[$args['widget_id']]))
+			return print $cache[$args['widget_id']];
 		
 		// go on with your widget logic, put everything into a string and …
 
 
-		extract( $args, EXTR_SKIP );
+		extract($args,EXTR_SKIP);
 
 		$widget_string = $before_widget;
 
 		// TODO: Here is where you manipulate your widget's values based on their input fields
 		ob_start();
-		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
+		include(plugin_dir_path(__FILE__) . 'views/widget.php');
 		$widget_string .= ob_get_clean();
 		$widget_string .= $after_widget;
 
 
-		$cache[ $args['widget_id'] ] = $widget_string;
+		$cache[$args['widget_id']] = $widget_string;
 
-		wp_cache_set( $this->get_widget_slug(), $cache, 'widget' );
+		wp_cache_set($this->get_widget_slug(), $cache,'widget');
 
 		print $widget_string;
 
@@ -118,7 +119,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	
 	public function flush_widget_cache() 
 	{
-    	wp_cache_delete( $this->get_widget_slug(), 'widget' );
+    	wp_cache_delete($this->get_widget_slug(),'widget');
 	}
 
 	/**
@@ -127,12 +128,18 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	 * @param array new_instance The new instance of values to be generated via the update.
 	 * @param array old_instance The previous instance of values before the update.
 	 */
-	public function update( $new_instance, $old_instance )
+	public function update($new_instance, $old_instance)
     {
-
 		$instance = $old_instance;
 
 		// TODO: Here is where you update your widget's old values with the new, incoming values
+
+        $instance['title']    = isset($new_instance['title']) ? wp_strip_all_tags($new_instance['title']) : '';
+        $instance['text']     = isset($new_instance['text']) ? wp_strip_all_tags($new_instance['text']) : '';
+        $instance['textarea'] = isset($new_instance['textarea']) ? wp_kses_post($new_instance['textarea']) : '';
+        $instance['checkbox'] = isset($new_instance['checkbox']) ? 1 : false;
+        $instance['select']   = isset($new_instance['select']) ? wp_strip_all_tags($new_instance['select']) : '';
+
 
 		return $instance;
 
@@ -143,7 +150,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	 *
 	 * @param array instance The array of keys and values for the widget.
 	 */
-	public function form( $instance )
+	public function form($instance)
     {
 
 		// TODO: Define default values for your variables
@@ -154,7 +161,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 		// TODO: Store the values of the widget in their own variable
 
 		// Display the admin form
-		include( plugin_dir_path(__FILE__) . 'views/admin.php' );
+		include(plugin_dir_path(__FILE__) . 'views/admin.php');
 
 	} // end form
 
@@ -168,7 +175,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	public function widget_textdomain()
     {
 
-		load_plugin_textdomain($this->get_widget_slug(), false, dirname(dirname(plugin_basename(__FILE__ ))) . '/languages/');
+		load_plugin_textdomain($this->get_widget_slug(), false, dirname(dirname(plugin_basename(__FILE__))) . '/languages/');
 
 	} // end widget_textdomain
 
@@ -180,7 +187,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	public function register_widget_styles()
     {
 
-		wp_enqueue_style( $this->get_widget_slug().'-widget-styles', plugins_url( 'css/widget.css', __FILE__ ) );
+		wp_enqueue_style($this->get_widget_slug().'-widget-styles', plugins_url('css/widget.css', __FILE__));
 
 	} // end register_widget_styles
 
@@ -190,7 +197,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	public function register_widget_scripts()
     {
 
-		wp_enqueue_script( $this->get_widget_slug().'-script', plugins_url( 'js/widget.js', __FILE__ ), array('jquery') );
+		wp_enqueue_script($this->get_widget_slug().'-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
 
 	} // end register_widget_scripts
 

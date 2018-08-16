@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Includes;
 
+use Analog\Analog;
+
 /**
  * Define the internationalization functionality.
  *
