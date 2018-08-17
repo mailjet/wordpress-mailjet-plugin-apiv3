@@ -172,9 +172,8 @@ var_dump($this->get_settings());
 	 */
 	public function widget_textdomain()
     {
-
-		load_plugin_textdomain($this->get_widget_slug(), false, dirname(dirname(plugin_basename(__FILE__))) . '/languages/');
-
+        load_plugin_textdomain($this->get_widget_slug(), false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ] - ' . dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
 	} // end widget_textdomain
 
 

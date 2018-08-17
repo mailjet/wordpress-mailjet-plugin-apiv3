@@ -25,7 +25,7 @@ class Mailjeti18n
 		load_plugin_textdomain(
 			'mailjet',
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+            dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/'
 		);
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
     }
