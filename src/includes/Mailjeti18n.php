@@ -29,4 +29,45 @@ class Mailjeti18n
 		);
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
     }
+
+
+    /**
+     * Provide array with translations in a format [key => message] and a locale to trnaslate to
+     *
+     * @param string $locale
+     * @param array $translations
+     * @return bool true - if succesfully updated or added translations | false - if something went wrong and translations were not updated
+     */
+    public static function updateTranslationsInFile($locale = 'en_GB', array $translations = array())
+    {
+        if (empty($locale) || empty($translations)) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Empty Locale or Translation messages provided ] ');
+            return false;
+        }
+
+        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-' . $locale . '.po';
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
+
+        // Parse a po file
+        $fileHandler = new \Sepia\PoParser\SourceHandler\FileSystem($filePo);
+        $poParser = new \Sepia\PoParser\Parser($fileHandler);
+        $catalog = $poParser->parse();
+
+        foreach ($translations as $keyToTranslate => $textToTranslate) {
+            $entry = $catalog->getEntry($keyToTranslate);
+            if (!empty($entry)) {
+                $catalog->removeEntry($keyToTranslate);
+            }
+
+            $catalog->addEntry(new \Sepia\PoParser\Catalog\Entry($keyToTranslate, $textToTranslate));
+        }
+
+        // Compile the updated .mo file
+        $compiler = new \Sepia\PoParser\PoCompiler();
+        $fileHandler->save($compiler->compile($catalog));
+
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO and MO file updated ]');
+
+        return true;
+    }
 }

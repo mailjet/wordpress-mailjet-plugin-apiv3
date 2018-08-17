@@ -23,6 +23,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:jbroadway/analog.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:raulferras/PHP-po-parser.git"
         }
 
     ],
@@ -31,6 +35,7 @@
         "composer/installers": "v1.0.6",
         "mailjet/mailjet-apiv3-php": "dev-master",
         "mailjet/Mailjet-iframe-v3": "dev-master",
+        "sepia/po-parser": "dev-master",
         "analog/analog" : "dev-master"
     },
     "autoload": {

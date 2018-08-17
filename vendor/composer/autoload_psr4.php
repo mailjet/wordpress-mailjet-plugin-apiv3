@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Sepia\\Test\\' => array($vendorDir . '/sepia/po-parser/tests'),
+    'Sepia\\PoParser\\' => array($vendorDir . '/sepia/po-parser/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'MailjetPlugin\\' => array($baseDir . '/src'),

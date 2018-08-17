@@ -29,18 +29,18 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 	public function __construct()
     {
 		// load plugin text domain
-		add_action( 'init', array( $this, 'widget_textdomain' ) );		
+		add_action('init', array($this, 'widget_textdomain'));
 
 		parent::__construct(
 			$this->get_widget_slug(),
-			__( 'Mailjet Subscription Widget', $this->get_widget_slug() ),
+			__('Mailjet Subscription Widget', $this->get_widget_slug()),
 			array(
 				'classname'  => 'WP_Mailjet_Subscribe_Widget',
-				'description' => __( 'Allows your visitors to subscribe to one of your lists', $this->get_widget_slug() )
+				'description' => __('Allows your visitors to subscribe to one of your lists', $this->get_widget_slug())
 			)
 		);
 
-var_dump($this->get_settings());
+//var_dump($this->get_settings());
 
 		// Register site styles and scripts
         add_action('admin_print_styles', array($this, 'register_widget_styles'));
@@ -138,6 +138,10 @@ var_dump($this->get_settings());
         $instance['checkbox'] = isset($new_instance['checkbox']) ? 1 : false;
         $instance['select']   = isset($new_instance['select']) ? wp_strip_all_tags($new_instance['select']) : '';
 
+
+        // Translations update
+        //
+        \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile(get_locale(), $instance);
 
 		return $instance;
 
