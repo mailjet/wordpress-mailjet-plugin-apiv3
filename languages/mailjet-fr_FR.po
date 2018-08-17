@@ -532,16 +532,16 @@ msgid "<p>Something awesome</p>"
 msgstr "<p>French Something awesome</p>"
 
 msgid "title"
-msgstr "French Title"
+msgstr "Fr Title"
 
 msgid "text"
-msgstr "French Text"
+msgstr "FrText"
 
 msgid "textarea"
-msgstr "French Textarea"
+msgstr "Fr Textarea"
 
 msgid "checkbox"
 msgstr "1"
 
 msgid "select"
-msgstr "option_1"
+msgstr "option_3"

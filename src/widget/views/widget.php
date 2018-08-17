@@ -32,7 +32,7 @@
 
         // Display select field
         if ($select) {
-            echo '<p>' . __($select, 'mailjet') . '</p>';
+            echo '<p>' . $select . '</p>';
         }
 
         // Display something if checkbox is true
