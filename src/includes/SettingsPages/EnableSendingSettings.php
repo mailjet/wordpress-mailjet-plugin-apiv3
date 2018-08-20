@@ -209,32 +209,43 @@ class EnableSendingSettings
 
         ?>
 
-        <div class="split left">
+
+        <div class="mainContainer">
+            <div class="left"">
             <div class="centered">
                 <?php
-                    MailjetAdminDisplay::getSettingsLeftMenu();
+                MailjetAdminDisplay::getSettingsLeftMenu();
                 ?>
             </div>
         </div>
 
-        <div class="split right">
-            <div class="centered">
-                <div class="wrap">
-                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-                    <form action="options.php" method="post">
-                        <?php
-                        // output security fields for the registered setting "mailjet"
-                        settings_fields('mailjet_sending_settings_page');
-                        // output setting sections and their fields
-                        // (sections are registered for "mailjet", each field is registered to a specific section)
-                        do_settings_sections('mailjet_sending_settings_page');
-                        // output save settings button
-                        submit_button('Save');
-                        ?>
-                    </form>
-                </div>
+        <div class="right"">
+        <div class="centered">
+            <div class="wrap">
+                <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                <form action="options.php" method="post">
+                    <?php
+                    // output security fields for the registered setting "mailjet"
+                    settings_fields('mailjet_sending_settings_page');
+                    // output setting sections and their fields
+                    // (sections are registered for "mailjet", each field is registered to a specific section)
+                    do_settings_sections('mailjet_sending_settings_page');
+                    // output save settings button
+                    submit_button('Save');
+                    ?>
+                </form>
             </div>
         </div>
+        </div>
+        </div>
+
+        <div style="position:absolute; bottom:0px; margin-top: 20px; display: inline;">
+            <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
+            <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+            <?php echo ' | ' ?>
+            <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+        </div>
+
 
         <?php
 

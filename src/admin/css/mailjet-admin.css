@@ -3,46 +3,35 @@
  * included in this file.
  */
 
-/* Split the screen in half */
-.split {
-    height: 100%;
-    width: 50%;
-    position: fixed;
-    /*z-index: 1;*/
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
+.mainContainer {
+    display: flex;
+    align-items: stretch;
+    background-color: #9d9d9d;
+    margin:50px auto;
+    padding:20px;
 }
 
 /* Control the left side */
 .left {
-    width: 40%;
-    left: 0;
-
-    /*background-color: #111;*/
 }
 
 /* Control the right side */
 .right {
-    width: 80%;
-    right: 0;
-    /*background-color: red;*/
+    height: 100%;
+    max-width: 500px;
+    margin: auto 20px;
 }
 
 /* If you want the content centered horizontally and vertically */
 .centered {
     border-right: double 1px #6f6f6f;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: left;
+    vertical-align: middle;
 }
 
-.split.right .centered {
+.right .centered {
     padding: 10px;
     background-color: #ffffff;
-    width: 450px;
 }
 
 .centered h1 {
@@ -81,6 +70,7 @@ input[type="submit"].button {
     border-radius: 5px;
     padding: 5px;
     color: #fff;
+    cursor: pointer;
 }
 .nextBtn:hover {
     background-color: #8CD0D3;
@@ -113,7 +103,28 @@ input[type="submit"].button {
 }
 
 
+/* Contacts list display screen */
+.availableContactListsContainer {
+    display:  table;
+    width:auto;
+    max-height: 300px;
+    overflow-y: scroll;
+    text-color:#eee;
+    margin-bottom: 20px;
+}
+.availableContactListsRow {
+    display:table-row;
+    width:auto;
+    border:1px solid  #666666;
+}
+.availableContactListsRow:nth-child(even) {background: #FFF;}
+.availableContactListsRow:nth-child(odd) {background: #C6C6C6;}
 
+.availableContactListsCell {
+    float:left;/*fix for  buggy browsers*/
+    display:table-column;
+    width:210px;
+}
 
 
 /* Create new Contact List popup */

@@ -28,7 +28,6 @@
             "type": "vcs",
             "url": "git@github.com:raulferras/PHP-po-parser.git"
         }
-
     ],
     "require": {
         "php": ">=5.4",
@@ -42,9 +41,6 @@
         "psr-4": {
             "MailjetPlugin\\": "src"
         }
-    },
-    "archive": {
-        "exclude": ["!vendor/", "!.gitignore"]
     },
     "config": {
         "preferred-install": "dist"

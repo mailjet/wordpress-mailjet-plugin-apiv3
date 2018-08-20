@@ -76,7 +76,7 @@ class MailjetMenu
 
 
                 // Initial configuration pages
-                add_submenu_page('mailjet_settings_page', __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
+                add_submenu_page('mailjet_settings_page', __('Configure your lists.', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
                     array(new InitialContactListsSettings(), 'mailjet_initial_contact_lists_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
 
@@ -110,11 +110,11 @@ class MailjetMenu
 
     public function show_settings_page()
     {
-        echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(dirname(__FILE__)) . '/admin/images/mj_logo_med.png" /></div><h2>';
-        echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet');
-        echo '</h2><div style="width:70%;float:left;">';
-        echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet');
-        echo '</div></div>';
+//        echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(dirname(__FILE__)) . '/admin/images/mj_logo_med.png" /></div><h2>';
+//        echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet');
+//        echo '</h2><div style="width:70%;float:left;">';
+//        echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet');
+//        echo '</div></div>';
     }
 
 
@@ -144,7 +144,7 @@ class MailjetMenu
             ->turnCreateCampaignButton(MailjetIframe::ON)
             ->turnSendingPolicy(MailjetIframe::ON);
 
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe prepared ]');
+       // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe prepared ]');
 
         return $mailjetIframe;
     }
@@ -167,7 +167,7 @@ class MailjetMenu
 
     public function show_campaigns_page()
     {
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
+       // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
 
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
         echo __('Campaigns', 'mailjet');
@@ -184,13 +184,13 @@ class MailjetMenu
             add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
         }
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
+      //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
     }
 
 
     public function show_stats_page()
     {
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
+    //    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
 
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
         echo __('Statistics', 'mailjet');
@@ -207,13 +207,13 @@ class MailjetMenu
             add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
         }
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
+      //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
     }
 
 
     public function show_contacts_page()
     {
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
+     //   \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
 
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
         echo __('Contacts', 'mailjet');
@@ -230,7 +230,7 @@ class MailjetMenu
             add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
         }
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
+      //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
 }
