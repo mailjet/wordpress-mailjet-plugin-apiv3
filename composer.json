@@ -43,6 +43,9 @@
             "MailjetPlugin\\": "src"
         }
     },
+    "archive": {
+        "exclude": ["!vendor/*", ".*", "!.gitignore", "node_modules/", "www/", "composer/", "*.yml"]
+    },
     "config": {
         "preferred-install": "dist"
     }
