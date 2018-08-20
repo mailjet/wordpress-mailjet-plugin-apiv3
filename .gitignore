@@ -4,4 +4,4 @@
 !/composer.json
 !/composer.lock
 !vendor/
-/vendor/**/.git
+vendor/**/.git
