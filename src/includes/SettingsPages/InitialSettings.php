@@ -190,7 +190,7 @@ class InitialSettings
             </div>
         </div>
 
-        <div style="position:absolute; bottom:0px; margin-top: 20px; display: inline-block;">
+        <div style="position:absolute; bottom:0px; margin-top: 20px; display: inline;">
             <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
             <?php echo ' | ' ?>
