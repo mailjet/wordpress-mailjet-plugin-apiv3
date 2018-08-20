@@ -31,7 +31,9 @@ class InitialSettings
     public function mailjet_section_initial_settings_cb($args)
     {
         ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'mailjet' ); ?></p>
+        <p id="<?php echo esc_attr( $args['id'] ); ?>">
+            <?php echo __('If you already have a Mailjet account, go to <a target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet'); ?>
+        </p>
         <?php
     }
 
@@ -56,21 +58,24 @@ class InitialSettings
 
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
-            <label for="mailjet_apikey"><?php echo __('<b>ApiKey</b>', 'mailjet'); ?></label>
+            <label for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
+            <br />
             <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?=$mailjetApikey ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Key', 'mailjet' ); ?>">
-
             <p class="description">
                 <?php esc_html_e('Enter your Mailjet accoutn API Key value','mailjet'); ?>
             </p>
 
-            <label for="mailjet_apisecret"><?php echo __('<b>ApiSecret</b>', 'mailjet'); ?></label>
-                <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
+            <br />
 
+            <label for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
+            <br />
+            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
             <p class="description">
                 <?php esc_html_e('Enter your Mailjet accoutn API Secret value','mailjet'); ?>
             </p>
         </fieldset>
 
+        <br />
         <hr>
         <label for="mailjet_activate_logger">
             <input name="mailjet_activate_logger" type="checkbox" id="mailjet_activate_logger" value="1" <?=($mailjetActivateLogger == 1 ? ' checked="checked"' : '') ?> >
@@ -79,7 +84,7 @@ class InitialSettings
 
         <hr>
         <p>
-            <h2><?php esc_html_e('Dont have a Mailjet account yet?' , 'mailjet'); ?></h2>
+            <h2><?php esc_html_e('Don\'t have a Mailjet account yet?' , 'mailjet'); ?></h2>
             <?php echo sprintf('<a target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
         </p>
 
@@ -106,7 +111,7 @@ class InitialSettings
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_section_initial_settings',
-            __( 'Connect your Mailjet account to get started', 'mailjet' ),
+            null,
             array($this, 'mailjet_section_initial_settings_cb'),
             'mailjet_initial_settings_page'
         );
@@ -156,34 +161,41 @@ class InitialSettings
         settings_errors('mailjet_messages');
 
         ?>
-
-        <div class="split left"">
-            <div class="centered">
-                <h1>Jane Flex</h1>
-                <p>Some text.</p>
-                <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" alt="Welcome to the Mailjet" />
+        <div>
+            <div class="split left"">
+                <div class="centered">
+                    <h1>Jane Flex</h1>
+                    <p>Some text.</p>
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" alt="Welcome to the Mailjet" />
+                </div>
             </div>
-        </div>
 
-        <div class="split right"">
-            <div class="centered">
-                <div class="wrap">
-                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-                    <form action="options.php" method="post">
-                        <?php
-                        // output security fields for the registered setting "mailjet"
-                        settings_fields('mailjet_initial_settings_page');
-                        // output setting sections and their fields
-                        // (sections are registered for "mailjet", each field is registered to a specific section)
-                        do_settings_sections('mailjet_initial_settings_page');
-                        // output save settings button
-                        submit_button('Save');
-                        ?>
-                    </form>
+            <div class="split right"">
+                <div class="centered">
+                    <div class="wrap">
+                        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                        <form action="options.php" method="post">
+                            <?php
+                            // output security fields for the registered setting "mailjet"
+                            settings_fields('mailjet_initial_settings_page');
+                            // output setting sections and their fields
+                            // (sections are registered for "mailjet", each field is registered to a specific section)
+                            do_settings_sections('mailjet_initial_settings_page');
+                            // output save settings button
+                            submit_button('Next');
+                            ?>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div style="position:absolute; bottom:0px; margin-top: 20px; display: inline-block;">
+            <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
+            <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+            <?php echo ' | ' ?>
+            <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+        </div>
 
         <?php
     }

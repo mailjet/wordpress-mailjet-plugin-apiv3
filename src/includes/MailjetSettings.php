@@ -29,8 +29,8 @@ class MailjetSettings
         // Redirect the user to the Dashboard if he already configured his initial settings
         $currentPage = $_REQUEST['page'];
         if ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
-            wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
-            exit;
+            //wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
+            //exit;
         }
         // If defined some contact list settings the we skip that page
         if ('mailjet_initial_contact_lists_page' == $currentPage && get_option('settings_step') == 'initial_contact_lists_settings_step') {

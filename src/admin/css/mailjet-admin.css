@@ -42,6 +42,7 @@
 .split.right .centered {
     padding: 10px;
     background-color: #ffffff;
+    width: 450px;
 }
 
 .centered h1 {
@@ -142,12 +143,11 @@ input[type="submit"].button {
 
 
 /* Dashboard */
-
 .dashboard {
     width: 100%;
     background-color:#FFFFFF;
 }
-.dashboard #container {
+.dashboard .container {
     text-align: center;
     max-width: 450px;
     margin: 0 auto;

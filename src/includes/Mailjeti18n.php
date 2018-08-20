@@ -70,4 +70,19 @@ class Mailjeti18n
 
         return true;
     }
+
+
+    public static function getLocale()
+    {
+        $locale = get_locale();
+        if (in_array($locale, array('en_US', 'en_EN'))) {
+            $locale = 'en_EN';
+        }
+        if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
+            $locale = 'de_DE';
+        }
+        return $locale;
+    }
+
+
 }

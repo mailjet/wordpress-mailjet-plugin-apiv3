@@ -4,12 +4,15 @@
     <?php
     extract($args);
 
+    $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
+
     // Check the widget options
-    $title    = isset($instance['title']) ? apply_filters('widget_title', $instance['title']) : '';
-    $text     = isset($instance['text']) ? $instance['text'] : '';
-    $textarea = isset($instance['textarea']) ?$instance['textarea'] : '';
-    $select   = isset($instance['select']) ? $instance['select'] : '';
-    $checkbox = ! empty($instance['checkbox']) ? $instance['checkbox'] : false;
+    $title = isset($instance[$locale]['title']) ? apply_filters('widget_title', $instance[$locale]['title']) : '';
+    $input1 = isset($instance[$locale]['input1']) ? $instance[$locale]['input1'] : '';
+    $input2 = isset($instance[$locale]['input2']) ? $instance[$locale]['input2'] : '';
+    $input3 = isset($instance[$locale]['input3']) ? $instance[$locale]['input3'] : '';
+    $input4 = !empty($instance[$locale]['input4']) ? $instance[$locale]['input4'] : false;
+
 
 
     // Display the widget
@@ -21,23 +24,23 @@
         }
 
         // Display text field
-        if ($text) {
-            echo '<p>' . $text . '</p>';
+        if ($input1) {
+            echo '<p>' . $input1 . '</p>';
         }
 
         // Display textarea field
-        if ($textarea) {
-            echo '<p>' . $textarea . '</p>';
-        }
-
-        // Display select field
-        if ($select) {
-            echo '<p>' . $select . '</p>';
+        if ($input2) {
+            echo '<p>' . $input2 . '</p>';
         }
 
         // Display something if checkbox is true
-        if ($checkbox) {
+        if ($input3) {
             echo __('<p>Something awesome</p>', 'mailjet');
+        }
+
+        // Display select field
+        if ($input4) {
+            echo '<p>' . $input4 . '</p>';
         }
 
     echo '</div>';

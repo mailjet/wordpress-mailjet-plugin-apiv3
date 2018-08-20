@@ -83,14 +83,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 		// Check if there is a cached output
 		$cache = wp_cache_get($this->get_widget_slug(),'widget');
 
-		if (!is_array($cache))
-			$cache = array();
+		if (!is_array($cache)) {
+		    $cache = array();
+        }
 
-		if (!isset($args['widget_id']))
-			$args['widget_id'] = $this->id;
+		if (!isset($args['widget_id'])) {
+		    $args['widget_id'] = $this->id;
+        }
 
-		if (isset($cache[$args['widget_id']]))
-			return print $cache[$args['widget_id']];
+		if (isset($cache[$args['widget_id']])) {
+		    return print $cache[$args['widget_id']];
+        }
 		
 		// go on with your widget logic, put everything into a string and …
 
@@ -132,16 +135,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
 		// TODO: Here is where you update your widget's old values with the new, incoming values
 
-        $instance['title']    = isset($new_instance['title']) ? wp_strip_all_tags($new_instance['title']) : '';
-        $instance['text']     = isset($new_instance['text']) ? wp_strip_all_tags($new_instance['text']) : '';
-        $instance['textarea'] = isset($new_instance['textarea']) ? wp_kses_post($new_instance['textarea']) : '';
-        $instance['checkbox'] = isset($new_instance['checkbox']) ? 1 : false;
-        $instance['select']   = isset($new_instance['select']) ? wp_strip_all_tags($new_instance['select']) : '';
+        foreach (array('en_GB', 'fr_FR') as $locale) {
+            $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
+            $instance[$locale]['input1'] = isset($new_instance[$locale]['input1']) ? wp_strip_all_tags($new_instance[$locale]['input1']) : '';
+            $instance[$locale]['input2'] = isset($new_instance[$locale]['input2']) ? wp_kses_post($new_instance[$locale]['input2']) : '';
+            $instance[$locale]['input3'] = isset($new_instance[$locale]['input3']) ? 1 : false;
+            $instance[$locale]['input4'] = isset($new_instance[$locale]['input4']) ? wp_strip_all_tags($new_instance[$locale]['input4']) : '';
 
-
-        // Translations update
-        //
-        \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile(get_locale(), $instance);
+            // Translations update
+            //
+            \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
+        }
 
 		return $instance;
 
@@ -163,7 +167,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 		// TODO: Store the values of the widget in their own variable
 
 		// Display the admin form
-		include(plugin_dir_path(__FILE__) . 'views/admin.php');
+        foreach (array('en_GB', 'fr_FR') as $locale) {
+            include(plugin_dir_path(__FILE__) . 'views/admin.php');
+        }
 
 	} // end form
 

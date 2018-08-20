@@ -32,7 +32,7 @@ class Dashboard
         <div class="wrap dashboard">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
-            <div id="container">
+            <div class="container">
                 <div class="block_single">
                     <h2><?php echo __('Send newsletter', 'mailjet' ); ?></h2>
                     <p><?php echo __('Create and manage your newsletters. Vew your campaign statistics', 'mailjet' ); ?></p>
@@ -41,7 +41,7 @@ class Dashboard
                 </div>
 
             </div>
-            <div id="container">
+            <div class="container">
                 <div class="block">
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
                     <h2><?php echo __('Manage my contacts', 'mailjet' ); ?></h2>

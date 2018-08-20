@@ -56,10 +56,10 @@ class MailjetMenu
             \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet settings menu added ]');
 
             if (function_exists('add_submenu_page')) {
-                add_submenu_page('mailjet_settings_page', __('Initial mailjet API settings', 'mailjet'),
+                add_submenu_page('mailjet_settings_page', __('Connect your Mailjet account to get started', 'mailjet'),
                     __('Settings', 'mailjet'), 'read', 'mailjet_settings_page', array($this, 'show_settings_page'));
 
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Initial mailjet API settings\' sub-menu added ]');
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial mailjet API settings sub-menu added ]');
 
                 add_submenu_page('mailjet_settings_page', __('Manage your Mailjet lists', 'mailjet'),
                     __('Lists', 'mailjet'), 'read', 'mailjet_settings_contacts_menu',
@@ -113,18 +113,7 @@ class MailjetMenu
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(dirname(__FILE__)) . '/admin/images/mj_logo_med.png" /></div><h2>';
         echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet');
         echo '</h2><div style="width:70%;float:left;">';
-
-        $desc = '<ol>';
-        $desc .= '<li>' . sprintf(__('<a target="_blank" href="https://www.mailjet.com/signup?aff=%s">Create your Mailjet account</a> if you don\'t have any.', 'mailjet'), 'wordpress-3.0') . '</li>';
-        $desc .= '<li>' . __('Log in with your account through the login form below or visit your <a target="_blank" href="https://www.mailjet.com/account/api_keys">account page</a> to get your API keys and set up them below.', 'mailjet') . '</li>';
-        $desc .= '<li>' . __('<a href="admin.php?page=mailjet_settings_contacts_menu">Create a new list</a> if you don\'t have one or need a new one.', 'mailjet') . '</li>';
-        $desc .= '<li>' . __('<a href="widgets.php">Add</a> the email collection widget to your sidebar or footer.', 'mailjet') . '</li>';
-        $desc .= '<li>' . __('<a href="admin.php?page=mailjet_settings_campaigns_menu">Create a campaign</a> on mailjet.com to send your newsletter.', 'mailjet') . '</li>';
-        $desc .= '<li>' . __('Should you have any questions or encounter any difficulties, please consult our <a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">User Guide</a> or contact our <a target="_blank" href="https://www.mailjet.com/support/ticket">technical Support Team</a>', 'mailjet') . '</li>';
-        $desc .= '</ol>';
-
-        echo $desc;
-
+        echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet');
         echo '</div></div>';
     }
 
@@ -148,12 +137,12 @@ class MailjetMenu
                 'stats',
             ))
             ->turnDocumentationProperties(MailjetIframe::OFF)
-            ->turnNewContactListCreation(MailjetIframe::OFF)
+            ->turnNewContactListCreation(MailjetIframe::ON)
             ->turnMenu(MailjetIframe::ON)
-            ->turnFooter(MailjetIframe::OFF)
+            ->turnFooter(MailjetIframe::ON)
             ->turnBar(MailjetIframe::ON)
             ->turnCreateCampaignButton(MailjetIframe::ON)
-            ->turnSendingPolicy(MailjetIframe::OFF);
+            ->turnSendingPolicy(MailjetIframe::ON);
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe prepared ]');
 
