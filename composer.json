@@ -42,5 +42,8 @@
         "psr-4": {
             "MailjetPlugin\\": "src"
         }
+    },
+    "config": {
+        "preferred-install": "dist"
     }
 }

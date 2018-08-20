@@ -20,7 +20,7 @@
         },
         "time": "2017-09-17T02:33:46+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-0": {
                 "Analog": "lib/"
@@ -163,7 +163,7 @@
                 "dev-master": "6.3-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "files": [
                 "src/functions_include.php"
@@ -223,7 +223,7 @@
                 "dev-master": "1.4-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "GuzzleHttp\\Promise\\": "src/"
@@ -281,7 +281,7 @@
                 "dev-master": "1.5-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "GuzzleHttp\\Psr7\\": "src/"
@@ -336,7 +336,7 @@
         },
         "time": "2018-08-15T11:33:36+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "MailjetIframe\\": "src"
@@ -393,7 +393,7 @@
         },
         "time": "2018-07-10T09:20:48+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-0": {
                 "Mailjet": "src/"
@@ -448,7 +448,7 @@
                 "dev-master": "1.0.x-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Psr\\Http\\Message\\": "src/"
@@ -500,7 +500,7 @@
                 "dev-master": "1.0.x-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Psr\\Log\\": "Psr/Log/"
@@ -592,7 +592,7 @@
         },
         "time": "2018-07-27T14:37:11+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Sepia\\PoParser\\": "src/",
@@ -650,7 +650,7 @@
                 "dev-master": "1.9-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Symfony\\Polyfill\\Mbstring\\": ""
