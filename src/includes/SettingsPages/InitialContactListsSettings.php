@@ -68,12 +68,13 @@ class InitialContactListsSettings
             <p><label for="list_name">Contact list name</label><input type="text" size="30" name="list_name" id="list_name" /></p>
             <p><input type="submit" value="Create" name="create_contact_list_btn" id="create_contact_list_btn"/> or <a class="closeCreateList" href="/">Cancel</a></p>
         </div>
-        <input name="create_contact_list" type="button" id="create_contact_list" value="Create new contactlist">
+        <input name="create_contact_list" type="button" id="create_contact_list" value="Create new contact list">
         <br />
 
 
-        <h2><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h2>
         <fieldset>
+            <h2><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h2>
+            <h4><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet' ); ?></h4>
             <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress users to a specific list', 'mailjet'); ?></span></legend>
             <label for="activate_mailjet_sync">
                 <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
@@ -214,7 +215,7 @@ class InitialContactListsSettings
         </div>
         </div>
 
-        <div style="position:absolute; bottom:0px; margin-top: 20px; display: inline;">
+        <div style="margin-top: 20px;">
             <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
             <?php echo ' | ' ?>
