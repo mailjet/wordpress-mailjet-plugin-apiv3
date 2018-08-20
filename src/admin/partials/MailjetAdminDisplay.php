@@ -59,13 +59,6 @@ class MailjetAdminDisplay
                 </div>
             </li>
         </ul>
-
-
-        <div class="bottom_links">
-            <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-            <?php echo ' | ' ?>
-            <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
-        </div>
         <?php
     }
 }

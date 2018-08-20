@@ -138,14 +138,15 @@ class InitialSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
-            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
+//            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
+
             // Initialize PhpMailer
             //
             if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
                 require_once ABSPATH . WPINC . '/class-phpmailer.php';
                 require_once ABSPATH . WPINC . '/class-smtp.php';
                 $phpmailer = new \PHPMailer();
-                \MailjetPlugin\Includes\MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
+//                \MailjetPlugin\Includes\MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
             }
 
             // Update From Email and Name
@@ -154,23 +155,27 @@ class InitialSettings
 
             // add settings saved message with the class of "updated"
             add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
-            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
+//            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
         }
 
         //// show error/update messages
         settings_errors('mailjet_messages');
 
         ?>
-        <div>
-            <div class="split left"">
+        <div class="mainContainer">
+            <div class="left"">
                 <div class="centered">
-                    <h1>Jane Flex</h1>
-                    <p>Some text.</p>
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" alt="Welcome to the Mailjet" />
+                    <div class="wrap">
+                        <h1><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                        <p>
+                        <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
+                        </p>
+                    </div>
+                    <img style="width: 100%; margin-top:20px;" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image.png'; ?>" alt="Welcome to the Mailjet" />
                 </div>
             </div>
 
-            <div class="split right"">
+            <div class="right"">
                 <div class="centered">
                     <div class="wrap">
                         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -182,7 +187,13 @@ class InitialSettings
                             // (sections are registered for "mailjet", each field is registered to a specific section)
                             do_settings_sections('mailjet_initial_settings_page');
                             // output save settings button
-                            submit_button('Next');
+                            submit_button('Save');
+                            ?>
+
+                            <?php
+                            if (!empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')) && get_option('settings_step') == 'initial_step') { ?>
+                                <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page'" value="<?=__('Next', 'mailjet')?>">
+                            <?php }
                             ?>
                         </form>
                     </div>
