@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),
-    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src'),
     'Analog' => array($vendorDir . '/analog/analog/lib'),
 );
