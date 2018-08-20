@@ -1,0 +1,22 @@
+{
+    "name": "mailjet/Mailjet-iframe-v3",
+    "description": "Mailjet iFrame wrapper",
+    "keywords": ["mailjet", "iframe", "marketing", "api", "campaign", "php", "email"],
+    "homepage": "https://github.com/mailjet/Mailjet-iframe-v3/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mailjet",
+            "email": "dev@mailjet.com",
+            "homepage": "https://dev.mailjet.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MailjetIframe\\": "src"
+        }
+    }
+}
