@@ -30,7 +30,7 @@
 	 */
     jQuery(document).ready(function ($) {
 
-        $('[scope=row]').closest('th').hide();
+        $('.mailjet_row [scope=row]').closest('th').hide();
 
 		function showExtraFromEmailInput($el) {
 			if ($el.val() == undefined) {

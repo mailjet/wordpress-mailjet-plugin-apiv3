@@ -123,10 +123,15 @@ input[type="submit"].button {
 .availableContactListsRow:nth-child(even) {background: #FFF;}
 .availableContactListsRow:nth-child(odd) {background: #C6C6C6;}
 
-.availableContactListsCell {
+.availableContactListsNameCell {
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:200px;
+    width:300px;
+}
+.availableContactListsCountCell {
+    float:left;/*fix for  buggy browsers*/
+    display:table-column;
+    width:100px;
 }
 
 

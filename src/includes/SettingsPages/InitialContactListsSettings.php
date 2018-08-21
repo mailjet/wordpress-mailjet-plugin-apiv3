@@ -53,8 +53,8 @@ class InitialContactListsSettings
                 }
                 ?>
                 <div class="availableContactListsRow">
-                    <div class="availableContactListsCell"><?=$mailjetContactList['Name'] ?></div>
-                    <div class="availableContactListsCell"><?=$mailjetContactList['SubscriberCount'] ?> <?php echo  __('Contacts', 'mailjet'); ?></div>
+                    <div class="availableContactListsNameCell"><?=$mailjetContactList['Name'] ?></div>
+                    <div class="availableContactListsCountCell"><?=$mailjetContactList['SubscriberCount'] ?> <?php echo  __('Contacts', 'mailjet'); ?></div>
                 </div>
                 <?php
             }
