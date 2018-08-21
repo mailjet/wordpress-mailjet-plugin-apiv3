@@ -8,7 +8,7 @@
     align-items: stretch;
     background-color: #d8d8d8;
     border: 1px solid #0a0a0a;
-    margin:20px auto;
+    margin:20px 20px 20px auto;
     padding:20px;
 }
 
@@ -166,7 +166,7 @@ input[type="submit"].button {
     /*width: 100%;*/
     background-color:#d8d8d8;
     border: 1px solid #0a0a0a;
-    margin:20px auto;
+    margin:20px 20px 20px auto;
     padding:20px;
 }
 .dashboard .container {
