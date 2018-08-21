@@ -175,7 +175,6 @@ class Mailjet
 
         $this->loader->add_action('phpmailer_init', $plugin_mails, 'phpmailer_init_smtp');
         $this->loader->add_action('wp_mail_failed', $plugin_mails, 'wp_mail_failed_cb');
-
     }
 
 

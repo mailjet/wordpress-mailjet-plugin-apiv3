@@ -138,24 +138,31 @@ class InitialSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
+            // Validate Mailjet API credentials
+            $isValidAPICredentials = self::isValidAPICredentials();
+            if (false == $isValidAPICredentials) {
+//                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
+            } else {
 //            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
 
-            // Initialize PhpMailer
-            //
-            if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
-                require_once ABSPATH . WPINC . '/class-phpmailer.php';
-                require_once ABSPATH . WPINC . '/class-smtp.php';
-                $phpmailer = new \PHPMailer();
+                // Initialize PhpMailer
+                //
+                if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
+                    require_once ABSPATH . WPINC . '/class-phpmailer.php';
+                    require_once ABSPATH . WPINC . '/class-smtp.php';
+                    $phpmailer = new \PHPMailer();
 //                \MailjetPlugin\Includes\MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
-            }
+                }
 
-            // Update From Email and Name
-            add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));
-            add_filter('wp_mail_from_name', array(new MailjetMail(), 'wp_sender_name'));
+                // Update From Email and Name
+                add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));
+                add_filter('wp_mail_from_name', array(new MailjetMail(), 'wp_sender_name'));
 
-            // add settings saved message with the class of "updated"
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+                // add settings saved message with the class of "updated"
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
 //            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
+            }
         }
 
         //// show error/update messages
@@ -210,5 +217,28 @@ class InitialSettings
 
         <?php
     }
+
+
+
+    public static function isValidAPICredentials()
+    {
+        $mailjetApikey = get_option('mailjet_apikey');
+        $mailjetApiSecret = get_option('mailjet_apisecret');
+        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+
+        $filters = [
+            'Limit' => '1'
+        ];
+        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactmetadata, ['filters' => $filters]);
+        if ($responseSenders->success()) {
+            return true;
+            // return $responseSenders->getData();
+        } else {
+            return false;
+            // return $responseSenders->getStatus();
+        }
+
+    }
+
 
 }

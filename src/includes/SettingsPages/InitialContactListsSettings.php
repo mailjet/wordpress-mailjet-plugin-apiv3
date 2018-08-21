@@ -24,10 +24,8 @@ class InitialContactListsSettings
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress users to one of them, or use them to collect new email addresses.', 'mailjet' ); ?>
         </p>
-
         <?php
     }
-
 
 
 
@@ -36,14 +34,14 @@ class InitialContactListsSettings
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
-        $mailjetContactLists = $this->getMailjetContactLists();
+        $mailjetContactLists = self::getMailjetContactLists();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetSyncList = get_option('mailjet_sync_list');
 
         // output the field
         ?>
-
+<hr>
         <h2> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h2>
 
         <div class="availableContactListsContainerParent">
@@ -64,15 +62,13 @@ class InitialContactListsSettings
         </div>
         </div>
 
-
-
         <div class="create_contact_list_popup pop">
-            <p><label for="list_name">Contact list name</label><input type="text" size="30" name="list_name" id="list_name" /></p>
+            <p><label for="create_list_name">Name your list</label><input type="text" size="30" name="create_list_name" id="create_list_name" /></p>
             <p><input type="submit" value="Create" name="create_contact_list_btn" id="create_contact_list_btn"/> or <a class="closeCreateList" href="/">Cancel</a></p>
         </div>
         <input name="create_contact_list" type="button" id="create_contact_list" value="+ Create a new list">
         <br />
-
+<hr>
 
         <fieldset>
             <h2><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h2>
@@ -153,20 +149,26 @@ class InitialContactListsSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
-            // Initial sync WP users to Mailjet
-            if (!empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
+            // Initial sync WP users to Mailjet - when the 'create_contact_list_btn' button is not the one that submits the form
+            if (empty(get_option('create_contact_list_btn')) && !empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
                 $syncResponse = SubscriptionOptionsSettings::syncAllWpUsers();
+                if (false === $syncResponse) {
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
+                }
             }
 
             // Create new Contact List
-            if (!empty(get_option('create_contact_list_btn')) && !empty(get_option('list_name'))) {
-                $this->createMailjetContactList(get_option('list_name'));
+            if (!empty(get_option('create_contact_list_btn')) && !empty(get_option('create_list_name'))) {
+                $createListResponse = $this->createMailjetContactList(get_option('create_list_name'));
+                if (false === $createListResponse) {
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
+                } else {
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your new contact list has been successfully created.', 'mailjet'), 'updated');
+                }
             }
 
             // add settings saved message with the class of "updated"
             add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
-
-
         }
 
         // show error/update messages
@@ -206,8 +208,8 @@ class InitialContactListsSettings
 
 
                     <?php
-                    if (get_option('settings_step') == 'initial_contact_lists_settings_step' && !empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) { ?>
-                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_dashboard_page'" value="<?=__('Next', 'mailjet')?>">
+                    if (get_option('settings_step') == 'initial_contact_lists_settings_step') { ?>
+                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?=__('Next', 'mailjet')?>">
                     <?php }
                     ?>
 
@@ -232,7 +234,7 @@ class InitialContactListsSettings
 
 
 
-    private function getMailjetContactLists()
+    public static function getMailjetContactLists()
     {
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');

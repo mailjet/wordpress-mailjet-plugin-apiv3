@@ -42,7 +42,7 @@ delete_option('activate_mailjet_sync');
 delete_option('mailjet_sync_list');
 delete_option('activate_mailjet_initial_sync');
 delete_option('create_contact_list_btn');
-delete_option('list_name');
+delete_option('create_list_name');
 
 delete_option('mailjet_enabled');
 delete_option('mailjet_from_name');
@@ -55,9 +55,6 @@ delete_option('mailjet_test_address');
 delete_option('mailjet_test_address');
 delete_option('send_test_email_btn');
 
-delete_option('activate_mailjet_sync');
-delete_option('mailjet_sync_list');
-delete_option('activate_mailjet_initial_sync');
 delete_option('activate_mailjet_comment_authors_sync');
 delete_option('mailjet_comment_authors_list');
 

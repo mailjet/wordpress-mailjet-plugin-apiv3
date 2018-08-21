@@ -171,6 +171,8 @@ class EnableSendingSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
+            $executionError = false;
+
             // Initialize PhpMailer
             //
             if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
@@ -190,18 +192,30 @@ class EnableSendingSettings
 
             // Check connection with selected port and protocol
             if (false === $this->checkConnection()) {
+                $executionError = true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings.', 'mailjet'), 'error');
             }
 
             if (!empty(get_option('send_test_email_btn')) && empty(get_option('mailjet_test_address'))) {
+                $executionError = true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('You have to provide a valid email address to send test email to', 'mailjet'), 'error');
             } else if (!empty(get_option('send_test_email_btn')) && !empty(get_option('mailjet_test_address'))) {
                 // Send a test email
-                MailjetMail::sendTestEmail();
+                $testSent = MailjetMail::sendTestEmail();
+                if (false === $testSent) {
+                    //\MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
+                    $executionError = true;
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was NOT sent, please review your settings', 'mailjet'), 'error');
+                } else {
+                    // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was sent succesfully', 'mailjet'), 'updated');
+                }
             }
 
-            // add settings saved message with the class of "updated"
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            if (false === $executionError) {
+                // add settings saved message with the class of "updated"
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            }
         }
 
         // show error/update messages

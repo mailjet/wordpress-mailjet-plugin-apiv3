@@ -31,7 +31,7 @@ class SubscriptionOptionsSettings
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
-        $mailjetContactLists = $this->getMailjetContactLists();
+        $mailjetContactLists = \MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings::getMailjetContactLists();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetSyncList = get_option('mailjet_sync_list');
@@ -143,14 +143,19 @@ class SubscriptionOptionsSettings
         // check if the user have submitted the settings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
-
+            $executionError = false;
             // Initial sync WP users to Mailjet
             if (!empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
                 $syncResponse = self::syncAllWpUsers();
+                if (false === $syncResponse) {
+                    $executionError = true;
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
+                }
             }
-
-            // add settings saved message with the class of "updated"
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            if (false === $executionError) {
+                // add settings saved message with the class of "updated"
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            }
         }
 
         // show error/update messages
@@ -200,29 +205,6 @@ class SubscriptionOptionsSettings
     }
 
 
-
-
-
-    private function getMailjetContactLists()
-    {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $filters = [
-            'Limit' => '0'
-        ];
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactslist, ['filters' => $filters]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
-        } else {
-            return $responseSenders->getStatus();
-        }
-
-    }
-
-
-
     public function syncAllWpUsers()
     {
         if (empty(get_option('mailjet_sync_list'))) {
@@ -239,10 +221,11 @@ class SubscriptionOptionsSettings
 
         if (false === self::syncContactsToMailjetList($contactListId, $users, 'addnoforce')) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing Wordpress users to your Mailjet contact list', 'mailjet'), 'error');
+            return false;
         } else {
             add_settings_error('mailjet_messages', 'mailjet_message', __('All Wordpress users were succesfully added to your Mailjet contact list', 'mailjet'), 'updated');
         }
-
+        return true;
     }
 
 
@@ -368,10 +351,6 @@ class SubscriptionOptionsSettings
      */
     public function mailjet_save_extra_profile_fields($user_id)
     {
-        if (!current_user_can('edit_user', $user_id)) {
-            return FALSE;
-        }
-
         $subscribe = filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
         update_user_meta($user_id, 'mailjet_subscribe_ok', $subscribe);
         $this->mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
@@ -388,9 +367,9 @@ class SubscriptionOptionsSettings
             $action = $subscribe ? 'addforce' : 'remove';
             // Add the user to a contact list
             if (false == SubscriptionOptionsSettings::syncContactsToMailjetList(get_option('mailjet_sync_list'), $user, $action)) {
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing Wordpress users to your Mailjet contact list', 'mailjet'), 'error');
+                return false;
             } else {
-                add_settings_error('mailjet_messages', 'mailjet_message', __('All Wordpress users were succesfully added to your Mailjet contact list', 'mailjet'), 'updated');
+                return true;
             }
         }
     }

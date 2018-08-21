@@ -5,6 +5,7 @@ namespace MailjetPlugin\Includes;
 use MailjetIframe\MailjetIframe;
 use MailjetPlugin\Includes\SettingsPages\ConnectAccountSettings;
 use MailjetPlugin\Includes\SettingsPages\Dashboard;
+use MailjetPlugin\Includes\SettingsPages\AllSetup;
 use MailjetPlugin\Includes\SettingsPages\EnableSendingSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
@@ -74,11 +75,15 @@ class MailjetMenu
                     array($this, 'show_stats_page'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet statistics\' sub-menu added ]');
 
-
                 // Initial configuration pages
                 add_submenu_page('mailjet_settings_page', __('Configure your lists.', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
                     array(new InitialContactListsSettings(), 'mailjet_initial_contact_lists_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
+
+                // All Setup page
+                add_submenu_page('mailjet_settings_page', __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_allsetup_page',
+                    array(new AllSetup(), 'mailjet_allsetup_page_html'));
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet All Setup sub-menu added ]');
 
 
                 // Dashboard page

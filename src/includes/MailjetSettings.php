@@ -25,22 +25,7 @@ class MailjetSettings
     {
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
 
-
-        // Redirect the user to the Dashboard if he already configured his initial settings
-        $currentPage = $_REQUEST['page'] ? $_REQUEST['page'] : null;
-        if ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
-            if (!empty(get_option('mailjet_sync_list'))) {
-                //wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
-                //exit;
-            }
-//            wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
-//            exit;
-        }
-        // If defined some contact list settings the we skip that page
-        if ('mailjet_initial_contact_lists_page' == $currentPage && get_option('settings_step') == 'initial_contact_lists_settings_step') {
-            //wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
-            //exit;
-        }
+        $this->handleRedirections();
 
         $this->addMailjetActions();
 
@@ -54,7 +39,7 @@ class MailjetSettings
         register_setting('mailjet_initial_contact_lists_page', 'mailjet_sync_list');
         register_setting('mailjet_initial_contact_lists_page', 'activate_mailjet_initial_sync');
         register_setting('mailjet_initial_contact_lists_page', 'create_contact_list_btn');
-        register_setting('mailjet_initial_contact_lists_page', 'list_name');
+        register_setting('mailjet_initial_contact_lists_page', 'create_list_name');
         register_setting('mailjet_initial_contact_lists_page', 'settings_step');
 
 
@@ -96,12 +81,36 @@ class MailjetSettings
 
 
     /**
+     * Handle any internal Mailjet plugin redirections - for example - redirects user to dashboard if initial configuration is already done
+     */
+    private function handleRedirections()
+    {
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handle internal Mailjet redirections - Start ]');
+
+        // Redirect the user to the Dashboard if he already configured his initial settings
+        $currentPage = $_REQUEST['page'] ? $_REQUEST['page'] : null;
+        if ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
+            wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
+            exit;
+        }
+
+
+        // If defined some contact list settings the we skip that page
+        if (get_option('settings_step') != 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage && !empty(get_option('activate_mailjet_initial_sync')) && !empty(get_option('mailjet_sync_list'))) {
+            wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
+            exit;
+        }
+
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handle internal Mailjet redirections - End ]');
+    }
+
+
+    /**
      * Adding a Mailjet logic and functionality to some WP actions - for example - inserting checkboxes for subscription
      */
     private function addMailjetActions()
     {
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - Start ]');
-
         if (!empty(get_option('activate_mailjet_sync')) && !empty(get_option('mailjet_sync_list'))) {
 
             $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
@@ -117,15 +126,15 @@ class MailjetSettings
             add_action('user_new_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
 
             // Runs when a user updates personal options from the admin screen.
-            add_action('personal_options_update', array($subscriptionOptionsSettings, 'mailjet_my_save_extra_profile_fields'));
+            add_action('personal_options_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs at the end of the Personal Options section of the user profile editing screen.
-            add_action('profile_personal_options ', array($subscriptionOptionsSettings, 'mailjet_my_save_extra_profile_fields'));
+            add_action('profile_personal_options ', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             //
-            add_action('edit_user_profile_update', array($subscriptionOptionsSettings, 'mailjet_my_save_extra_profile_fields'));
+            add_action('edit_user_profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs when a user's profile is updated. Action function argument: user ID.
             add_action('profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs immediately after the new user is added to the database.
-            add_action('user_register', array($this, array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields')));
+            add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
         }
 
 
