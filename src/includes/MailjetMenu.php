@@ -81,7 +81,7 @@ class MailjetMenu
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
 
                 // All Setup page
-                add_submenu_page('mailjet_settings_page', __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_allsetup_page',
+                add_submenu_page('mailjet_settings_page', __('You\'re all set up! What would you like to do next?', 'mailjet'), null, 'read', 'mailjet_allsetup_page',
                     array(new AllSetup(), 'mailjet_allsetup_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet All Setup sub-menu added ]');
 

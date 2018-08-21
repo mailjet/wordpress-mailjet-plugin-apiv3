@@ -163,8 +163,11 @@ input[type="submit"].button {
 
 /* Dashboard */
 .dashboard {
-    width: 100%;
-    background-color:#FFFFFF;
+    /*width: 100%;*/
+    background-color:#d8d8d8;
+    border: 1px solid #0a0a0a;
+    margin:20px auto;
+    padding:20px;
 }
 .dashboard .container {
     text-align: center;
@@ -176,9 +179,11 @@ input[type="submit"].button {
 .dashboard .block {
     width: 200px;
     height: 200px;
-    margin: 10px;
+    margin: 5px;
     display: inline-block;
     border:1px solid #999999;
+    background-color:#FFF;
+    padding:5px;
 }
 
 .dashboard .block img {
@@ -202,9 +207,11 @@ input[type="submit"].button {
     width: 200px;
     min-height: 420px;
     /*height: 100%;*/
-    margin: 10px;
+    margin: 5px;
     display: inline-block;
     border:1px solid #999999;
+    background-color:#FFF;
+    padding:5px;
 }
 .bottom_links_dashboard {
     clear: left;
