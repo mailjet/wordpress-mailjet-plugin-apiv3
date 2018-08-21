@@ -177,7 +177,7 @@ class InitialContactListsSettings
         ?>
 
 
-        <div class="mainContainer">
+        <div class="mainContainer dark">
             <div class="left">
             <div class="centered">
                 <div class="wrap">

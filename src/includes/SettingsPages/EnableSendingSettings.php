@@ -138,7 +138,7 @@ class EnableSendingSettings
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_enable_sending_settings',
-            __( 'The Matrix has you.', 'mailjet' ),
+            null,
             array($this, 'mailjet_section_enable_sending_cb'),
             'mailjet_sending_settings_page'
         );

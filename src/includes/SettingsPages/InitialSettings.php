@@ -169,7 +169,7 @@ class InitialSettings
         settings_errors('mailjet_messages');
 
         ?>
-        <div class="mainContainer">
+        <div class="mainContainer dark">
             <div class="left"">
                 <div class="centered">
                     <div class="wrap">

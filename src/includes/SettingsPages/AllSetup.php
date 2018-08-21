@@ -29,7 +29,7 @@ class AllSetup
         }
 
         ?>
-        <div class="dashboard">
+        <div class="allsetup">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
             <div class="container">
@@ -57,11 +57,11 @@ class AllSetup
                 </div>
             </div>
 
-            <div style="margin: 20px; margin-left: 220px;clear: left;"> or <?php echo '<a target="_blank" href="admin.php?page=mailjet_dashboard_page">' . __('Go to your Mailjet Plugin Homepage', 'mailjet') . '</a>'; ?> </div>
+            <div style="padding-top: 20px; margin-left: 220px; clear: left;"> or <?php echo '<a target="_blank" href="admin.php?page=mailjet_dashboard_page">' . __('Go to your Mailjet Plugin Homepage', 'mailjet') . '</a>'; ?> </div>
 
         </div>
 
-        <div class="bottom_links_dashboard">
+        <div class="bottom_links_allsetup">
             <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
             <?php echo ' | ' ?>

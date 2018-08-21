@@ -70,7 +70,7 @@ class ConnectAccountSettings
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_section_connect_account_settings',
-            __( 'The Matrix has you.', 'mailjet' ),
+            null,
             array($this, 'mailjet_section_connect_account_cb'),
             'mailjet_connect_account_page'
         );

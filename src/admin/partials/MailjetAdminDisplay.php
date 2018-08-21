@@ -26,7 +26,7 @@ class MailjetAdminDisplay
                 <div class="settingsMenuLink">
                 <?php
                 echo '<a class="' . ($currentPage == 'mailjet_connect_account_page' ? 'active' : '') . '" href="admin.php?page=mailjet_connect_account_page">'; ?>
-                <img style="width: 50px;" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_small.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/connect_account_screen_icon.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
                 <?php echo __('Connect your Mailjet account', 'mailjet'); ?>
                 </a>
                 </div>
@@ -35,7 +35,7 @@ class MailjetAdminDisplay
                 <div class="settingsMenuLink">
                 <?php
                 echo '<a class="' . ($currentPage == 'mailjet_sending_settings_page' ? 'active' : '') . '" href="admin.php?page=mailjet_sending_settings_page">'; ?>
-                <img style="width: 50px;" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_small.png'; ?>" alt="<?php echo __('Sending settings', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/sending_options_screen_icon.png'; ?>" alt="<?php echo __('Sending settings', 'mailjet'); ?>" />
                 <?php echo __('Sending settings', 'mailjet'); ?>
                 </a>
                 </div>
@@ -44,7 +44,7 @@ class MailjetAdminDisplay
                 <div class="settingsMenuLink">
                 <?php
                 echo '<a class="' . ($currentPage == 'mailjet_subscription_options_page' ? 'active' : '') . '" href="admin.php?page=mailjet_subscription_options_page">'; ?>
-                <img style="width: 50px;"  src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_small.png'; ?>" alt="<?php echo __('Subscription options', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/subscription_options_screen_icon.png'; ?>" alt="<?php echo __('Subscription options', 'mailjet'); ?>" />
                 <?php echo __('Subscription options', 'mailjet'); ?>
                 </a>
                 </div>
@@ -53,7 +53,7 @@ class MailjetAdminDisplay
                 <div class="settingsMenuLink">
                 <?php
                 echo '<a class="' . ($currentPage == 'mailjet_user_access_page' ? 'active' : '') . '" href="admin.php?page=mailjet_user_access_page">'; ?>
-                <img style="width: 50px;"  src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_small.png'; ?>" alt="<?php echo __('User access', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/user_access_screen_icon.png'; ?>" alt="<?php echo __('User access', 'mailjet'); ?>" />
                 <?php echo __('User access', 'mailjet'); ?>
                 </a>
                 </div>

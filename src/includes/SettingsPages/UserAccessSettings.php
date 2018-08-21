@@ -72,7 +72,7 @@ class UserAccessSettings
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_user_access_settings',
-            __( 'The Matrix has you.', 'mailjet' ),
+            null,
             array($this, 'mailjet_section_user_access_cb'),
             'mailjet_user_access_page'
         );

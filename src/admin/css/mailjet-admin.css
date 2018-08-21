@@ -6,11 +6,16 @@
 .mainContainer {
     display: flex;
     align-items: stretch;
-    background-color: #d8d8d8;
+    background-color: #FFF;
     border: 1px solid #0a0a0a;
     margin:20px 20px 20px auto;
     padding:20px;
 }
+
+.dark {
+    background-color: #d8d8d8;
+}
+
 
 /* Control the left side */
 .left {
@@ -21,19 +26,22 @@
 .right {
     height: 100%;
     max-width: 500px;
-    margin: auto 20px;
+    /*margin: auto 20px;*/
 }
 
 /* If you want the content centered horizontally and vertically */
 .centered {
-    border-right: groove 1px #7c7c7c;
+    border-right: solid 1px #C1C1C1;
     text-align: left;
-    vertical-align: middle;
 }
 
+.left .centered {
+    border-right: solid 1px #C1C1C1;
+    padding:20px;
+}
 .right .centered {
-    padding: 10px;
     background-color: #ffffff;
+    padding:20px;
 }
 
 .centered h1 {
@@ -50,21 +58,22 @@ input[type="submit"].button {
 
 .centered ul li .settingsMenuLink {
     color: #000000;
+    vertical-align: middle;
 }
 .centered ul li .settingsMenuLink a {
+    padding: 10px;
     color: #000000;
     width: 100%;
     text-decoration: none;
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
 }
 .centered ul li .settingsMenuLink a:hover {
-    font-weight: bold;
-    background-color: #c6c6ca;
+    color: #FFF;
+    background-color: #2e4453;
 }
 .centered ul li .settingsMenuLink a.active {
-    font-weight: bold;
-    background-color: #c6c6ca;
+    color: #FFF;
+    background-color: #2e4453;
 }
 
 .nextBtn {
@@ -171,7 +180,7 @@ input[type="submit"].button {
 }
 .dashboard .container {
     text-align: center;
-    max-width: 450px;
+    max-width: 480px;
     margin: 0 auto;
     float: left;
 }
@@ -179,7 +188,7 @@ input[type="submit"].button {
 .dashboard .block {
     width: 200px;
     height: 200px;
-    margin: 5px;
+    margin: 10px;
     display: inline-block;
     border:1px solid #999999;
     background-color:#FFF;
@@ -196,6 +205,64 @@ input[type="submit"].button {
 
 
 .dashboard .block_single img {
+    width: 280px;
+    height: 280px;
+    margin: 5px;
+    display: inline-block;
+    border: 2px solid #C1C1C1;
+}
+
+.dashboard .block_single {
+    width: 300px;
+    min-height: 440px;
+    /*height: 100%;*/
+    margin: 10px;
+    display: inline-block;
+    border:1px solid #999999;
+    background-color:#FFF;
+    padding:0px;
+}
+.bottom_links_dashboard {
+    clear: left;
+    left: 0;
+}
+
+
+/* Allsetup */
+.allsetup {
+    /*width: 100%;*/
+    background-color:#d8d8d8;
+    border: 1px solid #0a0a0a;
+    margin:20px 20px 20px auto;
+    padding:20px;
+}
+.allsetup .container {
+    text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
+    float: left;
+}
+
+.allsetup .block {
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    display: inline-block;
+    border:1px solid #999999;
+    background-color:#FFF;
+    padding:5px;
+}
+
+.allsetup .block img {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    display: inline-block;
+    border: 2px solid #C1C1C1;
+}
+
+
+.allsetup .block_single img {
     width: 150px;
     height: 150px;
     margin: 10px;
@@ -203,7 +270,7 @@ input[type="submit"].button {
     border: 2px solid #C1C1C1;
 }
 
-.dashboard .block_single {
+.allsetup .block_single {
     width: 200px;
     min-height: 420px;
     /*height: 100%;*/
@@ -213,7 +280,7 @@ input[type="submit"].button {
     background-color:#FFF;
     padding:5px;
 }
-.bottom_links_dashboard {
+.bottom_links_allsetup {
     clear: left;
     left: 0;
 }

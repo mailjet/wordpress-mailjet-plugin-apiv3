@@ -36,8 +36,8 @@ class Dashboard
                 <div class="block_single">
                     <h2><?php echo __('Send newsletter', 'mailjet' ); ?></h2>
                     <p><?php echo __('Create and manage your newsletters. Vew your campaign statistics', 'mailjet' ); ?></p>
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
                     <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'" value="<?=__('My campaigns', 'mailjet')?>">
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
                 </div>
 
             </div>
@@ -67,15 +67,17 @@ class Dashboard
                     <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_connect_account_page'" value="<?=__('Settings')?>">
                 </div>
             </div>
+            <br style="margin: 20px; margin-left: 220px;clear: left;" />
 
-
-            <div class="bottom_links_dashboard">
-                <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
-                <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-                <?php echo ' | ' ?>
-                <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
-            </div>
         </div>
+
+        <div class="bottom_links_dashboard">
+            <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
+            <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+            <?php echo ' | ' ?>
+            <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+        </div>
+
         <?php
     }
 

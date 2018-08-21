@@ -117,7 +117,7 @@ class SubscriptionOptionsSettings
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_subscription_options_settings',
-            __( 'The Matrix has you.', 'mailjet' ),
+            null,
             array($this, 'mailjet_section_subscription_options_cb'),
             'mailjet_subscription_options_page'
         );
