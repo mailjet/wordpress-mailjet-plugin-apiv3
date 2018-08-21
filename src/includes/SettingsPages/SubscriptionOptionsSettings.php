@@ -65,7 +65,7 @@ class SubscriptionOptionsSettings
 
                 <label for="activate_mailjet_initial_sync">
                 <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                <?php echo sprintf(__('Also, add existing %s Wordpress users (initial synchronization)', 'mailjet'), $wpUsersCount); ?></label>
+                <?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></label>
                 <br />
             </div>
 

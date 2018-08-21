@@ -34,6 +34,8 @@ class InitialContactListsSettings
     public function mailjet_initial_contact_lists_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
+        $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
+        $wpUsersCount = count($allWpUsers);
         $mailjetContactLists = $this->getMailjetContactLists();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
@@ -68,7 +70,7 @@ class InitialContactListsSettings
             <p><label for="list_name">Contact list name</label><input type="text" size="30" name="list_name" id="list_name" /></p>
             <p><input type="submit" value="Create" name="create_contact_list_btn" id="create_contact_list_btn"/> or <a class="closeCreateList" href="/">Cancel</a></p>
         </div>
-        <input name="create_contact_list" type="button" id="create_contact_list" value="Create new contact list">
+        <input name="create_contact_list" type="button" id="create_contact_list" value="+ Create a new list">
         <br />
 
 
@@ -81,27 +83,27 @@ class InitialContactListsSettings
                 <?php echo __('Automatically add all my future Wordpress users to a specific contact list', 'mailjet'); ?></label>
             <br />
 
-            <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
-                <?php
-                foreach ($mailjetContactLists as $mailjetContactList) {
-                    if ($mailjetContactList["IsDeleted"] == true) {
-                        continue;
-                    }
-                    ?>
-                    <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetSyncList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
+            <div class="mailjet_sync_options_div">
+                <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
                     <?php
-                } ?>
-            </select>
-            <br />
+                    foreach ($mailjetContactLists as $mailjetContactList) {
+                        if ($mailjetContactList["IsDeleted"] == true) {
+                            continue;
+                        }
+                        ?>
+                        <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetSyncList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
+                        <?php
+                    } ?>
+                </select>
+                <br />
 
-            <label for="activate_mailjet_initial_sync">
-                <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                <?php echo sprintf(__('Also, add existing %s Wordpress users (initial synchronization)', 'mailjet'), $wpUsersCount); ?></label>
-            <br />
-
-
+                <label for="activate_mailjet_initial_sync">
+                    <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                    <?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></label>
+                <br />
+            </div>
         </fieldset>
-
+<hr>
         <input name="settings_step" type="hidden" id="settings_step" value="initial_contact_lists_settings_step">
 
         <?php

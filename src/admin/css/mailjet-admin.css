@@ -6,7 +6,7 @@
 .mainContainer {
     display: flex;
     align-items: stretch;
-    background-color: #9d9d9d;
+    background-color: #d8d8d8;
     border: 1px solid #0a0a0a;
     margin:20px auto;
     padding:20px;
@@ -26,7 +26,7 @@
 
 /* If you want the content centered horizontally and vertically */
 .centered {
-    border-right: double 1px #6f6f6f;
+    border-right: groove 1px #7c7c7c;
     text-align: left;
     vertical-align: middle;
 }

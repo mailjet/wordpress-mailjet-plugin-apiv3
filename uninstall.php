@@ -26,6 +26,43 @@
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if (!defined( 'WP_UNINSTALL_PLUGIN')) {
 	exit;
 }
+
+
+// Delete all form settings stored for Mailjet plugin
+//
+delete_option('mailjet_apikey');
+delete_option('mailjet_apisecret');
+delete_option('mailjet_activate_logger');
+delete_option('settings_step');
+
+delete_option('activate_mailjet_sync');
+delete_option('mailjet_sync_list');
+delete_option('activate_mailjet_initial_sync');
+delete_option('create_contact_list_btn');
+delete_option('list_name');
+
+delete_option('mailjet_enabled');
+delete_option('mailjet_from_name');
+delete_option('mailjet_from_email');
+delete_option('mailjet_port');
+delete_option('mailjet_ssl');
+delete_option('mailjet_from_email_extra');
+delete_option('mailjet_from_email_extra_hidden');
+delete_option('mailjet_test_address');
+delete_option('mailjet_test_address');
+delete_option('send_test_email_btn');
+
+delete_option('activate_mailjet_sync');
+delete_option('mailjet_sync_list');
+delete_option('activate_mailjet_initial_sync');
+delete_option('activate_mailjet_comment_authors_sync');
+delete_option('mailjet_comment_authors_list');
+
+delete_option('mailjet_access_administrator');
+delete_option('mailjet_access_editor');
+delete_option('mailjet_access_author');
+delete_option('mailjet_access_contributor');
+delete_option('mailjet_access_subscriber');

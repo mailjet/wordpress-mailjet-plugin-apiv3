@@ -62,12 +62,15 @@
         });
 
         // Show / Hide Initial Sync options div
-        $('.mailjet_sync_options_div').hide();
-        if($('input[name="activate_mailjet_sync"]').prop('checked') === true){
-            $('.mailjet_sync_options_div').show();
+        $('.mailjet_sync_options_div').show();
+        $('.activate_mailjet_initial_sync').prop('checked', true);
+        if($('input[name="activate_mailjet_sync"]').prop('checked') !== true){
+            $('.mailjet_sync_options_div').hide();
+            $('.activate_mailjet_initial_sync').prop('checked', false);
         }
         $('input[name="activate_mailjet_sync"]').click(function () {
             $('.mailjet_sync_options_div').toggle('fast');
+            $('.activate_mailjet_initial_sync').prop('checked', $('input[name="activate_mailjet_sync"]').prop('checked'));
         });
 
         // Show / Hide Comment Authors Sync div

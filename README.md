@@ -105,6 +105,11 @@ function getMailjetSubscriptionEmailTemplate($templatePath) {
 }
 </code></pre>
 
+= For developers - before pushing any new changes, make sure you run the following command. It will remove unneeded .git direcotries from vendors =
+<pre><code>
+find vendor/ -type d -name ".git" -exec rm -rf {} \;
+</code></pre>
+
 == Screenshots ==
 
 1. Simply change a few parameters to get started.
