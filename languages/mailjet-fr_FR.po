@@ -531,9 +531,6 @@ msgstr ""
 msgid "<p>Something awesome</p>"
 msgstr "<p>French Something awesome</p>"
 
-msgid "title"
-msgstr "Fr Title"
-
 msgid "text"
 msgstr "FrText"
 
@@ -545,3 +542,24 @@ msgstr "1"
 
 msgid "select"
 msgstr "option_3"
+
+msgid "title"
+msgstr "fr21"
+
+msgid "input1"
+msgstr ""
+
+msgid "input2"
+msgstr ""
+
+msgid "input3"
+msgstr ""
+
+msgid "input4"
+msgstr ""
+
+msgid "language_checkbox"
+msgstr ""
+
+msgid "list"
+msgstr ""

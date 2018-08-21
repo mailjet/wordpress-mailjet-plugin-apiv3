@@ -193,42 +193,43 @@ class Mailjet
 	 *
 	 * @since    5.0.0
 	 */
-	public function run()
+    public function run()
     {
-		$this->loader->run();
-	}
+        $this->loader->run();
+    }
 
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name()
+    /**
+     * The name of the plugin used to uniquely identify it within the context of
+     * WordPress and to define internationalization functionality.
+     *
+     * @since     1.0.0
+     * @return    string    The name of the plugin.
+     */
+    public function get_plugin_name()
     {
-		return $this->plugin_name;
-	}
+        return $this->plugin_name;
+    }
 
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     5.0.0
-	 * @return    Mailjet_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader()
+    /**
+     * The reference to the class that orchestrates the hooks with the plugin.
+     *
+     * @since     5.0.0
+     * @return    Mailjet_Loader    Orchestrates the hooks of the plugin.
+     */
+    public function get_loader()
     {
-		return $this->loader;
-	}
+        return $this->loader;
+    }
 
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     5.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version()
+    /**
+     * Retrieve the version number of the plugin.
+     *
+     * @since     5.0.0
+     * @return    string    The version number of the plugin.
+     */
+    public function get_version()
     {
-		return $this->version;
-	}
+        return $this->version;
+    }
+
 }

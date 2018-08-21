@@ -83,6 +83,15 @@ class Mailjeti18n
         }
         return $locale;
     }
-
+    
+    public static function getSupportedLocales()
+    {
+        return array(
+            'English' => 'en_GB',
+            'French' => 'fr_FR',
+            'German' => 'de_DE',
+            'Spanish' => 'es_ES',
+        );
+    }
 
 }

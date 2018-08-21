@@ -178,7 +178,7 @@ class InitialContactListsSettings
 
 
         <div class="mainContainer">
-            <div class="left"">
+            <div class="left">
             <div class="centered">
                 <div class="wrap">
                     <h1><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
@@ -191,7 +191,7 @@ class InitialContactListsSettings
         </div>
 
 
-        <div class="right"">
+        <div class="right">
         <div class="centered">
             <div class="wrap">
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>

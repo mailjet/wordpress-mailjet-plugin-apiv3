@@ -1,8 +1,10 @@
 <?php
+
 namespace MailjetPlugin\Widget;
 
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
+
     /**
      *
      * Unique identifier for your widget.
@@ -18,43 +20,42 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     protected $widget_slug = 'mailjet';
 
-	/*--------------------------------------------------*/
-	/* Constructor
-	/*--------------------------------------------------*/
+    /* -------------------------------------------------- */
+    /* Constructor
+      /*-------------------------------------------------- */
 
-	/**
-	 * Specifies the classname and description, instantiates the widget,
-	 * loads localization files, and includes necessary stylesheets and JavaScript.
-	 */
-	public function __construct()
+    /**
+     * Specifies the classname and description, instantiates the widget,
+     * loads localization files, and includes necessary stylesheets and JavaScript.
+     */
+    public function __construct()
     {
-		// load plugin text domain
-		add_action('init', array($this, 'widget_textdomain'));
+        // load plugin text domain
+        add_action('init', array($this, 'widget_textdomain'));
 
-		parent::__construct(
-			$this->get_widget_slug(),
-			__('Mailjet Subscription Widget', $this->get_widget_slug()),
-			array(
-				'classname'  => 'WP_Mailjet_Subscribe_Widget',
-				'description' => __('Allows your visitors to subscribe to one of your lists', $this->get_widget_slug())
-			)
-		);
+        // Build widget
+        $widget_options = array(
+            'classname' => 'WP_Mailjet_Subscribe_Widget',
+            'description' => __('Allows your visitors to subscribe to one of your lists', $this->get_widget_slug())
+        );
+        parent::__construct(
+                $this->get_widget_slug(), __('Mailjet Subscription Widget', $this->get_widget_slug()), $widget_options
+        );
 
-//var_dump($this->get_settings());
-
-		// Register site styles and scripts
+//        var_dump($this->get_settings());
+        // Register site styles and scripts
         add_action('admin_print_styles', array($this, 'register_widget_styles'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'register_widget_styles'));
         add_action('wp_enqueue_scripts', array($this, 'register_widget_scripts'));
 
         // Refreshing the widget's cached output with each new post
-		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
-		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
-		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
+        add_action('save_post', array($this, 'flush_widget_cache'));
+        add_action('deleted_post', array($this, 'flush_widget_cache'));
+        add_action('switch_theme', array($this, 'flush_widget_cache'));
+    }
 
-	} // end constructor
-
+// end constructor
 
     /**
      * Return the widget slug.
@@ -68,144 +69,143 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         return $this->widget_slug;
     }
 
-	/*--------------------------------------------------*/
-	/* Widget API Functions
-	/*--------------------------------------------------*/
+    /* -------------------------------------------------- */
+    /* Widget API Functions
+      /*-------------------------------------------------- */
 
-	/**
-	 * Outputs the content of the widget.
-	 *
-	 * @param array args  The array of form elements
-	 * @param array instance The current instance of the widget
-	 */
-	public function widget($args, $instance)
+    /**
+     * Outputs the content of the widget.
+     *
+     * @param array args  The array of form elements
+     * @param array instance The current instance of the widget
+     */
+    public function widget($args, $instance)
     {
-		// Check if there is a cached output
-		$cache = wp_cache_get($this->get_widget_slug(),'widget');
+        // Check if there is a cached output
+        $cache = wp_cache_get($this->get_widget_slug(), 'widget');
 
-		if (!is_array($cache)) {
-		    $cache = array();
+        if (!is_array($cache)) {
+            $cache = array();
         }
 
-		if (!isset($args['widget_id'])) {
-		    $args['widget_id'] = $this->id;
+        if (!isset($args['widget_id'])) {
+            $args['widget_id'] = $this->id;
         }
 
-		if (isset($cache[$args['widget_id']])) {
-		    return print $cache[$args['widget_id']];
+        if (isset($cache[$args['widget_id']])) {
+            return print $cache[$args['widget_id']];
         }
-		
-		// go on with your widget logic, put everything into a string and …
+
+        // go on with your widget logic, put everything into a string and …
 
 
-		extract($args,EXTR_SKIP);
+        extract($args, EXTR_SKIP);
 
-		$widget_string = $before_widget;
+        $widget_string = $before_widget;
 
-		// TODO: Here is where you manipulate your widget's values based on their input fields
-		ob_start();
-		include(plugin_dir_path(__FILE__) . 'views/widget.php');
-		$widget_string .= ob_get_clean();
-		$widget_string .= $after_widget;
+        // TODO: Here is where you manipulate your widget's values based on their input fields
+        ob_start();
+        include(plugin_dir_path(__FILE__) . 'views/widget.php');
+        $widget_string .= ob_get_clean();
+        $widget_string .= $after_widget;
 
 
-		$cache[$args['widget_id']] = $widget_string;
+        $cache[$args['widget_id']] = $widget_string;
 
-		wp_cache_set($this->get_widget_slug(), $cache,'widget');
+        wp_cache_set($this->get_widget_slug(), $cache, 'widget');
 
-		print $widget_string;
+        print $widget_string;
+    }
 
-	} // end widget
-	
-	
-	public function flush_widget_cache() 
-	{
-    	wp_cache_delete($this->get_widget_slug(),'widget');
-	}
-
-	/**
-	 * Processes the widget's options to be saved.
-	 *
-	 * @param array new_instance The new instance of values to be generated via the update.
-	 * @param array old_instance The previous instance of values before the update.
-	 */
-	public function update($new_instance, $old_instance)
+    public function flush_widget_cache()
     {
-		$instance = $old_instance;
+        wp_cache_delete($this->get_widget_slug(), 'widget');
+    }
 
-		// TODO: Here is where you update your widget's old values with the new, incoming values
+    /**
+     * Processes the widget's options to be saved.
+     *
+     * @param array new_instance The new instance of values to be generated via the update.
+     * @param array old_instance The previous instance of values before the update.
+     */
+    public function update($new_instance, $old_instance)
+    {
+        $instance = $old_instance;
 
-        foreach (array('en_GB', 'fr_FR') as $locale) {
+        // TODO: Here is where you update your widget's old values with the new, incoming values
+        $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
+
+        foreach ($languages as $language => $locale) {
             $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
-            $instance[$locale]['input1'] = isset($new_instance[$locale]['input1']) ? wp_strip_all_tags($new_instance[$locale]['input1']) : '';
-            $instance[$locale]['input2'] = isset($new_instance[$locale]['input2']) ? wp_kses_post($new_instance[$locale]['input2']) : '';
-            $instance[$locale]['input3'] = isset($new_instance[$locale]['input3']) ? 1 : false;
-            $instance[$locale]['input4'] = isset($new_instance[$locale]['input4']) ? wp_strip_all_tags($new_instance[$locale]['input4']) : '';
+            $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
+            $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
 
             // Translations update
             //
             \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
 
-		return $instance;
+        return $instance;
+    }
 
-	} // end update
-
-	/**
-	 * Generates the administration form for the widget.
-	 *
-	 * @param array instance The array of keys and values for the widget.
-	 */
-	public function form($instance)
+    /**
+     * Generates the administration form for the widget.
+     *
+     * @param array instance The array of keys and values for the widget.
+     */
+    public function form($instance)
     {
 
-		// TODO: Define default values for your variables
-		$instance = wp_parse_args(
-			(array) $instance
-		);
+        // TODO: Define default values for your variables
+        $instance = wp_parse_args(
+                (array) $instance
+        );
 
-		// TODO: Store the values of the widget in their own variable
+        // Mailjet contact lists
+        $contactLists = \MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings::getMailjetContactLists();
 
-		// Display the admin form
-        foreach (array('en_GB', 'fr_FR') as $locale) {
+        // Display the admin form
+        $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
+        foreach ($languages as $language => $locale) {
             include(plugin_dir_path(__FILE__) . 'views/admin.php');
         }
+    }
 
-	} // end form
+    /* -------------------------------------------------- */
+    /* Public Functions
+      /*-------------------------------------------------- */
 
-	/*--------------------------------------------------*/
-	/* Public Functions
-	/*--------------------------------------------------*/
-
-	/**
-	 * Loads the Widget's text domain for localization and translation.
-	 */
-	public function widget_textdomain()
+    /**
+     * Loads the Widget's text domain for localization and translation.
+     */
+    public function widget_textdomain()
     {
         load_plugin_textdomain($this->get_widget_slug(), false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ] - ' . dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
-	} // end widget_textdomain
+    }
 
+// end widget_textdomain
 
+    /**
+     * Registers and enqueues widget-specific styles.
+     */
+    public function register_widget_styles()
+    {
+        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__));
+    }
 
-	/**
-	 * Registers and enqueues widget-specific styles.
-	 */
-	public function register_widget_styles()
+// end register_widget_styles
+
+    /**
+     * Registers and enqueues widget-specific scripts.
+     */
+    public function register_widget_scripts()
     {
 
-		wp_enqueue_style($this->get_widget_slug().'-widget-styles', plugins_url('css/widget.css', __FILE__));
+        wp_enqueue_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
+    }
 
-	} // end register_widget_styles
+// end register_widget_scripts
+}
 
-	/**
-	 * Registers and enqueues widget-specific scripts.
-	 */
-	public function register_widget_scripts()
-    {
-
-		wp_enqueue_script($this->get_widget_slug().'-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
-
-	} // end register_widget_scripts
-
-} // end class
+// end class
