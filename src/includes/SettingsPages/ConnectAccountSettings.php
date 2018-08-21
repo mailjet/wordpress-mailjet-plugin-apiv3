@@ -38,14 +38,15 @@ class ConnectAccountSettings
         ?>
         <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
+        <label for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
+        <br />
         <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?=$mailjetApikey ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Key', 'mailjet' ); ?>">
-        <p class="description">
-            <?php esc_html_e('Enter your Mailjet accoutn API Key value','mailjet'); ?>
-        </p>
+        <br /><br />
+
+        <label for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
+        <br />
         <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
-        <p class="description">
-            <?php esc_html_e('Enter your Mailjet accoutn API Secret value','mailjet'); ?>
-        </p>
+
         <?php
     }
 

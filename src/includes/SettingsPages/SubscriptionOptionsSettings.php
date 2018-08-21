@@ -21,7 +21,7 @@ class SubscriptionOptionsSettings
     public function mailjet_section_subscription_options_cb($args)
     {
         ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Subscription options', 'mailjet' ); ?></p>
+        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet' ); ?></p>
         <?php
     }
 
@@ -43,11 +43,11 @@ class SubscriptionOptionsSettings
         ?>
 
         <fieldset>
-            <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress users to a specific list', 'mailjet'); ?></span></legend>
+            <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
             <label for="activate_mailjet_sync">
             <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-            <?php echo __('Automatically add all my future Wordpress users to a specific contact list', 'mailjet'); ?></label>
-            <br />
+            <?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></label>
+            <br /><br />
 
             <div class="mailjet_sync_options_div">
                 <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
@@ -61,7 +61,7 @@ class SubscriptionOptionsSettings
                         <?php
                     } ?>
                 </select>
-                <br />
+                <br /><br />
 
                 <label for="activate_mailjet_initial_sync">
                 <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
@@ -75,7 +75,7 @@ class SubscriptionOptionsSettings
             <label for="activate_mailjet_comment_authors_sync">
             <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?=($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> >
             <?php echo __('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list)', 'mailjet'); ?></label>
-            <br />
+            <br /><br />
 
             <div class="mailjet_sync_comment_authors_div">
                 <select name="mailjet_comment_authors_list" id="mailjet_comment_authors_list" type="select">

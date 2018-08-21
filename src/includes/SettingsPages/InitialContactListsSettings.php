@@ -22,7 +22,7 @@ class InitialContactListsSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress users to one of them, or use them to collect new email addresses.', 'mailjet' ); ?>
+            <?php echo __('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress subscribers to one of them, or use them to collect new email addresses.', 'mailjet' ); ?>
         </p>
         <?php
     }
@@ -63,21 +63,21 @@ class InitialContactListsSettings
         </div>
 
         <div class="create_contact_list_popup pop">
-            <p><label for="create_list_name">Name your list</label><input type="text" size="30" name="create_list_name" id="create_list_name" /></p>
+            <p><label for="create_list_name"><?php echo __('Name your list', 'mailjet' ); ?></label><input type="text" size="30" name="create_list_name" id="create_list_name" /></p>
             <p><input type="submit" value="Create" name="create_contact_list_btn" id="create_contact_list_btn"/> or <a class="closeCreateList" href="/">Cancel</a></p>
         </div>
         <input name="create_contact_list" type="button" id="create_contact_list" value="+ Create a new list">
-        <br />
+        <br /><br />
 <hr>
 
         <fieldset>
             <h2><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h2>
             <h4><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet' ); ?></h4>
-            <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress users to a specific list', 'mailjet'); ?></span></legend>
+            <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
             <label for="activate_mailjet_sync">
                 <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                <?php echo __('Automatically add all my future Wordpress users to a specific contact list', 'mailjet'); ?></label>
-            <br />
+                <?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></label>
+            <br /><br />
 
             <div class="mailjet_sync_options_div">
                 <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
@@ -91,12 +91,12 @@ class InitialContactListsSettings
                         <?php
                     } ?>
                 </select>
-                <br />
+                <br /><br />
 
                 <label for="activate_mailjet_initial_sync">
                     <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
                     <?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></label>
-                <br />
+                <br /><br />
             </div>
         </fieldset>
 <hr>
@@ -181,9 +181,9 @@ class InitialContactListsSettings
             <div class="left">
             <div class="centered">
                 <div class="wrap">
-                    <h1><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                    <h1><?php echo __('Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
                     <p>
-                        <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
+                        <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your contacts, directly from Wordpress.', 'mailjet'); ?>
                     </p>
                 </div>
                 <img style="width: 100%; margin-top:20px;" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image.png'; ?>" alt="Welcome to the Mailjet" />

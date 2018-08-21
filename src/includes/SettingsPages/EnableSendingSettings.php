@@ -44,14 +44,14 @@ class EnableSendingSettings
         <fieldset>
             <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?=($mailjetEnabled == 1 ? ' checked="checked"' : '') ?> >
             <label for="mailjet_enabled"> <?php echo __('Enable sending emails through <b>Mailjet</b>', 'mailjet'); ?></label>
-            <br />
+            <br /><br />
 
             <div class="sending_options_div">
-                <label for="mailjet_from_name"><?php echo __('From: name', 'mailjet'); ?></label> <br />
+                <label for="mailjet_from_name"><b><?php echo __('From: Name', 'mailjet'); ?></b></label> <br />
                 <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?=$mailjetFromName ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
-                <br />
+                <br /><br />
 
-                <label for="mailjet_from_email"><?php echo __('From: email address', 'mailjet'); ?></label> <br />
+                <label for="mailjet_from_email"><b><?php echo __('From: name@email.com', 'mailjet'); ?></b></label> <br />
                 <select name="mailjet_from_email" id="mailjet_from_email" type="select">
                     <?php foreach ($mailjetSenders as $mailjetSender) {
                         if ($mailjetSender['Status'] != 'Active') {
@@ -64,19 +64,14 @@ class EnableSendingSettings
                         }
                     ?>
                         <option value="<?=$mailjetSender['Email'] ?>" <?=($mailjetFromEmail == $mailjetSender['Email'] ? 'selected="selected"' : '') ?> > <?=$mailjetSender['Email'] ?> </option>
-                    <?php
-                    } ?>
+                    <?php } ?>
                 </select>
                 <?php
                     if (!empty(get_option('mailjet_from_email_extra'))) { ?>
-
                         <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?=get_option('mailjet_from_email_extra') ?>">
-                <?php
+                <?php } ?>
 
-                    }
-                ?>
-
-                <br />
+                <br /><br />
 
                 <label for="mailjet_port"><?php echo __('Port to use for SMTP communication', 'mailjet'); ?></label>
                 <select name="mailjet_port" id="mailjet_port" type="select">
@@ -86,15 +81,15 @@ class EnableSendingSettings
                     <option value="588" <?=($mailjetPort == 588 ? 'selected="selected"' : '') ?> > 588 </option>
                     <option value="80" <?=($mailjetPort == 80 ? 'selected="selected"' : '') ?> > 80 </option>
                 </select>
-                <br />
+                <br /><br />
 
-                <input name="mailjet_ssl" type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> >
-                <label for="mailjet_ssl"> <?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></label>
-                <br />
+                <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> >
+                <label for="mailjet_ssl" style="display: inline"><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></label>
+                <br /><br />
 
                 <?php  if (!empty(get_option('mailjet_enabled')) && 1 == get_option('mailjet_enabled')) { ?>
                     <div class="test_email_popup pop">
-                        <p><label for="email">Recipient of the test email</label><input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" /></p>
+                        <p><label for="email"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label><input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" /></p>
                         <p><input type="submit" value="Send" name="send_test_email_btn" id="send_test_email_btn"/> or <a class="close" href="/">Cancel</a></p>
                     </div>
                     <input name="mailjet_test" type="button" id="mailjet_test" value="Send a test">

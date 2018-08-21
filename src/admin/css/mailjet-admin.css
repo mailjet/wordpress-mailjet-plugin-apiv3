@@ -284,3 +284,10 @@ input[type="submit"].button {
     clear: left;
     left: 0;
 }
+
+.mailjet_sync_options_div{
+    margin-left:20px;
+}
+.mailjet_sync_comment_authors_div{
+    margin-left:20px;
+}
