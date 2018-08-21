@@ -89,7 +89,8 @@ class MailjetSettings
 
         // Redirect the user to the Dashboard if he already configured his initial settings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
-        if ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
+
+        if (get_option('settings_step') != 'initial_step' && 'mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
             wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
             exit;
         }
