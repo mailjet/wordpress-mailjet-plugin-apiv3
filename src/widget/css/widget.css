@@ -6,3 +6,39 @@
 .mailjet_widget_front_container {
     /*background-color: #5F862F;*/
 }
+
+.hidden_default {
+    display: none;
+}
+
+.language-label{
+    font-weight: bold;
+    text-decoration: appworkspace;
+    margin: 10px;
+}
+
+.language-title-label{
+    font-weight: 600;
+}
+
+.dropdown-list{
+    height: 40px!important;
+    margin: 8px 0;
+}
+
+.title-input{
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.language-wrap{
+    padding: 10px;
+    border-bottom: 1px solid #898899;
+    border-bottom-width: thin;
+    border-right: 1px solid #898899;
+    border-right-width: thin;
+    border-left: 1px solid #898899;
+    border-left-width: thin;
+}
