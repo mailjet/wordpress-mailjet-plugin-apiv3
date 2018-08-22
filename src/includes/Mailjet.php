@@ -27,130 +27,128 @@ use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
  */
 class Mailjet
 {
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    5.0.0
-	 * @access   protected
-	 * @var      Mailjet_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
+    /**
+     * The loader that's responsible for maintaining and registering all hooks that power
+     * the plugin.
+     *
+     * @since    5.0.0
+     * @access   protected
+     * @var      Mailjet_Loader    $loader    Maintains and registers all hooks for the plugin.
+     */
+    protected $loader;
 
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    5.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
+    /**
+     * The unique identifier of this plugin.
+     *
+     * @since    5.0.0
+     * @access   protected
+     * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+     */
+    protected $plugin_name;
 
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
+    /**
+     * The current version of the plugin.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      string    $version    The current version of the plugin.
+     */
+    protected $version;
 
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    5.0.0
-	 */
-	public function __construct()
+    /**
+     * Define the core functionality of the plugin.
+     *
+     * Set the plugin name and the plugin version that can be used throughout the plugin.
+     * Load the dependencies, define the locale, and set the hooks for the admin area and
+     * the public-facing side of the site.
+     *
+     * @since    5.0.0
+     */
+    public function __construct()
     {
-		if ( defined( 'MAILJET_VERSION' ) ) {
-			$this->version = MAILJET_VERSION;
-		} else {
-			$this->version = '5.0.0';
-		}
-		$this->plugin_name = 'mailjet';
+        if (defined('MAILJET_VERSION')) {
+            $this->version = MAILJET_VERSION;
+        } else {
+            $this->version = '5.0.0';
+        }
+        $this->plugin_name = 'mailjet';
 
-		$this->load_dependencies();
-		$this->set_locale();
-		$this->define_admin_hooks();
+        $this->load_dependencies();
+        $this->set_locale();
+        $this->define_admin_hooks();
         $this->define_public_hooks();
         $this->addMailjetMenu();
         $this->addMailjetSettings();
         $this->addMailjetPHPMailer();
         $this->registerMailjetWidget();
+    }
 
-	}
-
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Mailjet_Loader. Orchestrates the hooks of the plugin.
-	 * - Mailjeti18n. Defines internationalization functionality.
-	 * - Mailjet_Admin. Defines all hooks for the admin area.
-	 * - Mailjet_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    5.0.0
-	 * @access   private
-	 */
-	private function load_dependencies()
+    /**
+     * Load the required dependencies for this plugin.
+     *
+     * Include the following files that make up the plugin:
+     *
+     * - Mailjet_Loader. Orchestrates the hooks of the plugin.
+     * - Mailjeti18n. Defines internationalization functionality.
+     * - Mailjet_Admin. Defines all hooks for the admin area.
+     * - Mailjet_Public. Defines all hooks for the public side of the site.
+     *
+     * Create an instance of the loader which will be used to register the hooks
+     * with WordPress.
+     *
+     * @since    5.0.0
+     * @access   private
+     */
+    private function load_dependencies()
     {
-		$this->loader = new MailjetLoader();
-	}
+        $this->loader = new MailjetLoader();
+    }
 
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Mailjeti18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    5.0.0
-	 * @access   private
-	 */
-	private function set_locale()
+    /**
+     * Define the locale for this plugin for internationalization.
+     *
+     * Uses the Mailjeti18n class in order to set the domain and to register the hook
+     * with WordPress.
+     *
+     * @since    5.0.0
+     * @access   private
+     */
+    private function set_locale()
     {
-		$plugin_i18n = new Mailjeti18n();
+        $plugin_i18n = new Mailjeti18n();
 
-		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
-	}
+        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+    }
 
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_hooks()
+    /**
+     * Register all of the hooks related to the admin area functionality
+     * of the plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    private function define_admin_hooks()
     {
-		$plugin_admin = new MailjetAdmin( $this->get_plugin_name(), $this->get_version() );
+        $plugin_admin = new MailjetAdmin($this->get_plugin_name(), $this->get_version());
 
-		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-	}
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+    }
 
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    5.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks()
+    /**
+     * Register all of the hooks related to the public-facing functionality
+     * of the plugin.
+     *
+     * @since    5.0.0
+     * @access   private
+     */
+    private function define_public_hooks()
     {
-		$plugin_public = new MailjetPublic($this->get_plugin_name(), $this->get_version());
+        $plugin_public = new MailjetPublic($this->get_plugin_name(), $this->get_version());
 
-		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
-	}
-
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+    }
 
     private function addMailjetMenu()
     {
@@ -159,7 +157,6 @@ class Mailjet
         $this->loader->add_action('admin_menu', $plugin_menu, 'display_menu');
     }
 
-
     private function addMailjetSettings()
     {
         $plugin_settings = new MailjetSettings();
@@ -167,7 +164,6 @@ class Mailjet
 //        $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_init');
         $this->loader->add_action('init', $plugin_settings, 'mailjet_settings_init');
     }
-
 
     private function addMailjetPHPMailer()
     {
@@ -181,18 +177,18 @@ class Mailjet
     private function registerMailjetWidget()
     {
         $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
-
     }
+
     function wp_mailjet_register_widgets()
     {
         register_widget(new WP_Mailjet_Subscribe_Widget());
     }
 
     /**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    5.0.0
-	 */
+     * Run the loader to execute all of the hooks with WordPress.
+     *
+     * @since    5.0.0
+     */
     public function run()
     {
         $this->loader->run();

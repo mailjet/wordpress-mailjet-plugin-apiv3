@@ -1,6 +1,8 @@
 /* This stylesheet is used to style the public view of the widget. */
 
 .mailjet_widget_admin_container {
+    margin-top: 10px;
+    margin-bottom: 10px;
     /*background-color: #00a0d2;*/
 }
 .mailjet_widget_front_container {
@@ -41,4 +43,9 @@
     border-right-width: thin;
     border-left: 1px solid #898899;
     border-left-width: thin;
+}
+
+.language-wrap:first-child{
+    border-top: 1px solid #898899;
+    border-top-width: thin;
 }

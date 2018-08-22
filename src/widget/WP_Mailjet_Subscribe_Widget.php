@@ -68,6 +68,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         return $this->widget_slug;
     }
+    
+    public function sendSubscriptionEmail($subscriptionOptionsSettings, $subscription_email){
+        $error = empty($subscription_email) ? 'Email field is empty' : false;
+        if (false !== $error) {
+            _e($error, 'mailjet');
+            die;
+        }
+
+        if (!is_email($subscription_email)) {
+            _e('Invalid email', 'mailjet');
+            die;
+        }
+
+        $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email);
+        
+    }
 
     /* -------------------------------------------------- */
     /* Widget API Functions
@@ -81,6 +97,26 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+        $subscriptionOptionsSettings = new \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings();
+        // Form is submited
+        if (isset($_POST['mailjet_widget_form_submited'])) {
+            $subscription_email = $_POST['subscription_email'];
+            $this->sendSubscriptionEmail($subscriptionOptionsSettings, $subscription_email);
+
+        } 
+
+        // Confirm email subscription
+        if (isset($_GET['mj_sub_token'])) {
+            $subscription_email = $_GET['subscription_email'];
+            $params = http_build_query(array('subscription_email' => $subscription_email));
+            if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
+                // Subscribe
+                
+            } else {
+                // Todo add Log and message
+                die;
+            }
+        }
         // Check if there is a cached output
         $cache = wp_cache_get($this->get_widget_slug(), 'widget');
 
@@ -130,18 +166,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
+        // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
 
-        // TODO: Here is where you update your widget's old values with the new, incoming values
         $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
 
         foreach ($languages as $language => $locale) {
-            $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
             $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
+            $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
             $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
 
             // Translations update
-            //
             \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
 
@@ -155,7 +190,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function form($instance)
     {
-
         // TODO: Define default values for your variables
         $instance = wp_parse_args(
                 (array) $instance
@@ -166,9 +200,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Display the admin form
         $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
-        foreach ($languages as $language => $locale) {
-            include(plugin_dir_path(__FILE__) . 'views/admin.php');
-        }
+        include(plugin_dir_path(__FILE__) . 'views/admin.php');
     }
 
     /* -------------------------------------------------- */

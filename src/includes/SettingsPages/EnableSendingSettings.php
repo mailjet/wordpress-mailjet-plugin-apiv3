@@ -220,7 +220,7 @@ class EnableSendingSettings
 
 
         <div class="mainContainer">
-            <div class="left"">
+            <div class="left">
             <div class="centered">
                 <?php
                 MailjetAdminDisplay::getSettingsLeftMenu();
@@ -228,7 +228,7 @@ class EnableSendingSettings
             </div>
         </div>
 
-        <div class="right"">
+        <div class="right">
         <div class="centered">
             <div class="wrap">
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>

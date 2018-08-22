@@ -18,6 +18,8 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 class SubscriptionOptionsSettings
 {
 
+    const WIDGET_HASH = '[\^=34|>5i!? {xIas';
+
     public function mailjet_section_subscription_options_cb($args)
     {
         ?>
@@ -165,7 +167,7 @@ class SubscriptionOptionsSettings
         ?>
 
         <div class="mainContainer">
-            <div class="left"">
+            <div class="left">
             <div class="centered">
                 <?php
                 MailjetAdminDisplay::getSettingsLeftMenu();
@@ -173,7 +175,7 @@ class SubscriptionOptionsSettings
             </div>
         </div>
 
-        <div class="right"">
+        <div class="right">
         <div class="centered">
             <div class="wrap">
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -457,6 +459,39 @@ class SubscriptionOptionsSettings
         add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
         wp_mail($_POST['email'], __('Subscription Confirmation', 'mailjet'), $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+    }
+    
+    public function mailjet_subscribe_confirmation_from_widget($subscription_email)
+    {
+//        $mailjetApikey = get_option('mailjet_apikey');
+//        $mailjetApiSecret = get_option('mailjet_apisecret');
+        // Check if it is already subscribed
+//        $mailjetClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+
+        $params = http_build_query(array('subscription_email' => $subscription_email));
+        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
+        $message = file_get_contents($subscriptionTemplate);
+        
+        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
+        $emailData = array(
+            '__EMAIL_TITLE__' => __('Confirm your mailing list subscription', 'mailjet'),
+            '__EMAIL_HEADER__' => sprintf(__('Please Confirm Your Subscription To', 'mailjet'), $wpUrl),
+            '__WP_URL__' => $wpUrl,
+            '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
+            '__CLICK_HERE__' => __('Click here to confirm', 'mailjet'),
+            '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'mailjet'),
+            '__FROM_NAME__' => get_option('blogname'),
+            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'mailjet'),
+            '__THANKS__' => __('Thanks,', 'mailjet')
+        );
+        $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
+        foreach ($emailParams as $key => $value) {
+            $message = str_replace($key, $value, $message);
+        }
+        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        $result = wp_mail($subscription_email, __('Subscription Confirmation', 'mailjet'), $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+//        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet') . '</p>';
+//        die;
     }
 
 }

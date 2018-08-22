@@ -8,42 +8,26 @@
 
     // Check the widget options
     $title = isset($instance[$locale]['title']) ? apply_filters('widget_title', $instance[$locale]['title']) : '';
-    $input1 = isset($instance[$locale]['input1']) ? $instance[$locale]['input1'] : '';
-    $input2 = isset($instance[$locale]['input2']) ? $instance[$locale]['input2'] : '';
-    $input3 = isset($instance[$locale]['input3']) ? $instance[$locale]['input3'] : '';
-    $input4 = !empty($instance[$locale]['input4']) ? $instance[$locale]['input4'] : false;
+    $list = isset($instance[$locale]['list']) ? $instance[$locale]['list'] : '';
+//    $input2 = isset($instance[$locale]['input2']) ? $instance[$locale]['input2'] : '';
+//    $input3 = isset($instance[$locale]['input3']) ? $instance[$locale]['input3'] : '';
+//    $input4 = !empty($instance[$locale]['input4']) ? $instance[$locale]['input4'] : false;
 
+//    'language_checkbox' => '',
+//        'title' => '',
+//        'list' => ''
 
 
     // Display the widget
-    echo '<div class="widget-text wp_widget_plugin_box">';
-
-        // Display widget title if defined
-        if ($title) {
-            echo $before_title . $title . $after_title;
-        }
-
-        // Display text field
-        if ($input1) {
-            echo '<p>' . $input1 . '</p>';
-        }
-
-        // Display textarea field
-        if ($input2) {
-            echo '<p>' . $input2 . '</p>';
-        }
-
-        // Display something if checkbox is true
-        if ($input3) {
-            echo __('<p>Something awesome</p>', 'mailjet');
-        }
-
-        // Display select field
-        if ($input4) {
-            echo '<p>' . $input4 . '</p>';
-        }
-
-    echo '</div>';
-
     ?>
+    <div class="widget-text wp_widget_plugin_box">
+        <div id="mailjet_widget_title_wrap"><span id="mailjet_widget_title"><?php echo $before_title . $title . $after_title ?></span></div>
+        <form method="post" action=" <?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
+            <label for="front_email" id="mailjet_widget_email_label"><?php _e('Email', 'mailjet') ?></label>
+            <input type="email" name="subscription_email" id="mailjet_widget_email" placeholder="<?php _e('Email', 'mailjet') ?>">
+
+            <input type="hidden" name="mailjet_widget_form_submited">
+            <input type="submit" value="<?php _e('Subscribe', 'mailjet') ?>">
+        </form>
+    </div>
 </div>

@@ -5,12 +5,14 @@
     $defaults = array(
         'language_checkbox' => '',
         'title' => '',
+        'list' => ''
     );
 
-    extract(wp_parse_args((array) $instance[$locale], $defaults));
+    foreach ($languages as $language => $locale) {
+        extract(wp_parse_args((array) $instance[$locale], $defaults));
     ?>
     <div class="language-wrap">
-        <input id="<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[language_checkbox]')); ?>" type="checkbox" class="language_checkbox" />
+        <input id="<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[language_checkbox]')); ?>" type="checkbox" class="language_checkbox" <?php checked('1', $language_checkbox); ?> />
         <label class="language-label" for="<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>"><?php _e($language, 'mailjet'); ?></label>
 
         <div class="hidden_default" id="hidden_<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>">
@@ -42,5 +44,6 @@
             </p>
         </div>
     </div>
+    <?php } ?>
 
 </div>
