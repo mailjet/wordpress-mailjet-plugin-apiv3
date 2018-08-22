@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-08-17 11:34+0300\n"
-"PO-Revision-Date: 2018-08-17 11:34+0300\n"
+"POT-Creation-Date: 2018-08-22 13:29+0300\n"
+"PO-Revision-Date: 2018-08-22 13:29+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -12,7 +12,9 @@ msgstr ""
 "X-Generator: Poedit 2.1.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
@@ -20,187 +22,230 @@ msgstr ""
 
 #: src/admin/partials/MailjetAdminDisplay.php:29
 #: src/admin/partials/MailjetAdminDisplay.php:30
-#: src/includes/MailjetMenu.php:91
+#: src/includes/MailjetMenu.php:96
 msgid "Connect your Mailjet account"
 msgstr ""
 
 #: src/admin/partials/MailjetAdminDisplay.php:38
 #: src/admin/partials/MailjetAdminDisplay.php:39
-#: src/includes/MailjetMenu.php:94
+#: src/includes/MailjetMenu.php:99
 msgid "Sending settings"
 msgstr ""
 
 #: src/admin/partials/MailjetAdminDisplay.php:47
 #: src/admin/partials/MailjetAdminDisplay.php:48
-#: src/includes/MailjetMenu.php:97
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:24
+#: src/includes/MailjetMenu.php:102
 msgid "Subscription options"
 msgstr ""
 
 #: src/admin/partials/MailjetAdminDisplay.php:56
 #: src/admin/partials/MailjetAdminDisplay.php:57
-#: src/includes/MailjetMenu.php:100
+#: src/includes/MailjetMenu.php:105
 msgid "User access"
 msgstr ""
 
-#: src/admin/partials/MailjetAdminDisplay.php:65
-#: src/includes/SettingsPages/Dashboard.php:74
-msgid "Read our user guide"
+#: src/includes/MailjetMail.php:112
+msgid ""
+"Email sending failed. Please review your smtp configuration and try again "
+"later"
 msgstr ""
 
-#: src/admin/partials/MailjetAdminDisplay.php:67
-#: src/includes/SettingsPages/Dashboard.php:76
-msgid "Contact our support team"
-msgstr ""
-
-#: src/includes/MailjetMail.php:114
+#: src/includes/MailjetMail.php:125
 msgid "Your test mail from Mailjet"
 msgstr ""
 
-#: src/includes/MailjetMail.php:115
+#: src/includes/MailjetMail.php:126
 #, php-format
 msgid "Your Mailjet configuration is ok!SSL: %s Port: %s"
 msgstr ""
 
-#: src/includes/MailjetMail.php:120
-msgid "Your test message was NOT sent, please review your settings"
+#: src/includes/MailjetMenu.php:60
+#: src/includes/SettingsPages/InitialSettings.php:57
+msgid "Connect your Mailjet account to get started"
 msgstr ""
 
-#: src/includes/MailjetMail.php:123
-msgid "Your test message was sent succesfully"
-msgstr ""
-
-#: src/includes/MailjetMenu.php:59
-msgid "Initial mailjet API settings"
-msgstr ""
-
-#: src/includes/MailjetMenu.php:60 src/includes/MailjetSettings.php:167
+#: src/includes/MailjetMenu.php:61 src/includes/MailjetSettings.php:202
 #: src/includes/SettingsPages/Dashboard.php:67
 msgid "Settings"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:64
+#: src/includes/MailjetMenu.php:65
 msgid "Manage your Mailjet lists"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:65
+#: src/includes/MailjetMenu.php:66
 msgid "Lists"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:68
+#: src/includes/MailjetMenu.php:69
 msgid "Manage your Mailjet campaigns"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:69 src/includes/MailjetMenu.php:184
+#: src/includes/MailjetMenu.php:70 src/includes/MailjetMenu.php:178
 msgid "Campaigns"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:72
+#: src/includes/MailjetMenu.php:73
 msgid "View your Mailjet statistics"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:73 src/includes/MailjetMenu.php:207
+#: src/includes/MailjetMenu.php:74 src/includes/MailjetMenu.php:201
 msgid "Statistics"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:79 src/includes/MailjetMenu.php:85
-#: src/includes/MailjetMenu.php:114
+#: src/includes/MailjetMenu.php:79
+msgid "Configure your lists."
+msgstr ""
+
+#: src/includes/MailjetMenu.php:84
+msgid "You're all set up! What would you like to do next?"
+msgstr ""
+
+#: src/includes/MailjetMenu.php:90
+#: src/includes/SettingsPages/InitialSettings.php:176
 msgid "Welcome to the Mailjet plugin for Wordpress"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:118
-#, php-format
-msgid ""
-"<a target=\"_blank\" href=\"https://www.mailjet.com/signup?aff=%s\">Create your "
-"Mailjet account</a> if you don't have any."
-msgstr ""
-
-#: src/includes/MailjetMenu.php:119
-msgid ""
-"Log in with your account through the login form below or visit your <a target=\""
-"_blank\" href=\"https://www.mailjet.com/account/api_keys\">account page</a> to g"
-"et your API keys and set up them below."
-msgstr ""
-
-#: src/includes/MailjetMenu.php:120
-msgid ""
-"<a href=\"admin.php?page=mailjet_settings_contacts_menu\">Create a new list</a> "
-"if you don't have one or need a new one."
-msgstr ""
-
-#: src/includes/MailjetMenu.php:121
-msgid ""
-"<a href=\"widgets.php\">Add</a> the email collection widget to your sidebar or f"
-"ooter."
-msgstr ""
-
-#: src/includes/MailjetMenu.php:122
-msgid ""
-"<a href=\"admin.php?page=mailjet_settings_campaigns_menu\">Create a campaign</a>"
-" on mailjet.com to send your newsletter."
-msgstr ""
-
-#: src/includes/MailjetMenu.php:123
-msgid ""
-"Should you have any questions or encounter any difficulties, please consult our "
-"<a target=\"_blank\" href=\"https://www.mailjet.com/guides/wordpress-user-guide/"
-"\">User Guide</a> or contact our <a target=\"_blank\" href=\"https://www.mailjet"
-".com/support/ticket\">technical Support Team</a>"
-msgstr ""
-
-#: src/includes/MailjetMenu.php:195 src/includes/MailjetMenu.php:218
-#: src/includes/MailjetMenu.php:241
+#: src/includes/MailjetMenu.php:189 src/includes/MailjetMenu.php:212
+#: src/includes/MailjetMenu.php:235
+#: src/includes/SettingsPages/ConnectAccountSettings.php:105
+#: src/includes/SettingsPages/InitialSettings.php:145
 msgid "Invalid Mailjet API credentials"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:230
+#: src/includes/MailjetMenu.php:224
+#: src/includes/SettingsPages/InitialContactListsSettings.php:56
 msgid "Contacts"
+msgstr ""
+
+#: src/includes/MailjetSettings.php:212
+msgid "You have been successfully subscribed to a Mailjet contact list"
+msgstr ""
+
+#: src/includes/MailjetSettings.php:214
+msgid "You have been successfully unsubscribed from a Mailjet contact list"
+msgstr ""
+
+#: src/includes/MailjetSettings.php:220
+msgid "Something went wrong with adding a contact to Mailjet contact list"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:37
+msgid "Add a subscription form to ypur website"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:38
+msgid ""
+"Go to the widget management page and add the Mailjet Subscription Widget to "
+"your website to start collecting email addresses."
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:40
+msgid "Manage my widgets"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:45
+msgid "Send an email campaign"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:46
+msgid ""
+"Ready to send a newsletter to your subscribers? Simply go to your Campaigns "
+"and click on \"Create a campaign\" to create and send your email."
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:48
+msgid "Create a campaign"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:53
+msgid "Configure Wordpress email sending"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:54
+msgid ""
+"Enable and configure sending of all your Wordpress emails (transactional "
+"emails, etc...) through Mailjet."
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:56
+msgid "Configure"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:60
+msgid "Go to your Mailjet Plugin Homepage"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:65
+#: src/includes/SettingsPages/ConnectAccountSettings.php:163
+#: src/includes/SettingsPages/Dashboard.php:75
+#: src/includes/SettingsPages/EnableSendingSettings.php:252
+#: src/includes/SettingsPages/InitialContactListsSettings.php:222
+#: src/includes/SettingsPages/InitialSettings.php:212
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:197
+#: src/includes/SettingsPages/UserAccessSettings.php:141
+msgid "Need help getting started?"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:66
+#: src/includes/SettingsPages/ConnectAccountSettings.php:164
+#: src/includes/SettingsPages/Dashboard.php:76
+#: src/includes/SettingsPages/EnableSendingSettings.php:253
+#: src/includes/SettingsPages/InitialContactListsSettings.php:223
+#: src/includes/SettingsPages/InitialSettings.php:213
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:198
+#: src/includes/SettingsPages/UserAccessSettings.php:142
+msgid "Read our user guide"
+msgstr ""
+
+#: src/includes/SettingsPages/AllSetup.php:68
+#: src/includes/SettingsPages/ConnectAccountSettings.php:166
+#: src/includes/SettingsPages/Dashboard.php:78
+#: src/includes/SettingsPages/EnableSendingSettings.php:255
+#: src/includes/SettingsPages/InitialContactListsSettings.php:225
+#: src/includes/SettingsPages/InitialSettings.php:215
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:200
+#: src/includes/SettingsPages/UserAccessSettings.php:144
+msgid "Contact our support team"
 msgstr ""
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:25
 msgid ""
-"In your Mailjet account, go to <a target=\"_blank\" href=\"https://www.mailjet.c"
-"om/account/api_keys\">My Account > API Keys</a> and paste your credentials bello"
-"w"
+"In your Mailjet account, go to <a target=\"_blank\" href=\"https://www."
+"mailjet.com/account/api_keys\">My Account > API Keys</a> and paste your "
+"credentials bellow"
 msgstr ""
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:41
-#: src/includes/SettingsPages/InitialSettings.php:60
-msgid "Your Mailjet API Key"
+#: src/includes/SettingsPages/InitialSettings.php:61
+msgid "<b>Api Key</b>"
 msgstr ""
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:43
 #: src/includes/SettingsPages/InitialSettings.php:63
-msgid "Enter your Mailjet accoutn API Key value"
+msgid "Your Mailjet API Key"
 msgstr ""
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:45
-#: src/includes/SettingsPages/InitialSettings.php:67
+#: src/includes/SettingsPages/ConnectAccountSettings.php:46
+#: src/includes/SettingsPages/InitialSettings.php:70
+msgid "<b>Secret Key</b>"
+msgstr ""
+
+#: src/includes/SettingsPages/ConnectAccountSettings.php:48
+#: src/includes/SettingsPages/InitialSettings.php:72
 msgid "Your Mailjet API Secret"
 msgstr ""
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:47
-#: src/includes/SettingsPages/InitialSettings.php:70
-msgid "Enter your Mailjet accoutn API Secret value"
-msgstr ""
-
-#: src/includes/SettingsPages/ConnectAccountSettings.php:73
-#: src/includes/SettingsPages/EnableSendingSettings.php:141
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:120
-#: src/includes/SettingsPages/UserAccessSettings.php:75
-msgid "The Matrix has you."
-msgstr "La Matrixiones jeveaux le tour"
-
-#: src/includes/SettingsPages/ConnectAccountSettings.php:82
-#: src/includes/SettingsPages/InitialSettings.php:118
+#: src/includes/SettingsPages/ConnectAccountSettings.php:83
+#: src/includes/SettingsPages/InitialSettings.php:123
 msgid "Mailjet API credentials"
 msgstr ""
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:113
-#: src/includes/SettingsPages/EnableSendingSettings.php:204
-#: src/includes/SettingsPages/InitialContactListsSettings.php:141
-#: src/includes/SettingsPages/InitialSettings.php:151
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:153
+#: src/includes/SettingsPages/ConnectAccountSettings.php:123
+#: src/includes/SettingsPages/EnableSendingSettings.php:212
+#: src/includes/SettingsPages/InitialContactListsSettings.php:170
+#: src/includes/SettingsPages/InitialSettings.php:163
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:157
 msgid "Settings Saved"
 msgstr ""
 
@@ -212,7 +257,7 @@ msgstr ""
 msgid "Create and manage your newsletters. Vew your campaign statistics"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:40
+#: src/includes/SettingsPages/Dashboard.php:39
 msgid "My campaigns"
 msgstr ""
 
@@ -260,12 +305,9 @@ msgstr ""
 msgid "Review and modify your plugin settings"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:73
-msgid "Need help getting started?"
-msgstr ""
-
 #: src/includes/SettingsPages/EnableSendingSettings.php:25
-msgid "Enable or disable the sending of your emails through your Mailjet account"
+msgid ""
+"Enable or disable the sending of your emails through your Mailjet account"
 msgstr ""
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:46
@@ -273,7 +315,7 @@ msgid "Enable sending emails through <b>Mailjet</b>"
 msgstr ""
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:50
-msgid "From: name"
+msgid "From: Name"
 msgstr ""
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:51
@@ -281,181 +323,225 @@ msgid "e.g. Jenny Ford"
 msgstr ""
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:54
-msgid "From: email address"
+msgid "From: name@email.com"
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:81
+#: src/includes/SettingsPages/EnableSendingSettings.php:76
 msgid "Port to use for SMTP communication"
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:92
-msgid "Enable SSL communication with mailjet.com (only available with port 465)"
+#: src/includes/SettingsPages/EnableSendingSettings.php:87
+msgid ""
+"Enable SSL communication with mailjet.com (only available with port 465)"
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:150
-#: src/includes/SettingsPages/InitialContactListsSettings.php:106
+#: src/includes/SettingsPages/EnableSendingSettings.php:92
+msgid "Recipient of the test email"
+msgstr ""
+
+#: src/includes/SettingsPages/EnableSendingSettings.php:145
+#: src/includes/SettingsPages/InitialContactListsSettings.php:127
 msgid "Mailjet Enable Email Sending"
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:193
+#: src/includes/SettingsPages/EnableSendingSettings.php:191
 msgid "Can not connect to Mailjet with the selected settings."
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:197
+#: src/includes/SettingsPages/EnableSendingSettings.php:196
 msgid "You have to provide a valid email address to send test email to"
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:283
+#: src/includes/SettingsPages/EnableSendingSettings.php:203
+msgid "Your test message was NOT sent, please review your settings"
+msgstr ""
+
+#: src/includes/SettingsPages/EnableSendingSettings.php:206
+msgid "Your test message was sent succesfully"
+msgstr ""
+
+#: src/includes/SettingsPages/EnableSendingSettings.php:302
 msgid ""
-"Your settings have been saved, but your port and SSL settings were changed as fo"
-"llows to ensure delivery"
+"Your settings have been saved, but your port and SSL settings were changed "
+"as follows to ensure delivery"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:24
-msgid "Choose a list so synchronize"
-msgstr ""
-
-#: src/includes/SettingsPages/InitialContactListsSettings.php:26
+#: src/includes/SettingsPages/InitialContactListsSettings.php:25
 msgid ""
-"You can choose to add your Wordpress subscribers to an existing list or create a"
-" new list"
+"Here are the contact lists we have detected on your Mailjet account. You can "
+"add your Wordpress subscribers to one of them, or use them to collect new "
+"email addresses."
 msgstr ""
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:46
+#: src/includes/SettingsPages/InitialContactListsSettings.php:44
+msgid "Your Mailjet contact lists"
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:65
+msgid "Name your list"
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:73
+msgid "Synchronize your Wordpress users"
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:74
+msgid ""
+"If you wish, you can add your Wordpress website users (readers, authors, "
+"administrators, …) to a contact list."
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:75
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:24
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:46
-msgid "Automatically add Wordpress users to a specific list"
+msgid "Automatically add Wordpress subscribers to a specific list"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:49
+#: src/includes/SettingsPages/InitialContactListsSettings.php:78
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:49
-msgid "Automatically add all my future Wordpress users to a specific contact list"
-msgstr ""
-
-#: src/includes/SettingsPages/InitialContactListsSettings.php:67
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:68
-#, php-format
-msgid "Also, add existing %s Wordpress users (initial synchronization)"
+msgid ""
+"Automatically add all my future Wordpress subscribers to a specific contact "
+"list"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:97
-msgid "Configure your lists."
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:68
+#, php-format
+msgid "Also, add existing <b>%s Wordpress users</b> (initial synchronization)"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:176
+#: src/includes/SettingsPages/InitialContactListsSettings.php:155
+#: src/includes/SettingsPages/InitialContactListsSettings.php:163
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:152
+msgid ""
+"The settings could not be saved. Please try again or in case the problem "
+"persists contact Mailjet support."
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:165
+msgid "Your new contact list has been successfully created."
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:183
+msgid "Mailjet plugin for Wordpress"
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:185
+msgid ""
+"Mailjet is an email service provider. With this plugin, easily send "
+"newsletters to your contacts, directly from Wordpress."
+msgstr ""
+
+#: src/includes/SettingsPages/InitialContactListsSettings.php:211
+#: src/includes/SettingsPages/InitialSettings.php:202
 msgid "Next"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialSettings.php:34
-msgid "Follow the white rabbit."
+#: src/includes/SettingsPages/InitialSettings.php:35
+msgid ""
+"If you already have a Mailjet account, go to <a target=\"_blank\" href="
+"\"https://www.mailjet.com/account/api_keys\">My Account > API Keys</a> and "
+"paste your credentials below"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialSettings.php:55
-#: src/includes/SettingsPages/InitialSettings.php:109
-msgid "Connect your Mailjet account to get started"
+#: src/includes/SettingsPages/InitialSettings.php:65
+msgid "Enter your Mailjet accoutn API Key value"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialSettings.php:59
-msgid "<b>ApiKey</b>"
-msgstr ""
-
-#: src/includes/SettingsPages/InitialSettings.php:66
-msgid "<b>ApiSecret</b>"
-msgstr ""
-
-#: src/includes/SettingsPages/InitialSettings.php:77
-msgid "Also activate Mailjet plugin logger, to track your expirience"
+#: src/includes/SettingsPages/InitialSettings.php:74
+msgid "Enter your Mailjet accoutn API Secret value"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialSettings.php:82
-msgid "Dont have a Mailjet account yet?"
+msgid "Also activate Mailjet plugin logger, to track your expirience"
 msgstr ""
 
-#: src/includes/SettingsPages/InitialSettings.php:83
+#: src/includes/SettingsPages/InitialSettings.php:87
+msgid "Don't have a Mailjet account yet?"
+msgstr ""
+
+#: src/includes/SettingsPages/InitialSettings.php:88
 msgid "Create an account"
+msgstr ""
+
+#: src/includes/SettingsPages/InitialSettings.php:178
+msgid ""
+"Mailjet is an email service provider. With this plugin, easily send "
+"newsletters to your website users, directly from Wordpress."
 msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:77
 msgid ""
-"Display \"Subscribe to our mailjet list\" checkbox in the \"Leave a reply\" form"
-" to allow comment authors to join a specific contact list)"
+"Display \"Subscribe to our mailjet list\" checkbox in the \"Leave a reply\" "
+"form to allow comment authors to join a specific contact list"
 msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:129
 msgid "Subscription Options"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:219
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:211
 msgid "Select a Mailjet contact list to add Wordpress users to"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:226
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:218
 msgid "No Wordpress users to add to Mailjet contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:231
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:381
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:223
 msgid ""
-"Something went wrong with adding existing Wordpress users to your Mailjet contac"
-"t list"
+"Something went wrong with adding existing Wordpress users to your Mailjet "
+"contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:233
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:383
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:226
 msgid "All Wordpress users were succesfully added to your Mailjet contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:349
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:400
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:342
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:387
 msgid "Subscribe to our mailing list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:415
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:456
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:402
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:438
 msgid "Invalid email"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:433
-msgid "Something went wrong with adding a contact to Mailjet contact list"
-msgstr ""
-
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:435
-msgid "Contact succesfully added to Mailjet contact list"
-msgstr ""
-
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:462
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:444
 msgid "Confirm your mailing list subscription"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:463
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:445
 msgid "Please Confirm Your Subscription To"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:466
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:448
 msgid "Click here to confirm"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:467
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:449
 msgid "You may copy/paste this link into your browser:"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:469
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:451
 msgid ""
-"Did not ask to subscribe to this list? Or maybe you have changed your mind? Then"
-" simply ignore this email and you will not be subscribed"
+"Did not ask to subscribe to this list? Or maybe you have changed your mind? "
+"Then simply ignore this email and you will not be subscribed"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:470
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:452
 msgid "Thanks,"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:476
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:458
 msgid "Subscription Confirmation"
 msgstr ""
 
 #: src/includes/SettingsPages/UserAccessSettings.php:25
 msgid ""
-"Select which WordPress user roles (in addition to Administrator) will also have "
-"access to the Mailjet Plug-in"
+"Select which Wordpress user roles (in addition to Administrator) will also "
+"have access to the Mailjet Plugin"
 msgstr ""
 
 #: src/includes/SettingsPages/UserAccessSettings.php:43
@@ -487,79 +573,63 @@ msgstr ""
 msgid "User Access Settings Saved"
 msgstr ""
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:36
-msgid "Mailjet Subscription Widget"
-msgstr "FR Mailjet Subscription Widget"
-
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:39
 msgid "Allows your visitors to subscribe to one of your lists"
 msgstr ""
 
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:42
+msgid "Mailjet Subscription Widget"
+msgstr "FR Mailjet Subscription Widget"
+
 #: src/widget/views/admin.php:19
-msgid "Widget Title"
-msgstr "La French Title"
-
-#: src/widget/views/admin.php:25
-msgid "Text:"
-msgstr "FR Text:"
-
-#: src/widget/views/admin.php:31
-msgid "Textarea:"
+msgid "Title of your form:"
 msgstr ""
 
-#: src/widget/views/admin.php:38
-msgid "Checkbox"
+#: src/widget/views/admin.php:20
+msgid "Sign up to receive the newsletter"
 msgstr ""
 
-#: src/widget/views/admin.php:43 src/widget/views/admin.php:48
-msgid "Select"
-msgstr "FR Select"
-
-#: src/widget/views/admin.php:49
-msgid "Option 1"
-msgstr "La Opsiones"
-
-#: src/widget/views/admin.php:50
-msgid "Option 2"
-msgstr "FR Option 2"
-
-#: src/widget/views/admin.php:51
-msgid "Option 3"
+#: src/widget/views/admin.php:23
+msgid "Add email addresses to:"
 msgstr ""
 
-#: src/widget/views/widget.php:40
+#: src/widget/views/admin.php:27
+msgid "Choose a list"
+msgstr ""
+
+#: src/widget/views/widget.php:38
 msgid "<p>Something awesome</p>"
 msgstr "<p>French Something awesome</p>"
 
-msgid "text"
-msgstr "FrText"
+#~ msgid "The Matrix has you."
+#~ msgstr "La Matrixiones jeveaux le tour"
 
-msgid "textarea"
-msgstr "Fr Textarea"
+#~ msgid "Widget Title"
+#~ msgstr "La French Title"
 
-msgid "checkbox"
-msgstr "1"
+#~ msgid "Text:"
+#~ msgstr "FR Text:"
 
-msgid "select"
-msgstr "option_3"
+#~ msgid "Select"
+#~ msgstr "FR Select"
 
-msgid "title"
-msgstr "fr21"
+#~ msgid "Option 1"
+#~ msgstr "La Opsiones"
 
-msgid "input1"
-msgstr ""
+#~ msgid "Option 2"
+#~ msgstr "FR Option 2"
 
-msgid "input2"
-msgstr ""
+#~ msgid "text"
+#~ msgstr "FrText"
 
-msgid "input3"
-msgstr ""
+#~ msgid "textarea"
+#~ msgstr "Fr Textarea"
 
-msgid "input4"
-msgstr ""
+#~ msgid "checkbox"
+#~ msgstr "1"
 
-msgid "language_checkbox"
-msgstr ""
+#~ msgid "select"
+#~ msgstr "option_3"
 
-msgid "list"
-msgstr ""
+#~ msgid "title"
+#~ msgstr "fr21"
