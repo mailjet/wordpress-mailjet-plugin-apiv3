@@ -29,6 +29,8 @@ class MailjetSettings
 
         $this->addMailjetActions();
 
+        $this->addSubscriptionConfirmations();
+
         // register a new setting for "mailjet" page
         register_setting('mailjet_initial_settings_page', 'mailjet_apikey');
         register_setting('mailjet_initial_settings_page', 'mailjet_apisecret');
@@ -137,29 +139,49 @@ class MailjetSettings
             add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
         }
 
-
         /* Add custom field to comment form and process it on form submit */
         if (!empty(get_option('activate_mailjet_comment_authors_sync')) && !empty(get_option('mailjet_comment_authors_list'))) {
-            add_action('comment_form_after_fields', array($subscriptionOptionsSettings, 'mailjet_show_extra_comment_fields'));
-            add_action('wp_insert_comment',array($subscriptionOptionsSettings, 'mailjet_subscribe_comment_author'));
-
-            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custome actions to sync them ]');
-
-            // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            if (!empty($_GET['mj_sub_comment_author_token'])
-                &&
-                $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
-                $subscriptionOptionsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
-            }
+            add_action('comment_form_after_fields',
+                array($subscriptionOptionsSettings, 'mailjet_show_extra_comment_fields'));
+            add_action('wp_insert_comment', array($subscriptionOptionsSettings, 'mailjet_subscribe_comment_author'));
+            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
-
 
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
         add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - End ]');
+    }
 
+
+
+    /**
+     * Adding a Mailjet logic and functionality to some WP actions - for example - inserting checkboxes for subscription
+     */
+    public function addSubscriptionConfirmations()
+    {
+        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handling subscription confirmations - Start ]');
+
+        $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
+
+        /* Add custom field to comment form and process it on form submit */
+        if (!empty(get_option('activate_mailjet_comment_authors_sync')) && !empty(get_option('mailjet_comment_authors_list'))) {
+            // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
+            if (!empty($_GET['mj_sub_comment_author_token'])
+                &&
+                $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
+                $syncSingleContactEmailToMailjetList = $subscriptionOptionsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
+                if (false === $syncSingleContactEmailToMailjetList) {
+                    $this->subsctiptionConfirmationAdminNoticeFailed();
+                } else {
+                    $this->subsctiptionConfirmationAdminNoticeSuccess();
+                }
+
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handling subscription confirmations - End ]');
+
+            }
+        }
     }
 
 
@@ -182,5 +204,21 @@ class MailjetSettings
         return $links;
     }
 
+
+
+    public function subsctiptionConfirmationAdminNoticeSuccess()
+    {
+        if (intval($_GET['subscribe']) > 0) {
+            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully subscribed to a Mailjet contact list', 'mailjet') . '</div>';
+        } else {
+            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully unsubscribed from a Mailjet contact list', 'mailjet') . '</div>';
+        }
+        die; //We die here to not continue loading rest of the WP home page
+    }
+    public function subsctiptionConfirmationAdminNoticeFailed()
+    {
+        echo '<div class="notice notice-error is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #dc3232; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('Something went wrong with adding a contact to Mailjet contact list', 'mailjet') . '</div>';
+        die; //We die here to not continue loading rest of the WP home page
+    }
 
 }

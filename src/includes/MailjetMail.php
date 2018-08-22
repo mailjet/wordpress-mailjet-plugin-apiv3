@@ -109,7 +109,7 @@ class MailjetMail
         if ($pagenow == 'index.php') {
             $user = wp_get_current_user();
             if ($user->exists()) {
-                echo '<div class="notice notice-error is-dismissible"></div>';
+                echo '<div class="notice notice-error is-dismissible">' . __('Email sending failed. Please review your smtp configuration and try again later', 'mailjet') . '</div>';
             }
         }
     }

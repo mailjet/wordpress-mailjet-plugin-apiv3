@@ -28,7 +28,6 @@ class InitialContactListsSettings
     }
 
 
-
     public function mailjet_initial_contact_lists_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
@@ -233,7 +232,6 @@ class InitialContactListsSettings
     }
 
 
-
     public static function getMailjetContactLists()
     {
         $mailjetApikey = get_option('mailjet_apikey');
@@ -251,9 +249,6 @@ class InitialContactListsSettings
         }
 
     }
-
-
-
 
 
     private function createMailjetContactList($listName)
@@ -276,7 +271,6 @@ class InitialContactListsSettings
             return false;
 //            return $responseSenders->getStatus();
         }
-
     }
 
 

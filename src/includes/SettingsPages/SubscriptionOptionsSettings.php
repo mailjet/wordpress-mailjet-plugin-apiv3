@@ -364,7 +364,7 @@ class SubscriptionOptionsSettings
     {
         if (!empty(get_option('mailjet_sync_list'))) {
             $user = get_userdata($user_id);
-            $action = $subscribe ? 'addforce' : 'remove';
+            $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
             // Add the user to a contact list
             if (false == SubscriptionOptionsSettings::syncContactsToMailjetList(get_option('mailjet_sync_list'), $user, $action)) {
                 return false;
@@ -378,11 +378,9 @@ class SubscriptionOptionsSettings
 
     public function mailjet_show_extra_comment_fields($user)
     {
-        global $current_user;
-        $user_id = $current_user->ID;
-
+        $user = wp_get_current_user();
         // Display the checkbox only for NOT-logged in users
-        if (!$user_id && get_option('mailjet_comment_authors_list')) {
+        if (!$user->exists() && get_option('mailjet_comment_authors_list')) {
             ?>
             <label for="admin_bar_front">
                 <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
@@ -416,14 +414,9 @@ class SubscriptionOptionsSettings
      */
     public function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
     {
-        $action = $subscribe ? 'addforce' : 'remove';
+        $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
         // Add the user to a contact list
-        if (false === SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_comment_authors_list'), $user_email, $action)) {
-            _e('Something went wrong with adding a contact to Mailjet contact list', 'mailjet');
-        } else {
-            _e('Contact succesfully added to Mailjet contact list', 'mailjet');
-        }
-        die();
+        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_comment_authors_list'), $user_email, $action);
     }
 
 
@@ -462,7 +455,7 @@ class SubscriptionOptionsSettings
             $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
-        wp_mail($_POST['email'], __('Subscription Confirmation', 'mailjet-'), $message,
+        wp_mail($_POST['email'], __('Subscription Confirmation', 'mailjet'), $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
 
