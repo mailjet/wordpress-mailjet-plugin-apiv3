@@ -47,12 +47,13 @@ class EnableSendingSettings
             <br /><br />
 
             <div class="sending_options_div">
-                <label for="mailjet_from_name"><b><?php echo __('From: Name', 'mailjet'); ?></b></label> <br />
-                <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?=$mailjetFromName ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
-                <br /><br />
-
+                <div style="display: inline-block; margin-right: 10px;">
+                    <label for="mailjet_from_name"><b><?php echo __('From: Name', 'mailjet'); ?></b></label> <br />
+                    <input style="width:150px;vertical-align: middle;" name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?=$mailjetFromName ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
+                </div>
+                <div style="display: inline-block;">
                 <label for="mailjet_from_email"><b><?php echo __('From: name@email.com', 'mailjet'); ?></b></label> <br />
-                <select name="mailjet_from_email" id="mailjet_from_email" type="select">
+                <select name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
                     <?php foreach ($mailjetSenders as $mailjetSender) {
                         if ($mailjetSender['Status'] != 'Active') {
                             continue;
@@ -66,6 +67,7 @@ class EnableSendingSettings
                         <option value="<?=$mailjetSender['Email'] ?>" <?=($mailjetFromEmail == $mailjetSender['Email'] ? 'selected="selected"' : '') ?> > <?=$mailjetSender['Email'] ?> </option>
                     <?php } ?>
                 </select>
+                </div>
                 <?php
                     if (!empty(get_option('mailjet_from_email_extra'))) { ?>
                         <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?=get_option('mailjet_from_email_extra') ?>">
@@ -207,7 +209,7 @@ class EnableSendingSettings
                 }
             }
 
-            if (false === $executionError) {
+            if (true !== $testSent && false === $executionError) {
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
             }
@@ -229,7 +231,7 @@ class EnableSendingSettings
         </div>
 
         <div class="right">
-        <div class="centered">
+        <div class="centered"  style="width:650px;">
             <div class="wrap">
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
                 <form action="options.php" method="post">
