@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-08-22 13:29+0300\n"
-"PO-Revision-Date: 2018-08-22 13:29+0300\n"
+"POT-Creation-Date: 2018-08-22 13:44+0300\n"
+"PO-Revision-Date: 2018-08-22 13:44+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: es_ES\n"
@@ -131,7 +131,7 @@ msgid "Something went wrong with adding a contact to Mailjet contact list"
 msgstr ""
 
 #: src/includes/SettingsPages/AllSetup.php:37
-msgid "Add a subscription form to ypur website"
+msgid "Add a subscription form to your website"
 msgstr ""
 
 #: src/includes/SettingsPages/AllSetup.php:38
@@ -182,7 +182,7 @@ msgstr ""
 #: src/includes/SettingsPages/EnableSendingSettings.php:252
 #: src/includes/SettingsPages/InitialContactListsSettings.php:222
 #: src/includes/SettingsPages/InitialSettings.php:212
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:197
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:199
 #: src/includes/SettingsPages/UserAccessSettings.php:141
 msgid "Need help getting started?"
 msgstr ""
@@ -193,7 +193,7 @@ msgstr ""
 #: src/includes/SettingsPages/EnableSendingSettings.php:253
 #: src/includes/SettingsPages/InitialContactListsSettings.php:223
 #: src/includes/SettingsPages/InitialSettings.php:213
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:198
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:200
 #: src/includes/SettingsPages/UserAccessSettings.php:142
 msgid "Read our user guide"
 msgstr ""
@@ -204,7 +204,7 @@ msgstr ""
 #: src/includes/SettingsPages/EnableSendingSettings.php:255
 #: src/includes/SettingsPages/InitialContactListsSettings.php:225
 #: src/includes/SettingsPages/InitialSettings.php:215
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:200
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:202
 #: src/includes/SettingsPages/UserAccessSettings.php:144
 msgid "Contact our support team"
 msgstr ""
@@ -245,7 +245,7 @@ msgstr ""
 #: src/includes/SettingsPages/EnableSendingSettings.php:212
 #: src/includes/SettingsPages/InitialContactListsSettings.php:170
 #: src/includes/SettingsPages/InitialSettings.php:163
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:157
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:159
 msgid "Settings Saved"
 msgstr ""
 
@@ -392,27 +392,27 @@ msgid ""
 msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:75
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:24
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:46
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:26
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:48
 msgid "Automatically add Wordpress subscribers to a specific list"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:78
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:49
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:51
 msgid ""
 "Automatically add all my future Wordpress subscribers to a specific contact "
 "list"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:97
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:68
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:70
 #, php-format
 msgid "Also, add existing <b>%s Wordpress users</b> (initial synchronization)"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:155
 #: src/includes/SettingsPages/InitialContactListsSettings.php:163
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:152
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:154
 msgid ""
 "The settings could not be saved. Please try again or in case the problem "
 "persists contact Mailjet support."
@@ -470,71 +470,79 @@ msgid ""
 "newsletters to your website users, directly from Wordpress."
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:77
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:79
 msgid ""
 "Display \"Subscribe to our mailjet list\" checkbox in the \"Leave a reply\" "
 "form to allow comment authors to join a specific contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:129
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:131
 msgid "Subscription Options"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:211
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:213
 msgid "Select a Mailjet contact list to add Wordpress users to"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:218
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:220
 msgid "No Wordpress users to add to Mailjet contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:223
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:225
 msgid ""
 "Something went wrong with adding existing Wordpress users to your Mailjet "
 "contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:226
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:228
 msgid "All Wordpress users were succesfully added to your Mailjet contact list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:342
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:387
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:344
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:389
 msgid "Subscribe to our mailing list"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:402
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:438
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:404
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:440
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:80
 msgid "Invalid email"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:444
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:446
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:477
 msgid "Confirm your mailing list subscription"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:445
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:447
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:478
 msgid "Please Confirm Your Subscription To"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:448
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:450
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:481
 msgid "Click here to confirm"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:449
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:451
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:482
 msgid "You may copy/paste this link into your browser:"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:451
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:453
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:484
 msgid ""
 "Did not ask to subscribe to this list? Or maybe you have changed your mind? "
 "Then simply ignore this email and you will not be subscribed"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:452
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:454
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:485
 msgid "Thanks,"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:458
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:460
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:492
 msgid "Subscription Confirmation"
 msgstr ""
 
@@ -581,24 +589,28 @@ msgstr ""
 msgid "Mailjet Subscription Widget"
 msgstr ""
 
-#: src/widget/views/admin.php:19
+#: src/widget/views/admin.php:21
 msgid "Title of your form:"
 msgstr ""
 
-#: src/widget/views/admin.php:20
+#: src/widget/views/admin.php:22
 msgid "Sign up to receive the newsletter"
 msgstr ""
 
-#: src/widget/views/admin.php:23
+#: src/widget/views/admin.php:25
 msgid "Add email addresses to:"
 msgstr ""
 
-#: src/widget/views/admin.php:27
+#: src/widget/views/admin.php:29
 msgid "Choose a list"
 msgstr ""
 
-#: src/widget/views/widget.php:38
-msgid "<p>Something awesome</p>"
+#: src/widget/views/widget.php:26 src/widget/views/widget.php:27
+msgid "Email"
+msgstr ""
+
+#: src/widget/views/widget.php:30
+msgid "Subscribe"
 msgstr ""
 
 #~ msgid "The Matrix has you."

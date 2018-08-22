@@ -34,7 +34,7 @@ class AllSetup
 
             <div class="container">
                 <div class="block_single">
-                    <h2><?php echo __('Add a subscription form to ypur website', 'mailjet' ); ?></h2>
+                    <h2><?php echo __('Add a subscription form to your website', 'mailjet' ); ?></h2>
                     <p><?php echo __('Go to the widget management page and add the Mailjet Subscription Widget to your website to start collecting email addresses.', 'mailjet' ); ?></p>
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_signup_to_newsletter.png'; ?>" />
                     <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'widgets.php'" value="<?=__('Manage my widgets', 'mailjet')?>">

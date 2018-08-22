@@ -19,7 +19,7 @@ class MailjetAdminDisplay
         ?>
         <h1>Settings</h1>
         <?php
-        $currentPage = $_REQUEST['page'];
+        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         ?>
         <ul>
             <li>
