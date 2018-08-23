@@ -16,19 +16,24 @@ namespace MailjetPlugin\Includes;
 class MailjetApi
 {
 
+    private $apiClient = null;
+
     public static function getApiClient()
     {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
-            throw new \Exception('Missing Mailjet API credentials');
+        if ($this->apiClient === null) {
+            $mailjetApikey = get_option('mailjet_apikey');
+            $mailjetApiSecret = get_option('mailjet_apisecret');
+            if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
+                throw new \Exception('Missing Mailjet API credentials');
+            }
+            return new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
         }
-        return new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        return $this->apiClient();
     }
 
     public static function getMailjetContactLists()
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'Limit' => '0'
@@ -39,9 +44,7 @@ class MailjetApi
         } else {
             return $responseSenders->getStatus();
         }
-
     }
-
 
     public static function createMailjetContactList($listName)
     {
@@ -49,7 +52,7 @@ class MailjetApi
             return false;
         }
 
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $body = [
             'Name' => $listName
@@ -63,11 +66,9 @@ class MailjetApi
         }
     }
 
-
-
     public static function getMailjetSenders()
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'Limit' => '0'
@@ -79,13 +80,11 @@ class MailjetApi
         } else {
             return $responseSenders->getStatus();
         }
-
     }
-
 
     public static function isValidAPICredentials()
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'Limit' => '1'
@@ -98,9 +97,7 @@ class MailjetApi
             return false;
             // return $responseSenders->getStatus();
         }
-
     }
-
 
     /**
      * Add or Remove a contact to a Mailjet contact list - It can process many or single contact at once
@@ -112,7 +109,7 @@ class MailjetApi
      */
     public static function syncMailjetContacts($contactListId, $contacts, $action = 'addforce')
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $body = [
             'Action' => $action,
