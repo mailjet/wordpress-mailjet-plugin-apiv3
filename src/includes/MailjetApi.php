@@ -28,6 +28,7 @@ class MailjetApi
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
             throw new \Exception('Missing Mailjet API credentials');
         }
+
         self::$mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
         return self::$mjApiClient;
     }
@@ -40,11 +41,11 @@ class MailjetApi
             'Limit' => '0',
             'Sort' => 'Name ASC'
         ];
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactslist, ['filters' => $filters]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
+        $response = $mjApiClient->get(\Mailjet\Resources::$Contactslist, ['filters' => $filters]);
+        if ($response->success()) {
+            return $response->getData();
         } else {
-            //return $responseSenders->getStatus();
+            //return $response->getStatus();
             return false;
         }
 
@@ -62,12 +63,12 @@ class MailjetApi
         $body = [
             'Name' => $listName
         ];
-        $responseSenders = $mjApiClient->post(\Mailjet\Resources::$Contactslist, ['body' => $body]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
+        $response = $mjApiClient->post(\Mailjet\Resources::$Contactslist, ['body' => $body]);
+        if ($response->success()) {
+            return $response->getData();
         } else {
             return false;
-//            return $responseSenders->getStatus();
+//            return $response->getStatus();
         }
     }
 
@@ -82,11 +83,11 @@ class MailjetApi
             'Sort' => 'ID DESC'
         ];
 
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Sender, ['filters' => $filters]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
+        $response = $mjApiClient->get(\Mailjet\Resources::$Sender, ['filters' => $filters]);
+        if ($response->success()) {
+            return $response->getData();
         } else {
-            //return $responseSenders->getStatus();
+            //return $response->getStatus();
             return false;
         }
 
@@ -100,13 +101,14 @@ class MailjetApi
         $filters = [
             'Limit' => '1'
         ];
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactmetadata, ['filters' => $filters]);
-        if ($responseSenders->success()) {
+        
+        $response = $mjApiClient->get(\Mailjet\Resources::$Contactmetadata, ['filters' => $filters]);
+        if ($response->success()) {
             return true;
-            // return $responseSenders->getData();
+            // return $response->getData();
         } else {
             return false;
-            // return $responseSenders->getStatus();
+            // return $response->getStatus();
         }
 
     }
@@ -129,12 +131,12 @@ class MailjetApi
             'Contacts' => $contacts
         ];
 
-        $responseSenders = $mjApiClient->post(\Mailjet\Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
+        $response = $mjApiClient->post(\Mailjet\Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
+        if ($response->success()) {
+            return $response->getData();
         } else {
             return false;
-//            return $responseSenders->getStatus();
+//            return $response->getStatus();
         }
     }
 
