@@ -16,12 +16,19 @@ namespace MailjetPlugin\Includes;
 class MailjetApi
 {
 
-
-    public static function getMailjetContactLists()
+    public static function getApiClient()
     {
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
+            throw new \Exception('Missing Mailjet API credentials');
+        }
+        return new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+    }
+
+    public static function getMailjetContactLists()
+    {
+        $mjApiClient = self::getApiClient() ;
 
         $filters = [
             'Limit' => '0'
@@ -42,9 +49,7 @@ class MailjetApi
             return false;
         }
 
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        $mjApiClient = self::getApiClient() ;
 
         $body = [
             'Name' => $listName
@@ -62,9 +67,7 @@ class MailjetApi
 
     public static function getMailjetSenders()
     {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        $mjApiClient = self::getApiClient() ;
 
         $filters = [
             'Limit' => '0'
@@ -82,9 +85,7 @@ class MailjetApi
 
     public static function isValidAPICredentials()
     {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        $mjApiClient = self::getApiClient() ;
 
         $filters = [
             'Limit' => '1'
@@ -111,9 +112,7 @@ class MailjetApi
      */
     public static function syncMailjetContacts($contactListId, $contacts, $action = 'addforce')
     {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        $mjApiClient = self::getApiClient() ;
 
         $body = [
             'Action' => $action,
