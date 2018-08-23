@@ -221,7 +221,7 @@ class InitialContactListsSettings
                     // (sections are registered for "mailjet", each field is registered to a specific section)
                     do_settings_sections('mailjet_initial_contact_lists_page');
                     // output save settings button
-                    submit_button('Save');
+                    submit_button('Save', 'primary', 'submit', false);
                     ?>
 
 
