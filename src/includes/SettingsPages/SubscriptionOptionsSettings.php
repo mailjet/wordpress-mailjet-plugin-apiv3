@@ -2,7 +2,9 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use Analog\Handler\Mail;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\MailjetApi;
 
 /**
  * Register all actions and filters for the plugin.
@@ -33,7 +35,7 @@ class SubscriptionOptionsSettings
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
-        $mailjetContactLists = \MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings::getMailjetContactLists();
+        $mailjetContactLists = MailjetApi::getMailjetContactLists();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetSyncList = get_option('mailjet_sync_list');
@@ -270,24 +272,7 @@ class SubscriptionOptionsSettings
             );
         }
 
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $body = [
-            'Action' => $action,
-            'Contacts' => $contacts
-        ];
-
-        $responseSenders = $mjApiClient->post(\Mailjet\Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
-        } else {
-            return false;
-//            return $responseSenders->getStatus();
-        }
-
-        return false;
+        return MailjetApi::syncMailjetContacts($contactListId, $contacts, $action);
     }
 
 
@@ -303,24 +288,7 @@ class SubscriptionOptionsSettings
             'Email' => $email
         );
 
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $body = [
-            'Action' => $action,
-            'Contacts' => $contacts
-        ];
-
-        $responseSenders = $mjApiClient->post(\Mailjet\Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
-        } else {
-            return false;
-//            return $responseSenders->getStatus();
-        }
-
-        return false;
+        return MailjetApi::syncMailjetContacts($contactListId, $contacts, $action);
     }
 
 

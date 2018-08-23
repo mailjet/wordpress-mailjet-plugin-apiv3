@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
 
 /**
@@ -37,7 +38,7 @@ class EnableSendingSettings
         $mailjetPort = get_option('mailjet_port');
         $mailjetSsl = get_option('mailjet_ssl');
 
-        $mailjetSenders = $this->getMailjetSenders();
+        $mailjetSenders = MailjetApi::getMailjetSenders();
         // output the field
         ?>
 
@@ -104,25 +105,6 @@ class EnableSendingSettings
         <?php
     }
 
-
-    private function getMailjetSenders()
-    {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $filters = [
-            'Limit' => '0'
-        ];
-
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Sender, ['filters' => $filters]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
-        } else {
-            return $responseSenders->getStatus();
-        }
-
-    }
 
     /**
      * top level menu:

@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Widget;
 
+use MailjetPlugin\Includes\MailjetApi;
+
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
 
@@ -196,7 +198,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         );
 
         // Mailjet contact lists
-        $contactLists = \MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings::getMailjetContactLists();
+        $contactLists = MailjetApi::getMailjetContactLists();
 
         // Display the admin form
         $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();

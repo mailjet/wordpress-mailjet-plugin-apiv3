@@ -2,6 +2,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
 
 /**
@@ -139,7 +140,7 @@ class InitialSettings
         if (isset($_GET['settings-updated'])) {
 
             // Validate Mailjet API credentials
-            $isValidAPICredentials = self::isValidAPICredentials();
+            $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (false == $isValidAPICredentials) {
 //                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
@@ -219,26 +220,6 @@ class InitialSettings
     }
 
 
-
-    public static function isValidAPICredentials()
-    {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $filters = [
-            'Limit' => '1'
-        ];
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactmetadata, ['filters' => $filters]);
-        if ($responseSenders->success()) {
-            return true;
-            // return $responseSenders->getData();
-        } else {
-            return false;
-            // return $responseSenders->getStatus();
-        }
-
-    }
 
 
 }

@@ -11,6 +11,7 @@ use MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
+use MailjetPlugin\Includes\MailjetApi;
 
 /**
  * Register all actions and filters for the plugin.
@@ -128,8 +129,6 @@ class MailjetMenu
     {
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mj = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
         $mailjetIframe = new MailjetIframe($mailjetApikey, $mailjetApiSecret, false);
 
         $mailjetIframe

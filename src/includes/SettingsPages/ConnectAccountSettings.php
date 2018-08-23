@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
 
 /**
@@ -99,7 +100,7 @@ class ConnectAccountSettings
         if (isset($_GET['settings-updated'])) {
 
             // Validate Mailjet API credentials
-            $isValidAPICredentials = InitialSettings::isValidAPICredentials();
+            $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (false == $isValidAPICredentials) {
 //                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');

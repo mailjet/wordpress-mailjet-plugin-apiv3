@@ -2,6 +2,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 
@@ -33,7 +34,7 @@ class InitialContactListsSettings
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
-        $mailjetContactLists = self::getMailjetContactLists();
+        $mailjetContactLists = MailjetApi::getMailjetContactLists();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetSyncList = get_option('mailjet_sync_list');
@@ -148,6 +149,8 @@ class InitialContactListsSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
+            $executionError = false;
+
             // Initial sync WP users to Mailjet - when the 'create_contact_list_btn' button is not the one that submits the form
             if (empty(get_option('create_contact_list_btn')) && !empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
                 $syncResponse = SubscriptionOptionsSettings::syncAllWpUsers();
@@ -157,17 +160,30 @@ class InitialContactListsSettings
             }
 
             // Create new Contact List
-            if (!empty(get_option('create_contact_list_btn')) && !empty(get_option('create_list_name'))) {
-                $createListResponse = $this->createMailjetContactList(get_option('create_list_name'));
-                if (false === $createListResponse) {
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
-                } else {
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your new contact list has been successfully created.', 'mailjet'), 'updated');
+            if (!empty(get_option('create_contact_list_btn'))) {
+                if (!empty(get_option('create_list_name'))) {
+                    $createListResponse = MailjetApi::createMailjetContactList(get_option('create_list_name'));
+                    if (false === $createListResponse) {
+                        $executionError = true;
+                        add_settings_error('mailjet_messages', 'mailjet_message',
+                            __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.',
+                                'mailjet'), 'error');
+                    } else {
+                        $executionError = true;
+                        add_settings_error('mailjet_messages', 'mailjet_message',
+                            __('Your new contact list has been successfully created.', 'mailjet'), 'updated');
+                    }
+                } else { // New list name empty
+                    $executionError = true;
+                    add_settings_error('mailjet_messages', 'mailjet_message',
+                        __('Please enter a valid contact list name', 'mailjet'), 'error');
                 }
             }
 
-            // add settings saved message with the class of "updated"
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            if (false === $executionError) {
+                // add settings saved message with the class of "updated"
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+            }
         }
 
         // show error/update messages
@@ -231,47 +247,6 @@ class InitialContactListsSettings
 
     }
 
-
-    public static function getMailjetContactLists()
-    {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $filters = [
-            'Limit' => '0'
-        ];
-        $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactslist, ['filters' => $filters]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
-        } else {
-            return $responseSenders->getStatus();
-        }
-
-    }
-
-
-    private function createMailjetContactList($listName)
-    {
-        if (empty($listName)) {
-            return false;
-        }
-
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
-        $body = [
-            'Name' => $listName
-        ];
-        $responseSenders = $mjApiClient->post(\Mailjet\Resources::$Contactslist, ['body' => $body]);
-        if ($responseSenders->success()) {
-            return $responseSenders->getData();
-        } else {
-            return false;
-//            return $responseSenders->getStatus();
-        }
-    }
 
 
 }
