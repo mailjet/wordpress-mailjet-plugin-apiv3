@@ -34,7 +34,7 @@ class MailjetApi
 
     public static function getMailjetContactLists()
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'Limit' => '0',
@@ -57,7 +57,7 @@ class MailjetApi
             return false;
         }
 
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $body = [
             'Name' => $listName
@@ -75,7 +75,7 @@ class MailjetApi
 
     public static function getMailjetSenders()
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'Limit' => '0',
@@ -95,7 +95,7 @@ class MailjetApi
 
     public static function isValidAPICredentials()
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'Limit' => '1'
@@ -122,7 +122,7 @@ class MailjetApi
      */
     public static function syncMailjetContacts($contactListId, $contacts, $action = 'addforce')
     {
-        $mjApiClient = self::getApiClient() ;
+        $mjApiClient = self::getApiClient();
 
         $body = [
             'Action' => $action,

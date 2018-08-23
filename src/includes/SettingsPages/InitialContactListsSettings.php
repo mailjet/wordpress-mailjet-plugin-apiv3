@@ -221,9 +221,16 @@ class InitialContactListsSettings
                     // (sections are registered for "mailjet", each field is registered to a specific section)
                     do_settings_sections('mailjet_initial_contact_lists_page');
                     // output save settings button
-                    submit_button('Save', 'primary', 'submit', false);
+                    if (MailjetApi::isValidAPICredentials()) {
+                        submit_button('Save', 'primary', 'submit', false);
+                    } else {
+                        update_option('settings_step', 'initial_step')
+                        ?>
+                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'mailjet')?>">
+                    <?php
+                    }
 
-                    if (get_option('settings_step') == 'initial_contact_lists_settings_step') { ?>
+                    if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_contact_lists_settings_step') { ?>
                         <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?=__('Next', 'mailjet')?>">
                     <?php }
                     ?>

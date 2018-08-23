@@ -197,7 +197,7 @@ class InitialSettings
                             // output save settings button
                             submit_button('Save', 'primary', 'submit', false);
 
-                            if (!empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')) && get_option('settings_step') == 'initial_step') { ?>
+                            if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
                                 <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page'" value="<?=__('Next', 'mailjet')?>">
                             <?php }
                             ?>
