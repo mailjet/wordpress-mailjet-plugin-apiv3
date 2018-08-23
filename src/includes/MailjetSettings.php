@@ -150,9 +150,25 @@ class MailjetSettings
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
         add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
 
+        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
+        if (in_array($currentPage, array('mailjet_initial_contact_lists_page', 'mailjet_sending_settings_page', 'mailjet_subscription_options_page'))) {
+            if (!MailjetApi::isValidAPICredentials()) {
+                add_action('admin_notices', array($this, 'apiCredentialsInvalid'));
+            }
+        }
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - End ]');
     }
 
+
+    /**
+     * Add admin notice saying that current API credentials are not valid
+     */
+    public function apiCredentialsInvalid()
+    {
+        echo '<div class="error"><p>';
+        _e('Your Mailjet API credentials are invalid or not yet configured. Please check and configure them to proceed further.', 'mailjet');
+        echo "</p></div>";
+    }
 
 
     /**

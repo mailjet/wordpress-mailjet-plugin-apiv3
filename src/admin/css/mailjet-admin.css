@@ -77,9 +77,9 @@ input[type="submit"].button {
 }
 
 .nextBtn {
-    background-color: #0a6680;
+    background-color: #008EC2;
     border-radius: 5px;
-    padding: 5px;
+    padding: 5px 10px;
     color: #fff;
     cursor: pointer;
 }
