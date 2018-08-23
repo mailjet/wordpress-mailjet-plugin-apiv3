@@ -16,19 +16,19 @@ namespace MailjetPlugin\Includes;
 class MailjetApi
 {
 
-    private $apiClient = null;
+    private static $apiClient = null;
 
     public static function getApiClient()
     {
-        if ($this->apiClient === null) {
+        if (self::$apiClient === null) {
             $mailjetApikey = get_option('mailjet_apikey');
             $mailjetApiSecret = get_option('mailjet_apisecret');
             if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
                 throw new \Exception('Missing Mailjet API credentials');
             }
-            $this->apiClient  = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+            self::$apiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
         }
-        return $this->apiClient;
+        return self::$apiClient;
     }
 
     public static function getMailjetContactLists()
