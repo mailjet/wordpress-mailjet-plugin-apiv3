@@ -26,9 +26,9 @@ class MailjetApi
             if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
                 throw new \Exception('Missing Mailjet API credentials');
             }
-            return new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+            $this->apiClient  = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
         }
-        return $this->apiClient();
+        return $this->apiClient;
     }
 
     public static function getMailjetContactLists()
