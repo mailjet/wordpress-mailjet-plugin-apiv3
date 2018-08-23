@@ -16,14 +16,20 @@ namespace MailjetPlugin\Includes;
 class MailjetApi
 {
 
+    private static $mjApiClient = null;
+
     public static function getApiClient()
     {
+        if (self::$mjApiClient instanceof \Mailjet\Client) {
+            return self::$mjApiClient;
+        }
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
             throw new \Exception('Missing Mailjet API credentials');
         }
-        return new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        self::$mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        return self::$mjApiClient;
     }
 
     public static function getMailjetContactLists()
@@ -31,13 +37,15 @@ class MailjetApi
         $mjApiClient = self::getApiClient() ;
 
         $filters = [
-            'Limit' => '0'
+            'Limit' => '0',
+            'Sort' => 'Name ASC'
         ];
         $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Contactslist, ['filters' => $filters]);
         if ($responseSenders->success()) {
             return $responseSenders->getData();
         } else {
-            return $responseSenders->getStatus();
+            //return $responseSenders->getStatus();
+            return false;
         }
 
     }
@@ -70,14 +78,16 @@ class MailjetApi
         $mjApiClient = self::getApiClient() ;
 
         $filters = [
-            'Limit' => '0'
+            'Limit' => '0',
+            'Sort' => 'ID DESC'
         ];
 
         $responseSenders = $mjApiClient->get(\Mailjet\Resources::$Sender, ['filters' => $filters]);
         if ($responseSenders->success()) {
             return $responseSenders->getData();
         } else {
-            return $responseSenders->getStatus();
+            //return $responseSenders->getStatus();
+            return false;
         }
 
     }
@@ -126,8 +136,6 @@ class MailjetApi
             return false;
 //            return $responseSenders->getStatus();
         }
-
-        return false;
     }
 
 }

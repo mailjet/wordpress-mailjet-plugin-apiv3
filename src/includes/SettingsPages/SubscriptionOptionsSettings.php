@@ -36,6 +36,7 @@ class SubscriptionOptionsSettings
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
         $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetSyncList = get_option('mailjet_sync_list');

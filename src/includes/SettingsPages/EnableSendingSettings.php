@@ -39,6 +39,8 @@ class EnableSendingSettings
         $mailjetSsl = get_option('mailjet_ssl');
 
         $mailjetSenders = MailjetApi::getMailjetSenders();
+        $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : array();
+
         // output the field
         ?>
 
