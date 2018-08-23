@@ -431,11 +431,6 @@ class SubscriptionOptionsSettings
     
     public function mailjet_subscribe_confirmation_from_widget($subscription_email)
     {
-//        $mailjetApikey = get_option('mailjet_apikey');
-//        $mailjetApiSecret = get_option('mailjet_apisecret');
-        // Check if it is already subscribed
-//        $mailjetClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-
         $params = http_build_query(array('subscription_email' => $subscription_email));
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);

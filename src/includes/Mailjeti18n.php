@@ -75,8 +75,8 @@ class Mailjeti18n
     public static function getLocale()
     {
         $locale = get_locale();
-        if (in_array($locale, array('en_US', 'en_EN'))) {
-            $locale = 'en_EN';
+        if (in_array($locale, array('en_US', 'en_EN', 'en_GB'))) {
+            $locale = 'en_US';
         }
         if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
             $locale = 'de_DE';
@@ -87,7 +87,7 @@ class Mailjeti18n
     public static function getSupportedLocales()
     {
         return array(
-            'English' => 'en_GB',
+            'English' => 'en_US',
             'French' => 'fr_FR',
             'German' => 'de_DE',
             'Spanish' => 'es_ES',

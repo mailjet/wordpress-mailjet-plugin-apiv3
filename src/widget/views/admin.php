@@ -18,7 +18,7 @@
         <div class="hidden_default" id="hidden_<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>">
             <hr>
             <p>
-                <label class="language-title-label" for="<?php echo esc_attr($this->get_field_id($locale . '[title]')); ?>"><?php _e('Title of your form:', 'mailjet'); ?></label>
+                <label class="language-title-label" for="<?php echo esc_attr($this->get_field_id($locale . '[title]')); ?>"><?php _e('Title of the form:', 'mailjet'); ?></label>
                 <input class="widefat title-input" id="<?php echo esc_attr($this->get_field_id($locale . '[title]')); ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[title]')); ?>" type="text" placeholder="<?php _e('Sign up to receive the newsletter', 'mailjet'); ?>" value="<?php echo esc_attr($title); ?>"/>
             </p>
             <p>
@@ -45,5 +45,10 @@
         </div>
     </div>
     <?php } ?>
-
+    <div>
+        <p>
+            <span id="advanced-form-link"><?php _e('Advanced form customization', 'mailjet') ?></span>
+            <span id="advanced-form-link-info" title="<?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet'); ?>">(?)</span>
+        </p>
+    </div>
 </div>

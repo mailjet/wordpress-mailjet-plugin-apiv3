@@ -22,6 +22,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     protected $widget_slug = 'mailjet';
 
+    private $mailjetClient = null;
+    private $instance;
     /* -------------------------------------------------- */
     /* Constructor
       /*-------------------------------------------------- */
@@ -70,21 +72,89 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         return $this->widget_slug;
     }
-    
-    public function sendSubscriptionEmail($subscriptionOptionsSettings, $subscription_email){
-        $error = empty($subscription_email) ? 'Email field is empty' : false;
-        if (false !== $error) {
-            _e($error, 'mailjet');
-            die;
+
+    /**
+     * Provide mailjet client instance
+     * @return \Mailjet\Client | null
+     */
+    private function getMailjetClient()
+    {
+        if ($this->mailjetClient === null) {
+            $mailjetApikey = get_option('mailjet_apikey');
+            $mailjetApiSecret = get_option('mailjet_apisecret');
+            $this->mailjetClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        }
+        return $this->mailjetClient;
+    }
+
+    /**
+     * Check if subscription form is submited
+     * Check if the user is already subscribed
+     * Send subscription email if need
+     * @param \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings $subscriptionOptionsSettings
+     * @return boolean
+     */
+    private function sendSubscriptionEmail($subscriptionOptionsSettings) 
+    {
+        // Check if subscription form is submited
+        if (empty($_POST['subscription_email'])) {
+            // Subscription form is not submited
+            return true;
         }
 
+        // Check if the user is subscribed
+        // Todo
+
+        // Send subscription email
+        $subscription_email = $_POST['subscription_email'];
         if (!is_email($subscription_email)) {
             _e('Invalid email', 'mailjet');
             die;
         }
-
         $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email);
-        
+    }
+
+    /**
+     * Validete the confirmation link
+     * Subscribe to mailjet list
+     * @param type $subscriptionOptionsSettings
+     */
+    private function activateConfirmSubscriptionUrl($subscriptionOptionsSettings, $instance)
+    {
+        $contacts = array();
+
+        // Check if subscription email is confirmed
+        if (empty($_GET['mj_sub_token'])) {
+            return true;
+        }
+
+        $subscription_email = $_GET['subscription_email'];
+        $params = http_build_query(array('subscription_email' => $subscription_email));
+
+        // The token is valid we can subscribe the user
+        if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
+            $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
+            $contactListId = !empty($instance[$locale]['list']) ? (int) $instance[$locale]['list'] : false;
+
+            // List id is not provided
+            if(!$contactListId) {
+                // Log
+            }
+            
+//            $contactProperties = array();
+            $contacts[] = array(
+                'Email' => $subscription_email,
+//                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
+//                'Properties' => $contactProperties
+            );
+            $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
+            var_dump($result);
+//            $mailjetClient
+        } else {
+            // Invalid token
+            // Todo add Log and message
+            die;
+        }
     }
 
     /* -------------------------------------------------- */
@@ -99,26 +169,16 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-        $subscriptionOptionsSettings = new \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings();
-        // Form is submited
-        if (isset($_POST['mailjet_widget_form_submited'])) {
-            $subscription_email = $_POST['subscription_email'];
-            $this->sendSubscriptionEmail($subscriptionOptionsSettings, $subscription_email);
+        $subscriptionOptionsSettings = new \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
-        } 
+        // Widget front form is submited
+        // TODO: Check if the user is already subscribed
+        // Send subscription email if need
+        $this->sendSubscriptionEmail($subscriptionOptionsSettings);
 
-        // Confirm email subscription
-        if (isset($_GET['mj_sub_token'])) {
-            $subscription_email = $_GET['subscription_email'];
-            $params = http_build_query(array('subscription_email' => $subscription_email));
-            if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-                // Subscribe
-                
-            } else {
-                // Todo add Log and message
-                die;
-            }
-        }
+        // Subscribe user
+        $this->activateConfirmSubscriptionUrl($subscriptionOptionsSettings, $instance);
+        
         // Check if there is a cached output
         $cache = wp_cache_get($this->get_widget_slug(), 'widget');
 
@@ -134,9 +194,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return print $cache[$args['widget_id']];
         }
 
+        
+
+
+        // Show front widget form
         // go on with your widget logic, put everything into a string and …
-
-
         extract($args, EXTR_SKIP);
 
         $widget_string = $before_widget;
@@ -181,7 +243,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             // Translations update
             \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
-
+        $this->instance = $instance;
         return $instance;
     }
 
