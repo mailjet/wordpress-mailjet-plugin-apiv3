@@ -121,12 +121,12 @@ input[type="submit"].button {
     margin-bottom: 20px;
 }
 .availableContactListsContainer {
-     display:  table;
-     width:auto;
+    display: table;
+    width:99%;
  }
 .availableContactListsRow {
     display:table-row;
-    width:auto;
+    width:100%;
     border:1px solid  #666666;
 }
 .availableContactListsRow:nth-child(even) {background: #FFF;}
@@ -135,12 +135,12 @@ input[type="submit"].button {
 .availableContactListsNameCell {
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:300px;
+    width:70%;
 }
 .availableContactListsCountCell {
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:100px;
+    width:30%;
 }
 
 

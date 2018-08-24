@@ -101,7 +101,7 @@ class MailjetApi
         $filters = [
             'Limit' => '1'
         ];
-        
+
         $response = $mjApiClient->get(\Mailjet\Resources::$Contactmetadata, ['filters' => $filters]);
         if ($response->success()) {
             return true;
