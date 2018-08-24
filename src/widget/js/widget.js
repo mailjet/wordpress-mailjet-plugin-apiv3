@@ -4,8 +4,8 @@
 
         $(document).on('widget-updated', function (event, widget) {
             var widget_id = $(widget).attr('id');
-            alert('On widget-updated: ' + widget_id);
-        
+//            alert('On widget-updated: ' + widget_id);
+
             showCheckedLanguages();
             // any code that needs to be run when a widget gets updated goes here
             // widget_id holds the ID of the actual widget that got updated
@@ -30,16 +30,21 @@
 
         init();
 
+        /**
+         * Show checked languages
+         * Activate tooltips
+         * Activate tabs
+         * @returns {undefined}
+         */
         function init() {
             showCheckedLanguages();
+            $('[data-toggle="tooltip"]').tooltip();
         }
 
-        function getLanguageHiddenElements(element) {
-            var language = (element);
-            var languageId = language.getAttribute('id');
-            return 'hidden_' + languageId;
-        }
-
+        /**
+         * Show the hidden elements of the checked languages
+         * @returns {undefined}
+         */
         function showCheckedLanguages() {
             $('.language_checkbox').each(function (index, value) {
                 if (value.checked === true) {
@@ -47,6 +52,17 @@
                     $('#' + languageHiddenElementClass).show();
                 }
             });
+        }
+
+        /**
+         * Get the id of the hidden elements of a specific language checkbox
+         * @param {type} element
+         * @returns {String}
+         */
+        function getLanguageHiddenElements(element) {
+            var language = (element);
+            var languageId = language.getAttribute('id');
+            return 'hidden_' + languageId;
         }
 
     });

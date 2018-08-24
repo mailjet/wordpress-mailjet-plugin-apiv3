@@ -289,6 +289,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function register_widget_styles()
     {
         wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__));
+        wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
+        wp_enqueue_style('prefix_bootstrap');
     }
 
 // end register_widget_styles
@@ -298,8 +300,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function register_widget_scripts()
     {
-
         wp_enqueue_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
+        wp_register_script('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
+        wp_enqueue_script('prefix_bootstrap');
     }
 
 // end register_widget_scripts

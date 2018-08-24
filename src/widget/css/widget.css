@@ -49,3 +49,38 @@
     border-top: 1px solid #898899;
     border-top-width: thin;
 }
+
+#advanced-form-link{
+    color: #55bfe6;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#advanced-form-link-info{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* Style the tab */
+            .mailjet-tab {
+                overflow: hidden;
+                background-color: #f1f1f1;
+                width: 100%;
+            }
+
+            .mailjet_tablinks {
+                float: left!important;
+                list-style-type: none;
+                margin-right: 20px;
+                padding: 0;
+                color: blue;
+            }
+
+            /* Style the tab content */
+            .mailjet_tabcontent {
+                
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                border-top: none;
+            }
