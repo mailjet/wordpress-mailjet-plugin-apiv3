@@ -21,9 +21,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @var      string
      */
     protected $widget_slug = 'mailjet';
-
     private $mailjetClient = null;
     private $instance;
+
     /* -------------------------------------------------- */
     /* Constructor
       /*-------------------------------------------------- */
@@ -94,7 +94,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @param \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
-    private function sendSubscriptionEmail($subscriptionOptionsSettings) 
+    private function sendSubscriptionEmail($subscriptionOptionsSettings)
     {
         // Check if subscription form is submited
         if (empty($_POST['subscription_email'])) {
@@ -104,7 +104,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Check if the user is subscribed
         // Todo
-
         // Send subscription email
         $subscription_email = $_POST['subscription_email'];
         if (!is_email($subscription_email)) {
@@ -137,10 +136,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $contactListId = !empty($instance[$locale]['list']) ? (int) $instance[$locale]['list'] : false;
 
             // List id is not provided
-            if(!$contactListId) {
+            if (!$contactListId) {
                 // Log
             }
-            
+
 //            $contactProperties = array();
             $contacts[] = array(
                 'Email' => $subscription_email,
@@ -178,7 +177,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Subscribe user
         $this->activateConfirmSubscriptionUrl($subscriptionOptionsSettings, $instance);
-        
+
         // Check if there is a cached output
         $cache = wp_cache_get($this->get_widget_slug(), 'widget');
 
@@ -194,7 +193,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return print $cache[$args['widget_id']];
         }
 
-        
+
 
 
         // Show front widget form
@@ -239,6 +238,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
             $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
             $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
+            $instance[$locale]['contactProperties'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['contactProperties']) : '';
 
             // Translations update
             \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
@@ -262,7 +262,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Mailjet contact lists
         $contactLists = MailjetApi::getMailjetContactLists();
         $contactLists = !empty($contactLists) ? $contactLists : array();
-
+        $mailjetContactProperties = MailjetApi::getContactProperties();
+        $propertiesOptions = array();
+        foreach ($mailjetContactProperties as $property) {
+            $propertiesOptions[$property['ID']] = $property['Name'];
+        }
+        $mailjetContactProperties = null;
+        $mailjetContactProperties = $propertiesOptions;
+        $admin_locale = get_locale();
         // Display the admin form
         $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
         include(plugin_dir_path(__FILE__) . 'views/admin.php');

@@ -27,6 +27,16 @@
             var languageHiddenElementClass = getLanguageHiddenElements(this);
             $('#' + languageHiddenElementClass).toggle("slow");
         });
+        
+        $(document).on('change', '.mjProperties', function (event) {
+            var optionValue = event.target.value;
+            // Create new property
+            if(optionValue === 'newProperty') {
+                // Show new property inputs
+                $('.newPropertyFields').show();
+            }
+            // Show menu
+        });
 
         init();
 

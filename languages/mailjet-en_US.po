@@ -609,7 +609,13 @@ msgid "language_checkbox"
 msgstr "1"
 
 msgid "title"
-msgstr "ad"
+msgstr "Subscription form"
 
 msgid "list"
 msgstr "37731"
+
+msgid "contactProperties"
+msgstr "2922"
+
+msgid "contactPropertiesOptions"
+msgstr "2924"

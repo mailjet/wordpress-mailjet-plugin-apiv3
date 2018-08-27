@@ -2,6 +2,10 @@
 
 namespace MailjetPlugin\Includes;
 
+use Exception;
+use Mailjet\Client;
+use Mailjet\Resources;
+
 /**
  * Define the internationalization functionality.
  *
@@ -20,16 +24,16 @@ class MailjetApi
 
     public static function getApiClient()
     {
-        if (self::$mjApiClient instanceof \Mailjet\Client) {
+        if (self::$mjApiClient instanceof Client) {
             return self::$mjApiClient;
         }
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
-            throw new \Exception('Missing Mailjet API credentials');
+            throw new Exception('Missing Mailjet API credentials');
         }
 
-        self::$mjApiClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
+        self::$mjApiClient = new Client($mailjetApikey, $mailjetApiSecret);
         return self::$mjApiClient;
     }
 
@@ -41,16 +45,14 @@ class MailjetApi
             'Limit' => '0',
             'Sort' => 'Name ASC'
         ];
-        $response = $mjApiClient->get(\Mailjet\Resources::$Contactslist, ['filters' => $filters]);
+        $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
         if ($response->success()) {
             return $response->getData();
         } else {
             //return $response->getStatus();
             return false;
         }
-
     }
-
 
     public static function createMailjetContactList($listName)
     {
@@ -63,7 +65,7 @@ class MailjetApi
         $body = [
             'Name' => $listName
         ];
-        $response = $mjApiClient->post(\Mailjet\Resources::$Contactslist, ['body' => $body]);
+        $response = $mjApiClient->post(Resources::$Contactslist, ['body' => $body]);
         if ($response->success()) {
             return $response->getData();
         } else {
@@ -72,7 +74,43 @@ class MailjetApi
         }
     }
 
+    public static function getContactProperties()
+    {
+        $mjApiClient = self::getApiClient();
+        $filters = array();
+        $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+//            return $response->getStatus();
+        }
+    }
 
+    public static function createMailjetContactProperty($name, $type = "str")
+    {
+        if (empty($name)) {
+            return false;
+        }
+
+        $mjApiClient = self::getApiClient();
+
+//      Name: the name of the custom data field
+//      DataType: the type of data that is being stored (this can be either a str, int, float or bool)
+//      NameSpace: this can be either static or historic
+        $body = [
+            'Datatype' => "str",
+            'Name' => $name,
+            'NameSpace' => "static"
+        ];
+        $response = $mjApiClient->post(Resources::$Contactmetadata, ['body' => $body]);
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+//            return $response->getStatus();
+        }
+    }
 
     public static function getMailjetSenders()
     {
@@ -83,16 +121,14 @@ class MailjetApi
             'Sort' => 'ID DESC'
         ];
 
-        $response = $mjApiClient->get(\Mailjet\Resources::$Sender, ['filters' => $filters]);
+        $response = $mjApiClient->get(Resources::$Sender, ['filters' => $filters]);
         if ($response->success()) {
             return $response->getData();
         } else {
             //return $response->getStatus();
             return false;
         }
-
     }
-
 
     public static function isValidAPICredentials()
     {
@@ -102,7 +138,7 @@ class MailjetApi
             'Limit' => '1'
         ];
 
-        $response = $mjApiClient->get(\Mailjet\Resources::$Contactmetadata, ['filters' => $filters]);
+        $response = $mjApiClient->get(Resources::$Contactmetadata, ['filters' => $filters]);
         if ($response->success()) {
             return true;
             // return $response->getData();
@@ -110,9 +146,7 @@ class MailjetApi
             return false;
             // return $response->getStatus();
         }
-
     }
-
 
     /**
      * Add or Remove a contact to a Mailjet contact list - It can process many or single contact at once
@@ -131,7 +165,7 @@ class MailjetApi
             'Contacts' => $contacts
         ];
 
-        $response = $mjApiClient->post(\Mailjet\Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
+        $response = $mjApiClient->post(Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
         if ($response->success()) {
             return $response->getData();
         } else {

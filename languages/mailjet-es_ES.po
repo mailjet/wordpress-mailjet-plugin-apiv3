@@ -616,3 +616,9 @@ msgstr ""
 
 msgid "list"
 msgstr ""
+
+msgid "contactProperties"
+msgstr ""
+
+msgid "contactPropertiesOptions"
+msgstr ""

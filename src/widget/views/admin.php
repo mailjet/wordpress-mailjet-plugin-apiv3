@@ -37,14 +37,20 @@
                         }
                         // Loop through options and add each one to the select dropdown
                         foreach ($options as $key => $name) {
-                            echo '<option value="' . esc_attr($key) . '" id="' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
+                            echo '<option value="' . esc_attr($key) . '" id="mjContactList_' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
                         }
                         ?>
                     </select>
                 </p>
             </div>
         </div>
-    <?php } ?>
+        <?php
+    }
+    $advancedFormDefaults = array(
+        'contactProperties'
+    );
+    extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
+    ?>
 
     <div id="advanced-form-link-wrap">
         <p>
@@ -72,7 +78,51 @@
                     <!--Tab panes--> 
                     <div id="advanced-form-tabs" class="tab-content">
                         <!-- Form fields -->
-                        <div role="tabpanel" class="tab-pane advanced-form-fields active">1</div>
+                        <div role="tabpanel" class="tab-pane advanced-form-fields active">
+                            <p id='properties-info'><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
+                            <div class="row">
+<!--                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search for...">
+                                    </div> /input-group 
+                                </div>-->
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                    <label for="<?php echo $this->get_field_id($admin_locale . '[contactProperties]'); ?>">Property #1</label>
+                                    <select class="mjProperties" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties]'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties]'); ?>">
+                                        <?php
+                                        $options = array(
+                                            'newProperty' => __('Create new', 'mailjet'),
+                                        );
+                                        if (is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
+                                            foreach ($mailjetContactProperties as $key => $mailjetContactProperty) {
+                                                $options[$key] = $mailjetContactProperty;
+                                            }
+                                        }
+                                        // Loop through options and add each one to the select dropdown
+                                        foreach ($options as $key => $name) {
+                                            echo '<option value="' . esc_attr($key) . '" id="mjContactProperty_' . esc_attr($key) . '" ' . selected($contactProperties, $key, false) . '>' . $name . '</option>';
+                                            echo '<li role="separator" class="divider"></li>';
+                                        }
+                                        ?>
+                                    </select>
+                                    <!-- New property fields -->
+<!--                                    <div class="newPropertyFields">
+                                        <input type="text" placeholder="" />
+                                        <select>
+                                            <optgroup>
+                                                <option>Int</option>
+                                            </optgroup>
+                                            <option>String</option>
+                                            <option>Date</option>
+                                        </select>
+                                        <button>Save</button>
+                                        <span>Cancel</span>
+                                    </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!--Form validation messages-->
                         <div role="tabpanel" class="tab-pane advanced-form-validation-messages">2</div>
                         <!--Confirmation email content-->
@@ -82,7 +132,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                    <button type="button" class="btn btn-primary" id="saveAdvancedForm">Send message</button>
                 </div>
             </div>
         </div>

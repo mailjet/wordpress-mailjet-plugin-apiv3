@@ -658,3 +658,9 @@ msgstr "1"
 
 msgid "list"
 msgstr "37731"
+
+msgid "contactProperties"
+msgstr ""
+
+msgid "contactPropertiesOptions"
+msgstr ""
