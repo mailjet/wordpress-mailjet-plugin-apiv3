@@ -233,12 +233,20 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $instance = $old_instance;
 
         $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
-
         foreach ($languages as $language => $locale) {
             $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
             $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
             $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
-            $instance[$locale]['contactProperties'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['contactProperties']) : '';
+            for($i=0;$i<=4;$i++) {
+                $instance[$locale]['contactProperties'.$i] = isset($new_instance[$locale]['contactProperties'.$i]) ? wp_strip_all_tags($new_instance[$locale]['contactProperties'.$i]) : '';
+                $instance[$locale]['propertyDataType'.$i] = isset($new_instance[$locale]['propertyDataType'.$i]) ? wp_strip_all_tags($new_instance[$locale]['propertyDataType'.$i]) : '';
+
+//                $instance[$locale][$language.'Label'.$i] = isset($new_instance[$locale][$language.'Label'.$i]) ? wp_strip_all_tags($new_instance[$locale][$language.'Label'.$i]) : '';
+                $instance[$locale]['EnglishLabel'.$i] = isset($new_instance[$locale]['EnglishLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['EnglishLabel'.$i]) : '';
+                $instance[$locale]['FrenchLabel'.$i] = isset($new_instance[$locale]['FrenchLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['FrenchLabel'.$i]) : '';
+                $instance[$locale]['GermanLabel'.$i] = isset($new_instance[$locale]['GermanLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['GermanLabel'.$i]) : '';
+                $instance[$locale]['SpanishLabel'.$i] = isset($new_instance[$locale]['SpanishLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['SpanishLabel'.$i]) : '';
+            }
 
             // Translations update
             \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);

@@ -615,7 +615,118 @@ msgid "list"
 msgstr "37731"
 
 msgid "contactProperties"
-msgstr "2922"
+msgstr "6925"
 
 msgid "contactPropertiesOptions"
 msgstr "2924"
+
+msgid "propertyDataType"
+msgstr ""
+
+msgid "contactProperties0"
+msgstr ""
+
+msgid "contactProperties1"
+msgstr ""
+
+msgid "contactProperties2"
+msgstr ""
+
+msgid "contactProperties3"
+msgstr ""
+
+msgid "contactProperties4"
+msgstr ""
+
+msgid "propertyDataType0"
+msgstr "0"
+
+msgid "propertyDataType1"
+msgstr "0"
+
+msgid "propertyDataType2"
+msgstr "0"
+
+msgid "propertyDataType3"
+msgstr ""
+
+msgid "propertyDataType4"
+msgstr ""
+
+msgid "englishLabel0"
+msgstr ""
+
+msgid "englishLabel1"
+msgstr ""
+
+msgid "englishLabel2"
+msgstr ""
+
+msgid "englishLabel3"
+msgstr ""
+
+msgid "englishLabel4"
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid "EnglishLabel0"
+msgstr ""
+
+msgid "EnglishLabel1"
+msgstr ""
+
+msgid "EnglishLabel2"
+msgstr ""
+
+msgid "EnglishLabel3"
+msgstr ""
+
+msgid "EnglishLabel4"
+msgstr ""
+
+msgid "FrenchLabel0"
+msgstr ""
+
+msgid "GermanLabel0"
+msgstr ""
+
+msgid "SpanishLabel0"
+msgstr ""
+
+msgid "FrenchLabel1"
+msgstr ""
+
+msgid "GermanLabel1"
+msgstr ""
+
+msgid "SpanishLabel1"
+msgstr ""
+
+msgid "FrenchLabel2"
+msgstr ""
+
+msgid "GermanLabel2"
+msgstr ""
+
+msgid "SpanishLabel2"
+msgstr ""
+
+msgid "FrenchLabel3"
+msgstr ""
+
+msgid "GermanLabel3"
+msgstr ""
+
+msgid "SpanishLabel3"
+msgstr ""
+
+msgid "FrenchLabel4"
+msgstr ""
+
+msgid "GermanLabel4"
+msgstr ""
+
+msgid "SpanishLabel4"
+msgstr ""

@@ -66,6 +66,68 @@
     margin: 40px 0 40px 20px;
 }
 
+.property{
+    clear: left;
+}
+
 .newPropertyFields{
     display: none;
+}
+
+.properties-label-header{
+    margin-bottom: 10px;
+
+}
+.floatLeft{
+    float: left;
+    margin-left: 1%;
+}
+
+/*.propertySelect {*/
+/*max-width: 100%;*/
+/*}*/
+.propertyLabel{
+    margin: 5px 0;
+}
+
+.propertySelect select{
+    max-width: 140px;
+}
+
+.typeSelect select{
+    width: 94px;
+    margin-left: 10px;
+}
+
+.languageInput{
+    min-width: 8%;
+    /*width: 12%;*/ 
+    /*width: 30%;*/
+
+}
+
+.languageInput input{
+    width: 100%;
+    height: 28px;
+}
+
+.deleteProperty{
+    width: 15px;
+    margin: 3px;
+    /*display: none;*/
+}
+
+.hiddenProperties{
+    /*display: none;*/
+}
+
+.hiddenSelectProperties{
+    /*display: none;*/
+}
+
+@media (min-width: 992px) {
+    .modal-mailjet-lg {
+        width: 1200px!important;
+        height: 900px; /* control height here */
+    }
 }

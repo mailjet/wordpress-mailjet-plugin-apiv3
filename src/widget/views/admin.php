@@ -46,10 +46,22 @@
         </div>
         <?php
     }
-    $advancedFormDefaults = array(
-        'contactProperties'
-    );
+    $advancedFormDefaults = array();
+    for($i=0;$i<=4;$i++) {
+        $advancedFormDefaults[] = 'contactProperties'.$i;
+        $advancedFormDefaults[] = 'propertyDataType'.$i;
+        $advancedFormDefaults[] = 'EnglishLabel'.$i;
+        $advancedFormDefaults[] = 'FrenchLabel'.$i;
+        $advancedFormDefaults[] = 'GermanLabel'.$i;
+        $advancedFormDefaults[] = 'SpanishLabel'.$i;
+    }
+//        'propertyDataType',
+//        'englishLabel'
     extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
+//    echo "<pre>";print_r($instance);
+//    for($i=0;$i<=4;$i++) {
+//        echo ${'contactProperties'.$i};
+//    }
     ?>
 
     <div id="advanced-form-link-wrap">
@@ -60,7 +72,7 @@
     </div>
 
     <div class="modal fade advanced-form-popup" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg modal-mailjet-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -78,50 +90,95 @@
                     <!--Tab panes--> 
                     <div id="advanced-form-tabs" class="tab-content">
                         <!-- Form fields -->
-                        <div role="tabpanel" class="tab-pane advanced-form-fields active">
-                            <p id='properties-info'><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
-                            <div class="row">
-<!--                                <div class="col-lg-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search for...">
-                                    </div> /input-group 
-                                </div>-->
-                                <div class="col-lg-6">
-                                    <div class="input-group">
-                                    <label for="<?php echo $this->get_field_id($admin_locale . '[contactProperties]'); ?>">Property #1</label>
-                                    <select class="mjProperties" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties]'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties]'); ?>">
-                                        <?php
-                                        $options = array(
-                                            'newProperty' => __('Create new', 'mailjet'),
-                                        );
-                                        if (is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
-                                            foreach ($mailjetContactProperties as $key => $mailjetContactProperty) {
-                                                $options[$key] = $mailjetContactProperty;
-                                            }
+                        <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid">
+                            <p id="properties-info"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
+                            
+                            <?php 
+                            $opened = 0;
+                            $display = 'block';
+                            for($row=0;$row<=4;$row++) {
+                                $contactPropertiesN = ${'contactProperties'.$row};
+                                $propertyDataTypeN = ${'propertyDataType'.$row};
+
+                                // The selected properties and one more default select is shown
+                                // We do not need more default selects
+                                if(!$contactPropertiesN && $opened) {
+                                    
+                                    //Todo Or hide next rows
+                                    // depends on js
+                                    $display = 'none';
+//                                    break;
+                                }
+
+                                // There is no default select shown
+                                if(!$contactPropertiesN && !$opened) {
+                                    $opened++;
+                                }
+                                
+                            ?>
+                            <div class="property" style="display: <?php echo $display ?>">
+                                <span class="floatLeft propertyLabel">Property#<?php echo $row ?></span>
+
+                                <!--Select property-->
+                                <div class="propertySelect floatLeft">
+                                    <select class="selectProperty mjProperties" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties'.$row.']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties'.$row.']'); ?>">
+                                    <!--<option disabled selected value>Select a property</option>-->
+                                    <option value>Select a property</option>
+                                    <?php
+                                    $options = array(
+                                        'newProperty' => __('Create new', 'mailjet'),
+                                    );
+                                    if (is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
+                                        foreach ($mailjetContactProperties as $key => $mailjetContactProperty) {
+                                            $options[$key] = $mailjetContactProperty;
                                         }
-                                        // Loop through options and add each one to the select dropdown
-                                        foreach ($options as $key => $name) {
-                                            echo '<option value="' . esc_attr($key) . '" id="mjContactProperty_' . esc_attr($key) . '" ' . selected($contactProperties, $key, false) . '>' . $name . '</option>';
-                                            echo '<li role="separator" class="divider"></li>';
-                                        }
-                                        ?>
+                                    }
+                                    // Loop through options and add each one to the select dropdown
+                                    foreach ($options as $key => $name) {
+                                        echo '<option value="' . esc_attr($key) . '" id="mjContactProperty_' . esc_attr($key) . '" ' . selected($contactPropertiesN, $key, false) . '>' . $name . '</option>';
+                                    }
+                                    ?>
                                     </select>
-                                    <!-- New property fields -->
-<!--                                    <div class="newPropertyFields">
-                                        <input type="text" placeholder="" />
-                                        <select>
-                                            <optgroup>
-                                                <option>Int</option>
-                                            </optgroup>
-                                            <option>String</option>
-                                            <option>Date</option>
+                                </div>
+                                <!--Display only if there is a selected option-->
+                                <div class="hiddenProperties" style="display: <?php echo $contactPropertiesN ? 'block': 'none' ?>">
+                                    <!--Select property DataType-->
+                                    <div class="typeSelect floatLeft">
+                                        <select class="propertyDataType" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType'.$row.']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType'.$row.']'); ?>">
+                                            <?php 
+                                            $dataTypeOptions = array('Optional', 'Mandatory', 'Hidden');
+                                            foreach ($dataTypeOptions as $key => $name) {
+                                                echo '<option value="' . esc_attr($key) . '" id="mjPropertyDataType_' . esc_attr($key) . '" ' . selected($propertyDataTypeN, $key, false) . '>' . $name . '</option>';
+                                            } ?>
                                         </select>
-                                        <button>Save</button>
-                                        <span>Cancel</span>
-                                    </div>-->
+                                    </div>
+                                    <?php
+                                    $numberActiveLanguages = 0;
+                                    foreach ($languages as $language => $locale) {
+                                        $numberActiveLanguages+= $instance[$locale]['language_checkbox'];
+                                    }
+                                    $maxWidth = 60;
+                                    $percent = $numberActiveLanguages > 0 ? $maxWidth/$numberActiveLanguages : $maxWidth;
+    //                                echo "<pre>";var_dump($instance);
+
+                                    foreach ($languages as $language => $locale) {
+                                        ${$language.'LabelN'} = ${$language.'Label'.$row};
+
+                                        if($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="languageInput floatLeft" style="width: <?php echo $percent.'%' ?>">
+                                        <input type="text" value="<?php echo ${$language.'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '['. $language.'Label'.$row.']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '['. $language.'Label'.$row.']'); ?>"/>
+                                    </div>
+                                    <?php } ?>
+                                    <div class="deleteProperty floatLeft">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true" id=""></span>
                                     </div>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
                         <!--Form validation messages-->
                         <div role="tabpanel" class="tab-pane advanced-form-validation-messages">2</div>
