@@ -88,6 +88,23 @@
                             <p id="properties-info"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
                             
                             <?php 
+                            $numberActiveLanguages = 0;
+                            foreach ($languages as $language => $locale) {
+                                if($instance[$locale]['language_checkbox']) {
+                                    $activeLanguages[] = $language;
+                                }
+                                $numberActiveLanguages += $instance[$locale]['language_checkbox'];
+                            }
+                            $maxWidth = 60;
+                            $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
+                            ?>
+                            
+<!--                            <span style="margin-left: 21%;">Type</span>
+                            <span>Label of value in English</span>
+                            <span>Label of value in French</span>
+                            <span>Label of value in German</span>
+                            <span>Label of value in Spanish</span>-->
+                            <?php 
                             $opened = 0;
                             $display = 'block';
                             for($row=0;$row<=4;$row++) {
@@ -149,13 +166,6 @@
                                         </select>
                                     </div>
                                     <?php
-                                    $numberActiveLanguages = 0;
-                                    foreach ($languages as $language => $locale) {
-                                        $numberActiveLanguages+= $instance[$locale]['language_checkbox'];
-                                    }
-                                    $maxWidth = 60;
-                                    $percent = $numberActiveLanguages > 0 ? $maxWidth/$numberActiveLanguages : $maxWidth;
-    //                                echo "<pre>";var_dump($instance);
 
                                     foreach ($languages as $language => $locale) {
                                         ${$language.'LabelN'} = ${$language.'Label'.$row};
@@ -166,7 +176,7 @@
                                     ?>
                                     <!--Languages label-->
                                     <div class="languageInput floatLeft" style="width: <?php echo $percent.'%' ?>">
-                                        <input type="text" value="<?php echo ${$language.'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '['. $language.'Label'.$row.']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '['. $language.'Label'.$row.']'); ?>"/>
+                                        <input type="text" value="<?php echo ${$language.'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '['. $language.'Label'.$row.']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '['. $language.'Label'.$row.']'); ?>" placeholder="Field label in <?php echo $language ?>" />
                                     </div>
                                     <?php } ?>
                                     <div class="deleteProperty floatLeft" style="display: <?php echo $displayDelete ?>">

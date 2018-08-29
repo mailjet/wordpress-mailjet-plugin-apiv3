@@ -26,10 +26,10 @@
         $(document).on('change', '.language_checkbox', function () {
             var languageHiddenElementClass = getLanguageHiddenElements(this);
             $('#' + languageHiddenElementClass).toggle("slow");
-            
+
             // Hide advanced form, changes must be saved
 //            $("div#advanced-form-link-wrap").hide();
-            
+
         });
 
         // Select a contact property
@@ -42,7 +42,7 @@
             } else {
                 // Show datatype and languages inputs/values and delete
                 $(this).parent().parent().find('.hiddenProperties').show();
-                
+
                 // Show next default property select
                 $(this).parent().parent().next('.property').show();
 
@@ -69,23 +69,46 @@
             // reset inputs
             $(this).parent().parent().find('.languageInput input').val('');
         });
-        
-        $(document).on('click', '#saveAdvancedForm', function(){
+
+        $(document).on('click', '#saveAdvancedForm', function () {
             $("input[name='savewidget']").click();
             $(this).text("Saving...").prop('disabled', true);
         });
 
-        // Show/hide 
-        $(document).on('change', $("input[name='savewidget']"), function(){
+        // Show/hide advnaced form link depends on Save button
+        $(document).on('change', $("input[name='savewidget']"), function () {
             var isSaveButtonDisabled = $(this).is(":disabled");
             if (isSaveButtonDisabled) {
                 $("div#advanced-form-link-wrap").show();
-            }else {
+            } else {
                 $("div#advanced-form-link-wrap").hide();
             }
-           $("div#advanced-form-link-wrap").hide();
-           $("span#advanced-form-link").hide();
+//           $("div#advanced-form-link-wrap").hide();
+//           $("span#advanced-form-link").hide();
         });
+
+        // Fires when property value is changed
+        $(document).on('change', '.propertyDataType', function () {
+            var optionValue = event.target.value;
+            var defaultPlaceholder = 'Field label in';
+            var hiddenPlaceholder = 'Value for';
+            if (optionValue === '2') {
+                // When 'hidden' option is selected
+                replaceLanguagePlaceholder($(this), defaultPlaceholder, hiddenPlaceholder);
+            } else {
+                replaceLanguagePlaceholder($(this), hiddenPlaceholder, defaultPlaceholder);
+            }
+        });
+
+        function replaceLanguagePlaceholder(element, searchStr, replaceStr) {
+            element.parent().parent().parent().find('.languageInput input').each(function (env) {
+                if (!$(this).val()) {
+                    var str = $(this).attr("placeholder");
+                    var res = str.replace(searchStr, replaceStr);
+                    $(this).attr("placeholder", res);
+                }
+            });
+        }
 
         init();
 

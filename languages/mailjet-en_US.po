@@ -627,19 +627,19 @@ msgid "contactProperties0"
 msgstr "6536"
 
 msgid "contactProperties1"
-msgstr ""
+msgstr "2924"
 
 msgid "contactProperties2"
-msgstr ""
+msgstr "6536"
 
 msgid "contactProperties3"
-msgstr ""
+msgstr "6704"
 
 msgid "contactProperties4"
-msgstr ""
+msgstr "6536"
 
 msgid "propertyDataType0"
-msgstr "0"
+msgstr "2"
 
 msgid "propertyDataType1"
 msgstr "0"
