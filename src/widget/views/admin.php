@@ -55,13 +55,7 @@
         $advancedFormDefaults[] = 'GermanLabel'.$i;
         $advancedFormDefaults[] = 'SpanishLabel'.$i;
     }
-//        'propertyDataType',
-//        'englishLabel'
     extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
-//    echo "<pre>";print_r($instance);
-//    for($i=0;$i<=4;$i++) {
-//        echo ${'contactProperties'.$i};
-//    }
     ?>
 
     <div id="advanced-form-link-wrap">
@@ -117,7 +111,7 @@
                                 
                             ?>
                             <div class="property" style="display: <?php echo $display ?>">
-                                <span class="floatLeft propertyLabel">Property#<?php echo $row ?></span>
+                                <span class="floatLeft propertyLabel">Property#<?php echo $row+1 ?></span>
 
                                 <!--Select property-->
                                 <div class="propertySelect floatLeft">

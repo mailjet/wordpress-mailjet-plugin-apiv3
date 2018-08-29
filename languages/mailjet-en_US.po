@@ -627,7 +627,7 @@ msgid "contactProperties0"
 msgstr "2922"
 
 msgid "contactProperties1"
-msgstr "6704"
+msgstr ""
 
 msgid "contactProperties2"
 msgstr ""
@@ -639,10 +639,10 @@ msgid "contactProperties4"
 msgstr ""
 
 msgid "propertyDataType0"
-msgstr "1"
+msgstr "0"
 
 msgid "propertyDataType1"
-msgstr "1"
+msgstr "0"
 
 msgid "propertyDataType2"
 msgstr "0"
@@ -672,10 +672,10 @@ msgid ""
 msgstr ""
 
 msgid "EnglishLabel0"
-msgstr "en"
+msgstr "Firstname"
 
 msgid "EnglishLabel1"
-msgstr "dsfdsf"
+msgstr ""
 
 msgid "EnglishLabel2"
 msgstr ""
@@ -687,7 +687,7 @@ msgid "EnglishLabel4"
 msgstr ""
 
 msgid "FrenchLabel0"
-msgstr "fra"
+msgstr "Firste nome"
 
 msgid "GermanLabel0"
 msgstr ""
@@ -696,7 +696,7 @@ msgid "SpanishLabel0"
 msgstr ""
 
 msgid "FrenchLabel1"
-msgstr "adsfads"
+msgstr ""
 
 msgid "GermanLabel1"
 msgstr ""
