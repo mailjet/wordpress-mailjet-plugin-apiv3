@@ -26,6 +26,10 @@
         $(document).on('change', '.language_checkbox', function () {
             var languageHiddenElementClass = getLanguageHiddenElements(this);
             $('#' + languageHiddenElementClass).toggle("slow");
+            
+            // Hide advanced form, changes must be saved
+//            $("div#advanced-form-link-wrap").hide();
+            
         });
 
         // Select a contact property
@@ -64,6 +68,23 @@
             $(this).parent().parent().find('.propertyDataType').val(0);
             // reset inputs
             $(this).parent().parent().find('.languageInput input').val('');
+        });
+        
+        $(document).on('click', '#saveAdvancedForm', function(){
+            $("input[name='savewidget']").click();
+            $(this).text("Saving...").prop('disabled', true);
+        });
+
+        // Show/hide 
+        $(document).on('change', $("input[name='savewidget']"), function(){
+            var isSaveButtonDisabled = $(this).is(":disabled");
+            if (isSaveButtonDisabled) {
+                $("div#advanced-form-link-wrap").show();
+            }else {
+                $("div#advanced-form-link-wrap").hide();
+            }
+           $("div#advanced-form-link-wrap").hide();
+           $("span#advanced-form-link").hide();
         });
 
         init();

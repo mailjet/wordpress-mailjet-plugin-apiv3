@@ -237,15 +237,15 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
             $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
             $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
-            for($i=0;$i<=4;$i++) {
-                $instance[$locale]['contactProperties'.$i] = isset($new_instance[$locale]['contactProperties'.$i]) ? wp_strip_all_tags($new_instance[$locale]['contactProperties'.$i]) : '';
-                $instance[$locale]['propertyDataType'.$i] = isset($new_instance[$locale]['propertyDataType'.$i]) ? wp_strip_all_tags($new_instance[$locale]['propertyDataType'.$i]) : '';
+            for ($i = 0; $i <= 4; $i++) {
+                $instance[$locale]['contactProperties' . $i] = isset($new_instance[$locale]['contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$locale]['contactProperties' . $i]) : '';
+                $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$locale]['propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$locale]['propertyDataType' . $i]) : '';
 
 //                $instance[$locale][$language.'Label'.$i] = isset($new_instance[$locale][$language.'Label'.$i]) ? wp_strip_all_tags($new_instance[$locale][$language.'Label'.$i]) : '';
-                $instance[$locale]['EnglishLabel'.$i] = isset($new_instance[$locale]['EnglishLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['EnglishLabel'.$i]) : '';
-                $instance[$locale]['FrenchLabel'.$i] = isset($new_instance[$locale]['FrenchLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['FrenchLabel'.$i]) : '';
-                $instance[$locale]['GermanLabel'.$i] = isset($new_instance[$locale]['GermanLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['GermanLabel'.$i]) : '';
-                $instance[$locale]['SpanishLabel'.$i] = isset($new_instance[$locale]['SpanishLabel'.$i]) ? wp_strip_all_tags($new_instance[$locale]['SpanishLabel'.$i]) : '';
+                $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$locale]['EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['EnglishLabel' . $i]) : '';
+                $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['FrenchLabel' . $i]) : '';
+                $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['GermanLabel' . $i]) : '';
+                $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['SpanishLabel' . $i]) : '';
             }
 
             // Translations update
@@ -262,18 +262,26 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function form($instance)
     {
+        $isMailjetDown = '';
         // TODO: Define default values for your variables
         $instance = wp_parse_args(
                 (array) $instance
         );
 
         // Mailjet contact lists
-        $contactLists = MailjetApi::getMailjetContactLists();
-        $contactLists = !empty($contactLists) ? $contactLists : array();
+        $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        $contactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetContactProperties = MailjetApi::getContactProperties();
         $propertiesOptions = array();
-        foreach ($mailjetContactProperties as $property) {
-            $propertiesOptions[$property['ID']] = $property['Name'];
+        if (!empty($mailjetContactProperties)) {
+            foreach ($mailjetContactProperties as $property) {
+                $propertiesOptions[$property['ID']] = $property['Name'];
+            }
+        }
+
+        // Mailjet is down (widget can't be configured so show an error instead of form)
+        if ($mailjetContactLists === false && $mailjetContactProperties === false) {
+            $isMailjetDown = 'No connection with Mailjet.Please try a bit later.';
         }
         $mailjetContactProperties = null;
         $mailjetContactProperties = $propertiesOptions;

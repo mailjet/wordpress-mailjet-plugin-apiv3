@@ -91,6 +91,8 @@
                             $opened = 0;
                             $display = 'block';
                             for($row=0;$row<=4;$row++) {
+                                $nextRow = $row + 1;
+                                $displayDelete = !empty(${'contactProperties' . $nextRow}) ? 'none':'block';
                                 $contactPropertiesN = ${'contactProperties'.$row};
                                 $propertyDataTypeN = ${'propertyDataType'.$row};
 
@@ -167,7 +169,7 @@
                                         <input type="text" value="<?php echo ${$language.'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '['. $language.'Label'.$row.']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '['. $language.'Label'.$row.']'); ?>"/>
                                     </div>
                                     <?php } ?>
-                                    <div class="deleteProperty floatLeft">
+                                    <div class="deleteProperty floatLeft" style="display: <?php echo $displayDelete ?>">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true" id=""></span>
                                     </div>
                                 </div>
@@ -182,8 +184,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveAdvancedForm">Send message</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-backdrop="false" id="saveAdvancedForm">Save&Close</button>
                 </div>
             </div>
         </div>
