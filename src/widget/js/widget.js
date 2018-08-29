@@ -28,27 +28,27 @@
             $('#' + languageHiddenElementClass).toggle("slow");
         });
 
-        // Show property
+        // Select a contact property
         $(document).on('change', '.selectProperty', function (event) {
             var optionValue = event.target.value;
-//            // Create new property
+
+            // Create new property
             if (optionValue === 'newProperty') {
                 // Show new property inputs
             } else {
                 // Show datatype and languages inputs/values and delete
                 $(this).parent().parent().find('.hiddenProperties').show();
-
+                
                 // Show next default property select
                 $(this).parent().parent().next('.property').show();
+
+                // Remove the delete icon for the previous row
+                $(this).parent().parent().prev().find('.deleteProperty').hide();
             }
         });
 
         // Delete a property
         $(document).on('click', '.deleteProperty', function (event) {
-            // Hide properties
-//            $(this).parent().parent().hide();
-            // Hide the whole row
-//            $(this).parent().parent().find('.property').hide();
 
             // Hide row properties and only property select left
             $(this).parent().parent().find('.hiddenProperties').hide();
@@ -56,32 +56,15 @@
             // Hide next row as the deleted stays the current
             $(this).parent().parent().next('.property').hide();
 
-            // reset selects
+            // Show delete icon for the last row
+            $(this).parent().parent().prev().find('.deleteProperty').show();
+
+            // Reset selects
             $(this).parent().parent().find('.selectProperty').val(0);
             $(this).parent().parent().find('.propertyDataType').val(0);
             // reset inputs
             $(this).parent().parent().find('.languageInput input').val('');
-            
-            // Hide all delete buttons
-//            $('.deleteProperty').hide();
-
-            // Show current delete button
-//            $(this).prev('.deleteProperty').show();
-
-            // Show next select (When all 5 properties are selected)
-//            $(this).parent().parent().next('.property').show();
-            
         });
-
-//        $(document).on('change', '.mjProperties', function (event) {
-//            var optionValue = event.target.value;
-//            // Create new property
-//            if(optionValue === 'newProperty') {
-//                // Show new property inputs
-//                $('.newPropertyFields').show();
-//            }
-//            // Show menu
-//        });
 
         init();
 
@@ -97,24 +80,20 @@
 //            showPropertySelect(1);
         }
 
-        function showPropertySelect(n) {
-            var selectProperties = $('.selectProperty');
-            var opened = 0;
-            selectProperties.each(function (index, value) {
-                if (opened >= n) {
-                    return false;
-                }
-//                console.log( $(this).parent().parent().find('.hiddenSelectProperties'));
-                $(this).parent().parent().find('.hiddenSelectProperties').show();
-                $(this).parent().parent().parent().find('.hiddenSelectProperties').show();
-                $(this).parent().find('.hiddenSelectProperties').show();
-                $(this).parent().parent().find('.hiddenSelectProperties').css({'display':'block'});
-                
-                opened = opened + 1;
-                console.log(opened);
-//                console.log(value.value);
-            });
-        }
+//        function showPropertySelect(n) {
+//            var selectProperties = $('.selectProperty');
+//            var opened = 0;
+//            selectProperties.each(function (index, value) {
+//                if (opened >= n) {
+//                    return false;
+//                }
+//                $(this).parent().parent().find('.hiddenSelectProperties').show();
+//                $(this).parent().parent().parent().find('.hiddenSelectProperties').show();
+//                $(this).parent().find('.hiddenSelectProperties').show();
+//                $(this).parent().parent().find('.hiddenSelectProperties').css({'display':'block'});
+//                opened = opened + 1;
+//            });
+//        }
 
         /**
          * Show the hidden elements of the checked languages
