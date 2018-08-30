@@ -68,6 +68,7 @@
 
 .property{
     clear: left;
+    padding: 1%;
 }
 
 .newPropertyFields{
@@ -83,9 +84,6 @@
     margin-left: 1%;
 }
 
-/*.propertySelect {*/
-/*max-width: 100%;*/
-/*}*/
 .propertyLabel{
     margin: 5px 0;
 }
@@ -101,9 +99,6 @@
 
 .languageInput{
     min-width: 8%;
-    /*width: 12%;*/ 
-    /*width: 30%;*/
-
 }
 
 .languageInput input{
