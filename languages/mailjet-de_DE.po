@@ -608,15 +608,6 @@ msgstr ""
 #~ msgid "The Matrix has you."
 #~ msgstr "Das Matrtix ich dich"
 
-msgid "title"
-msgstr "Zaglavien"
-
-msgid "language_checkbox"
-msgstr ""
-
-msgid "list"
-msgstr "38046"
-
 msgid "contactProperties"
 msgstr ""
 
@@ -624,36 +615,6 @@ msgid "contactPropertiesOptions"
 msgstr ""
 
 msgid "propertyDataType"
-msgstr ""
-
-msgid "contactProperties0"
-msgstr ""
-
-msgid "contactProperties1"
-msgstr ""
-
-msgid "contactProperties2"
-msgstr ""
-
-msgid "contactProperties3"
-msgstr ""
-
-msgid "contactProperties4"
-msgstr ""
-
-msgid "propertyDataType0"
-msgstr ""
-
-msgid "propertyDataType1"
-msgstr ""
-
-msgid "propertyDataType2"
-msgstr ""
-
-msgid "propertyDataType3"
-msgstr ""
-
-msgid "propertyDataType4"
 msgstr ""
 
 msgid "englishLabel0"
@@ -674,19 +635,19 @@ msgstr ""
 msgid ""
 msgstr ""
 
-msgid "GermanLabel0"
+msgid "language_checkbox"
 msgstr ""
 
-msgid "GermanLabel1"
+msgid "title"
+msgstr "Ger"
+
+msgid "list"
+msgstr "36160"
+
+msgid "contactProperties0"
 msgstr ""
 
-msgid "GermanLabel2"
-msgstr ""
-
-msgid "GermanLabel3"
-msgstr ""
-
-msgid "GermanLabel4"
+msgid "propertyDataType0"
 msgstr ""
 
 msgid "EnglishLabel0"
@@ -695,7 +656,16 @@ msgstr ""
 msgid "FrenchLabel0"
 msgstr ""
 
+msgid "GermanLabel0"
+msgstr ""
+
 msgid "SpanishLabel0"
+msgstr ""
+
+msgid "contactProperties1"
+msgstr ""
+
+msgid "propertyDataType1"
 msgstr ""
 
 msgid "EnglishLabel1"
@@ -704,7 +674,16 @@ msgstr ""
 msgid "FrenchLabel1"
 msgstr ""
 
+msgid "GermanLabel1"
+msgstr ""
+
 msgid "SpanishLabel1"
+msgstr ""
+
+msgid "contactProperties2"
+msgstr ""
+
+msgid "propertyDataType2"
 msgstr ""
 
 msgid "EnglishLabel2"
@@ -713,7 +692,16 @@ msgstr ""
 msgid "FrenchLabel2"
 msgstr ""
 
+msgid "GermanLabel2"
+msgstr ""
+
 msgid "SpanishLabel2"
+msgstr ""
+
+msgid "contactProperties3"
+msgstr ""
+
+msgid "propertyDataType3"
 msgstr ""
 
 msgid "EnglishLabel3"
@@ -722,7 +710,16 @@ msgstr ""
 msgid "FrenchLabel3"
 msgstr ""
 
+msgid "GermanLabel3"
+msgstr ""
+
 msgid "SpanishLabel3"
+msgstr ""
+
+msgid "contactProperties4"
+msgstr ""
+
+msgid "propertyDataType4"
 msgstr ""
 
 msgid "EnglishLabel4"
@@ -731,5 +728,17 @@ msgstr ""
 msgid "FrenchLabel4"
 msgstr ""
 
+msgid "GermanLabel4"
+msgstr ""
+
 msgid "SpanishLabel4"
+msgstr ""
+
+msgid "language_mandatory_email"
+msgstr ""
+
+msgid "language_mandatory_button"
+msgstr ""
+
+msgid "someTest"
 msgstr ""

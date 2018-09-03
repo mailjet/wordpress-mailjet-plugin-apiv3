@@ -1,13 +1,16 @@
 <!-- This file is used to markup the administration form of the widget. -->
 <div class="mailjet_widget_admin_container">
+
     <?php
     // Set widget defaults
     $defaults = array(
         'language_checkbox' => '',
         'title' => '',
-        'list' => ''
+        'list' => '',
     );
-
+//echo "<pre>First";
+//print_r($instance);
+//echo "</pre>";
     foreach ($languages as $language => $locale) {
         extract(wp_parse_args((array) $instance[$locale], $defaults));
         ?>
@@ -48,13 +51,30 @@
     }
     $advancedFormDefaults = array();
     for ($i = 0; $i <= 4; $i++) {
+        // Original
         $advancedFormDefaults[] = 'contactProperties' . $i;
         $advancedFormDefaults[] = 'propertyDataType' . $i;
         $advancedFormDefaults[] = 'EnglishLabel' . $i;
         $advancedFormDefaults[] = 'FrenchLabel' . $i;
         $advancedFormDefaults[] = 'GermanLabel' . $i;
         $advancedFormDefaults[] = 'SpanishLabel' . $i;
+
+        // Test
+//        $advancedFormDefaults['contactProperties' . $i] = '';
+//        $advancedFormDefaults['propertyDataType' . $i] = '';
+//        $advancedFormDefaults['EnglishLabel' . $i]  = '';
+//        $advancedFormDefaults['FrenchLabel' . $i]  = '';
+//        $advancedFormDefaults['GermanLabel' . $i]  = '';
+//        $advancedFormDefaults['SpanishLabel' . $i]  = '';
     }
+//    array_push($advancedFormDefaults, 'language_mandatory_email');
+    $advancedFormDefaults['language_mandatory_email'] = '';
+    $advancedFormDefaults['language_mandatory_button'] = '';
+//    $advancedFormDefaults['someTest'] = '';
+//    array_push($advancedFormDefaults, 'language_mandatory_button');
+//echo "<pre>Second";
+//print_r($instance);
+//echo "</pre>";
     extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
@@ -136,12 +156,13 @@
                                     <!--Select property-->
                                     <div class="propertySelect floatLeft">
                                         <select class="selectProperty mjProperties" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties' . $row . ']'); ?>">
-                                            <!--<option disabled selected value>Select a property</option>-->
-                                            <option value>Select a property</option>
+                                            <option disabled selected value="0">Select a property</option>
+                                            <option value="newProperty">Create new</option>
+                                            <option disabled value="0"><?php echo str_repeat('-', 16) ?></option>
                                             <?php
                                             $options = array(
-                                                'newProperty' => __('Create new', 'mailjet'),
                                             );
+
                                             if (is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
                                                 foreach ($mailjetContactProperties as $key => $mailjetContactProperty) {
                                                     $options[$key] = $mailjetContactProperty;
@@ -153,6 +174,22 @@
                                             }
                                             ?>
                                         </select>
+                                    </div>
+
+                                    <div class="createNewProperties">
+                                        <div class="newPropertyName floatLeft">
+                                            <input type="text"  />
+                                        </div>
+                                        <div class="newPropertyType floatLeft">
+                                            <select >
+                                                <option>Text</option>
+                                                <option>Int</option>
+                                                <option>Date</option>
+                                                <option>Bool</option>
+                                            </select>
+                                        </div>
+                                        <span class="btn btn-default floatLeft saveNewPropertyButton" >Save</span>
+                                        <span class="btn floatLeft cancelNewPropertyButton">Cancel</span>
                                     </div>
                                     <!--Display only if there is a selected option-->
                                     <div class="hiddenProperties" style="display: <?php echo $contactPropertiesN ? 'block' : 'none' ?>">
@@ -177,7 +214,7 @@
                                             ?>
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php echo $percent . '%' ?>">
-                                                <input type="text" value="<?php echo ${$language . 'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" placeholder="<?php echo $propertyDataTypeN != 2 ? $defaultPlaceholder.$language : $hiddenPlaceholder.$language ?>" />
+                                                <input type="text" value="<?php echo ${$language . 'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" placeholder="<?php echo $propertyDataTypeN != 2 ? $defaultPlaceholder . $language : $hiddenPlaceholder . $language ?>" />
                                             </div>
                                         <?php } ?>
                                         <div class="deleteProperty floatLeft" style="display: <?php echo $displayDelete ?>">
@@ -186,6 +223,40 @@
                                     </div>
                                 </div>
                             <?php } ?>
+                            <p class="customize-mandatory-email"><span><?php _e('Customize the placeholder text for the email address field:', 'mailjet') ?></span></p>
+                            <div id="mandatory-wrap">
+                                <span class="floatLeft mandatoryEmailLabel"><?php _e('Email address field placeholder text', 'mailjet'); ?></span>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="mandatoryEmailLanguageInput floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>"><?php echo $language ?></label>
+                                        <input class="form-control" type="text" value="<?php echo esc_attr($language_mandatory_email); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="" />
+                                    </div>
+                                <?php } ?>
+                                <p class="customize-mandatory-button"><span><?php _e('Customize the submission button label:', 'mailjet') ?></span></p>        
+                                <span class="floatLeft mandatoryEmailLabel"><?php _e('For button label', 'mailjet'); ?></span>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="mandatoryButtonLanguage floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>"><?php echo $language ?></label>
+                                        <input class="form-control" type="text"  value="<?php echo esc_attr($language_mandatory_button); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>" placeholder="" />
+                                    </div>
+                                <?php } ?>
+
+                            </div>
+
                         </div>
                         <!--Form validation messages-->
                         <div role="tabpanel" class="tab-pane advanced-form-validation-messages">2</div>

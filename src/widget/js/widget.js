@@ -29,7 +29,6 @@
 
             // Hide advanced form, changes must be saved
 //            $("div#advanced-form-link-wrap").hide();
-
         });
 
         // Select a contact property
@@ -38,10 +37,30 @@
 
             // Create new property
             if (optionValue === 'newProperty') {
+                // Hide select property inputs
+                $(this).parent().parent().find('.hiddenProperties').hide();
+
                 // Show new property inputs
+                $(this).parent().parent().find('.createNewProperties').show();
+                
+                // Hide all rows that are not setup
+                $('.selectProperty').each(function (env) {
+                    console.log($(this).val());
+                   if( $(this).val() === null) {
+                       $(this).parent().parent().hide();
+                   }
+                });
+                // Show next default property select
+//                $(this).parent().parent().next('.property').hide();
             } else {
                 // Show datatype and languages inputs/values and delete
                 $(this).parent().parent().find('.hiddenProperties').show();
+
+                // Hide inputs of adding new property
+                $(this).parent().parent().find('.createNewProperties').hide();
+                
+                // Reset inputs for adding new property
+                resetAddingNewPropertyInputs($(this));
 
                 // Show next default property select
                 $(this).parent().parent().next('.property').show();
@@ -63,12 +82,25 @@
             // Show delete icon for the last row
             $(this).parent().parent().prev().find('.deleteProperty').show();
 
-            // Reset selects
-            $(this).parent().parent().find('.selectProperty').val(0);
-            $(this).parent().parent().find('.propertyDataType').val(0);
-            // reset inputs
-            $(this).parent().parent().find('.languageInput input').val('');
+            resetHiddenPropertiesInputs($(this));
         });
+        
+        function resetHiddenPropertiesInputs(element) {
+            // Reset selects
+            element.parent().parent().find('.selectProperty').val(0);
+            element.parent().parent().find('.propertyDataType').val(0);
+
+            // reset language inputs
+            element.parent().parent().find('.languageInput input').val('');
+        }
+        
+        function resetAddingNewPropertyInputs(element) {
+            // Reset new property name input
+            element.parent().parent().find('.newPropertyName input').val('');
+
+            // Reset new property datatype select
+            element.parent().parent().find('.newPropertyType input').val(0);
+        }
 
         $(document).on('click', '#saveAdvancedForm', function () {
             $("input[name='savewidget']").click();
@@ -98,6 +130,21 @@
             } else {
                 replaceLanguagePlaceholder($(this), hiddenPlaceholder, defaultPlaceholder);
             }
+        });
+
+        $(document).on('click', '.cancelNewPropertyButton', function() {
+            // Hide new property inputs
+            $(this).parent().parent().find('.createNewProperties').hide();
+            
+            // Reset inputs
+            resetHiddenPropertiesInputs($(this));
+
+           // Show select property inputs
+//            $(this).parent().parent().find('.hiddenProperties').show();
+            
+            // Show next default property select
+//            $(this).parent().parent().next('.property').show();
+            
         });
 
         function replaceLanguagePlaceholder(element, searchStr, replaceStr) {
