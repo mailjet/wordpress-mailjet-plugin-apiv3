@@ -63,47 +63,47 @@ class MailjetMenu
 
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial mailjet API settings sub-menu added ]');
 
-                add_submenu_page('mailjet_settings_page', __('Manage your Mailjet lists', 'mailjet'),
+                add_submenu_page(null, __('Manage your Mailjet lists', 'mailjet'),
                     __('Lists', 'mailjet'), 'read', 'mailjet_settings_contacts_menu',
                     array($this, 'show_contacts_page'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet lists\' sub-menu added ]');
-                add_submenu_page('mailjet_settings_page', __('Manage your Mailjet campaigns', 'mailjet'),
+                add_submenu_page(null, __('Manage your Mailjet campaigns', 'mailjet'),
                     __('Campaigns', 'mailjet'), 'read', 'mailjet_settings_campaigns_menu',
                     array($this, 'show_campaigns_page'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet campaigns\' sub-menu added ]');
-                add_submenu_page('mailjet_settings_page', __('View your Mailjet statistics', 'mailjet'),
+                add_submenu_page(null, __('View your Mailjet statistics', 'mailjet'),
                     __('Statistics', 'mailjet'), 'read', 'mailjet_settings_stats_menu',
                     array($this, 'show_stats_page'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet statistics\' sub-menu added ]');
 
                 // Initial configuration pages
-                add_submenu_page('mailjet_settings_page', __('Configure your lists.', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
+                add_submenu_page(null, __('Configure your lists.', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
                     array(new InitialContactListsSettings(), 'mailjet_initial_contact_lists_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
 
                 // All Setup page
-                add_submenu_page('mailjet_settings_page', __('You\'re all set up!', 'mailjet'), null, 'read', 'mailjet_allsetup_page',
+                add_submenu_page(null, __('You\'re all set up!', 'mailjet'), null, 'read', 'mailjet_allsetup_page',
                     array(new AllSetup(), 'mailjet_allsetup_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet All Setup sub-menu added ]');
 
 
                 // Dashboard page
-                add_submenu_page('mailjet_settings_page', __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_dashboard_page',
+                add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_dashboard_page',
                     array(new Dashboard(), 'mailjet_dashboard_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Dashboard sub-menu added ]');
 
 
                 // Settings pages
-                add_submenu_page('mailjet_settings_page', __('Connect your Mailjet account', 'mailjet'), null, 'read', 'mailjet_connect_account_page',
+                add_submenu_page(null, __('Connect your Mailjet account', 'mailjet'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
-                add_submenu_page('mailjet_settings_page', __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page',
+                add_submenu_page(null, __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page',
                     array(new EnableSendingSettings(), 'mailjet_sending_settings_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
-                add_submenu_page('mailjet_settings_page', __('Subscription options', 'mailjet'), null, 'read', 'mailjet_subscription_options_page',
+                add_submenu_page(null, __('Subscription options', 'mailjet'), null, 'read', 'mailjet_subscription_options_page',
                     array(new SubscriptionOptionsSettings(), 'mailjet_subscription_options_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
-                add_submenu_page('mailjet_settings_page', __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page',
+                add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
             }

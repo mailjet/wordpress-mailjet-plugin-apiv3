@@ -46,8 +46,6 @@ class MailjetSettings
 
 
 
-
-
         register_setting('mailjet_connect_account_page', 'mailjet_apikey');
         register_setting('mailjet_connect_account_page', 'mailjet_apisecret');
         register_setting('mailjet_connect_account_page', 'settings_step');
@@ -91,16 +89,20 @@ class MailjetSettings
 
         // Redirect the user to the Dashboard if he already configured his initial settings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
+        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
 
-        if (get_option('settings_step') != 'initial_step' && 'mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
-//            wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
-//            exit;
-        }
+        // We allow again initial setup if user comes from WP Plugins page link
+        if (!($fromPage == 'plugins')) {
+            if (get_option('settings_step') != 'initial_step' && 'mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
+                wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
+                exit;
+            }
 
-        // If defined some contact list settings the we skip that page
-        if (get_option('settings_step') != 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage && !empty(get_option('activate_mailjet_initial_sync')) && !empty(get_option('mailjet_sync_list'))) {
-//            wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
-//            exit;
+            // If defined some contact list settings the we skip that page
+            if (get_option('settings_step') != 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage && !empty(get_option('activate_mailjet_initial_sync')) && !empty(get_option('mailjet_sync_list'))) {
+                wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
+                exit;
+            }
         }
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handle internal Mailjet redirections - End ]');
@@ -215,7 +217,7 @@ class MailjetSettings
             return $links;
         }
 
-        $settings_link = '<a href="admin.php?page=mailjet_dashboard_page">' . __('Settings', 'mailjet') . '</a>';
+        $settings_link = '<a href="admin.php?page=mailjet_settings_page&from=plugins">' . __('Settings', 'mailjet') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }

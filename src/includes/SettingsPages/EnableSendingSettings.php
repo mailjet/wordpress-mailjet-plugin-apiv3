@@ -97,11 +97,11 @@ class EnableSendingSettings
                         <p><label for="email"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label>
                             <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
                         </p>
-                        <input type="submit" value="Save" name="send_test_email_btn" class="MailjetSubmit" id="send_test_email_btn"/>
+                        <input type="submit" value="<?=__('Send', 'mailjet')?>" name="send_test_email_btn" class="MailjetSubmit" id="send_test_email_btn"/>
                         <input name="nextBtn" class="nextBtn cancelTestEmail" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
                         <br style="clear: left;"/>
                     </div>
-                    <input name="mailjet_test" type="button" id="mailjet_test" class="sendTestMeilBtn" value="Send a test">
+                    <input name="mailjet_test" type="button" id="mailjet_test" class="sendTestMeilBtn" value="<?=__('Send a test', 'mailjet')?>">
                     <br />
                 <?php } ?>
             </div>

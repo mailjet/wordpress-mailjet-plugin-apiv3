@@ -300,6 +300,14 @@ input[type="submit"].button {
 #create_contact_list:hover {
     text-decoration: none;
 }
+.greenLink {
+    font-weight: 700;
+    color: #19BC9C;
+    text-decoration: none;
+}
+.greenLink:hover {
+    text-decoration: none;
+}
 
 
 /* Dashboard */
