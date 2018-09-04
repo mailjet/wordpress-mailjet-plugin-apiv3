@@ -68,6 +68,7 @@
 
 .property{
     clear: left;
+    padding: 1%;
 }
 
 .newPropertyFields{
@@ -83,9 +84,6 @@
     margin-left: 1%;
 }
 
-/*.propertySelect {*/
-/*max-width: 100%;*/
-/*}*/
 .propertyLabel{
     margin: 5px 0;
 }
@@ -101,9 +99,6 @@
 
 .languageInput{
     min-width: 8%;
-    /*width: 12%;*/ 
-    /*width: 30%;*/
-
 }
 
 .languageInput input{
@@ -125,9 +120,74 @@
     /*display: none;*/
 }
 
+.createNewProperties{
+    display: none;
+}
+
+.newPropertyName{
+    width: 30%;
+}
+
+.newPropertyName input{
+    width: 100%;
+    height: 28px;
+}
+
+.newPropertyType select{
+    width: 100px;
+    margin-left: 10px;
+}
+
+.saveNewPropertyButton{
+    margin-left: 25px!important;
+    font-size: 11px!important;
+}
+
+.cancelNewPropertyButton{
+    font-size: 11px!important;
+    margin-left: -2px!important;
+}
+
+.cancelNewPropertyButton {
+    color: silver;
+}
+
+
 @media (min-width: 992px) {
     .modal-mailjet-lg {
         width: 1200px!important;
         height: 900px; /* control height here */
     }
+}
+
+.customize-mandatory-email{
+    font-weight: bold;
+    margin: 70px 0 10px 20px;
+    clear: left;
+}
+
+.customize-mandatory-button{
+    font-weight: bold;
+    margin: 70px 0 10px 10px;
+    clear: left;
+}
+
+#mandatory-wrap{
+    clear: left;
+    padding: 1%;
+}
+
+.mandatoryEmailLabel{
+    width: 250px;
+    margin-top: 27px;
+    margin-right: 60px;
+}
+
+.mandatoryEmailLanguageInput input {
+    width: 100%;
+    height: 28px;
+}
+
+.mandatoryButtonLanguage{
+        width: 250px;
 }
