@@ -71,7 +71,9 @@ class InitialContactListsSettings
             <input name="nextBtn" class="nextBtn closeCreateList" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
             <br style="clear: left;"/>
         </div>
-        <input name="create_contact_list" type="button" id="create_contact_list" value="+ Create a new list">
+
+        <img id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.png'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
+        <a id="create_contact_list" href="#"><?php echo __('Create a new list', 'mailjet' ); ?></a>
         <br /><br />
 <hr>
 
@@ -238,14 +240,15 @@ class InitialContactListsSettings
 
         </div>
 
-        <div style="margin-top: 20px;">
-            <h3><?php echo __('Need help getting started?', 'mailjet' ); ?></h3>
+        <div class="bottom_links">
+            <div class="needHelpDiv">
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <?php echo __('Need help getting started?', 'mailjet' ); ?>
+            </div>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-            <?php echo ' | ' ?>
+            &nbsp;&nbsp;&nbsp;
             <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
         </div>
-
-
 
         <?php
 

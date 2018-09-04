@@ -160,10 +160,13 @@ class ConnectAccountSettings
             </div>
         </div>
 
-        <div style="margin-top: 20px;">
-            <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
+        <div class="bottom_links">
+            <div class="needHelpDiv">
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <?php echo __('Need help?', 'mailjet' ); ?>
+            </div>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-            <?php echo ' | ' ?>
+            &nbsp;&nbsp;&nbsp;
             <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
         </div>
 

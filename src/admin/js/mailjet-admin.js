@@ -85,7 +85,8 @@
 
         // Send test email popup
         $(function() {
-            $('#mailjet_test').on('click', function() {
+            $('#mailjet_test').on('click', function(event) {
+                event.preventDefault();
                 $('.pop').slideToggle('fast');
                 $('#mailjet_test').hide();
                 $('#enableSendingSubmit').hide();
@@ -104,9 +105,11 @@
 
 		// Create new Contact List popup
 	   	$(function() {
-            $('#create_contact_list').on('click', function() {
+            $('#create_contact_list').on('click', function(event) {
+                event.preventDefault();
                 $('.pop').slideToggle('fast');
                 $('#create_contact_list').hide();
+                $('#createContactListImg').hide();
                 $('#initialContactListsSubmit').hide();
                 return false;
             });
@@ -114,6 +117,7 @@
                 event.preventDefault();
                 $('.pop').slideToggle('fast');
                 $('#create_contact_list').show();
+                $('#createContactListImg').show();
                 $('#initialContactListsSubmit').show();
                 return false;
             });

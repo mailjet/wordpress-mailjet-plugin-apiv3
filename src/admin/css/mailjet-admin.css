@@ -2,6 +2,44 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.mailjet_page_mailjet_allsetup_page #wpwrap,
+.mailjet_page_mailjet_user_access_page #wpwrap,
+.mailjet_page_mailjet_subscription_options_page #wpwrap,
+.mailjet_page_mailjet_sending_settings_page #wpwrap,
+.mailjet_page_mailjet_connect_account_page #wpwrap,
+.mailjet_page_mailjet_settings_page #wpwrap,
+.mailjet_page_mailjet_initial_contact_lists_page #wpwrap,
+.mailjet_page_mailjet_dashboard_page #wpwrap,
+.toplevel_page_mailjet_settings_page  #wpwrap {
+    background-color: #F2F2F2;
+}
+
+/* Checkbox background change*/
+.mailjet_row input[type="checkbox"] {
+    content: "\00a0";
+    display: inline-block;
+    font: 16px/1em sans-serif;
+    margin: 0 .25em 0 0;
+    padding: 0;
+    vertical-align: top;
+    height: 16px;
+    width: 16px;
+    border: 1px solid #19BC9C;
+    border-radius: 3px;
+}
+.mailjet_row input[type="checkbox"]:checked {
+    background: #19BC9C;
+    content: "\2714";
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
+}
+.mailjet_row input[type="checkbox"]:checked:before {
+     color: #FFF;
+}
+
+
+
 
 .mainContainer {
     min-height: 720px;
@@ -89,7 +127,8 @@
     display: flex;
     align-items: stretch;
     background-color: #FFF;
-    border: 1px solid #0a0a0a;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
     margin:20px 20px 20px auto;
     padding:20px;
 }
@@ -115,7 +154,6 @@
 
 .left .centered {
     border-right: solid 1px #C1C1C1;
-    padding:20px;
 }
 .right .centered {
     background-color: #ffffff;
@@ -132,7 +170,20 @@ input[type="submit"].button {
 }
 
 .bottom_links {
-    padding-top: 50px;
+    margin-top:20px;
+}
+.bottom_links a, .bottom_links_dashboard a, .bottom_links_allsetup a {
+    color: #19BC9C;
+    text-decoration: none;
+}
+.bottom_links a:hover, .bottom_links_dashboard a:hover, .bottom_links_allsetup a:hover {
+    color: #555555;
+    text-decoration: none;
+}
+.needHelpDiv {
+    float: left;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 .centered ul li .settingsMenuLink {
@@ -141,18 +192,20 @@ input[type="submit"].button {
 }
 .centered ul li .settingsMenuLink a {
     padding: 10px;
-    color: #000000;
     width: 100%;
     text-decoration: none;
     display: block;
+    color: #555555;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
 }
 .centered ul li .settingsMenuLink a:hover {
-    color: #FFF;
-    background-color: #2e4453;
+    background-color: #F2F2F2;
 }
 .centered ul li .settingsMenuLink a.active {
-    color: #FFF;
-    background-color: #2e4453;
+    color: #19BC9C;
+    background-color: transparent;
 }
 
 
@@ -214,6 +267,14 @@ input[type="submit"].button {
     margin: 8px 0;
     padding-bottom: 8px;
 }
+#create_contact_list {
+    font-weight: 700;
+    color: #19BC9C;
+    text-decoration: none;
+}
+#create_contact_list:hover {
+    text-decoration: none;
+}
 
 
 /* Dashboard */
@@ -272,6 +333,7 @@ input[type="submit"].button {
 .bottom_links_dashboard {
     clear: left;
     left: 0;
+    padding:10px;
 }
 
 
@@ -333,6 +395,7 @@ input[type="submit"].button {
 .bottom_links_allsetup {
     clear: left;
     left: 0;
+    padding:10px;
 }
 
 .nextBtnReverse, .nextBtnReverseDashboard {
