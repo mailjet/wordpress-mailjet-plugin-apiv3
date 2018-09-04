@@ -128,7 +128,7 @@ class InitialSettings
             $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (false == $isValidAPICredentials) {
 //                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             } else {
 //            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
 
@@ -188,8 +188,22 @@ class InitialSettings
 
             </div>
 
-            <div id="initialSettingsImage">
-                <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image.png'; ?>" alt="Welcome to the Mailjet" />
+
+            <div id="initialSettingsDescription">
+                <div class="availableContactListsContainer">
+                    <div class="initialSettingsDescriptionRow">
+                        <div class="initialSettingsImageCell"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                        <div class="initialSettingsTextCell"><h4><?php echo __('Collect email addresses...', 'mailjet' ); ?></h4><?php echo __('Email addresses are collected from your website', 'mailjet' ); ?></div>
+                    </div>
+                    <div class="initialSettingsDescriptionRow">
+                        <div class="initialSettingsImageCell"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                        <div class="initialSettingsTextCell"><h4><?php echo __('...and add them automatically to a contact list', 'mailjet' ); ?></h4><?php echo __('Email are added to your contact list', 'mailjet' ); ?></div>
+                    </div>
+                    <div class="initialSettingsDescriptionRow">
+                        <div class="initialSettingsImageCell"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                        <div class="initialSettingsTextCell"><h4><?php echo __('We will take care if delivering your newsletter', 'mailjet' ); ?></h4><?php echo __('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet' ); ?></div>
+                    </div>
+                </div>
             </div>
         </div>
 <!--        <br style="clear: left;"/>-->

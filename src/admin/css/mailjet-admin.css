@@ -78,11 +78,32 @@
     left:0;
     padding:10px;
  }
-#initialSettingsImage {
+#initialSettingsDescription {
     float: left;
     display: inline-block;
-    height: 320px;
     width: 526px;
+}
+
+.initialSettingsDescriptionContainer {
+    display: table;
+}
+.initialSettingsDescriptionRow {
+    display:table-row;
+    width:500px;
+    border:1px solid  #666666;
+}
+.initialSettingsImageCell {
+    padding: 20px;
+    padding-left:2px;
+    float:left;/*fix for  buggy browsers*/
+    display:table-column;
+    width:100px;
+}
+.initialSettingsTextCell {
+    padding: 20px;
+    float:left;/*fix for  buggy browsers*/
+    display:table-column;
+    width:400px;
 }
 #initialSettingsForm {
     float: left;
