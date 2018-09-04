@@ -29,6 +29,7 @@ class Dashboard
         }
 
         ?>
+        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="wrap dashboard">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
@@ -36,35 +37,35 @@ class Dashboard
                 <div class="block_single">
                     <h2><?php echo __('Send newsletter', 'mailjet' ); ?></h2>
                     <p><?php echo __('Create and manage your newsletters. Vew your campaign statistics', 'mailjet' ); ?></p>
-                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'" value="<?=__('My campaigns', 'mailjet')?>">
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
+                    <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard1" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'" value="<?=__('My campaigns', 'mailjet')?>">
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_main_image.png'; ?>" />
                 </div>
-
             </div>
+
             <div class="container">
                 <div class="block">
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_top_left_image.png'; ?>" />
                     <h2><?php echo __('Manage my contacts', 'mailjet' ); ?></h2>
                     <p><?php echo __('View and manage your contact lists', 'mailjet' ); ?></p>
-                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'" value="<?=__('My contact lists')?>">
+                    <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard2" onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'" value="<?=__('My contact lists')?>">
                 </div>
                 <div class="block">
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_top_right_image.png'; ?>" />
                     <h2><?php echo __('Add a subscription form', 'mailjet' ); ?></h2>
                     <p><?php echo __('Customize a subscription form and add it to your Wordpress website', 'mailjet' ); ?></p>
-                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'widgets.php'" value="<?=__('My widgets', 'mailjet')?>">
+                    <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard3" onclick="location.href = 'widgets.php'" value="<?=__('My widgets', 'mailjet')?>">
                 </div>
                 <div class="block">
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_bottom_left_image.png'; ?>" />
                     <h2><?php echo __('View statistics', 'mailjet' ); ?></h2>
                     <p><?php echo __('View your sending statistics over a period of time', 'mailjet' ); ?></p>
-                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'" value="<?=__('My statistics')?>">
+                    <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard4" onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'" value="<?=__('My statistics')?>">
                 </div>
                 <div class="block">
-                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/mj_logo_med.png'; ?>" />
+                    <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_bottom_right_image.png'; ?>" />
                     <h2><?php echo __('Update settings', 'mailjet' ); ?></h2>
                     <p><?php echo __('Review and modify your plugin settings', 'mailjet' ); ?></p>
-                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_connect_account_page'" value="<?=__('Settings')?>">
+                    <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard5" onclick="location.href = 'admin.php?page=mailjet_connect_account_page'" value="<?=__('Settings')?>">
                 </div>
             </div>
             <br style="margin: 20px; margin-left: 220px;clear: left;" />

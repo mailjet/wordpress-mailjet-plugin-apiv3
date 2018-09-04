@@ -94,8 +94,12 @@ class EnableSendingSettings
 
                 <?php  if (!empty(get_option('mailjet_enabled')) && 1 == get_option('mailjet_enabled')) { ?>
                     <div class="test_email_popup pop">
-                        <p><label for="email"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label><input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" /></p>
-                        <p><input type="submit" value="Send" name="send_test_email_btn" id="send_test_email_btn"/> or <a class="close" href="/">Cancel</a></p>
+                        <p><label for="email"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label>
+                            <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
+                        </p>
+                        <input type="submit" value="Save" name="send_test_email_btn" class="MailjetSubmit" id="send_test_email_btn"/>
+                        <input name="nextBtn" class="nextBtn cancelTestEmail" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
+                        <br style="clear: left;"/>
                     </div>
                     <input name="mailjet_test" type="button" id="mailjet_test" value="Send a test">
                     <br />
@@ -205,7 +209,7 @@ class EnableSendingSettings
         ?>
 
 
-        <div class="mainContainer">
+        <div class="mainContainerSettings">
             <div class="left">
             <div class="centered">
                 <?php
@@ -226,7 +230,7 @@ class EnableSendingSettings
                     // (sections are registered for "mailjet", each field is registered to a specific section)
                     do_settings_sections('mailjet_sending_settings_page');
                     // output save settings button
-                    submit_button('Save');
+                    submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
                     ?>
                 </form>
             </div>

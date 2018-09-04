@@ -4,16 +4,94 @@
  */
 
 .mainContainer {
+    min-height: 720px;
+    width: 1072px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
+    /*margin-top: 20px;*/
+    padding: 20px;
+}
+
+.mailjet_row label {
+    font-weight: normal;
+}
+
+#initialSettingsSubmit, #initialContactListsSubmit, #create_contact_list_btn, .closeCreateList,  #send_test_email_btn, .cancelTestEmail,
+#enableSendingSubmit, #subscriptionOptionsSubmit,  #connectAccountSubmit,  #userAccessSubmit {
+    height: 36px;
+    /*width: 311px;*/
+    background-color: #FEAD0D;
+    float: left;
+    color: #FFFFFF;
+    font-family: "Arial";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    margin-left:10px;
+}
+#initialSettingsHead {
+    height: 48px;
+    width: 1072px;
+    border-radius: 3px 3px 0 0;
+    background-color: #23282D;
+    margin-top:20px;
+    left:0;
+    padding:10px;
+ }
+#initialSettingsImage {
+    float: left;
+    display: inline-block;
+    height: 320px;
+    width: 526px;
+}
+#initialSettingsForm {
+    float: left;
+    /*height: 480px;*/
+    width: 359px;
+    border: 1px solid #E5E5E5;
+    border-radius: 3px;
+    padding: 10px;
+}
+#initialSettingsForm input[type="text"] {
+    height: 36px;
+    width: 311px;
+    border: 1px solid #888888;
+    border-radius: 3px;
+}
+#initialContactListsForm input[type="text"] {
+    height: 36px;
+    width: 311px;
+    border: 1px solid #888888;
+    border-radius: 3px;
+}
+
+.nextBtn {
+    background-color: transparent;
+    height: 36px;
+    border: 1px solid #FEAD0D;
+    border-radius: 3px;
+    color: #FCB340;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    margin-left:10px;
+}
+.nextBtn:hover {
+    background-color: #FEAD0D;
+    color: #FFF;
+}
+
+.mainContainerSettings {
     display: flex;
     align-items: stretch;
     background-color: #FFF;
     border: 1px solid #0a0a0a;
     margin:20px 20px 20px auto;
     padding:20px;
-}
-
-.dark {
-    background-color: #d8d8d8;
 }
 
 
@@ -42,6 +120,7 @@
 .right .centered {
     background-color: #ffffff;
     padding:20px;
+    border:none;
 }
 
 .centered h1 {
@@ -76,39 +155,17 @@ input[type="submit"].button {
     background-color: #2e4453;
 }
 
-.nextBtn {
-    background-color: #008EC2;
-    border-radius: 5px;
-    padding: 5px 10px;
-    color: #fff;
-    cursor: pointer;
-}
-.nextBtn:hover {
-    background-color: #8CD0D3;
-}
 
 
 /* Send test email popup */
 .test_email_popup {
-    background-color:#FFFFFF;
-    border:1px solid #999999;
-    cursor:default;
     display:none;
-    margin-top: 15px;
-    position:absolute;
-    text-align:left;
-    width:394px;
-    z-index:50;
-    padding: 25px 25px 20px;
+    margin: 20px auto;
 }
 .test_email_popup label {
     display: block;
-    margin-bottom: 3px;
-    padding-left: 15px;
-    text-indent: -15px;
 }
 .test_email_popup p, .test_email_popup.div {
-    border-bottom: 1px solid #EFEFEF;
     margin: 8px 0;
     padding-bottom: 8px;
 }
@@ -133,9 +190,10 @@ input[type="submit"].button {
 .availableContactListsRow:nth-child(odd) {background: #C6C6C6;}
 
 .availableContactListsNameCell {
+    padding-left:2px;
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:70%;
+    width:69%;
 }
 .availableContactListsCountCell {
     float:left;/*fix for  buggy browsers*/
@@ -146,25 +204,13 @@ input[type="submit"].button {
 
 /* Create new Contact List popup */
 .create_contact_list_popup {
-    background-color:#FFFFFF;
-    border:1px solid #999999;
-    cursor:default;
     display:none;
-    margin-top: 15px;
-    position:absolute;
-    text-align:left;
-    width:394px;
-    z-index:50;
-    padding: 25px 25px 20px;
+    margin: 20px auto;
 }
 .create_contact_list_popup label {
     display: block;
-    margin-bottom: 3px;
-    padding-left: 15px;
-    text-indent: -15px;
 }
 .create_contact_list_popup p, .create_contact_list_popup.div {
-    border-bottom: 1px solid #EFEFEF;
     margin: 8px 0;
     padding-bottom: 8px;
 }
@@ -172,56 +218,57 @@ input[type="submit"].button {
 
 /* Dashboard */
 .dashboard {
-    /*width: 100%;*/
-    background-color:#d8d8d8;
-    border: 1px solid #0a0a0a;
-    margin:20px 20px 20px auto;
+    width: 1072px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
     padding:20px;
 }
 .dashboard .container {
     text-align: center;
-    max-width: 480px;
     margin: 0 auto;
+    max-width: 496px;
     float: left;
 }
 
 .dashboard .block {
-    width: 200px;
-    height: 200px;
-    margin: 10px;
+    height: 328px;
+    width: 220px;
+    border: 1px solid #E5E5E5;
+    border-radius: 3px;
+    margin: 5px;
     display: inline-block;
-    border:1px solid #999999;
-    background-color:#FFF;
     padding:5px;
+    float: left;
 }
 
 .dashboard .block img {
-    width: 50px;
-    height: 50px;
+    width: 101px;
+    height: 71px;
     margin: 10px;
     display: inline-block;
-    border: 2px solid #C1C1C1;
 }
 
-
-.dashboard .block_single img {
-    width: 280px;
-    height: 280px;
-    margin: 5px;
-    display: inline-block;
-    border: 2px solid #C1C1C1;
-}
 
 .dashboard .block_single {
-    width: 300px;
-    min-height: 440px;
-    /*height: 100%;*/
-    margin: 10px;
+    min-height: 672px;
+    width: 480px;
+    border: 1px solid #E5E5E5;
+    border-radius: 3px;
+    margin: 5px;
     display: inline-block;
-    border:1px solid #999999;
-    background-color:#FFF;
     padding:0px;
+    float: left;
 }
+
+.dashboard .block_single img {
+    width: 448px;
+    height: 289px;
+    margin: 5px;
+    display: inline-block;
+}
+
+
 .bottom_links_dashboard {
     clear: left;
     left: 0;
@@ -230,15 +277,17 @@ input[type="submit"].button {
 
 /* Allsetup */
 .allsetup {
-    /*width: 100%;*/
-    background-color:#d8d8d8;
-    border: 1px solid #0a0a0a;
-    margin:20px 20px 20px auto;
-    padding:20px;
+    min-height: 720px;
+    width: 1072px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
+    /*margin-top: 20px;*/
+    padding: 20px;
 }
 .allsetup .container {
     text-align: center;
-    max-width: 450px;
+    max-width: 340px;
     margin: 0 auto;
     float: left;
 }
@@ -271,18 +320,41 @@ input[type="submit"].button {
 }
 
 .allsetup .block_single {
-    width: 200px;
-    min-height: 420px;
+    width: 300px;
+    min-height: 480px;
     /*height: 100%;*/
     margin: 5px;
     display: inline-block;
-    border:1px solid #999999;
-    background-color:#FFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 3px;
     padding:5px;
 }
+
 .bottom_links_allsetup {
     clear: left;
     left: 0;
+}
+
+.nextBtnReverse, .nextBtnReverseDashboard {
+    background-color: #FEAD0D;
+    width: 272px;
+    height: 36px;
+    border: 1px solid #FEAD0D;
+    border-radius: 3px;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    margin-left:10px;
+}
+.nextBtnReverseDashboard {
+    width: 192px;
+}
+.nextBtnReverse:hover, .nextBtnReverseDashboard:hover {
+    background-color: transparent;
+    color: #FCB340;
 }
 
 .mailjet_sync_options_div{

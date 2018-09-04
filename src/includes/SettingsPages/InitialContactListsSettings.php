@@ -55,7 +55,7 @@ class InitialContactListsSettings
                 ?>
                 <div class="availableContactListsRow">
                     <div class="availableContactListsNameCell"><?=$mailjetContactList['Name'] ?></div>
-                    <div class="availableContactListsCountCell"><?=$mailjetContactList['SubscriberCount'] ?> <?php echo  __('Contacts', 'mailjet'); ?></div>
+                    <div class="availableContactListsCountCell"><?=$mailjetContactList['SubscriberCount'] ?> <?php echo  __('contacts', 'mailjet'); ?></div>
                 </div>
                 <?php
             }
@@ -63,17 +63,21 @@ class InitialContactListsSettings
         </div>
         </div>
 
-        <div class="create_contact_list_popup pop">
-            <p><label for="create_list_name"><?php echo __('Name your list', 'mailjet' ); ?></label><input type="text" size="30" name="create_list_name" id="create_list_name" /></p>
-            <p><input type="submit" value="Create" name="create_contact_list_btn" id="create_contact_list_btn"/> or <a class="closeCreateList" href="/">Cancel</a></p>
+        <div class="create_contact_list_popup pop" id="create_contact_list_popup">
+            <p><label for="create_list_name"><?php echo __('Name your list', 'mailjet' ); ?></label>
+                <input type="text" size="30" name="create_list_name" id="create_list_name" />
+            </p>
+            <input type="submit" value="Save" name="create_contact_list_btn" class="MailjetSubmit" id="create_contact_list_btn"/>
+            <input name="nextBtn" class="nextBtn closeCreateList" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
+            <br style="clear: left;"/>
         </div>
         <input name="create_contact_list" type="button" id="create_contact_list" value="+ Create a new list">
         <br /><br />
 <hr>
 
-        <fieldset>
-            <h2><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h2>
-            <h4><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet' ); ?></h4>
+        <fieldset class="initialContactListsFieldset">
+            <h3><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h3>
+            <p><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet' ); ?></p>
             <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
             <label for="activate_mailjet_sync">
                 <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
@@ -195,24 +199,20 @@ class InitialContactListsSettings
         ?>
 
 
-        <div class="mainContainer dark">
-            <div class="left">
-            <div class="centered" style="border-right: none;">
-                <div class="wrap">
-                    <h1><?php echo __('Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
-                    <p>
-                        <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your contacts, directly from Wordpress.', 'mailjet'); ?>
-                    </p>
-                </div>
-                <img style="width: 100%; margin-top:20px;" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image.png'; ?>" alt="Welcome to the Mailjet" />
-            </div>
-        </div>
+        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+        <div class="mainContainer">
 
-
-        <div class="right">
-        <div class="centered">
             <div class="wrap">
-                <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                <h1><?php echo __('Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                <p>
+                    <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your contacts, directly from Wordpress.', 'mailjet'); ?>
+                </p>
+            </div>
+
+
+
+            <div id="initialContactListsForm">
+                <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
@@ -222,27 +222,24 @@ class InitialContactListsSettings
                     do_settings_sections('mailjet_initial_contact_lists_page');
                     // output save settings button
                     if (MailjetApi::isValidAPICredentials()) {
-                        submit_button('Save', 'primary', 'submit', false);
+                        submit_button('Apply and continue', 'MailjetSubmit', 'submit', false, array('id' => 'initialContactListsSubmit'));
                     } else {
                         update_option('settings_step', 'initial_step')
                         ?>
                         <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'mailjet')?>">
                     <?php
-                    }
+                    } ?>
 
-                    if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_contact_lists_settings_step') { ?>
-                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?=__('Next', 'mailjet')?>">
-                    <?php }
-                    ?>
+                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?=__('Skip this step', 'mailjet')?>">
+
                     <br />
                 </form>
             </div>
-        </div>
-        </div>
+
         </div>
 
         <div style="margin-top: 20px;">
-            <h2><?php echo __('Need help getting started?', 'mailjet' ); ?></h2>
+            <h3><?php echo __('Need help getting started?', 'mailjet' ); ?></h3>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
             <?php echo ' | ' ?>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>

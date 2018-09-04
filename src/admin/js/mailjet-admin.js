@@ -84,28 +84,19 @@
 
 
         // Send test email popup
-        function deselect(e) {
-            $('.pop').slideFadeToggle(function() {
-                e.removeClass('selected');
-            });
-        }
-        $.fn.slideFadeToggle = function(easing, callback) {
-            return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
-        };
-
         $(function() {
             $('#mailjet_test').on('click', function() {
-                if($(this).hasClass('selected')) {
-                    deselect($(this));
-                } else {
-                    $(this).addClass('selected');
-                    $('.pop').slideFadeToggle();
-                }
+                $('.pop').slideToggle('fast');
+                $('#mailjet_test').hide();
+                $('#enableSendingSubmit').hide();
                 return false;
             });
 
-            $('.close').on('click', function() {
-                deselect($('#mailjet_test'));
+            $('.cancelTestEmail').on('click', function(event) {
+                event.preventDefault();
+                $('.pop').slideToggle('fast');
+                $('#mailjet_test').show();
+                $('#enableSendingSubmit').show();
                 return false;
             });
         });
@@ -114,16 +105,16 @@
 		// Create new Contact List popup
 	   	$(function() {
             $('#create_contact_list').on('click', function() {
-                if($(this).hasClass('selected')) {
-                    deselect($(this));
-                } else {
-                    $(this).addClass('selected');
-                    $('.pop').slideFadeToggle();
-                }
+                $('.pop').slideToggle('fast');
+                $('#create_contact_list').hide();
+                $('#initialContactListsSubmit').hide();
                 return false;
             });
-            $('.closeCreateList').on('click', function() {
-                deselect($('#create_contact_list'));
+            $('.closeCreateList').on('click', function(event) {
+                event.preventDefault();
+                $('.pop').slideToggle('fast');
+                $('#create_contact_list').show();
+                $('#initialContactListsSubmit').show();
                 return false;
             });
 

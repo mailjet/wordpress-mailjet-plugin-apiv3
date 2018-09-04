@@ -93,14 +93,14 @@ class MailjetSettings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
 
         if (get_option('settings_step') != 'initial_step' && 'mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret'))) {
-            wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
-            exit;
+//            wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
+//            exit;
         }
 
         // If defined some contact list settings the we skip that page
         if (get_option('settings_step') != 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage && !empty(get_option('activate_mailjet_initial_sync')) && !empty(get_option('mailjet_sync_list'))) {
-            wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
-            exit;
+//            wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
+//            exit;
         }
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handle internal Mailjet redirections - End ]');

@@ -131,7 +131,7 @@ class ConnectAccountSettings
 
         ?>
 
-        <div class="mainContainer">
+        <div class="mainContainerSettings">
             <div class="left"">
                 <div class="centered">
                     <?php
@@ -152,7 +152,7 @@ class ConnectAccountSettings
                             // (sections are registered for "mailjet", each field is registered to a specific section)
                             do_settings_sections('mailjet_connect_account_page');
                             // output save settings button
-                            submit_button('Save');
+                            submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
                             ?>
                         </form>
                     </div>

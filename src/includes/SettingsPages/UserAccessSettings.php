@@ -108,7 +108,7 @@ class UserAccessSettings
 
         ?>
 
-        <div class="mainContainer">
+        <div class="mainContainerSettings">
             <div class="left"">
             <div class="centered">
                 <?php
@@ -129,7 +129,7 @@ class UserAccessSettings
                     // (sections are registered for "mailjet", each field is registered to a specific section)
                     do_settings_sections('mailjet_user_access_page');
                     // output save settings button
-                    submit_button('Save');
+                    submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'userAccessSubmit'));
                     ?>
                 </form>
             </div>
