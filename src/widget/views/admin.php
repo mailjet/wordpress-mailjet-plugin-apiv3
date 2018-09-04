@@ -258,9 +258,126 @@
                             </div>
 
                         </div>
+                    <!--Tab 2-->
                         <!--Form validation messages-->
-                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages">2</div>
+                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages">
+                            <p><span>You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.</span></p>
+
+                            <div class="validation_messages_wrap">
+                                <div class="validation_message_row">
+                                    <div class="floatLeft">
+                                        <label for="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>">Description</label>
+                                        <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>">Form successfully submitted</div>
+                                    </div>
+                                    <?php
+                                    foreach ($languages as $language => $locale) {
+                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                        if ($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <!--Languages label-->
+                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                            <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php echo $language ?></label>
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                
+                                <div class="validation_message_row">
+                                    <div class="floatLeft">
+                                        <div class="form-control validation_messages_labels">Subscription confirmed (displayed after the user has clicked the confirmation email)</div>
+                                    </div>
+                                    <?php
+                                    foreach ($languages as $language => $locale) {
+                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                        if ($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <!--Languages label-->
+                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($subscription_confirmed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+
+                                <div class="validation_message_row">
+                                    <div class="floatLeft">
+                                        <div class="form-control validation_messages_labels">Error: email field is empty</div>
+                                    </div>
+                                    <?php
+                                    foreach ($languages as $language => $locale) {
+                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                        if ($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <!--Languages label-->
+                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($empty_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                
+                                <div class="validation_message_row">
+                                    <div class="floatLeft">
+                                        <div class="form-control validation_messages_labels">Error: the email address is already subscribed</div>
+                                    </div>
+                                    <?php
+                                    foreach ($languages as $language => $locale) {
+                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                        if ($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <!--Languages label-->
+                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($already_subscribed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                
+                                <div class="validation_message_row">
+                                    <div class="floatLeft">
+                                        <div class="form-control validation_messages_labels">Error: Invalid data format (this applies only for numbers and dates)</div>
+                                    </div>
+                                    <?php
+                                    foreach ($languages as $language => $locale) {
+                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                        if ($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <!--Languages label-->
+                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($invalid_data_format_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                
+                                <div class="validation_message_row">
+                                    <div class="floatLeft">
+                                        <div class="form-control validation_messages_labels">Generic technical error message</div>
+                                    </div>
+                                    <?php
+                                    foreach ($languages as $language => $locale) {
+                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                        if ($instance[$locale]['language_checkbox'] != 1) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <!--Languages label-->
+                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($generic_technical_error_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+
+                            </div>
+                        </div>
                         <!--Confirmation email content-->
+
                         <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content">3</div>
                     </div>
                 </div>
