@@ -192,6 +192,7 @@ class SubscriptionOptionsSettings
                     // output save settings button
                     submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
                     ?>
+                    <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
                 </form>
             </div>
         </div>

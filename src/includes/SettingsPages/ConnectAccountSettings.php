@@ -154,6 +154,7 @@ class ConnectAccountSettings
                             // output save settings button
                             submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
                             ?>
+                            <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
                         </form>
                     </div>
                 </div>

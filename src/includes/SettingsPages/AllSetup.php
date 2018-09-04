@@ -39,7 +39,7 @@ class AllSetup
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_signup_to_newsletter.png'; ?>" />
                     <h2><?php echo __('Add a subscription form to your website', 'mailjet' ); ?></h2>
                     <p><?php echo __('Go to the widget management page and add the Mailjet Subscription Widget to your website to start collecting email addresses.', 'mailjet' ); ?></p>
-                    <br /><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse1" onclick="location.href = 'widgets.php'" value="<?=__('Manage my widgets', 'mailjet')?>">
+                    <br /> <br /><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse1" onclick="location.href = 'widgets.php'" value="<?=__('Manage my widgets', 'mailjet')?>">
                 </div>
             </div>
             <div class="container">
@@ -55,11 +55,11 @@ class AllSetup
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_configure.png'; ?>" />
                     <h2><?php echo __('Configure Wordpress email sending', 'mailjet' ); ?></h2>
                     <p><?php echo __('Enable and configure sending of all your Wordpress emails (transactional emails, etc...) through Mailjet.', 'mailjet' ); ?></p>
-                    <br /><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse3" onclick="location.href = 'admin.php?page=mailjet_sending_settings_page'" value="<?=__('Configure', 'mailjet')?>">
+                    <br /><br /><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse3" onclick="location.href = 'admin.php?page=mailjet_sending_settings_page'" value="<?=__('Configure', 'mailjet')?>">
                 </div>
             </div>
 
-            <div style="padding-top: 20px; margin-left: 380px; clear: left;"> or <?php echo '<a target="_blank" href="admin.php?page=mailjet_dashboard_page">' . __('Go to your Mailjet Plugin Homepage', 'mailjet') . '</a>'; ?> </div>
+            <div style="padding-top: 20px; margin-left: 380px; clear: left;"> or <?php echo '<a id="create_contact_list" target="_blank" href="admin.php?page=mailjet_dashboard_page">' . __('Go to your Mailjet Plugin Homepage', 'mailjet') . '</a>'; ?> </div>
 
         </div>
 

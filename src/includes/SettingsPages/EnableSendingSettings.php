@@ -101,7 +101,7 @@ class EnableSendingSettings
                         <input name="nextBtn" class="nextBtn cancelTestEmail" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
                         <br style="clear: left;"/>
                     </div>
-                    <input name="mailjet_test" type="button" id="mailjet_test" value="Send a test">
+                    <input name="mailjet_test" type="button" id="mailjet_test" class="sendTestMeilBtn" value="Send a test">
                     <br />
                 <?php } ?>
             </div>
@@ -232,6 +232,7 @@ class EnableSendingSettings
                     // output save settings button
                     submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
                     ?>
+                    <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
                 </form>
             </div>
         </div>

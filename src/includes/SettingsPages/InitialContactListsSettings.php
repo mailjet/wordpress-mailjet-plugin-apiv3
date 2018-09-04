@@ -43,7 +43,7 @@ class InitialContactListsSettings
         // output the field
         ?>
 <hr>
-        <h2> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h2>
+        <h3> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h3>
 
         <div class="availableContactListsContainerParent">
         <div class="availableContactListsContainer">
@@ -204,7 +204,7 @@ class InitialContactListsSettings
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="mainContainer">
 
-            <div class="wrap">
+            <div>
                 <h1><?php echo __('Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
                 <p>
                     <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your contacts, directly from Wordpress.', 'mailjet'); ?>
@@ -214,7 +214,7 @@ class InitialContactListsSettings
 
 
             <div id="initialContactListsForm">
-                <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
+                <h3><?php echo esc_html(get_admin_page_title()); ?></h3>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
