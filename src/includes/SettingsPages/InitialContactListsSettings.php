@@ -210,7 +210,7 @@ class InitialContactListsSettings
                     <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your contacts, directly from Wordpress.', 'mailjet'); ?>
                 </p>
             </div>
-
+            <br /><br />
 
 
             <div id="initialContactListsForm">

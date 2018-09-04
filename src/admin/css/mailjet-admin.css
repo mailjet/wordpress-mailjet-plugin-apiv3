@@ -81,7 +81,8 @@
 #initialSettingsDescription {
     float: left;
     display: inline-block;
-    width: 526px;
+    width: 550px;
+    margin-left: 20px;
 }
 
 .initialSettingsDescriptionContainer {
@@ -89,7 +90,7 @@
 }
 .initialSettingsDescriptionRow {
     display:table-row;
-    width:500px;
+    width:520px;
     border:1px solid  #666666;
 }
 .initialSettingsImageCell {
@@ -103,7 +104,7 @@
     padding: 20px;
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:400px;
+    width:430px;
 }
 #initialSettingsForm {
     float: left;
