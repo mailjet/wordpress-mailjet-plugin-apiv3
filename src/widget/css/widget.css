@@ -189,5 +189,19 @@
 }
 
 .mandatoryButtonLanguage{
-        width: 250px;
+    width: 250px;
+}
+
+.validation_message_row{
+    clear: left;
+}
+
+.validation_messages_labels{
+    height: auto!important;
+    width: 240px!important;
+    border: 0px solid transparent!important;
+}
+
+.modal-footer{
+    margin-top: 60px
 }
