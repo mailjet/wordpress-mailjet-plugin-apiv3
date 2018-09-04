@@ -62,7 +62,7 @@ class InitialSettings
             <label for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
             <br />
             <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?=$mailjetApikey ?>" class="mailjet_apikey" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Key', 'mailjet' ); ?>">
-            <br />
+            <br /><br />
 
             <label for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
             <br />
@@ -182,8 +182,8 @@ class InitialSettings
                         <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page'" value="<?=__('Next', 'mailjet')?>">
                     <?php } ?>
                     <br style="clear: left;" />
-                    <h4><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
-                    <?php echo sprintf('<a target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
+                    <h4 style="margin-top:50px;"><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
+                    <?php echo sprintf('<a id="create_contact_list" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
                 </form>
 
             </div>

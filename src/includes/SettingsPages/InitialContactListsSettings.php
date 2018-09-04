@@ -67,7 +67,7 @@ class InitialContactListsSettings
             <p><label for="create_list_name"><?php echo __('Name your list', 'mailjet' ); ?></label>
                 <input type="text" size="30" name="create_list_name" id="create_list_name" />
             </p>
-            <input type="submit" value="Save" name="create_contact_list_btn" class="MailjetSubmit" id="create_contact_list_btn"/>
+            <input type="submit" value="Save" name="create_contact_list_btn" class="MailjetSubmit nextBtn" id="create_contact_list_btn"/>
             <input name="nextBtn" class="nextBtn closeCreateList" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
             <br style="clear: left;"/>
         </div>
