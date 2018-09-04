@@ -25,7 +25,9 @@ class SubscriptionOptionsSettings
     public function mailjet_section_subscription_options_cb($args)
     {
         ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet' ); ?></p>
+        <p id="<?php echo esc_attr( $args['id'] ); ?>">
+            <?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet' ); ?>
+        </p>
         <?php
     }
 

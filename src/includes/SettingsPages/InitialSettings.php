@@ -33,7 +33,7 @@ class InitialSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('If you already have a Mailjet account, go to <a target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet'); ?>
+            <?php echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet'); ?>
         </p>
         <?php
     }
@@ -183,7 +183,7 @@ class InitialSettings
                     <?php } ?>
                     <br style="clear: left;" />
                     <h4 style="margin-top:50px;"><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
-                    <?php echo sprintf('<a id="create_contact_list" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
+                    <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
                 </form>
 
             </div>
