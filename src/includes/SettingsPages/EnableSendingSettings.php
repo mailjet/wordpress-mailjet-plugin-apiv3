@@ -97,7 +97,7 @@ class EnableSendingSettings
                         <p><label for="email"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label>
                             <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
                         </p>
-                        <input type="submit" value="<?=__('Send', 'mailjet')?>" name="send_test_email_btn" class="MailjetSubmit" id="send_test_email_btn"/>
+                        <input type="submit" value="<?=__('Send', 'mailjet')?>" name="send_test_email_btn" class="MailjetSubmit nextBtn" id="send_test_email_btn"/>
                         <input name="nextBtn" class="nextBtn cancelTestEmail" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
                         <br style="clear: left;"/>
                     </div>
@@ -209,34 +209,33 @@ class EnableSendingSettings
         ?>
 
 
-        <div class="mainContainerSettings">
+        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+        <div class="mainContainer mjSettings">
             <div class="left">
-            <div class="centered">
-                <?php
-                MailjetAdminDisplay::getSettingsLeftMenu();
-                ?>
-            </div>
-        </div>
-
-        <div class="right">
-        <div class="centered"  style="width:650px;">
-            <div class="wrap">
-                <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-                <form action="options.php" method="post">
+                <div class="centered">
                     <?php
-                    // output security fields for the registered setting "mailjet"
-                    settings_fields('mailjet_sending_settings_page');
-                    // output setting sections and their fields
-                    // (sections are registered for "mailjet", each field is registered to a specific section)
-                    do_settings_sections('mailjet_sending_settings_page');
-                    // output save settings button
-                    submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
+                    MailjetAdminDisplay::getSettingsLeftMenu();
                     ?>
-                    <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
-                </form>
+                </div>
             </div>
-        </div>
-        </div>
+
+            <div class="right">
+                <div class="centered"  style="width:650px;">
+                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                    <form action="options.php" method="post">
+                        <?php
+                        // output security fields for the registered setting "mailjet"
+                        settings_fields('mailjet_sending_settings_page');
+                        // output setting sections and their fields
+                        // (sections are registered for "mailjet", each field is registered to a specific section)
+                        do_settings_sections('mailjet_sending_settings_page');
+                        // output save settings button
+                        submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
+                        ?>
+                        <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class="bottom_links">

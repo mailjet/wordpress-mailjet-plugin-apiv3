@@ -171,34 +171,33 @@ class SubscriptionOptionsSettings
 
         ?>
 
-        <div class="mainContainerSettings">
+        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+        <div class="mainContainer mjSettings">
             <div class="left">
-            <div class="centered">
-                <?php
-                MailjetAdminDisplay::getSettingsLeftMenu();
-                ?>
-            </div>
-        </div>
-
-        <div class="right">
-        <div class="centered">
-            <div class="wrap">
-                <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-                <form action="options.php" method="post">
+                <div class="centered">
                     <?php
-                    // output security fields for the registered setting "mailjet"
-                    settings_fields('mailjet_subscription_options_page');
-                    // output setting sections and their fields
-                    // (sections are registered for "mailjet", each field is registered to a specific section)
-                    do_settings_sections('mailjet_subscription_options_page');
-                    // output save settings button
-                    submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
+                    MailjetAdminDisplay::getSettingsLeftMenu();
                     ?>
-                    <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
-                </form>
+                </div>
             </div>
-        </div>
-        </div>
+
+            <div class="right">
+                <div class="centered">
+                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                    <form action="options.php" method="post">
+                        <?php
+                        // output security fields for the registered setting "mailjet"
+                        settings_fields('mailjet_subscription_options_page');
+                        // output setting sections and their fields
+                        // (sections are registered for "mailjet", each field is registered to a specific section)
+                        do_settings_sections('mailjet_subscription_options_page');
+                        // output save settings button
+                        submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
+                        ?>
+                        <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class="bottom_links">

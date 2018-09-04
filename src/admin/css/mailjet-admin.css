@@ -2,14 +2,14 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.mailjet_page_mailjet_allsetup_page #wpwrap,
-.mailjet_page_mailjet_user_access_page #wpwrap,
-.mailjet_page_mailjet_subscription_options_page #wpwrap,
-.mailjet_page_mailjet_sending_settings_page #wpwrap,
-.mailjet_page_mailjet_connect_account_page #wpwrap,
-.mailjet_page_mailjet_settings_page #wpwrap,
-.mailjet_page_mailjet_initial_contact_lists_page #wpwrap,
-.mailjet_page_mailjet_dashboard_page #wpwrap,
+.admin_page_mailjet_allsetup_page #wpwrap,
+.admin_page_mailjet_user_access_page #wpwrap,
+.admin_page_mailjet_subscription_options_page #wpwrap,
+.admin_page_mailjet_sending_settings_page #wpwrap,
+.admin_page_mailjet_connect_account_page #wpwrap,
+.admin_page_mailjet_settings_page #wpwrap,
+.admin_page_mailjet_initial_contact_lists_page #wpwrap,
+.admin_page_mailjet_dashboard_page #wpwrap,
 .toplevel_page_mailjet_settings_page  #wpwrap {
     background-color: #F2F2F2;
 }
@@ -144,25 +144,19 @@
     background-color: #FEAD0D;
     color: #FFF;
 }
-
-.mainContainerSettings {
+.mjSettings {
+    min-height: 450px;
     display: flex;
     align-items: stretch;
-    background-color: #FFF;
-    border: 1px solid #E5E5E5;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
-    margin:20px 20px 20px auto;
-    padding:20px;
 }
-
-
 /* Control the left side */
 .left {
-
+    float:left;
 }
 
 /* Control the right side */
 .right {
+    float:left;
     height: 100%;
     max-width: 500px;
     /*margin: auto 20px;*/

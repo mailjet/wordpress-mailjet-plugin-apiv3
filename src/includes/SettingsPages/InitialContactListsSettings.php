@@ -64,7 +64,7 @@ class InitialContactListsSettings
         </div>
 
         <div class="create_contact_list_popup pop" id="create_contact_list_popup">
-            <p><label for="create_list_name"><?php echo __('Name your list', 'mailjet' ); ?></label>
+            <p><label for="create_list_name"><b><?php echo __('Name your list', 'mailjet' ); ?></b></label>
                 <input type="text" size="30" name="create_list_name" id="create_list_name" />
             </p>
             <input type="submit" value="<?=__('Save', 'mailjet')?>" name="create_contact_list_btn" class="MailjetSubmit nextBtn" id="create_contact_list_btn"/>

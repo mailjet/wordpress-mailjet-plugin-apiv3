@@ -90,6 +90,7 @@
                 $('.pop').slideToggle('fast');
                 $('#mailjet_test').hide();
                 $('#enableSendingSubmit').hide();
+                $('#cancelBtn').hide();
                 return false;
             });
 
@@ -98,6 +99,7 @@
                 $('.pop').slideToggle('fast');
                 $('#mailjet_test').show();
                 $('#enableSendingSubmit').show();
+                $('#cancelBtn').show();
                 return false;
             });
         });
