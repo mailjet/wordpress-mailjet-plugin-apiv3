@@ -128,6 +128,20 @@
 
 
 
+        // Change settings menu links images on hover
+        $('.settingsMenuLink a').hover(
+            function(){
+                $(this).addClass('hover');
+                var imgId = $(this).data('img_id');
+                $('#' + imgId).attr('src', $(this).data('hover'));
+            },
+            function(){
+                $(this).removeClass('hover');
+                var imgId = $(this).data('img_id');
+                $('#' + imgId).attr('src', $(this).data('default'));
+            }
+        );
+
 
     });
 })( jQuery );
