@@ -143,7 +143,8 @@ class ConnectAccountSettings
 
             <div class="right"">
                 <div class="centered">
-                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+<!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+                    <h2><?php echo __('Connect your Mailjet account', 'mailjet'); ?></h2>
                     <form action="options.php" method="post">
                         <?php
                         // output security fields for the registered setting "mailjet"
@@ -162,7 +163,7 @@ class ConnectAccountSettings
 
         <div class="bottom_links">
             <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help', 'mailjet'); ?>" />
                 <?php echo __('Need help?', 'mailjet' ); ?>
             </div>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
