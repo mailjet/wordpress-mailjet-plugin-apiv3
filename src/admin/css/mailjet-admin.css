@@ -42,7 +42,7 @@
 
 
 .mainContainer {
-    min-height: 720px;
+    min-height: 820px;
     width: 1072px;
     border-radius: 3px;
     background-color: #FFFFFF;
@@ -81,7 +81,7 @@
 #initialSettingsDescription {
     float: left;
     display: inline-block;
-    width: 550px;
+    width: 650px;
     margin-left: 20px;
 }
 
@@ -90,21 +90,23 @@
 }
 .initialSettingsDescriptionRow {
     display:table-row;
-    width:520px;
+    width:550px;
     border:1px solid  #666666;
 }
 .initialSettingsImageCell {
-    padding: 20px;
     padding-left:2px;
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:100px;
+    width:200px;
+    vertical-align: middle;
 }
 .initialSettingsTextCell {
-    padding: 20px;
+    padding: 10px;
     float:left;/*fix for  buggy browsers*/
     display:table-column;
     width:430px;
+    margin: 40px auto;
+    vertical-align: middle;
 }
 #initialSettingsForm {
     float: left;
@@ -320,7 +322,7 @@ input[type="submit"].button {
 }
 
 .dashboard .block {
-    height: 328px;
+    height: 428px;
     width: 220px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
@@ -331,15 +333,15 @@ input[type="submit"].button {
 }
 
 .dashboard .block img {
-    width: 101px;
-    height: 71px;
+    width: 192px;
+    height: 192px;
     margin: 10px;
     display: inline-block;
 }
 
 
 .dashboard .block_single {
-    min-height: 672px;
+    min-height: 866px;
     width: 480px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;

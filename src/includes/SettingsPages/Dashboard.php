@@ -39,7 +39,7 @@ class Dashboard
                     <p><?php echo __('Create and manage your newsletters. Vew your campaign statistics', 'mailjet' ); ?></p>
                     <br /><br />
                     <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard1" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'" value="<?=__('My campaigns', 'mailjet')?>">
-                    <br /><br /><br />
+                    <br /><br />
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_main_image.png'; ?>" />
                 </div>
             </div>
@@ -49,14 +49,14 @@ class Dashboard
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_top_left_image.png'; ?>" />
                     <h3><?php echo __('Manage my contacts', 'mailjet' ); ?></h3>
                     <p><?php echo __('View and manage your contact lists', 'mailjet' ); ?></p>
-                    <br /><br /><br />
+                    <br /><br />
                     <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard2" onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'" value="<?=__('My contact lists')?>">
                 </div>
                 <div class="block">
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_top_right_image.png'; ?>" />
                     <h3><?php echo __('Add a subscription form', 'mailjet' ); ?></h3>
                     <p><?php echo __('Customize a subscription form and add it to your Wordpress website', 'mailjet' ); ?></p>
-                    <br /><br />
+                    <br />
                     <input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard3" onclick="location.href = 'widgets.php'" value="<?=__('My widgets', 'mailjet')?>">
                 </div>
                 <div class="block">
