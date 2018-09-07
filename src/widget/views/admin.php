@@ -236,22 +236,29 @@
                                     <!--Languages label-->
                                     <div class="mandatoryEmailLanguageInput floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                         <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>"><?php echo $language ?></label>
-                                        <input class="form-control" type="text" value="<?php echo esc_attr($language_mandatory_email); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="" />
+                                        <input class="form-control" type="text" value="<?php if(esc_attr($language_mandatory_email)){ echo esc_attr($language_mandatory_email); }else { _e('your@email.com', 'mailjet');} ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="" />
                                     </div>
                                 <?php } ?>
                                 <p class="customize-mandatory-button"><span><?php _e('Customize the submission button label:', 'mailjet') ?></span></p>        
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('For button label', 'mailjet'); ?></span>
                                 <?php
                                 foreach ($languages as $language => $locale) {
-                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+//                                    if($locale !== $admin_locale) {
+//                                        echo "<pre>";
+//                                        echo $locale."->";
+//                                        var_dump(switch_to_locale( $locale ));
+//                                        var_dump(get_locale());
+//                                        echo "</pre>";
+//                                    }
                                     if ($instance[$locale]['language_checkbox'] != 1) {
                                         continue;
                                     }
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryButtonLanguage floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                         <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>"><?php echo $language ?></label>
-                                        <input class="form-control" type="text"  value="<?php echo esc_attr($language_mandatory_button); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>" placeholder="" />
+                                        <input class="form-control" type="text" title="<?php if(esc_attr($language_mandatory_button)){ echo esc_attr($language_mandatory_button); }else { _e('Subscribe', 'mailjet');echo ';';} ?>"  value="<?php if(esc_attr($language_mandatory_button)){ echo esc_attr($language_mandatory_button); }else { _e('Subscribe', 'mailjet');} ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>" placeholder="" />
                                     </div>
                                 <?php } ?>
 
@@ -283,7 +290,7 @@
                                         </div>
                                     <?php } ?>
                                 </div>
-                                
+
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
                                         <div class="form-control validation_messages_labels">Subscription confirmed (displayed after the user has clicked the confirmation email)</div>
@@ -376,9 +383,107 @@
 
                             </div>
                         </div>
+                        
                         <!--Confirmation email content-->
+                        <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content">
+                            <p><span>When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.</span></p>
 
-                        <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content">3</div>
+                            <div class="confirmation_email_row">
+                                <div class="floatLeft">
+                                    <label for="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>">Description</label>
+                                    <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>">Email subject</div>
+                                </div>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php echo $language ?></label>
+                                        <!--<input class="form-control" type="text"  value="<?php echo esc_attr($email_subject); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="" />-->
+                                        <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php echo esc_attr($email_subject); ?></textarea>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            
+                            <div class="confirmation_email_row">
+                                <div class="floatLeft">
+                                    <div class="form-control validation_messages_labels">Email content: title</div>
+                                </div>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_title]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_title]')); ?>"><?php echo esc_attr($email_content_title); ?></textarea>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            
+                            <div class="confirmation_email_row">
+                                <div class="floatLeft">
+                                    <div class="form-control validation_messages_labels">Email content: main text </div>
+                                </div>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_main_text]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_main_text]')); ?>"><?php echo esc_attr($email_content_main_text); ?></textarea>
+                                    </div>
+                                <?php } ?>
+                            </div>
+
+                            <div class="confirmation_email_row">
+                                <div class="floatLeft">
+                                    <div class="form-control validation_messages_labels">Email content: confirmation button label</div>
+                                </div>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_confirm_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_confirm_button]')); ?>"><?php echo esc_attr($email_content_confirm_button); ?></textarea>
+                                    </div>
+                                <?php } ?>
+                            </div>
+
+                            <div class="confirmation_email_row">
+                                <div class="floatLeft">
+                                    <div class="form-control validation_messages_labels">Email content: text after the button</div>
+                                </div>
+                                <?php
+                                foreach ($languages as $language => $locale) {
+                                    extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
+                                    if ($instance[$locale]['language_checkbox'] != 1) {
+                                        continue;
+                                    }
+                                    ?>
+                                    <!--Languages label-->
+                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_after_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_after_button]')); ?>"><?php echo esc_attr($email_content_after_button); ?></textarea>
+                                    </div>
+                                <?php } 
+                                switch_to_locale( $admin_locale );
+                                ?>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
 

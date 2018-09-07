@@ -195,6 +195,9 @@
 .validation_message_row{
     clear: left;
 }
+.confirmation_email_row{
+    clear: left;
+}
 
 .validation_messages_labels{
     height: auto!important;
