@@ -190,10 +190,10 @@ class EnableSendingSettings
                 if (false === $testSent) {
                     //\MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
                     $executionError = true;
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was NOT sent, please review your settings', 'mailjet'), 'error');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The test email could not be sent. Please make sure your server doesn\'t block the SMTP ports. Also double check that you are using correct API and Secret keys and a valid sending address from your Mailjet account.', 'mailjet'), 'error');
                 } else {
                     // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was sent succesfully', 'mailjet'), 'updated');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was sent successfully', 'mailjet'), 'updated');
                 }
             }
 
@@ -241,7 +241,7 @@ class EnableSendingSettings
 
         <div class="bottom_links">
             <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
                 <?php echo __('Need help?', 'mailjet' ); ?>
             </div>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>

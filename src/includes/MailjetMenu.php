@@ -185,7 +185,7 @@ class MailjetMenu
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
             \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
         }
       //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
@@ -208,7 +208,7 @@ class MailjetMenu
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
             \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
         }
       //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
@@ -231,7 +231,7 @@ class MailjetMenu
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
             \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Invalid Mailjet API credentials', 'mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
         }
       //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');

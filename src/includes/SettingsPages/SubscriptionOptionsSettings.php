@@ -203,7 +203,7 @@ class SubscriptionOptionsSettings
 
         <div class="bottom_links">
             <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
                 <?php echo __('Need help?', 'mailjet' ); ?>
             </div>
             <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
@@ -233,7 +233,7 @@ class SubscriptionOptionsSettings
             add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing Wordpress users to your Mailjet contact list', 'mailjet'), 'error');
             return false;
         } else {
-            add_settings_error('mailjet_messages', 'mailjet_message', __('All Wordpress users were succesfully added to your Mailjet contact list', 'mailjet'), 'updated');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('All Wordpress users were successfully added to your Mailjet contact list', 'mailjet'), 'updated');
         }
         return true;
     }
@@ -421,10 +421,9 @@ class SubscriptionOptionsSettings
             '__EMAIL_HEADER__' => __('Please Confirm Your Subscription To', 'mailjet'),
             '__WP_URL__' => sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url()),
             '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email),
-            '__CLICK_HERE__' => __('Click here to confirm', 'mailjet'),
-            '__COPY_PASTE_LINK__' => __('You may copy/paste this link into your browser:', 'mailjet'),
+            '__CLICK_HERE__' => __('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet'),
             '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => __('Did not ask to subscribe to this list? Or maybe you have changed your mind? Then simply ignore this email and you will not be subscribed', 'mailjet'),
+            '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet'),
             '__THANKS__' => __('Thanks,', 'mailjet')
         );
         foreach ($emailParams as $key => $value) {
