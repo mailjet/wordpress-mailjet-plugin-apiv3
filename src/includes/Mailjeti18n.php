@@ -38,7 +38,7 @@ class Mailjeti18n
      * @param array $translations
      * @return bool true - if succesfully updated or added translations | false - if something went wrong and translations were not updated
      */
-    public static function updateTranslationsInFile($locale = 'en_GB', array $translations = array())
+    public static function updateTranslationsInFile($locale = 'en_US', array $translations = array())
     {
         if (empty($locale) || empty($translations)) {
             \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Empty Locale or Translation messages provided ] ');
