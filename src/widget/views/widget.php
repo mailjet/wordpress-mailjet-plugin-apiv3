@@ -24,10 +24,12 @@
     // Display the widget
     ?>
     <div class="widget-text wp_widget_plugin_box">
+        <?php echo "From PO:"; _e('Subscribe', 'mailjet') ?>
+        <?php echo "<br>From DB:"; echo $emailLabel ?>
         <div id="mailjet_widget_title_wrap"><span id="mailjet_widget_title"><?php echo $before_title . $title . $after_title ?></span></div>
         <form method="post" action=" <?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
-            <label for="front_email" id="mailjet_widget_email_label"><?php echo $emailLabel ?></label>
-            <input type="email" name="subscription_email" id="mailjet_widget_email" placeholder="<?php _e('Email', 'mailjet') ?>">
+            <!--<label for="front_email" id="mailjet_widget_email_label"><?php echo $emailLabel ?></label>;-->
+             <input type="email" name="subscription_email" id="mailjet_widget_email" placeholder="<?php echo $emailLabel ?>">
             <input type="submit" value="<?php echo $buttonLabel ?>">
         </form>
     </div>
