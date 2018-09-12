@@ -31,7 +31,8 @@ class AllSetup
         ?>
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="allsetup">
-            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+<!--            <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+            <h1><?php echo __('You\'re all set up!', 'mailjet'); ?></h1>
             <h3><?php echo __('What would you like to do next?', 'mailjet'); ?></h3>
 
             <div class="container">

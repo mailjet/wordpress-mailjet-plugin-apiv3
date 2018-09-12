@@ -218,7 +218,7 @@ class SubscriptionOptionsSettings
     public function syncAllWpUsers()
     {
         if (empty(get_option('mailjet_sync_list'))) {
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Select a Mailjet contact list to add Wordpress users to', 'mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please select a contact list.', 'mailjet'), 'error');
             return false;
         }
         $contactListId = get_option('mailjet_sync_list');

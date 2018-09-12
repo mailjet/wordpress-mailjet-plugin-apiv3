@@ -178,7 +178,7 @@ class EnableSendingSettings
             // Check connection with selected port and protocol
             if (false === $this->checkConnection()) {
                 $executionError = true;
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings.', 'mailjet'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings. Check if a firewall is blocking connections to the Mailjet ports.', 'mailjet'), 'error');
             }
 
             if (!empty(get_option('send_test_email_btn')) && empty(get_option('mailjet_test_address'))) {
@@ -280,10 +280,11 @@ class EnableSendingSettings
             $ssl = get_option('mailjet_ssl');
         } else {
             for ($i = 0; $i < count($configs); ++$i) {
-                if ($configs[$i][0])
+                if ($configs[$i][0]) {
                     $protocol = $configs[$i][0] . '://';
-                else
+                } else {
                     $protocol = '';
+                }
 
                 $soc = @fsockopen($protocol . MailjetMail::MJ_HOST, $configs[$i][1], $errno, $errstr, 5);
                 if ($soc) {

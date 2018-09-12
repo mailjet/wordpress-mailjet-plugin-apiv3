@@ -167,7 +167,7 @@ class InitialSettings
             <br /><br />
 
             <div id="initialSettingsForm">
-                <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
+                <h3><?php echo esc_html(get_admin_page_title()); ?></h3>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
@@ -192,16 +192,16 @@ class InitialSettings
             <div id="initialSettingsDescription">
                 <div class="availableContactListsContainer">
                     <div class="initialSettingsDescriptionRow">
-                        <div class="initialSettingsImageCell"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                        <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
                         <div class="initialSettingsTextCell"><h4><?php echo __('Collect email addresses...', 'mailjet' ); ?></h4><?php echo __('Email addresses are collected from your website', 'mailjet' ); ?></div>
                     </div>
                     <div class="initialSettingsDescriptionRow">
-                        <div class="initialSettingsImageCell"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                        <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
                         <div class="initialSettingsTextCell"><h4><?php echo __('...and add them automatically to a contact list', 'mailjet' ); ?></h4><?php echo __('Email are added to your contact list', 'mailjet' ); ?></div>
                     </div>
                     <div class="initialSettingsDescriptionRow">
-                        <div class="initialSettingsImageCell"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                        <div class="initialSettingsTextCell"><h4><?php echo __('We will take care if delivering your newsletter', 'mailjet' ); ?></h4><?php echo __('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet' ); ?></div>
+                        <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                        <div class="initialSettingsTextCell"><h4><?php echo __('We will take care of delivering your newsletter', 'mailjet' ); ?></h4><?php echo __('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet' ); ?></div>
                     </div>
                 </div>
             </div>

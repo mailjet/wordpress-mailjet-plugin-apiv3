@@ -99,8 +99,8 @@ class MailjetSettings
             }
 
             // If defined some contact list settings the we skip that page
-            if (get_option('settings_step') != 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage && !empty(get_option('activate_mailjet_initial_sync')) && !empty(get_option('mailjet_sync_list'))) {
-                wp_redirect(admin_url('/admin.php?page=mailjet_dashboard_page'));
+            if (get_option('settings_step') == 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage) {
+                wp_redirect(admin_url('/admin.php?page=mailjet_allsetup_page'));
                 exit;
             }
         }

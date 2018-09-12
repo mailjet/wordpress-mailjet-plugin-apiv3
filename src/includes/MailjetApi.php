@@ -65,12 +65,8 @@ class MailjetApi
             'Name' => $listName
         ];
         $response = $mjApiClient->post(Resources::$Contactslist, ['body' => $body]);
-        if ($response->success()) {
-            return $response->getData();
-        } else {
-            return false;
-//            return $response->getStatus();
-        }
+        return $response;
+
     }
 
     public static function getContactProperties()

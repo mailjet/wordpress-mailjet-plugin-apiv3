@@ -72,7 +72,7 @@ class InitialContactListsSettings
             <br style="clear: left;"/>
         </div>
 
-        <img id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.png'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
+        <img width="20" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
         <a id="create_contact_list" href="#"><?php echo __('Create a new list', 'mailjet' ); ?></a>
         <br /><br />
 <hr>
@@ -159,6 +159,7 @@ class InitialContactListsSettings
         if (isset($_GET['settings-updated'])) {
 
             $executionError = false;
+            $applyAndContinueBtnClicked = false;
 
             // Initial sync WP users to Mailjet - when the 'create_contact_list_btn' button is not the one that submits the form
             if (empty(get_option('create_contact_list_btn')) && !empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
@@ -172,21 +173,25 @@ class InitialContactListsSettings
             if (!empty(get_option('create_contact_list_btn'))) {
                 if (!empty(get_option('create_list_name'))) {
                     $createListResponse = MailjetApi::createMailjetContactList(get_option('create_list_name'));
-                    if (false === $createListResponse) {
-                        $executionError = true;
-                        add_settings_error('mailjet_messages', 'mailjet_message',
-                            __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.',
-                                'mailjet'), 'error');
-                    } else {
+
+                    if ($createListResponse->success()) {
                         $executionError = true;
                         add_settings_error('mailjet_messages', 'mailjet_message',
                             __('Your new contact list has been successfully created.', 'mailjet'), 'updated');
+                    } else {
+                        $executionError = true;
+                        if (isset($createListResponse->getBody()['ErrorMessage']) && stristr($createListResponse->getBody()['ErrorMessage'], 'already exists')) {
+                            add_settings_error('mailjet_messages', 'mailjet_message', sprintf(__('A contact list with name <b>%s</b> already exists', 'mailjet'), get_option('create_list_name')), 'error');
+                        } else {
+                            add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
+                        }
                     }
                 } else { // New list name empty
                     $executionError = true;
-                    add_settings_error('mailjet_messages', 'mailjet_message',
-                        __('Please enter a valid contact list name', 'mailjet'), 'error');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Please enter a valid contact list name', 'mailjet'), 'error');
                 }
+            } else {
+                $applyAndContinueBtnClicked = true;
             }
 
             if (false === $executionError) {
@@ -232,7 +237,7 @@ class InitialContactListsSettings
                     <?php
                     } ?>
 
-                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?=__('Skip this step', 'mailjet')?>">
+                    <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?=(true !== $applyAndContinueBtnClicked) ? __('Skip this step', 'mailjet') : __('Next', 'mailjet')?>">
 
                     <br />
                 </form>

@@ -81,8 +81,8 @@
 #initialSettingsDescription {
     float: left;
     display: inline-block;
-    width: 650px;
-    margin-left: 20px;
+    width: 550px;
+    margin-left: 10px;
 }
 
 .initialSettingsDescriptionContainer {
@@ -90,14 +90,14 @@
 }
 .initialSettingsDescriptionRow {
     display:table-row;
-    width:550px;
+    width:500px;
     border:1px solid  #666666;
 }
 .initialSettingsImageCell {
     padding-left:2px;
     float:left;/*fix for  buggy browsers*/
     display:table-column;
-    width:200px;
+    width:100px;
     vertical-align: middle;
 }
 .initialSettingsTextCell {
@@ -105,7 +105,7 @@
     float:left;/*fix for  buggy browsers*/
     display:table-column;
     width:430px;
-    margin: 40px auto;
+    /*margin: 10px auto;*/
     vertical-align: middle;
 }
 #initialSettingsForm {
@@ -322,7 +322,7 @@ input[type="submit"].button {
 }
 
 .dashboard .block {
-    height: 428px;
+    height: 328px;
     width: 220px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
@@ -333,15 +333,15 @@ input[type="submit"].button {
 }
 
 .dashboard .block img {
-    width: 192px;
-    height: 192px;
+    width: 96px;
+    height: 96px;
     margin: 10px;
     display: inline-block;
 }
 
 
 .dashboard .block_single {
-    min-height: 866px;
+    min-height: 666px;
     width: 480px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;

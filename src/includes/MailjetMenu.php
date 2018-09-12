@@ -46,13 +46,12 @@ class MailjetMenu
         ) {
 
             add_menu_page(
-                'Mailjet',
+                'Connect your Mailjet account to get started',
                 'Mailjet',
                 'manage_options',
                 'mailjet_settings_page',
                 array(new InitialSettings(), 'mailjet_initial_settings_page_html'),
-                plugin_dir_url( dirname( __FILE__ ) ) . 'admin/images/mj_logo_small.png',
-                20
+                plugin_dir_url( dirname( __FILE__ ) ) . 'admin/images/mj_logo_small.png'
             );
 
             \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet settings menu added ]');
@@ -97,7 +96,7 @@ class MailjetMenu
                 add_submenu_page(null, __('Connect your Mailjet account', 'mailjet'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
-                add_submenu_page(null, __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page_html',
+                add_submenu_page(null, __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page',
                     array(new EnableSendingSettings(), 'mailjet_sending_settings_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
                 add_submenu_page(null, __('Subscription options', 'mailjet'), null, 'read', 'mailjet_subscription_options_page',
