@@ -19,7 +19,6 @@ use Mailjet\Resources;
  */
 class MailjetApi
 {
-
     private static $mjApiClient = null;
 
     public static function getApiClient()
@@ -30,7 +29,7 @@ class MailjetApi
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
-            throw new Exception('Missing Mailjet API credentials');
+            throw new \Exception('Missing Mailjet API credentials');
         }
 
         self::$mjApiClient = new Client($mailjetApikey, $mailjetApiSecret);
@@ -132,7 +131,11 @@ class MailjetApi
 
     public static function isValidAPICredentials()
     {
-        $mjApiClient = self::getApiClient();
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
 
         $filters = [
             'Limit' => '1'

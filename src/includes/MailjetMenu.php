@@ -88,7 +88,7 @@ class MailjetMenu
 
 
                 // Dashboard page
-                add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_dashboard_page',
+                add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_dashboard_page_html',
                     array(new Dashboard(), 'mailjet_dashboard_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Dashboard sub-menu added ]');
 
