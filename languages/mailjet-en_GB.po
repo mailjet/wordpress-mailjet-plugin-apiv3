@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-12 13:57+0300\n"
-"PO-Revision-Date: 2018-09-12 13:58+0300\n"
+"POT-Creation-Date: 2018-09-12 16:39+0300\n"
+"PO-Revision-Date: 2018-09-12 16:39+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_GB\n"
@@ -402,7 +402,6 @@ msgid "Mailjet Enable Email Sending"
 msgstr "Mailjet Enable Email Sending"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:181
-#| msgid "Can not connect to Mailjet with the selected settings."
 msgid ""
 "Can not connect to Mailjet with the selected settings. Check if a firewall "
 "is blocking connections to the Mailjet ports."
@@ -625,10 +624,8 @@ msgid "Subscription Options"
 msgstr "Subscription Options"
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:221
-#, fuzzy
-#| msgid "Please enter a valid contact list name"
 msgid "Please select a contact list."
-msgstr "Please enter a valid contact list name"
+msgstr "Please enter a valid contact list name."
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:228
 msgid "No Wordpress users to add to Mailjet contact list"
@@ -798,15 +795,11 @@ msgid "The value you entered is not in the correct format."
 msgstr ""
 
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:304
-#, fuzzy
-#| msgid ""
-#| "Email sending failed. Please review your smtp configuration and try again "
-#| "later"
 msgid ""
 "A technical issue has prevented your subscription. Please try again later."
 msgstr ""
 "Email sending failed. Please review your smtp configuration and try again "
-"later"
+"later."
 
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:305
 #, fuzzy
@@ -815,10 +808,8 @@ msgid "Yes, subscribe me to this list"
 msgstr "Subscribe to our mailing list"
 
 #: src/widget/views/admin.php:2
-#, fuzzy
-#| msgid "Customize your subscription form"
 msgid "Choose the languages supported by your subscription form:"
-msgstr "Customize your subscription form"
+msgstr "Customize your subscription form:"
 
 #: src/widget/views/admin.php:23
 msgid "Title of the form:"

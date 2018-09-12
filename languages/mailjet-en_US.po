@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-12 13:46+0300\n"
-"PO-Revision-Date: 2018-09-12 13:46+0300\n"
+"POT-Creation-Date: 2018-09-12 16:39+0300\n"
+"PO-Revision-Date: 2018-09-12 16:39+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_US\n"
@@ -384,7 +384,9 @@ msgid "Mailjet Enable Email Sending"
 msgstr ""
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:181
-msgid "Can not connect to Mailjet with the selected settings."
+msgid ""
+"Can not connect to Mailjet with the selected settings. Check if a firewall "
+"is blocking connections to the Mailjet ports."
 msgstr ""
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:186
@@ -402,7 +404,7 @@ msgstr ""
 msgid "Your test message was sent successfully"
 msgstr ""
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:296
+#: src/includes/SettingsPages/EnableSendingSettings.php:297
 msgid ""
 "Your settings have been saved, but your port and SSL settings were changed "
 "as follows to ensure delivery"
@@ -579,7 +581,7 @@ msgid "Subscription Options"
 msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:221
-msgid "Select a Mailjet contact list to add Wordpress users to"
+msgid "Please select a contact list."
 msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:228
