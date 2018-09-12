@@ -134,12 +134,12 @@
             function(){
                 $(this).addClass('hover');
                 var imgId = $(this).data('img_id');
-                $('#' + imgId).attr('src', $(this).data('hover'));
+                $('.' + imgId).css({fill:"#19BC9C"});
             },
             function(){
                 $(this).removeClass('hover');
                 var imgId = $(this).data('img_id');
-                $('#' + imgId).attr('src', $(this).data('default'));
+                $('.' + imgId).css({fill:"#000000"});
             }
         );
 
