@@ -9,6 +9,15 @@
     /*background-color: #5F862F;*/
 }
 
+#chooseLangLabelWrap {
+    margin: 20px 0 20px 0;
+}
+
+#chooseLangLabel {
+    font-weight: bold;
+    font-size: small;
+}
+
 .hidden_default {
     display: none;
 }
@@ -193,6 +202,10 @@
 }
 
 .validation_message_row{
+    clear: left;
+}
+
+.confirmation_email_row{
     clear: left;
 }
 
