@@ -97,13 +97,13 @@ class MailjetMenu
                 add_submenu_page(null, __('Connect your Mailjet account', 'mailjet'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
-                add_submenu_page(null, __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page',
+                add_submenu_page(null, __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page_html',
                     array(new EnableSendingSettings(), 'mailjet_sending_settings_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
                 add_submenu_page(null, __('Subscription options', 'mailjet'), null, 'read', 'mailjet_subscription_options_page',
                     array(new SubscriptionOptionsSettings(), 'mailjet_subscription_options_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
-                add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page',
+                add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page_html',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
             }
