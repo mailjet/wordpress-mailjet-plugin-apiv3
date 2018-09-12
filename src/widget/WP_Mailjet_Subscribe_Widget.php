@@ -288,6 +288,24 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
+     * Register the dynamic translations to the po files
+     */
+    private function registerCustomLanguageTranslations()
+    {
+        __('English', 'mailjet');
+        __('French', 'mailjet');
+        __('German', 'mailjet');
+        __('Spanish', 'mailjet');
+        __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'mailjet');
+        __('Your subscription was successfully confirmed.', 'mailjet');
+        __('Please provide an email address', 'mailjet');
+        __('This email address has already been subscribed.', 'mailjet');
+        __('The value you entered is not in the correct format.', 'mailjet');
+        __('A technical issue has prevented your subscription. Please try again later.', 'mailjet');
+        __('Yes, subscribe me to this list', 'mailjet');
+    }
+
+    /**
      * Generates the administration form for the widget.
      *
      * @param array instance The array of keys and values for the widget.

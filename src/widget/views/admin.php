@@ -1,6 +1,6 @@
 <!-- This file is used to markup the administration form of the widget. -->
+<div id="chooseLangLabelWrap"><span id="chooseLangLabel"><?php _e('Choose the languages supported by your subscription form:', 'mailjet'); ?></span></div>
 <div class="mailjet_widget_admin_container">
-
     <?php
     // Set widget defaults
     $defaults = array(
@@ -9,6 +9,7 @@
         'list' => '',
     );
 
+    $this->registerCustomLanguageTranslations();
     foreach ($languages as $language => $locale) {
         extract(wp_parse_args((array) $instance[$locale], $defaults));
         ?>
@@ -136,7 +137,7 @@
                                 }
                                 ?>
                                 <div class="property" style="display: <?php echo $display ?>">
-                                    <span class="floatLeft propertyLabel"><?php _e('Property', 'mailjet') ?>#<?php echo $row + 1 ?></span>
+                                    <span class="floatLeft propertyLabel"><?php _e('Property', 'mailjet') ?> #<?php echo $row + 1 ?></span>
 
                                     <!--Select property-->
                                     <div class="propertySelect floatLeft">
@@ -182,7 +183,11 @@
                                         <div class="typeSelect floatLeft">
                                             <select class="propertyDataType" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">
                                                 <?php
-                                                $dataTypeOptions = array('Optional', 'Mandatory', 'Hidden');
+                                                $dataTypeOptions = array(
+                                                    __('Optional', 'mailjet'),
+                                                    __('Mandatory', 'mailjet'),
+                                                    __('Hidden', 'mailjet')
+                                                );
                                                 foreach ($dataTypeOptions as $key => $name) {
                                                     echo '<option value="' . esc_attr($key) . '" id="mjPropertyDataType_' . esc_attr($key) . '" ' . selected($propertyDataTypeN, $key, false) . '>' . $name . '</option>';
                                                 }
@@ -262,18 +267,19 @@
                                         if ($instance[$locale]['language_checkbox'] != 1) {
                                             continue;
                                         }
+                                        $subscriptionConfirmationEmailSent = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm your subscription.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                             <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php echo $language ?></label>
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="" />
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>" />
                                         </div>
                                     <?php } ?>
                                 </div>
                                 
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels">Subscription confirmed (displayed after the user has clicked the confirmation email)</div>
+                                        <div class="form-control validation_messages_labels"><?php _e('Subscription confirmed (displayed after the user has clicked the confirmation email)', 'mailjet'); ?></div>
                                     </div>
                                     <?php
                                     foreach ($languages as $language => $locale) {
@@ -281,17 +287,18 @@
                                         if ($instance[$locale]['language_checkbox'] != 1) {
                                             continue;
                                         }
+                                        $subscriptionConfirmed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($subscription_confirmed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="" />
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($subscription_confirmed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>" />
                                         </div>
                                     <?php } ?>
                                 </div>
 
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels">Error: email field is empty</div>
+                                        <div class="form-control validation_messages_labels"><?php _e('Error: email field is empty', 'mailjet') ?></div>
                                     </div>
                                     <?php
                                     foreach ($languages as $language => $locale) {
@@ -299,17 +306,18 @@
                                         if ($instance[$locale]['language_checkbox'] != 1) {
                                             continue;
                                         }
+                                        $provideEmail = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($empty_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="" />
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($empty_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>" />
                                         </div>
                                     <?php } ?>
                                 </div>
                                 
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels">Error: the email address is already subscribed</div>
+                                        <div class="form-control validation_messages_labels"><?php _e('Error: the email address is already subscribed', 'mailjet') ?></div>
                                     </div>
                                     <?php
                                     foreach ($languages as $language => $locale) {
@@ -317,10 +325,12 @@
                                         if ($instance[$locale]['language_checkbox'] != 1) {
                                             continue;
                                         }
+                                        
+                                        $emailAlreadySubscribed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'This email address has already been subscribed.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($already_subscribed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="" />
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($already_subscribed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>" />
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -335,10 +345,11 @@
                                         if ($instance[$locale]['language_checkbox'] != 1) {
                                             continue;
                                         }
+                                        $incorectValue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($invalid_data_format_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="" />
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($invalid_data_format_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>" />
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -353,10 +364,11 @@
                                         if ($instance[$locale]['language_checkbox'] != 1) {
                                             continue;
                                         }
+                                        $technicalIssue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($generic_technical_error_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="" />
+                                            <input class="form-control" type="text"  value="<?php echo esc_attr($generic_technical_error_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>" />
                                         </div>
                                     <?php } ?>
                                 </div>
