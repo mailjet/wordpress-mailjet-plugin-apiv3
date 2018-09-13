@@ -122,8 +122,9 @@ class MailjetMail
             return;
         }
         // Send a test mail
+        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
         $subject = __('Your test mail from Mailjet', 'mailjet');
-        $message = sprintf(__('Your Mailjet configuration is ok!' . 'SSL: %s Port: %s', 'mailjet'), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
+        $message = sprintf(__('Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port: %s', 'mailjet'), get_home_url(), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
         $testSent = wp_mail(get_option('mailjet_test_address'), $subject, $message);
 
         return $testSent;

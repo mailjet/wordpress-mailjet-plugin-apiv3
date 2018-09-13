@@ -85,7 +85,6 @@
         // Send test email popup
         $(function() {
             $('#mailjet_test').on('click', function(event) {
-                return false;
                 event.preventDefault();
                 $('.pop').slideToggle('fast');
                 $('#mailjet_test').hide();
@@ -95,7 +94,6 @@
             });
 
             $('.cancelTestEmail').on('click', function(event) {
-                return false;
                 event.preventDefault();
                 $('.pop').slideToggle('fast');
                 $('#mailjet_test').show();
