@@ -69,11 +69,11 @@ class InitialSettings
             <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="mailjet_apisecret" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
         </fieldset>
 
-        <br />
-        <label for="mailjet_activate_logger">
-            <input name="mailjet_activate_logger" type="checkbox" id="mailjet_activate_logger" value="1" <?=($mailjetActivateLogger == 1 ? ' checked="checked"' : '') ?> >
-            <?php echo __('Also activate Mailjet plugin logger, to track your expirience', 'mailjet'); ?></label>
-        <br />
+<!--        <br />-->
+<!--        <label for="mailjet_activate_logger">-->
+<!--            <input name="mailjet_activate_logger" type="checkbox" id="mailjet_activate_logger" value="1" --><?//=($mailjetActivateLogger == 1 ? ' checked="checked"' : '') ?><!-- >-->
+<!--            --><?php //echo __('Also activate Mailjet plugin logger, to track your expirience', 'mailjet'); ?><!--</label>-->
+<!--        <br />-->
         <?php
     }
 
