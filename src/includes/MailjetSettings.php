@@ -90,7 +90,7 @@ class MailjetSettings
         // Redirect the user to the Dashboard if he already configured his initial settings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
-        $redirectFromInitialSettingsPage = (get_option('settings_step') != 'initial_step' && 'mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')));
+        $redirectFromInitialSettingsPage = ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')));
         $redirectFromInitialContactListsPage = (get_option('settings_step') == 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage);
 
         // We allow again initial setup if user comes from WP Plugins page link
