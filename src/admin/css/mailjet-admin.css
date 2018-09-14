@@ -229,6 +229,7 @@ input[type="submit"].button {
 .centered ul li .settingsMenuLink a.active {
     color: #19BC9C;
     background-color: transparent;
+    fill: #19BC9C;
 }
 
 

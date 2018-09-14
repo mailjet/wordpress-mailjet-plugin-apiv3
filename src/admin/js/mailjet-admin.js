@@ -137,7 +137,9 @@
             function(){
                 $(this).removeClass('hover');
                 var imgId = $(this).data('img_id');
-                $('.' + imgId).css({fill:"#000000"});
+                if (!$(this).hasClass('active')) {
+                    $('.' + imgId).css({fill:"#000000"});
+                }
             }
         );
 
