@@ -154,6 +154,7 @@ class InitialSettings
                     window.location.href = '<?php echo admin_url('/admin.php?page=mailjet_initial_contact_lists_page'); ?>';
                 </script>
                 <?php
+                echo '<META HTTP-EQUIV="refresh" content="0;URL=' . admin_url('/admin.php?page=mailjet_initial_contact_lists_page') . '">';
                 exit;
 //            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
