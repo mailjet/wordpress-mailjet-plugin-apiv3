@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-12 16:41+0300\n"
+"POT-Creation-Date: 2018-09-13 17:25+0300\n"
 "PO-Revision-Date: 2015-01-29 12:40-0000\n"
 "Last-Translator: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
@@ -21,9 +21,8 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 "X-Poedit-SearchPathExcluded-1: assets\n"
 
-#: src/admin/partials/MailjetAdminDisplay.php:31
-#: src/admin/partials/MailjetAdminDisplay.php:32
-#: src/includes/MailjetMenu.php:96 src/includes/SettingsPages/AllSetup.php:69
+#: src/admin/partials/MailjetAdminDisplay.php:30
+#: src/includes/MailjetMenu.php:96 src/includes/SettingsPages/AllSetup.php:71
 #: src/includes/SettingsPages/ConnectAccountSettings.php:147
 #: src/includes/SettingsPages/Dashboard.php:83
 #: src/includes/SettingsPages/InitialContactListsSettings.php:250
@@ -31,22 +30,19 @@ msgstr ""
 msgid "Connect your Mailjet account"
 msgstr ""
 
-#: src/admin/partials/MailjetAdminDisplay.php:42
-#: src/admin/partials/MailjetAdminDisplay.php:43
+#: src/admin/partials/MailjetAdminDisplay.php:39
 #: src/includes/MailjetMenu.php:99
 #: src/includes/SettingsPages/EnableSendingSettings.php:225
 msgid "Sending settings"
 msgstr ""
 
-#: src/admin/partials/MailjetAdminDisplay.php:53
-#: src/admin/partials/MailjetAdminDisplay.php:54
+#: src/admin/partials/MailjetAdminDisplay.php:48
 #: src/includes/MailjetMenu.php:102
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:187
 msgid "Subscription options"
 msgstr ""
 
-#: src/admin/partials/MailjetAdminDisplay.php:64
-#: src/admin/partials/MailjetAdminDisplay.php:65
+#: src/admin/partials/MailjetAdminDisplay.php:57
 #: src/includes/MailjetMenu.php:105
 #: src/includes/SettingsPages/UserAccessSettings.php:124
 msgid "User access"
@@ -58,13 +54,15 @@ msgid ""
 "later"
 msgstr ""
 
-#: src/includes/MailjetMail.php:125
+#: src/includes/MailjetMail.php:126
 msgid "Your test mail from Mailjet"
 msgstr ""
 
-#: src/includes/MailjetMail.php:126
+#: src/includes/MailjetMail.php:127
 #, php-format
-msgid "Your Mailjet configuration is ok!SSL: %s Port: %s"
+msgid ""
+"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /"
+"> Port: %s"
 msgstr ""
 
 #: src/includes/MailjetMenu.php:60
@@ -72,7 +70,7 @@ msgstr ""
 msgid "Connect your Mailjet account to get started"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:61 src/includes/MailjetSettings.php:220
+#: src/includes/MailjetMenu.php:61 src/includes/MailjetSettings.php:222
 #: src/includes/SettingsPages/Dashboard.php:74
 msgid "Settings"
 msgstr ""
@@ -128,21 +126,21 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
-#: src/includes/MailjetSettings.php:171
+#: src/includes/MailjetSettings.php:173
 msgid ""
 "Your Mailjet API credentials are invalid or not yet configured. Please "
 "check and configure them to proceed further."
 msgstr ""
 
-#: src/includes/MailjetSettings.php:230
+#: src/includes/MailjetSettings.php:232
 msgid "You have been successfully subscribed to a Mailjet contact list"
 msgstr ""
 
-#: src/includes/MailjetSettings.php:232
+#: src/includes/MailjetSettings.php:234
 msgid "You have been successfully unsubscribed from a Mailjet contact list"
 msgstr ""
 
-#: src/includes/MailjetSettings.php:238
+#: src/includes/MailjetSettings.php:240
 msgid "Something went wrong with adding a contact to Mailjet contact list"
 msgstr ""
 
@@ -192,11 +190,14 @@ msgstr ""
 msgid "Configure"
 msgstr ""
 
-#: src/includes/SettingsPages/AllSetup.php:63
-msgid "Go to your Mailjet Plugin Homepage"
+#: src/includes/SettingsPages/AllSetup.php:64
+#, php-format
+msgid ""
+"or <a class=\"greenLink\" href=\"%s\">Go to your Mailjet Plugin Homepage</"
+"a>"
 msgstr ""
 
-#: src/includes/SettingsPages/AllSetup.php:70
+#: src/includes/SettingsPages/AllSetup.php:72
 #: src/includes/SettingsPages/ConnectAccountSettings.php:166
 #: src/includes/SettingsPages/ConnectAccountSettings.php:167
 #: src/includes/SettingsPages/Dashboard.php:84
@@ -209,7 +210,7 @@ msgstr ""
 msgid "Need help?"
 msgstr ""
 
-#: src/includes/SettingsPages/AllSetup.php:72
+#: src/includes/SettingsPages/AllSetup.php:74
 #: src/includes/SettingsPages/ConnectAccountSettings.php:169
 #: src/includes/SettingsPages/Dashboard.php:86
 #: src/includes/SettingsPages/EnableSendingSettings.php:247
@@ -220,7 +221,7 @@ msgstr ""
 msgid "Read our user guide"
 msgstr ""
 
-#: src/includes/SettingsPages/AllSetup.php:74
+#: src/includes/SettingsPages/AllSetup.php:76
 #: src/includes/SettingsPages/ConnectAccountSettings.php:171
 #: src/includes/SettingsPages/Dashboard.php:88
 #: src/includes/SettingsPages/EnableSendingSettings.php:249
@@ -524,10 +525,6 @@ msgid ""
 "If you already have a Mailjet account, go to <a class=\"greenLink\" target="
 "\"_blank\" href=\"https://www.mailjet.com/account/api_keys\">My Account > "
 "API Keys</a> and paste your credentials below"
-msgstr ""
-
-#: src/includes/SettingsPages/InitialSettings.php:75
-msgid "Also activate Mailjet plugin logger, to track your expirience"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialSettings.php:164

@@ -102,7 +102,7 @@ class MailjetMenu
                 add_submenu_page(null, __('Subscription options', 'mailjet'), null, 'read', 'mailjet_subscription_options_page',
                     array(new SubscriptionOptionsSettings(), 'mailjet_subscription_options_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
-                add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page_html',
+                add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
             }

@@ -132,7 +132,7 @@ class EnableSendingSettings
         add_settings_field(
             'mailjet_enable_sending', // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
-            __( 'Mailjet Enable Email Sending', 'mailjet' ),
+            __('Enable sending emails through Mailjet', 'mailjet' ),
             array($this, 'mailjet_enable_sending_cb'),
             'mailjet_sending_settings_page',
             'mailjet_enable_sending_settings',
@@ -183,7 +183,7 @@ class EnableSendingSettings
 
             if (!empty(get_option('send_test_email_btn')) && empty(get_option('mailjet_test_address'))) {
                 $executionError = true;
-                add_settings_error('mailjet_messages', 'mailjet_message', __('You have to provide a valid email address to send test email to', 'mailjet'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Please provide a valid email address', 'mailjet'), 'error');
             } else if (!empty(get_option('send_test_email_btn')) && !empty(get_option('mailjet_test_address'))) {
                 // Send a test email
                 $testSent = MailjetMail::sendTestEmail();
@@ -193,7 +193,7 @@ class EnableSendingSettings
                     add_settings_error('mailjet_messages', 'mailjet_message', __('The test email could not be sent. Please make sure your server doesn\'t block the SMTP ports. Also double check that you are using correct API and Secret keys and a valid sending address from your Mailjet account.', 'mailjet'), 'error');
                 } else {
                     // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test message was sent successfully', 'mailjet'), 'updated');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test email has been successfully sent', 'mailjet'), 'updated');
                 }
             }
 

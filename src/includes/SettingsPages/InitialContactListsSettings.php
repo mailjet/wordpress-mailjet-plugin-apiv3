@@ -134,7 +134,7 @@ class InitialContactListsSettings
         add_settings_field(
             'mailjet_enable_sending', // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
-            __( 'Mailjet Enable Email Sending', 'mailjet' ),
+            __( 'Enable sending emails through Mailjet', 'mailjet' ),
             array($this, 'mailjet_initial_contact_lists_cb'),
             'mailjet_initial_contact_lists_page',
             'mailjet_initial_contact_lists_settings',
@@ -177,7 +177,7 @@ class InitialContactListsSettings
                     if ($createListResponse->success()) {
                         $executionError = true;
                         add_settings_error('mailjet_messages', 'mailjet_message',
-                            __('Your new contact list has been successfully created.', 'mailjet'), 'updated');
+                            __('Congratulations! You have just created a new contact list!', 'mailjet'), 'updated');
                     } else {
                         $executionError = true;
                         if (isset($createListResponse->getBody()['ErrorMessage']) && stristr($createListResponse->getBody()['ErrorMessage'], 'already exists')) {

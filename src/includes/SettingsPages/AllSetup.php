@@ -60,7 +60,9 @@ class AllSetup
                 </div>
             </div>
 
-            <div style="padding-top: 20px; margin-left: 380px; clear: left;"> or <?php echo '<a class="greenLink" href="admin.php?page=mailjet_dashboard_page">' . __('Go to your Mailjet Plugin Homepage', 'mailjet') . '</a>'; ?> </div>
+            <div style="padding-top: 20px; margin-left: 380px; clear: left;">
+                <?php echo sprintf(__('or <a class="greenLink" href="%s">Go to your Mailjet Plugin Homepage</a>', 'mailjet'), "admin.php?page=mailjet_dashboard_page"); ?>
+            </div>
 
         </div>
 
