@@ -147,6 +147,14 @@ class InitialSettings
 
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+
+                // Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
+                ?>
+                <script type="text/javascript">
+                    window.location.href = '<?php echo admin_url('/admin.php?page=mailjet_initial_contact_lists_page'); ?>';
+                </script>
+                <?php
+                exit;
 //            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
