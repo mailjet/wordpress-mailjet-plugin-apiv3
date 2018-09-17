@@ -77,7 +77,7 @@ class Mailjeti18n
         $poParser = new \Sepia\PoParser\Parser($fileHandler);
         $catalog = $poParser->parse();
         $entry = $catalog->getEntry($msgId);
-        if(empty($entry)) {
+        if (empty($entry)) {
             return $msgId;
         }
         return strlen($entry->getMsgStr()) > 0 ? $entry->getMsgStr() : $entry->getMsgId();
@@ -103,6 +103,22 @@ class Mailjeti18n
             'German' => 'de_DE',
             'Spanish' => 'es_ES',
         );
+    }
+
+    public static function getCurrentUserLanguage()
+    {
+        $locale = self::getLocale();
+        $languages = array(
+            'en_US' => 'English',
+            'fr_FR' => 'French',
+            'de_DE' => 'German',
+            'es_ES' => 'Spanish'
+        );
+        if (!isset($languages[$locale])) {
+            // return English if the language is not supported
+            $locale = 'en_US';
+        }
+        return $languages[$locale];
     }
 
 }
