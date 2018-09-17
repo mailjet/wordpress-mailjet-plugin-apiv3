@@ -436,7 +436,7 @@ class SubscriptionOptionsSettings
     
     public function mailjet_subscribe_confirmation_from_widget($subscription_email)
     {
-        $params = http_build_query(array('subscription_email' => $subscription_email));
+        $params = http_build_query(array('subscription_email' => $subscription_email, 'properties' => $_POST['properties']));
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
         

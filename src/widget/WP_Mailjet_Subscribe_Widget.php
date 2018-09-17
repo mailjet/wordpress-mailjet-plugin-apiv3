@@ -128,8 +128,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         $subscription_email = $_GET['subscription_email'];
-        $params = http_build_query(array('subscription_email' => $subscription_email));
-
+        $properties = $_GET['properties'];
+        $params = http_build_query(array(
+            'subscription_email' => $subscription_email,
+            'properties' => $properties
+        ));
+//        echo "<pre>";
+//        var_dump($params);
+//        var_dump(sha1($params . $subscriptionOptionsSettings::WIDGET_HASH));exit;
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
             $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
@@ -139,19 +145,28 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             if (!$contactListId) {
                 // Log
             }
+            $dataProperties = array();
+            $mailjetContactProperties = MailjetApi::getContactProperties();
+            if (!empty($mailjetContactProperties)) {
+                foreach ($mailjetContactProperties as $property) {
+                    if(isset($properties[$property['ID']])) {
+                        $dataProperties[$property['Name']] = $properties[$property['ID']];
+                    }
+                }
+            }
 
-//            $contactProperties = array();
             $contacts[] = array(
                 'Email' => $subscription_email,
 //                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
-//                'Properties' => $contactProperties
+                'Properties' => $dataProperties
             );
             $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
-            var_dump($result);
 //            $mailjetClient
         } else {
             // Invalid token
             // Todo add Log and message
+            
+            echo "Invalid token";
             die;
         }
     }
@@ -168,6 +183,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+//        $mailjetContactProperties = MailjetApi::getContactProperties();
+//        echo "<pre>";
+//        var_dump($mailjetContactProperties);
+//        echo "</pre>";exit;
         $subscriptionOptionsSettings = new \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
         // Widget front form is submited
@@ -221,11 +240,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         wp_cache_delete($this->get_widget_slug(), 'widget');
     }
 
-    public function testtt($locale)
-    {
-        return 'fr_FR';
-    }
-
     /**
      * Processes the widget's options to be saved.
      *
@@ -234,10 +248,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
-//        echo "<pre>";
-//        var_dump($new_instance);
-//        echo "</pre>";
-//        exit;
         // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
 
@@ -299,10 +309,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'mailjet');
         __('Your subscription was successfully confirmed.', 'mailjet');
         __('Please provide an email address', 'mailjet');
+        __('Please confirm your subscription', 'mailjet');
         __('This email address has already been subscribed.', 'mailjet');
         __('The value you entered is not in the correct format.', 'mailjet');
         __('A technical issue has prevented your subscription. Please try again later.', 'mailjet');
         __('Yes, subscribe me to this list', 'mailjet');
+        __("If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message", 'mailjet');
     }
 
     /**
