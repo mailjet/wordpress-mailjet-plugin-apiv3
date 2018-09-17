@@ -218,3 +218,7 @@
 .modal-footer{
     margin-top: 60px
 }
+
+#mailjet_widget_title h2 {
+    font-size: 12px;
+}
