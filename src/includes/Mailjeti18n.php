@@ -121,4 +121,47 @@ class Mailjeti18n
         return $languages[$locale];
     }
 
+
+    public static function getMailjetSupportLinkByLocale()
+    {
+        $locale = self::getLocale();
+        $supportedLocales = array_flip(self::getSupportedLocales());
+        if (!isset($supportedLocales[$locale])) {
+            // return English if the language is not supported
+            $locale = 'en_US';
+        }
+        return "https://app.mailjet.com/support?lc=" . $locale;
+    }
+
+    public static function getMailjetUserGuideLinkByLocale()
+    {
+        $locale = self::getLocale();
+        $supportedLocales = array_flip(self::getSupportedLocales());
+        if (!isset($supportedLocales[$locale])) {
+            // return English if the language is not supported
+            $locale = 'en_US';
+        }
+        switch ($locale) {
+            case 'fr_FR' :
+        }
+
+        switch ($locale) {
+            case 'fr_FR':
+                $link = 'https://www.mailjet.com/guides/wordpress-user-guide-fr/';
+                break;
+            case 'de_DE':
+                $link = 'https://www.mailjet.com/guides/wordpress-user-guide-de/';
+                break;
+            case 'es_ES':
+                $link = 'https://www.mailjet.com/guides/wordpress-user-guide-es/';
+                break;
+            case 'it_IT':
+                $link = 'https://www.mailjet.com/guides/wordpress-user-guide-it/';
+                break;
+            default:
+                $link = 'https://www.mailjet.com/guides/wordpress-user-guide/';
+        }
+
+        return $link;
+    }
 }

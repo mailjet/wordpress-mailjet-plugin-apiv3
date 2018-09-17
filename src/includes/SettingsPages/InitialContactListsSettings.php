@@ -6,6 +6,7 @@ use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetSettings;
+use MailjetPlugin\Includes\Mailjeti18n;
 
 /**
  * Register all actions and filters for the plugin.
@@ -261,9 +262,8 @@ class InitialContactListsSettings
                 <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
                 <?php echo __('Need help getting started?', 'mailjet' ); ?>
             </div>
-            <?php echo '<a target="_blank" href="https://www.mailjet.com/guides/wordpress-user-guide/">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-            &nbsp;&nbsp;&nbsp;
-            <?php echo '<a target="_blank" href="https://www.mailjet.com/support/ticket">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
         </div>
 
         <?php
