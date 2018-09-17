@@ -5,6 +5,7 @@ namespace MailjetPlugin\Includes\SettingsPages;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -122,6 +123,8 @@ class InitialContactListsSettings
      */
     public function mailjet_initial_contact_lists_page_html()
     {
+        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
+
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_initial_contact_lists_settings',
@@ -197,7 +200,15 @@ class InitialContactListsSettings
             if (false === $executionError) {
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+
+                if (!($fromPage == 'plugins') || get_option('settings_step') == 'initial_contact_lists_settings_step') {
+                    MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
+                }
             }
+        }
+
+        if (!($fromPage == 'plugins') && (get_option('settings_step') == 'initial_contact_lists_settings_step')) {
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
         }
 
         // show error/update messages

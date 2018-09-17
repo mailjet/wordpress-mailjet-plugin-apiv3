@@ -25,8 +25,6 @@ class MailjetSettings
     {
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
 
-        $this->handleRedirections();
-
         $this->addMailjetActions();
 
         $this->addSubscriptionConfirmations();
@@ -77,37 +75,6 @@ class MailjetSettings
 
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init End ]');
-    }
-
-
-    /**
-     * Handle any internal Mailjet plugin redirections - for example - redirects user to dashboard if initial configuration is already done
-     */
-    private function handleRedirections()
-    {
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handle internal Mailjet redirections - Start ]');
-
-        // Redirect the user to the Dashboard if he already configured his initial settings
-        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
-        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
-        $redirectFromInitialSettingsPage = ('mailjet_settings_page' == $currentPage && !empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')));
-        $redirectFromInitialContactListsPage = (get_option('settings_step') == 'initial_contact_lists_settings_step' && 'mailjet_initial_contact_lists_page' == $currentPage);
-
-        // We allow again initial setup if user comes from WP Plugins page link
-        if (!($fromPage == 'plugins')) {
-            if (true === $redirectFromInitialSettingsPage) {
-                wp_redirect(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
-                exit;
-            }
-
-            // If defined some contact list settings the we skip that page
-            if (true === $redirectFromInitialContactListsPage) {
-                wp_redirect(admin_url('/admin.php?page=mailjet_allsetup_page'));
-                exit;
-            }
-        }
-
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handle internal Mailjet redirections - End ]');
     }
 
 
@@ -239,6 +206,26 @@ class MailjetSettings
     {
         echo '<div class="notice notice-error is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #dc3232; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('Something went wrong with adding a contact to Mailjet contact list', 'mailjet') . '</div>';
         die; //We die here to not continue loading rest of the WP home page
+    }
+
+
+    /**
+     * Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
+     *
+     * @param $urlToRedirect
+     */
+    public static function redirectJs($urlToRedirect)
+    {
+        if (empty($urlToRedirect)) {
+            return;
+        }
+        ?>
+        <script type="text/javascript">
+            window.location.href = '<?php echo $urlToRedirect; ?>';
+        </script>
+        <?php
+        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $urlToRedirect . '">';
+        exit;
     }
 
 }

@@ -4,6 +4,7 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetMail;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -85,6 +86,7 @@ class InitialSettings
     public function mailjet_initial_settings_page_html()
     {
         global $phpmailer;
+        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
 
         // check user capabilities
         if (!current_user_can('manage_options')) {
@@ -149,15 +151,14 @@ class InitialSettings
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
 
                 // Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
-                ?>
-                <script type="text/javascript">
-                    window.location.href = '<?php echo admin_url('/admin.php?page=mailjet_initial_contact_lists_page'); ?>';
-                </script>
-                <?php
-                echo '<META HTTP-EQUIV="refresh" content="0;URL=' . admin_url('/admin.php?page=mailjet_initial_contact_lists_page') . '">';
-                exit;
-//            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
+                if (!($fromPage == 'plugins') || get_option('settings_step') == 'initial_step') {
+                    MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
+                }
+                //\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
+        }
+        if (!($fromPage == 'plugins') && (!empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')))) {
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
         }
 
         //// show error/update messages
