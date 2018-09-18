@@ -169,6 +169,8 @@ class InitialContactListsSettings
             if (empty(get_option('create_contact_list_btn')) && !empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
                 $syncResponse = SubscriptionOptionsSettings::syncAllWpUsers();
                 if (false === $syncResponse) {
+                    $executionError = true;
+                    update_option('contacts_list_ok', 0);
                     add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
                 }
             }
@@ -179,14 +181,18 @@ class InitialContactListsSettings
                     $createListResponse = MailjetApi::createMailjetContactList(get_option('create_list_name'));
 
                     if ($createListResponse->success()) {
-                        $executionError = true;
                         add_settings_error('mailjet_messages', 'mailjet_message',
                             __('Congratulations! You have just created a new contact list!', 'mailjet'), 'updated');
                     } else {
                         $executionError = true;
+                        update_option('contacts_list_ok', 0);
+
                         if (isset($createListResponse->getBody()['ErrorMessage']) && stristr($createListResponse->getBody()['ErrorMessage'], 'already exists')) {
                             add_settings_error('mailjet_messages', 'mailjet_message', sprintf(__('A contact list with name <b>%s</b> already exists', 'mailjet'), get_option('create_list_name')), 'error');
                         } else {
+                            $executionError = true;
+                            update_option('contacts_list_ok', 0);
+
                             add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
                         }
                     }
@@ -199,16 +205,17 @@ class InitialContactListsSettings
             }
 
             if (false === $executionError) {
+                update_option('contacts_list_ok', 1);
+
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
 
-                if (!($fromPage == 'plugins') || get_option('settings_step') == 'initial_contact_lists_settings_step') {
+                if (!($fromPage == 'plugins') || (!empty(get_option('contacts_list_ok')) && '1' == get_option('contacts_list_ok'))) {
                     MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
                 }
             }
         }
-
-        if (!($fromPage == 'plugins') && (get_option('settings_step') == 'initial_contact_lists_settings_step')) {
+        if (!($fromPage == 'plugins') && (!empty(get_option('contacts_list_ok')) && '1' == get_option('contacts_list_ok'))) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
         }
 

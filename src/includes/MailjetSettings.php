@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes;
 
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+use MailjetPlugin\Includes\MailjetApi;
 
 /**
  * Register all actions and filters for the plugin.
@@ -29,7 +30,7 @@ class MailjetSettings
 
         $this->addSubscriptionConfirmations();
 
-        // register a new setting for "mailjet" page
+        // register a new settings for Mailjet pages
         register_setting('mailjet_initial_settings_page', 'mailjet_apikey');
         register_setting('mailjet_initial_settings_page', 'mailjet_apisecret');
         register_setting('mailjet_initial_settings_page', 'mailjet_activate_logger');
@@ -73,6 +74,23 @@ class MailjetSettings
         register_setting('mailjet_user_access_page', 'mailjet_access_subscriber');
         register_setting('mailjet_user_access_page', 'settings_step');
 
+
+        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
+        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
+        if (in_array($currentPage, array(
+            'mailjet_allsetup_pagec',
+            'mailjet_dashboard_page',
+            'mailjet_user_access_page',
+            'mailjet_subscription_options_page',
+            'mailjet_sending_settings_pag',
+            'mailjet_connect_account_page',
+            'mailjet_initial_contact_lists_page',
+            'mailjet_settings_page'
+        ))) {
+            if (!($fromPage == 'plugins') && !empty(get_option('api_credentials_ok')) && '1' != get_option('api_credentials_ok')) {
+                MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
+            }
+        }
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init End ]');
     }

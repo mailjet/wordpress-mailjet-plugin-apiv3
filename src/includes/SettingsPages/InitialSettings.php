@@ -96,7 +96,6 @@ class InitialSettings
         }
 
 
-
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_section_initial_settings',
@@ -127,9 +126,13 @@ class InitialSettings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
 
+            $executionError = false;
+
             // Validate Mailjet API credentials
             $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (false == $isValidAPICredentials) {
+                update_option('api_credentials_ok', 0);
+                $executionError = true;
 //                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             } else {
@@ -150,15 +153,20 @@ class InitialSettings
 
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+                $executionError = false;
 
                 // Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
-                if (!($fromPage == 'plugins') || get_option('settings_step') == 'initial_step') {
-                    MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
+                if (false === $executionError) {
+                    // Update the flag for passed API credentials check
+                    update_option('api_credentials_ok', 1);
+                    // Redirect to the next page
+                    MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page' . (!empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : '')));
                 }
+
                 //\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
-        if (!($fromPage == 'plugins') && (!empty(get_option('mailjet_apikey')) && !empty(get_option('mailjet_apisecret')))) {
+        if (!($fromPage == 'plugins') && (!empty(get_option('api_credentials_ok')) && '1' == get_option('api_credentials_ok'))) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
         }
 
