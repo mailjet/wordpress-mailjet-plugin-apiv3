@@ -216,7 +216,7 @@ class InitialContactListsSettings
             }
         }
         if (!($fromPage == 'plugins') && (!empty(get_option('contacts_list_ok')) && '1' == get_option('contacts_list_ok'))) {
-            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
         }
 
         // show error/update messages
