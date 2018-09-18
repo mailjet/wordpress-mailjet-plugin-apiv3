@@ -42,13 +42,13 @@
 
                 // Show new property inputs
                 $(this).parent().parent().find('.createNewProperties').show();
-                
+
                 // Hide all rows that are not setup
                 $('.selectProperty').each(function (env) {
                     console.log($(this).val());
-                   if( $(this).val() === null) {
-                       $(this).parent().parent().hide();
-                   }
+                    if ($(this).val() === null) {
+                        $(this).parent().parent().hide();
+                    }
                 });
                 // Show next default property select
 //                $(this).parent().parent().next('.property').hide();
@@ -58,7 +58,7 @@
 
                 // Hide inputs of adding new property
                 $(this).parent().parent().find('.createNewProperties').hide();
-                
+
                 // Reset inputs for adding new property
                 resetAddingNewPropertyInputs($(this));
 
@@ -84,7 +84,7 @@
 
             resetHiddenPropertiesInputs($(this));
         });
-        
+
         function resetHiddenPropertiesInputs(element) {
             // Reset selects
             element.parent().parent().find('.selectProperty').val(0);
@@ -93,7 +93,7 @@
             // reset language inputs
             element.parent().parent().find('.languageInput input').val('');
         }
-        
+
         function resetAddingNewPropertyInputs(element) {
             // Reset new property name input
             element.parent().parent().find('.newPropertyName input').val('');
@@ -132,19 +132,19 @@
             }
         });
 
-        $(document).on('click', '.cancelNewPropertyButton', function() {
+        $(document).on('click', '.cancelNewPropertyButton', function () {
             // Hide new property inputs
             $(this).parent().parent().find('.createNewProperties').hide();
-            
+
             // Reset inputs
             resetHiddenPropertiesInputs($(this));
 
-           // Show select property inputs
+            // Show select property inputs
 //            $(this).parent().parent().find('.hiddenProperties').show();
-            
+
             // Show next default property select
 //            $(this).parent().parent().next('.property').show();
-            
+
         });
 
         function replaceLanguagePlaceholder(element, searchStr, replaceStr) {

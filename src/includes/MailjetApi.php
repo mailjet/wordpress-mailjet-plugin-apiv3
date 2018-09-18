@@ -72,7 +72,9 @@ class MailjetApi
     public static function getContactProperties()
     {
         $mjApiClient = self::getApiClient();
-        $filters = array();
+        $filters = array(
+            'limit' => 0
+        );
         $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
         if ($response->success()) {
             return $response->getData();

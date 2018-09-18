@@ -16,6 +16,14 @@ namespace MailjetPlugin\Includes;
 class Mailjeti18n
 {
 
+    public static $supportedLocales = array(
+        'English' => 'en_US',
+        'French' => 'fr_FR',
+        'German' => 'de_DE',
+        'Spanish' => 'es_ES',
+        'Italian' => 'it_IT',
+    );
+
     /**
      * Load the plugin text domain for translation.
      *
@@ -83,12 +91,17 @@ class Mailjeti18n
         return strlen($entry->getMsgStr()) > 0 ? $entry->getMsgStr() : $entry->getMsgId();
     }
 
+    /**
+     * Get locale, if it is not supported the default en_US is returned
+     * @return string
+     */
     public static function getLocale()
     {
         $locale = get_locale();
-        if (in_array($locale, array('en_US', 'en_EN', 'en_GB'))) {
+        if (in_array($locale, array('en_US', 'en_EN', 'en_GB')) && !in_array($locale, array_values(self::$supportedLocales))) {
             $locale = 'en_US';
         }
+
         if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
             $locale = 'de_DE';
         }
@@ -97,23 +110,17 @@ class Mailjeti18n
 
     public static function getSupportedLocales()
     {
-        return array(
-            'English' => 'en_US',
-            'French' => 'fr_FR',
-            'German' => 'de_DE',
-            'Spanish' => 'es_ES',
-        );
+        return self::$supportedLocales;
     }
 
+    /**
+     * Get user language via locale, if the language is not supported returns the default en_US
+     * @return string
+     */
     public static function getCurrentUserLanguage()
     {
         $locale = self::getLocale();
-        $languages = array(
-            'en_US' => 'English',
-            'fr_FR' => 'French',
-            'de_DE' => 'German',
-            'es_ES' => 'Spanish'
-        );
+        $languages = array_flip(self::$supportedLocales);
         if (!isset($languages[$locale])) {
             // return English if the language is not supported
             $locale = 'en_US';
@@ -140,9 +147,6 @@ class Mailjeti18n
         if (!isset($supportedLocales[$locale])) {
             // return English if the language is not supported
             $locale = 'en_US';
-        }
-        switch ($locale) {
-            case 'fr_FR' :
         }
 
         switch ($locale) {

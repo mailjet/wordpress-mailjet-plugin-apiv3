@@ -457,7 +457,7 @@ class SubscriptionOptionsSettings
             $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
-        $result = wp_mail($subscription_email, __('Subscription Confirmation', 'mailjet'), $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+        return wp_mail($subscription_email, __('Subscription Confirmation', 'mailjet'), $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
 //        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet') . '</p>';
 //        die;
     }

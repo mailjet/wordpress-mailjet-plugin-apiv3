@@ -23,6 +23,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     protected $widget_slug = 'mailjet';
     private $mailjetClient = null;
     private $instance;
+    
+    private $propertyData = array();
 
     /* -------------------------------------------------- */
     /* Constructor
@@ -97,9 +99,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     private function sendSubscriptionEmail($subscriptionOptionsSettings)
     {
         // Check if subscription form is submited
-        if (empty($_POST['subscription_email'])) {
+        if (!isset($_POST['subscription_email'])) {
             // Subscription form is not submited
-            return true;
+            return false;
+        }
+        
+        // Submited but empty
+        if(empty($_POST['subscription_email'])) {
+            return __('Please provide an email address', 'mailjet');
         }
 
         // Check if the user is subscribed
@@ -107,10 +114,23 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Send subscription email
         $subscription_email = $_POST['subscription_email'];
         if (!is_email($subscription_email)) {
-            _e('Invalid email', 'mailjet');
-            die;
+            return __('Invalid email', 'mailjet');
         }
-        $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email);
+        
+        $isSubscribed = $this->isEmailAlreadySubscribed($subscription_email);
+        if($isSubscribed) {
+            return __('This email address has already been subscribed.', 'mailjet');
+        }
+
+        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email);
+        if($sendingResult) {
+            return __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet');
+        }
+        return __('A technical issue has prevented your subscription. Please try again later.', 'mailjet');
+    }
+    
+    private function isEmailAlreadySubscribed($email) {
+        return true;
     }
 
     /**
@@ -183,16 +203,19 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-//        $mailjetContactProperties = MailjetApi::getContactProperties();
-//        echo "<pre>";
-//        var_dump($mailjetContactProperties);
-//        echo "</pre>";exit;
+        $mailjetContactProperties = MailjetApi::getContactProperties();
+        foreach($mailjetContactProperties as $mjContactProperty) {
+            $this->propertyData[$mjContactProperty['ID']] = array(
+                'Name' => $mjContactProperty['Name'],
+                'Datatype' => $mjContactProperty['Datatype']
+            );
+        }
         $subscriptionOptionsSettings = new \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
         // Widget front form is submited
         // TODO: Check if the user is already subscribed
         // Send subscription email if need
-        $this->sendSubscriptionEmail($subscriptionOptionsSettings);
+        $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings);
 
         // Subscribe user
         $this->activateConfirmSubscriptionUrl($subscriptionOptionsSettings, $instance);
@@ -233,6 +256,29 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         wp_cache_set($this->get_widget_slug(), $cache, 'widget');
 
         print $widget_string;
+    }
+    
+    private function getInputType($inputType)
+    {
+        switch ($inputType) {
+            case 'str':
+                $inputType = 'text';
+                break;
+            case 'int':
+                $inputType = 'number';
+                break;
+            case 'datetime':
+                $inputType = 'date';
+                break;
+            case 'float':
+            case 'bool':
+                $inputType = 'text';
+                break;
+            default:
+                $inputType = 'text';
+                break;
+        }
+        return $inputType;
     }
 
     public function flush_widget_cache()

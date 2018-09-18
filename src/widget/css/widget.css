@@ -222,3 +222,7 @@
 #mailjet_widget_title h2 {
     font-size: 12px;
 }
+
+.input-required{
+    color: red;
+}
