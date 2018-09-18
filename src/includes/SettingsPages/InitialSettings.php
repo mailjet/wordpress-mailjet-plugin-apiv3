@@ -179,9 +179,9 @@ class InitialSettings
 
             <div>
                 <h1><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
-                <p>
+                <h4>
                 <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
-                </p>
+                </h4>
             </div>
             <br /><br />
 
@@ -196,10 +196,12 @@ class InitialSettings
                     do_settings_sections('mailjet_initial_settings_page');
                     // output save settings button
                     submit_button('Connect your account', 'MailjetSubmit', 'submit', false, array('id' => 'initialSettingsSubmit'));
-
+/* No Next btn on Initial API settings page - we redirect automatically
                     if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
-                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet')?>">
-                    <?php } ?>
+                        <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet')?>">
+                    <?php }
+*/
+                    ?>
                     <br style="clear: left;" />
                     <h4 style="margin-top:50px;"><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
                     <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>

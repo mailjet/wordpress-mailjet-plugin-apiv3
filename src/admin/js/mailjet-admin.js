@@ -58,7 +58,7 @@
 		   $('.sending_options_div').show();
        	}
         $('input[name="mailjet_enabled"]').click(function () {
-            $('.sending_options_div').toggle('fast');
+            $('.sending_options_div').toggle('slow');
         });
 
         // Show / Hide Initial Sync options div
@@ -68,7 +68,7 @@
             $('#activate_mailjet_initial_sync').prop('checked', false);
         }
         $('input[name="activate_mailjet_sync"]').click(function () {
-            $('.mailjet_sync_options_div').toggle('fast');
+            $('.mailjet_sync_options_div').toggle('slow');
             $('#activate_mailjet_initial_sync').prop('checked', $('input[name="activate_mailjet_sync"]').prop('checked'));
         });
 
@@ -78,7 +78,7 @@
             $('.mailjet_sync_comment_authors_div').show();
         }
         $('input[name="activate_mailjet_comment_authors_sync"]').click(function () {
-            $('.mailjet_sync_comment_authors_div').toggle('fast');
+            $('.mailjet_sync_comment_authors_div').toggle('slow');
         });
 
 
@@ -86,7 +86,7 @@
         $(function() {
             $('#mailjet_test').on('click', function(event) {
                 event.preventDefault();
-                $('.pop').slideToggle('fast');
+                $('.pop').slideToggle('slow');
                 $('#mailjet_test').hide();
                 $('#enableSendingSubmit').hide();
                 $('#cancelBtn').hide();
@@ -95,7 +95,7 @@
 
             $('.cancelTestEmail').on('click', function(event) {
                 event.preventDefault();
-                $('.pop').slideToggle('fast');
+                $('.pop').slideToggle('slow');
                 $('#mailjet_test').show();
                 $('#enableSendingSubmit').show();
                 $('#cancelBtn').show();
@@ -108,7 +108,7 @@
 	   	$(function() {
             $('#create_contact_list').on('click', function(event) {
                 event.preventDefault();
-                $('.pop').slideToggle('fast');
+                $('.pop').slideToggle('slow');
                 $('#create_contact_list').hide();
                 $('#createContactListImg').hide();
                 $('#initialContactListsSubmit').hide();
@@ -116,7 +116,7 @@
             });
             $('.closeCreateList').on('click', function(event) {
                 event.preventDefault();
-                $('.pop').slideToggle('fast');
+                $('.pop').slideToggle('slow');
                 $('#create_contact_list').show();
                 $('#createContactListImg').show();
                 $('#initialContactListsSubmit').show();

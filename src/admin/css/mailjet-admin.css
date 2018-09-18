@@ -69,6 +69,9 @@
     text-align: center;
     margin-left:10px;
 }
+#initialSettingsSubmit {
+    width: 311px;
+}
 #initialSettingsHead {
     height: 48px;
     width: 1072px;
@@ -82,7 +85,7 @@
     float: left;
     display: inline-block;
     width: 550px;
-    margin-left: 10px;
+    margin-left: 50px;
 }
 
 .initialSettingsDescriptionContainer {
@@ -261,10 +264,10 @@ input[type="submit"].button {
 .availableContactListsRow {
     display:table-row;
     width:600px;
-    border:1px solid  #666666;
+    border:1px solid  #C1C1C1;
 }
 .availableContactListsRow:nth-child(even) {background: #FFF;}
-.availableContactListsRow:nth-child(odd) {background: #C6C6C6;}
+.availableContactListsRow:nth-child(odd) {background: #e5e8e3;}
 
 .availableContactListsNameCell {
     padding: 10px;

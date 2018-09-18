@@ -202,7 +202,7 @@ class MailjetMenu
         try {
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_STATS);
-            echo '<div style="margin-left:0px; width:1040px; height:1260px;">';
+            echo '<div style="margin-left:0px; width:1140px; height:1460px;">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
