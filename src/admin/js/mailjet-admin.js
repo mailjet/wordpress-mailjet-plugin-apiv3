@@ -41,7 +41,7 @@
 				if (hiddenEmailExtra == undefined) {
                     hiddenEmailExtra = '';
 				}
-                $('<input style="margin-right:5px; width:150px; vertical-align: middle; " type="text" id="mailjet_from_email_extra" name="mailjet_from_email_extra" value="' + hiddenEmailExtra + '" placeholder="Enter your email name" />').insertBefore('#mailjet_from_email');
+                $('<input style="margin-right:5px; width:150px; vertical-align: middle; " type="text" id="mailjet_from_email_extra" name="mailjet_from_email_extra" value="' + hiddenEmailExtra + '" required="required" placeholder="Enter your email name" />').insertBefore('#mailjet_from_email');
 			} else {
                 $('#mailjet_from_email_extra').remove();
 			}
