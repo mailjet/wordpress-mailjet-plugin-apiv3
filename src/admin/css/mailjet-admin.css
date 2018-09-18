@@ -211,6 +211,7 @@ input[type="submit"].button {
 .bottom_links a, .bottom_links_dashboard a, .bottom_links_allsetup a {
     color: #19BC9C;
     text-decoration: none;
+    margin-right:20px;
 }
 .bottom_links a:hover, .bottom_links_dashboard a:hover, .bottom_links_allsetup a:hover {
     color: #555555;
@@ -237,7 +238,8 @@ input[type="submit"].button {
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
+    line-height: 24px;
     vertical-align: middle;
 }
 .centered ul li .settingsMenuLink a:hover, .centered ul li .settingsMenuLink a.active:hover {
@@ -539,4 +541,12 @@ h4.dont_have_account {
 .top_descrption_helper {
     font-family: Roboto;
     font-size: 14px;
+}
+
+.section_inner_title {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
 }

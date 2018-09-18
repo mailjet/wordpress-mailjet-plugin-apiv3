@@ -44,8 +44,8 @@ class InitialContactListsSettings
 
         // output the field
         ?>
-<hr>
-        <h3> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h3>
+
+        <h4 class="section_inner_title"> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h4>
 
         <div class="availableContactListsContainerParent">
         <div class="availableContactListsContainer">
@@ -80,7 +80,7 @@ class InitialContactListsSettings
 <hr>
 
         <fieldset class="initialContactListsFieldset">
-            <h3><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h3>
+            <h4 class="section_inner_title"><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h4>
             <p><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet' ); ?></p>
             <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
             <label for="activate_mailjet_sync">
