@@ -34,7 +34,7 @@ class InitialSettings
     public function mailjet_section_initial_settings_cb($args)
     {
         ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>">
+        <p class="top_descrption_helper" id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet'); ?>
         </p>
         <?php
@@ -178,15 +178,15 @@ class InitialSettings
         <div class="mainContainer">
 
             <div>
-                <h1><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
-                <h4>
+                <p class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </p>
+                <p class="page_top_subtitle">
                 <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
-                </h4>
+                </p>
             </div>
             <br /><br />
 
             <div id="initialSettingsForm">
-                <h3><?php echo esc_html(get_admin_page_title()); ?></h3>
+                <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
@@ -203,7 +203,7 @@ class InitialSettings
 */
                     ?>
                     <br style="clear: left;" />
-                    <h4 style="margin-top:50px;"><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
+                    <h4 class="dont_have_account"><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
                     <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
                 </form>
 
@@ -214,15 +214,15 @@ class InitialSettings
                 <div class="availableContactListsContainer">
                     <div class="initialSettingsDescriptionRow">
                         <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                        <div class="initialSettingsTextCell"><h4><?php echo __('Collect email addresses...', 'mailjet' ); ?></h4><?php echo __('Email addresses are collected from your website', 'mailjet' ); ?></div>
+                        <div class="initialSettingsTextCell"><p><?php echo __('Collect email addresses...', 'mailjet' ); ?></p><?php echo __('Email addresses are collected from your website', 'mailjet' ); ?></div>
                     </div>
                     <div class="initialSettingsDescriptionRow">
                         <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                        <div class="initialSettingsTextCell"><h4><?php echo __('...and add them automatically to a contact list', 'mailjet' ); ?></h4><?php echo __('Email are added to your contact list', 'mailjet' ); ?></div>
+                        <div class="initialSettingsTextCell"><p><?php echo __('...and add them automatically to a contact list', 'mailjet' ); ?></p><?php echo __('Email are added to your contact list', 'mailjet' ); ?></div>
                     </div>
                     <div class="initialSettingsDescriptionRow">
                         <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                        <div class="initialSettingsTextCell"><h4><?php echo __('We will take care of delivering your newsletter', 'mailjet' ); ?></h4><?php echo __('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet' ); ?></div>
+                        <div class="initialSettingsTextCell"><p><?php echo __('We will take care of delivering your newsletter', 'mailjet' ); ?></p><?php echo __('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet' ); ?></div>
                     </div>
                 </div>
             </div>

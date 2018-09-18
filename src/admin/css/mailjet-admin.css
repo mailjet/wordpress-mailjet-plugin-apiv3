@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    font-family: Roboto;
+}
+
 /**
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
@@ -62,7 +68,7 @@
     background-color: #FEAD0D;
     float: left;
     color: #FFFFFF;
-    font-family: "Arial";
+    font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -80,6 +86,7 @@
     margin-top:20px;
     left:0;
     padding:10px;
+    padding-top:13px;
  }
 #initialSettingsDescription {
     float: left;
@@ -110,6 +117,13 @@
     width:430px;
     /*margin: 10px auto;*/
     vertical-align: middle;
+    font-weight:normal;
+    font-size:14px;
+}
+.initialSettingsTextCell p {
+    font-weight:500;
+    font-size:16px;
+    color: #555555;
 }
 #initialSettingsForm {
     float: left;
@@ -221,7 +235,7 @@ input[type="submit"].button {
     text-decoration: none;
     display: inline-block;
     color: #555555;
-    font-family: Arial;
+    font-family: Roboto;
     font-size: 16px;
     font-weight: bold;
     vertical-align: middle;
@@ -442,7 +456,7 @@ input[type="submit"].button {
     border: 1px solid #FEAD0D;
     border-radius: 3px;
     color: #FFF;
-    font-family: Arial;
+    font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -464,7 +478,7 @@ input[type="submit"].button {
     border: 1px solid #FEAD0D;
     border-radius: 3px;
     color: #FCB340;
-    font-family: Arial;
+    font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -482,7 +496,7 @@ input[type="submit"].button {
     border: 1px solid #c1c1c1;
     border-radius: 3px;
     color: #FFF;
-    font-family: Arial;
+    font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -501,4 +515,28 @@ input[type="submit"].button {
 }
 .mailjet_sync_comment_authors_div{
     margin-left:20px;
+}
+
+.page_top_title {
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 32px;
+}
+.page_top_subtitle {
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+}
+.section_title {
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 16px;
+}
+h4.dont_have_account {
+    font-family: Roboto;
+    font-size: 14px;
+}
+.top_descrption_helper {
+    font-family: Roboto;
+    font-size: 14px;
 }

@@ -24,7 +24,7 @@ class InitialContactListsSettings
     public function mailjet_section_initial_contact_lists_cb($args)
     {
         ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>">
+        <p class="top_descrption_helper" id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress subscribers to one of them, or use them to collect new email addresses.', 'mailjet' ); ?>
         </p>
         <?php
@@ -229,16 +229,16 @@ class InitialContactListsSettings
         <div class="mainContainer">
 
             <div>
-                <h1><?php echo __('Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
-                <p>
-                    <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your contacts, directly from Wordpress.', 'mailjet'); ?>
+                <p class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </p>
+                <p class="page_top_subtitle">
+                    <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
                 </p>
             </div>
             <br /><br />
 
 
             <div id="initialContactListsForm">
-                <h3><?php echo esc_html(get_admin_page_title()); ?></h3>
+                <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
