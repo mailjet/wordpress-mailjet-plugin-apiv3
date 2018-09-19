@@ -96,7 +96,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @param \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
-    private function sendSubscriptionEmail($subscriptionOptionsSettings)
+    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance)
     {
         // Check if subscription form is submited
         if (!isset($_POST['subscription_email'])) {
@@ -122,7 +122,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return __('This email address has already been subscribed.', 'mailjet');
         }
 
-        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email);
+        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
         if($sendingResult) {
             return __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet');
         }
@@ -130,7 +130,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
     
     private function isEmailAlreadySubscribed($email) {
-        return true;
+        return false;
     }
 
     /**
@@ -215,7 +215,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Widget front form is submited
         // TODO: Check if the user is already subscribed
         // Send subscription email if need
-        $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings);
+        $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance);
 
         // Subscribe user
         $this->activateConfirmSubscriptionUrl($subscriptionOptionsSettings, $instance);
