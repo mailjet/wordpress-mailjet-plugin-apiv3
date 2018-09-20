@@ -235,18 +235,15 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return print $cache[$args['widget_id']];
         }
 
-
-
-
         // Show front widget form
         // go on with your widget logic, put everything into a string and …
         extract($args, EXTR_SKIP);
 
         $widget_string = $before_widget;
 
-        // TODO: Here is where you manipulate your widget's values based on their input fields
         ob_start();
-        include(plugin_dir_path(__FILE__) . 'views/widget.php');
+        $front_widget_file = apply_filters('mailjet_widget_form_filename', plugin_dir_path(__FILE__) . 'views/widget.php');
+        include($front_widget_file);
         $widget_string .= ob_get_clean();
         $widget_string .= $after_widget;
 
