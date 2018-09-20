@@ -20,6 +20,30 @@ body {
     background-color: #F2F2F2;
 }
 
+
+
+/**  STYLE 11 */
+
+#availableContactListsContainerParent::-webkit-scrollbar {
+   width:10px;
+}
+#availableContactListsContainerParent::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+}
+#availableContactListsContainerParent::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+#availableContactListsContainerParent::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+#availableContactListsContainerParent::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+
 /* Checkbox background change*/
 .mailjet_row input[type="checkbox"] {
     content: "\00a0";
@@ -158,6 +182,8 @@ body {
     line-height: 20px;
     text-align: center;
     margin-left:10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .nextBtn:hover {
     background-color: #FEAD0D;
@@ -272,7 +298,7 @@ input[type="submit"].button {
     max-height: 300px;
     overflow-y: scroll;
     margin-bottom: 20px;
-    width:620px;
+    width:615px;
 }
 .availableContactListsContainer {
     display: table;
@@ -282,8 +308,11 @@ input[type="submit"].button {
     width:600px;
     border:1px solid  #C1C1C1;
 }
-.availableContactListsRow:nth-child(even) {background: #FFF;}
-.availableContactListsRow:nth-child(odd) {background: #e5e8e3;}
+/*.availableContactListsRow:nth-child(even) {background: #FFF;}*/
+/*.availableContactListsRow:nth-child(odd) {background: #e5e8e3;}*/
+.availableContactListsRow:hover {
+    background-color: #e5e8e3;
+}
 
 .availableContactListsNameCell {
     padding: 10px;
@@ -547,6 +576,14 @@ h4.dont_have_account {
     color: #555555;
     font-family: Roboto;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 32px;
+}
+
+.section_inner_title_slave {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
 }

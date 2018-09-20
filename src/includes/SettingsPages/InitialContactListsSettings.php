@@ -24,6 +24,7 @@ class InitialContactListsSettings
     public function mailjet_section_initial_contact_lists_cb($args)
     {
         ?>
+        <h4 class="section_inner_title"><?php echo __('Configure your lists.', 'mailjet'); ?> </h4>
         <p class="top_descrption_helper" id="<?php echo esc_attr( $args['id'] ); ?>">
             <?php echo __('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress subscribers to one of them, or use them to collect new email addresses.', 'mailjet' ); ?>
         </p>
@@ -45,9 +46,9 @@ class InitialContactListsSettings
         // output the field
         ?>
 
-        <h4 class="section_inner_title"> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h4>
+        <h4 class="section_inner_title_slave"> <?php echo __('Your Mailjet contact lists', 'mailjet' ); ?> </h4>
 
-        <div class="availableContactListsContainerParent">
+        <div class="availableContactListsContainerParent" id="availableContactListsContainerParent">
         <div class="availableContactListsContainer">
             <?php // Display available contact lists and containing contacts
             foreach ($mailjetContactLists as $mailjetContactList) {
@@ -66,7 +67,7 @@ class InitialContactListsSettings
         </div>
 
         <div class="create_contact_list_popup pop" id="create_contact_list_popup">
-            <p><label for="create_list_name"><b><?php echo __('Name your list', 'mailjet' ); ?></b></label>
+            <p><label for="create_list_name"><b><?php echo __('Name your list (max. 50 characters)', 'mailjet' ); ?></b></label>
                 <input type="text" size="30" name="create_list_name" id="create_list_name" />
             </p>
             <input type="submit" value="<?=__('Save', 'mailjet')?>" name="create_contact_list_btn" class="MailjetSubmit nextBtn" id="create_contact_list_btn"/>
@@ -77,7 +78,6 @@ class InitialContactListsSettings
         <img width="20" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
         <a id="create_contact_list" href="#"><?php echo __('Create a new list', 'mailjet' ); ?></a>
         <br /><br />
-<hr>
 
         <fieldset class="initialContactListsFieldset">
             <h4 class="section_inner_title"><?php echo __('Synchronize your Wordpress users', 'mailjet' ); ?></h4>
@@ -110,7 +110,7 @@ class InitialContactListsSettings
                 <br /><br />
             </div>
         </fieldset>
-<hr>
+
         <input name="settings_step" type="hidden" id="settings_step" value="initial_contact_lists_settings_step">
 
         <?php
