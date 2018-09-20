@@ -13,30 +13,40 @@
     $buttonLabel = !empty($instance[$locale]['language_mandatory_button']) ? apply_filters('widget_language_mandatory_button', $instance[$locale]['language_mandatory_button']) : \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscribe');
     ?>
     <div class="widget-text wp_widget_plugin_box">
-    <?php 
+    <?php
 //    echo "From PO:";
 //    _e('Subscribe', 'mailjet') ;
 //    echo "<br>From DB:";
 //    echo $emailLabel 
     ?>
+        <!--Widget title-->
         <div id="mailjet_widget_title_wrap">
             <span id="mailjet_widget_title">
                 <?php echo $before_title . $title . $after_title ?>
             </span>
         </div>
+        <!--End Widget title-->
+        
+        <!--Widget form-->
         <form method="post" action=" <?php echo esc_url($_SERVER['REQUEST_URI']) ?>" id="mjForm" name="mjForm">
+            
+            <!--Subscription email input(mandatory)-->
             <div class="form-group">
-                <span class="input-required">*</span>
-                <input type="email" name="subscription_email" id="mailjet_widget_email" required="required" placeholder="<?php echo $emailLabel ?>">
+                <input type="email" name="subscription_email" id="mailjet_widget_email" required="required" placeholder="* <?php echo $emailLabel ?>">
             </div>
             <?php
+
+            // Check for the additional properties from the admin advanced settings
             for ($i = 0; $i < 5; $i++) {
 
                 // Property id - '0' there is no selected property
                 $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
 
-                $inputTypeCase = $this->propertyData[$contactPropertyId]['Datatype'];
-                $inputType = $this->getInputType($inputTypeCase);
+                // Mailjet property type
+                $propertyDataType = $this->propertyData[$contactPropertyId]['Datatype'];
+
+                // Map mailjet property type to valid input type
+                $inputType = $this->getInputType($propertyDataType);
 
                 // Skip if this property is not added in admin part
                 if (empty($contactPropertyId)) {
@@ -46,31 +56,54 @@
                 // The value of the label
                 $placeholder = $instance[$locale][$language . 'Label' . $i];
 
-                // '0' - optional, '1' - mandatory, '2' - hidden
+                // '0' - optional
+                // '1' - mandatory
+                // '2' - hidden
                 $propertyType = (int) $instance[$locale]['propertyDataType' . $i];
+
+                // Display block by default
                 $display = 'block';
+
+                // Not required by default
                 $required = '';
+
+                // Used on hidden properties
                 $value = '';
+
+                $requiredStar = '';
+
+                // Set required, display and value depends on the current property type
                 switch ($propertyType) {
+                    // Optional input
                     case 0:
+                        // Display: block
+                        // No value, only placeholder
+                        // Not Required
                         break;
+                    // Mandatory input
                     case 1:
+                        // Display: block
+                        // No value, only placeholder
+
+                        // Required
                         $required = 'required';
+
+                        // Add * to placeholder to indicate that the input is required
+                        $requiredStar = '* ';
                         break;
+                    // Hidden input
                     case 2:
+                        // Display: none
                         $display = 'none';
+
+                        // Value is given from admin advanced settings
                         $value = 'value="'.$placeholder.'"';
-                        break;
-                    default:
                         break;
                 }
 
                 ?>
                 <div class="form-group">
-                    <?php if($required) {
-                        ?><span class="input-required">*</span><?php
-                    } ?>
-                    <input <?php echo $required ?> class="mj_form_property" type="<?php echo $inputType ?>" name="properties[<?php echo $contactPropertyId ?>]" <?php echo $value ?> placeholder="<?php echo $placeholder ?>" style="display: <?php echo $display ?>">
+                    <input <?php echo $required ?> class="mj_form_property" type="<?php echo $inputType ?>" name="properties[<?php echo $contactPropertyId ?>]" <?php echo $value ?> placeholder="<?php echo $requiredStar; echo $placeholder ?>" style="display: <?php echo $display ?>">
                 </div>
                 <?php
             }
