@@ -144,7 +144,7 @@
 
 .newPropertyType select{
     width: 100px;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .saveNewPropertyButton{
@@ -216,7 +216,7 @@
 }
 
 .modal-footer{
-    margin-top: 60px
+    margin-top: 120px!important;
 }
 
 #mailjet_widget_title h2 {
@@ -230,4 +230,8 @@
 .tab-info{
     font-weight: bold;
     margin: 25px 25px 30px;
+}
+
+.advanced-form-confirmation-email-content textarea{
+    /*height: 80px!important;*/
 }
