@@ -948,13 +948,13 @@ msgstr ""
 #~ msgstr "Une de Matrixe muy bien"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "sp"
 
 msgid "list"
-msgstr ""
+msgstr "38823"
 
 msgid "language_mandatory_email"
 msgstr ""

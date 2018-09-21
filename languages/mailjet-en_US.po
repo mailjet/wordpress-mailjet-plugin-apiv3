@@ -1015,16 +1015,16 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr ""
+msgstr "2922"
 
 msgid "propertyDataType0"
-msgstr ""
+msgstr "0"
 
 msgid "EnglishLabel0"
-msgstr ""
+msgstr "Firstname"
 
 msgid "FrenchLabel0"
-msgstr ""
+msgstr "Firste Nom"
 
 msgid "GermanLabel0"
 msgstr ""
@@ -1036,7 +1036,7 @@ msgid "contactProperties1"
 msgstr ""
 
 msgid "propertyDataType1"
-msgstr ""
+msgstr "0"
 
 msgid "EnglishLabel1"
 msgstr ""
@@ -1054,7 +1054,7 @@ msgid "contactProperties2"
 msgstr ""
 
 msgid "propertyDataType2"
-msgstr ""
+msgstr "0"
 
 msgid "EnglishLabel2"
 msgstr ""
@@ -1072,7 +1072,7 @@ msgid "contactProperties3"
 msgstr ""
 
 msgid "propertyDataType3"
-msgstr ""
+msgstr "0"
 
 msgid "EnglishLabel3"
 msgstr ""
@@ -1090,7 +1090,7 @@ msgid "contactProperties4"
 msgstr ""
 
 msgid "propertyDataType4"
-msgstr ""
+msgstr "0"
 
 msgid "EnglishLabel4"
 msgstr ""
