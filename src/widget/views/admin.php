@@ -170,19 +170,30 @@
                                     </div>
 
                                     <div class="createNewProperties">
-                                        <div class="newPropertyName floatLeft">
-                                            <input type="text"  />
+                                        <div class="newPropertyName floatLeft form-group">
+                                            <?php if($row === 0) { ?>
+                                                <label for="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>"><?php _e('Name your property (no spaces)', 'mailjet') ?></label>
+                                            <?php } ?>
+                                            <input type="text" class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>" />
                                         </div>
-                                        <div class="newPropertyType floatLeft">
-                                            <select>
+                                        <div class="newPropertyType floatLeft form-group col-md-2">
+                                            <?php if($row === 0) { ?>
+                                                <label for="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>"><?php _e('Property type', 'mailjet') ?></label>
+                                            <?php } ?>
+                                            <select class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>">
                                                 <option value="0">Text</option>
                                                 <option value="1">Int</option>
                                                 <option value="2">Date</option>
                                                 <option value="3">Bool</option>
                                             </select>
                                         </div>
-                                        <span class="btn btn-default floatLeft saveNewPropertyButton" ><?php _e('Save', 'mailjet') ?></span>
-                                        <span class="btn floatLeft cancelNewPropertyButton"><?php _e('Cancel', 'mailjet') ?></span>
+                                        <?php 
+                                            $styleSaveCancel = '';
+                                        if($row == 0 ) {
+                                            $styleSaveCancel = 'margin-top: 20px;';
+                                        } ?>
+                                        <span class="btn btn-default floatLeft saveNewPropertyButton" style="<?php echo $styleSaveCancel ?>" ><?php _e('Save', 'mailjet') ?></span>
+                                        <span class="btn floatLeft cancelNewPropertyButton" style="<?php echo $styleSaveCancel ?>"><?php _e('Cancel', 'mailjet') ?></span>
                                     </div>
                                     <!--Display only if there is a selected option-->
                                     <div class="hiddenProperties" style="display: <?php echo $contactPropertiesN ? 'block' : 'none' ?>">
