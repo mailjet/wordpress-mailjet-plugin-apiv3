@@ -137,11 +137,18 @@
                                 }
                                 ?>
                                 <div class="property" style="display: <?php echo $display ?>">
-                                    <span class="floatLeft propertyLabel"><?php _e('Property', 'mailjet') ?> #<?php echo $row + 1 ?></span>
-
+                                        <?php 
+                                            $setLabelStyle = '';
+                                            if($row===0) {
+                                                $setLabelStyle = 'padding-top: 20px;';
+                                            } ?>
+                                        <span class="floatLeft propertyLabel" style="<?php echo $setLabelStyle ?>"><?php _e('Property', 'mailjet') ?> #<?php echo $row + 1 ?></span>
                                     <!--Select property-->
-                                    <div class="propertySelect floatLeft">
-                                        <select class="selectProperty mjProperties" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties' . $row . ']'); ?>">
+                                    <div class="propertySelect floatLeft form-group">
+                                        <?php if($row==0) { ?>
+                                        <label for="<?php echo esc_attr($this->get_field_id($admin_locale . '[contactProperties' . $row . ']')); ?>"><?php _e('Properties', 'mailjet') ?></label>
+                                        <?php } ?>
+                                        <select class="selectProperty mjProperties form-control" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties' . $row . ']'); ?>">
                                             <option disabled selected value="0"><?php _e('Select a property', 'mailjet') ?></option>
                                             <option value="newProperty">+ <?php _e('Create new', 'mailjet') ?></option>
                                             <option disabled value="0"><?php echo str_repeat('-', 16) ?></option>
@@ -180,8 +187,11 @@
                                     <!--Display only if there is a selected option-->
                                     <div class="hiddenProperties" style="display: <?php echo $contactPropertiesN ? 'block' : 'none' ?>">
                                         <!--Select property DataType-->
-                                        <div class="typeSelect floatLeft">
-                                            <select class="propertyDataType" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">
+                                        <div class="typeSelect floatLeft form-group">
+                                             <?php if($row==0) { ?>
+                                            <label for="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">Type</label>
+                                             <?php } ?>
+                                            <select class="propertyDataType form-control" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">
                                                 <?php
                                                 $dataTypeOptions = array(
                                                     __('Optional', 'mailjet'),
@@ -204,10 +214,18 @@
                                             ?>
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php echo $percent . '%' ?>">
+                                                <?php if($row==0) { ?>
+                                                    <label for="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>"><?php echo $language ?></label>
+                                                <?php } ?>
                                                 <input type="text" value="<?php echo ${$language . 'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" placeholder="<?php echo $propertyDataTypeN != 2 ? $defaultPlaceholder . $language : $hiddenPlaceholder . $language ?>" />
                                             </div>
-                                        <?php } ?>
-                                        <div class="deleteProperty floatLeft" style="display: <?php echo $displayDelete ?>">
+                                        <?php }
+                                            $setDeleteLabelStyle = '';
+                                            if ($row === 0) {
+                                                $setDeleteLabelStyle = 'padding-top:25px;';
+                                            }
+                                            ?>
+                                        <div class="deleteProperty floatLeft" style="display: <?php echo $displayDelete.';'. $setDeleteLabelStyle ?>">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true" id=""></span>
                                         </div>
                                     </div>
@@ -253,7 +271,7 @@
                         <!--Tab 2-->
                         <!--Form validation messages-->
                         <div role="tabpanel" class="tab-pane advanced-form-validation-messages">
-                            <p><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
+                            <p class="tab-info"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
 
                             <div class="validation_messages_wrap">
                                 <div class="validation_message_row">
@@ -378,7 +396,7 @@
                         <!--Confirmation email content-->
 
                         <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content">
-                            <p><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
+                            <p class="tab-info"><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
                                     <label for="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Description', 'mailjet') ?></label>

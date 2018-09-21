@@ -103,7 +103,7 @@
 
 .typeSelect select{
     width: 94px;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .languageInput{
@@ -225,4 +225,9 @@
 
 .input-required{
     color: red;
+}
+
+.tab-info{
+    font-weight: bold;
+    margin: 25px 25px 30px;
 }
