@@ -997,7 +997,7 @@ msgid "title"
 msgstr "French title"
 
 msgid "list"
-msgstr "37731"
+msgstr ""
 
 msgid "language_mandatory_email"
 msgstr ""
