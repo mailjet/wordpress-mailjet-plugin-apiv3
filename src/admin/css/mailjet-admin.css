@@ -445,6 +445,7 @@ input[type="submit"].button {
 }
 .dashboard .block_single .dashboar_block_title {
     text-align: left;
+    font-size: 20px;
 }
 
 .dashboard .block_single img {
