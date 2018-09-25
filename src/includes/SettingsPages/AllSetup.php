@@ -36,7 +36,7 @@ class AllSetup
 <!--            <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
             <div class="page_top_title"><?php echo __('You\'re all set up!', 'mailjet'); ?></div>
             <div class="section_inner_title_slave"><?php echo __('What would you like to do next?', 'mailjet'); ?></div>
-
+<br />
             <div class="container">
                 <div class="block_single">
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_signup_to_newsletter.png'; ?>" />
@@ -62,7 +62,7 @@ class AllSetup
                 </div>
             </div>
 
-            <div style="padding-top: 20px; margin-left: 380px; clear: left;">
+            <div class="allsetupGreenLinkDiv">
                 <?php echo sprintf(__('or <a class="greenLink" href="%s">Go to your Mailjet Plugin Homepage</a>', 'mailjet'), "admin.php?page=mailjet_dashboard_page"); ?>
             </div>
 

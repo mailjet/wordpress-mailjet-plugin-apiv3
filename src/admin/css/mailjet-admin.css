@@ -378,6 +378,16 @@ input[type="submit"].button {
     text-decoration: none;
 }
 
+.allsetupGreenLinkDiv {
+    padding-top: 20px;
+    margin-left: 380px;
+    clear: left;
+}
+.allsetupGreenLinkDiv .greenLink {
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+}
 
 /* Dashboard */
 .dashboard {
@@ -500,11 +510,10 @@ input[type="submit"].button {
 
 
 .allsetup .block_single img {
-    width: 150px;
-    height: 150px;
+    width: 96px;
+    height: 96px;
     margin: 10px;
     display: inline-block;
-    border: 2px solid #C1C1C1;
 }
 
 .allsetup .block_single {
@@ -532,6 +541,7 @@ input[type="submit"].button {
     clear: left;
     left: 0;
     padding:10px;
+    font-size: 14px;
 }
 
 .nextBtnReverse, .nextBtnReverseDashboard {
