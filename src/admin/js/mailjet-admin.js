@@ -132,7 +132,11 @@
             function(){
                 $(this).addClass('hover');
                 var imgId = $(this).data('img_id');
-                $('.' + imgId).css({fill:"#19BC9C"});
+                if ($(this).parent().hasClass('settingsMenuLink1')) {
+                    $('.' + imgId).css({fill:"#FFFFFF"});
+                } else {
+                    $('.' + imgId).css({fill:"#19BC9C"});
+                }
             },
             function(){
                 $(this).removeClass('hover');

@@ -186,7 +186,7 @@ class InitialSettings
             <br /><br />
 
             <div id="initialSettingsForm">
-                <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
+                <p class="section_title" style="width: 311px; margin:auto; margin-bottom:10px; color#555555; font-size:20px;"><?php echo esc_html(get_admin_page_title()); ?></p>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
@@ -202,9 +202,12 @@ class InitialSettings
                     <?php }
 */
                     ?>
-                    <br style="clear: left;" />
-                    <h4 class="dont_have_account"><?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?></h4>
-                    <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
+                    <br style="clear: left; " />
+                    <div class="dont_have_account">
+                        <?php esc_html_e('You don\'t have a Mailjet account yet?' , 'mailjet'); ?>
+                        <br />
+                        <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
+                    </div>
                 </form>
 
             </div>

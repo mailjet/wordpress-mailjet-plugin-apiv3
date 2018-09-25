@@ -52,10 +52,16 @@ class SubscriptionOptionsSettings
 
         <fieldset>
             <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
-            <label for="activate_mailjet_sync">
-            <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-            <?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></label>
-            <br /><br />
+
+            <div>
+                <label>
+                    <span style="display: table-cell;">
+                        <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                    </span>
+                    <span style="display: table-cell;text-align: justify;"><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></span>
+                </label>
+            </div>
+            <br />
 
             <div class="mailjet_sync_options_div">
                 <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
@@ -71,19 +77,27 @@ class SubscriptionOptionsSettings
                 </select>
                 <br /><br />
 
-                <label for="activate_mailjet_initial_sync">
-                <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                <?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></label>
-                <br />
+                <div>
+                    <label>
+                    <span style="display: table-cell;">
+                        <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" style="vertical-align: middle;" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                    </span>
+                        <span style="display: table-cell;text-align: justify;"><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></span>
+                    </label>
+                </div>
             </div>
-
 <hr>
 
 
-            <label for="activate_mailjet_comment_authors_sync">
-            <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?=($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-            <?php echo __('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet'); ?></label>
-            <br /><br />
+            <div>
+                <label>
+                    <span style="display: table-cell;">
+                        <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" style="vertical-align: middle;" value="1" <?=($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                    </span>
+                    <span style="display: table-cell;text-align: justify;"><?php echo __('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet'); ?></span>
+                </label>
+            </div>
+             <br />
 
             <div class="mailjet_sync_comment_authors_div">
                 <select name="mailjet_comment_authors_list" id="mailjet_comment_authors_list" type="select">

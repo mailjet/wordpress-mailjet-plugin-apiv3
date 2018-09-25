@@ -21,6 +21,10 @@ body {
 }
 
 
+.button.MailjetSubmit, .button.MailjetSubmit:hover, .button.MailjetSubmit:focus {
+    border-color: transparent;
+}
+
 
 /**  STYLE 11 */
 
@@ -163,6 +167,9 @@ body {
     border: 1px solid #888888;
     border-radius: 3px;
 }
+#initialContactListsForm {
+    margin-top:24px;
+}
 #initialContactListsForm input[type="text"] {
     height: 36px;
     width: 311px;
@@ -203,7 +210,7 @@ body {
 .right {
     float:left;
     height: 100%;
-    max-width: 500px;
+    max-width: 700px;
     /*margin: auto 20px;*/
 }
 
@@ -247,6 +254,9 @@ input[type="submit"].button {
     float: left;
     font-weight: bold;
     margin-right: 20px;
+    color: #555555;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .centered ul li .settingsMenuLink {
@@ -256,17 +266,24 @@ input[type="submit"].button {
 .centered ul li .settingsMenuLink svg {
     vertical-align: middle;
 }
-.centered ul li .settingsMenuLink a {
-    padding: 10px;
-    width: 100%;
+
+.centered ul li .settingsMenuLink p, .centered ul li .settingsMenuLink a {
     text-decoration: none;
-    display: inline-block;
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
     font-weight: bold;
     line-height: 24px;
     vertical-align: middle;
+}
+.centered ul li .settingsMenuLink a {
+    padding: 5px;
+    width: 100%;
+    display: inline-block;
+}
+.centered ul li .settingsMenuLink p {
+    padding-left: 16px;
+    display: inline;
 }
 .centered ul li .settingsMenuLink a:hover, .centered ul li .settingsMenuLink a.active:hover {
     background-color: #F2F2F2;
@@ -276,8 +293,9 @@ input[type="submit"].button {
     background-color: transparent;
     fill: #19BC9C;
 }
-
-
+.centered ul li .settingsMenuLink1 a.active {
+    fill: #FFFFFF;
+}
 
 /* Send test email popup */
 .test_email_popup {
@@ -316,7 +334,7 @@ input[type="submit"].button {
 
 .availableContactListsNameCell {
     padding: 10px;
-    padding-left:2px;
+    padding-left:24px;
     float:left;/*fix for  buggy browsers*/
     display:table-column;
     width:400px;
@@ -342,16 +360,18 @@ input[type="submit"].button {
     padding-bottom: 8px;
 }
 #create_contact_list {
-    font-weight: 700;
     color: #19BC9C;
     text-decoration: none;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
 }
 #create_contact_list:hover {
     text-decoration: none;
 }
 .greenLink {
-    font-weight: 700;
     color: #19BC9C;
+    font-family: Roboto;
     text-decoration: none;
 }
 .greenLink:hover {
@@ -383,6 +403,15 @@ input[type="submit"].button {
     display: inline-block;
     padding:5px;
     float: left;
+    position: relative;
+}
+
+.dashboard .block p, .allsetup .block_single p {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
 }
 
 .dashboard .block img {
@@ -400,14 +429,28 @@ input[type="submit"].button {
     border-radius: 3px;
     margin: 5px;
     display: inline-block;
-    padding:0px;
+    padding:10px;
     float: left;
+    text-align: left;
+}
+
+.dashboard .block .dashboar_block_title, .dashboard .block_single .dashboar_block_title {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.dashboard .block_single .dashboar_block_title {
+    text-align: left;
 }
 
 .dashboard .block_single img {
     width: 448px;
     height: 289px;
-    margin: 5px;
+    margin: 0px;
     display: inline-block;
 }
 
@@ -421,7 +464,7 @@ input[type="submit"].button {
 
 /* Allsetup */
 .allsetup {
-    min-height: 720px;
+    min-height: 620px;
     width: 1072px;
     border-radius: 3px;
     background-color: #FFFFFF;
@@ -465,14 +508,24 @@ input[type="submit"].button {
 
 .allsetup .block_single {
     width: 300px;
-    min-height: 480px;
+    min-height: 400px;
     /*height: 100%;*/
     margin: 5px;
     display: inline-block;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
     padding:5px;
+    position: relative;
 }
+
+.allsetup .block_single .section_inner_title {
+    margin-bottom: 10px;
+}
+.dashboard .block .bottomBtn, .allsetup .block_single .bottomBtn {
+    position: absolute;
+    bottom:20px;
+}
+
 
 .bottom_links_allsetup {
     clear: left;
@@ -496,6 +549,7 @@ input[type="submit"].button {
 }
 .nextBtnReverseDashboard {
     width: 192px;
+    margin:20px auto 20px 0px;
 }
 .nextBtnReverse:hover, .nextBtnReverseDashboard:hover {
     background-color: transparent;
@@ -563,9 +617,22 @@ input[type="submit"].button {
     font-weight: bold;
     font-size: 16px;
 }
-h4.dont_have_account {
+.dont_have_account {
     font-family: Roboto;
     font-size: 14px;
+    width: 311px;
+    margin: auto;
+    margin-top: 30px;
+}
+#mailjet_section_initial_settings, #mailjet_section_connect_account_settings, #mailjet_subscription_options_settings, #mailjet_enable_sending_settings, #mailjet_user_access_settings {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+    margin: auto;
+}
+#mailjet_section_initial_settings {
+    width: 311px;
 }
 .top_descrption_helper {
     font-family: Roboto;

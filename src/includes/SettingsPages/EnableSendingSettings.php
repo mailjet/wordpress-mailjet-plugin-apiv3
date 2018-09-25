@@ -46,8 +46,8 @@ class EnableSendingSettings
         ?>
 
         <fieldset>
-            <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?=($mailjetEnabled == 1 ? ' checked="checked"' : '') ?> >
-            <label for="mailjet_enabled"> <?php echo __('Enable sending emails through <b>Mailjet</b>', 'mailjet'); ?></label>
+            <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" style="vertical-align: middle;" value="1" <?=($mailjetEnabled == 1 ? ' checked="checked"' : '') ?> >
+            <label for="mailjet_enabled" style="vertical-align: middle;display: inline;"> <?php echo __('Enable sending emails through <b>Mailjet</b>', 'mailjet'); ?></label>
             <br /><br />
 
             <div class="sending_options_div">
@@ -89,8 +89,8 @@ class EnableSendingSettings
                 </select>
                 <br /><br />
 
-                <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> >
-                <label for="mailjet_ssl" style="display: inline"><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></label>
+                <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" style="vertical-align: middle;" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> >
+                <label for="mailjet_ssl" style="vertical-align: middle;display: inline;"><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></label>
                 <br /><br />
 
                 <?php  if (!empty(get_option('mailjet_enabled')) && 1 == get_option('mailjet_enabled')) { ?>

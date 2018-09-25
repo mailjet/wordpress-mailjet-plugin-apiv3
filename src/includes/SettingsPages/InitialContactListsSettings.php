@@ -75,7 +75,7 @@ class InitialContactListsSettings
             <br style="clear: left;"/>
         </div>
 
-        <img width="20" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
+        <img width="16" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
         <a id="create_contact_list" href="#"><?php echo __('Create a new list', 'mailjet' ); ?></a>
         <br /><br />
 
@@ -89,7 +89,7 @@ class InitialContactListsSettings
             <br /><br />
 
             <div class="mailjet_sync_options_div">
-                <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
+                <select name="mailjet_sync_list" id="mailjet_sync_list" type="select" style="background-color: #F2F2F2; height: 36px; width: 312px;">
                     <?php
                     foreach ($mailjetContactLists as $mailjetContactList) {
                         if ($mailjetContactList["IsDeleted"] == true) {
@@ -234,8 +234,6 @@ class InitialContactListsSettings
                     <?php echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
                 </p>
             </div>
-            <br /><br />
-
 
             <div id="initialContactListsForm">
                 <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
