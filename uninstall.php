@@ -38,11 +38,15 @@ delete_option('mailjet_apisecret');
 delete_option('mailjet_activate_logger');
 delete_option('settings_step');
 
+delete_option('api_credentials_ok');
+delete_option('contacts_list_ok');
+
 delete_option('activate_mailjet_sync');
 delete_option('mailjet_sync_list');
 delete_option('activate_mailjet_initial_sync');
 delete_option('create_contact_list_btn');
 delete_option('create_list_name');
+
 
 delete_option('mailjet_enabled');
 delete_option('mailjet_from_name');
