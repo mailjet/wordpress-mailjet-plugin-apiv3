@@ -94,7 +94,7 @@ body {
     color: #FFFFFF;
     font-family: Roboto;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 20px;
     text-align: center;
     margin-left:10px;
@@ -145,7 +145,7 @@ body {
     font-size:14px;
 }
 .initialSettingsTextCell p {
-    font-weight:500;
+    font-weight:bold;
     font-size:16px;
     color: #555555;
 }
@@ -178,7 +178,7 @@ body {
     color: #FCB340;
     font-family: Roboto;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 20px;
     text-align: center;
     margin-left:10px;
@@ -264,7 +264,7 @@ input[type="submit"].button {
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 24px;
     vertical-align: middle;
 }
@@ -489,7 +489,7 @@ input[type="submit"].button {
     color: #FFF;
     font-family: Roboto;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 20px;
     text-align: center;
     margin-left:10px;
@@ -511,7 +511,7 @@ input[type="submit"].button {
     color: #FCB340;
     font-family: Roboto;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 20px;
     text-align: center;
 }
@@ -529,7 +529,7 @@ input[type="submit"].button {
     color: #FFF;
     font-family: Roboto;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 20px;
     text-align: center;
     margin-left:10px;
@@ -576,7 +576,7 @@ h4.dont_have_account {
     color: #555555;
     font-family: Roboto;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 32px;
 }
 
@@ -584,6 +584,6 @@ h4.dont_have_account {
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 24px;
 }
