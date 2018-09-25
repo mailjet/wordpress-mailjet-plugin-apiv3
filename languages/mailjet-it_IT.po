@@ -948,7 +948,7 @@ msgid "title"
 msgstr "it"
 
 msgid "list"
-msgstr "38823"
+msgstr ""
 
 msgid "language_mandatory_email"
 msgstr ""

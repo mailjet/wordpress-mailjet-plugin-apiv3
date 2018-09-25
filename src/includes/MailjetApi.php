@@ -73,7 +73,8 @@ class MailjetApi
     {
         $mjApiClient = self::getApiClient();
         $filters = array(
-            'limit' => 0
+            'limit' => 0,
+            'Sort' => 'Name ASC'
         );
         $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
         if ($response->success()) {

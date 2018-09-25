@@ -1006,7 +1006,7 @@ msgid "title"
 msgstr "English title"
 
 msgid "list"
-msgstr "37731"
+msgstr ""
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1015,7 +1015,7 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "2922"
+msgstr ""
 
 msgid "propertyDataType0"
 msgstr "0"
@@ -1123,7 +1123,13 @@ msgid "generic_technical_error_message_input"
 msgstr ""
 
 msgid "email_subject"
-msgstr "Subscription confirmation en"
+msgstr "Subscription confirmation en
+asd
+asd
+asd
+asd
+asdasd13ddd
+dsa"
 
 msgid "email_content_title"
 msgstr ""
