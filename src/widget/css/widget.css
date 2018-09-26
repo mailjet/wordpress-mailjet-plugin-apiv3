@@ -237,3 +237,7 @@
 .advanced-form-confirmation-email-content textarea{
     /*height: 80px!important;*/
 }
+
+.modal-title{
+    font-weight: bold;
+}
