@@ -101,7 +101,7 @@
                     <div id="advanced-form-tabs" class="tab-content">
                         <!-- Form fields -->
                         <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid">
-                            <p id="properties-info"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
+                            <p id="properties-info" class="propertiesInfo"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
                             <?php
                             $numberActiveLanguages = 0;
                             foreach ($languages as $language => $locale) {
@@ -242,7 +242,7 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                            <p class="customize-mandatory-email"><span><?php _e('Customize the placeholder text for the email address field:', 'mailjet') ?></span></p>
+                            <p class="customize-mandatory-email propertiesInfo"><span><?php _e('Customize the placeholder text for the email address field:', 'mailjet') ?></span></p>
                             <div id="mandatory-wrap">
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Email address field placeholder text', 'mailjet'); ?></span>
                                 <?php
@@ -259,7 +259,7 @@
                                         <input class="form-control" type="text" value="<?php echo $language_mandatory_email ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="<?php echo $yourEmailTranslation ?>" />
                                     </div>
                                 <?php } ?>
-                                <p class="customize-mandatory-button"><span><?php _e('Customize the submission button label:', 'mailjet') ?></span></p>        
+                                <p class="customize-mandatory-button propertiesInfo"><span><?php _e('Customize the submission button label:', 'mailjet') ?></span></p>        
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('For button label', 'mailjet'); ?></span>
                                 <?php
                                 foreach ($languages as $language => $locale) {
@@ -282,7 +282,7 @@
                         <!--Tab 2-->
                         <!--Form validation messages-->
                         <div role="tabpanel" class="tab-pane advanced-form-validation-messages">
-                            <p class="tab-info"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
+                            <p class="tab-info propertiesInfo"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
 
                             <div class="validation_messages_wrap">
                                 <div class="validation_message_row">
@@ -407,7 +407,7 @@
                         <!--Confirmation email content-->
 
                         <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content">
-                            <p class="tab-info"><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
+                            <p class="tab-info propertiesInfo"><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
                                     <label for="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Description', 'mailjet') ?></label>

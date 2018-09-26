@@ -3,6 +3,10 @@ label{
     font-size: 12px;
 }
 
+.propertiesInfo{
+    font-size: 14px;
+}
+
 .mailjet_widget_admin_container {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -75,7 +79,7 @@ label{
 
 #properties-info{
     font-weight: bold;
-    font-size: 14px;
+    /*font-size: 14px;*/
     margin: 40px 0 40px 10px;
 }
 
@@ -176,14 +180,14 @@ label{
 
 .customize-mandatory-email{
     font-weight: bold;
-    font-size: 14px;
+/*    font-size: 14px;*/
     margin: 70px 0 10px 10px;
     clear: left;
 }
 
 .customize-mandatory-button{
     font-weight: bold;
-    font-size: 14px;
+    /*font-size: 14px;*/
     margin: 70px 0 10px 0px;
     clear: left;
 }
@@ -236,7 +240,7 @@ label{
 }
 
 .tab-info{
-    font-weight: bold;
+    
     margin: 25px 25px 30px;
 }
 
