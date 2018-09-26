@@ -3,6 +3,9 @@
 namespace MailjetPlugin\Widget;
 
 use MailjetPlugin\Includes\MailjetApi;
+use MailjetPlugin\Includes\Mailjeti18n;
+use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
@@ -77,24 +80,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
-     * Provide mailjet client instance
-     * @return \Mailjet\Client | null
-     */
-    private function getMailjetClient()
-    {
-        if ($this->mailjetClient === null) {
-            $mailjetApikey = get_option('mailjet_apikey');
-            $mailjetApiSecret = get_option('mailjet_apisecret');
-            $this->mailjetClient = new \Mailjet\Client($mailjetApikey, $mailjetApiSecret);
-        }
-        return $this->mailjetClient;
-    }
-
-    /**
      * Check if subscription form is submited
      * Check if the user is already subscribed
      * Send subscription email if need
-     * @param \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings $subscriptionOptionsSettings
+     * @param SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
     private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance)
@@ -148,7 +137,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-            $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
+            $locale = Mailjeti18n::getLocale();
             $contactListId = !empty($instance[$locale]['list']) ? (int) $instance[$locale]['list'] : false;
 
             // List id is not provided
@@ -201,7 +190,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 'Datatype' => $mjContactProperty['Datatype']
             );
         }
-        $subscriptionOptionsSettings = new \MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+        $subscriptionOptionsSettings = new SubscriptionOptionsSettings;
 
         // Send subscription email if need
         $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance);
@@ -282,7 +271,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
 
-        $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
+        $languages = Mailjeti18n::getSupportedLocales();
         foreach ($languages as $language => $locale) {
             // Initial
             $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
@@ -322,7 +311,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale]['email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_after_button']) : '';
 
             // Translations update
-            \MailjetPlugin\Includes\Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
+            Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
         $this->instance = $instance;
         return $instance;
@@ -381,7 +370,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $mailjetContactProperties = $propertiesOptions;
         $admin_locale = get_locale();
         // Display the admin form
-        $languages = \MailjetPlugin\Includes\Mailjeti18n::getSupportedLocales();
+        $languages = Mailjeti18n::getSupportedLocales();
         include(plugin_dir_path(__FILE__) . 'views/admin.php');
     }
 
@@ -395,7 +384,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function widget_textdomain()
     {
         load_plugin_textdomain($this->get_widget_slug(), false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ] - ' . dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
+        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ] - ' . dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
     }
 
 // end widget_textdomain
