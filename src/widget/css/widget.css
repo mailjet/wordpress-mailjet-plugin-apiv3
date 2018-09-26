@@ -1,4 +1,7 @@
 /* This stylesheet is used to style the public view of the widget. */
+label{
+    font-size: 12px;
+}
 
 .mailjet_widget_admin_container {
     margin-top: 10px;
@@ -72,6 +75,7 @@
 
 #properties-info{
     font-weight: bold;
+    font-size: 14px;
     margin: 40px 0 40px 10px;
 }
 
@@ -172,12 +176,14 @@
 
 .customize-mandatory-email{
     font-weight: bold;
+    font-size: 14px;
     margin: 70px 0 10px 10px;
     clear: left;
 }
 
 .customize-mandatory-button{
     font-weight: bold;
+    font-size: 14px;
     margin: 70px 0 10px 0px;
     clear: left;
 }
