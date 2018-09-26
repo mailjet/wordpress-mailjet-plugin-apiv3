@@ -67,6 +67,7 @@ label{
 }
 
 #advanced-form-link{
+    font-size: 20px!important;
     color: #55bfe6;
     text-decoration: underline;
     cursor: pointer;
