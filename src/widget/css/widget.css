@@ -79,8 +79,7 @@ label{
 
 #properties-info{
     font-weight: bold;
-    /*font-size: 14px;*/
-    margin: 40px 0 40px 10px;
+    margin: 40px 0 20px 10px;
 }
 
 .property{
@@ -225,6 +224,7 @@ label{
     height: auto!important;
     width: 240px!important;
     border: 0px solid transparent!important;
+    margin-left: -12px;
 }
 
 .modal-footer{
@@ -240,8 +240,7 @@ label{
 }
 
 .tab-info{
-    
-    margin: 25px 25px 30px;
+    margin: 25px 10px 30px;
 }
 
 .advanced-form-confirmation-email-content textarea{
