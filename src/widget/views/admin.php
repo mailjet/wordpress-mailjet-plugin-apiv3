@@ -301,7 +301,8 @@
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                             <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php echo $language ?></label>
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>" />
+                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>" />-->
+                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>"><?php echo esc_attr($confirmation_email_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -320,7 +321,8 @@
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($subscription_confirmed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>" />
+                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($subscription_confirmed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>" />-->
+                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>"><?php echo esc_attr($subscription_confirmed_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -339,7 +341,8 @@
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($empty_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>" />
+                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($empty_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>" />-->
+                                            <textarea class="form-control"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>"><?php echo esc_attr($empty_email_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -359,7 +362,8 @@
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($already_subscribed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>" />
+                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($already_subscribed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>" />-->
+                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>"><?php echo esc_attr($already_subscribed_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -378,7 +382,8 @@
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($invalid_data_format_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>" />
+                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($invalid_data_format_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>" />-->
+                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>"><?php echo esc_attr($invalid_data_format_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -397,7 +402,8 @@
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <input class="form-control" type="text"  value="<?php echo esc_attr($generic_technical_error_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>" />
+                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($generic_technical_error_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>" />-->
+                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>"><?php echo esc_attr($generic_technical_error_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
