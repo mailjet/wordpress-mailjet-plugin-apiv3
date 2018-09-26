@@ -241,3 +241,7 @@
 .modal-title{
     font-weight: bold;
 }
+
+.modal-header{
+    border-bottom: none!important;
+}
