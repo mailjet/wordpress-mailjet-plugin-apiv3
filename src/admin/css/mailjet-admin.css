@@ -20,6 +20,11 @@ body {
     background-color: #F2F2F2;
 }
 
+/* Error messages */
+#setting-error-mailjet_message {
+    margin-left: 0px;
+}
+
 
 .button.MailjetSubmit, .button.MailjetSubmit:hover, .button.MailjetSubmit:focus {
     border-color: transparent;
