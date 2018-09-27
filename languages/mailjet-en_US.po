@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-25 17:16+0300\n"
-"PO-Revision-Date: 2018-09-25 17:17+0300\n"
+"POT-Creation-Date: 2018-09-27 10:09+0300\n"
+"PO-Revision-Date: 2018-09-27 10:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_US\n"
@@ -53,14 +53,13 @@ msgstr "Email sending failed. Please review your smtp configuration and try agai
 msgid "Your test mail from Mailjet"
 msgstr "Your test mail from Mailjet"
 
+#| msgid "Your Mailjet configuration is ok!SSL: %s Port: %s"
 #: src/includes/MailjetMail.php:127
-#, php-format
+#, fuzzy, php-format
 msgid ""
 "Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port"
 ": %s"
-msgstr ""
-"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port"
-": %s"
+msgstr "Your Mailjet configuration is ok!SSL: %s Port: %s"
 
 #: src/includes/MailjetMenu.php:60
 #: src/includes/SettingsPages/InitialSettings.php:60
@@ -200,10 +199,11 @@ msgstr ""
 msgid "Configure"
 msgstr "Configure"
 
+#| msgid "Go to your Mailjet Plugin Homepage"
 #: src/includes/SettingsPages/AllSetup.php:66
-#, php-format
+#, fuzzy, php-format
 msgid "or <a class=\"greenLink\" href=\"%s\">Go to your Mailjet Plugin Homepage</a>"
-msgstr "or <a class=\"greenLink\" href=\"%s\">Go to your Mailjet Plugin Homepage</a>"
+msgstr "Go to your Mailjet Plugin Homepage"
 
 #: src/includes/SettingsPages/AllSetup.php:74
 #: src/includes/SettingsPages/ConnectAccountSettings.php:167
@@ -289,7 +289,7 @@ msgstr "Settings Saved"
 #: src/includes/SettingsPages/InitialContactListsSettings.php:74
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:213
 #: src/includes/SettingsPages/UserAccessSettings.php:137
-#: src/widget/views/admin.php:196 src/widget/views/admin.php:511
+#: src/widget/views/admin.php:198 src/widget/views/admin.php:519
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -392,8 +392,9 @@ msgstr "Send a test"
 #| msgid "Enable sending emails through <b>Mailjet</b>"
 #: src/includes/SettingsPages/EnableSendingSettings.php:136
 #: src/includes/SettingsPages/InitialContactListsSettings.php:141
+#, fuzzy
 msgid "Enable sending emails through Mailjet"
-msgstr "Enable sending emails through Mailjet"
+msgstr "Enable sending emails through <b>Mailjet</b>"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:182
 msgid ""
@@ -405,8 +406,9 @@ msgstr ""
 
 #| msgid "Please provide an email address"
 #: src/includes/SettingsPages/EnableSendingSettings.php:187
+#, fuzzy
 msgid "Please provide a valid email address"
-msgstr "Please provide a valid email address"
+msgstr "Please provide an email address"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:194
 msgid ""
@@ -420,8 +422,9 @@ msgstr ""
 
 #| msgid "Your test message was sent successfully"
 #: src/includes/SettingsPages/EnableSendingSettings.php:197
+#, fuzzy
 msgid "Your test email has been successfully sent"
-msgstr "Your test email has been successfully sent"
+msgstr "Your test message was sent successfully"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:297
 msgid ""
@@ -454,7 +457,7 @@ msgid "Name your list (max. 50 characters)"
 msgstr "Name your list (max. 50 characters)"
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:73
-#: src/widget/views/admin.php:195 src/widget/views/admin.php:512
+#: src/widget/views/admin.php:197 src/widget/views/admin.php:520
 msgid "Save"
 msgstr "Save"
 
@@ -504,7 +507,7 @@ msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:185
 msgid "Congratulations! You have just created a new contact list!"
-msgstr "Congratulations! You have just created a new contact list!"
+msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:191
 #, php-format
@@ -626,16 +629,17 @@ msgstr "Subscribe to our mailing list"
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:392
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:428
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:118
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:107
 msgid "Invalid email"
 msgstr "Invalid email"
 
 #| msgid "Please Confirm Your Subscription To"
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:434
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:456
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:343
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:332
+#, fuzzy
 msgid "Please confirm your subscription"
-msgstr "Please confirm your subscription"
+msgstr "Please Confirm Your Subscription To"
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:435
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:459
@@ -649,7 +653,7 @@ msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:438
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:457
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:347
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:336
 msgid "Yes, subscribe me to this list"
 msgstr "Yes, subscribe me to this list"
 
@@ -704,50 +708,51 @@ msgstr "Subscriber"
 msgid "User Access Settings Saved"
 msgstr "User Access Settings Saved"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:46
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:49
 msgid "Allows your visitors to subscribe to one of your lists"
 msgstr "Allows your visitors to subscribe to one of your lists"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:49
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:52
 msgid "Mailjet Subscription Widget"
 msgstr "Mailjet Subscription Widget"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:110
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:342
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:99
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:331
 msgid "Please provide an email address"
 msgstr "Please provide an email address"
 
 #| msgid "Subscription confirmation email sent. Please check your inbox and confirm your subscription."
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:123
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:112
+#, fuzzy
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm the su"
 "bscription."
 msgstr ""
-"Subscription confirmation email sent. Please check your inbox and confirm the su"
-"bscription."
+"Subscription confirmation email sent. Please check your inbox and confirm your s"
+"ubscription."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:125
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:346
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:114
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:335
 msgid "A technical issue has prevented your subscription. Please try again later."
 msgstr "A technical issue has prevented your subscription. Please try again later."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:336
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:325
 msgid "English"
 msgstr "English"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:337
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:326
 msgid "French"
 msgstr "French"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:338
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:327
 msgid "German"
 msgstr "German"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:339
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:328
 msgid "Spanish"
 msgstr "Spanish"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:340
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:329
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm your s"
 "ubscription."
@@ -755,25 +760,27 @@ msgstr ""
 "Subscription confirmation email sent. Please check your inbox and confirm your s"
 "ubscription."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:341
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:330
 msgid "Your subscription was successfully confirmed."
 msgstr "Your subscription was successfully confirmed."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:344
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:333
 msgid "This email address has already been subscribed."
 msgstr "This email address has already been subscribed."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:345
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:334
 msgid "The value you entered is not in the correct format."
 msgstr "The value you entered is not in the correct format."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:348
+#| msgid "If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message."
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:337
+#, fuzzy
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, simply"
 " ignore this message"
 msgstr ""
 "If you received this email by mistake or don't wish to subscribe anymore, simply"
-" ignore this message"
+" ignore this message."
 
 #: src/widget/views/admin.php:2
 msgid "Choose the languages supported by your subscription form:"
@@ -807,81 +814,83 @@ msgstr ""
 "Add more fields to your form (ex: First name, Last name, Birthday...) and custom"
 "ize the labels, error messages and confirmation email wordings."
 
-#: src/widget/views/admin.php:89
+#: src/widget/views/admin.php:91
 msgid "Customize your subscription form"
 msgstr "Customize your subscription form"
 
-#: src/widget/views/admin.php:95
+#: src/widget/views/admin.php:97
 msgid "Form fields"
 msgstr "Form fields"
 
-#: src/widget/views/admin.php:96
+#: src/widget/views/admin.php:98
 msgid "Form validation messages"
 msgstr "Form validation messages"
 
-#: src/widget/views/admin.php:97
+#: src/widget/views/admin.php:99
 msgid "Confirmation email content"
 msgstr "Confirmation email content"
 
-#: src/widget/views/admin.php:104
+#: src/widget/views/admin.php:106
 msgid "You can add up to 5 contact properties to collect additional data"
 msgstr "You can add up to 5 contact properties to collect additional data"
 
-#: src/widget/views/admin.php:145
+#: src/widget/views/admin.php:147
 msgid "Property"
 msgstr "Property"
 
 #| msgid "Property"
-#: src/widget/views/admin.php:149
+#: src/widget/views/admin.php:151
+#, fuzzy
 msgid "Properties"
-msgstr "Properties"
+msgstr "Property"
 
-#: src/widget/views/admin.php:152
+#: src/widget/views/admin.php:154
 msgid "Select a property"
 msgstr "Select a property"
 
-#: src/widget/views/admin.php:153
+#: src/widget/views/admin.php:155
 msgid "Create new"
 msgstr "Create new"
 
-#: src/widget/views/admin.php:175
+#: src/widget/views/admin.php:177
 msgid "Name your property (no spaces)"
 msgstr "Name your property (no spaces)"
 
 #| msgid "Property"
-#: src/widget/views/admin.php:181
+#: src/widget/views/admin.php:183
+#, fuzzy
 msgid "Property type"
-msgstr "Property type"
+msgstr "Property"
 
-#: src/widget/views/admin.php:208
+#: src/widget/views/admin.php:210
 msgid "Optional"
 msgstr "Optional"
 
-#: src/widget/views/admin.php:209
+#: src/widget/views/admin.php:211
 msgid "Mandatory"
 msgstr "Mandatory"
 
-#: src/widget/views/admin.php:210
+#: src/widget/views/admin.php:212
 msgid "Hidden"
 msgstr "Hidden"
 
-#: src/widget/views/admin.php:245
+#: src/widget/views/admin.php:247
 msgid "Customize the placeholder text for the email address field:"
 msgstr "Customize the placeholder text for the email address field:"
 
-#: src/widget/views/admin.php:247
+#: src/widget/views/admin.php:249
 msgid "Email address field placeholder text"
 msgstr "Email address field placeholder text"
 
-#: src/widget/views/admin.php:262
+#: src/widget/views/admin.php:264
 msgid "Customize the submission button label:"
 msgstr "Customize the submission button label:"
 
-#: src/widget/views/admin.php:263
+#: src/widget/views/admin.php:265
 msgid "For button label"
 msgstr "For button label"
 
-#: src/widget/views/admin.php:285
+#: src/widget/views/admin.php:287
 msgid ""
 "You can customize error and success messages displayed to your users as they int"
 "eract with the subscription form. Leave empty fields to use the default values."
@@ -889,15 +898,15 @@ msgstr ""
 "You can customize error and success messages displayed to your users as they int"
 "eract with the subscription form. Leave empty fields to use the default values."
 
-#: src/widget/views/admin.php:290 src/widget/views/admin.php:413
+#: src/widget/views/admin.php:292 src/widget/views/admin.php:421
 msgid "Description"
 msgstr "Description"
 
-#: src/widget/views/admin.php:291
+#: src/widget/views/admin.php:293
 msgid "Form successfully submitted"
 msgstr "Form successfully submitted"
 
-#: src/widget/views/admin.php:311
+#: src/widget/views/admin.php:314
 msgid ""
 "Subscription confirmed (displayed after the user has clicked the confirmation em"
 "ail)"
@@ -905,23 +914,23 @@ msgstr ""
 "Subscription confirmed (displayed after the user has clicked the confirmation em"
 "ail)"
 
-#: src/widget/views/admin.php:330
+#: src/widget/views/admin.php:334
 msgid "Error: email field is empty"
 msgstr "Error: email field is empty"
 
-#: src/widget/views/admin.php:349
+#: src/widget/views/admin.php:354
 msgid "Error: the email address is already subscribed"
 msgstr "Error: the email address is already subscribed"
 
-#: src/widget/views/admin.php:369
+#: src/widget/views/admin.php:375
 msgid "Error: Invalid data format (this applies only for numbers and dates)"
 msgstr "Error: Invalid data format (this applies only for numbers and dates)"
 
-#: src/widget/views/admin.php:388
+#: src/widget/views/admin.php:395
 msgid "Generic technical error message"
 msgstr "Generic technical error message"
 
-#: src/widget/views/admin.php:410
+#: src/widget/views/admin.php:418
 msgid ""
 "When a user fills in the form, they will receive an email containing a button th"
 "ey need to click on to confirm their subscription. You can customize the text of"
@@ -933,23 +942,23 @@ msgstr ""
 " the confirmation email if you wish. Leave empty fields to use the default value"
 "s."
 
-#: src/widget/views/admin.php:414
+#: src/widget/views/admin.php:422
 msgid "Email subject"
 msgstr "Email subject"
 
-#: src/widget/views/admin.php:435
+#: src/widget/views/admin.php:443
 msgid "Email content: title"
 msgstr "Email content: title"
 
-#: src/widget/views/admin.php:454
+#: src/widget/views/admin.php:462
 msgid "Email content: main text"
 msgstr "Email content: main text"
 
-#: src/widget/views/admin.php:472
+#: src/widget/views/admin.php:480
 msgid "Email content: confirmation button label"
 msgstr "Email content: confirmation button label"
 
-#: src/widget/views/admin.php:490
+#: src/widget/views/admin.php:498
 msgid "Email content: text after the button"
 msgstr "Email content: text after the button"
 
@@ -1007,10 +1016,10 @@ msgstr "Email content: text after the button"
 #~ msgstr "2924"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "English title"
+msgstr ""
 
 msgid "list"
 msgstr ""
@@ -1022,16 +1031,16 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "37372"
+msgstr ""
 
 msgid "propertyDataType0"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel0"
-msgstr "Firstname"
+msgstr ""
 
 msgid "FrenchLabel0"
-msgstr "Firste Nom"
+msgstr ""
 
 msgid "GermanLabel0"
 msgstr ""
@@ -1043,7 +1052,7 @@ msgid "contactProperties1"
 msgstr ""
 
 msgid "propertyDataType1"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel1"
 msgstr ""
@@ -1061,7 +1070,7 @@ msgid "contactProperties2"
 msgstr ""
 
 msgid "propertyDataType2"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel2"
 msgstr ""
@@ -1079,7 +1088,7 @@ msgid "contactProperties3"
 msgstr ""
 
 msgid "propertyDataType3"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel3"
 msgstr ""
@@ -1097,7 +1106,7 @@ msgid "contactProperties4"
 msgstr ""
 
 msgid "propertyDataType4"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel4"
 msgstr ""
@@ -1130,13 +1139,7 @@ msgid "generic_technical_error_message_input"
 msgstr ""
 
 msgid "email_subject"
-msgstr "Subscription confirmation en
-asd
-asd
-asd
-asd
-asdasd13ddd
-dsa"
+msgstr ""
 
 msgid "email_content_title"
 msgstr ""

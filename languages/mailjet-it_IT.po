@@ -955,10 +955,10 @@ msgstr ""
 #~ msgstr "Attivare l'invio di e-mail tramite Mailjet"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "it"
+msgstr ""
 
 msgid "list"
 msgstr ""
