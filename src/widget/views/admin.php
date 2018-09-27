@@ -257,7 +257,7 @@
                                     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryEmailLanguageInput floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>"><?php echo $language ?></label>
+                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>"><?php _e($language, 'mailjet') ?></label>
                                         <input class="form-control" type="text" value="<?php echo $language_mandatory_email ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="<?php echo $yourEmailTranslation ?>" />
                                     </div>
                                 <?php } ?>
@@ -273,7 +273,7 @@
                                     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryButtonLanguage floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>"><?php echo $language ?></label>
+                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>"><?php _e($language, 'mailjet') ?></label>
                                         <input class="form-control" type="text" title=""  value="<?php echo $language_mandatory_button ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>" placeholder="<?php echo $subscribeTranslation ?>" />
                                     </div>
                                 <?php }
@@ -302,7 +302,7 @@
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php echo $language ?></label>
+                                            <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php _e($language, 'mailjet') ?></label>
                                             <!--<input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>" />-->
                                             <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>"><?php echo esc_attr($confirmation_email_message_input); ?></textarea>
                                         </div>
@@ -431,7 +431,7 @@
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php echo $language ?></label>
+                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php _e($language, 'mailjet') ?></label>
                                         <!--<input class="form-control" type="text"  value="<?php echo esc_attr($email_subject); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="" />-->
                                         <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="<?php echo $subscriptionConfirmation ?>"><?php echo esc_attr($email_subject); ?></textarea>
                                     </div>

@@ -326,6 +326,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         __('French', 'mailjet');
         __('German', 'mailjet');
         __('Spanish', 'mailjet');
+        __('your@email.com', 'mailjet');
+        __('Subscribe', 'mailjet');
         __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'mailjet');
         __('Your subscription was successfully confirmed.', 'mailjet');
         __('Please provide an email address', 'mailjet');
