@@ -1016,10 +1016,10 @@ msgstr "Email content: text after the button"
 #~ msgstr "2924"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "en"
 
 msgid "list"
 msgstr ""

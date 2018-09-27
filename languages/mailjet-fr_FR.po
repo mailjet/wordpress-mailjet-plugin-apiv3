@@ -1012,10 +1012,10 @@ msgstr "Contenu de l'email: texte après le bouton"
 #~ msgstr "option_3"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "French title"
 
 msgid "list"
 msgstr ""

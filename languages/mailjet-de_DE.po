@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-27 11:38+0300\n"
-"PO-Revision-Date: 2018-09-27 11:41+0300\n"
+"POT-Creation-Date: 2018-09-27 11:52+0300\n"
+"PO-Revision-Date: 2018-09-27 11:53+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: de_DE\n"
@@ -983,10 +983,10 @@ msgstr "E-Mail-Inhalt: Text nach dem Button"
 #~ msgstr "Das Matrtix ich dich"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "ge"
 
 msgid "list"
 msgstr ""
@@ -1001,7 +1001,7 @@ msgid "contactProperties0"
 msgstr ""
 
 msgid "propertyDataType0"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel0"
 msgstr ""
@@ -1019,7 +1019,7 @@ msgid "contactProperties1"
 msgstr ""
 
 msgid "propertyDataType1"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel1"
 msgstr ""
@@ -1037,7 +1037,7 @@ msgid "contactProperties2"
 msgstr ""
 
 msgid "propertyDataType2"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel2"
 msgstr ""
@@ -1055,7 +1055,7 @@ msgid "contactProperties3"
 msgstr ""
 
 msgid "propertyDataType3"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel3"
 msgstr ""
@@ -1073,7 +1073,7 @@ msgid "contactProperties4"
 msgstr ""
 
 msgid "propertyDataType4"
-msgstr "0"
+msgstr ""
 
 msgid "EnglishLabel4"
 msgstr ""
