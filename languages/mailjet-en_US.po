@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-27 14:29+0300\n"
-"PO-Revision-Date: 2018-09-27 14:31+0300\n"
+"POT-Creation-Date: 2018-09-27 14:36+0300\n"
+"PO-Revision-Date: 2018-09-27 14:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_US\n"
@@ -646,7 +646,7 @@ msgstr "Invalid email"
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:434
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:456
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:334
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:335
 msgid "Please confirm your subscription"
 msgstr "Please confirm your subscription"
 
@@ -662,7 +662,7 @@ msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:438
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:457
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:338
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:339
 msgid "Yes, subscribe me to this list"
 msgstr "Yes, subscribe me to this list"
 
@@ -726,7 +726,7 @@ msgid "Mailjet Subscription Widget"
 msgstr "Mailjet Subscription Widget"
 
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:99
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:333
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:334
 msgid "Please provide an email address"
 msgstr "Please provide an email address"
 
@@ -739,7 +739,7 @@ msgstr ""
 "the subscription."
 
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:114
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:337
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:338
 msgid ""
 "A technical issue has prevented your subscription. Please try again later."
 msgstr ""
@@ -762,14 +762,18 @@ msgid "Spanish"
 msgstr "Spanish"
 
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:329
+msgid "Italian"
+msgstr "Italian"
+
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:330
 msgid "your@email.com"
 msgstr "your@email.com"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:330
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:331
 msgid "Subscribe"
 msgstr "Subscribe"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:331
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:332
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "your subscription."
@@ -777,19 +781,19 @@ msgstr ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "your subscription."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:332
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:333
 msgid "Your subscription was successfully confirmed."
 msgstr "Your subscription was successfully confirmed."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:335
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:336
 msgid "This email address has already been subscribed."
 msgstr "This email address has already been subscribed."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:336
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:337
 msgid "The value you entered is not in the correct format."
 msgstr "The value you entered is not in the correct format."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:339
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:340
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message"
