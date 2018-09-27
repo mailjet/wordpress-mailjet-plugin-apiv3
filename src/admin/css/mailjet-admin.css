@@ -108,6 +108,14 @@ body {
     text-align: center;
     margin-left:10px;
 }
+#initialSettingsSubmit:hover, #initialContactListsSubmit:hover, #create_contact_list_btn:hover, .closeCreateList:hover,  #send_test_email_btn:hover, .cancelTestEmail:hover,
+#enableSendingSubmit:hover, #subscriptionOptionsSubmit:hover,  #connectAccountSubmit:hover,  #userAccessSubmit:hover {
+    background-color: transparent;
+    color: #FCB340;
+    border: 1px solid #FEAD0D;
+    border-radius: 3px;
+}
+
 #initialSettingsSubmit {
     width: 311px;
 }
