@@ -262,7 +262,7 @@
                                     </div>
                                 <?php } ?>
                                 <p class="customize-mandatory-button propertiesInfo"><span><?php _e('Customize the submission button label:', 'mailjet') ?></span></p>        
-                                <span class="floatLeft mandatoryEmailLabel"><?php _e('For button label', 'mailjet'); ?></span>
+                                <span class="floatLeft mandatoryEmailLabel"><?php _e('Button label', 'mailjet'); ?></span>
                                 <?php
                                 foreach ($languages as $language => $locale) {
                                     if ($instance[$locale]['language_checkbox'] != 1) {

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-27 12:10+0300\n"
-"PO-Revision-Date: 2018-09-27 13:57+0300\n"
+"POT-Creation-Date: 2018-09-27 14:27+0300\n"
+"PO-Revision-Date: 2018-09-27 14:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: es_ES\n"
@@ -910,8 +910,8 @@ msgid "Customize the submission button label:"
 msgstr "Personalice la etiqueta del botón de envío:"
 
 #: src/widget/views/admin.php:265
-msgid "For button label"
-msgstr ""
+msgid "Button label"
+msgstr "Etiqueta del botón"
 
 #: src/widget/views/admin.php:287
 msgid ""
