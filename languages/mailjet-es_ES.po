@@ -953,10 +953,10 @@ msgstr ""
 #~ msgstr "Une de Matrixe muy bien"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "sp"
+msgstr ""
 
 msgid "list"
 msgstr ""

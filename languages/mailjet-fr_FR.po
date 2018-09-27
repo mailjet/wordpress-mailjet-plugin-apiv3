@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-09-25 17:19+0300\n"
-"PO-Revision-Date: 2018-09-25 17:20+0300\n"
+"POT-Creation-Date: 2018-09-27 10:30+0300\n"
+"PO-Revision-Date: 2018-09-27 10:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -289,7 +289,7 @@ msgstr "Vos modifications ont été enregistrées"
 #: src/includes/SettingsPages/InitialContactListsSettings.php:74
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:213
 #: src/includes/SettingsPages/UserAccessSettings.php:137
-#: src/widget/views/admin.php:196 src/widget/views/admin.php:511
+#: src/widget/views/admin.php:198 src/widget/views/admin.php:519
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -452,7 +452,7 @@ msgid "Name your list (max. 50 characters)"
 msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:73
-#: src/widget/views/admin.php:195 src/widget/views/admin.php:512
+#: src/widget/views/admin.php:197 src/widget/views/admin.php:520
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -626,14 +626,14 @@ msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:392
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:428
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:118
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:107
 msgid "Invalid email"
 msgstr ""
 
 #| msgid "Please Confirm Your Subscription To"
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:434
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:456
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:343
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:332
 #, fuzzy
 msgid "Please confirm your subscription"
 msgstr "Confirmez votre abonnement"
@@ -650,9 +650,9 @@ msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:438
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:457
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:347
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:336
 msgid "Yes, subscribe me to this list"
-msgstr ""
+msgstr "Oui, abonnez-moi à cette liste"
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:440
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:473
@@ -705,21 +705,21 @@ msgstr "Abonné"
 msgid "User Access Settings Saved"
 msgstr "Vos modifications ont été enregistrées"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:46
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:49
 msgid "Allows your visitors to subscribe to one of your lists"
 msgstr ""
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:49
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:52
 msgid "Mailjet Subscription Widget"
 msgstr "Widget d'inscription Mailjet"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:110
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:342
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:99
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:331
 msgid "Please provide an email address"
 msgstr "Veuilez fournir une adresse email"
 
 #| msgid "Subscription confirmation email sent. Please check your inbox and confirm your subscription."
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:123
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:112
 #, fuzzy
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm the su"
@@ -728,28 +728,28 @@ msgstr ""
 "Email de confirmation d'inscription envoyé. Veuillez vérifier votre boîte mail e"
 "t confirmez votre inscription."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:125
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:346
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:114
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:335
 msgid "A technical issue has prevented your subscription. Please try again later."
 msgstr "Un problème tehcnique a empêché votre inscription. Veuillez rééssayer plus tard."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:336
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:325
 msgid "English"
 msgstr "Anglais"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:337
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:326
 msgid "French"
 msgstr "Français"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:338
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:327
 msgid "German"
 msgstr "Allemand"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:339
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:328
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:340
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:329
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm your s"
 "ubscription."
@@ -757,19 +757,19 @@ msgstr ""
 "Email de confirmation d'inscription envoyé. Veuillez vérifier votre boîte mail e"
 "t confirmez votre inscription."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:341
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:330
 msgid "Your subscription was successfully confirmed."
 msgstr "Votre inscription a été confirmée avec succès."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:344
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:333
 msgid "This email address has already been subscribed."
 msgstr "Cette adresse email a déjà été enregistrée."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:345
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:334
 msgid "The value you entered is not in the correct format."
 msgstr "La valeur entrée n'est pas au bon format."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:348
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:337
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, simply"
 " ignore this message"
@@ -809,85 +809,85 @@ msgstr ""
 "Ajoutez plus de champs à votre formulaire (ex: Prénom, Nom, Anniversaire...) et "
 "personnalisez les étiquettes, messages."
 
-#: src/widget/views/admin.php:89
+#: src/widget/views/admin.php:91
 msgid "Customize your subscription form"
 msgstr "Personnalisez votre formulaire d'inscription"
 
-#: src/widget/views/admin.php:95
+#: src/widget/views/admin.php:97
 msgid "Form fields"
 msgstr "Champs de formulaire"
 
-#: src/widget/views/admin.php:96
+#: src/widget/views/admin.php:98
 msgid "Form validation messages"
 msgstr "Messages de validation de formulaire"
 
-#: src/widget/views/admin.php:97
+#: src/widget/views/admin.php:99
 msgid "Confirmation email content"
 msgstr "Contenu d'email de confirmation"
 
-#: src/widget/views/admin.php:104
+#: src/widget/views/admin.php:106
 msgid "You can add up to 5 contact properties to collect additional data"
 msgstr ""
 "Vous pouvez ajouter jusqu'à 5 propriété de contacts pour collecter des données s"
 "upplémentaires"
 
-#: src/widget/views/admin.php:145
+#: src/widget/views/admin.php:147
 msgid "Property"
 msgstr "Propriété"
 
 #| msgid "Property"
-#: src/widget/views/admin.php:149
+#: src/widget/views/admin.php:151
 #, fuzzy
 msgid "Properties"
 msgstr "Propriété"
 
-#: src/widget/views/admin.php:152
+#: src/widget/views/admin.php:154
 msgid "Select a property"
 msgstr "Sélectionnez une propriété de contact"
 
-#: src/widget/views/admin.php:153
+#: src/widget/views/admin.php:155
 msgid "Create new"
 msgstr "Créer un nouveau"
 
-#: src/widget/views/admin.php:175
+#: src/widget/views/admin.php:177
 msgid "Name your property (no spaces)"
-msgstr ""
+msgstr "Nommez votre propriété"
 
 #| msgid "Property"
-#: src/widget/views/admin.php:181
+#: src/widget/views/admin.php:183
 #, fuzzy
 msgid "Property type"
 msgstr "Propriété"
 
-#: src/widget/views/admin.php:208
+#: src/widget/views/admin.php:210
 msgid "Optional"
 msgstr "Optionnel"
 
-#: src/widget/views/admin.php:209
+#: src/widget/views/admin.php:211
 msgid "Mandatory"
 msgstr "Obligatoire"
 
-#: src/widget/views/admin.php:210
+#: src/widget/views/admin.php:212
 msgid "Hidden"
 msgstr "Caché"
 
-#: src/widget/views/admin.php:245
+#: src/widget/views/admin.php:247
 msgid "Customize the placeholder text for the email address field:"
 msgstr "Personnalisez le texte de l'espace réserver pour le champ d'adresse email :"
 
-#: src/widget/views/admin.php:247
+#: src/widget/views/admin.php:249
 msgid "Email address field placeholder text"
 msgstr "Texte de l'espace réservé à l'adresse email"
 
-#: src/widget/views/admin.php:262
+#: src/widget/views/admin.php:264
 msgid "Customize the submission button label:"
 msgstr "Personnaliser l'étiquette de bouton de soumission:"
 
-#: src/widget/views/admin.php:263
+#: src/widget/views/admin.php:265
 msgid "For button label"
 msgstr "Etiquette de bouton"
 
-#: src/widget/views/admin.php:285
+#: src/widget/views/admin.php:287
 msgid ""
 "You can customize error and success messages displayed to your users as they int"
 "eract with the subscription form. Leave empty fields to use the default values."
@@ -896,15 +896,15 @@ msgstr ""
 "isateurs lorsqu'ils intéragissent avec le formuaire d'inscription. Laissez les c"
 "hamps vides afin d'utiliser les valeurs par défaut."
 
-#: src/widget/views/admin.php:290 src/widget/views/admin.php:413
+#: src/widget/views/admin.php:292 src/widget/views/admin.php:421
 msgid "Description"
 msgstr "Description"
 
-#: src/widget/views/admin.php:291
+#: src/widget/views/admin.php:293
 msgid "Form successfully submitted"
 msgstr "Formulaire soumis avec succès"
 
-#: src/widget/views/admin.php:311
+#: src/widget/views/admin.php:314
 msgid ""
 "Subscription confirmed (displayed after the user has clicked the confirmation em"
 "ail)"
@@ -912,25 +912,25 @@ msgstr ""
 "Inscription confirmée (affichée après le clc de l'utilisateur sur l'email de con"
 "firmation)"
 
-#: src/widget/views/admin.php:330
+#: src/widget/views/admin.php:334
 msgid "Error: email field is empty"
 msgstr "Erreur : le champ erreur est vide"
 
-#: src/widget/views/admin.php:349
+#: src/widget/views/admin.php:354
 msgid "Error: the email address is already subscribed"
 msgstr "Erreur : l'adresse email est déjà inscrite"
 
-#: src/widget/views/admin.php:369
+#: src/widget/views/admin.php:375
 msgid "Error: Invalid data format (this applies only for numbers and dates)"
 msgstr ""
 "Erreur : format de données invalide (seulement applicable pour les nombres et le"
 "s dates)"
 
-#: src/widget/views/admin.php:388
+#: src/widget/views/admin.php:395
 msgid "Generic technical error message"
 msgstr "Message d'erreur technique générique"
 
-#: src/widget/views/admin.php:410
+#: src/widget/views/admin.php:418
 msgid ""
 "When a user fills in the form, they will receive an email containing a button th"
 "ey need to click on to confirm their subscription. You can customize the text of"
@@ -942,23 +942,23 @@ msgstr ""
 "texte de l'emai de confirmation si vous le souhaitez. Laissez des champs vides p"
 "our utiliser les valeurs par défaut."
 
-#: src/widget/views/admin.php:414
+#: src/widget/views/admin.php:422
 msgid "Email subject"
 msgstr "Sujet de l'email"
 
-#: src/widget/views/admin.php:435
+#: src/widget/views/admin.php:443
 msgid "Email content: title"
 msgstr "Contenu de l'email : titre"
 
-#: src/widget/views/admin.php:454
+#: src/widget/views/admin.php:462
 msgid "Email content: main text"
 msgstr "Contenu de l'email : texte principal"
 
-#: src/widget/views/admin.php:472
+#: src/widget/views/admin.php:480
 msgid "Email content: confirmation button label"
 msgstr "Contenu de l'email : etiquette de bouton de confirmation"
 
-#: src/widget/views/admin.php:490
+#: src/widget/views/admin.php:498
 msgid "Email content: text after the button"
 msgstr "Contenu de l'email: texte après le bouton"
 
@@ -1012,10 +1012,10 @@ msgstr "Contenu de l'email: texte après le bouton"
 #~ msgstr "option_3"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "French title"
+msgstr ""
 
 msgid "list"
 msgstr ""
