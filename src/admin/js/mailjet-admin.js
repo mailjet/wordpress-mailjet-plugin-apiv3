@@ -142,7 +142,11 @@
                 $(this).removeClass('hover');
                 var imgId = $(this).data('img_id');
                 if (!$(this).hasClass('active')) {
-                    $('.' + imgId).css({fill:"#000000"});
+                    if ($(this).parent().hasClass('settingsMenuLink1')) {
+                        $('.' + imgId).css({fill:"#FFFFFF"});
+                    } else {
+                        $('.' + imgId).css({fill:"#000000"});
+                    }
                 }
             }
         );

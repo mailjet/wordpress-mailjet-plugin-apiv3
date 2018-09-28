@@ -26,7 +26,7 @@ class MailjetAdminDisplay
                 <div class="settingsMenuLink settingsMenuLink1">
                 <?php
                 echo '<a data-img_id="settingsMenuLinkImg1" class="' . ($currentPage == 'mailjet_connect_account_page' ? 'active' : '') . '" href="admin.php?page=mailjet_connect_account_page">'; ?>
-                <svg class="settingsMenuLinkImg1" width="16" viewBox="0 0 16 16"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b"><stop stop-color="#FFBC48" offset="0%"/><stop stop-color="#FFA414" offset="100%"/></linearGradient><rect id="a" width="16" height="16" rx="3"/></defs><g fill-rule="nonzero" fill="none"><g><use fill="#D8D8D8" xlink:href="#a"/><use fill="url(#b)" xlink:href="#a"/></g><path class="settingsMenuLinkImg1" d="M6.518 7.887l-.183 1.271-1.322 1.911.437-.244 7.208-3.965L14 6.118l-7.482 1.77zm-.051-.335l5.652-1.281-.366-.051-1.484-.203-3.152-.438L3 5l1.515 1.108 1.9 1.393.052.05z" fill="#000"/></g></svg>
+                <svg class="settingsMenuLinkImg1" width="16" viewBox="0 0 16 16"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b"><stop stop-color="#FFBC48" offset="0%"/><stop stop-color="#FFA414" offset="100%"/></linearGradient><rect id="a" width="16" height="16" rx="3"/></defs><g fill-rule="nonzero" fill="none"><g><use fill="#D8D8D8" xlink:href="#a"/><use fill="url(#b)" xlink:href="#a"/></g><path class="settingsMenuLinkImg1" d="M6.518 7.887l-.183 1.271-1.322 1.911.437-.244 7.208-3.965L14 6.118l-7.482 1.77zm-.051-.335l5.652-1.281-.366-.051-1.484-.203-3.152-.438L3 5l1.515 1.108 1.9 1.393.052.05z" fill="#FFFFFF"/></g></svg>
                 <p><?php echo __('Connect your Mailjet account', 'mailjet'); ?></p>
                 </a>
                 </div>
