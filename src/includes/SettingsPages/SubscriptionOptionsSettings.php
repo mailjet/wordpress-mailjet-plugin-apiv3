@@ -451,6 +451,12 @@ class SubscriptionOptionsSettings
     
     public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance)
     {
+        $language = Mailjeti18n::getCurrentUserLanguage();
+        $thankYouPageId = !empty($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : false;
+        $post = get_post( $thankYouPageId );
+        $thankYouURI = !empty($post->guid) ? $post->guid : get_home_url();
+//        $thankYouURI = get_home_url();
+//        var_dump($thankYouURI);exit;
         $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
         $email_subject = !empty($instance[$locale]['email_subject']) ? apply_filters('widget_email_subject', $instance[$locale]['email_subject']) : __('Subscription Confirmation', 'mailjet');
         $email_title = !empty($instance[$locale]['email_content_title']) ? apply_filters('widget_email_content_title', $instance[$locale]['email_content_title']) : __('Please confirm your subscription', 'mailjet');
@@ -459,15 +465,19 @@ class SubscriptionOptionsSettings
         $test = sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet'), $wpUrl);
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', $instance[$locale]['email_content_main_text']) : $test;
 
-        $params = http_build_query(array('subscription_email' => $subscription_email, 'properties' => $_POST['properties']));
+        $params = http_build_query(array(
+            'subscription_email' => $subscription_email,
+            'properties' => $_POST['properties'],
+//            'thank_id' => $thankYouURI
+        ));
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
-        
+
         $emailData = array(
             '__EMAIL_TITLE__' => $email_title,
             '__EMAIL_HEADER__' => $email_main_text,
-            '__WP_URL__' => $wpUrl,
-            '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
+            '__WP_URL__' => get_home_url(),
+            '__CONFIRM_URL__' => $thankYouURI . '&' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet'),

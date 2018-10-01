@@ -517,55 +517,22 @@
                         <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab">
                             <p class="tab-info propertiesInfo">
                                 <span><?php _e('Select a page from your Wordpress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet') ?></span>
-                                
-                                <?php
-//                                $countActiveLanguages = count($activeLanguages); // 4, 5
-//                                $maxWidth = 60;
-//                                $percent = $countActiveLanguages > 0 ? $maxWidth / $countActiveLanguages : $maxWidth;
-                                foreach ($activeLanguages as $languageKey => $language) {
-                                    extract(wp_parse_args((array) $instance[$language], $advancedFormDefaults));
-                                    ?>
-                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>"><?php _e($language, 'mailjet') ?></label>
-                                        <select class="thankYou_select form-control" id="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>" name="<?php echo $this->get_field_name($language . '[thank_you]'); ?>">
-                                            <option value="0"><?php _e('Default page', 'mailjet') ?></option>
-                                            <?php
-                                            foreach ($pages as $page) { ?>
-                                                <option value="<?php echo $page->ID ?>" id="thankYouOption_<?php echo $page->ID ?>" <?php echo selected($thank_you, $page->ID, false) ?> > <?php echo $page->post_title ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                <?php }
-
-//                                $numberActiveLanguages = 0;
-//                                foreach ($languages as $language => $locale) {
-//                                    if ($instance[$locale]['language_checkbox']) {
-//                                        $activeLanguages[] = $language;
-//                                    }
-//                                    $numberActiveLanguages += $instance[$locale]['language_checkbox'];
-//                                }
-//                                $maxWidth = 60;
-//                                $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
-//
-//                                $opened = 0;
-//                                $display = 'block';
-
-
-                                // SELECT PAGES
-//                                $pageOptions = array();
-//                                foreach ($pages as $page) {
-//                                    $pageOptions[$page->ID] = $page->post_title;
-//                                }
+                            </p>   
+                            <?php
+                            foreach ($activeLanguages as $languageKey => $language) {
+                                extract(wp_parse_args((array) $instance[$language], $advancedFormDefaults));
                                 ?>
-                                <!--<select name="<?php echo $this->get_field_name($locale . '[thankYouPage]'); ?>" id="<?php echo $this->get_field_id($locale . '[thankYouPage]'); ?>" class="widefat dropdown-list">-->
-                                    <!--<option value="0" id="default_thank_you_page">Default page</option>-->
-                                    <?php
-//                                    foreach ($pageOptions as $key => $pageTitle) {
-//                                        echo '<option value="' . esc_attr($key) . '" id="thank_you_page_option_' . esc_attr($key) . '" ' . selected($pageOptions, $key, false) . '>' . $pageTitle . '</option>';
-//                                    }
-                                    ?>
-                                <!--</select>-->
-                            </p>
+                                <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                    <label for="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>"><?php _e($language, 'mailjet') ?></label>
+                                    <select class="thankYou_select form-control" id="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>" name="<?php echo $this->get_field_name($language . '[thank_you]'); ?>">
+                                        <option value="0"><?php _e('Default page', 'mailjet') ?></option>
+                                        <?php
+                                        foreach ($pages as $page) { ?>
+                                            <option value="<?php echo $page->ID ?>" id="thankYouOption_<?php echo $page->ID ?>" <?php echo selected($thank_you, $page->ID, false) ?> > <?php echo $page->post_title ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

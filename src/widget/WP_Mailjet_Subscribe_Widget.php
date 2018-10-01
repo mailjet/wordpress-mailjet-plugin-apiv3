@@ -130,9 +130,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $subscription_email = $_GET['subscription_email'];
         $properties = $_GET['properties'];
+//        $thank_id = $_GET['thank_id'];
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
-            'properties' => $properties
+            'properties' => $properties,
+//            'thank_id' => $thank_id,
         ));
 
         // The token is valid we can subscribe the user
@@ -161,11 +163,15 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 'Properties' => $dataProperties
             );
             $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
-            if($result) {
-                // Redirect to thank you page
-            } else {
-                // Some message to try again
+            
+            if(!$result) {
+                echo "Subscription failed.Please try again.";
+                die;
             }
+            
+            // Subscribed
+            
+
         } else {
             // Invalid token
             // Todo add Log and message
@@ -317,7 +323,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             
             // Tab 4
             $instance[$language]['thank_you'] = isset($new_instance[$language]['thank_you']) ? wp_strip_all_tags($new_instance[$language]['thank_you']) : '';
-//            $instance[$locale]['thankYouPage'] = isset($new_instance[$locale]['thankYouPage']) ? wp_strip_all_tags($new_instance[$locale]['thankYouPage']) : '';
 
             // Translations update
             Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
