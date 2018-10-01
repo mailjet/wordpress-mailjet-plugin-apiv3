@@ -63,10 +63,12 @@ body {
     vertical-align: top;
     height: 16px;
     width: 16px;
-    border: 1px solid #19BC9C;
+    /*border: 1px solid #19BC9C;*/
+    border: 1px solid #888888;
     border-radius: 3px;
 }
 .mailjet_row input[type="checkbox"]:checked {
+    border: 1px solid #19BC9C;
     background: #19BC9C;
     content: "\2714";
     color: #FFF;
@@ -216,6 +218,22 @@ body {
     display: flex;
     align-items: stretch;
 }
+.mjSettings .left .centered h1 {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 40px;
+}
+.mjSettings .right .centered h2 {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 32px;
+    margin-top: 90px;
+}
+
 /* Control the left side */
 .left {
     float:left;
@@ -236,7 +254,7 @@ body {
 }
 
 .left .centered {
-    height:90%;
+    height:93%;
     border-right: solid 1px #C1C1C1;
 }
 .right .centered {
@@ -294,6 +312,7 @@ input[type="submit"].button {
     font-weight: bold;
     line-height: 24px;
     vertical-align: middle;
+    padding-right:10px;
 }
 .centered ul li .settingsMenuLink a {
     padding: 5px;
@@ -314,6 +333,9 @@ input[type="submit"].button {
 }
 .centered ul li .settingsMenuLink1 a.active {
     fill: #FFFFFF;
+}
+.centered ul li .settingsMenuLink a.active p {
+    color: #19BC9C;
 }
 
 /* Send test email popup */
