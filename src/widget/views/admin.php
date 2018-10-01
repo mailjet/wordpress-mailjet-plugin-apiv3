@@ -68,6 +68,7 @@
     }
     $advancedFormDefaults['language_mandatory_email'] = '';
     $advancedFormDefaults['language_mandatory_button'] = '';
+    $advancedFormDefaults['thank_you'] = '';
 
     extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
     $defaultPlaceholder = 'Field label in ';
@@ -78,7 +79,7 @@
         <p>
             <span id="advanced-form-link" data-toggle="modal" data-target=".advanced-form-popup"><?php _e('Advanced form customization', 'mailjet') ?></span>
             <span id="advanced-form-link-info" data-toggle="tooltip" data-placement="bottom" title="<?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet'); ?>">
-            <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
+            <svg viewBox="0 0 16 16" style="height: 12px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
             </span>
         </p>
     </div>
@@ -97,6 +98,7 @@
                         <li role="presentation" class="active"><a href=".advanced-form-fields" aria-controls="advanced-form-fields" role="tab" data-toggle="tab"><?php _e('Form fields', 'mailjet') ?></a></li>
                         <li role="presentation"><a href=".advanced-form-validation-messages" aria-controls="advanced-form-validation-messages" role="tab" data-toggle="tab"><?php _e('Form validation messages', 'mailjet') ?></a></li>
                         <li role="presentation"><a href=".advanced-form-confirmation-email-content" aria-controls="advanced-form-confirmation-email-content" role="tab" data-toggle="tab"><?php _e('Confirmation email content', 'mailjet') ?></a></li>
+                        <li role="presentation"><a href=".advanced-form-thank-you-page-tab" aria-controls="advanced-form-thank-you-page-tab" role="tab" data-toggle="tab"><?php _e('Thank you page', 'mailjet') ?></a></li>
                     </ul>
 
                     <!--Tab panes--> 
@@ -202,7 +204,7 @@
                                         <!--Select property DataType-->
                                         <div class="typeSelect floatLeft form-group">
                                              <?php if($row==0) { ?>
-                                            <label for="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">Type</label>
+                                            <label for="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>"><?php _e('Type', 'mailjet') ?></label>
                                              <?php } ?>
                                             <select class="propertyDataType form-control" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">
                                                 <?php
@@ -511,6 +513,59 @@
                                     </div>
                                 <?php } ?>
                             </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab">
+                            <p class="tab-info propertiesInfo">
+                                <span><?php _e('Select a page from your Wordpress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet') ?></span>
+                                
+                                <?php
+//                                $countActiveLanguages = count($activeLanguages); // 4, 5
+//                                $maxWidth = 60;
+//                                $percent = $countActiveLanguages > 0 ? $maxWidth / $countActiveLanguages : $maxWidth;
+                                foreach ($activeLanguages as $languageKey => $language) {
+                                    extract(wp_parse_args((array) $instance[$language], $advancedFormDefaults));
+                                    ?>
+                                    <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
+                                        <label for="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>"><?php _e($language, 'mailjet') ?></label>
+                                        <select class="thankYou_select form-control" id="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>" name="<?php echo $this->get_field_name($language . '[thank_you]'); ?>">
+                                            <option value="0"><?php _e('Default page', 'mailjet') ?></option>
+                                            <?php
+                                            foreach ($pages as $page) { ?>
+                                                <option value="<?php echo $page->ID ?>" id="thankYouOption_<?php echo $page->ID ?>" <?php echo selected($thank_you, $page->ID, false) ?> > <?php echo $page->post_title ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                <?php }
+
+//                                $numberActiveLanguages = 0;
+//                                foreach ($languages as $language => $locale) {
+//                                    if ($instance[$locale]['language_checkbox']) {
+//                                        $activeLanguages[] = $language;
+//                                    }
+//                                    $numberActiveLanguages += $instance[$locale]['language_checkbox'];
+//                                }
+//                                $maxWidth = 60;
+//                                $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
+//
+//                                $opened = 0;
+//                                $display = 'block';
+
+
+                                // SELECT PAGES
+//                                $pageOptions = array();
+//                                foreach ($pages as $page) {
+//                                    $pageOptions[$page->ID] = $page->post_title;
+//                                }
+                                ?>
+                                <!--<select name="<?php echo $this->get_field_name($locale . '[thankYouPage]'); ?>" id="<?php echo $this->get_field_id($locale . '[thankYouPage]'); ?>" class="widefat dropdown-list">-->
+                                    <!--<option value="0" id="default_thank_you_page">Default page</option>-->
+                                    <?php
+//                                    foreach ($pageOptions as $key => $pageTitle) {
+//                                        echo '<option value="' . esc_attr($key) . '" id="thank_you_page_option_' . esc_attr($key) . '" ' . selected($pageOptions, $key, false) . '>' . $pageTitle . '</option>';
+//                                    }
+                                    ?>
+                                <!--</select>-->
+                            </p>
                         </div>
                     </div>
                 </div>

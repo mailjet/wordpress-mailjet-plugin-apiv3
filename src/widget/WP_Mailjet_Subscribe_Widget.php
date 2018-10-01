@@ -161,6 +161,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 'Properties' => $dataProperties
             );
             $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
+            if($result) {
+                // Redirect to thank you page
+            } else {
+                // Some message to try again
+            }
         } else {
             // Invalid token
             // Todo add Log and message
@@ -309,6 +314,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $instance[$locale]['email_content_main_text'] = isset($new_instance[$locale]['email_content_main_text']) ? wp_strip_all_tags($new_instance[$locale]['email_content_main_text']) : '';
             $instance[$locale]['email_content_confirm_button'] = isset($new_instance[$locale]['email_content_confirm_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_confirm_button']) : '';
             $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale]['email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_after_button']) : '';
+            
+            // Tab 4
+            $instance[$language]['thank_you'] = isset($new_instance[$language]['thank_you']) ? wp_strip_all_tags($new_instance[$language]['thank_you']) : '';
+//            $instance[$locale]['thankYouPage'] = isset($new_instance[$locale]['thankYouPage']) ? wp_strip_all_tags($new_instance[$locale]['thankYouPage']) : '';
 
             // Translations update
             Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
@@ -348,7 +357,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function form($instance)
     {
         $isMailjetDown = '';
-        // TODO: Define default values for your variables
+        // Define default values for your variables
         $instance = wp_parse_args(
                 (array) $instance
         );
@@ -374,6 +383,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $admin_locale = get_locale();
         // Display the admin form
         $languages = Mailjeti18n::getSupportedLocales();
+        $pages = get_pages();
         include(plugin_dir_path(__FILE__) . 'views/admin.php');
     }
 
