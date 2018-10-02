@@ -28,7 +28,9 @@
     <div class="mj-confirmation-page-header mockup-content paint-area" style="background-color: #e1e1e6; text-align: center;">
         <div style="display: table; height: 90px; width: 100%;">
             <div style="display: table-cell; vertical-align: middle;">
-                <div class="mj-confirmation-page-title paint-area paint-area--text" style="font-family:Ubuntu, Helvetica; display: inline-block; text-align: center; font-size: 20px; color: #333333;">Newsletter Registration</div>
+                <div class="mj-confirmation-page-title paint-area paint-area--text" style="font-family:Ubuntu, Helvetica; display: inline-block; text-align: center; font-size: 20px; color: #333333;">
+                    <?php _e('Newsletter Registration', 'mailjet') ?>
+                </div>
             </div>
         </div>
     </div>
@@ -36,7 +38,9 @@
         <div class="mj-confirmation-page-image-place" style="padding: 50px 0;"><img src="//r.mailjet.com/w/w-confirmation-page-mail.png" alt="confirm subscription"></div>
         <div style="display: table; height: 70px; width: 100%;">
             <div style="display: table-cell; vertical-align: middle;">
-                <div class="mj-confirmation-page-text paint-area paint-area--text" style="color: #aab6bd; font-family: Ubuntu, Helvetica; font-size: 22px; display: inline-block;"><b class="medium-b">Congratulations, you have successfully subscribed!</b></div>
+                <div class="mj-confirmation-page-text paint-area paint-area--text" style="color: #aab6bd; font-family: Ubuntu, Helvetica; font-size: 22px; display: inline-block;">
+                    <b class="medium-b"><?php _e('Congratulations, you have successfully subscribed!', 'mailjet') ?></b>
+                </div>
             </div>
         </div>
     </div>
