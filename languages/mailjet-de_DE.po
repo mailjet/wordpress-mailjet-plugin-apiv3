@@ -993,7 +993,7 @@ msgid "title"
 msgstr "ge"
 
 msgid "list"
-msgstr ""
+msgstr "37731"
 
 msgid "language_mandatory_email"
 msgstr ""

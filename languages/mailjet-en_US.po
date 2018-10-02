@@ -1015,7 +1015,7 @@ msgid "title"
 msgstr "en"
 
 msgid "list"
-msgstr ""
+msgstr "37731"
 
 msgid "language_mandatory_email"
 msgstr ""
