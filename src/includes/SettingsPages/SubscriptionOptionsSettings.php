@@ -451,17 +451,17 @@ class SubscriptionOptionsSettings
     
     public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance)
     {
+        $homeUrl = get_home_url();
         $language = Mailjeti18n::getCurrentUserLanguage();
         $thankYouPageId = !empty($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : false;
         $post = get_post( $thankYouPageId );
-        $thankYouURI = !empty($post->guid) ? $post->guid : get_home_url();
-//        $thankYouURI = get_home_url();
-//        var_dump($thankYouURI);exit;
+        $thankYouURI = !empty($post->guid) ? $post->guid : $homeUrl;
         $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
+
         $email_subject = !empty($instance[$locale]['email_subject']) ? apply_filters('widget_email_subject', $instance[$locale]['email_subject']) : __('Subscription Confirmation', 'mailjet');
         $email_title = !empty($instance[$locale]['email_content_title']) ? apply_filters('widget_email_content_title', $instance[$locale]['email_content_title']) : __('Please confirm your subscription', 'mailjet');
         $email_button_value = !empty($instance[$locale]['email_content_confirm_button']) ? apply_filters('widget_email_content_confirm_button', $instance[$locale]['email_content_confirm_button']) : __('Yes, subscribe me to this list', 'mailjet');
-        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
+        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', $homeUrl, $homeUrl);
         $test = sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet'), $wpUrl);
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', $instance[$locale]['email_content_main_text']) : $test;
 
@@ -473,11 +473,14 @@ class SubscriptionOptionsSettings
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
 
+        // Check if subscription is done via home page or some post
+        $confirmUrl = $thankYouURI == $homeUrl ? '?' : '&';
+
         $emailData = array(
             '__EMAIL_TITLE__' => $email_title,
             '__EMAIL_HEADER__' => $email_main_text,
-            '__WP_URL__' => get_home_url(),
-            '__CONFIRM_URL__' => $thankYouURI . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
+            '__WP_URL__' => $homeUrl,
+            '__CONFIRM_URL__' => $thankYouURI . $confirmUrl . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet'),
