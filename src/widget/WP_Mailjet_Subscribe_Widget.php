@@ -477,10 +477,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     function wp_ajax_mailjet_add_contact_property()
     {
         if (!empty($_POST['propertyName'])) {
-            $type = 'Text';
-            if (!empty($_POST['propertyType'])) {
-                $type = $_POST['propertyType'];
-            }
+            $type = !empty($_POST['propertyType']) ? $_POST['propertyType'] : 'Text'; 
             echo json_encode(MailjetApi::createMailjetContactProperty($_POST['propertyName'], $type));
         }
         die;
