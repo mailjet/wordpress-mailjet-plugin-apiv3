@@ -173,8 +173,21 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             // Subscribed
             $language = Mailjeti18n::getCurrentUserLanguage();
             $thankYouPageId = get_option('mailjet_thank_you_page_' . $language);
+
             // If no selected page, select default template
             if (!$thankYouPageId) {
+
+                $locale = Mailjeti18n::getLocaleByPll();
+                if(!$locale) {
+                    // No polylang so use native translations
+                    $newsletterRegistration = __('Newsletter Registration', 'mailjet');
+                    $congratsSubscribed = __('Congratulations, you have successfully subscribed!', 'mailjet');
+                } else {
+                    // Use polylang set language
+                    $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
+                    $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
+                }
+
                 // Default page is selected
                 include(plugin_dir_path(__FILE__) . 'templates/thankyou.php');
                 die;

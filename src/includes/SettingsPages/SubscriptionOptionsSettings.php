@@ -477,7 +477,7 @@ class SubscriptionOptionsSettings
             '__EMAIL_TITLE__' => $email_title,
             '__EMAIL_HEADER__' => $email_main_text,
             '__WP_URL__' => get_home_url(),
-            '__CONFIRM_URL__' => $thankYouURI . '&' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
+            '__CONFIRM_URL__' => $thankYouURI . '?' . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet'),

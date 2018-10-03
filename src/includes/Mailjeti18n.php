@@ -140,6 +140,31 @@ class Mailjeti18n
         return "https://app.mailjet.com/support?lc=" . $locale;
     }
 
+    /**
+     * Get user locale depends on polylang cookie
+     * @param str $pll
+     */
+    public static function getLocaleByPll()
+    {
+        if(empty($_COOKIE['pll_language'])) {
+            // The user language is not changed via polylang
+            return false;
+        }
+        
+        $pll = $_COOKIE['pll_language'];
+
+        switch($pll) {
+            case 'en' : $locale = 'en_US';break;
+            case 'fr' : $locale = 'fr_FR';break;
+            case 'de' : $locale = 'de_DE';break;
+            case 'es' : $locale = 'es_ES';break;
+            case 'it' : $locale = 'it_IT';break;
+            // If given pll is not supported get current language
+            default : $locale = self::getCurrentUserLanguage();
+        }
+        return $locale;
+    }
+
     public static function getMailjetUserGuideLinkByLocale()
     {
         $locale = self::getLocale();
