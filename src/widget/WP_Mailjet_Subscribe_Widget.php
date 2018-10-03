@@ -188,8 +188,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                     $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
                 }
 
+                $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates/thankyou.php');
                 // Default page is selected
-                include(plugin_dir_path(__FILE__) . 'templates/thankyou.php');
+                include($tankyouPageTemplate);
                 die;
             }
         } else {
