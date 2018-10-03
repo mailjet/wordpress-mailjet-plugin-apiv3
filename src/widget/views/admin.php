@@ -185,10 +185,10 @@
                                                 <label for="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>"><?php _e('Property type', 'mailjet') ?></label>
                                             <?php } ?>
                                             <select class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>">
-                                                <option value="0">Text</option>
-                                                <option value="1">Int</option>
-                                                <option value="2">Date</option>
-                                                <option value="3">Bool</option>
+                                                <option value="Text">Text</option>
+                                                <option value="Int">Int</option>
+                                                <option value="Date">Date</option>
+                                                <option value="Bool">Bool</option>
                                             </select>
                                         </div>
                                         <?php 

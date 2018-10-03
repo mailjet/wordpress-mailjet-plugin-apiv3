@@ -31,6 +31,55 @@
 //            $("div#advanced-form-link-wrap").hide();
         });
 
+        $(document).on('click', '.saveNewPropertyButton', function () {
+
+            var element = $(this);
+
+            // Get new property name value
+            var newPropertyName = element.parent().parent().find('.newPropertyName input').val();
+            // Get new property type
+            var newPropertyType = element.parent().parent().find('.newPropertyType select').val();
+
+            var selectProperty = element.parent().parent().find('.selectProperty');
+
+            // ajax request to create the new property
+            jQuery.ajax({
+                type: "post",
+                dataType: "json",
+                url: myAjax.ajaxurl,
+                data : {action: "mailjet_add_contact_property", propertyName:newPropertyName, propertyType:newPropertyType},
+                success: function (response) {
+                    if (response !== null && response[0] !== undefined && response[0].ID !== undefined) {
+
+                        // Reset elements
+                        resetHiddenPropertiesInputs(element);
+                        resetAddingNewPropertyInputs(element, 'Text');
+
+                        // Hide new property inputs
+                        element.parent().parent().find('.createNewProperties').hide();
+
+                        // Show datatype and languages inputs/values and delete
+                        element.parent().parent().find('.hiddenProperties').show();
+
+                        // Show next default property select
+                        element.parent().parent().next('.property').show();
+
+                        // Remove the delete icon for the previous row
+                        element.parent().parent().prev().find('.deleteProperty').hide();
+
+                        // Remove class as the input value is ok
+                        element.parent().parent().find('.newPropertyName input').removeClass('redInput');
+
+                        // Add the new property and select it
+                        selectProperty.append('<option value="' + response[0].ID + '" selected="selected">' + newPropertyName + '</option>');
+                    } else {
+                        element.parent().parent().find('.newPropertyName input').addClass('redInput');
+                    }
+                }
+            });
+
+        });
+
         // Select a contact property
         $(document).on('change', '.selectProperty', function (event) {
             var optionValue = event.target.value;
@@ -43,13 +92,14 @@
                 // Show new property inputs
                 $(this).parent().parent().find('.createNewProperties').show();
 
+                // Do not delete 
                 // Hide all rows that are not setup
-                $('.selectProperty').each(function (env) {
-                    console.log($(this).val());
-                    if ($(this).val() === null) {
-                        $(this).parent().parent().hide();
-                    }
-                });
+//                $('.selectProperty').each(function (env) {
+//                    if ($(this).val() === null) {
+//                        $(this).parent().parent().hide();
+//                    }
+//                });
+
                 // Show next default property select
 //                $(this).parent().parent().next('.property').hide();
             } else {
@@ -90,16 +140,19 @@
             element.parent().parent().find('.selectProperty').val(0);
             element.parent().parent().find('.propertyDataType').val(0);
 
-            // reset language inputs
+            // Reset language inputs
             element.parent().parent().find('.languageInput input').val('');
+
+            // Remove class as the input value is ok
+            element.parent().parent().find('.newPropertyName input').removeClass('redInput');
         }
 
-        function resetAddingNewPropertyInputs(element) {
+        function resetAddingNewPropertyInputs(element, resetElementValue = 0) {
             // Reset new property name input
             element.parent().parent().find('.newPropertyName input').val('');
 
             // Reset new property datatype select
-            element.parent().parent().find('.newPropertyType input').val(0);
+            element.parent().parent().find('.newPropertyType input').val(resetElementValue);
         }
 
         $(document).on('click', '#saveAdvancedForm', function () {

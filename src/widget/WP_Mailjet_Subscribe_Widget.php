@@ -63,6 +63,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         add_action('save_post', array($this, 'flush_widget_cache'));
         add_action('deleted_post', array($this, 'flush_widget_cache'));
         add_action('switch_theme', array($this, 'flush_widget_cache'));
+
+        add_action('wp_ajax_mailjet_add_contact_property', array($this, 'wp_ajax_mailjet_add_contact_property'));
+
         // Subscribe user
         $this->activateConfirmSubscriptionUrl();
     }
@@ -178,7 +181,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             if (!$thankYouPageId) {
 
                 $locale = Mailjeti18n::getLocaleByPll();
-                if(!$locale) {
+                if (!$locale) {
                     // No polylang so use native translations
                     $newsletterRegistration = __('Newsletter Registration', 'mailjet');
                     $congratsSubscribed = __('Congratulations, you have successfully subscribed!', 'mailjet');
@@ -228,7 +231,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Subscribe user
 //        $this->activateConfirmSubscriptionUrl();
-
         // Check if there is a cached output
         $cache = wp_cache_get($this->get_widget_slug(), 'widget');
 
@@ -445,7 +447,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function register_widget_scripts()
     {
-        wp_enqueue_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
+        wp_register_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
+//        wp_enqueue_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
+        wp_localize_script($this->get_widget_slug() . '-script', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
+        wp_enqueue_script($this->get_widget_slug() . '-script');
+
         wp_register_script('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
         wp_enqueue_script('prefix_bootstrap');
     }
@@ -466,6 +472,18 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return new SubscriptionOptionsSettings;
         }
         return $this->subscriptionOptionsSettings;
+    }
+
+    function wp_ajax_mailjet_add_contact_property()
+    {
+        if (!empty($_POST['propertyName'])) {
+            $type = 'Text';
+            if (!empty($_POST['propertyType'])) {
+                $type = $_POST['propertyType'];
+            }
+            echo json_encode(MailjetApi::createMailjetContactProperty($_POST['propertyName'], $type));
+        }
+        die;
     }
 
 }

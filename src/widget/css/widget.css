@@ -260,3 +260,7 @@ label{
 .modal-header{
     border-bottom: none!important;
 }
+
+.redInput{
+    border: 1px solid red!important;
+}
