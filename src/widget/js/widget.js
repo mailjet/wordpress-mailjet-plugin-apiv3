@@ -24,8 +24,22 @@
 
         // Toggle(show/hide) hidden language elements(title, contactList)
         $(document).on('change', '.language_checkbox', function () {
+            
+            // Show/Colapse
             var languageHiddenElementClass = getLanguageHiddenElements(this);
             $('#' + languageHiddenElementClass).toggle("slow");
+
+            var isSelected = $(this).prop('checked');
+            if(isSelected) {
+                // Require to select some option
+            }else {
+                // Reset Title and List ?
+                $(this).parent().find('.language-select-list').val(0);
+                $(this).parent().find('.title-input').val('');
+            }
+
+            // Add email addresses to:
+//            console.log($(this).parent().find('.language-select-list').val());
 
             // Hide advanced form, changes must be saved
 //            $("div#advanced-form-link-wrap").hide();
