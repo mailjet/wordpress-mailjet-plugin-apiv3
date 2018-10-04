@@ -25,10 +25,10 @@
                 </p>
                 <p>
                     <label class="language-title-label" for="<?php echo $this->get_field_id($locale . '[list]'); ?>"><?php _e('Add email addresses to:', 'mailjet'); ?></label>
-                    <select name="<?php echo $this->get_field_name($locale . '[list]'); ?>" id="<?php echo $this->get_field_id($locale . '[list]'); ?>" class="widefat dropdown-list">
+                    <select name="<?php echo $this->get_field_name($locale . '[list]'); ?>" id="<?php echo $this->get_field_id($locale . '[list]'); ?>" class="widefat dropdown-list language-select-list">
                         <?php
                         $options = array(
-                            '' => __('Choose a list', 'mailjet'),
+                            0 => __('Choose a list', 'mailjet'),
                         );
                         if (is_array($contactLists) && !empty($contactLists)) {
                             foreach ($contactLists as $contactList) {
@@ -39,7 +39,7 @@
                         }
                         // Loop through options and add each one to the select dropdown
                         foreach ($options as $key => $name) {
-                            echo '<option value="' . esc_attr($key) . '" id="mjContactList_' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
+                                echo '<option value="' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
                         }
                         ?>
                     </select>
@@ -104,7 +104,7 @@
                     <!--Tab panes--> 
                     <div id="advanced-form-tabs" class="tab-content">
                         <!-- Form fields -->
-                        <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid">
+                        <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid" style="overflow-y: scroll;height: 502px;">
                             <p id="properties-info" class="propertiesInfo"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
                             <?php
                             $numberActiveLanguages = 0;
@@ -285,7 +285,7 @@
                         </div>
                         <!--Tab 2-->
                         <!--Form validation messages-->
-                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages">
+                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages" style="height: 502px;">
                             <p class="tab-info propertiesInfo"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
 
                             <div class="validation_messages_wrap">
@@ -416,7 +416,7 @@
                         </div>
                         <!--Confirmation email content-->
 
-                        <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content">
+                        <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content" style="height: 502px;">
                             <p class="tab-info propertiesInfo"><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
@@ -514,7 +514,9 @@
                                 <?php } ?>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab">
+                        
+                        <!--TAB - 4 THANK YOU PAGE-->
+                        <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab" style="height: 240px;"">
                             <p class="tab-info propertiesInfo">
                                 <span><?php _e('Select a page from your Wordpress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet') ?></span>
                             </p>   
