@@ -124,6 +124,7 @@ class InitialContactListsSettings
      */
     public function mailjet_initial_contact_lists_page_html()
     {
+        $applyAndContinueBtnClicked = false;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
 
         // register a new section in the "mailjet" page
