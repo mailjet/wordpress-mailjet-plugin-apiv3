@@ -221,11 +221,11 @@
                                         </div>
                                         <?php
                                         foreach ($languages as $language => $locale) {
-                                            ${$language . 'LabelN'} = ${$language . 'Label' . $row};
-
                                             if ($instance[$locale]['language_checkbox'] != 1) {
                                                 continue;
                                             }
+                                            ${$language . 'LabelN'} = ${$language . 'Label' . $row};
+
                                             ?>
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php echo $percent . '%' ?>">
