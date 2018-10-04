@@ -1041,7 +1041,7 @@ msgid "language_checkbox"
 msgstr "1"
 
 msgid "title"
-msgstr "French title"
+msgstr ""
 
 msgid "list"
 msgstr "37731"

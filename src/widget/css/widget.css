@@ -180,6 +180,7 @@ label{
     .modal-mailjet-lg {
         width: 1200px!important;
         height: 900px; /* control height here */
+        /*margin: 40px 0 0 145px!important;*/
     }
 }
 

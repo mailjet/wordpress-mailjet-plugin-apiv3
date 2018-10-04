@@ -1038,7 +1038,7 @@ msgid "language_checkbox"
 msgstr "1"
 
 msgid "title"
-msgstr "en"
+msgstr ""
 
 msgid "list"
 msgstr "37731"

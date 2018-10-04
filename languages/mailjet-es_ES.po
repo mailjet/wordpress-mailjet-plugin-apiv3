@@ -1007,13 +1007,13 @@ msgstr ""
 #~ msgstr "Une de Matrixe muy bien"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "sp"
+msgstr ""
 
 msgid "list"
-msgstr "37731"
+msgstr ""
 
 msgid "language_mandatory_email"
 msgstr ""

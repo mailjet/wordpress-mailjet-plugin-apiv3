@@ -1006,13 +1006,13 @@ msgstr ""
 #~ msgstr "Attivare l'invio di e-mail tramite Mailjet"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "it"
+msgstr ""
 
 msgid "list"
-msgstr "37731"
+msgstr ""
 
 msgid "language_mandatory_email"
 msgstr ""

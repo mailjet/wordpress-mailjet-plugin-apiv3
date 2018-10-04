@@ -84,7 +84,7 @@
         </p>
     </div>
 
-    <div class="modal fade advanced-form-popup" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal fade advanced-form-popup" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="margin: 35px 0 0 165px!important;">
         <div class="modal-dialog modal-lg modal-mailjet-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -519,7 +519,10 @@
                                 <span><?php _e('Select a page from your Wordpress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet') ?></span>
                             </p>   
                             <?php
-                            foreach ($activeLanguages as $languageKey => $language) {
+                            foreach ($languages as $language => $locale) {
+                                if ($instance[$locale]['language_checkbox'] != 1) {
+                                    continue;
+                                }
                                 extract(wp_parse_args((array) $instance[$language], $advancedFormDefaults));
                                 ?>
                                 <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
