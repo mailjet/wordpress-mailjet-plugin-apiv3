@@ -3,8 +3,6 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\MailjetMail;
-use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\Mailjeti18n;
 
