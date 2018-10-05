@@ -1,11 +1,11 @@
 <?php
-$numberActiveLanguages = 0;
+$activeLanguages = array();
 foreach ($languages as $language => $locale) {
     if ($instance[$locale]['language_checkbox']) {
-        $activeLanguages[] = $language;
+        $activeLanguages[$language] = $locale;
     }
-    $numberActiveLanguages += $instance[$locale]['language_checkbox'];
 }
+$numberActiveLanguages = count($activeLanguages);
 $maxWidth = 60;
 $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
 ?>
@@ -43,9 +43,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                         );
                         if (is_array($contactLists) && !empty($contactLists)) {
                             foreach ($contactLists as $contactList) {
-//                            if($contactList['IsDeleted'] == 'false') {
                                 $options[$contactList['ID']] = $contactList['Name'] . ' (' . $contactList['SubscriberCount'] . ')';
-//                            }
                             }
                         }
                         // Loop through options and add each one to the select dropdown
@@ -61,21 +59,12 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
     }
     $advancedFormDefaults = array();
     for ($i = 0; $i <= 4; $i++) {
-        // Original
         $advancedFormDefaults[] = 'contactProperties' . $i;
         $advancedFormDefaults[] = 'propertyDataType' . $i;
         $advancedFormDefaults[] = 'EnglishLabel' . $i;
         $advancedFormDefaults[] = 'FrenchLabel' . $i;
         $advancedFormDefaults[] = 'GermanLabel' . $i;
         $advancedFormDefaults[] = 'SpanishLabel' . $i;
-
-        // Test
-//        $advancedFormDefaults['contactProperties' . $i] = '';
-//        $advancedFormDefaults['propertyDataType' . $i] = '';
-//        $advancedFormDefaults['EnglishLabel' . $i]  = '';
-//        $advancedFormDefaults['FrenchLabel' . $i]  = '';
-//        $advancedFormDefaults['GermanLabel' . $i]  = '';
-//        $advancedFormDefaults['SpanishLabel' . $i]  = '';
     }
     $advancedFormDefaults['language_mandatory_email'] = '';
     $advancedFormDefaults['language_mandatory_button'] = '';
@@ -115,7 +104,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
 
                     <!--Tab panes--> 
                     <div id="advanced-form-tabs" class="tab-content">
-                        <!-- Form fields -->
+
+                        <!-- TAB 1 - Form fields -->
                         <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid" style="overflow-y: scroll;height: 502px;">
                             <p id="properties-info" class="propertiesInfo"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
                             <?php
@@ -130,11 +120,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                 // The selected properties and one more default select is shown
                                 // We do not need more default selects
                                 if (!$contactPropertiesN && $opened) {
-
-                                    //Todo Or hide next rows
-                                    // depends on js
                                     $display = 'none';
-//                                    break;
                                 }
 
                                 // There is no default select shown
@@ -222,13 +208,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                             </select>
                                         </div>
                                         <?php
-                                        foreach ($languages as $language => $locale) {
-                                            if ($instance[$locale]['language_checkbox'] != 1) {
-                                                continue;
-                                            }
-                                            ${$language . 'LabelN'} = ${$language . 'Label' . $row};
-
-                                            ?>
+                                        foreach ($activeLanguages as $language => $locale) {
+                                            ${$language . 'LabelN'} = ${$language . 'Label' . $row}; ?>
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php echo $percent . '%' ?>">
                                                 <?php if($row==0) { ?>
@@ -252,10 +233,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                             <div id="mandatory-wrap">
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Email address field placeholder text', 'mailjet'); ?></span>
                                 <?php
-                                foreach ($languages as $language => $locale) {
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
+                                foreach ($activeLanguages as $language => $locale) {
                                     $yourEmailTranslation = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'your@email.com');
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
@@ -268,10 +246,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                 <p class="customize-mandatory-button propertiesInfo"><span><?php _e('Customize the submission button label:', 'mailjet') ?></span></p>        
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Button label', 'mailjet'); ?></span>
                                 <?php
-                                foreach ($languages as $language => $locale) {
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
+                                foreach ($activeLanguages as $language => $locale) {
                                     $subscribeTranslation = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscribe');
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
@@ -283,10 +258,9 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                 <?php }
                                 ?>
                             </div>
-
                         </div>
-                        <!--Tab 2-->
-                        <!--Form validation messages-->
+
+                        <!--Tab 2 - Form validation messages-->
                         <div role="tabpanel" class="tab-pane advanced-form-validation-messages" style="height: 502px;">
                             <p class="tab-info propertiesInfo"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
 
@@ -297,11 +271,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>"><?php _e('Form successfully submitted', 'mailjet') ?></div>
                                     </div>
                                     <?php
-                                    foreach ($languages as $language => $locale) {
+                                    foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        if ($instance[$locale]['language_checkbox'] != 1) {
-                                            continue;
-                                        }
                                         $subscriptionConfirmationEmailSent = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm your subscription.');
                                         ?>
                                         <!--Languages label-->
@@ -318,11 +289,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels"><?php _e('Subscription confirmed (displayed after the user has clicked the confirmation email)', 'mailjet'); ?></div>
                                     </div>
                                     <?php
-                                    foreach ($languages as $language => $locale) {
+                                    foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        if ($instance[$locale]['language_checkbox'] != 1) {
-                                            continue;
-                                        }
                                         $subscriptionConfirmed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
                                         ?>
                                         <!--Languages label-->
@@ -338,11 +306,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels"><?php _e('Error: email field is empty', 'mailjet') ?></div>
                                     </div>
                                     <?php
-                                    foreach ($languages as $language => $locale) {
+                                    foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        if ($instance[$locale]['language_checkbox'] != 1) {
-                                            continue;
-                                        }
                                         $provideEmail = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
                                         ?>
                                         <!--Languages label-->
@@ -358,12 +323,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels"><?php _e('Error: the email address is already subscribed', 'mailjet') ?></div>
                                     </div>
                                     <?php
-                                    foreach ($languages as $language => $locale) {
+                                    foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        if ($instance[$locale]['language_checkbox'] != 1) {
-                                            continue;
-                                        }
-
                                         $emailAlreadySubscribed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'This email address has already been subscribed.');
                                         ?>
                                         <!--Languages label-->
@@ -379,11 +340,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels"><?php _e('Error: Invalid data format (this applies only for numbers and dates)', 'mailjet') ?></div>
                                     </div>
                                     <?php
-                                    foreach ($languages as $language => $locale) {
+                                    foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        if ($instance[$locale]['language_checkbox'] != 1) {
-                                            continue;
-                                        }
                                         $incorectValue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
                                         ?>
                                         <!--Languages label-->
@@ -399,11 +357,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels"><?php _e('Generic technical error message', 'mailjet') ?></div>
                                     </div>
                                     <?php
-                                    foreach ($languages as $language => $locale) {
+                                    foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        if ($instance[$locale]['language_checkbox'] != 1) {
-                                            continue;
-                                        }
                                         $technicalIssue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
                                         ?>
                                         <!--Languages label-->
@@ -416,8 +371,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
 
                             </div>
                         </div>
-                        <!--Confirmation email content-->
 
+                        <!--TAB 3 - Confirmation email content-->
                         <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content" style="height: 502px;">
                             <p class="tab-info propertiesInfo"><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
                             <div class="confirmation_email_row">
@@ -426,11 +381,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                     <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Email subject', 'mailjet') ?></div>
                                 </div>
                                 <?php
-                                foreach ($languages as $language => $locale) {
+                                foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
                                     $subscriptionConfirmation = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
                                     ?>
                                     <!--Languages label-->
@@ -447,11 +399,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                     <div class="form-control validation_messages_labels"><?php _e('Email content: title', 'mailjet') ?></div>
                                 </div>
                                 <?php
-                                foreach ($languages as $language => $locale) {
+                                foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
                                     $confirmYourSubscription = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription');
                                     ?>
                                     <!--Languages label-->
@@ -466,11 +415,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                     <div class="form-control validation_messages_labels"><?php _e('Email content: main text', 'mailjet') ?></div>
                                 </div>
                                 <?php
-                                foreach ($languages as $language => $locale) {
+                                foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
                                     $toReceiveNewslettersFrom = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:');
                                     ?>
                                     <!--Languages label-->
@@ -484,11 +430,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                     <div class="form-control validation_messages_labels"><?php _e('Email content: confirmation button label', 'mailjet') ?></div>
                                 </div>
                                 <?php
-                                foreach ($languages as $language => $locale) {
+                                foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
                                     $yesSubscribeMe = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list');
                                     ?>
                                     <!--Languages label-->
@@ -502,10 +445,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                     <div class="form-control validation_messages_labels"><?php _e('Email content: text after the button', 'mailjet') ?></div>
                                 </div>
                                 <?php
-                                foreach ($languages as $language => $locale) {
-                                    if ($instance[$locale]['language_checkbox'] != 1) {
-                                        continue;
-                                    }
+                                foreach ($activeLanguages as $language => $locale) {
                                     $ignoreMessage = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, "If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message.");
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
@@ -518,15 +458,12 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                         </div>
                         
                         <!--TAB - 4 THANK YOU PAGE-->
-                        <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab" style="height: 240px;"">
+                        <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab" style="height: 240px;">
                             <p class="tab-info propertiesInfo">
                                 <span><?php _e('Select a page from your Wordpress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet') ?></span>
                             </p>   
                             <?php
-                            foreach ($languages as $language => $locale) {
-                                if ($instance[$locale]['language_checkbox'] != 1) {
-                                    continue;
-                                }
+                            foreach ($activeLanguages as $language => $locale) {
                                 extract(wp_parse_args((array) $instance[$language], $advancedFormDefaults));
                                 ?>
                                 <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
