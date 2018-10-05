@@ -1,3 +1,14 @@
+<?php
+$numberActiveLanguages = 0;
+foreach ($languages as $language => $locale) {
+    if ($instance[$locale]['language_checkbox']) {
+        $activeLanguages[] = $language;
+    }
+    $numberActiveLanguages += $instance[$locale]['language_checkbox'];
+}
+$maxWidth = 60;
+$percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
+?>
 <!-- This file is used to markup the administration form of the widget. -->
 <div id="chooseLangLabelWrap"><span id="chooseLangLabel"><?php _e('Choose the languages supported by your subscription form:', 'mailjet'); ?></span></div>
 <div class="mailjet_widget_admin_container">
@@ -39,7 +50,7 @@
                         }
                         // Loop through options and add each one to the select dropdown
                         foreach ($options as $key => $name) {
-                                echo '<option value="' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
+                                echo '<option  value="' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
                         }
                         ?>
                     </select>
@@ -73,9 +84,10 @@
     extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
-    ?>
 
-    <div id="advanced-form-link-wrap">
+    $class = $numberActiveLanguages === 0 ? 'hidden_default': ''; 
+    ?>
+    <div id="advanced-form-link-wrap" class="<?php echo $class ?>">
         <p>
             <span id="advanced-form-link" data-toggle="modal" data-target=".advanced-form-popup"><?php _e('Advanced form customization', 'mailjet') ?></span>
             <span id="advanced-form-link-info" data-toggle="tooltip" data-placement="bottom" title="<?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet'); ?>">
@@ -107,16 +119,6 @@
                         <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid" style="overflow-y: scroll;height: 502px;">
                             <p id="properties-info" class="propertiesInfo"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
                             <?php
-                            $numberActiveLanguages = 0;
-                            foreach ($languages as $language => $locale) {
-                                if ($instance[$locale]['language_checkbox']) {
-                                    $activeLanguages[] = $language;
-                                }
-                                $numberActiveLanguages += $instance[$locale]['language_checkbox'];
-                            }
-                            $maxWidth = 60;
-                            $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
-
                             $opened = 0;
                             $display = 'block';
                             for ($row = 0; $row <= 4; $row++) {
