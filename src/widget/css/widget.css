@@ -3,6 +3,14 @@ label{
     font-size: 12px;
 }
 
+.language_checkbox{
+    height: 17px;
+    width: 17px;
+    border: 1px solid #979797;
+    background-color: #FFFFFF;
+    margin-top: 1px!important;
+}
+
 .propertiesInfo{
     font-size: 14px;
 }
