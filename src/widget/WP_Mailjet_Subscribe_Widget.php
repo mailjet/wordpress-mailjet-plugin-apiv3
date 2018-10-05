@@ -25,7 +25,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     private $subscriptionOptionsSettings = null;
     protected $widget_slug = 'mailjet';
-    private $mailjetClient = null;
     private $instance;
     private $propertyData = array();
     private $mailjetContactProperties = null;
@@ -384,6 +383,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function form($instance)
     {
+
         $isMailjetDown = '';
         // Define default values for your variables
         $instance = wp_parse_args(
@@ -391,10 +391,16 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         );
 
         // Mailjet contact lists
-        $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        try {
+            $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        } catch (\Exception $ex) {
+            include(plugin_dir_path(__FILE__) . 'views/designforfailure.php');
+            return false;
+        }
+
         $contactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
-//        $mailjetContactProperties = MailjetApi::getContactProperties();
         $mailjetContactProperties = $this->getMailjetContactProperties();
+
         $propertiesOptions = array();
         if (!empty($mailjetContactProperties)) {
             foreach ($mailjetContactProperties as $property) {
@@ -477,7 +483,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     function wp_ajax_mailjet_add_contact_property()
     {
         if (!empty($_POST['propertyName'])) {
-            $type = !empty($_POST['propertyType']) ? $_POST['propertyType'] : 'Text'; 
+            $type = !empty($_POST['propertyType']) ? $_POST['propertyType'] : 'Text';
             echo json_encode(MailjetApi::createMailjetContactProperty($_POST['propertyName'], $type));
         }
         die;
