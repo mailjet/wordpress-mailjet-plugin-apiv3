@@ -67,11 +67,15 @@ label{
 }
 
 #advanced-form-link{
-    font-size: 14px!important;
-    /*color: #55bfe6;*/
-    color: #0073aa;
     text-decoration: underline;
     cursor: pointer;
+    height: 14px;
+    width: 158px;
+    color: #018EC2;
+    font-family: Helvetica;
+    font-size: 12px!important;
+    line-height: 14px;
+
 }
 
 #advanced-form-link:hover{
