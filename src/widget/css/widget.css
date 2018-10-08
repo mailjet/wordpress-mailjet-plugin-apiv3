@@ -3,6 +3,24 @@ label{
     font-size: 12px;
 }
 
+.form-group{
+    margin-bottom: 10px!important;
+}
+
+.form-control{
+    border-radius: 0px!important;
+    background-color: #FFF !important;
+    border: 1px solid #888 !important;
+    
+}
+
+.selectProperty{
+    height: 32px!important;
+}
+.propertyDataType{
+    height: 32px!important;
+}
+
 .language_checkbox{
     height: 17px;
     width: 17px;
@@ -101,13 +119,15 @@ label{
 
 #properties-info{
     font-weight: bold;
-    margin: 30px 0 5px 10px;
+    margin: 30px 0 5px 23px;
 }
 
 .property{
     clear: left;
     padding: 1%;
-    margin-left: 30px
+    /*margin-left: 30px*/
+    margin-left: 44px;
+    margin-top: 39px;
 }
 
 .newPropertyFields{
@@ -120,11 +140,13 @@ label{
 }
 .floatLeft{
     float: left;
-    margin-left: 1%;
+    /*margin-left: 1%;*/
+    margin-left: 12px;
 }
 
 .propertyLabel{
-    margin: 5px 0;
+    margin: 9px 0;
+    
 }
 
 .propertySelect select{
@@ -142,12 +164,14 @@ label{
 
 .languageInput input{
     width: 100%;
-    height: 28px;
+    height: 32px;
+    background-color: #FFF !important;
+    border: 1px solid #888 !important;
 }
 
 .deleteProperty{
     width: 15px;
-    margin: 3px;
+    margin: 8px;
     /*display: none;*/
 }
 
@@ -169,22 +193,35 @@ label{
 
 .newPropertyName input{
     width: 100%;
-    height: 28px;
+    height: 32px;
 }
 
 .newPropertyType select{
-    width: 100px;
+    width: 100%;
+    height: 32px;
     /*margin-left: 10px;*/
 }
 
 .saveNewPropertyButton{
-    margin-left: 25px!important;
-    font-size: 11px!important;
+    /*margin-left: -25px!important;*/
+    font-size: 12px!important;
+    height: 30px!important;
+    width: 70px!important;
+    border: 1px solid #B8B8B8 !important;
+    border-radius: 3px !important;
+    background-color: #FFFFFF !important;
 }
 
 .cancelNewPropertyButton{
-    font-size: 11px!important;
+    font-size: 12px!important;
     margin-left: -2px!important;
+    height: 14px!important;
+    width: 40px!important;
+    color: #9B9B9B !important;
+    font-family: Helvetica;
+    font-size: 12px!important;
+    font-weight: bold!important;
+    line-height: 14px!important;
 }
 
 .cancelNewPropertyButton {
@@ -203,14 +240,14 @@ label{
 .customize-mandatory-email{
     font-weight: bold;
     /*    font-size: 14px;*/
-    margin: 70px 0 10px 10px;
+    margin: 70px 0 10px 23px;
     clear: left;
 }
 
 .customize-mandatory-button{
     font-weight: bold;
     /*font-size: 14px;*/
-    margin: 70px 0 10px 0px;
+    margin: 70px 0 10px 13px;
     clear: left;
 }
 
@@ -223,16 +260,22 @@ label{
     width: 250px;
     margin-top: 27px;
     margin-right: 60px;
-    margin-left: 30px;
+    /*margin-left: 30px;*/
+    margin-left: 44px;
 }
 
 .mandatoryEmailLanguageInput input {
     width: 100%;
-    height: 28px;
+    height: 32px;
+    width: 136px;
 }
 
 .mandatoryButtonLanguage{
     width: 250px;
+}
+
+.mandatoryButtonLanguage input{
+    height: 32px;
 }
 
 .validation_message_row{

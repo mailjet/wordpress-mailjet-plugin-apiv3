@@ -5,7 +5,11 @@ foreach ($languages as $language => $locale) {
         $activeLanguages[$language] = $locale;
     }
 }
+
 $numberActiveLanguages = count($activeLanguages);
+//$pxPerLang = 136;
+//$totalWidth = $numberActiveLanguages * $pxPerLang;
+//$percent = $totalWidth/$numberActiveLanguages.'px';
 $maxWidth = 60;
 $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
 ?>
@@ -65,6 +69,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
         $advancedFormDefaults[] = 'FrenchLabel' . $i;
         $advancedFormDefaults[] = 'GermanLabel' . $i;
         $advancedFormDefaults[] = 'SpanishLabel' . $i;
+        $advancedFormDefaults[] = 'ItalianLabel' . $i;
     }
     $advancedFormDefaults['language_mandatory_email'] = '';
     $advancedFormDefaults['language_mandatory_button'] = '';
@@ -132,8 +137,9 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <?php 
                                             $setLabelStyle = '';
                                             if($row===0) {
-                                                $setLabelStyle = 'padding-top: 20px;';
-                                            } ?>
+                                                $setLabelStyle = 'padding-top: 22px;';
+                                            } 
+                                            ?>
                                         <span class="floatLeft propertyLabel" style="<?php echo $setLabelStyle ?>"><?php _e('Property', 'mailjet') ?> #<?php echo $row + 1 ?></span>
                                     <!--Select property-->
                                     <div class="propertySelect floatLeft form-group">

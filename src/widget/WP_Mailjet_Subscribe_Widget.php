@@ -325,6 +325,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['FrenchLabel' . $i]) : '';
                 $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['GermanLabel' . $i]) : '';
                 $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['SpanishLabel' . $i]) : '';
+                $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$locale]['ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['ItalianLabel' . $i]) : '';
             }
 
             // Tab 2
