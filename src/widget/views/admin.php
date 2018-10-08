@@ -74,9 +74,9 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
 
-    $class = $numberActiveLanguages === 0 ? 'hidden_default': ''; 
+    $hideAdvancedLinkClass = $numberActiveLanguages === 0 ? 'hidden_default': ''; 
     ?>
-    <div id="advanced-form-link-wrap" class="<?php echo $class ?>">
+    <div id="advanced-form-link-wrap" class="some-space <?php echo $hideAdvancedLinkClass ?>">
         <p>
             <span id="advanced-form-link" data-toggle="modal" data-target=".advanced-form-popup"><?php _e('Advanced form customization', 'mailjet') ?></span>
             <span id="advanced-form-link-info" data-toggle="tooltip" data-placement="bottom" title="<?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet'); ?>">

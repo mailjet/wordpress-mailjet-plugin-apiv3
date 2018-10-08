@@ -383,7 +383,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function form($instance)
     {
-
         $isMailjetDown = '';
         // Define default values for your variables
         $instance = wp_parse_args(
