@@ -1013,13 +1013,13 @@ msgstr ""
 #~ msgstr "Das Matrtix ich dich"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
 msgstr ""
 
 msgid "list"
-msgstr ""
+msgstr "0"
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1151,4 +1151,19 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "thankYouPage"
+msgstr ""
+
+msgid "ItalianLabel0"
+msgstr ""
+
+msgid "ItalianLabel1"
+msgstr ""
+
+msgid "ItalianLabel2"
+msgstr ""
+
+msgid "ItalianLabel3"
+msgstr ""
+
+msgid "ItalianLabel4"
 msgstr ""

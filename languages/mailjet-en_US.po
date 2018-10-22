@@ -1041,7 +1041,7 @@ msgid "title"
 msgstr ""
 
 msgid "list"
-msgstr "37731"
+msgstr "0"
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1050,7 +1050,7 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr ""
+msgstr "37372"
 
 msgid "propertyDataType0"
 msgstr "0"
@@ -1173,4 +1173,19 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "thankYouPage"
+msgstr ""
+
+msgid "ItalianLabel0"
+msgstr ""
+
+msgid "ItalianLabel1"
+msgstr ""
+
+msgid "ItalianLabel2"
+msgstr ""
+
+msgid "ItalianLabel3"
+msgstr ""
+
+msgid "ItalianLabel4"
 msgstr ""
