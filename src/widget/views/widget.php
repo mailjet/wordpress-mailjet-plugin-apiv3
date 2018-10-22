@@ -41,17 +41,18 @@
 
                 // Property id - '0' there is no selected property
                 $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
+                
+                // Skip if this property is not added in admin part
+                if (empty($contactPropertyId)) {
+                    continue;
+                }
 
                 // Mailjet property type
                 $propertyDataType = $this->propertyData[$contactPropertyId]['Datatype'];
 
                 // Map mailjet property type to valid input type
                 $inputType = $this->getInputType($propertyDataType);
-
-                // Skip if this property is not added in admin part
-                if (empty($contactPropertyId)) {
-                    continue;
-                }
+               
 
                 // The value of the label
                 $placeholder = $instance[$locale][$language . 'Label' . $i];
