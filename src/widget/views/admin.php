@@ -111,7 +111,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                     <div id="advanced-form-tabs" class="tab-content">
 
                         <!-- TAB 1 - Form fields -->
-                        <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid" style="overflow-y: scroll;height: 502px;">
+                        <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid" >
                             <p id="properties-info" class="propertiesInfo"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet') ?></span></p>
                             <?php
                             $opened = 0;
@@ -267,7 +267,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                         </div>
 
                         <!--Tab 2 - Form validation messages-->
-                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages" style="height: 502px;">
+                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages" style="overflow-y: scroll;height: 502px;">
                             <p class="tab-info propertiesInfo"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet') ?></span></p>
 
                             <div class="validation_messages_wrap">
@@ -277,15 +277,17 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>"><?php _e('Form successfully submitted', 'mailjet') ?></div>
                                     </div>
                                     <?php
+                                    $n = 0;
+                                    $marginLeftByDefault = 'margin-left: 10px;';
                                     foreach ($activeLanguages as $language => $locale) {
+                                        $n++;
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                         $subscriptionConfirmationEmailSent = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm your subscription.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                             <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php _e($language, 'mailjet') ?></label>
-                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($confirmation_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>" />-->
-                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>"><?php echo esc_attr($confirmation_email_message_input); ?></textarea>
+                                            <textarea class="form-control form-validation-successfully-submited" name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>"><?php echo esc_attr($confirmation_email_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -300,9 +302,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         $subscriptionConfirmed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
                                         ?>
                                         <!--Languages label-->
-                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($subscription_confirmed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>" />-->
-                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>"><?php echo esc_attr($subscription_confirmed_message_input); ?></textarea>
+                                        <div class="floatLeft form-group"  style="width: <?php echo $percent . '%' ?>">
+                                            <textarea class="form-control form-validation-confirmed" name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>"><?php echo esc_attr($subscription_confirmed_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -318,8 +319,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($empty_email_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>" />-->
-                                            <textarea class="form-control"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>"><?php echo esc_attr($empty_email_message_input); ?></textarea>
+                                            <textarea class="form-control form-validation-email-empty"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>"><?php echo esc_attr($empty_email_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -335,8 +335,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($already_subscribed_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>" />-->
-                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>"><?php echo esc_attr($already_subscribed_message_input); ?></textarea>
+                                            <textarea class="form-control form-validation-email-already-subscribed" name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>"><?php echo esc_attr($already_subscribed_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -352,8 +351,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($invalid_data_format_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>" />-->
-                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>"><?php echo esc_attr($invalid_data_format_message_input); ?></textarea>
+                                            <textarea class="form-control form-validation-invalid-data" name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>"><?php echo esc_attr($invalid_data_format_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -369,8 +367,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <!--<input class="form-control" type="text"  value="<?php echo esc_attr($generic_technical_error_message_input); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>" />-->
-                                            <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>"><?php echo esc_attr($generic_technical_error_message_input); ?></textarea>
+                                            <textarea class="form-control form-validation-generic-error" name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>"><?php echo esc_attr($generic_technical_error_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -394,7 +391,6 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                         <label for="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php _e($language, 'mailjet') ?></label>
-                                        <!--<input class="form-control" type="text"  value="<?php echo esc_attr($email_subject); ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="" />-->
                                         <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="<?php echo $subscriptionConfirmation ?>"><?php echo esc_attr($email_subject); ?></textarea>
                                     </div>
                                 <?php } ?>
