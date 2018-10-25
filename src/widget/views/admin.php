@@ -26,7 +26,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
 
     $this->registerCustomLanguageTranslations();
     foreach ($languages as $language => $locale) {
-        extract(wp_parse_args((array) $instance[$locale], $defaults));
+        $pass_args_data = isset($instance[$locale]) ? $instance[$locale]: array();
+        extract(wp_parse_args($pass_args_data, $defaults));
         ?>
         <div class="language-wrap">
             <input id="<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[language_checkbox]')); ?>" type="checkbox" class="language_checkbox" <?php checked('1', $language_checkbox); ?> />
@@ -75,7 +76,8 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
     $advancedFormDefaults['language_mandatory_button'] = '';
     $advancedFormDefaults['thank_you'] = '';
 
-    extract(wp_parse_args((array) $instance[$admin_locale], $advancedFormDefaults));
+    $pass_args_data = isset($instance[$locale]) ? $instance[$admin_locale]: array();
+    extract(wp_parse_args($pass_args_data, $advancedFormDefaults));
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
 
