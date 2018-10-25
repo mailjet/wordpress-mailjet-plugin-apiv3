@@ -273,13 +273,16 @@ class SubscriptionOptionsSettings
             $userInfo = get_userdata($user->ID);
             $userRoles = $userInfo->roles;
             $userMetadata = get_user_meta($user->ID);
+            $userNames = '';
 
             $contactProperties = array();
             if (!empty($userMetadata['first_name'][0])) {
                 $contactProperties['first_name'] = $userMetadata['first_name'][0];
+                $userNames = $contactProperties['first_name'];
             }
             if (!empty($userMetadata['last_name'][0])) {
                 $contactProperties['last_name'] = $userMetadata['last_name'][0];
+                $userNames.= ' ' . $contactProperties['last_name'];
             }
             if (!empty($userRoles[0])) {
                 $contactProperties['wp_user_role'] = $userRoles[0];
@@ -287,7 +290,7 @@ class SubscriptionOptionsSettings
 
             $contacts[] = array(
                 'Email' => $user->user_email,
-                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
+                'Name' => $userNames,
                 'Properties' => $contactProperties
             );
         }
