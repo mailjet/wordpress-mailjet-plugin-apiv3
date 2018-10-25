@@ -37,6 +37,24 @@ class MailjetActivator
         $commentAuthorsListId = get_option('mailjet_comment_authors_list_id');
         add_option('mailjet_comment_authors_list', $commentAuthorsListId);
 
+        // Default settings
+        set_option('mailjet_activate_logger', 0);
+        set_option('settings_step', 'user_access_step');
+        set_option('api_credentials_ok', 1);
+        set_option('activate_mailjet_sync', 1);
+        set_option('activate_mailjet_initial_sync');
+        set_option('create_contact_list_btn');
+        set_option('create_list_name');
+
+        // If no list set, contact list can not be ok
+        $isContactListOk = $initSyncListId > 0 ? 1 : '';
+        set_option('contacts_list_ok', $isContactListOk);
+        set_option('mailjet_from_email_extra');
+        set_option('mailjet_from_email_extra_hidden');
+        set_option('send_test_email_btn');
+        $authorSync = $commentAuthorsListId > 0 ? 1 : '';
+        set_option('activate_mailjet_comment_authors_sync', $authorSync);
+
         /**
          * mailjet_activate_logger
          * settings_step                user_access_step
