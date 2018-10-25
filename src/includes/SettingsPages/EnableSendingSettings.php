@@ -158,6 +158,7 @@ class EnableSendingSettings
         if (isset($_GET['settings-updated'])) {
 
             $executionError = false;
+            $testSent = false;
 
             // Initialize PhpMailer
             //
