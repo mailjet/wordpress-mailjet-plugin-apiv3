@@ -1,7 +1,7 @@
 <?php
 $activeLanguages = array();
 foreach ($languages as $language => $locale) {
-    if ($instance[$locale]['language_checkbox']) {
+    if (isset($instance[$locale]) && isset($instance[$locale]['language_checkbox']) && $instance[$locale]['language_checkbox']) {
         $activeLanguages[$language] = $locale;
     }
 }
