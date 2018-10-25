@@ -55,20 +55,22 @@ class MailjetActivator
         $authorSync = $commentAuthorsListId > 0 ? 1 : '';
         set_option('activate_mailjet_comment_authors_sync', $authorSync);
 
-        /**
-         * mailjet_activate_logger
-         * settings_step                user_access_step
-         * api_credentials_ok           1
-         * activate_mailjet_sync	1
-         * activate_mailjet_initial_sync	
-         * create_contact_list_btn	
-         * create_list_name	
-         * contacts_list_ok             1
-         * mailjet_from_email_extra
-         * mailjet_from_email_extra_hidden
-         * send_test_email_btn
-         * activate_mailjet_comment_authors_sync
-         */
+        // Delete unused options
+        $deleteOptions = array(
+            'mailjet_username',
+            'mailjet_password',
+            'widget_wp_mailjet_subscribe_widget',
+            'mailjet_initial_sync_list_id',
+            'mailjet_comment_authors_list_id',
+            'mailjet_initial_sync_last_date',
+            'mailjet_comment_authors_list_date',
+            'mailjet_auto_subscribe_list_id',
+            'mailjet_user_api_version'
+        );
+
+        foreach ($deleteOptions as $option) {
+            delete_option($option);
+        }
     }
 
 }
