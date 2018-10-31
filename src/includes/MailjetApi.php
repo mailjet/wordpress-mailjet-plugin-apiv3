@@ -32,7 +32,23 @@ class MailjetApi
             throw new \Exception('Missing Mailjet API credentials');
         }
 
-        self::$mjApiClient = new Client($mailjetApikey, $mailjetApiSecret);
+        $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
+
+        // Add proxy options for guzzle requests - if the Wordpress site is configured to use Proxy
+        if(defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
+            $mjClient->addRequestOption(CURLOPT_HTTPPROXYTUNNEL, 1);
+            $mjClient->addRequestOption(CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
+            $mjClient->addRequestOption(CURLOPT_PROXY, WP_PROXY_HOST . ':' . WP_PROXY_PORT);
+            $mjClient->addRequestOption(CURLOPT_PROXYPORT, WP_PROXY_PORT);
+            $mjClient->addRequestOption(CURLOPT_PROXYUSERPWD, WP_PROXY_USERNAME . ':' . WP_PROXY_PASSWORD);
+        }
+
+        // We turn of secure protocol for API requests if the wordpress does not support it
+        if (empty($_SERVER['HTTPS']) || (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'off') || $_SERVER['SERVER_PORT'] != 443) {
+            $mjClient->setSecureProtocol(false);
+        }
+
+        self::$mjApiClient = $mjClient;
         return self::$mjApiClient;
     }
 
