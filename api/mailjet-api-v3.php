@@ -507,7 +507,16 @@ class WP_Mailjet_Api_V3
         curl_setopt($this->_curl_handle, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($this->_curl_handle, CURLOPT_USERPWD, $this->_apiKey.':'.$this->_secretKey);
         curl_setopt($this->_curl_handle, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($this->_curl_handle, CURLOPT_USERAGENT, 'wordpress-4.3.0');
+        curl_setopt($this->_curl_handle, CURLOPT_USERAGENT, 'wordpress-4.4.0');
+
+        // Add Proxy support for Mailjet API requests
+        if(defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
+            curl_setopt($this->_curl_handle, CURLOPT_HTTPPROXYTUNNEL, 1);
+            curl_setopt($this->_curl_handle, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
+            curl_setopt($this->_curl_handle, CURLOPT_PROXY, WP_PROXY_HOST . ':' . WP_PROXY_PORT);
+            curl_setopt($this->_curl_handle, CURLOPT_PROXYPORT, WP_PROXY_PORT);
+            curl_setopt($this->_curl_handle, CURLOPT_PROXYUSERPWD, WP_PROXY_USERNAME . ':' . WP_PROXY_PASSWORD);
+        }
 
         switch ($method) {
             case 'GET' :
