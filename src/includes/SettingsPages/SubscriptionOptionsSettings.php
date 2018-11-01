@@ -243,7 +243,7 @@ class SubscriptionOptionsSettings
             return false;
         }
 
-        if (false === self::syncContactsToMailjetList($contactListId, $users, 'addnoforce')) {
+        if (false === self::syncContactsToMailjetList($contactListId, $users, 'addforce')) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing Wordpress users to your Mailjet contact list', 'mailjet'), 'error');
             return false;
         } else {
