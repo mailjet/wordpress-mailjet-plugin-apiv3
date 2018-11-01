@@ -18,6 +18,7 @@ use MailjetPlugin\Includes\MailjetApi;
  */
 class MailjetSettings
 {
+
     /**
      * custom option and settings
      *  IMPORTANT - add each setting here, in order to be processed by the WP Settings API
@@ -78,15 +79,15 @@ class MailjetSettings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
         if (in_array($currentPage, array(
-            'mailjet_allsetup_pagec',
-            'mailjet_dashboard_page',
-            'mailjet_user_access_page',
-            'mailjet_subscription_options_page',
-            'mailjet_sending_settings_pag',
-            'mailjet_connect_account_page',
-            'mailjet_initial_contact_lists_page',
-            'mailjet_settings_page'
-        ))) {
+                    'mailjet_allsetup_pagec',
+                    'mailjet_dashboard_page',
+                    'mailjet_user_access_page',
+                    'mailjet_subscription_options_page',
+                    'mailjet_sending_settings_pag',
+                    'mailjet_connect_account_page',
+                    'mailjet_initial_contact_lists_page',
+                    'mailjet_settings_page'
+                ))) {
             if (!($fromPage == 'plugins') && !empty(get_option('api_credentials_ok')) && '1' != get_option('api_credentials_ok')) {
                 MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
             }
@@ -95,16 +96,15 @@ class MailjetSettings
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init End ]');
     }
 
-
     /**
      * Adding a Mailjet logic and functionality to some WP actions - for example - inserting checkboxes for subscription
      */
     private function addMailjetActions()
     {
+        $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
+
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - Start ]');
         if (!empty(get_option('activate_mailjet_sync')) && !empty(get_option('mailjet_sync_list'))) {
-
-            $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
 
             // When user is viewing another users profile page (not their own).
             add_action('edit_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
@@ -130,8 +130,7 @@ class MailjetSettings
 
         /* Add custom field to comment form and process it on form submit */
         if (!empty(get_option('activate_mailjet_comment_authors_sync')) && !empty(get_option('mailjet_comment_authors_list'))) {
-            add_action('comment_form_after_fields',
-                array($subscriptionOptionsSettings, 'mailjet_show_extra_comment_fields'));
+            add_action('comment_form_after_fields', array($subscriptionOptionsSettings, 'mailjet_show_extra_comment_fields'));
             add_action('wp_insert_comment', array($subscriptionOptionsSettings, 'mailjet_subscribe_comment_author'));
             \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
@@ -148,7 +147,6 @@ class MailjetSettings
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - End ]');
     }
 
-
     /**
      * Add admin notice saying that current API credentials are not valid
      */
@@ -158,7 +156,6 @@ class MailjetSettings
         _e('Your Mailjet API credentials are invalid or not yet configured. Please check and configure them to proceed further.', 'mailjet');
         echo "</p></div>";
     }
-
 
     /**
      * Adding a Mailjet logic and functionality to some WP actions - for example - inserting checkboxes for subscription
@@ -172,9 +169,8 @@ class MailjetSettings
         /* Add custom field to comment form and process it on form submit */
         if (!empty(get_option('activate_mailjet_comment_authors_sync')) && !empty(get_option('mailjet_comment_authors_list'))) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            if (!empty($_GET['mj_sub_comment_author_token'])
-                &&
-                $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+            if (!empty($_GET['mj_sub_comment_author_token']) &&
+                    $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
                 $syncSingleContactEmailToMailjetList = $subscriptionOptionsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
                 if (false === $syncSingleContactEmailToMailjetList) {
@@ -184,12 +180,9 @@ class MailjetSettings
                 }
 
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handling subscription confirmations - End ]');
-
             }
         }
     }
-
-
 
     /**
      * Display settings link on plugins page
@@ -209,8 +202,6 @@ class MailjetSettings
         return $links;
     }
 
-
-
     public function subsctiptionConfirmationAdminNoticeSuccess()
     {
         if (intval($_GET['subscribe']) > 0) {
@@ -220,12 +211,12 @@ class MailjetSettings
         }
         die; //We die here to not continue loading rest of the WP home page
     }
+
     public function subsctiptionConfirmationAdminNoticeFailed()
     {
         echo '<div class="notice notice-error is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #dc3232; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('Something went wrong with adding a contact to Mailjet contact list', 'mailjet') . '</div>';
         die; //We die here to not continue loading rest of the WP home page
     }
-
 
     /**
      * Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
