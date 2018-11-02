@@ -412,6 +412,7 @@ class WP_Mailjet_Options
                 update_option('mailjet_access_subscriber', $fields['mailjet_access_subscriber']);
             }
 
+
             // Establish API connection because we will need it to check if the API and secrect keys are correct
             $this->api = new WP_Mailjet_Api($fields['mailjet_username'], $fields['mailjet_password']);
             update_option('mailjet_user_api_version',
@@ -463,7 +464,7 @@ class WP_Mailjet_Options
             // Get all senders
             $senders = $this->api->getSenders(array('limit' => 0));
             // Check the `senders` response for valid array - in case of error response is stdClass
-            if (!is_array($senders) | empty($senders['email'])) {
+            if (!is_array($senders) || empty($senders['email'])) {
                 $connected = FALSE;
             }
             $from_email = $fields['mailjet_from_email'] ? $fields['mailjet_from_email'] : get_option('admin_email');
