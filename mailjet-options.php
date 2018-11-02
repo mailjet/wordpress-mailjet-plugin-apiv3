@@ -462,6 +462,10 @@ class WP_Mailjet_Options
 
             // Get all senders
             $senders = $this->api->getSenders(array('limit' => 0));
+            // Check the `senders` response for valid array - in case of error response is stdClass
+            if (!is_array($senders) | empty($senders['email'])) {
+                $connected = FALSE;
+            }
             $from_email = $fields['mailjet_from_email'] ? $fields['mailjet_from_email'] : get_option('admin_email');
 
             // If there is connection, display successful message
