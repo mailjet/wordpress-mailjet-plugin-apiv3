@@ -7,11 +7,6 @@
 //            alert('On widget-updated: ' + widget_id);
 
             showCheckedLanguages();
-            $('.language_checkbox').each(function (index, value) {
-                if (value.checked === true) {
-                    var a = $(value).parent().find('.language-select-list').val();
-                }
-            });
             // any code that needs to be run when a widget gets updated goes here
             // widget_id holds the ID of the actual widget that got updated
             // be sure to only run the code if one of your widgets got updated

@@ -44,16 +44,13 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                     <select name="<?php echo $this->get_field_name($locale . '[list]'); ?>" id="<?php echo $this->get_field_id($locale . '[list]'); ?>" class="widefat dropdown-list language-select-list">
                         <?php
                         $options = array(
-//                            0 => __('Choose a list', 'mailjet'),
+                            0 => __('Choose a list', 'mailjet'),
                         );
                         if (is_array($contactLists) && !empty($contactLists)) {
                             foreach ($contactLists as $contactList) {
                                 $options[$contactList['ID']] = $contactList['Name'] . ' (' . $contactList['SubscriberCount'] . ')';
                             }
                         }
-
-                        $chooseList = __('Choose a list', 'mailjet');
-                        echo '<option disabled selected value="0">'.$chooseList.'</option>';
                         // Loop through options and add each one to the select dropdown
                         foreach ($options as $key => $name) {
                                 echo '<option  value="' . esc_attr($key) . '" ' . selected($list, $key, false) . '>' . $name . '</option>';
