@@ -19,6 +19,7 @@ use Mailjet\Resources;
  */
 class MailjetApi
 {
+
     private static $mjApiClient = null;
 
     public static function getApiClient()
@@ -35,7 +36,7 @@ class MailjetApi
         $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
 
         // Add proxy options for guzzle requests - if the Wordpress site is configured to use Proxy
-        if(defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
+        if (defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
             $mjClient->addRequestOption(CURLOPT_HTTPPROXYTUNNEL, 1);
             $mjClient->addRequestOption(CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
             $mjClient->addRequestOption(CURLOPT_PROXY, WP_PROXY_HOST . ':' . WP_PROXY_PORT);
@@ -82,7 +83,30 @@ class MailjetApi
         ];
         $response = $mjApiClient->post(Resources::$Contactslist, ['body' => $body]);
         return $response;
+    }
 
+    public static function isContactListActive($contactListId)
+    {
+        if (!$contactListId) {
+            return false;
+        }
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        $filters = array(
+            'ID' => $contactListId
+        );
+        $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
+        if ($response->success()) {
+            $data = $response->getData();
+            if (!empty($data[0]['IsDeleted'])) {
+                // Return true if the list is not deleted
+                return !$data[0]['IsDeleted'];
+            }
+        }
+        return false;
     }
 
     public static function getContactProperties()
