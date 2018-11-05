@@ -228,11 +228,13 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function widget($args, $instance)
     {
         $mailjetContactProperties = $this->getMailjetContactProperties();
-        foreach ($mailjetContactProperties as $mjContactProperty) {
-            $this->propertyData[$mjContactProperty['ID']] = array(
-                'Name' => $mjContactProperty['Name'],
-                'Datatype' => $mjContactProperty['Datatype']
-            );
+        if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
+            foreach ($mailjetContactProperties as $mjContactProperty) {
+                $this->propertyData[$mjContactProperty['ID']] = array(
+                    'Name' => $mjContactProperty['Name'],
+                    'Datatype' => $mjContactProperty['Datatype']
+                );
+            }
         }
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
 
