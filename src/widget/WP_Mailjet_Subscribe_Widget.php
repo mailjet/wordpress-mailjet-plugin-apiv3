@@ -133,6 +133,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return true;
         }
 
+        $technicalIssue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
+
         $subscription_email = $_GET['subscription_email'];
         $properties = $_GET['properties'];
         $params = http_build_query(array(
@@ -147,10 +149,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             // List id is not provided
             if (!$contactListId) {
-                // Log
-                exit('Wrong contact list id');
+                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided! ]');
+                echo $technicalIssue;
+                die;
             }
-            
+
             $dataProperties = array();
             $mailjetContactProperties = $this->getMailjetContactProperties();
             if (!empty($mailjetContactProperties)) {
@@ -168,14 +171,16 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             );
 
             $isActiveList = MailjetApi::isContactListActive($contactListId);
-            if(!$isActiveList) {
-                echo "The contact list is not active.Please contact administrator.";
+            if (!$isActiveList) {
+                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList: ' . $contactListId . ' is deleted and ' . $subscription_email . ' was not subscribed ]');
+                echo $technicalIssue;
                 die;
             }
 
             $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
             if (!$result) {
-                echo "Subscription failed.Please try again.";
+                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
+                echo $technicalIssue;
                 die;
             }
 
@@ -204,9 +209,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
         } else {
             // Invalid token
-            // Todo add Log and message
-
-            echo "Invalid token";
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ User token is invalid.Subscription email ' . $subscription_email . ']');
+            echo $technicalIssue;
             die;
         }
     }
