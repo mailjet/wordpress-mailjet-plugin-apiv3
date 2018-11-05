@@ -47,6 +47,10 @@
                     continue;
                 }
 
+                if(empty($this->propertyData[$contactPropertyId])) {
+                   continue;
+                }
+
                 // Mailjet property type
                 $propertyDataType = $this->propertyData[$contactPropertyId]['Datatype'];
 
