@@ -148,9 +148,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             // List id is not provided
             if (!$contactListId) {
                 // Log
-
                 exit('Wrong contact list id');
             }
+            
             $dataProperties = array();
             $mailjetContactProperties = $this->getMailjetContactProperties();
             if (!empty($mailjetContactProperties)) {
@@ -166,6 +166,13 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 //                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
                 'Properties' => $dataProperties
             );
+
+            $isActiveList = MailjetApi::isContactListActive($contactListId);
+            if(!$isActiveList) {
+                echo "The contact list is not active.Please contact administrator.";
+                die;
+            }
+
             $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
             if (!$result) {
                 echo "Subscription failed.Please try again.";
