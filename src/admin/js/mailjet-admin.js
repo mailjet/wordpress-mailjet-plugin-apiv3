@@ -154,3 +154,31 @@
 
     });
 })( jQuery );
+
+function mjSelect() {
+    const allSelects = document.querySelectorAll('.mj-select');
+    allSelects.forEach(function(select) {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('mj-select-wrapper');
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.appendChild(select);
+        const selectValue = () => select.querySelector("option:checked").textContent
+        wrapper.setAttribute('data-value', selectValue());
+
+        select.addEventListener("change", function() {
+            wrapper.setAttribute('data-value', selectValue());
+        });
+        select.addEventListener("focus", function() {
+            wrapper.classList.add('mj-select-focus');
+        });
+        select.addEventListener("blur", function() {
+            wrapper.classList.remove('mj-select-focus');
+        });
+    });
+}
+
+document.addEventListener('readystatechange', event => {
+    if (event.target.readyState === "complete") {
+        mjSelect();
+    }
+});

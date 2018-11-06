@@ -34,7 +34,7 @@ class Dashboard
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="dashboard">
 <!--            <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-            <p class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </p>
+            <h1 class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
 
             <div class="container">
                 <div class="block_single">
@@ -71,7 +71,6 @@ class Dashboard
                     <div class="bottomBtn"><input name="nextBtnReverseDashboard" class="nextBtnReverseDashboard" type="button" id="nextBtnReverseDashboard5" onclick="location.href = 'admin.php?page=mailjet_connect_account_page'" value="<?=__('Settings')?>"></div>
                 </div>
             </div>
-            <br style="margin: 20px; margin-left: 220px; clear: left;" />
 
         </div>
 

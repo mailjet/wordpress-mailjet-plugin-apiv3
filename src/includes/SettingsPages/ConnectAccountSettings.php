@@ -135,11 +135,9 @@ class ConnectAccountSettings
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="mainContainer mjSettings">
             <div class="left"">
-                <div class="centered">
-                    <?php
-                    MailjetAdminDisplay::getSettingsLeftMenu();
-                    ?>
-                </div>
+                <?php
+                MailjetAdminDisplay::getSettingsLeftMenu();
+                ?>
             </div>
 
             <div class="right"">
