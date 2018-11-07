@@ -24,22 +24,39 @@
 
         // Toggle(show/hide) hidden language elements(title, contactList)
         $(document).on('change', '.language_checkbox', function () {
-            
+
             // Show/Colapse
             var languageHiddenElementClass = getLanguageHiddenElements(this);
             $('#' + languageHiddenElementClass).toggle("slow");
 
             // Uncheck the language checkbox
             var removeLanguage = !$(this).prop('checked');
-            if(removeLanguage) {
+            if (removeLanguage) {
                 // Reset Title and List ?
                 $(this).parent().find('.title-input').val('');
                 $(this).parent().find('.language-select-list').val(0);
+            } else {
+                // Add specific language
+                var languageListId = $(this).parent().find('.language-select-list').val();
+                if (languageListId === "0") {
+                    $(this).parent().find('.language-select-list').css({'border': '1px solid red'});
+                }
             }
 
 
             // Hide advanced form, changes must be saved
 //            $("div#advanced-form-link-wrap").hide();
+        });
+
+        $(document).on('change', '.language-select-list', function (event) {
+            var languageListId = event.target.value;
+            if (languageListId === "0") {
+                // No contact list is selected
+                $(this).parent().find('.language-select-list').css({'border': '1px solid red'});
+            } else {
+                // A contact list is selected
+                $(this).parent().find('.language-select-list').css({'border': '1px solid green'});
+            }
         });
 
         $(document).on('click', '.saveNewPropertyButton', function () {
@@ -58,7 +75,7 @@
                 type: "post",
                 dataType: "json",
                 url: myAjax.ajaxurl,
-                data : {action: "mailjet_add_contact_property", propertyName:newPropertyName, propertyType:newPropertyType},
+                data: {action: "mailjet_add_contact_property", propertyName: newPropertyName, propertyType: newPropertyType},
                 success: function (response) {
                     if (response !== null && response[0] !== undefined && response[0].ID !== undefined) {
 
