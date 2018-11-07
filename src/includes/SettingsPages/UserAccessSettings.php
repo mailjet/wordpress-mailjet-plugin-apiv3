@@ -40,13 +40,27 @@ class UserAccessSettings
 
         ?>
 
-        <fieldset>
+        <fieldset class="settingsAccessFldset">
             <legend class="screen-reader-text"><span><?php echo  __('User Access', 'mailjet'); ?></span></legend>
-            <label for="mailjet_access_administrator"><input name="mailjet_access_administrator" type="checkbox" id="mailjet_access_administrator" value="1" <?=( TRUE || $mailjetAccessAdministrator == 1 ? ' checked="checked" disabled' : '') ?> > <?php echo __('Administrator', 'mailjet'); ?></label><br />
-            <label for="mailjet_access_editor"><input name="mailjet_access_editor" type="checkbox" id="mailjet_access_editor" value="1" <?=($mailjetAccessEditor == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Editor', 'mailjet'); ?></label><br />
-            <label for="mailjet_access_author"><input name="mailjet_access_author" type="checkbox" id="mailjet_access_author" value="1" <?=($mailjetAccessAuthor == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Author', 'mailjet'); ?></label><br />
-            <label for="mailjet_access_contributor"><input name="mailjet_access_contributor" type="checkbox" id="mailjet_access_contributor" value="1" <?=($mailjetAccessContributor == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Contributor', 'mailjet'); ?></label><br />
-            <label for="mailjet_access_subscriber"><input name="mailjet_access_subscriber" type="checkbox" id="mailjet_access_subscriber" value="1" <?=($mailjetAccessSubscriber == 1 ? ' checked="checked"' : '') ?> > <?php echo __('Subscriber', 'mailjet'); ?></label><br />
+            <label class="checkboxLabel" for="mailjet_access_administrator">
+                <input name="mailjet_access_administrator" type="checkbox" id="mailjet_access_administrator" value="1" <?=( TRUE || $mailjetAccessAdministrator == 1 ? ' checked="checked" disabled' : '') ?> >
+                <span><?php echo __('Administrator', 'mailjet'); ?></span>
+            </label>
+            <label class="checkboxLabel" class="mj-label" for="mailjet_access_editor">
+                <input name="mailjet_access_editor" type="checkbox" id="mailjet_access_editor" value="1" <?=($mailjetAccessEditor == 1 ? ' checked="checked"' : '') ?> >
+                <span><?php echo __('Editor', 'mailjet'); ?></span>
+            </label>
+            <label class="checkboxLabel" class="mj-label" for="mailjet_access_author">
+                <input name="mailjet_access_author" type="checkbox" id="mailjet_access_author" value="1" <?=($mailjetAccessAuthor == 1 ? ' checked="checked"' : '') ?> >
+                <span><?php echo __('Author', 'mailjet'); ?></span>
+            </label>
+            <label class="checkboxLabel" class="mj-label" for="mailjet_access_contributor">
+                <input name="mailjet_access_contributor" type="checkbox" id="mailjet_access_contributor" value="1" <?=($mailjetAccessContributor == 1 ? ' checked="checked"' : '') ?> >
+                <span><?php echo __('Contributor', 'mailjet'); ?></label>
+            <label class="checkboxLabel" class="mj-label" for="mailjet_access_subscriber">
+                <input name="mailjet_access_subscriber" type="checkbox" id="mailjet_access_subscriber" value="1" <?=($mailjetAccessSubscriber == 1 ? ' checked="checked"' : '') ?> >
+                <?php echo __('Subscriber', 'mailjet'); ?></span>
+            </label>
         </fieldset>
 
         <input name="settings_step" type="hidden" id="settings_step" value="user_access_step">
@@ -110,30 +124,33 @@ class UserAccessSettings
         ?>
 
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer mjSettings">
-            <div class="left"">
-                <?php
-                MailjetAdminDisplay::getSettingsLeftMenu();
-                ?>
-            </div>
+        <div class="mainContainer">
+            <h1 class="page_top_title">Settings</h1>
+            <div class="mjSettings">
+                <div class="left"">
+                    <?php
+                    MailjetAdminDisplay::getSettingsLeftMenu();
+                    ?>
+                </div>
 
-            <div class="right"">
-                <div class="centered">
-<!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                    <h2><?php echo __('User access', 'mailjet'); ?></h2>
-                    <form action="options.php" method="post">
-                        <?php
-                        // output security fields for the registered setting "mailjet"
-                        settings_fields('mailjet_user_access_page');
-                        // output setting sections and their fields
-                        // (sections are registered for "mailjet", each field is registered to a specific section)
-                        do_settings_sections('mailjet_user_access_page');
-                        // output save settings button
-                        submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'userAccessSubmit'));
-                        ?>
+                <div class="right"">
+                    <div class="centered">
+    <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+                        <h2 class="section_inner_title"><?php echo __('User access', 'mailjet'); ?></h2>
+                        <form action="options.php" method="post">
+                            <?php
+                            // output security fields for the registered setting "mailjet"
+                            settings_fields('mailjet_user_access_page');
+                            // output setting sections and their fields
+                            // (sections are registered for "mailjet", each field is registered to a specific section)
+                            do_settings_sections('mailjet_user_access_page');
+                            // output save settings button
+                            submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'userAccessSubmit'));
+                            ?>
 
-                        <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
-                    </form>
+                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

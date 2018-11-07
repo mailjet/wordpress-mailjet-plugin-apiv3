@@ -61,9 +61,9 @@ class InitialSettings
 
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
-            <label for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
+            <label class="mj-label" for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
             <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?=$mailjetApikey ?>" class="mailjet_apikey" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Key', 'mailjet' ); ?>">
-            <label for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
+            <label class="mj-label" for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
             <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="mailjet_apisecret" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
         </fieldset>
 

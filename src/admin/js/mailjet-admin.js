@@ -33,7 +33,7 @@
         $('.mailjet_row [scope=row]').closest('th').hide();
 
 		function showExtraFromEmailInput($el) {
-			if ($el.val() == undefined) {
+            if ($el.val() == undefined) {
 				return;
 			}
 			if ($el.val().indexOf('*') >= 0) {
@@ -41,13 +41,13 @@
 				if (hiddenEmailExtra == undefined) {
                     hiddenEmailExtra = '';
 				}
-                $('<input style="margin-right:5px; width:150px; vertical-align: middle; " type="text" id="mailjet_from_email_extra" name="mailjet_from_email_extra" value="' + hiddenEmailExtra + '" required="required" placeholder="Enter your email name" />').insertBefore('#mailjet_from_email');
+                $('#mailjet_from_email_fields .fromFldGroup').prepend('<input type="text" id="mailjet_from_email_extra" name="mailjet_from_email_extra" value="' + hiddenEmailExtra + '" required="required" placeholder="Enter your email name" />');
 			} else {
                 $('#mailjet_from_email_extra').remove();
 			}
-		};
-		$('select[name="mailjet_from_email"]').change(function (e) {
-			showExtraFromEmailInput($(this));
+        };
+        $('select[name="mailjet_from_email"]').change(function (e) {
+            showExtraFromEmailInput($(this));
 		});
 		showExtraFromEmailInput($('select[name="mailjet_from_email"]'));
 
@@ -83,25 +83,25 @@
 
 
         // Send test email popup
-        $(function() {
-            $('#mailjet_test').on('click', function(event) {
-                event.preventDefault();
-                $('.pop').slideToggle('slow');
-                $('#mailjet_test').hide();
-                $('#enableSendingSubmit').hide();
-                $('#cancelBtn').hide();
-                return false;
-            });
+        // $(function() {
+        //     $('#mailjet_test').on('click', function(event) {
+        //         event.preventDefault();
+        //         $('.pop').slideToggle('slow');
+        //         $('#mailjet_test').hide();
+        //         $('#enableSendingSubmit').hide();
+        //         $('#cancelBtn').hide();
+        //         return false;
+        //     });
 
-            $('.cancelTestEmail').on('click', function(event) {
-                event.preventDefault();
-                $('.pop').slideToggle('slow');
-                $('#mailjet_test').show();
-                $('#enableSendingSubmit').show();
-                $('#cancelBtn').show();
-                return false;
-            });
-        });
+        //     $('.cancelTestEmail').on('click', function(event) {
+        //         event.preventDefault();
+        //         $('.pop').slideToggle('slow');
+        //         $('#mailjet_test').show();
+        //         $('#enableSendingSubmit').show();
+        //         $('#cancelBtn').show();
+        //         return false;
+        //     });
+        // });
 
 
 		// Create new Contact List popup
@@ -157,24 +157,26 @@
 
 function mjSelect() {
     const allSelects = document.querySelectorAll('.mj-select');
-    allSelects.forEach(function(select) {
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('mj-select-wrapper');
-        select.parentNode.insertBefore(wrapper, select);
-        wrapper.appendChild(select);
-        const selectValue = () => select.querySelector("option:checked").textContent
-        wrapper.setAttribute('data-value', selectValue());
-
-        select.addEventListener("change", function() {
+    if (allSelects && allSelects.length > 0) {
+        allSelects.forEach(function(select) {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('mj-select-wrapper');
+            select.parentNode.insertBefore(wrapper, select);
+            wrapper.appendChild(select);
+            const selectValue = () => select.querySelector("option:checked").textContent
             wrapper.setAttribute('data-value', selectValue());
+
+            select.addEventListener("change", function() {
+                wrapper.setAttribute('data-value', selectValue());
+            });
+            select.addEventListener("focus", function() {
+                wrapper.classList.add('mj-select-focus');
+            });
+            select.addEventListener("blur", function() {
+                wrapper.classList.remove('mj-select-focus');
+            });
         });
-        select.addEventListener("focus", function() {
-            wrapper.classList.add('mj-select-focus');
-        });
-        select.addEventListener("blur", function() {
-            wrapper.classList.remove('mj-select-focus');
-        });
-    });
+    }
 }
 
 document.addEventListener('readystatechange', event => {
