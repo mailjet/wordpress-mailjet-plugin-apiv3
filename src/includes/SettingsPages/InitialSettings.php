@@ -186,7 +186,7 @@ class InitialSettings
             <br /><br />
 
             <div id="initialSettingsForm">
-                <p class="section_title" style="width: 311px; margin:auto; margin-bottom:10px; color#555555; font-size:20px;"><?php echo esc_html(get_admin_page_title()); ?></p>
+                <p class="section_title" style="width: 311px; margin:auto; margin-bottom:10px; color:#555555; font-size:20px;"><?php echo esc_html(get_admin_page_title()); ?></p>
                 <form action="options.php" method="post">
                     <?php
                     // output security fields for the registered setting "mailjet"
