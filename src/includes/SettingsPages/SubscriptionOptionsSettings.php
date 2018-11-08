@@ -230,7 +230,7 @@ class SubscriptionOptionsSettings
     }
 
 
-    public function syncAllWpUsers()
+    public static function syncAllWpUsers()
     {
         if (empty(get_option('mailjet_sync_list'))) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please select a contact list.', 'mailjet'), 'error');
