@@ -402,6 +402,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function form($instance)
     {
+        $validApiCredentials = MailjetApi::isValidAPICredentials();
+        if (false == $validApiCredentials) {
+            include(plugin_dir_path(__FILE__) . 'views/designforfailure.php');
+            return false;
+        }
+
         $isMailjetDown = '';
         // Define default values for your variables
         $instance = wp_parse_args(
@@ -430,6 +436,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         if ($mailjetContactLists === false && $mailjetContactProperties === false) {
             $isMailjetDown = 'No connection with Mailjet.Please try a bit later.';
         }
+
         $mailjetContactProperties = null;
         $mailjetContactProperties = $propertiesOptions;
         $admin_locale = get_locale();
