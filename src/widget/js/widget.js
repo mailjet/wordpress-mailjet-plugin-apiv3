@@ -102,6 +102,7 @@
                         selectProperty.append('<option value="' + response[0].ID + '" selected="selected">' + newPropertyName + '</option>');
                     } else {
                         element.parent().parent().find('.newPropertyName input').addClass('redInput');
+                        element.parent().parent().find('.newPropertyName input').val('');
                     }
                 }
             });
