@@ -174,7 +174,7 @@ $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $ma
                                             <?php if($row === 0) { ?>
                                                 <label for="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>"><?php _e('Name your property (no spaces)', 'mailjet') ?></label>
                                             <?php } ?>
-                                            <input type="text" class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>" />
+                                                <input type="text" class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>" placeholder="<?php _e('Forbidden characters: space , * + - / &quot &#39; : [ ] ( ) &gt; &lt; = ; $ ', 'mailjet') ?>"/>
                                         </div>
                                         <div class="newPropertyType floatLeft form-group col-md-2">
                                             <?php if($row === 0) { ?>
