@@ -468,9 +468,10 @@ class SubscriptionOptionsSettings
         $test = sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet'), $wpUrl);
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', $instance[$locale]['email_content_main_text']) : $test;
 
+        $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
-            'properties' => $_POST['properties'],
+            'properties' => $properties,
 //            'thank_id' => $thankYouURI
         ));
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
