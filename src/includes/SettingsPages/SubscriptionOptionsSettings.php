@@ -65,6 +65,7 @@ class SubscriptionOptionsSettings
 
             <div class="mailjet_sync_options_div">
                 <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
+                    <option value="0"><?php _e('Choose a list', 'mailjet') ?></option>
                     <?php
                     foreach ($mailjetContactLists as $mailjetContactList) {
                         if ($mailjetContactList["IsDeleted"] == true) {
