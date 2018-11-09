@@ -55,72 +55,29 @@
 		showExtraFromEmailInput($('select[name="mailjet_from_email"]'));
 
 
-		// Show / Hide Initial Sync options div
-        $('.mailjet_sync_options_div').show();
-        if($('input[name="activate_mailjet_sync"]').prop('checked') !== true){
-            $('.mailjet_sync_options_div').hide();
-            $('#activate_mailjet_initial_sync').prop('checked', false);
-        }
-        $('input[name="activate_mailjet_sync"]').click(function () {
-            $('.mailjet_sync_options_div').toggle('slow');
-            $('#activate_mailjet_initial_sync').prop('checked', $('input[name="activate_mailjet_sync"]').prop('checked'));
-        });
-
-        // Show / Hide Comment Authors Sync div
-        $('.mailjet_sync_comment_authors_div').hide();
-        if($('input[name="activate_mailjet_comment_authors_sync"]').prop('checked') === true){
-            $('.mailjet_sync_comment_authors_div').show();
-        }
-        $('input[name="activate_mailjet_comment_authors_sync"]').click(function () {
-            $('.mailjet_sync_comment_authors_div').toggle('slow');
-        });
-
-		// Create new Contact List popup
-	   	$(function() {
-            $('#create_contact_list').on('click', function(event) {
-                event.preventDefault();
-                $('.pop').slideToggle('slow');
-                $('#create_contact_list').hide();
-                $('#createContactListImg').hide();
-                $('#initialContactListsSubmit').hide();
-                return false;
-            });
-            $('.closeCreateList').on('click', function(event) {
-                event.preventDefault();
-                $('.pop').slideToggle('slow');
-                $('#create_contact_list').show();
-                $('#createContactListImg').show();
-                $('#initialContactListsSubmit').show();
-                return false;
-            });
-
-        });
-
-
-
-        // Change settings menu links images on hover
-        $('.settingsMenuLink a').hover(
-            function(){
-                $(this).addClass('hover');
-                var imgId = $(this).data('img_id');
-                if ($(this).parent().hasClass('settingsMenuLink1')) {
-                    $('.' + imgId).css({fill:"#FFFFFF"});
-                } else {
-                    $('.' + imgId).css({fill:"#19BC9C"});
-                }
-            },
-            function(){
-                $(this).removeClass('hover');
-                var imgId = $(this).data('img_id');
-                if (!$(this).hasClass('active')) {
-                    if ($(this).parent().hasClass('settingsMenuLink1')) {
-                        $('.' + imgId).css({fill:"#FFFFFF"});
-                    } else {
-                        $('.' + imgId).css({fill:"#000000"});
-                    }
-                }
-            }
-        );
+		// Change settings menu links images on hover
+        // $('.settingsMenuLink a').hover(
+        //     function(){
+        //         $(this).addClass('hover');
+        //         var imgId = $(this).data('img_id');
+        //         if ($(this).parent().hasClass('settingsMenuLink1')) {
+        //             $('.' + imgId).css({fill:"#FFFFFF"});
+        //         } else {
+        //             $('.' + imgId).css({fill:"#19BC9C"});
+        //         }
+        //     },
+        //     function(){
+        //         $(this).removeClass('hover');
+        //         var imgId = $(this).data('img_id');
+        //         if (!$(this).hasClass('active')) {
+        //             if ($(this).parent().hasClass('settingsMenuLink1')) {
+        //                 $('.' + imgId).css({fill:"#FFFFFF"});
+        //             } else {
+        //                 $('.' + imgId).css({fill:"#000000"});
+        //             }
+        //         }
+        //     }
+        // );
 
 
     });
@@ -130,10 +87,16 @@ const mjInitShowHide = () => {
     
     const btn = document.querySelectorAll('.mj-toggleBtn');
     const expanded = document.querySelectorAll('.mj-show');
+    const collapsed = document.querySelectorAll('.mj-hide');
 
     if (expanded && expanded.length > 0) {
         expanded.forEach(function(el) {
             el.style.minHeight = `${el.scrollHeight}px`;
+        });
+    }
+    if (collapsed && collapsed.length > 0) {
+        collapsed.forEach(function(el) {
+            el.style.height = '0';
         });
     }
     
@@ -147,20 +110,21 @@ const mjInitShowHide = () => {
 
             el.addEventListener("click", function() {
                 isHidden() ?
-                    mjShow(target, btn)
+                    mjShow(target, el)
                 :
-                    mjHide(target, btn);
+                    mjHide(target, el);
             });
         });
     }
 }
 
 let transitionTimeout;
-    
-function deleteHeight(el) {
+
+function deleteHeight(el, delay) {
+    console.log(delay)
     transitionTimeout = window.setTimeout(function() {
         el.style.height = ''
-    }, 1000);
+    }, delay);
 }
 
 function cleardeleteHeight() {
@@ -170,17 +134,18 @@ function cleardeleteHeight() {
 function mjShow(target, btn) {
     cleardeleteHeight();
 
-    const transitionTime = getComputedStyle(target)['transition-duration'];
-    console.log(transitionTime);
-
-    target.style.minHeight = 0;
+    target.style.minHeight = '0';
     target.style.minHeight = `${target.scrollHeight}px`;
-    deleteHeight(target);
-
+    
     target.classList.remove('mj-hide');
     target.classList.add('mj-show');
     btn && btn.classList.add('mj-active');
-    
+
+    const targetStyles = getComputedStyle(target);
+    const transitionIndex = targetStyles['transition-property'].replace(/\s+/g, '').split(',').indexOf('min-height');
+    const cssTransitionTime = targetStyles['transition-duration'].split(',')[transitionIndex];
+    const jsTransitionTime = cssTransitionTime.indexOf('ms') > 0 ? parseFloat(cssTransitionTime) : parseFloat(cssTransitionTime)*1000;
+    deleteHeight(target, jsTransitionTime);    
 }
 
 function mjHide(target, btn) {
@@ -216,6 +181,42 @@ const mjSelect = () => {
             });
         });
     }
+}
+
+mjSubscription = () => {
+    /**
+     * Handles Contact List form's display
+     */
+    const cancelCLBtn = document.querySelector('#cancel_create_list');
+    cancelCLBtn && cancelCLBtn.addEventListener("click", function() {
+        document.querySelector('#create_contact_list').click();
+    });
+
+    /**
+     * Show / Hide Initial Sync options div
+     */
+    const autoSubscrBox = document.querySelector('#activate_mailjet_sync');
+    const autoSubscrForm = document.querySelector('#activate_mailjet_sync_form');
+
+    autoSubscrBox.addEventListener("change", function() {
+        this.checked == true ?
+            mjShow(autoSubscrForm)
+        :
+            mjHide(autoSubscrForm);
+    });
+
+    /**
+     * Show / Hide Comment Authors Sync div
+     */
+    const contactListBox = document.querySelector('#activate_mailjet_comment_authors_sync');
+    const contactList = document.querySelector('#comment_authors_contact_list');
+    
+    contactListBox.addEventListener("change", function() {
+        this.checked == true ?
+            mjShow(contactList)
+        :
+            mjHide(contactList);
+    });
 }
 
 const mjSendingSettings = () => {
@@ -285,8 +286,9 @@ const mjSendingSettings = () => {
 const mjAdmin = () => {
     mjInitShowHide();
     mjSelect();
-    document.querySelector('body').classList.contains('admin_page_mailjet_sending_settings_page');
-    mjSendingSettings();
+    if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page') 
+        || document.querySelector('body.admin_page_mailjet_subscription_options_page')) { mjSubscription() };
+    document.querySelector('body.admin_page_mailjet_sending_settings_page') && mjSendingSettings();
 }
 
 document.addEventListener('readystatechange', event => {

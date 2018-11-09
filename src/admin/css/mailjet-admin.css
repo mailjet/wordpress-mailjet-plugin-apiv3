@@ -36,7 +36,7 @@ input[type="text"] {
 .mj-hide {
     height: 0;
     overflow: hidden;
-    transition: min-height 75ms ease-in 0ms, height 75ms ease-in 0ms;
+    transition: height 75ms ease-in 0ms, min-height 75ms ease-in 0ms;
 }
 .mj-disabled {
     opacity: .4;
@@ -500,15 +500,16 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     margin-right: 16px;
     fill: currentColor;
 }
-.settingsMenuLink a.active {
-    color: #19BC9C;
-}
 .settingsMenuLink a:hover,
 .settingsMenuLink a:active,
 .settingsMenuLink a:focus {
     text-decoration: none;
+    color: #555;
     background-color: #f2f2f2;
     outline: 0;
+}
+.settingsMenuLink a.active {
+    color: #19BC9C;
 }
 #mailjet_subscription_options_settings {
     margin-bottom: 16px;
@@ -542,7 +543,6 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 
 /* Create new Contact List popup */
 .create_contact_list_popup {
-    display:none;
     margin-bottom: 24px;
 }
 .create_contact_list_popup label {
@@ -558,6 +558,9 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     text-decoration: none;
     color: #19BC9C;
     cursor: pointer;
+}
+#create_contact_list.mj-active {
+    display: none;
 }
 #create_contact_list img {
     margin-right: 8px;

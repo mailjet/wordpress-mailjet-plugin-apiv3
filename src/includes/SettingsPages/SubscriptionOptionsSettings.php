@@ -54,11 +54,11 @@ class SubscriptionOptionsSettings
             <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
 
             <label class="checkboxLabel">
-                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
                 <span><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></span>
             </label>
 
-            <div class="mailjet_sync_options_div">
+            <div id="activate_mailjet_sync_form" class="mailjet_sync_options_div <?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
                 <select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
                     <?php
                     foreach ($mailjetContactLists as $mailjetContactList) {
@@ -78,11 +78,11 @@ class SubscriptionOptionsSettings
 
 
             <label class="checkboxLabel">
-                <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?=($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?=($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
                 <span><?php echo __('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet'); ?></span>
             </label>
 
-            <div class="mailjet_sync_comment_authors_div">
+            <div id="comment_authors_contact_list" class="<?=($mailjetCommentAuthorsSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_comment_authors_div">
                 <select class="mj-select" name="mailjet_comment_authors_list" id="mailjet_comment_authors_list" type="select">
                     <?php
                     foreach ($mailjetContactLists as $mailjetContactList) {

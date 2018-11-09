@@ -64,21 +64,20 @@ class InitialContactListsSettings
             </div>
             </div>
 
-            <div class="create_contact_list_popup pop" id="create_contact_list_popup">
+            <a id="create_contact_list" class="mj-toggleBtn" data-target="create_contact_list_popup">
+                <img width="16" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
+                <?php echo __('Create a new list', 'mailjet' ); ?>
+            </a>
+            <div class="mj-hide create_contact_list_popup" id="create_contact_list_popup">
                 <div class="create_contact_list_fields">
                     <label class="mj-label" for="create_list_name"><?php echo __('Name your list (max. 50 characters)', 'mailjet' ); ?></label>
                     <input type="text" size="30" name="create_list_name" id="create_list_name" />
                 </div>
                 <div class="create_contact_list_btns">
                     <input type="submit" value="<?=__('Save', 'mailjet')?>" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"/>
-                    <input name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
+                    <input name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList" type="button" id="cancel_create_list" value="<?=__('Cancel', 'mailjet')?>">
                 </div>
             </div>
-
-            <a id="create_contact_list">
-                <img width="16" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
-                <?php echo __('Create a new list', 'mailjet' ); ?>
-            </a>
         </div>
         
         <fieldset class="initialContactListsFieldset">
@@ -87,11 +86,11 @@ class InitialContactListsSettings
             <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
             <div class="activate_mailjet_sync_field">
                 <label class="checkboxLabel" for="activate_mailjet_sync">
-                    <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
                     <span><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></span>
                 </label>
                 
-                <div class="mailjet_sync_options_div">
+                <div id="activate_mailjet_sync_form" class="mailjet_sync_options_div <?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
                     <select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
                         <?php
                         foreach ($mailjetContactLists as $mailjetContactList) {
