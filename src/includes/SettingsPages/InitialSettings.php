@@ -57,7 +57,7 @@ class InitialSettings
         // output the field
         ?>
         <fieldset>
-            <legend class="screen-reader-text"><span><b><?php echo  __('Connect your Mailjet account to get started', 'mailjet'); ?></b></span></legend>
+            <legend class="screen-reader-text"><span><b><?php _e('Connect your Mailjet account to get started', 'mailjet'); ?></b></span></legend>
 
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
@@ -195,7 +195,8 @@ class InitialSettings
                     // (sections are registered for "mailjet", each field is registered to a specific section)
                     do_settings_sections('mailjet_initial_settings_page');
                     // output save settings button
-                    submit_button('Connect your account', 'MailjetSubmit', 'submit', false, array('id' => 'initialSettingsSubmit'));
+                    $connectYourAccount = __('Connect your account', 'mailjet');
+                    submit_button($connectYourAccount, 'MailjetSubmit', 'submit', false, array('id' => 'initialSettingsSubmit'));
 /* No Next btn on Initial API settings page - we redirect automatically
                     if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
                         <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet')?>">
@@ -233,7 +234,7 @@ class InitialSettings
 <!--        <br style="clear: left;"/>-->
         <div class="bottom_links">
             <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet'); ?>" />
                 <?php echo __('Need help getting started?', 'mailjet' ); ?>
             </div>
             <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>

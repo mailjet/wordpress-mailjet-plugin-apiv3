@@ -245,7 +245,8 @@ class InitialContactListsSettings
         do_settings_sections('mailjet_initial_contact_lists_page');
         // output save settings button
         if (MailjetApi::isValidAPICredentials()) {
-            submit_button('Apply and continue', 'MailjetSubmit', 'submit', false, array('id' => 'initialContactListsSubmit'));
+            $applyAndContinue = __('Apply & Continue', 'mailjet');
+            submit_button($applyAndContinue, 'MailjetSubmit', 'submit', false, array('id' => 'initialContactListsSubmit'));
         } else {
             update_option('settings_step', 'initial_step')
             ?>
