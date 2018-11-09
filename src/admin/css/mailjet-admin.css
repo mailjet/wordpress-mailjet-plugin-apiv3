@@ -28,6 +28,20 @@ input[type="text"] {
     color: inherit;
     box-shadow: none;
 }
+.mj-show {
+    min-height: 0;
+    overflow: hidden;
+    transition: height 0ms ease-in 0ms, min-height 250ms ease-in 0ms;
+}
+.mj-hide {
+    height: 0;
+    overflow: hidden;
+    transition: min-height 75ms ease-in 0ms, height 75ms ease-in 0ms;
+}
+.mj-disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
 .form-table {
     margin-top: 0;
 }
@@ -409,14 +423,46 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     width: auto;
     min-width: 80px;
 }
-.mjSettings .settingsSendingFldset .sslFld {
-    margin-bottom: 24px;
-}
 .mjSettings .fromFldGroup {
     display: flex;
 }
 .mjSettings .fromFldGroup input[type="text"] {
     margin-right: 16px;
+}
+.mjSettings .sendTestEmailBtn {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: #19BC9C;
+    background: transparent;
+    outline: 0;
+}
+.mjSettings .sendTestEmailBtn:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+    transform-origin: center;
+    vertical-align: 2px;
+    transition: transform .075s ease-in;
+}
+.mjSettings .sendTestEmailBtn.mj-active:before {
+    transform: rotate(-45deg) translateY(1px);
+    transition: transform .25s ease-in;
+}
+.mjSettings .test_email_collapsible {
+    overflow: hidden;
+}
+.mjSettings .test_email_collapsible label {
+    margin-top: 16px !important;
+}
+.mjSettings .test_email_collapsible input {
+    margin-bottom: 0;
 }
 
 .mjSettings .mailjet_sync_comment_authors_div .mj-select-wrapper {

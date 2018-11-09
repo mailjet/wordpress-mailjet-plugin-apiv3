@@ -32,7 +32,10 @@
 
         $('.mailjet_row [scope=row]').closest('th').hide();
 
-		function showExtraFromEmailInput($el) {
+        /**
+         * Show text input if domain name is selected in the "From address" dropdown
+         */
+        function showExtraFromEmailInput($el) {
             if ($el.val() == undefined) {
 				return;
 			}
@@ -52,16 +55,7 @@
 		showExtraFromEmailInput($('select[name="mailjet_from_email"]'));
 
 
-		// Show / Hide Sending options div
-        $('.sending_options_div').hide();
-        if($('input[name="mailjet_enabled"]').prop('checked') === true){
-		   $('.sending_options_div').show();
-       	}
-        $('input[name="mailjet_enabled"]').click(function () {
-            $('.sending_options_div').toggle('slow');
-        });
-
-        // Show / Hide Initial Sync options div
+		// Show / Hide Initial Sync options div
         $('.mailjet_sync_options_div').show();
         if($('input[name="activate_mailjet_sync"]').prop('checked') !== true){
             $('.mailjet_sync_options_div').hide();
@@ -80,29 +74,6 @@
         $('input[name="activate_mailjet_comment_authors_sync"]').click(function () {
             $('.mailjet_sync_comment_authors_div').toggle('slow');
         });
-
-
-        // Send test email popup
-        // $(function() {
-        //     $('#mailjet_test').on('click', function(event) {
-        //         event.preventDefault();
-        //         $('.pop').slideToggle('slow');
-        //         $('#mailjet_test').hide();
-        //         $('#enableSendingSubmit').hide();
-        //         $('#cancelBtn').hide();
-        //         return false;
-        //     });
-
-        //     $('.cancelTestEmail').on('click', function(event) {
-        //         event.preventDefault();
-        //         $('.pop').slideToggle('slow');
-        //         $('#mailjet_test').show();
-        //         $('#enableSendingSubmit').show();
-        //         $('#cancelBtn').show();
-        //         return false;
-        //     });
-        // });
-
 
 		// Create new Contact List popup
 	   	$(function() {
@@ -155,7 +126,75 @@
     });
 })( jQuery );
 
-function mjSelect() {
+const mjInitShowHide = () => {
+    
+    const btn = document.querySelectorAll('.mj-toggleBtn');
+    const expanded = document.querySelectorAll('.mj-show');
+
+    if (expanded && expanded.length > 0) {
+        expanded.forEach(function(el) {
+            el.style.minHeight = `${el.scrollHeight}px`;
+        });
+    }
+    
+    if (btn && btn.length > 0) {
+        btn.forEach(function(el) {
+            const target = document.querySelector(`#${el.dataset.target}`);
+            const isHidden = () => {
+                const classes = target.className.split(' ');
+                return classes.indexOf('mj-hide') >= 0;
+            }
+
+            el.addEventListener("click", function() {
+                isHidden() ?
+                    mjShow(target, btn)
+                :
+                    mjHide(target, btn);
+            });
+        });
+    }
+}
+
+let transitionTimeout;
+    
+function deleteHeight(el) {
+    transitionTimeout = window.setTimeout(function() {
+        el.style.height = ''
+    }, 1000);
+}
+
+function cleardeleteHeight() {
+    window.clearTimeout(transitionTimeout);
+}
+
+function mjShow(target, btn) {
+    cleardeleteHeight();
+
+    const transitionTime = getComputedStyle(target)['transition-duration'];
+    console.log(transitionTime);
+
+    target.style.minHeight = 0;
+    target.style.minHeight = `${target.scrollHeight}px`;
+    deleteHeight(target);
+
+    target.classList.remove('mj-hide');
+    target.classList.add('mj-show');
+    btn && btn.classList.add('mj-active');
+    
+}
+
+function mjHide(target, btn) {
+    cleardeleteHeight();
+    target.style.height = `${target.scrollHeight}px`;
+    target.style.height = '0';
+    target.style.minHeight = '0';
+
+    target.classList.remove('mj-show');
+    target.classList.add('mj-hide');
+    btn && btn.classList.remove('mj-active');
+}
+
+const mjSelect = () => {
     const allSelects = document.querySelectorAll('.mj-select');
     if (allSelects && allSelects.length > 0) {
         allSelects.forEach(function(select) {
@@ -179,8 +218,79 @@ function mjSelect() {
     }
 }
 
+const mjSendingSettings = () => {
+    /**
+     * disable SSL checkbox if port != 465
+     */
+    const portSelect = document.querySelector('.mjSettings #mailjet_port');
+    const getPort = () => portSelect ? portSelect.value : null;
+    const sslBox = document.querySelector('.mjSettings #mailjet_ssl');
+    const sslLabel = sslBox.parentElement.nodeName == "LABEL" ? sslBox.parentElement : null
+    
+    const disableSSL = () => {
+        if (getPort() !== "465") {
+            sslBox.checked = false;
+
+            sslBox.setAttribute("disabled", "disabled");
+            sslLabel && sslBox.parentElement.classList.add('mj-disabled');
+        }
+        else {
+            sslBox.removeAttribute("disabled");
+            sslLabel && sslBox.parentElement.classList.remove('mj-disabled');
+        }
+    }
+
+    if (portSelect && sslBox) {
+        portSelect.addEventListener("change", function() {        
+            disableSSL();
+        })
+        disableSSL();
+    }
+
+    /**
+     * Show Sending email through MJ form
+     */
+    const mjEnabledBox = document.querySelector('.mjSettings #mailjet_enabled');
+    const enabledForm = document.querySelector('.mjSettings #enable_mj_emails');
+    const mjEnebledRequiredFlds = enabledForm.querySelectorAll('[required]');
+    
+    mjEnabledBox.addEventListener("change", function() {
+        if (this.checked) {
+            mjShow(enabledForm);
+            mjEnebledRequiredFlds.forEach(function(fld) {
+                fld.setAttribute('required', true);
+            });
+        } else {
+            mjHide(enabledForm);
+            mjEnebledRequiredFlds.forEach(function(fld) {
+                fld.removeAttribute('required');
+            });
+        }
+    })
+
+    /**
+     * Show Test email form
+     */
+    if (sslBox) {
+        const btnTest = document.querySelector('.mjSettings #mailjet_test');
+        sslBox.addEventListener("change", function() {
+            this.checked ?
+                mjShow(btnTest)
+            :
+            mjHide(btnTest)
+        })
+    }
+}
+
+const mjAdmin = () => {
+    mjInitShowHide();
+    mjSelect();
+    document.querySelector('body').classList.contains('admin_page_mailjet_sending_settings_page');
+    mjSendingSettings();
+}
+
 document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
-        mjSelect();
+        mjAdmin();
     }
 });
