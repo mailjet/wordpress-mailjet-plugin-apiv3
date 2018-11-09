@@ -221,7 +221,7 @@ class InitialSettings
                     </div>
                     <div class="initialSettingsDescriptionRow">
                         <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                        <div class="initialSettingsTextCell"><p><?php echo __('...and add them automatically to a contact list', 'mailjet' ); ?></p><?php echo __('Email are added to your contact list', 'mailjet' ); ?></div>
+                        <div class="initialSettingsTextCell"><p><?php echo __('...and add them automatically to a contact list', 'mailjet' ); ?></p><?php echo __('Emails are added to your contact list', 'mailjet' ); ?></div>
                     </div>
                     <div class="initialSettingsDescriptionRow">
                         <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
