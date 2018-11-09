@@ -35,7 +35,14 @@ class InitialContactListsSettings
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
-        $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        try {
+            $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        } catch (\Exception $ex) {
+            update_option('api_credentials_ok', 0);
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
+            die;
+        }
+
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
