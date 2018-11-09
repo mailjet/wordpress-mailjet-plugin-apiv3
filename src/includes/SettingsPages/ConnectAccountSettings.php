@@ -24,7 +24,7 @@ class ConnectAccountSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('In your Mailjet account, go to <a class="greenLink" target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials bellow', 'mailjet'); ?>
+            <?php echo __('In your Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials bellow', 'mailjet'); ?>
         </p>
         <?php
     }
