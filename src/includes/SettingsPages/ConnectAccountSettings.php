@@ -38,17 +38,15 @@ class ConnectAccountSettings
 
         // output the field
         ?>
-        <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
+        <fieldset class="settingsConnectFldset">
+            <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
-        <label for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
-        <br />
-        <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?=$mailjetApikey ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Key', 'mailjet' ); ?>">
-        <br /><br />
+            <label class="mj-label" for="mailjet_apikey"><?php echo __('<b>Api Key</b>', 'mailjet'); ?></label>
+            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?=$mailjetApikey ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Key', 'mailjet' ); ?>">
 
-        <label for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
-        <br />
-        <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
-
+            <label class="mj-label" for="mailjet_apisecret"><?php echo __('<b>Secret Key</b>', 'mailjet'); ?></label>
+            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?=$mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'Your Mailjet API Secret', 'mailjet' ); ?>">
+        </fieldset>
         <?php
     }
 
@@ -133,31 +131,32 @@ class ConnectAccountSettings
         ?>
 
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer mjSettings">
-            <div class="left"">
-                <div class="centered">
+        <div class="mainContainer">
+            <h1 class="page_top_title">Settings</h1>
+            <div class="mjSettings">
+                <div class="left"">
                     <?php
                     MailjetAdminDisplay::getSettingsLeftMenu();
                     ?>
                 </div>
-            </div>
 
-            <div class="right"">
-                <div class="centered">
-<!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                    <h2><?php echo __('Connect your Mailjet account', 'mailjet'); ?></h2>
-                    <form action="options.php" method="post">
-                        <?php
-                        // output security fields for the registered setting "mailjet"
-                        settings_fields('mailjet_connect_account_page');
-                        // output setting sections and their fields
-                        // (sections are registered for "mailjet", each field is registered to a specific section)
-                        do_settings_sections('mailjet_connect_account_page');
-                        // output save settings button
-                        submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
-                        ?>
-                        <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
-                    </form>
+                <div class="right"">
+                    <div class="centered">
+    <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+                        <h2 class="section_inner_title"><?php echo __('Connect your Mailjet account', 'mailjet'); ?></h2>
+                        <form action="options.php" method="post">
+                            <?php
+                            // output security fields for the registered setting "mailjet"
+                            settings_fields('mailjet_connect_account_page');
+                            // output setting sections and their fields
+                            // (sections are registered for "mailjet", each field is registered to a specific section)
+                            do_settings_sections('mailjet_connect_account_page');
+                            // output save settings button
+                            submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
+                            ?>
+                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

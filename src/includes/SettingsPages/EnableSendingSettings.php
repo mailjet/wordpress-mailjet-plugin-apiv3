@@ -45,66 +45,60 @@ class EnableSendingSettings
         // output the field
         ?>
 
-        <fieldset>
-            <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" style="vertical-align: middle;" value="1" <?=($mailjetEnabled == 1 ? ' checked="checked"' : '') ?> >
-            <label for="mailjet_enabled" style="vertical-align: middle;display: inline;"> <?php echo __('Enable sending emails through <b>Mailjet</b>', 'mailjet'); ?></label>
-            <br /><br />
-
-            <div class="sending_options_div">
-                <div style="display: inline-block; margin-right: 10px;">
-                    <label for="mailjet_from_name"><b><?php echo __('From: Name', 'mailjet'); ?></b></label> <br />
-                    <input style="width:150px;vertical-align: middle;" name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?=$mailjetFromName ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
+        <fieldset class="settingsSendingFldset">
+            <label class="checkboxLabel" for="mailjet_enabled">
+                <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?=($mailjetEnabled == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
+                <span><?php echo __('Enable sending emails through <b>Mailjet</b>', 'mailjet'); ?></span>
+            </label>
+            <div id="enable_mj_emails" class="sending_options_div <?= $mailjetEnabled ? 'mj-show' : 'mj-hide' ?>">
+                <div>
+                    <label class="mj-label" for="mailjet_from_name"><b><?php echo __('From: Name', 'mailjet'); ?></b></label>
+                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?=$mailjetFromName ?>" class="regular-text code"  <?=($mailjetEnabled == 1 ? ' required="required"' : '') ?> placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
                 </div>
-                <div style="display: inline-block;">
-                <label for="mailjet_from_email"><b><?php echo __('From: name@email.com', 'mailjet'); ?></b></label> <br />
-                <select name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
-                    <?php foreach ($mailjetSenders as $mailjetSender) {
-                        if ($mailjetSender['Status'] != 'Active') {
-                            continue;
-                        }
-                        if (!empty(get_option('mailjet_from_email_extra'))) {
-                            if (stristr($mailjetSender['Email'],'*') && stristr(get_option('mailjet_from_email'), str_ireplace('*', '', $mailjetSender['Email']))) {
-                                $mailjetFromEmail = $mailjetSender['Email'];
+                <div id="mailjet_from_email_fields" class="fromFld">
+                    <label class="mj-label" for="mailjet_from_email"><b><?php echo __('From: name@email.com', 'mailjet'); ?></b></label>
+                    <div class="fromFldGroup">
+                        <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
+                        <?php foreach ($mailjetSenders as $mailjetSender) {
+                            if ($mailjetSender['Status'] != 'Active') {
+                                continue;
                             }
-                        }
-                    ?>
-                        <option value="<?=$mailjetSender['Email'] ?>" <?=($mailjetFromEmail == $mailjetSender['Email'] ? 'selected="selected"' : '') ?> > <?=$mailjetSender['Email'] ?> </option>
-                    <?php } ?>
-                </select>
+                            if (!empty(get_option('mailjet_from_email_extra'))) {
+                                if (stristr($mailjetSender['Email'],'*') && stristr(get_option('mailjet_from_email'), str_ireplace('*', '', $mailjetSender['Email']))) {
+                                    $mailjetFromEmail = $mailjetSender['Email'];
+                                }
+                            }
+                        ?>
+                            <option value="<?=$mailjetSender['Email'] ?>" <?=($mailjetFromEmail == $mailjetSender['Email'] ? 'selected="selected"' : '') ?> > <?=$mailjetSender['Email'] ?> </option>
+                        <?php } ?>
+                        </select>
+                    </div>
                 </div>
                 <?php
                     if (!empty(get_option('mailjet_from_email_extra'))) { ?>
                         <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?=get_option('mailjet_from_email_extra') ?>">
                 <?php } ?>
-
-                <br /><br />
-
-                <label for="mailjet_port"><?php echo __('Port to use for SMTP communication', 'mailjet'); ?></label>
-                <select name="mailjet_port" id="mailjet_port" type="select">
-                    <option value="25" <?=($mailjetPort == 25 ? 'selected="selected"' : '') ?> > 25 </option>
-                    <option value="465" <?=($mailjetPort == 465 ? 'selected="selected"' : '') ?> > 465 </option>
-                    <option value="587" <?=($mailjetPort == 587 ? 'selected="selected"' : '') ?> > 587 </option>
-                    <option value="588" <?=($mailjetPort == 588 ? 'selected="selected"' : '') ?> > 588 </option>
-                    <option value="80" <?=($mailjetPort == 80 ? 'selected="selected"' : '') ?> > 80 </option>
-                </select>
-                <br /><br />
-
-                <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" style="vertical-align: middle;" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> >
-                <label for="mailjet_ssl" style="vertical-align: middle;display: inline;"><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></label>
-                <br /><br />
-
-                <?php  if (!empty(get_option('mailjet_enabled')) && 1 == get_option('mailjet_enabled')) { ?>
-                    <div class="test_email_popup pop">
-                        <p><label for="email"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label>
-                            <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                        </p>
-                        <input type="submit" value="<?=__('Send', 'mailjet')?>" name="send_test_email_btn" class="MailjetSubmit nextBtn" id="send_test_email_btn"/>
-                        <input name="nextBtn" class="nextBtn cancelTestEmail" type="button" id="nextBtn" value="<?=__('Cancel', 'mailjet')?>">
-                        <br style="clear: left;"/>
-                    </div>
-                    <input name="mailjet_test" type="button" id="mailjet_test" class="sendTestMeilBtn" value="<?=__('Send a test', 'mailjet')?>">
-                    <br />
-                <?php } ?>
+                <div class="smtpFld">
+                    <label class="mj-label" for="mailjet_port"><b><?php echo __('Port to use for SMTP communication', 'mailjet'); ?></b></label>
+                    <select class="mj-select" name="mailjet_port" id="mailjet_port" type="select">
+                        <option value="25" <?=($mailjetPort == 25 ? 'selected="selected"' : '') ?> > 25 </option>
+                        <option value="465" <?=($mailjetPort == 465 ? 'selected="selected"' : '') ?> > 465 </option>
+                        <option value="587" <?=($mailjetPort == 587 ? 'selected="selected"' : '') ?> > 587 </option>
+                        <option value="588" <?=($mailjetPort == 588 ? 'selected="selected"' : '') ?> > 588 </option>
+                        <option value="80" <?=($mailjetPort == 80 ? 'selected="selected"' : '') ?> > 80 </option>
+                    </select>
+                </div>
+                <div class="sslFld">
+                    <label class="checkboxLabel" for="mailjet_ssl">
+                        <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> autocomplete="off">
+                        <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></span>
+                    </label>
+                </div>
+                <button type="button" id="mailjet_test" class="<?= $mailjetSsl ? 'mj-show' : 'mj-hide' ?> sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?=__('Send a test', 'mailjet')?></button>
+                <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
+                    <label class="mj-label" for="mailjet_test_address"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label>
+                    <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
+                </div>
             </div>
 
             <input name="settings_step" type="hidden" id="settings_step" value="enable_sending_step">
@@ -212,31 +206,32 @@ class EnableSendingSettings
 
 
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer mjSettings">
-            <div class="left">
-                <div class="centered">
+        <div class="mainContainer">
+            <h1 class="page_top_title">Settings</h1>
+            <div class="mjSettings">
+                <div class="left">
                     <?php
                     MailjetAdminDisplay::getSettingsLeftMenu();
                     ?>
                 </div>
-            </div>
 
-            <div class="right">
-                <div class="centered"  style="width:650px;">
-<!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                    <h2><?php echo __('Sending settings', 'mailjet'); ?></h2>
-                    <form action="options.php" method="post">
-                        <?php
-                        // output security fields for the registered setting "mailjet"
-                        settings_fields('mailjet_sending_settings_page');
-                        // output setting sections and their fields
-                        // (sections are registered for "mailjet", each field is registered to a specific section)
-                        do_settings_sections('mailjet_sending_settings_page');
-                        // output save settings button
-                        submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
-                        ?>
-                        <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
-                    </form>
+                <div class="right">
+                    <div class="centered"  style="width:650px;">
+    <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+                        <h2 class="section_inner_title"><?php echo __('Sending settings', 'mailjet'); ?></h2>
+                        <form action="options.php" method="post">
+                            <?php
+                            // output security fields for the registered setting "mailjet"
+                            settings_fields('mailjet_sending_settings_page');
+                            // output setting sections and their fields
+                            // (sections are registered for "mailjet", each field is registered to a specific section)
+                            do_settings_sections('mailjet_sending_settings_page');
+                            // output save settings button
+                            submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
+                            ?>
+                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -295,7 +290,7 @@ class EnableSendingSettings
                     $ssl = $configs[$i][0];
                     update_option('mailjet_ssl', $ssl);
                     update_option('mailjet_port', $port);
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your settings have been saved, but your port and SSL settings were changed as follows to ensure delivery', 'mailjet'), 'updated');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your settings have been saved, but your port and SSL settings were changed to ensure delivery', 'mailjet'), 'updated');
                     break;
                 }
             }

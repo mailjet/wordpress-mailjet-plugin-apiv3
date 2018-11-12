@@ -32,36 +32,30 @@ class AllSetup
 
         ?>
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="allsetup">
+        <div class="mainContainer allsetup">
 <!--            <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-            <div class="page_top_title"><?php echo __('You\'re all set up!', 'mailjet'); ?></div>
+            <h1 class="page_top_title"><?php echo __('You\'re all set up!', 'mailjet'); ?></h1>
             <div class="section_inner_title_slave"><?php echo __('What would you like to do next?', 'mailjet'); ?></div>
-<br />
-            <div class="container">
+            <div class="allsetup_blocks">
                 <div class="block_single">
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_signup_to_newsletter.png'; ?>" />
                     <div class="section_inner_title"><?php echo __('Add a subscription form to your website', 'mailjet' ); ?></div>
                     <p><?php echo __('Go to the widget management page and add the Mailjet Subscription Widget to your website to start collecting email addresses.', 'mailjet' ); ?></p>
-                    <div class="bottomBtn"><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse1" onclick="location.href = 'widgets.php'" value="<?=__('Manage my widgets', 'mailjet')?>"></div>
+                    <div class="bottomBtn"><input name="nextBtnReverse" class="mj-btn btnPrimary" type="button" id="nextBtnReverse1" onclick="location.href = 'widgets.php'" value="<?=__('Manage my widgets', 'mailjet')?>"></div>
                 </div>
-            </div>
-            <div class="container">
                 <div class="block_single">
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_send_campaign.png'; ?>" />
                     <div class="section_inner_title"><?php echo __('Send an email campaign', 'mailjet' ); ?><br /></div>
                     <p><?php echo __('Ready to send a newsletter to your subscribers? Simply go to your Campaigns and click on "Create a campaign" to create and send your email.', 'mailjet' ); ?></p>
-                    <div class="bottomBtn"><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse2" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'" value="<?=__('Create a campaign', 'mailjet')?>"></div>
+                    <div class="bottomBtn"><input name="nextBtnReverse" class="mj-btn btnPrimary" type="button" id="nextBtnReverse2" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'" value="<?=__('Create a campaign', 'mailjet')?>"></div>
                 </div>
-            </div>
-            <div class="container">
                 <div class="block_single">
                     <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_configure.png'; ?>" />
                     <div class="section_inner_title"><?php echo __('Configure Wordpress email sending', 'mailjet' ); ?></div>
                     <p><?php echo __('Enable and configure sending of all your Wordpress emails (transactional emails, etc...) through Mailjet.', 'mailjet' ); ?></p>
-                    <div class="bottomBtn"><input name="nextBtnReverse" class="nextBtnReverse" type="button" id="nextBtnReverse3" onclick="location.href = 'admin.php?page=mailjet_sending_settings_page'" value="<?=__('Configure', 'mailjet')?>"></div>
+                    <div class="bottomBtn"><input name="nextBtnReverse" class="mj-btn btnPrimary" type="button" id="nextBtnReverse3" onclick="location.href = 'admin.php?page=mailjet_sending_settings_page'" value="<?=__('Configure', 'mailjet')?>"></div>
                 </div>
             </div>
-
             <div class="allsetupGreenLinkDiv">
                 <?php echo sprintf(__('or <a class="greenLink" href="%s">Go to your Mailjet Plugin Homepage</a>', 'mailjet'), "admin.php?page=mailjet_dashboard_page"); ?>
             </div>
