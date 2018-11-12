@@ -596,75 +596,62 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 }
 
 /* Dashboard */
-.dashboard {
-    width: 1072px;
-    border-radius: 3px;
-    background-color: #FFFFFF;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
-    padding:20px;
+.dashboard .initialSettingsMainCtn {
+    display: flex;
 }
-.dashboard .container {
-    text-align: center;
-    margin: 0 auto;
-    max-width: 496px;
-    float: left;
-}
-
 .dashboard .block {
-    height: 328px;
-    width: 220px;
+    position: relative;
+    padding: 24px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
-    margin: 5px;
-    display: inline-block;
-    padding:5px;
-    float: left;
-    position: relative;
 }
-
-.dashboard .block p, .allsetup .block_single p {
+.dashboard .leftCol {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 40%;
+}
+.dashboard .passportImage {
+    flex-grow: 1;
+    width: 100%;
+    margin-top: 40px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.dashboard .rightCol {
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 500px;
+    max-width: 650px;
+}
+.dashboard .rightCol .block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(50% - 16px);
+    margin: 0 0 16px 16px;
+    text-align: center;
+}
+.dashboard .rightCol .block:nth-last-child(-n+2) {
+    margin-bottom: 0;
+}
+.dashboard .rightCol .blockTitle {
+    line-height: 24px;
+    margin: 0 0 16px;
+    font-size: 16px;
+}
+.dashboard .rightCol .blockText {
     flex-grow: 1;
 }
-
-.dashboard .block img {
+.dashboard .rightCol img {
     width: 96px;
     height: 96px;
-    margin: 10px;
-    display: inline-block;
+    margin-bottom: 24px;
 }
-
-
-.dashboard .block_single {
-    min-height: 666px;
-    width: 480px;
-    border: 1px solid #E5E5E5;
-    border-radius: 3px;
-    margin: 5px;
-    display: inline-block;
-    padding:10px;
-    float: left;
-    text-align: left;
+.dashboard .rightCol .mj-btn {
+    width: 100%;
 }
-
-.dashboard .block .dashboar_block_title, .dashboard .block_single .dashboar_block_title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    text-align: center;
-    margin-bottom: 10px;
-}
-.dashboard .block_single .dashboar_block_title {
-    text-align: left;
-    font-size: 20px;
-}
-
-.dashboard .block_single img {
-    width: 448px;
-    height: 289px;
-    margin: 0px;
-    display: inline-block;
-}
-
 
 .bottom_links_dashboard {
     clear: left;
@@ -707,29 +694,6 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     padding:10px;
     font-size: 14px;
 }
-
-.nextBtnReverse, .nextBtnReverseDashboard {
-    background-color: #FEAD0D;
-    width: 272px;
-    height: 36px;
-    border: 1px solid #FEAD0D;
-    border-radius: 3px;
-    color: #FFF;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    text-align: center;
-    margin-left:10px;
-}
-.nextBtnReverseDashboard {
-    width: 192px;
-    margin:20px 8px;
-}
-.nextBtnReverse:hover, .nextBtnReverseDashboard:hover {
-    background-color: transparent;
-    color: #FCB340;
-}
-
 .cancelBtn {
     background-color: #c5c5c5;
     width: 100px;

@@ -83,27 +83,30 @@
     });
 })( jQuery );
 
-const mjInitShowHide = () => {
+function mjInitShowHide() {
     
     const btn = document.querySelectorAll('.mj-toggleBtn');
     const expanded = document.querySelectorAll('.mj-show');
     const collapsed = document.querySelectorAll('.mj-hide');
 
     if (expanded && expanded.length > 0) {
-        expanded.forEach(function(el) {
-            el.style.minHeight = `${el.scrollHeight}px`;
-        });
+        for(var i = 0; i < expanded.length; i++) {
+            el = expanded[i];
+            el.style.minHeight = el.scrollHeight+'px';
+        }
     }
     if (collapsed && collapsed.length > 0) {
-        collapsed.forEach(function(el) {
+        for(var i = 0; i < collapsed.length; i++) {
+            el = collapsed[i];
             el.style.height = '0';
-        });
+        }
     }
     
     if (btn && btn.length > 0) {
-        btn.forEach(function(el) {
-            const target = document.querySelector(`#${el.dataset.target}`);
-            const isHidden = () => {
+        for(var i = 0; i < btn.length; i++) {
+            el = btn[i];
+            const target = document.querySelector('#'+el.dataset.target);
+            function isHidden() {
                 const classes = target.className.split(' ');
                 return classes.indexOf('mj-hide') >= 0;
             }
@@ -114,14 +117,13 @@ const mjInitShowHide = () => {
                 :
                     mjHide(target, el);
             });
-        });
+        }
     }
 }
 
 let transitionTimeout;
 
 function deleteHeight(el, delay) {
-    console.log(delay)
     transitionTimeout = window.setTimeout(function() {
         el.style.height = ''
     }, delay);
@@ -135,7 +137,7 @@ function mjShow(target, btn) {
     cleardeleteHeight();
 
     target.style.minHeight = '0';
-    target.style.minHeight = `${target.scrollHeight}px`;
+    target.style.minHeight = target.scrollHeight+'px';
     
     target.classList.remove('mj-hide');
     target.classList.add('mj-show');
@@ -150,7 +152,7 @@ function mjShow(target, btn) {
 
 function mjHide(target, btn) {
     cleardeleteHeight();
-    target.style.height = `${target.scrollHeight}px`;
+    target.style.height = target.scrollHeight+'px';
     target.style.height = '0';
     target.style.minHeight = '0';
 
@@ -159,15 +161,17 @@ function mjHide(target, btn) {
     btn && btn.classList.remove('mj-active');
 }
 
-const mjSelect = () => {
+function mjSelect() {
     const allSelects = document.querySelectorAll('.mj-select');
     if (allSelects && allSelects.length > 0) {
-        allSelects.forEach(function(select) {
+        
+        for(var i = 0; i < allSelects.length; i++) {
+            select = allSelects[i];
             const wrapper = document.createElement('div');
             wrapper.classList.add('mj-select-wrapper');
             select.parentNode.insertBefore(wrapper, select);
             wrapper.appendChild(select);
-            const selectValue = () => select.querySelector("option:checked").textContent
+            function selectValue() { return select.querySelector("option:checked").textContent }
             wrapper.setAttribute('data-value', selectValue());
 
             select.addEventListener("change", function() {
@@ -179,11 +183,11 @@ const mjSelect = () => {
             select.addEventListener("blur", function() {
                 wrapper.classList.remove('mj-select-focus');
             });
-        });
+        }
     }
 }
 
-mjSubscription = () => {
+function mjSubscription() {
     /**
      * Handles Contact List form's display
      */
@@ -219,16 +223,16 @@ mjSubscription = () => {
     });
 }
 
-const mjSendingSettings = () => {
+function mjSendingSettings() {
     /**
      * disable SSL checkbox if port != 465
      */
     const portSelect = document.querySelector('.mjSettings #mailjet_port');
-    const getPort = () => portSelect ? portSelect.value : null;
+    function getPort() { return portSelect ? portSelect.value : null; }
     const sslBox = document.querySelector('.mjSettings #mailjet_ssl');
     const sslLabel = sslBox.parentElement.nodeName == "LABEL" ? sslBox.parentElement : null
     
-    const disableSSL = () => {
+    function disableSSL() {
         if (getPort() !== "465") {
             sslBox.checked = false;
 
@@ -283,7 +287,7 @@ const mjSendingSettings = () => {
     }
 }
 
-const mjAdmin = () => {
+function mjAdmin() {
     mjInitShowHide();
     mjSelect();
     if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page') 
@@ -291,7 +295,7 @@ const mjAdmin = () => {
     document.querySelector('body.admin_page_mailjet_sending_settings_page') && mjSendingSettings();
 }
 
-document.addEventListener('readystatechange', event => {
+document.addEventListener('readystatechange', function(event) {
     if (event.target.readyState === "complete") {
         mjAdmin();
     }
