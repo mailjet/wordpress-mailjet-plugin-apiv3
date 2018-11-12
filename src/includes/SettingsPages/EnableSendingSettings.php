@@ -94,7 +94,7 @@ class EnableSendingSettings
                         <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></span>
                     </label>
                 </div>
-                <button type="button" id="mailjet_test" class="<?= $mailjetSsl ? 'mj-show' : 'mj-hide' ?> sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?=__('Send a test', 'mailjet')?></button>
+                <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?=__('Send a test', 'mailjet')?></button>
                 <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
                     <label class="mj-label" for="mailjet_test_address"><b><?php echo __('Recipient of the test email', 'mailjet'); ?></b></label>
                     <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
