@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-11-09 18:00+0200\n"
-"PO-Revision-Date: 2018-11-09 18:00+0200\n"
+"PO-Revision-Date: 2018-11-12 10:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -882,7 +882,7 @@ msgstr "Contenu d'email de confirmation"
 
 #: src/widget/views/admin.php:109
 msgid "Thank you page"
-msgstr ""
+msgstr "Merci page"
 
 #: src/widget/views/admin.php:117
 msgid "You can add up to 5 contact properties to collect additional data"
