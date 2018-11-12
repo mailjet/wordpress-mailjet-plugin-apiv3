@@ -628,7 +628,6 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 .dashboard .rightCol .block {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: calc(50% - 16px);
     margin: 0 0 16px 16px;
     text-align: center;
@@ -647,7 +646,7 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 .dashboard .rightCol img {
     width: 96px;
     height: 96px;
-    margin-bottom: 24px;
+    margin: 0 auto 24px;
 }
 .dashboard .rightCol .mj-btn {
     width: 100%;
