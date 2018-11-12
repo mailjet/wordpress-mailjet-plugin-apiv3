@@ -272,19 +272,6 @@ function mjSendingSettings() {
             });
         }
     })
-
-    /**
-     * Show Test email form
-     */
-    if (sslBox) {
-        const btnTest = document.querySelector('.mjSettings #mailjet_test');
-        sslBox.addEventListener("change", function() {
-            this.checked ?
-                mjShow(btnTest)
-            :
-            mjHide(btnTest)
-        })
-    }
 }
 
 function mjAdmin() {

@@ -563,6 +563,7 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     display: none;
 }
 #create_contact_list img {
+    height: 16px;
     margin-right: 8px;
 }
 #create_contact_list:hover {
