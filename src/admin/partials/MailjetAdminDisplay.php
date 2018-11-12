@@ -17,7 +17,7 @@ class MailjetAdminDisplay
     public static function getSettingsLeftMenu()
     {
         ?>
-        <h1>Settings</h1>
+        <h1><?php _e('Settings', 'mailjet') ?></h1>
         <?php
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         ?>
