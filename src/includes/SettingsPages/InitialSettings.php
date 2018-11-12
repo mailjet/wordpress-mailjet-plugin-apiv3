@@ -35,7 +35,7 @@ class InitialSettings
     {
         ?>
         <p class="top_descrption_helper" id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://www.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet'); ?>
+            <?php echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet'); ?>
         </p>
         <?php
     }
@@ -57,7 +57,7 @@ class InitialSettings
         // output the field
         ?>
         <fieldset>
-            <legend class="screen-reader-text"><span><b><?php echo  __('Connect your Mailjet account to get started', 'mailjet'); ?></b></span></legend>
+            <legend class="screen-reader-text"><span><b><?php _e('Connect your Mailjet account to get started', 'mailjet'); ?></b></span></legend>
 
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
@@ -229,7 +229,7 @@ class InitialSettings
 <!--        <br style="clear: left;"/>-->
         <div class="bottom_links">
             <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet'); ?>" />
                 <?php echo __('Need help getting started?', 'mailjet' ); ?>
             </div>
             <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
