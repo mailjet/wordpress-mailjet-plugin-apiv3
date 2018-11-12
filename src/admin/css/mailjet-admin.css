@@ -414,6 +414,7 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 }
 .mjSettings .settingsSendingFldset {
     margin-bottom: 24px;
+    padding-left: 24px;
 }
 .mjSettings .settingsSendingFldset .fromFld,
 .mjSettings .settingsSendingFldset .smtpFld {
@@ -584,13 +585,8 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 }
 
 .allsetupGreenLinkDiv {
-    padding-top: 20px;
-    margin-left: 380px;
-    clear: left;
-}
-.allsetupGreenLinkDiv .greenLink {
-    font-size: 14px;
-    line-height: 20px;
+    margin-top: 24px;
+    text-align: center;
 }
 #initialContactListsForm .initialContactListsFieldset p {
     margin-bottom: 16px;
@@ -662,12 +658,6 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 .allsetup_blocks {
     display: flex;
 }
-.allsetup .block_single img {
-    display: block;
-    width: 96px;
-    height: 96px;
-    margin: 0 auto 24px; 
-}
 .allsetup .block_single {
     flex-grow: 1;
     flex-basis: 0;
@@ -681,8 +671,17 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 .allsetup .block_single + .block_single {
     margin-left: 24px;
 }
+.allsetup .block_single img {
+    display: block;
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 24px; 
+}
 .allsetup .block_single .section_inner_title {
     margin-bottom: 16px;
+}
+.allsetup .block_single .blockText {
+    flex-grow: 1;
 }
 .allsetup .block_single .mj-btn {
     display: block;
