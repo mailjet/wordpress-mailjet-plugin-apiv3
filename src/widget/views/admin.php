@@ -11,7 +11,11 @@ $numberActiveLanguages = count($activeLanguages);
 //$totalWidth = $numberActiveLanguages * $pxPerLang;
 //$percent = $totalWidth/$numberActiveLanguages.'px';
 $maxWidth = 60;
-$percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
+if($numberActiveLanguages == 1) {
+    $percent = 30;
+} else {
+    $percent = $numberActiveLanguages > 0 ? $maxWidth / $numberActiveLanguages : $maxWidth;
+}
 ?>
 <!-- This file is used to markup the administration form of the widget. -->
 <div id="chooseLangLabelWrap"><span id="chooseLangLabel"><?php _e('Choose the languages supported by your subscription form:', 'mailjet'); ?></span></div>

@@ -152,9 +152,7 @@ class MailjetSettings
      */
     public function apiCredentialsInvalid()
     {
-        echo '<div class="error"><p>';
-        _e('Your Mailjet API credentials are invalid or not yet configured. Please check and configure them to proceed further.', 'mailjet');
-        echo "</p></div>";
+        add_settings_error('mailjet_messages', 'mailjet_message', __('Your Mailjet API credentials are invalid or not yet configured. Please check and configure them to proceed further.', 'mailjet'), 'error');
     }
 
     /**

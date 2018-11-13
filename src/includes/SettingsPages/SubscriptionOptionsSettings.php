@@ -50,58 +50,42 @@ class SubscriptionOptionsSettings
         // output the field
         ?>
 
-        <fieldset>
-            <legend class="screen-reader-text"><span><?php echo  __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
+        <fieldset class="settingsSubscrFldset">
+            <legend class="screen-reader-text"><span><?php  _e('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
 
-            <div>
-                <label>
-                    <span style="display: table-cell;">
-                        <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                    </span>
-                    <span style="display: table-cell;text-align: justify;"><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></span>
-                </label>
-            </div>
-            <br />
+            <label class="checkboxLabel">
+                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?php echo ($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
+                <span><?php _e('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></span>
+            </label>
 
-            <div class="mailjet_sync_options_div">
-                <select name="mailjet_sync_list" id="mailjet_sync_list" type="select">
-                    <option value="0"><?php _e('Choose a list', 'mailjet') ?></option>
-                    <?php
-                    foreach ($mailjetContactLists as $mailjetContactList) {
-                        if ($mailjetContactList["IsDeleted"] == true) {
-                            continue;
-                        }
-                        ?>
-                        <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetSyncList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
-                        <?php
-                    } ?>
-                </select>
-                <br /><br />
-
-                <div>
-                    <label>
-                    <span style="display: table-cell;">
-                        <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" style="vertical-align: middle;" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                    </span>
-                        <span style="display: table-cell;text-align: justify;"><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></span>
+            <div id="activate_mailjet_sync_form" class="<?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
+                <div class="mailjet_sync_options_div">
+                    <select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
+                 <?php
+                 foreach ($mailjetContactLists as $mailjetContactList) {
+                            if ($mailjetContactList["IsDeleted"] == true) {
+                                continue;
+                            }
+                            ?>
+                            <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetSyncList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
+                            <?php
+                        } ?>
+                    </select>
+                    <label class="checkboxLabel">
+                        <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
+                        <span><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></span>
                     </label>
                 </div>
             </div>
-<hr>
 
 
-            <div>
-                <label>
-                    <span style="display: table-cell;">
-                        <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" style="vertical-align: middle;" value="1" <?=($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                    </span>
-                    <span style="display: table-cell;text-align: justify;"><?php echo __('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet'); ?></span>
-                </label>
-            </div>
-             <br />
+            <label class="checkboxLabel">
+                <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?php echo ($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
+                <span><?php _e('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet'); ?></span>
+            </label>
 
-            <div class="mailjet_sync_comment_authors_div">
-                <select name="mailjet_comment_authors_list" id="mailjet_comment_authors_list" type="select">
+            <div id="comment_authors_contact_list" class="<?php echo ($mailjetCommentAuthorsSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_comment_authors_div">
+                <select class="mj-select" name="mailjet_comment_authors_list" id="mailjet_comment_authors_list" type="select">
                     <?php
                     foreach ($mailjetContactLists as $mailjetContactList) {
                         if ($mailjetContactList["IsDeleted"] == true) {
@@ -112,7 +96,6 @@ class SubscriptionOptionsSettings
                         <?php
                     } ?>
                 </select>
-                <br />
             </div>
 
         </fieldset>
@@ -188,31 +171,32 @@ class SubscriptionOptionsSettings
         ?>
 
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer mjSettings">
-            <div class="left">
-                <div class="centered">
+        <div class="mainContainer">
+            <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
+            <div class="mjSettings">
+                <div class="left">
                     <?php
                     MailjetAdminDisplay::getSettingsLeftMenu();
                     ?>
                 </div>
-            </div>
 
-            <div class="right">
-                <div class="centered">
-<!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                    <h2><?php echo __('Subscription options', 'mailjet'); ?></h2>
-                    <form action="options.php" method="post">
-                        <?php
-                        // output security fields for the registered setting "mailjet"
-                        settings_fields('mailjet_subscription_options_page');
-                        // output setting sections and their fields
-                        // (sections are registered for "mailjet", each field is registered to a specific section)
-                        do_settings_sections('mailjet_subscription_options_page');
-                        // output save settings button
-                        submit_button('Save', 'MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
-                        ?>
-                        <input name="cancelBtn" class="cancelBtn" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
-                    </form>
+                <div class="right">
+                    <div class="centered">
+    <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+                        <h2 class="section_inner_title"><?php echo __('Subscription options', 'mailjet'); ?></h2>
+                        <form action="options.php" method="post">
+                            <?php
+                            // output security fields for the registered setting "mailjet"
+                            settings_fields('mailjet_subscription_options_page');
+                            // output setting sections and their fields
+                            // (sections are registered for "mailjet", each field is registered to a specific section)
+                            do_settings_sections('mailjet_subscription_options_page');
+                            // output save settings button
+                            submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
+                            ?>
+                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,7 +314,7 @@ class SubscriptionOptionsSettings
                 $this->mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
             }
             ?>
-            <label for="admin_bar_front">
+            <label class="mj-label" for="admin_bar_front">
                 <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
                     <?php echo(is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
                        class="checkbox" /> <?php _e('Subscribe to our mailing list', 'mailjet') ?></label>
@@ -376,11 +360,10 @@ class SubscriptionOptionsSettings
         // Display the checkbox only for NOT-logged in users
         if (!$user->exists() && get_option('mailjet_comment_authors_list')) {
             ?>
-            <label for="admin_bar_front">
+            <label class="mj-label" for="admin_bar_front">
                 <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
                 <?php _e('Subscribe to our mailing list', 'mailjet') ?>
             </label>
-            <br>
             <?php
         }
     }

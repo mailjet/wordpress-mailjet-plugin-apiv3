@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-11-09 17:59+0200\n"
-"PO-Revision-Date: 2018-11-09 17:59+0200\n"
+"PO-Revision-Date: 2018-11-13 16:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_GB\n"
@@ -250,18 +250,13 @@ msgid "Contact our support team"
 msgstr "Contact our support team"
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:27
-#, fuzzy
-#| msgid ""
-#| "In your Mailjet account, go to <a class=\"greenLink\" target=\"_blank\" "
-#| "href=\"https://www.mailjet.com/account/api_keys\">My Account > API Keys</"
-#| "a> and paste your credentials bellow"
 msgid ""
 "In your Mailjet account, go to <a class=\"greenLink\" target=\"_blank\" href="
 "\"https://app.mailjet.com/account/api_keys\">My Account > API Keys</a> and "
 "paste your credentials bellow"
 msgstr ""
 "In your Mailjet account, go to <a class=\"greenLink\" target=\"_blank\" href="
-"\"https://www.mailjet.com/account/api_keys\">My Account > API Keys</a> and "
+"\"https://app.mailjet.com/account/api_keys\">My Account > API Keys</a> and "
 "paste your credentials bellow"
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:43
