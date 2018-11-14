@@ -173,7 +173,7 @@ class MailjetMenu
        // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
 
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
-        echo __('Campaigns', 'mailjet');
+        _e('Campaigns', 'mailjet');
         echo '</h2></div>';
 
         try {
@@ -198,7 +198,7 @@ class MailjetMenu
     //    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
 
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
-        echo __('Statistics', 'mailjet');
+        _e('Statistics', 'mailjet');
         echo '</div>';
 
         try {
@@ -223,7 +223,7 @@ class MailjetMenu
      //   \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
 
         echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
-        echo __('Contacts', 'mailjet');
+        _e('Contacts', 'mailjet');
         echo '</h2></div>';
 
         try {
