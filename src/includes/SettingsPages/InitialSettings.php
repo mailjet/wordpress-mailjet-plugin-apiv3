@@ -177,7 +177,8 @@ class InitialSettings
         // (sections are registered for "mailjet", each field is registered to a specific section)
         do_settings_sections('mailjet_initial_settings_page');
         // output save settings button
-        submit_button('Connect your account', 'mj-btn btnPrimary', 'submit', false, array('id' => 'initialSettingsSubmit'));
+        $connectYourAccount = __('Connect your account', 'mailjet');
+        submit_button($connectYourAccount, 'mj-btn btnPrimary', 'submit', false, array('id' => 'initialSettingsSubmit'));
         /* No Next btn on Initial API settings page - we redirect automatically
           if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
           <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet')?>">
