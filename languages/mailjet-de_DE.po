@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-11-14 11:00+0200\n"
-"PO-Revision-Date: 2018-11-14 11:30+0200\n"
+"PO-Revision-Date: 2018-11-14 12:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: de_DE\n"
@@ -881,7 +881,7 @@ msgstr "Inhalt der Bestätigungs-E-Mail"
 
 #: src/widget/views/admin.php:113
 msgid "Thank you page"
-msgstr "Danke Seite"
+msgstr "\"Danke\"-Seite"
 
 #: src/widget/views/admin.php:121
 msgid "You can add up to 5 contact properties to collect additional data"
@@ -1029,6 +1029,9 @@ msgid ""
 "Select a page from your Wordpress site to show after successful subscription "
 "confirmation or leave empty to use the default \"Thank you\" page"
 msgstr ""
+"Wählen Sie eine Seite von Ihrer Wordpress-Seite aus, die nach erfolgreicher "
+"Anmeldebestätigung angezeigt werden soll, oder lassen Sie sie leer, um die "
+"Standardseite \"Danke\" zu verwenden."
 
 #: src/widget/views/admin.php:480
 msgid "Default page"
