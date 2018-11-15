@@ -172,7 +172,7 @@ class MailjetMenu
     {
        // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
 
-        echo '<div class="iframePage">';
+        echo '<div class="mj-pluginPage iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
@@ -200,7 +200,7 @@ class MailjetMenu
     {
     //    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
 
-        echo '<div class="iframePage">';
+        echo '<div class="mj-pluginPage iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
@@ -227,7 +227,7 @@ class MailjetMenu
     {
      //   \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
 
-        echo '<div class="iframePage">';
+        echo '<div class="mj-pluginPage iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();

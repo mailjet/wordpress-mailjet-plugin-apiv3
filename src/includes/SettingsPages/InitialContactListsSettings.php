@@ -227,27 +227,27 @@ class InitialContactListsSettings
         settings_errors('mailjet_messages');
         ?>
 
+        <div class="mj-pluginPage">
+            <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+            <div class="mainContainer">
 
-        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer">
+                <div class="backToDashboard">
+                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
+                    <?php _e('Back to dashboard', 'mailjet') ?>
+                    </a>
+                </div>
 
-            <div class="backToDashboard">
-                <a href="admin.php?page=mailjet_dashboard_page">
-                <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
-                <?php _e('Back to dashboard', 'mailjet') ?>
-                </a>
-            </div>
-
-            <div>
-                <h1 class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
-                <p class="page_top_subtitle">
+                <div>
+                    <h1 class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                    <p class="page_top_subtitle">
         <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
-                </p>
-            </div>
+                    </p>
+                </div>
 
-            <div id="initialContactListsForm">
-                <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
-                <form action="options.php" method="post">
+                <div id="initialContactListsForm">
+                    <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
+                    <form action="options.php" method="post">
                    <?php
                     // output security fields for the registered setting "mailjet"
                     settings_fields('mailjet_initial_contact_lists_page');
@@ -260,25 +260,26 @@ class InitialContactListsSettings
                     } else {
                         update_option('settings_step', 'initial_step')
                         ?>
-                        <input name="nextBtn" class="mj-btn btnPrimary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'mailjet')?>">
+                            <input name="nextBtn" class="mj-btn btnPrimary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'mailjet')?>">
                     <?php
                     } ?>
 
-                    <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?php (true !== $applyAndContinueBtnClicked) ? _e('Skip this step', 'mailjet') : _e('Next', 'mailjet'); ?>">
+                        <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?php (true !== $applyAndContinueBtnClicked) ? _e('Skip this step', 'mailjet') : _e('Next', 'mailjet'); ?>">
 
-                    <br />
-                </form>
+                        <br />
+                    </form>
+                </div>
+
             </div>
 
-        </div>
-
-        <div class="bottom_links">
-            <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
-            <?php echo __('Need help getting started?', 'mailjet'); ?>
+            <div class="bottom_links">
+                <div class="needHelpDiv">
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
+                <?php echo __('Need help getting started?', 'mailjet'); ?>
+                </div>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
             </div>
-            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-        <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
         </div>
 
         <?php

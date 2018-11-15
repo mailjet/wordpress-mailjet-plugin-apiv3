@@ -3,232 +3,235 @@
 /**
  * Global styles and WP/bootsrap override
  */
-[class*="admin_page_mailjet"] {
+.mj-pluginPage {
     font-family: Roboto;
     color: #555;
 }
-[class*="admin_page_mailjet"] a {	
+.mj-pluginPage a {
     color: #19BC9C;
 }
-[class*="admin_page_mailjet"] a:hover,
-[class*="admin_page_mailjet"] a:focus {	
+.mj-pluginPage a:hover,
+.mj-pluginPage a:focus {
     text-decoration: underline;
     color: #33D6B6;
 }
-[class*="admin_page_mailjet"] a:visited {	
+.mj-pluginPage a:visited {
     text-decoration: underline;
     color: #9B59B6;
 }
-[class*="admin_page_mailjet"] b {	
-    font-weight: 500;
+.mj-pluginPage b {
+    font-weight: 650;
 }
-[class*="admin_page_mailjet"] p {	
-    margin-bottom: 24px;    	
-}	
-p {	
-    max-width: 550px;	
-    line-height: 20px;	
-    font-size: 14px;	
-}	
-input[type="text"] {	
+.mj-pluginPage p {
+    margin-bottom: 24px;    
+}
+.mj-pluginPage p {
+    max-width: 550px;
+    line-height: 20px;
+    font-size: 14px;
+}
+.mj-pluginPage input[type="text"] {
     /* font-family: Roboto; */
-    width: 100%;	
-    max-width: 311px;	
-    height: 36px;	
-    margin-bottom: 16px;	
-    border: 1px solid #888;	
-    border-radius: 3px;	
-    color: inherit;	
-    box-shadow: none;	
-}	
-.mj-show {	
-    min-height: 0;	
-    overflow: hidden;	
-    transition: height 0ms ease-in 0ms, min-height 250ms ease-in 0ms;	
-}	
-.mj-hide {	
-    height: 0;	
-    overflow: hidden;	
-    transition: height 75ms ease-in 0ms, min-height 75ms ease-in 0ms;	
-}	
-.mj-disabled {	
-    opacity: .4;	
-    cursor: not-allowed;	
-}	
-.form-table {	
-    margin-top: 0;	
-}	
-.form-table td {	
-    padding: 0;	
-}	
-.form-table td p {	
-    margin-top: 0;	
-}	
-[class*="admin_page_mailjet"] .mj-label,	
-.form-table td fieldset .label {	
-    display: block;	
-    max-width: -moz-max-content;	
-    max-width: max-content;	
-    line-height: 20px;	
-    margin: 0 0 8px !important;	
-}	
-.mj-select-wrapper {	
-    position: relative;	
-    display: inline-block;	
-    margin-bottom: 16px;	
-}	
-.mj-select-wrapper:before {	
-    content: attr(data-value);	
-    position: absolute;	
-    left: 0;	
-    top: 0;	
-    z-index: 1;	
-    display: block;	
-    width: 100%;	
-    height: 100%;	
-    line-height: 20px;	
-    padding: 8px 32px 8px 16px;	
-    border-radius: 3px;	
-    font-weight: 500;	
-    color: #555;	
-    background-color: #f2f2f2;	
-}	
-.mj-select-wrapper:after {	
-    content: '';	
-    position: absolute;	
-    right: 16px;	
-    top: calc(100% / 2);	
-    z-index: 2;	
-    display: block;	
-    width: 0;	
-    height: 0;	
-    border-style: solid solid none solid;	
-    border-width: 5px 4px 0 4px;	
-    border-color: #555 transparent transparent transparent;	
-}	
-.mj-select-wrapper:hover:before {	
-    background-color: #e5e5e5;	
-}	
-.mj-select-wrapper.mj-select-focus:before {	
-    background-color: #d9d9d9;	
-}	
-.mj-select-wrapper select {	
-    position: relative;	
-    z-index: 3;	
-    width: 312px;	
-    height: 36px;	
-    opacity: 0;	
+    width: 100%;
+    max-width: 311px;
+    height: 36px;
+    margin-bottom: 16px;
+    border: 1px solid #888;
+    border-radius: 3px;
+    color: inherit;
+    box-shadow: none;
+}
+.mj-show {
+    min-height: 0;
+    overflow: hidden;
+    transition: height 0ms ease-in 0ms, min-height 250ms ease-in 0ms;
+}
+.mj-hide {
+    height: 0;
+    overflow: hidden;
+    transition: height 75ms ease-in 0ms, min-height 75ms ease-in 0ms;
+}
+.mj-disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+.mj-pluginPage .form-table {
+    margin-top: 0;
+}
+.mj-pluginPage .form-table td {
+    padding: 0;
+}
+.mj-pluginPage .form-table td p {
+    margin-top: 0;
+}
+.mj-pluginPage .mj-label,
+.mj-pluginPage .form-table td fieldset .label {
+    display: block;
+    max-width: -moz-max-content;
+    max-width: max-content;
+    line-height: 20px;
+    margin: 0 0 8px !important;
+}
+.mj-select-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+.mj-select-wrapper:before {
+    content: attr(data-value);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 20px;
+    padding: 8px 32px 8px 16px;
+    border-radius: 3px;
+    font-weight: 500;
+    color: #555;
+    background-color: #f2f2f2;
+}
+.mj-select-wrapper:after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: calc(100% / 2);
+    z-index: 2;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid solid none solid;
+    border-width: 5px 4px 0 4px;
+    border-color: #555 transparent transparent transparent;
+}
+.mj-select-wrapper:hover:before {
+    background-color: #e5e5e5;
+}
+.mj-select-wrapper.mj-select-focus:before {
+    background-color: #d9d9d9;
+}
+.mj-select-wrapper select {
+    position: relative;
+    z-index: 3;
+    width: 312px;
+    height: 36px;
+    opacity: 0;
 }
 
-/* Buttons */	
-[class*="admin_page_mailjet"] .mj-btn {	
-    min-width: 84px;	
-    height: 36px;	
-    line-height: 20px;	
-    padding: 8px 16px;	
-    border: 1px solid currentColor;	
-    border-radius: 3px;	
-    text-align: center;	
-    font-size: 14px;	
-    font-weight: 500;	
-    background-color: transparent;	
-    box-shadow: none;	
-}	
-[class*="admin_page_mailjet"] .mj-btn:hover,	
-[class*="admin_page_mailjet"] .mj-btn:focus,	
-[class*="admin_page_mailjet"] .mj-btn:active {	
-    transform: none;	
-    outline: 0;	
-    box-shadow: none;	
-}	
-[class*="admin_page_mailjet"] .btnPrimary {
-    border-color: transparent;	
-    color: white;	
+/* Buttons */
+.mj-pluginPage .mj-btn {
+    min-width: 84px;
+    height: 36px;
+    line-height: 20px;
+    padding: 8px 16px;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: transparent;
+    box-shadow: none;
+}
+.mj-pluginPage .mj-btn:hover,
+.mj-pluginPage .mj-btn:focus,
+.mj-pluginPage .mj-btn:active {
+    transform: none;
+    outline: 0;
+    box-shadow: none;
+}
+.mj-pluginPage .btnPrimary,
+.mj-pluginPage .btnPrimary:hover,
+.mj-pluginPage .btnPrimary:focus,
+.mj-pluginPage .btnPrimary:active {
+    border-color: transparent;
+    color: white;
     background-color: #FEAD0D;
-}	
-[class*="admin_page_mailjet"] .btnPrimary:hover {
+}
+.mj-pluginPage .btnPrimary:hover {
     background-color: #FFBA1A;
 }
-[class*="admin_page_mailjet"] .btnPrimary:focus,	
-[class*="admin_page_mailjet"] .btnPrimary:active {
+.mj-pluginPage .btnPrimary:focus,
+.mj-pluginPage .btnPrimary:active {
     background-color: #F1A000;
 }
-[class*="admin_page_mailjet"] .btnSecondary {	
-    color: #FEAD0D;	
-    border-color: currentColor;	
-}	
-[class*="admin_page_mailjet"] .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus {    	
-    background-color: rgba(254,173,13,0.1);	
-}	
-[class*="admin_page_mailjet"] .btnSmall {	
-    min-width: 0;	
-    height: 28px;	
-    padding: 4px 16px;	
-}	
-[class*="admin_page_mailjet"] .btnCancel {	
-    padding-left: 0;	
-    padding-right: 0;	
-    border-color: transparent;	
-    color: #888;	
-}	
-.mj-btn + .mj-btn {	
-    margin-left: 16px;	
+.mj-pluginPage .btnSecondary {
+    color: #FEAD0D;
+    border-color: currentColor;
+}
+.mj-pluginPage .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus {    
+    background-color: rgba(254,173,13,0.1);
+}
+.mj-pluginPage .btnSmall {
+    min-width: 0;
+    height: 28px;
+    padding: 4px 16px;
+}
+.mj-pluginPage .btnCancel {
+    padding-left: 0;
+    padding-right: 0;
+    border-color: transparent;
+    color: #888;
+}
+.mj-btn + .mj-btn {
+    margin-left: 16px;
 }
 
-/**	
-* Don't break notices	
-*/	
-[class*="admin_page_mailjet"] .notice {	
-    margin: 16px 0 16px 0;	
-}	
-[class*="admin_page_mailjet"] .notice p {	
-    margin: .5em 0;	
-}	
-[class*="admin_page_mailjet"] .notice strong {	
-    font-weight: 500;	
+/**
+* Don't break notices
+*/
+.mj-pluginPage .notice {
+    margin: 16px 0 16px 0;
+}
+.mj-pluginPage .notice p {
+    margin: .5em 0;
+}
+.mj-pluginPage .notice strong {
+    font-weight: 500;
 }
 
-/**	
-* Override bootstrap modal styles	
-*/	
-[class*="admin_page_mailjet"] .modal-backdrop {	
-    background-color: #2D2F37;	
-}	
-[class*="admin_page_mailjet"] .modal-backdrop.in {	
-    opacity: .6;	
-}	
-[class*="admin_page_mailjet"] .modal.in .modal-dialog {	
-    transform: translate(0, calc(50vh - 50%));	
-    margin-top: 0;	
-}	
-[class*="admin_page_mailjet"] .modal-content {	
-    overflow: hidden;	
-    border-radius: 3px;	
-    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .2);	
-}	
-[class*="admin_page_mailjet"] .modal-header {	
-    display: flex;	
-    padding: 12px 32px 15px;	
-    border-top: 4px solid #FEAD0D;	
-    border-bottom: 1px solid #e5e5e5 !important;	
-}	
-[class*="admin_page_mailjet"] .modal-title {	
-    flex-grow: 1;	
-    line-height: 32px;	
-    font-size: 20px;	
-    font-weight: 500;	
-}	
-[class*="admin_page_mailjet"] .button.close {	
-    font-size: 0;	
-    color: rgba(255, 255, 255, 0);	
-}	
-[class*="admin_page_mailjet"] .modal-body {	
-    padding: 32px;	
-}	
-[class*="admin_page_mailjet"] .modal-body input {	
-    margin-bottom: 0;	
+/**
+* Override bootstrap modal styles
+*/
+.mj-pluginPage .modal-backdrop {
+    background-color: #2D2F37;
 }
-[class*="admin_page_mailjet"] .modal-footer {	
+.mj-pluginPage .modal-backdrop.in {
+    opacity: .6;
+}
+.mj-pluginPage .modal.in .modal-dialog {
+    transform: translate(0, calc(50vh - 50%));
+    margin-top: 0;
+}
+.mj-pluginPage .modal-content {
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .2);
+}
+.mj-pluginPage .modal-header {
+    display: flex;
+    padding: 12px 32px 15px;
+    border-top: 4px solid #FEAD0D;
+    border-bottom: 1px solid #e5e5e5 !important;
+}
+.mj-pluginPage .modal-title {
+    flex-grow: 1;
+    line-height: 32px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.mj-pluginPage .button.close {
+    font-size: 0;
+    color: rgba(255, 255, 255, 0);
+}
+.mj-pluginPage .modal-body {
+    padding: 32px;
+}
+.mj-pluginPage .modal-body input {
+    margin-bottom: 0;
+}
+.mj-pluginPage .modal-footer {
     padding: 16px 32px;
 }
 /**
@@ -275,17 +278,17 @@ input[type="text"] {
 #availableContactListsContainerParent::-webkit-scrollbar-thumb:active {
     background: linear-gradient(left, #22ADD4, #1E98BA);
 }
-[class*="admin_page_mailjet"] .checkboxLabel,
-.form-table td fieldset .checkboxLabel {
-    display: flex;	
-    max-width: -moz-max-content;	
-    max-width: max-content;	
-    line-height: 20px;	
-    margin: 0 0 8px !important;	
+.mj-pluginPage .checkboxLabel,
+.mj-pluginPage .form-table td fieldset .checkboxLabel {
+    display: flex;
+    max-width: -moz-max-content;
+    max-width: max-content;
+    line-height: 20px;
+    margin: 0 0 8px !important;
 }
 .mailjet_row input[type="checkbox"] {
     content: "\00a0";
-    position: relative;	
+    position: relative;
     top: 1px;
     display: inline-block;
     font: 16px/1em sans-serif;
@@ -298,13 +301,13 @@ input[type="text"] {
     border-radius: 3px;
     box-shadow: none;
 }
-.mailjet_row input[type="checkbox"]:checked::before {	
-    margin: -1px 0 0 -2px;	
-    font-size: 16px;	
+.mailjet_row input[type="checkbox"]:checked::before {
+    margin: -1px 0 0 -2px;
+    font-size: 16px;
 }
-.mailjet_row input[type="checkbox"]:focus {	
-    border:1px solid #19BC9C;	
-    background: #FFFFFF;	
+.mailjet_row input[type="checkbox"]:focus {
+    border:1px solid #19BC9C;
+    background: #FFFFFF;
     outline:none;
 }
 .mailjet_row input[type="checkbox"]:checked {
@@ -318,7 +321,7 @@ input[type="text"] {
 .mailjet_row input[type="checkbox"]:checked:before {
     color: #FFF;
 }
-#wpbody-content {	
+#wpbody-content {
     padding-right: 20px;
 }
 .mainContainer {
@@ -353,7 +356,7 @@ input[type="text"] {
     font-size: 14px;
     line-height: 20px;
 }
-.initialSettings {	
+.initialSettings {
     display: flex;
 }
 #initialSettingsForm {
@@ -362,19 +365,19 @@ input[type="text"] {
     border-radius: 3px;
     padding: 24px;
 }
-#initialSettingsForm .form-table {	
+#initialSettingsForm .form-table {
     margin-bottom: 8px;
 }
 #initialSettingsSubmit {
     display: block;
     width: 100%;
 }
-#initialSettingsForm .dont_have_account {	
-    margin: 24px 0 0;	
-}	
-.closeCreateList,	
-#subscriptionOptionsSubmit {	
-    float: left;	
+#initialSettingsForm .dont_have_account {
+    margin: 24px 0 0;
+}
+.closeCreateList,
+#subscriptionOptionsSubmit {
+    float: left;
     margin-left:10px;
 }
 #initialSettingsHead {
@@ -400,7 +403,7 @@ input[type="text"] {
     align-items: center;
     margin-bottom: 16px;
 }
-.initialSettingsDescriptionRow .initialSettingsTextCell {	
+.initialSettingsDescriptionRow .initialSettingsTextCell {
     margin-bottom: 0;
 }
 .initialSettingsImageCell {
@@ -424,9 +427,9 @@ input[type="text"] {
     display: flex;
     align-items: stretch;
 }
-.mjSettings .left {	
-    width: 268px;	
-    border-right: 1px solid #e5e5e5;	
+.mjSettings .left {
+    width: 268px;
+    border-right: 1px solid #e5e5e5;
 }
 .mjSettings .left .centered h1 {
     font-size: 32px;
@@ -457,13 +460,13 @@ input[type="text"] {
 .mjSettings .settingsSendingFldset .smtpFld {
     margin-bottom: 8px;
 }
-.mjSettings .settingsSendingFldset .smtpFld .mj-select-wrapper {	
+.mjSettings .settingsSendingFldset .smtpFld .mj-select-wrapper {
     margin-bottom: 0;
 }
-.mjSettings .settingsSendingFldset .smtpFld select {	
+.mjSettings .settingsSendingFldset .smtpFld select {
     width: auto;
     min-width: 80px;
-}	
+}
 .mjSettings .fromFldGroup {
     display: flex;
 }
@@ -477,9 +480,9 @@ input[type="text"] {
     display: block;
     padding: 0;
     margin: 0;
-    border: none;	
-    color: #19BC9C;	
-    background: transparent;	
+    border: none;
+    color: #19BC9C;
+    background: transparent;
     outline: 0;
 }
 .mjSettings .sendTestEmailBtn:before {
@@ -489,10 +492,10 @@ input[type="text"] {
     height: 6px;
     margin-right: 8px;
     border-top: 1px solid currentColor;
-    border-right: 1px solid currentColor;	
-    transform: rotate(45deg);	
-    transform-origin: center;	
-    vertical-align: 2px;	
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+    transform-origin: center;
+    vertical-align: 2px;
     transition: transform .075s ease-in;
 }
 .mjSettings .sendTestEmailBtn.mj-active:before {
@@ -514,9 +517,9 @@ input[type="text"] {
 }
 /*May should remove 1,2,3,4,5*/
 .bottom_links {
-    display: flex;	
-    max-width: -moz-max-content;	
-    max-width: max-content;	
+    display: flex;
+    max-width: -moz-max-content;
+    max-width: max-content;
     line-height: 20px;
     margin-top: 24px;
 }
@@ -570,8 +573,8 @@ input[type="text"] {
 }
 
 /* Contacts list display screen */
-.availableContactLists {	
-    margin-bottom: 24px;	
+.availableContactLists {
+    margin-bottom: 24px;
 }
 .availableContactListsContainerParent {
     width: 615px;
@@ -600,9 +603,9 @@ input[type="text"] {
 }
 .create_contact_list_popup label { /* -2,3,4*/
     display: block;
-    max-width: max-content;	
-    line-height: 20px;	
-    margin: 0 0 8px !important;	
+    max-width: max-content;
+    line-height: 20px;
+    margin: 0 0 8px !important;
     padding-bottom: 8px;
 }
 #create_contact_list {
@@ -622,11 +625,11 @@ input[type="text"] {
 #create_contact_list:hover {
     text-decoration: none;
 }
-.create_contact_list_fields {	
-    margin-bottom: 8px;	
-}	
-.create_contact_list_btns {	
-    display: flex;	
+.create_contact_list_fields {
+    margin-bottom: 8px;
+}
+.create_contact_list_btns {
+    display: flex;
 }
 .greenLink {
     color: #19BC9C;
@@ -701,7 +704,7 @@ input[type="text"] {
     width: 100%;
 }
 
-.allsetup_blocks {	
+.allsetup_blocks {
     display: flex;
 }
 .allsetup .block_single {
@@ -761,8 +764,8 @@ input[type="text"] {
 .activate_mailjet_sync_field {
      margin-bottom: 24px;
 }
-.mailjet_sync_options_div {	
-    margin: 16px 0 0 18px;	
+.mailjet_sync_options_div {
+    margin: 16px 0 0 18px;
 }
 .mailjet_sync_comment_authors_div{
     margin-left: 20px;
@@ -799,9 +802,9 @@ input[type="text"] {
     font-size: 16px;
 }
 
-/**	
+/**
 * Pages with iframe
-*/	
+*/
 .iframePage {
     display: flex;
     flex-direction: column;
