@@ -328,6 +328,7 @@ input[type="text"] {
 }
 .backToDashboard a {
     display: inline-flex;
+    align-items: center;
 }
 .backToDashboard a,
 .backToDashboard a:hover,
@@ -337,11 +338,11 @@ input[type="text"] {
     text-decoration: none;
     color: #888;
 }
-.backToDashboard a:before {
-    content: '';
+.backToDashboard svg {
     width: 8px;
     height: 8px;
-    background: url(../css/left_arrow.svg) no-repeat center center / contain;
+    margin-right: 8px;
+    fill: currentColor;
 }
 .mailjet_row label {
     font-weight: normal;
@@ -694,12 +695,6 @@ input[type="text"] {
 }
 .dashboard .rightCol .mj-btn {
     width: 100%;
-}
-
-.bottom_links_dashboard {
-    clear: left;
-    left: 0;
-    padding:10px;
 }
 
 .allsetup_blocks {	

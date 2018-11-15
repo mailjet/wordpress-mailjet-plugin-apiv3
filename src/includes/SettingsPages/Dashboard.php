@@ -73,7 +73,7 @@ class Dashboard
             </div>
         </div>
 
-        <div class="bottom_links_dashboard">
+        <div class="bottom_links">
             <div class="needHelpDiv">
                 <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet'); ?>" />
                 <?php echo __('Need help?', 'mailjet'); ?>
