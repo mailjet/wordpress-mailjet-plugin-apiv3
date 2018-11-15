@@ -141,14 +141,18 @@ input[type="text"] {
     outline: 0;	
     box-shadow: none;	
 }	
-[class*="admin_page_mailjet"] .btnPrimary,	
-[class*="admin_page_mailjet"] .btnPrimary:hover,	
-[class*="admin_page_mailjet"] .btnPrimary:focus,	
-[class*="admin_page_mailjet"] .btnPrimary:active {	
+[class*="admin_page_mailjet"] .btnPrimary {
     border-color: transparent;	
     color: white;	
-    background-color: #FEAD0D;	
+    background-color: #FEAD0D;
 }	
+[class*="admin_page_mailjet"] .btnPrimary:hover {
+    background-color: #FFBA1A;
+}
+[class*="admin_page_mailjet"] .btnPrimary:focus,	
+[class*="admin_page_mailjet"] .btnPrimary:active {
+    background-color: #F1A000;
+}
 [class*="admin_page_mailjet"] .btnSecondary {	
     color: #FEAD0D;	
     border-color: currentColor;	
@@ -717,7 +721,7 @@ input[type="text"] {
     display: block;
     width: 96px;
     height: 96px;
-    margin: 0 auto 24px; 
+    margin: 0 auto 24px; bottom_links_dashboard
 }
 .allsetup .block_single .section_inner_title {
     margin-bottom: 16px;
