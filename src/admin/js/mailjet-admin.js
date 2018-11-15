@@ -44,7 +44,9 @@
                 if (hiddenEmailExtra == undefined) {
                     hiddenEmailExtra = '';
                 }
-                $('#mailjet_from_email_fields .fromFldGroup').prepend('<input type="text" id="mailjet_from_email_extra" name="mailjet_from_email_extra" value="' + hiddenEmailExtra + '" required="required" placeholder="Enter your email name" />');
+                if (!document.querySelector('#mailjet_from_email_extra')) {
+                    $('#mailjet_from_email_fields .fromFldGroup').prepend('<input type="text" id="mailjet_from_email_extra" name="mailjet_from_email_extra" value="' + hiddenEmailExtra + '" required="required" placeholder="Enter your email name" />');
+                }
             } else {
                 $('#mailjet_from_email_extra').remove();
             }
@@ -163,7 +165,7 @@ function mjSelect() {
     if (allSelects && allSelects.length > 0) {
 
         for (var i = 0; i < allSelects.length; i++) {
-            select = allSelects[i];
+            const select = allSelects[i];
             const wrapper = document.createElement('div');
             wrapper.classList.add('mj-select-wrapper');
             select.parentNode.insertBefore(wrapper, select);

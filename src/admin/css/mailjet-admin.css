@@ -1,16 +1,28 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
 
 /**
- * Global styles and WP/bootsrap override	
+ * Global styles and WP/bootsrap override
  */
-body[class*="_page_mailjet_"] {
+[class*="admin_page_mailjet"] {
     font-family: Roboto;
     color: #555;
 }
-body[class*="_page_mailjet_"] b {	
+[class*="admin_page_mailjet"] a {	
+    color: #19BC9C;
+}
+[class*="admin_page_mailjet"] a:hover,
+[class*="admin_page_mailjet"] a:focus {	
+    text-decoration: underline;
+    color: #33D6B6;
+}
+[class*="admin_page_mailjet"] a:visited {	
+    text-decoration: underline;
+    color: #9B59B6;
+}
+[class*="admin_page_mailjet"] b {	
     font-weight: 500;
 }
-body[class*="_page_mailjet_"] p {	
+[class*="admin_page_mailjet"] p {	
     margin-bottom: 24px;    	
 }	
 p {	
@@ -19,6 +31,7 @@ p {
     font-size: 14px;	
 }	
 input[type="text"] {	
+    /* font-family: Roboto; */
     width: 100%;	
     max-width: 311px;	
     height: 36px;	
@@ -51,7 +64,7 @@ input[type="text"] {
 .form-table td p {	
     margin-top: 0;	
 }	
-body[class*="_page_mailjet_"] .mj-label,	
+[class*="admin_page_mailjet"] .mj-label,	
 .form-table td fieldset .label {	
     display: block;	
     max-width: -moz-max-content;	
@@ -108,7 +121,7 @@ body[class*="_page_mailjet_"] .mj-label,
 }
 
 /* Buttons */	
-body[class*="_page_mailjet_"] .mj-btn {	
+[class*="admin_page_mailjet"] .mj-btn {	
     min-width: 84px;	
     height: 36px;	
     line-height: 20px;	
@@ -121,34 +134,34 @@ body[class*="_page_mailjet_"] .mj-btn {
     background-color: transparent;	
     box-shadow: none;	
 }	
-body[class*="_page_mailjet_"] .mj-btn:hover,	
-body[class*="_page_mailjet_"] .mj-btn:focus,	
-body[class*="_page_mailjet_"] .mj-btn:active {	
+[class*="admin_page_mailjet"] .mj-btn:hover,	
+[class*="admin_page_mailjet"] .mj-btn:focus,	
+[class*="admin_page_mailjet"] .mj-btn:active {	
     transform: none;	
     outline: 0;	
     box-shadow: none;	
 }	
-body[class*="_page_mailjet_"] .btnPrimary,	
-body[class*="_page_mailjet_"] .btnPrimary:hover,	
-body[class*="_page_mailjet_"] .btnPrimary:focus,	
-body[class*="_page_mailjet_"] .btnPrimary:active {	
+[class*="admin_page_mailjet"] .btnPrimary,	
+[class*="admin_page_mailjet"] .btnPrimary:hover,	
+[class*="admin_page_mailjet"] .btnPrimary:focus,	
+[class*="admin_page_mailjet"] .btnPrimary:active {	
     border-color: transparent;	
     color: white;	
     background-color: #FEAD0D;	
 }	
-body[class*="_page_mailjet_"] .btnSecondary {	
+[class*="admin_page_mailjet"] .btnSecondary {	
     color: #FEAD0D;	
     border-color: currentColor;	
 }	
-body[class*="_page_mailjet_"] .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus {    	
+[class*="admin_page_mailjet"] .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus {    	
     background-color: rgba(254,173,13,0.1);	
 }	
-body[class*="_page_mailjet_"] .btnSmall {	
+[class*="admin_page_mailjet"] .btnSmall {	
     min-width: 0;	
     height: 28px;	
     padding: 4px 16px;	
 }	
-body[class*="_page_mailjet_"] .btnCancel {	
+[class*="admin_page_mailjet"] .btnCancel {	
     padding-left: 0;	
     padding-right: 0;	
     border-color: transparent;	
@@ -161,57 +174,57 @@ body[class*="_page_mailjet_"] .btnCancel {
 /**	
 * Don't break notices	
 */	
-body[class*="_page_mailjet_"] .notice {	
+[class*="admin_page_mailjet"] .notice {	
     margin: 16px 0 16px 0;	
 }	
-body[class*="_page_mailjet_"] .notice p {	
+[class*="admin_page_mailjet"] .notice p {	
     margin: .5em 0;	
 }	
-body[class*="_page_mailjet_"] .notice strong {	
+[class*="admin_page_mailjet"] .notice strong {	
     font-weight: 500;	
 }
 
 /**	
 * Override bootstrap modal styles	
 */	
-body[class*="_page_mailjet_"] .modal-backdrop {	
+[class*="admin_page_mailjet"] .modal-backdrop {	
     background-color: #2D2F37;	
 }	
-body[class*="_page_mailjet_"] .modal-backdrop.in {	
+[class*="admin_page_mailjet"] .modal-backdrop.in {	
     opacity: .6;	
 }	
-body[class*="_page_mailjet_"] .modal.in .modal-dialog {	
+[class*="admin_page_mailjet"] .modal.in .modal-dialog {	
     transform: translate(0, calc(50vh - 50%));	
     margin-top: 0;	
 }	
-body[class*="_page_mailjet_"] .modal-content {	
+[class*="admin_page_mailjet"] .modal-content {	
     overflow: hidden;	
     border-radius: 3px;	
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .2);	
 }	
-body[class*="_page_mailjet_"] .modal-header {	
+[class*="admin_page_mailjet"] .modal-header {	
     display: flex;	
     padding: 12px 32px 15px;	
     border-top: 4px solid #FEAD0D;	
     border-bottom: 1px solid #e5e5e5 !important;	
 }	
-body[class*="_page_mailjet_"] .modal-title {	
+[class*="admin_page_mailjet"] .modal-title {	
     flex-grow: 1;	
     line-height: 32px;	
     font-size: 20px;	
     font-weight: 500;	
 }	
-body[class*="_page_mailjet_"] .button.close {	
+[class*="admin_page_mailjet"] .button.close {	
     font-size: 0;	
     color: rgba(255, 255, 255, 0);	
 }	
-body[class*="_page_mailjet_"] .modal-body {	
+[class*="admin_page_mailjet"] .modal-body {	
     padding: 32px;	
 }	
-body[class*="_page_mailjet_"] .modal-body input {	
+[class*="admin_page_mailjet"] .modal-body input {	
     margin-bottom: 0;	
 }
-body[class*="_page_mailjet_"] .modal-footer {	
+[class*="admin_page_mailjet"] .modal-footer {	
     padding: 16px 32px;
 }
 /**
@@ -258,7 +271,7 @@ body[class*="_page_mailjet_"] .modal-footer {
 #availableContactListsContainerParent::-webkit-scrollbar-thumb:active {
     background: linear-gradient(left, #22ADD4, #1E98BA);
 }
-body[class*="_page_mailjet_"] .checkboxLabel,
+[class*="admin_page_mailjet"] .checkboxLabel,
 .form-table td fieldset .checkboxLabel {
     display: flex;	
     max-width: -moz-max-content;	
@@ -302,7 +315,7 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     color: #FFF;
 }
 #wpbody-content {	
-    padding-right: 20px;	
+    padding-right: 20px;
 }
 .mainContainer {
     border-radius: 3px;
@@ -310,7 +323,26 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
     padding: 32px;
 }
-
+.backToDashboard {
+    margin-bottom: 24px;
+}
+.backToDashboard a {
+    display: inline-flex;
+}
+.backToDashboard a,
+.backToDashboard a:hover,
+.backToDashboard a:focus,
+.backToDashboard a:active,
+.backToDashboard a:visited {
+    text-decoration: none;
+    color: #888;
+}
+.backToDashboard a:before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: url(../css/left_arrow.svg) no-repeat center center / contain;
+}
 .mailjet_row label {
     font-weight: normal;
     font-size: 14px;
@@ -413,13 +445,16 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     margin-bottom: 8px;
 }
 .mjSettings .settingsSendingFldset {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     padding-left: 24px;
 }
 .mjSettings .settingsSendingFldset .fromFld,
 .mjSettings .settingsSendingFldset .smtpFld {
     margin-bottom: 8px;
-}	
+}
+.mjSettings .settingsSendingFldset .smtpFld .mj-select-wrapper {	
+    margin-bottom: 0;
+}
 .mjSettings .settingsSendingFldset .smtpFld select {	
     width: auto;
     min-width: 80px;
@@ -429,6 +464,9 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 }
 .mjSettings .fromFldGroup input[type="text"] {
     margin-right: 16px;
+}
+.mjSettings .testEmailFldset {
+    margin-bottom: 24px;
 }
 .mjSettings .sendTestEmailBtn {
     display: block;
@@ -474,19 +512,22 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     display: flex;	
     max-width: -moz-max-content;	
     max-width: max-content;	
-    line-height: 20px;	
-    margin: 0 0 8px !important;
-    margin-top:20px;
+    line-height: 20px;
+    margin-top: 24px;
+}
+.bottom_links > * {
+    margin-right: 24px;
+}
+.needHelpDiv {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+.needHelpDiv img {
+    margin-right: 8px;
 }
 .bottom_links a:hover, .bottom_links_dashboard a:hover, .bottom_links_allsetup a:hover {
     text-decoration: none;
-}
-.needHelpDiv {
-    float: left;
-    font-weight: 500;
-    margin-right: 20px;
-    font-size: 14px;
-    line-height: 20px;
 }
 .settingsMenuLink a {
     display: flex;
@@ -506,8 +547,15 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 .settingsMenuLink a:focus {
     text-decoration: none;
     color: #555;
+    outline: 0;
+}
+.settingsMenuLink a:not(.active):hover,
+.settingsMenuLink a:not(.active):active,
+.settingsMenuLink a:not(.active):focus {
     background-color: #f2f2f2;
-     outline: 0;
+}
+.settingsMenuLink a:visited {
+    color: #555;
 }
 .settingsMenuLink a.active {
     color: #19BC9C;
@@ -515,7 +563,6 @@ body[class*="_page_mailjet_"] .checkboxLabel,
 #mailjet_subscription_options_settings {
     margin-bottom: 16px;
 }
-
 
 /* Contacts list display screen */
 .availableContactLists {	
@@ -753,11 +800,14 @@ body[class*="_page_mailjet_"] .checkboxLabel,
     font-size: 16px;
 }
 
-/*.cancelBtn:hover {
-    background-color: transparent;
-    color: #FCB340;
-}*/
-/*.create_contact_list_popup p, .create_contact_list_popup.div {
-    margin: 8px 0;
-    padding-bottom: 8px;
-}*/
+/**	
+* Pages with iframe
+*/	
+.iframePage {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+}
+.iframePage .mainContainer {
+    flex-grow: 1;
+}

@@ -160,6 +160,8 @@ class InitialSettings
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="mainContainer">
 
+            <div class="backToDashboard"><a href="admin.php?page=mailjet_dashboard_page"><?php _e('Back to dashboard', 'mailjet') ?></a></div>
+
             <div>
                 <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
                 <p class="page_top_subtitle">

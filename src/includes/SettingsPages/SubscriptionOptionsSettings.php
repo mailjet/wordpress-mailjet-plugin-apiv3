@@ -172,6 +172,9 @@ class SubscriptionOptionsSettings
 
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="mainContainer">
+
+            <div class="backToDashboard"><a href="admin.php?page=mailjet_dashboard_page"><?php _e('Back to dashboard', 'mailjet') ?></a></div>
+
             <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
             <div class="mjSettings">
                 <div class="left">
@@ -194,7 +197,7 @@ class SubscriptionOptionsSettings
                             // output save settings button
                             submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
                             ?>
-                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>">
+                            <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>"> -->
                         </form>
                     </div>
                 </div>

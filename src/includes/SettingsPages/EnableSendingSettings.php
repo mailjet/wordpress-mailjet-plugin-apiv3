@@ -59,6 +59,7 @@ class EnableSendingSettings
                     <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'mailjet'); ?></b></label>
                     <div class="fromFldGroup">
                         <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
+                        <option value="*@marion.de"> *@marion.fr </option>
                         <?php foreach ($mailjetSenders as $mailjetSender) {
                             if ($mailjetSender['Status'] != 'Active') {
                                 continue;
@@ -93,16 +94,19 @@ class EnableSendingSettings
                         <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> autocomplete="off">
                         <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></span>
                     </label>
-                </div>
-                <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet')?></button>
-                <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
-                    <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet'); ?></b></label>
-                    <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                    <input type="submit" value="<?php _e('Send', 'mailjet')?>" name="send_test_email_btn" class="button mj-btn btnPrimary MailjetSubmit" id="send_test_email_btn"/>
-                </div>
+                </div>                
             </div>
 
             <input name="settings_step" type="hidden" id="settings_step" value="enable_sending_step">
+        </fieldset>
+
+        <fieldset class="testEmailFldset">
+            <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet')?></button>
+            <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
+                <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet'); ?></b></label>
+                <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
+                <input type="submit" value="<?php _e('Send', 'mailjet')?>" name="send_test_email_btn" class="button mj-btn btnPrimary MailjetSubmit" id="send_test_email_btn"/>
+            </div>
         </fieldset>
         <?php
     }
@@ -208,6 +212,9 @@ class EnableSendingSettings
 
         <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
         <div class="mainContainer">
+            
+        <div class="backToDashboard"><a href="admin.php?page=mailjet_dashboard_page"><?php _e('Back to dashboard', 'mailjet') ?></a></div>
+
             <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
             <div class="mjSettings">
                 <div class="left">
@@ -230,7 +237,7 @@ class EnableSendingSettings
                             // output save settings button
                             submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
                             ?>
-                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'mailjet') ?>">
+                            <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'mailjet') ?>"> -->
                         </form>
                     </div>
                 </div>

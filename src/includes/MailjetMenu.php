@@ -172,14 +172,15 @@ class MailjetMenu
     {
        // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
 
-        echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
-        _e('Campaigns', 'mailjet');
-        echo '</h2></div>';
+        echo '<div class="iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_CAMPAIGNS);
-            echo '<div style="margin-left:0px; width:1040px; height:1260px;">';
+            echo '<div id="initialSettingsHead">
+                    <img src="' . plugin_dir_url(dirname(dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
+                </div>
+                <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
@@ -189,6 +190,8 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
+
+        echo '</div">';
       //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
     }
 
@@ -197,14 +200,15 @@ class MailjetMenu
     {
     //    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
 
-        echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
-        _e('Statistics', 'mailjet');
-        echo '</div>';
+        echo '<div class="iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_STATS);
-            echo '<div style="margin-left:0px; width:1140px; height:1460px;">';
+            echo '<div id="initialSettingsHead">
+                    <img src="' . plugin_dir_url(dirname(dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
+                </div>
+                <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
@@ -214,6 +218,7 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
+        echo '</div">';
       //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
     }
 
@@ -222,14 +227,15 @@ class MailjetMenu
     {
      //   \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
 
-        echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(__FILE__) . '/admin/images/mj_logo_med.png' . '" /></div><h2>';
-        _e('Contacts', 'mailjet');
-        echo '</h2></div>';
+        echo '<div class="iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_CONTACTS);
-            echo '<div style="margin-left:0px; width:1040px; height:1260px;">';
+            echo '<div id="initialSettingsHead">
+                    <img src="' . plugin_dir_url(dirname(dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
+                </div>
+                <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
@@ -239,6 +245,7 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
+        echo '</div">';
       //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
