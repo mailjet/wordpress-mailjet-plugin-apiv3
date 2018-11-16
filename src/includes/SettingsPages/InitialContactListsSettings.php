@@ -64,7 +64,11 @@ class InitialContactListsSettings
                         ?>
                         <div class="availableContactListsRow">
                             <span class="availableContactListsNameCell"><?php echo $mailjetContactList['Name'] ?></span>
-                            <b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contacts', 'mailjet'); ?></b>
+                            <?php if($mailjetContactList['SubscriberCount'] == 1) {
+                                ?><b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contact', 'mailjet'); ?></b><?php
+                            } else {
+                                ?><b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contacts', 'mailjet'); ?></b><?php
+                            } ?>
                         </div>
                         <?php
                     }
@@ -77,11 +81,11 @@ class InitialContactListsSettings
             </a>
             <div class="mj-hide create_contact_list_popup" id="create_contact_list_popup">
                 <div class="create_contact_list_fields">
-                    <label class="mj-label" for="create_list_name"><?php echo __('Name your list (max. 50 characters)', 'mailjet'); ?></label>
+                    <label class="mj-label" for="create_list_name"><?php _e('Name your list (max. 50 characters)', 'mailjet'); ?></label>
                     <input type="text" size="30" name="create_list_name" id="create_list_name" />
                 </div>
                 <div class="create_contact_list_btns">
-                    <input type="submit" value="<?= __('Save', 'mailjet') ?>" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"/>
+                    <input type="submit" value="<?php _e('Save', 'mailjet') ?>" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"/>
                     <input name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList" type="button" id="cancel_create_list" value="<?= __('Cancel', 'mailjet') ?>">
                 </div>
             </div>

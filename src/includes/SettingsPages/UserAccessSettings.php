@@ -154,7 +154,8 @@ class UserAccessSettings
                                 // (sections are registered for "mailjet", each field is registered to a specific section)
                                 do_settings_sections('mailjet_user_access_page');
                                 // output save settings button
-                                submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'userAccessSubmit'));
+                                $saveButton = __('Save', 'mailjet');
+                                submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'userAccessSubmit'));
                                 ?>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>"> -->
                             </form>
