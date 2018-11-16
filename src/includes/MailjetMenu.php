@@ -46,7 +46,7 @@ class MailjetMenu
         ) {
 
             add_menu_page(
-                'Connect your Mailjet account to get started',
+                __('Connect your Mailjet account to get started', 'mailjet'),
                 'Mailjet',
                 'manage_options',
                 'mailjet_settings_page',
