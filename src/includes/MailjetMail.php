@@ -99,6 +99,9 @@ class MailjetMail
     public function wp_mail_failed_cb($wpError)
     {
         add_action('admin_notices', array($this, 'wp_mail_failed_admin_notice'));
+        if(!get_option('mailjet_enabled')) {
+            return false;
+        }
         add_settings_error('mailjet_messages', 'mailjet_message', 'ERROR - '. $wpError->get_error_message(), 'error');
     }
 
