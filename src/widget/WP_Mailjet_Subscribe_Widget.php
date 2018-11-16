@@ -125,6 +125,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     private function activateConfirmSubscriptionUrl()
     {
+        $locale = Mailjeti18n::getLocale();
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
         $contacts = array();
 
@@ -144,7 +145,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-            $locale = Mailjeti18n::getLocale();
+            
             $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
 
             // List id is not provided
