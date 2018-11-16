@@ -231,15 +231,8 @@ class InitialContactListsSettings
             <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
             <div class="mainContainer">
 
-                <div class="backToDashboard">
-                    <a href="admin.php?page=mailjet_dashboard_page">
-                    <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
-                    <?php _e('Back to dashboard', 'mailjet') ?>
-                    </a>
-                </div>
-
                 <div>
-                    <h1 class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
                     <p class="page_top_subtitle">
         <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
                     </p>
