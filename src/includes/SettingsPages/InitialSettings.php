@@ -157,19 +157,20 @@ class InitialSettings
         //// show error/update messages
         settings_errors('mailjet_messages');
         ?>
-        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer">
+        <div class="mj-pluginPage">
+            <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+            <div class="mainContainer">
 
-            <div>
-                <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
-                <p class="page_top_subtitle">
+                <div>
+                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                    <p class="page_top_subtitle">
         <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
-                </p>
-            </div>
-            <div class="initialSettings">
-                <div id="initialSettingsForm">
-                    <h2 class="section_inner_title"><?php echo esc_html(get_admin_page_title()); ?></h2>
-                    <form action="options.php" method="post">
+                    </p>
+                </div>
+                <div class="initialSettings">
+                    <div id="initialSettingsForm">
+                        <h2 class="section_inner_title"><?php echo esc_html(get_admin_page_title()); ?></h2>
+                        <form action="options.php" method="post">
         <?php
         // output security fields for the registered setting "mailjet"
         settings_fields('mailjet_initial_settings_page');
@@ -185,40 +186,41 @@ class InitialSettings
           <?php }
          */
         ?>
-                        <p class="dont_have_account">
-                        <?php esc_html_e('You don\'t have a Mailjet account yet?', 'mailjet'); ?>
-                            <br />
-                        <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
-                        </p>
-                    </form>
-                </div>
+                            <p class="dont_have_account">
+                            <?php esc_html_e('You don\'t have a Mailjet account yet?', 'mailjet'); ?>
+                                <br />
+                            <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet') . '</a>'; ?>
+                            </p>
+                        </form>
+                    </div>
 
-                <div id="initialSettingsDescription">
-                    <div class="availableContactListsContainer">
-                        <div class="initialSettingsDescriptionRow">
-                            <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                            <p class="initialSettingsTextCell"><b><?php _e('Collect email addresses...', 'mailjet'); ?></b><?php _e('Email addresses are collected from your website', 'mailjet'); ?></p>
-                        </div>
-                        <div class="initialSettingsDescriptionRow">
-                            <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                            <p class="initialSettingsTextCell"><b><?php _e('...and add them automatically to a contact list', 'mailjet'); ?></b><?php _e('Email are added to your contact list', 'mailjet'); ?></p>
-                        </div>
-                        <div class="initialSettingsDescriptionRow">
-                            <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                            <p class="initialSettingsTextCell"><b><?php _e('We will take care of delivering your newsletter', 'mailjet'); ?></b><?php _e('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet'); ?></p>
+                    <div id="initialSettingsDescription">
+                        <div class="availableContactListsContainer">
+                            <div class="initialSettingsDescriptionRow">
+                                <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                                <p class="initialSettingsTextCell"><b><?php _e('Collect email addresses...', 'mailjet'); ?></b><?php _e('Email addresses are collected from your website', 'mailjet'); ?></p>
+                            </div>
+                            <div class="initialSettingsDescriptionRow">
+                                <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                                <p class="initialSettingsTextCell"><b><?php _e('...and add them automatically to a contact list', 'mailjet'); ?></b><?php _e('Email are added to your contact list', 'mailjet'); ?></p>
+                            </div>
+                            <div class="initialSettingsDescriptionRow">
+                                <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
+                                <p class="initialSettingsTextCell"><b><?php _e('We will take care of delivering your newsletter', 'mailjet'); ?></b><?php _e('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet'); ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--        <br style="clear: left;"/>-->
-        <div class="bottom_links">
-            <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet'); ?>" />
-        <?php echo __('Need help getting started?', 'mailjet'); ?>
+            <!--        <br style="clear: left;"/>-->
+            <div class="bottom_links">
+                <div class="needHelpDiv">
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet'); ?>" />
+            <?php echo __('Need help getting started?', 'mailjet'); ?>
+                </div>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
             </div>
-        <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-        <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
         </div>
 
         <?php

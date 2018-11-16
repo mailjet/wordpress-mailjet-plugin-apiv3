@@ -117,46 +117,55 @@ class ConnectAccountSettings
         settings_errors('mailjet_messages');
         ?>
 
-        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer">
-            <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
-            <div class="mjSettings">
-                <div class="left">
+        <div class="mj-pluginPage">
+            <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+            <div class="mainContainer">
+            
+                <div class="backToDashboard">
+                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
+                    <?php _e('Back to dashboard', 'mailjet') ?>
+                    </a>
+                </div>
+
+                <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
+                <div class="mjSettings">
+                    <div class="left">
         <?php
         MailjetAdminDisplay::getSettingsLeftMenu();
         ?>
-                </div>
+                    </div>
 
-                <div class="right">
-                    <div class="centered">
-                        <!--                    <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
-                        <h2 class="section_inner_title"><?php echo __('Connect your Mailjet account', 'mailjet'); ?></h2>
-                        <form action="options.php" method="post">
-                    <?php
-                    // output security fields for the registered setting "mailjet"
-                    settings_fields('mailjet_connect_account_page');
-                    // output setting sections and their fields
-                    // (sections are registered for "mailjet", each field is registered to a specific section)
-                    do_settings_sections('mailjet_connect_account_page');
-                    // output save settings button
-                    submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
-                    ?>
-                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href = location.href" value="<?= __('Cancel', 'mailjet') ?>">
-                        </form>
+                    <div class="right">
+                        <div class="centered">
+                            <!--                    <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
+                            <h2 class="section_inner_title"><?php echo __('Connect your Mailjet account', 'mailjet'); ?></h2>
+                            <form action="options.php" method="post">
+                        <?php
+                        // output security fields for the registered setting "mailjet"
+                        settings_fields('mailjet_connect_account_page');
+                        // output setting sections and their fields
+                        // (sections are registered for "mailjet", each field is registered to a specific section)
+                        do_settings_sections('mailjet_connect_account_page');
+                        // output save settings button
+                        submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
+                        ?>
+                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href = location.href" value="<?= __('Cancel', 'mailjet') ?>"> -->
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bottom_links">
-            <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
+            <div class="bottom_links">
+                <div class="needHelpDiv">
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
         <?php echo __('Need help?', 'mailjet'); ?>
-            </div>
+                </div>
         <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
         <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+            </div>
         </div>
-
 
         <?php
     }

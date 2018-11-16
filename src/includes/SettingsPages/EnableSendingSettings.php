@@ -59,6 +59,7 @@ class EnableSendingSettings
                     <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'mailjet'); ?></b></label>
                     <div class="fromFldGroup">
                         <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
+                        <option value="*@marion.de"> *@marion.fr </option>
                         <?php foreach ($mailjetSenders as $mailjetSender) {
                             if ($mailjetSender['Status'] != 'Active') {
                                 continue;
@@ -93,16 +94,19 @@ class EnableSendingSettings
                         <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> autocomplete="off">
                         <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet'); ?></span>
                     </label>
-                </div>
-                <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet')?></button>
-                <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
-                    <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet'); ?></b></label>
-                    <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                    <input type="submit" value="<?php _e('Send', 'mailjet')?>" name="send_test_email_btn" class="button mj-btn btnPrimary MailjetSubmit" id="send_test_email_btn"/>
-                </div>
+                </div>                
             </div>
 
             <input name="settings_step" type="hidden" id="settings_step" value="enable_sending_step">
+        </fieldset>
+
+        <fieldset class="testEmailFldset">
+            <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet')?></button>
+            <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
+                <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet'); ?></b></label>
+                <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
+                <input type="submit" value="<?php _e('Send', 'mailjet')?>" name="send_test_email_btn" class="button mj-btn btnPrimary MailjetSubmit" id="send_test_email_btn"/>
+            </div>
         </fieldset>
         <?php
     }
@@ -205,45 +209,54 @@ class EnableSendingSettings
 
         ?>
 
-
-        <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
-        <div class="mainContainer">
-            <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
-            <div class="mjSettings">
-                <div class="left">
-                    <?php
-                    MailjetAdminDisplay::getSettingsLeftMenu();
-                    ?>
+        <div class="mj-pluginPage">
+            <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+            <div class="mainContainer">
+                
+            <div class="backToDashboard">
+                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
+                    <?php _e('Back to dashboard', 'mailjet') ?>
+                    </a>
                 </div>
 
-                <div class="right">
-                    <div class="centered"  style="width:650px;">
-                        <!--                    <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
-                        <h2 class="section_inner_title"><?php _e('Sending settings', 'mailjet'); ?></h2>
-                        <form action="options.php" method="post">
-                            <?php
-                            // output security fields for the registered setting "mailjet"
-                            settings_fields('mailjet_sending_settings_page');
-                            // output setting sections and their fields
-                            // (sections are registered for "mailjet", each field is registered to a specific section)
-                            do_settings_sections('mailjet_sending_settings_page');
-                            // output save settings button
-                            submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
-                            ?>
-                            <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'mailjet') ?>">
-                        </form>
+                <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
+                <div class="mjSettings">
+                    <div class="left">
+                        <?php
+                        MailjetAdminDisplay::getSettingsLeftMenu();
+                        ?>
+                    </div>
+
+                    <div class="right">
+                        <div class="centered"  style="width:650px;">
+                            <!--                    <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
+                            <h2 class="section_inner_title"><?php _e('Sending settings', 'mailjet'); ?></h2>
+                            <form action="options.php" method="post">
+                                <?php
+                                // output security fields for the registered setting "mailjet"
+                                settings_fields('mailjet_sending_settings_page');
+                                // output setting sections and their fields
+                                // (sections are registered for "mailjet", each field is registered to a specific section)
+                                do_settings_sections('mailjet_sending_settings_page');
+                                // output save settings button
+                                submit_button('Save', 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
+                                ?>
+                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'mailjet') ?>"> -->
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bottom_links">
-            <div class="needHelpDiv">
-                <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
-                <?php echo __('Need help?', 'mailjet' ); ?>
+            <div class="bottom_links">
+                <div class="needHelpDiv">
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
+                    <?php echo __('Need help?', 'mailjet' ); ?>
+                </div>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
             </div>
-            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
         </div>
 
         <?php
