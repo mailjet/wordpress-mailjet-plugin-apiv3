@@ -101,7 +101,7 @@ class MailjetApi
         $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
         if ($response->success()) {
             $data = $response->getData();
-            if (!empty($data[0]['IsDeleted'])) {
+            if (isset($data[0]['IsDeleted'])) {
                 // Return true if the list is not deleted
                 return !$data[0]['IsDeleted'];
             }
