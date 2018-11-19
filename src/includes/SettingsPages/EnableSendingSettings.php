@@ -59,7 +59,6 @@ class EnableSendingSettings
                     <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'mailjet'); ?></b></label>
                     <div class="fromFldGroup">
                         <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
-                        <option value="*@marion.de"> *@marion.fr </option>
                         <?php foreach ($mailjetSenders as $mailjetSender) {
                             if ($mailjetSender['Status'] != 'Active') {
                                 continue;
