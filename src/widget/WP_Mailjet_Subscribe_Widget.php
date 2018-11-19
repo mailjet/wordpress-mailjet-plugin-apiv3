@@ -136,8 +136,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $technicalIssue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
-        $subscription_email = $_GET['subscription_email'];
-        $properties = $_GET['properties'];
+        $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
+        if(!$subscription_email) {
+            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
+            echo $technicalIssue;
+            die;
+        }
+
+        $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
             'properties' => $properties,
@@ -145,7 +151,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-            
+
             $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
 
             // List id is not provided
