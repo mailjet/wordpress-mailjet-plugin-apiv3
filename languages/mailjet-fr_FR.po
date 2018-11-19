@@ -1078,13 +1078,13 @@ msgstr ""
 #~ msgstr "option_3"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "French title"
 
 msgid "list"
-msgstr "0"
+msgstr "57937"
 
 msgid "language_mandatory_email"
 msgstr ""

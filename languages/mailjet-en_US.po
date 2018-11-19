@@ -1075,13 +1075,13 @@ msgstr ""
 #~ msgstr "2924"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "English title"
 
 msgid "list"
-msgstr "0"
+msgstr "57936"
 
 msgid "language_mandatory_email"
 msgstr ""
