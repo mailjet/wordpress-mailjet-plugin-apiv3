@@ -53,7 +53,7 @@ class EnableSendingSettings
             <div id="enable_mj_emails" class="sending_options_div <?php echo $mailjetEnabled ? 'mj-show' : 'mj-hide' ?>">
                 <div>
                     <label class="mj-label" for="mailjet_from_name"><b><?php _e('From: Name', 'mailjet'); ?></b></label>
-                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php echo $mailjetFromName ?>" class="regular-text code"  <?php echo ($mailjetEnabled == 1 ? ' required="required"' : '') ?> placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
+                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php echo $mailjetFromName ?>" class="regular-text code" placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
                 </div>
                 <div id="mailjet_from_email_fields" class="fromFld">
                     <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'mailjet'); ?></b></label>

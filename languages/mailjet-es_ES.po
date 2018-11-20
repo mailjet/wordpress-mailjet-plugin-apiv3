@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-11-16 15:51+0200\n"
-"PO-Revision-Date: 2018-11-16 16:05+0200\n"
+"PO-Revision-Date: 2018-11-20 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: es_ES\n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 "X-Poedit-SearchPathExcluded-1: assets\n"
 
-#: src/admin/partials/MailjetAdminDisplay.php:27
-#: src/includes/MailjetMenu.php:96 src/includes/SettingsPages/AllSetup.php:69
+#: src/admin/partials/MailjetAdminDisplay.php:27 src/includes/MailjetMenu.php:96
+#: src/includes/SettingsPages/AllSetup.php:69
 #: src/includes/SettingsPages/ConnectAccountSettings.php:142
 #: src/includes/SettingsPages/Dashboard.php:79
 #: src/includes/SettingsPages/InitialContactListsSettings.php:274
@@ -27,20 +27,17 @@ msgstr ""
 msgid "Connect your Mailjet account"
 msgstr "Conecte su cuenta de Mailjet"
 
-#: src/admin/partials/MailjetAdminDisplay.php:36
-#: src/includes/MailjetMenu.php:99
+#: src/admin/partials/MailjetAdminDisplay.php:36 src/includes/MailjetMenu.php:99
 #: src/includes/SettingsPages/EnableSendingSettings.php:234
 msgid "Sending settings"
 msgstr "Configuración de envío"
 
-#: src/admin/partials/MailjetAdminDisplay.php:45
-#: src/includes/MailjetMenu.php:102
+#: src/admin/partials/MailjetAdminDisplay.php:45 src/includes/MailjetMenu.php:102
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:194
 msgid "Subscription options"
 msgstr "Opciones de suscripción"
 
-#: src/admin/partials/MailjetAdminDisplay.php:54
-#: src/includes/MailjetMenu.php:105
+#: src/admin/partials/MailjetAdminDisplay.php:54 src/includes/MailjetMenu.php:105
 #: src/includes/SettingsPages/UserAccessSettings.php:148
 msgid "User access"
 msgstr "Acceso de usuarios"
@@ -293,14 +290,14 @@ msgstr "Se han guardado tus cambios"
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:179
 #: src/includes/SettingsPages/UserAccessSettings.php:133
 msgid "Back to dashboard"
-msgstr ""
+msgstr "Volver al panel de control"
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:151
 #: src/includes/SettingsPages/EnableSendingSettings.php:243
 #: src/includes/SettingsPages/InitialContactListsSettings.php:88
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:203
-#: src/includes/SettingsPages/UserAccessSettings.php:157
-#: src/widget/views/admin.php:199 src/widget/views/admin.php:494
+#: src/includes/SettingsPages/UserAccessSettings.php:157 src/widget/views/admin.php:199
+#: src/widget/views/admin.php:494
 msgid "Save"
 msgstr "Guardar"
 
@@ -308,8 +305,8 @@ msgstr "Guardar"
 #: src/includes/SettingsPages/EnableSendingSettings.php:246
 #: src/includes/SettingsPages/InitialContactListsSettings.php:89
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:206
-#: src/includes/SettingsPages/UserAccessSettings.php:160
-#: src/widget/views/admin.php:200 src/widget/views/admin.php:493
+#: src/includes/SettingsPages/UserAccessSettings.php:160 src/widget/views/admin.php:200
+#: src/widget/views/admin.php:493
 msgid "Cancel"
 msgstr "Cancelar"
 

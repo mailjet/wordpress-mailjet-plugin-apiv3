@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-11-16 15:52+0200\n"
-"PO-Revision-Date: 2018-11-16 16:23+0200\n"
+"PO-Revision-Date: 2018-11-20 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: it_IT\n"
@@ -288,7 +288,7 @@ msgstr "Le modifiche sono state salvate"
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:179
 #: src/includes/SettingsPages/UserAccessSettings.php:133
 msgid "Back to dashboard"
-msgstr ""
+msgstr "Torna alla pannello di controllo"
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:151
 #: src/includes/SettingsPages/EnableSendingSettings.php:243

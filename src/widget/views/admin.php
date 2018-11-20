@@ -68,13 +68,13 @@ if($numberActiveLanguages == 1) {
     }
     $advancedFormDefaults = array();
     for ($i = 0; $i <= 4; $i++) {
-        $advancedFormDefaults[] = 'contactProperties' . $i;
-        $advancedFormDefaults[] = 'propertyDataType' . $i;
-        $advancedFormDefaults[] = 'EnglishLabel' . $i;
-        $advancedFormDefaults[] = 'FrenchLabel' . $i;
-        $advancedFormDefaults[] = 'GermanLabel' . $i;
-        $advancedFormDefaults[] = 'SpanishLabel' . $i;
-        $advancedFormDefaults[] = 'ItalianLabel' . $i;
+        $advancedFormDefaults['contactProperties' . $i] = '';
+        $advancedFormDefaults['propertyDataType' . $i] = '';
+        $advancedFormDefaults['EnglishLabel' . $i] = '';
+        $advancedFormDefaults['FrenchLabel' . $i] = '';
+        $advancedFormDefaults['GermanLabel' . $i] = '';
+        $advancedFormDefaults['SpanishLabel' . $i] = '';
+        $advancedFormDefaults['ItalianLabel' . $i] = '';
     }
     $advancedFormDefaults['language_mandatory_email'] = '';
     $advancedFormDefaults['language_mandatory_button'] = '';
