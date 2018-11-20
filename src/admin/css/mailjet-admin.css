@@ -532,7 +532,7 @@
 .needHelpDiv img {
     margin-right: 8px;
 }
-.bottom_links a:hover, .bottom_links_dashboard a:hover, .bottom_links_allsetup a:hover {
+.bottom_links a:hover {
     text-decoration: none;
 }
 .settingsMenuLink a {
@@ -733,12 +733,6 @@
 .allsetup .block_single .mj-btn {
     display: block;
     width: 100%;
-}
-.bottom_links_allsetup {
-    clear: left;
-    left: 0;
-    padding:10px;
-    font-size: 14px;
 }
 .cancelBtn {
     background-color: #c5c5c5;
