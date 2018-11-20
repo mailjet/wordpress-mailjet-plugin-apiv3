@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-11-16 15:51+0200\n"
-"PO-Revision-Date: 2018-11-20 10:11+0200\n"
+"PO-Revision-Date: 2018-11-20 11:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -593,7 +593,7 @@ msgstr "Les adresses emails sont envoyés depuis votre site Internet"
 
 #: src/includes/SettingsPages/InitialSettings.php:205
 msgid "...and add them automatically to a contact list"
-msgstr "…et ajouté à votre liste de contacts de Mailjet"
+msgstr "…et ajouter à votre liste de contacts de Mailjet"
 
 #: src/includes/SettingsPages/InitialSettings.php:205
 msgid "Email are added to your contact list"

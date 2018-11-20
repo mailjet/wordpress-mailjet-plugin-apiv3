@@ -1048,13 +1048,13 @@ msgstr ""
 #~ msgstr "2924"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
 msgstr ""
 
 msgid "list"
-msgstr "0"
+msgstr "57936"
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1063,7 +1063,7 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr ""
+msgstr "2924"
 
 msgid "propertyDataType0"
 msgstr "0"
@@ -1169,6 +1169,13 @@ msgstr ""
 
 msgid "confirmation_email_message_input"
 msgstr ""
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+"aaaaaaaaaaaaaaaa"
 
 msgid "subscription_confirmed_message_input"
 msgstr ""

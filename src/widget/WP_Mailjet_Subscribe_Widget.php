@@ -55,8 +55,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Register site styles and scripts
         add_action('admin_print_styles', array($this, 'register_widget_styles'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_styles'));
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'register_widget_styles'));
+        add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
 
         // Refreshing the widget's cached output with each new post
         add_action('save_post', array($this, 'flush_widget_cache'));
@@ -137,7 +137,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $technicalIssue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
-        if(!$subscription_email) {
+        if (!$subscription_email) {
             \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
             echo $technicalIssue;
             die;
@@ -474,8 +474,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function register_widget_styles()
     {
         wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__));
-        wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
+        wp_register_style('prefix_bootstrap', plugins_url('css/bootstrap.css', __FILE__));
+//        wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
         wp_enqueue_style('prefix_bootstrap');
+    }
+
+    public function register_widget_front_styles()
+    {
+        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/front-widget.css', __FILE__));
     }
 
 // end register_widget_styles
