@@ -1,8 +1,3 @@
-/* This stylesheet is used to style the public view of the widget. */
-label{
-    font-size: 12px;
-}
-
 .form-group{
     margin-bottom: 10px!important;
 }
@@ -63,6 +58,8 @@ label{
     font-weight: bold;
     text-decoration: appworkspace;
     margin: 10px;
+    margin-bottom: 0px;
+    font-size: 12px;
 }
 
 .language-title-label{
@@ -94,6 +91,13 @@ label{
 .language-wrap:first-child{
     border-top: 1px solid #898899;
     border-top-width: thin;
+}
+
+.language-wrap hr{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
 }
 
 #advanced-form-link{
@@ -373,3 +377,30 @@ label{
 /*.advanced-form-validation-messages textarea{
     width: 140px!important;
 }*/
+
+#advanced-form-navs a{
+    text-decoration: none!important;
+}
+
+#exampleModalLabel{
+    margin: 0;
+    line-height: 1.42857143;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.modal-content label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.mailjet_widget_admin_container span {
+    font-size: 14px;
+}
+
+.modal-content{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+}
