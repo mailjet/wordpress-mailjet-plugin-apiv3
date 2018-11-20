@@ -8,6 +8,7 @@
     color: #555;
 }
 .mj-pluginPage a {
+    text-decoration: none;
     color: #19BC9C;
 }
 .mj-pluginPage a:hover,
