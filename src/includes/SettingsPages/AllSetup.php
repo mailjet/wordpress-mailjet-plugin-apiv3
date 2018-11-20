@@ -64,7 +64,7 @@ class AllSetup
 
             </div>
 
-            <div class="bottom_links_allsetup">
+            <div class="bottom_links">
                 <div class="needHelpDiv">
                     <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
                     <?php echo __('Need help?', 'mailjet'); ?>
