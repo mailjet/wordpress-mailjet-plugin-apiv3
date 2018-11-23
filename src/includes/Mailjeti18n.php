@@ -117,7 +117,6 @@ class Mailjeti18n
             $locale = 'en_US';
         }
 
-
         return $locale;
     }
 
@@ -160,7 +159,7 @@ class Mailjeti18n
     {
         if (empty($_COOKIE['pll_language'])) {
             // The user language is not changed via polylang
-            return false;
+            return self::getLocale();
         }
 
         $pll = $_COOKIE['pll_language'];
@@ -177,7 +176,7 @@ class Mailjeti18n
             case 'it' : $locale = 'it_IT';
                 break;
             // If given pll is not supported get current language
-            default : $locale = self::getCurrentUserLanguage();
+            default : $locale = self::getLocale();
         }
         return $locale;
     }
