@@ -80,6 +80,9 @@ class Mailjeti18n
     public static function getTranslationsFromFile($locale, $msgId)
     {
         $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-' . $locale . '.po';
+        if (!file_exists($filePo)) {
+            return $msgId;
+        }
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
         $fileHandler = new \Sepia\PoParser\SourceHandler\FileSystem($filePo);
         $poParser = new \Sepia\PoParser\Parser($fileHandler);
