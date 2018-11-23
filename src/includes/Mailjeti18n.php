@@ -98,13 +98,23 @@ class Mailjeti18n
     public static function getLocale()
     {
         $locale = get_locale();
-        if (in_array($locale, array('en_US', 'en_EN', 'en_GB')) && !in_array($locale, array_values(self::$supportedLocales))) {
-            $locale = 'en_US';
-        }
 
+        // de_DE_formal consider as de_DE
         if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
             $locale = 'de_DE';
         }
+
+        // Use en_US as main if locale is some en
+        if (in_array($locale, array('en_US', 'en_EN', 'en_GB'))) {
+            $locale = 'en_US';
+        }
+
+        // Use en_US if locale is not supported
+        if (!in_array($locale, array_values(self::$supportedLocales))) {
+            $locale = 'en_US';
+        }
+
+
         return $locale;
     }
 
@@ -128,7 +138,6 @@ class Mailjeti18n
         return $languages[$locale];
     }
 
-
     public static function getMailjetSupportLinkByLocale()
     {
         $locale = self::getLocale();
@@ -146,19 +155,24 @@ class Mailjeti18n
      */
     public static function getLocaleByPll()
     {
-        if(empty($_COOKIE['pll_language'])) {
+        if (empty($_COOKIE['pll_language'])) {
             // The user language is not changed via polylang
             return false;
         }
-        
+
         $pll = $_COOKIE['pll_language'];
 
-        switch($pll) {
-            case 'en' : $locale = 'en_US';break;
-            case 'fr' : $locale = 'fr_FR';break;
-            case 'de' : $locale = 'de_DE';break;
-            case 'es' : $locale = 'es_ES';break;
-            case 'it' : $locale = 'it_IT';break;
+        switch ($pll) {
+            case 'en' : $locale = 'en_US';
+                break;
+            case 'fr' : $locale = 'fr_FR';
+                break;
+            case 'de' : $locale = 'de_DE';
+                break;
+            case 'es' : $locale = 'es_ES';
+                break;
+            case 'it' : $locale = 'it_IT';
+                break;
             // If given pll is not supported get current language
             default : $locale = self::getCurrentUserLanguage();
         }
@@ -193,4 +207,5 @@ class Mailjeti18n
 
         return $link;
     }
+
 }
