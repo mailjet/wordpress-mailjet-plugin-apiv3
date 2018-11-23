@@ -196,17 +196,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             // If no selected page, select default template
             if (!$thankYouPageId) {
-
                 $locale = Mailjeti18n::getLocaleByPll();
-                if (!$locale) {
-                    // No polylang so use native translations
-                    $newsletterRegistration = __('Newsletter Registration', 'mailjet');
-                    $congratsSubscribed = __('Congratulations, you have successfully subscribed!', 'mailjet');
-                } else {
-                    // Use polylang set language
-                    $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
-                    $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
-                }
+                $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
+                $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
                 $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates/thankyou.php');
                 // Default page is selected
