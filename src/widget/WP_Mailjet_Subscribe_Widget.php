@@ -92,6 +92,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance)
     {
+        $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
         // Check if subscription form is submited
         if (!isset($_POST['subscription_email'])) {
             // Subscription form is not submited
@@ -100,22 +101,20 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Submited but empty
         if (empty($_POST['subscription_email'])) {
-            return __('Please provide an email address', 'mailjet');
+            return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
         }
 
-        // Check if the user is subscribed
-        // Todo
         // Send subscription email
         $subscription_email = $_POST['subscription_email'];
         if (!is_email($subscription_email)) {
-            return __('Invalid email', 'mailjet');
+            return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Invalid email');
         }
 
         $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
         if ($sendingResult) {
-            return __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet');
+            return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
-        return __('A technical issue has prevented your subscription. Please try again later.', 'mailjet');
+        return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
     }
 
     /**
@@ -446,7 +445,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $mailjetContactProperties = null;
         $mailjetContactProperties = $propertiesOptions;
-        $admin_locale = get_locale();
+//        $admin_locale = get_locale();
+        $admin_locale = Mailjeti18n::getLocale();
         // Display the admin form
         $languages = Mailjeti18n::getSupportedLocales();
         $pages = get_pages();
