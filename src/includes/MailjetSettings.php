@@ -209,9 +209,9 @@ class MailjetSettings
         if (!empty(get_option('activate_mailjet_woo_integration')) && !empty(get_option('activate_mailjet_woo_sync')) && !empty(get_option('mailjet_woo_list'))) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             if (!empty($_GET['mj_sub_woo_token']) &&
-                $_GET['mj_sub_woo_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . str_ireplace(' ', '+', $_GET['first_name']) . str_ireplace(' ', '+', $_GET['last_name']))) {
+                $_GET['mj_sub_woo_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'])) {
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
-                $syncSingleContactEmailToMailjetList = $subscriptionOptionsSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
+                $syncSingleContactEmailToMailjetList = $subscriptionOptionsSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']), $_GET['first_name'], $_GET['last_name']);
                 if (false === $syncSingleContactEmailToMailjetList) {
                     $this->subsctiptionConfirmationAdminNoticeFailed();
                 } else {

@@ -294,7 +294,7 @@ class SubscriptionOptionsSettings
     }
 
 
-    public static function syncSingleContactEmailToMailjetList($contactListId, $email, $action)
+    public static function syncSingleContactEmailToMailjetList($contactListId, $email, $action, $contactProperties = [])
     {
         $contacts = array();
 
@@ -302,9 +302,13 @@ class SubscriptionOptionsSettings
             return false;
         }
 
-        $contacts[] = array(
-            'Email' => $email
-        );
+        $contact = [];
+        $contact['Email'] = $email;
+        if (!empty($contactProperties)) {
+            $contact['Properties'] = $contactProperties;
+        }
+
+        $contacts[] = $contact;
 
         return MailjetApi::syncMailjetContacts($contactListId, $contacts, $action);
     }
@@ -451,11 +455,19 @@ class SubscriptionOptionsSettings
     /**
      *  Subscribe or unsubscribe a wordpress comment author in/from a Mailjet's contact list when the comment is saved
      */
-    public function mailjet_subscribe_unsub_woo_to_list($subscribe, $user_email)
+    public function mailjet_subscribe_unsub_woo_to_list($subscribe, $user_email, $first_name, $last_name)
     {
         $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
+        $contactproperties = [];
+        if (!empty($first_name)) {
+            $contactproperties['first_name'] = $first_name;
+        }
+        if (!empty($last_name)) {
+            $contactproperties['last_name'] = $last_name;
+        }
+
         // Add the user to a contact list
-        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_woo_list'), $user_email, $action);
+        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_woo_list'), $user_email, $action, $contactproperties);
     }
 
 
