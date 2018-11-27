@@ -48,11 +48,20 @@ class MailjetAdminDisplay
             </li>
             <li>
                 <div class="settingsMenuLink settingsMenuLink4">
-                <?php
-                echo '<a data-img_id="settingsMenuLinkImg4" class="' . ($currentPage == 'mailjet_user_access_page' ? 'active' : '') . '" href="admin.php?page=mailjet_user_access_page">'; ?>
-                <svg class="settingsMenuLinkImg4" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 12"><circle cx="4.2" cy="8.7" r=".9"/><path class="settingsMenuLinkImg4" d="M7.2 5.4V3a3 3 0 0 0-6 0v2.4A1.2 1.2 0 0 0 0 6.6v4.2A1.2 1.2 0 0 0 1.2 12h6a1.2 1.2 0 0 0 1.2-1.2V6.6a1.2 1.2 0 0 0-1.2-1.2zM2.4 3A1.8 1.8 0 0 1 6 3v2.4H2.4zm-1.2 7.8V6.6h6v4.2z"/></svg>
-                <span><?php echo __('User access', 'mailjet'); ?></span>
-                </a>
+                    <?php
+                    echo '<a data-img_id="settingsMenuLinkImg4" class="' . ($currentPage == 'mailjet_user_access_page' ? 'active' : '') . '" href="admin.php?page=mailjet_user_access_page">'; ?>
+                    <svg class="settingsMenuLinkImg4" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 12"><circle cx="4.2" cy="8.7" r=".9"/><path class="settingsMenuLinkImg4" d="M7.2 5.4V3a3 3 0 0 0-6 0v2.4A1.2 1.2 0 0 0 0 6.6v4.2A1.2 1.2 0 0 0 1.2 12h6a1.2 1.2 0 0 0 1.2-1.2V6.6a1.2 1.2 0 0 0-1.2-1.2zM2.4 3A1.8 1.8 0 0 1 6 3v2.4H2.4zm-1.2 7.8V6.6h6v4.2z"/></svg>
+                    <span><?php echo __('User access', 'mailjet'); ?></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="settingsMenuLink settingsMenuLink4">
+                    <?php
+                    echo '<a data-img_id="settingsMenuLinkImg4" class="' . ($currentPage == 'mailjet_integrations_page' ? 'active' : '') . '" href="admin.php?page=mailjet_integrations_page">'; ?>
+                    <svg class="settingsMenuLinkImg5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path class="settingsMenuLinkImg5" d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+                    <span><?php echo __('Integrations', 'mailjet'); ?></span>
+                    </a>
                 </div>
             </li>
         </ul>

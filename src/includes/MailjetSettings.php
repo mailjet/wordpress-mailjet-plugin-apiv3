@@ -2,6 +2,7 @@
 
 namespace MailjetPlugin\Includes;
 
+use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\MailjetApi;
 
@@ -77,6 +78,10 @@ class MailjetSettings
         register_setting('mailjet_user_access_page', 'mailjet_access_subscriber');
         register_setting('mailjet_user_access_page', 'settings_step');
 
+        register_setting('mailjet_integrations_page', 'activate_mailjet_woo_integration');
+        register_setting('mailjet_integrations_page', 'activate_mailjet_woo_sync');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_list');
+        register_setting('mailjet_integrations_page', 'settings_step');
 
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
@@ -84,6 +89,7 @@ class MailjetSettings
                     'mailjet_allsetup_pagec',
                     'mailjet_dashboard_page',
                     'mailjet_user_access_page',
+                    'mailjet_integrations_page',
                     'mailjet_subscription_options_page',
                     'mailjet_sending_settings_pag',
                     'mailjet_connect_account_page',
@@ -104,6 +110,7 @@ class MailjetSettings
     private function addMailjetActions()
     {
         $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
+        $integrationsSettings = new IntegrationsSettings();
 
         \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - Start ]');
         if (!empty(get_option('activate_mailjet_sync')) && !empty(get_option('mailjet_sync_list'))) {
@@ -136,6 +143,21 @@ class MailjetSettings
             add_action('wp_insert_comment', array($subscriptionOptionsSettings, 'mailjet_subscribe_comment_author'));
             \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
+
+
+        /* Add custom field to WooCommerce checkout form and process it on form submit */
+        if (!empty(get_option('activate_mailjet_woo_integration')) && !empty(get_option('activate_mailjet_woo_sync')) && !empty(get_option('mailjet_woo_list'))) {
+            // Add the checkbox
+            add_action('woocommerce_after_checkout_billing_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_woo_fields'));
+            // Process the checkbox on submit
+            add_action('woocommerce_checkout_update_order_meta', array($subscriptionOptionsSettings, 'mailjet_subscribe_woo'));
+
+            // Add filter for changing "Thank you" text on order processed page
+            add_filter('woocommerce_thankyou_order_received_text', array($integrationsSettings, 'woo_change_order_received_text'));
+
+            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
+        }
+
 
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
         add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
@@ -170,9 +192,26 @@ class MailjetSettings
         if (!empty(get_option('activate_mailjet_comment_authors_sync')) && !empty(get_option('mailjet_comment_authors_list'))) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             if (!empty($_GET['mj_sub_comment_author_token']) &&
-                    $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+                $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
                 $syncSingleContactEmailToMailjetList = $subscriptionOptionsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
+                if (false === $syncSingleContactEmailToMailjetList) {
+                    $this->subsctiptionConfirmationAdminNoticeFailed();
+                } else {
+                    $this->subsctiptionConfirmationAdminNoticeSuccess();
+                }
+
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handling subscription confirmations - End ]');
+            }
+        }
+
+        /* Add custom field to WooCommerce checkout form and process it on form submit */
+        if (!empty(get_option('activate_mailjet_woo_integration')) && !empty(get_option('activate_mailjet_woo_sync')) && !empty(get_option('mailjet_woo_list'))) {
+            // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
+            if (!empty($_GET['mj_sub_woo_token']) &&
+                $_GET['mj_sub_woo_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . str_ireplace(' ', '+', $_GET['first_name']) . str_ireplace(' ', '+', $_GET['last_name']))) {
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
+                $syncSingleContactEmailToMailjetList = $subscriptionOptionsSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
                 if (false === $syncSingleContactEmailToMailjetList) {
                     $this->subsctiptionConfirmationAdminNoticeFailed();
                 } else {

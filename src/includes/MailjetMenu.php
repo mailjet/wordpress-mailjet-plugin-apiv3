@@ -11,6 +11,7 @@ use MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
+use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
 use MailjetPlugin\Includes\MailjetApi;
 
 /**
@@ -105,6 +106,9 @@ class MailjetMenu
                 add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));
                 \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
+                add_submenu_page(null, __('Integrations', 'mailjet'), null, 'read', 'mailjet_integrations_page',
+                    array(new IntegrationsSettings(), 'mailjet_integrations_page_html'));
+                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Integrations\' sub-menu added ]');
             }
         } else {
             \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have required permissions to see Mailjet plugin ]');

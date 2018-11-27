@@ -37,6 +37,10 @@ class MailjetActivator
         $commentAuthorsListId = get_option('mailjet_comment_authors_list_id');
         add_option('mailjet_comment_authors_list', $commentAuthorsListId);
 
+        // WooCommerce
+        $wooListId = get_option('mailjet_comment_authors_list_id');
+        add_option('mailjet_woo_list', $wooListId);
+
         // Default settings
         add_option('mailjet_activate_logger', 0);
         add_option('settings_step', 'user_access_step');
@@ -54,6 +58,11 @@ class MailjetActivator
         add_option('send_test_email_btn');
         $authorSync = $commentAuthorsListId > 0 ? 1 : '';
         add_option('activate_mailjet_comment_authors_sync', $authorSync);
+
+        // WooCommerce
+        $wooSync = $wooListId > 0 ? 1 : '';
+        add_option('activate_mailjet_woo_sync', $wooSync);
+
 
         // Delete unused options
         $deleteOptions = array(
