@@ -24,7 +24,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @var      string
      */
     private $subscriptionOptionsSettings = null;
-    protected $widget_slug = 'mailjet';
+    // protected $widget_slug = 'mailjet';
+    protected $widget_slug = 'wp_mailjet_subscribe_widget';
     private $instance;
     private $propertyData = array();
     private $mailjetContactProperties = null;
@@ -394,39 +395,37 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
-     *  Transition widget settings from v4 t ov5
+     *  Transition widget settings from v4 to v5
      */
-	private function checkTransition($instance)
+    private function checkTransition($instance)
     {
         $mailjet_widget = get_option('widget_wp_mailjet_subscribe_widget');
-		if($mailjet_widget == false) {
-			return $instance;
-		}
+        if ($mailjet_widget == false) {
+            return $instance;
+        }
+
         $settings = isset($mailjet_widget[2]) ? $mailjet_widget[2] : array();
 
-        if(isset($settings['enableTaben']) && $settings['enableTaben'] == 'on') {
+        if (isset($settings['enableTaben']) && $settings['enableTaben'] == 'on') {
             $instance['en_US']['language_checkbox'] = 1;
-            $instance['en_US']['title'] = isset($settings['titleen']) ? $settings['titleen']: '';
-            $instance['en_US']['list'] = isset($settings['list_iden']) ? $settings['list_iden']: '';
+            $instance['en_US']['title'] = isset($settings['titleen']) ? $settings['titleen'] : '';
+            $instance['en_US']['list'] = isset($settings['list_iden']) ? $settings['list_iden'] : '';
         }
-        if(isset($settings['enableTabfr']) && $settings['enableTabfr'] == 'on') {
+        if (isset($settings['enableTabfr']) && $settings['enableTabfr'] == 'on') {
             $instance['fr_FR']['language_checkbox'] = 1;
-            $instance['fr_FR']['title'] = isset($settings['titlefr']) ? $settings['titlefr']: '';
-            $instance['fr_FR']['list'] = isset($settings['list_idfr']) ? $settings['list_idfr']: '';
+            $instance['fr_FR']['title'] = isset($settings['titlefr']) ? $settings['titlefr'] : '';
+            $instance['fr_FR']['list'] = isset($settings['list_idfr']) ? $settings['list_idfr'] : '';
         }
-        if(isset($settings['enableTabde']) && $settings['enableTabde'] == 'on') {
+        if (isset($settings['enableTabde']) && $settings['enableTabde'] == 'on') {
             $instance['de_DE']['language_checkbox'] = 1;
-            $instance['de_DE']['title'] = isset($settings['titlede']) ? $settings['titlede']: '';
-            $instance['de_DE']['list'] = isset($settings['list_idde']) ? $settings['list_idde']: '';
+            $instance['de_DE']['title'] = isset($settings['titlede']) ? $settings['titlede'] : '';
+            $instance['de_DE']['list'] = isset($settings['list_idde']) ? $settings['list_idde'] : '';
         }
-        if(isset($settings['enableTabes']) && $settings['enableTabes'] == 'on') {
+        if (isset($settings['enableTabes']) && $settings['enableTabes'] == 'on') {
             $instance['es_ES']['language_checkbox'] = 1;
-            $instance['es_ES']['title'] = isset($settings['titlees']) ? $settings['titlees']: '';
-            $instance['es_ES']['list'] = isset($settings['list_ides']) ? $settings['list_ides']: '';
+            $instance['es_ES']['title'] = isset($settings['titlees']) ? $settings['titlees'] : '';
+            $instance['es_ES']['list'] = isset($settings['list_ides']) ? $settings['list_ides'] : '';
         }
-        // delete_option('mailjet_username');
-        // delete_option('mailjet_password');
-        delete_option('widget_wp_mailjet_subscribe_widget');
         return $instance;
     }
 
@@ -444,11 +443,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         $isMailjetDown = '';
+        $instance = $this->checkTransition($instance);
         // Define default values for your variables
         $instance = wp_parse_args(
                 (array) $instance
         );
-		$instance = $this->checkTransition($instance);
         // Mailjet contact lists
         try {
             $mailjetContactLists = MailjetApi::getMailjetContactLists();
