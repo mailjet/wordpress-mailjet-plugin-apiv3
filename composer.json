@@ -46,20 +46,14 @@
         "preferred-install": "dist"
     },
     "scripts": {
-        "clearConfigCache": [
-            "rm -f ./data/cache/module-config-cache.*.php",
-            "rm -f ./data/cache/module-classmap-cache.*.php"
-        ],
-        "clearClassCache": [
-            "rm -f ./data/cache/classes.php.cache"
+        "clearComposerCache": [
+            "rm -rf ~/.composer/cache*"
         ],
         "post-install-cmd": [
-            "@clearConfigCache",
-            "@clearClassCache"
+            "@clearComposerCache"
         ],
         "post-update-cmd": [
-            "@clearConfigCache",
-            "@clearClassCache"
+            "@clearComposerCache"
         ]
     }
 }
