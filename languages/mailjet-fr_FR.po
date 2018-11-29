@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-11-29 09:47+0200\n"
-"PO-Revision-Date: 2018-11-29 09:48+0200\n"
+"POT-Creation-Date: 2018-11-29 11:45+0200\n"
+"PO-Revision-Date: 2018-11-29 11:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -117,7 +117,7 @@ msgstr "Statistiques"
 #: src/includes/MailjetMenu.php:80
 #: src/includes/SettingsPages/InitialContactListsSettings.php:26
 msgid "Configure your lists."
-msgstr "Configurez vos listes"
+msgstr "Configurez vos listes."
 
 #: src/includes/MailjetMenu.php:85 src/includes/SettingsPages/AllSetup.php:38
 msgid "You're all set up!"
@@ -717,26 +717,24 @@ msgid "Subscribe to our mailing list"
 msgstr ""
 
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:397
-#, fuzzy
-#| msgid "Yes, subscribe me to this list"
-msgid "Subscribe to our mailing list."
+msgid "Subscribe to our newsletter"
 msgstr "Oui, abonnez-moi à cette liste"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:411
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:429
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:489
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:530
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:416
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:434
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:499
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:540
 msgid "Invalid email"
 msgstr ""
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:495
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:537
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:505
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:547
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:388
 msgid "Please confirm your subscription"
 msgstr "Confirmez votre abonnement"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:496
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:538
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:506
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:548
 #, php-format
 msgid ""
 "To receive newsletters from %s please confirm your subscription by clicking "
@@ -745,14 +743,14 @@ msgstr ""
 "Pour recevoir la newsletter de %s  veuillez confirmer votre abonnement en "
 "cliquant sur le bouton suivant :"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:499
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:541
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:509
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:551
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:392
 msgid "Yes, subscribe me to this list"
 msgstr "Oui, abonnez-moi à cette liste"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:501
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:543
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:511
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:553
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message."
@@ -760,8 +758,8 @@ msgstr ""
 "Si vous recevez cet email par erreur ou si vous ne souhaitez plus vous "
 "abonner, ignorer simplement cet email."
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:507
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:549
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:517
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:559
 msgid "Subscription Confirmation"
 msgstr "Confirmation d'inscription"
 

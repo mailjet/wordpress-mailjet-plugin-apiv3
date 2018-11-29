@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2018-11-27 15:40+0200\n"
-"PO-Revision-Date: 2018-11-27 15:41+0200\n"
+"POT-Creation-Date: 2018-11-29 11:43+0200\n"
+"PO-Revision-Date: 2018-11-29 11:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
@@ -117,7 +117,7 @@ msgstr "Statistics"
 #: src/includes/MailjetMenu.php:80
 #: src/includes/SettingsPages/InitialContactListsSettings.php:26
 msgid "Configure your lists."
-msgstr "Configure your lists"
+msgstr "Configure your lists."
 
 #: src/includes/MailjetMenu.php:85 src/includes/SettingsPages/AllSetup.php:38
 msgid "You're all set up!"
@@ -723,24 +723,24 @@ msgstr "Subscribe to our mailing list"
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:397
 #, fuzzy
 #| msgid "Subscribe to our mailing list"
-msgid "Subscribe to our mailing list."
+msgid "Subscribe to our newsletter"
 msgstr "Subscribe to our mailing list"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:411
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:429
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:489
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:530
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:416
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:434
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:499
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:540
 msgid "Invalid email"
 msgstr "Invalid email"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:495
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:537
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:505
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:547
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:388
 msgid "Please confirm your subscription"
 msgstr "Please confirm your subscription"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:496
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:538
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:506
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:548
 #, php-format
 msgid ""
 "To receive newsletters from %s please confirm your subscription by clicking "
@@ -749,14 +749,14 @@ msgstr ""
 "To receive newsletters from %s please confirm your subscription by clicking "
 "the following button:"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:499
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:541
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:509
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:551
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:392
 msgid "Yes, subscribe me to this list"
 msgstr "Yes, subscribe me to this list"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:501
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:543
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:511
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:553
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message."
@@ -764,8 +764,8 @@ msgstr ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message."
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:507
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:549
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:517
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:559
 msgid "Subscription Confirmation"
 msgstr "Subscription Confirmation"
 
@@ -1079,6 +1079,11 @@ msgstr "Default page"
 #: src/widget/views/designforfailure.php:6
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
+
+#, fuzzy
+#~| msgid "Subscribe to our mailing list"
+#~ msgid "Subscribe to our mailing list."
+#~ msgstr "Subscribe to our mailing list"
 
 #~ msgid "You have been successfully subscribed to a Mailjet contact list"
 #~ msgstr "You have been successfully subscribed to a Mailjet contact list"

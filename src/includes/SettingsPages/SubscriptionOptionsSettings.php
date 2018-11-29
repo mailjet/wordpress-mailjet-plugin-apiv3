@@ -394,7 +394,7 @@ class SubscriptionOptionsSettings
             }
             woocommerce_form_field( 'mailjet_woo_subscribe_ok', array(
                 'type'          => 'checkbox',
-                'label'         => __('Subscribe to our mailing list.', 'mailjet'),
+                'label'         => __('Subscribe to our newsletter', 'mailjet'),
                 'required'  => false,
             ), $checkout->get_value( 'mailjet_woo_subscribe_ok' ));
         }
