@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Includes;
 
+use MailjetPlugin\Includes\MailjetLogger;
+
 /**
  * Define the internationalization functionality.
  *
@@ -34,7 +36,7 @@ class Mailjeti18n
         load_plugin_textdomain(
                 'mailjet', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/'
         );
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
+        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
     }
 
     /**
@@ -47,12 +49,12 @@ class Mailjeti18n
     public static function updateTranslationsInFile($locale = 'en_US', array $translations = array())
     {
         if (empty($locale) || empty($translations)) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Empty Locale or Translation messages provided ] ');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Empty Locale or Translation messages provided ] ');
             return false;
         }
 
         $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-' . $locale . '.po';
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
+        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
 
         // Parse a po file
         $fileHandler = new \Sepia\PoParser\SourceHandler\FileSystem($filePo);
@@ -72,7 +74,7 @@ class Mailjeti18n
         $compiler = new \Sepia\PoParser\PoCompiler();
         $fileHandler->save($compiler->compile($catalog));
 
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO and MO file updated ]');
+        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO and MO file updated ]');
 
         return true;
     }
@@ -83,7 +85,7 @@ class Mailjeti18n
         if (!file_exists($filePo)) {
             return $msgId;
         }
-        \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
+        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
         $fileHandler = new \Sepia\PoParser\SourceHandler\FileSystem($filePo);
         $poParser = new \Sepia\PoParser\Parser($fileHandler);
         $catalog = $poParser->parse();

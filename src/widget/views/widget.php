@@ -1,16 +1,21 @@
-<!-- This file is used to markup the public-facing widget. -->
+<?php
 
+use MailjetPlugin\Includes\Mailjeti18n;
+
+?>
+
+<!-- This file is used to markup the public-facing widget. -->
 <div class="mailjet_widget_front_container">
     <?php
     extract($args);
 
-    $locale = \MailjetPlugin\Includes\Mailjeti18n::getLocale();
-    $language = \MailjetPlugin\Includes\Mailjeti18n::getCurrentUserLanguage();
+    $locale = Mailjeti18n::getLocale();
+    $language = Mailjeti18n::getCurrentUserLanguage();
 
     // Check the widget options
     $title = isset($instance[$locale]['title']) ? apply_filters('widget_title', $instance[$locale]['title']) : '';
-    $emailLabel = !empty($instance[$locale]['language_mandatory_email']) ? apply_filters('widget_language_mandatory_email', $instance[$locale]['language_mandatory_email']) : \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'your@email.com');
-    $buttonLabel = !empty($instance[$locale]['language_mandatory_button']) ? apply_filters('widget_language_mandatory_button', $instance[$locale]['language_mandatory_button']) : \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscribe');
+    $emailLabel = !empty($instance[$locale]['language_mandatory_email']) ? apply_filters('widget_language_mandatory_email', $instance[$locale]['language_mandatory_email']) : Mailjeti18n::getTranslationsFromFile($locale, 'your@email.com');
+    $buttonLabel = !empty($instance[$locale]['language_mandatory_button']) ? apply_filters('widget_language_mandatory_button', $instance[$locale]['language_mandatory_button']) : Mailjeti18n::getTranslationsFromFile($locale, 'Subscribe');
     ?>
     <div class="widget-text wp_widget_plugin_box">
     <?php
