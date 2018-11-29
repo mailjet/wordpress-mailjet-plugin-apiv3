@@ -40,7 +40,10 @@
     "autoload": {
         "psr-4": {
             "MailjetPlugin\\": "src/"
-        }
+        },
+        "classmap" : [
+            "src/"
+        ]
     },
     "config": {
         "preferred-install": "dist"
