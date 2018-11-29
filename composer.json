@@ -39,10 +39,27 @@
     },
     "autoload": {
         "psr-4": {
-            "MailjetPlugin\\": "src"
+            "MailjetPlugin\\": "src/"
         }
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "scripts": {
+        "clearConfigCache": [
+            "rm -f ./data/cache/module-config-cache.*.php",
+            "rm -f ./data/cache/module-classmap-cache.*.php"
+        ],
+        "clearClassCache": [
+            "rm -f ./data/cache/classes.php.cache"
+        ],
+        "post-install-cmd": [
+            "@clearConfigCache",
+            "@clearClassCache"
+        ],
+        "post-update-cmd": [
+            "@clearConfigCache",
+            "@clearClassCache"
+        ]
     }
 }
