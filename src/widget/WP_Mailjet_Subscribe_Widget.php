@@ -402,7 +402,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 		if($mailjet_widget == false) {
 			return $instance;
 		}
-        $settings = $mailjet_widget[2];
+        $settings = isset($mailjet_widget[2]) ? $mailjet_widget[2] : array();
 
         if(isset($settings['enableTaben']) && $settings['enableTaben'] == 'on') {
             $instance['en_US']['language_checkbox'] = 1;
