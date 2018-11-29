@@ -407,6 +407,11 @@ class SubscriptionOptionsSettings
         $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
         $userId = filter_var($comment->user_id, FILTER_SANITIZE_NUMBER_INT);
 
+        // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
+        if (empty($authorEmail)) {
+            return;
+        }
+
         if (!is_email($authorEmail)) {
             _e('Invalid email', 'mailjet');
             die;
@@ -483,6 +488,11 @@ class SubscriptionOptionsSettings
         if (false !== $error) {
             _e($error, 'mailjet');
             die;
+        }
+
+        // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
+        if (empty($user_email)) {
+            return;
         }
 
         if (!is_email($user_email)) {

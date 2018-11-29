@@ -40,7 +40,7 @@ class IntegrationsSettings
         $mailjetWooIntegrationActivated = get_option('activate_mailjet_woo_integration');
 
         $wooCommerceNotInstalled = false;
-        if (!class_exists('WooCommerce')) {
+        if (!class_exists('WooCommerce')) { // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
             delete_option('activate_mailjet_woo_integration');
             delete_option('activate_mailjet_woo_sync');
             delete_option('mailjet_woo_list');
