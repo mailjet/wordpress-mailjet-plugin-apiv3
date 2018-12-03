@@ -637,6 +637,7 @@ function mimetype_from_filename($filename)
 function mimetype_from_extension($extension)
 {
     static $mimetypes = [
+        '3gp' => 'video/3gpp',
         '7z' => 'application/x-7z-compressed',
         'aac' => 'audio/x-aac',
         'ai' => 'application/postscript',
