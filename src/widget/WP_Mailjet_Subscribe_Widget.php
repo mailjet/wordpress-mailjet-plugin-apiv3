@@ -102,20 +102,21 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Submited but empty
         if (empty($_POST['subscription_email'])) {
-            return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
+            return !empty($instance[$locale]['empty_email_message_input']) ? $instance[$locale]['empty_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
         }
 
         // Send subscription email
         $subscription_email = $_POST['subscription_email'];
         if (!is_email($subscription_email)) {
-            return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Invalid email');
+            return Mailjeti18n::getTranslationsFromFile($locale, 'Invalid email');
         }
 
         $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
         if ($sendingResult) {
-            return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
+           return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
-        return \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
+
+        return !empty($instance[$locale]['technical_error_message_input']) ? $instance[$locale]['technical_error_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
     }
 
     /**
