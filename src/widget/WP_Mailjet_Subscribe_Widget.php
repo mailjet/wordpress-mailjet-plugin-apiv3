@@ -842,7 +842,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     private function getMailjetContactProperties()
     {
         if ($this->mailjetContactProperties == null) {
-            $this->mailjetContactProperties = MailjetApi::getContactProperties();
+            try {
+                $this->mailjetContactProperties = MailjetApi::getContactProperties();
+            } catch (Exception $ex) {
+                return false;
+            }
         }
         return $this->mailjetContactProperties;
     }
