@@ -462,6 +462,7 @@ class SubscriptionOptionsSettings
         $test = sprintf(Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), $wpUrl);
 //        $test = sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet'), $wpUrl);
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', sprintf($instance[$locale]['email_content_main_text'], get_option('blogname'))) : $test;
+        $email_content_after_button = !empty($instance[$locale]['email_content_after_button']) ? $instance[$locale]['email_content_after_button'] : Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.');
         $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
@@ -481,7 +482,7 @@ class SubscriptionOptionsSettings
             '__CONFIRM_URL__' => $thankYouURI . $confirmUrl . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.'),
+            '__IGNORE__' => $email_content_after_button,
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
         foreach ($emailParams as $key => $value) {
