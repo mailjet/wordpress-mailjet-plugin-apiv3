@@ -23,11 +23,11 @@ class IntegrationsSettings
 
     public function mailjet_section_integrations_cb($args)
     {
-        ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('Select which Wordpress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet' ); ?>
-        </p>
-        <?php
+//        ?>
+<!--        <p id="--><?php //echo esc_attr( $args['id'] ); ?><!--">-->
+<!--            --><?php //echo __('Select which Wordpress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet' ); ?>
+<!--        </p>-->
+<!--        --><?php
     }
 
 
