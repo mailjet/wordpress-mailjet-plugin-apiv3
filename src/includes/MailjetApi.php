@@ -125,6 +125,22 @@ class MailjetApi
         }
     }
 
+    public static function getPropertyIdByName($name)
+    {
+        if (!$name) {
+           return false; 
+        }
+        $contactProperties = self::getContactProperties();
+        if ($contactProperties) {
+            foreach ($contactProperties as $property) {
+                if ($property['Name'] === $name) {
+                    return $property['ID'];
+                }
+            }
+        }
+        return false;
+    }
+
     public static function createMailjetContactProperty($name, $type = "str")
     {
         if (empty($name)) {
@@ -137,7 +153,7 @@ class MailjetApi
 //      DataType: the type of data that is being stored (this can be either a str, int, float or bool)
 //      NameSpace: this can be either static or historic
         $body = [
-            'Datatype' => "str",
+            'Datatype' => $type,
             'Name' => $name,
             'NameSpace' => "static"
         ];

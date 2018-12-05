@@ -14,7 +14,7 @@ class MailjetActivator
      */
     public static function activate()
     {
-        $apikey = get_option('mailjet_apikey');
+        /* $apikey = get_option('mailjet_apikey');
         $apisecret = get_option('mailjet_apisecret');
 
         // Check if transition from v4 to v5 is already done
@@ -70,7 +70,7 @@ class MailjetActivator
 
         foreach ($deleteOptions as $option) {
             delete_option($option);
-        }
+        } */
     }
 
 }
