@@ -148,12 +148,12 @@ class MailjetSettings
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         if (!empty(get_option('activate_mailjet_woo_integration')) && !empty(get_option('activate_mailjet_woo_sync')) && !empty(get_option('mailjet_woo_list'))) {
             // Add the checkbox
-            add_action('woocommerce_after_checkout_billing_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_woo_fields'));
+            add_action('woocommerce_after_checkout_billing_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
             // Process the checkbox on submit
-            add_action('woocommerce_checkout_update_order_meta', array($subscriptionOptionsSettings, 'mailjet_subscribe_woo'));
+            add_action('woocommerce_checkout_create_order', array($subscriptionOptionsSettings, 'mailjet_subscribe_woo'), 10, 2);
 
             // Add filter for changing "Thank you" text on order processed page
-            add_filter('woocommerce_thankyou_order_received_text', array($integrationsSettings, 'woo_change_order_received_text'));
+            add_filter('woocommerce_thankyou_order_received_text', array($integrationsSettings, 'woo_change_order_received_text'), 10, 2);
 
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }

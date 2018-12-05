@@ -424,9 +424,8 @@ class SubscriptionOptionsSettings
 
 
 
-    public function mailjet_subscribe_woo($orederId)
+    public function mailjet_subscribe_woo($order, $data)
     {
-        $order = wc_get_order($orederId);
         $wooUserEmail = filter_var($order->get_billing_email(), FILTER_SANITIZE_EMAIL);
         $firstName = $order->get_billing_first_name();
         $lastName = $order->get_billing_last_name();
@@ -436,11 +435,15 @@ class SubscriptionOptionsSettings
             die;
         }
 
+        if( isset($_POST['_my_field_name']) && ! empty($_POST['_my_field_name']) )
+            $order->update_meta_data( '_my_field_name', sanitize_text_field( $_POST['_my_field_name'] ) );
+
+
         $subscribe = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
         if ($subscribe) {
-            update_post_meta($order_id, 'mailjet_woo_subscribe_ok', esc_attr($_POST['mailjet_woo_subscribe_ok']));
+            $order->update_meta_data( 'mailjet_woo_subscribe_ok', sanitize_text_field( $_POST['mailjet_woo_subscribe_ok'] ) );
+            $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
         }
-        $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
     }
 
 

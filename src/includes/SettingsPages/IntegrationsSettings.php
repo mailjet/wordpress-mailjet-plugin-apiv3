@@ -211,13 +211,13 @@ class IntegrationsSettings
      * @param $order
      * @return string
      */
-    public function woo_change_order_received_text($str, $order = null) {
+    public function woo_change_order_received_text($str, $order) {
         if (!empty($order)) {
-            $new_str = $str . ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b> ' . $order->get_billing_email . ' </b>). To confirm your subscription you have to click on the provided link.</i></b>';
-        } else {
-            $new_str = $str . ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you. To confirm your subscription you have to click on the provided link.</i></b>';
+            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
+                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b> ' . $order->get_billing_email() . ' </b>). To confirm your subscription you have to click on the provided link.</i></b>';
+            }
         }
-        return $new_str;
+        return $str;
     }
 
 }
