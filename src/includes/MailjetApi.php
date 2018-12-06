@@ -232,4 +232,25 @@ class MailjetApi
         }
     }
 
+    /**
+     * Add a contact to a Mailjet contact list
+     */
+    public static function syncMailjetContact($contactListId, $contact, $action = 'addforce')
+    {
+        $mjApiClient = self::getApiClient();
+        $name = isset($contact['Properties']['firstname']) ? $contact['Properties']['firstname'] : '';
+        $body = [
+            'Name' => $name,
+            'Action' => $action,
+            'Email' => $contact['Email'],
+            'Properties' => $contact['Properties']
+        ];
+        $response = $mjApiClient->post(Resources::$ContactslistManagecontact, ['id' => $contactListId, 'body' => $body]);
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+        }
+    }
+
 }

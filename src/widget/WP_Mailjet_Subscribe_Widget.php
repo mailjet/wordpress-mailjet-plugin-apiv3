@@ -167,7 +167,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             if (!empty($mailjetContactProperties)) {
                 foreach ($mailjetContactProperties as $property) {
                     if (isset($properties[$property['ID']])) {
-                        $dataProperties[$property['Name']] = $properties[$property['ID']];
+                        if ($property['Datatype'] == 'datetime') {
+                            $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
+                            echo $properties[$property['ID']];
+                            if ($datetime instanceof \DateTime) {
+                                $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
+                            }else {
+                                // Prevent adding wrong date but subscribe user with all other stuffs
+                            }
+                        } else {
+                            $dataProperties[$property['Name']] = $properties[$property['ID']];
+                        }
                     }
                 }
             }
@@ -185,7 +195,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 die;
             }
 
-            $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
+            $result = MailjetApi::syncMailjetContact($contactListId, $contact);
             if (!$result) {
                 \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 echo $technicalIssue;
