@@ -3,15 +3,16 @@
 namespace MailjetPlugin\Includes;
 
 use MailjetIframe\MailjetIframe;
+use MailjetPlugin\Includes\SettingsPages\AllSetup;
 use MailjetPlugin\Includes\SettingsPages\ConnectAccountSettings;
 use MailjetPlugin\Includes\SettingsPages\Dashboard;
-use MailjetPlugin\Includes\SettingsPages\AllSetup;
 use MailjetPlugin\Includes\SettingsPages\EnableSendingSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialContactListsSettings;
 use MailjetPlugin\Includes\SettingsPages\InitialSettings;
+use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
-use MailjetPlugin\Includes\MailjetApi;
+use MailjetPlugin\Includes\MailjetLogger;
 
 /**
  * Register all actions and filters for the plugin.
@@ -54,60 +55,63 @@ class MailjetMenu
                 plugin_dir_url( dirname( __FILE__ ) ) . 'admin/images/mj_logo_small.png'
             );
 
-            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet settings menu added ]');
+            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet settings menu added ]');
 
             if (function_exists('add_submenu_page')) {
                 add_submenu_page('mailjet_settings_page', __('Connect your Mailjet account to get started', 'mailjet'),
                     __('Settings', 'mailjet'), 'read', 'mailjet_settings_page', array($this, 'show_settings_page'));
 
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial mailjet API settings sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial mailjet API settings sub-menu added ]');
 
                 add_submenu_page(null, __('Manage your Mailjet lists', 'mailjet'),
                     __('Lists', 'mailjet'), 'read', 'mailjet_settings_contacts_menu',
                     array($this, 'show_contacts_page'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet lists\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet lists\' sub-menu added ]');
                 add_submenu_page(null, __('Manage your Mailjet campaigns', 'mailjet'),
                     __('Campaigns', 'mailjet'), 'read', 'mailjet_settings_campaigns_menu',
                     array($this, 'show_campaigns_page'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet campaigns\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet campaigns\' sub-menu added ]');
                 add_submenu_page(null, __('View your Mailjet statistics', 'mailjet'),
                     __('Statistics', 'mailjet'), 'read', 'mailjet_settings_stats_menu',
                     array($this, 'show_stats_page'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet statistics\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet statistics\' sub-menu added ]');
 
                 // Initial configuration pages
                 add_submenu_page(null, __('Configure your lists.', 'mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
                     array(new InitialContactListsSettings(), 'mailjet_initial_contact_lists_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
 
                 // All Setup page
                 add_submenu_page(null, __('You\'re all set up!', 'mailjet'), null, 'read', 'mailjet_allsetup_page',
                     array(new AllSetup(), 'mailjet_allsetup_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet All Setup sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet All Setup sub-menu added ]');
 
 
                 // Dashboard page
                 add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet'), null, 'read', 'mailjet_dashboard_page',
                     array(new Dashboard(), 'mailjet_dashboard_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Dashboard sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Dashboard sub-menu added ]');
 
 
                 // Settings pages
                 add_submenu_page(null, __('Connect your Mailjet account', 'mailjet'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
                 add_submenu_page(null, __('Sending settings', 'mailjet'), null, 'read', 'mailjet_sending_settings_page',
                     array(new EnableSendingSettings(), 'mailjet_sending_settings_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
                 add_submenu_page(null, __('Subscription options', 'mailjet'), null, 'read', 'mailjet_subscription_options_page',
                     array(new SubscriptionOptionsSettings(), 'mailjet_subscription_options_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
                 add_submenu_page(null, __('User access', 'mailjet'), null, 'read', 'mailjet_user_access_page',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));
-                \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
+                add_submenu_page(null, __('Integrations', 'mailjet'), null, 'read', 'mailjet_integrations_page',
+                    array(new IntegrationsSettings(), 'mailjet_integrations_page_html'));
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Integrations\' sub-menu added ]');
             }
         } else {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have required permissions to see Mailjet plugin ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have required permissions to see Mailjet plugin ]');
         }
     }
 
@@ -147,7 +151,7 @@ class MailjetMenu
             ->turnCreateCampaignButton(MailjetIframe::ON)
             ->turnSendingPolicy(MailjetIframe::ON);
 
-       // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe prepared ]');
+       // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe prepared ]');
 
         return $mailjetIframe;
     }
@@ -170,7 +174,7 @@ class MailjetMenu
 
     public function show_campaigns_page()
     {
-       // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
+       // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
 
         echo '<div class="mj-pluginPage iframePage">';
 
@@ -184,7 +188,7 @@ class MailjetMenu
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
@@ -192,13 +196,13 @@ class MailjetMenu
         }
 
         echo '</div">';
-      //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
+      //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
     }
 
 
     public function show_stats_page()
     {
-    //    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
+    //    MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
 
         echo '<div class="mj-pluginPage iframePage">';
 
@@ -212,20 +216,20 @@ class MailjetMenu
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
         echo '</div">';
-      //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
+      //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
     }
 
 
     public function show_contacts_page()
     {
-     //   \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
+     //   MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
 
         echo '<div class="mj-pluginPage iframePage">';
 
@@ -239,14 +243,14 @@ class MailjetMenu
             echo $mailjetIframe->getHtml();
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
         echo '</div">';
-      //  \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
+      //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
 }

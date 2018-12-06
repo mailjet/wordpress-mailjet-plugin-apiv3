@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155
+class ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -28,6 +28,10 @@ class ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155
         ),
         'M' => 
         array (
+            'MailjetPlugin\\Widget\\' => 21,
+            'MailjetPlugin\\Includes\\' => 23,
+            'MailjetPlugin\\Front\\' => 20,
+            'MailjetPlugin\\Admin\\' => 20,
             'MailjetPlugin\\' => 14,
             'MailjetIframe\\' => 14,
         ),
@@ -63,6 +67,22 @@ class ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'MailjetPlugin\\Widget\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/widget',
+        ),
+        'MailjetPlugin\\Includes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/includes',
+        ),
+        'MailjetPlugin\\Front\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/front',
+        ),
+        'MailjetPlugin\\Admin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/admin',
         ),
         'MailjetPlugin\\' => 
         array (
@@ -110,9 +130,9 @@ class ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit9e9f1c2d711c6840fb28d3748d6d6155::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

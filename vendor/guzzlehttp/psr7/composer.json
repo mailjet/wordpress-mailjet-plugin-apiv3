@@ -2,7 +2,7 @@
     "name": "guzzlehttp/psr7",
     "type": "library",
     "description": "PSR-7 message implementation that also provides common utility methods",
-    "keywords": ["request", "response", "message", "stream", "http", "uri", "url"],
+    "keywords": ["request", "response", "message", "stream", "http", "uri", "url", "psr-7"],
     "license": "MIT",
     "authors": [
         {

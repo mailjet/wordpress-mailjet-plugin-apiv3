@@ -25,6 +25,7 @@ $mailjetIframe
         'campaigns',
         'contacts',
         'stats',
+        'email_automation',
     ))
     ->turnDocumentationProperties(MailjetIframe::OFF)
     ->turnNewContactListCreation(MailjetIframe::OFF)

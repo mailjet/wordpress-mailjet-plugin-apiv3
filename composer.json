@@ -39,10 +39,25 @@
     },
     "autoload": {
         "psr-4": {
-            "MailjetPlugin\\": "src"
+            "MailjetPlugin\\": "src/",
+            "MailjetPlugin\\Includes\\": "src/includes/",
+            "MailjetPlugin\\Admin\\": "src/admin/",
+            "MailjetPlugin\\Front\\": "src/front/",
+            "MailjetPlugin\\Widget\\": "src/widget/"
         }
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "scripts": {
+        "clearComposerCache": [
+            "rm -rf ~/.composer/cache*"
+        ],
+        "post-install-cmd": [
+            "@clearComposerCache"
+        ],
+        "post-update-cmd": [
+            "@clearComposerCache"
+        ]
     }
 }

@@ -4,8 +4,9 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\Mailjeti18n;
+use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetMail;
 
 /**
  * Register all actions and filters for the plugin.
@@ -145,7 +146,7 @@ class EnableSendingSettings
 
         // check user capabilities
         if (!current_user_can('manage_options')) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
 
@@ -188,11 +189,11 @@ class EnableSendingSettings
                 // Send a test email
                 $testSent = MailjetMail::sendTestEmail();
                 if (false === $testSent) {
-                    //\MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
+                    //MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
                     $executionError = true;
                     add_settings_error('mailjet_messages', 'mailjet_message', __('The test email could not be sent. Please make sure your server doesn\'t block the SMTP ports. Also double check that you are using correct API and Secret keys and a valid sending address from your Mailjet account.', 'mailjet'), 'error');
                 } else {
-                    // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
+                    // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
                     add_settings_error('mailjet_messages', 'mailjet_message', __('Your test email has been successfully sent', 'mailjet'), 'updated');
                 }
             }

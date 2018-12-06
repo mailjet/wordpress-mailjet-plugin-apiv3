@@ -1,5 +1,7 @@
 <?php
 
+namespace MailjetPlugin;
+
 /**
  * The plugin bootstrap file
  *
@@ -46,16 +48,17 @@ if (!defined('WPINC')) {
 // Autoloading via composer
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Analog\Analog;
 use MailjetPlugin\Includes\Mailjet;
 use MailjetPlugin\Includes\MailjetActivator;
 use MailjetPlugin\Includes\MailjetDeactivator;
-use Analog\Analog;
+use MailjetPlugin\Includes\MailjetLogger;
 
 // Change the handler to any other if you need to.
 //Analog::handler(\Analog\Handler\File::init(dirname(__FILE__) . '/logs.txt'));
 Analog::handler(\Analog\Handler\ChromeLogger::init());
 
-\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet - Start ]');
+MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet - Start ]');
 
 
 /**
@@ -133,7 +136,7 @@ updateV5();
  */
 function activate_mailjet() {
 	MailjetActivator::activate();
-    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ]  [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ activate_mailjet ]');
+    MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ]  [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ activate_mailjet ]');
 }
 
 /**
@@ -142,7 +145,7 @@ function activate_mailjet() {
  */
 function deactivate_mailjet() {
 	MailjetDeactivator::deactivate();
-    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ]  [ ' . plugin_basename(__FILE__) . ' ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ deactivate_mailjet ]');
+    MailjetLogger::info('[ Mailjet ]  [ ' . plugin_basename(__FILE__) . ' ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ deactivate_mailjet ]');
 }
 
 register_activation_hook( __FILE__, 'activate_mailjet' );
@@ -159,9 +162,9 @@ register_deactivation_hook( __FILE__, 'deactivate_mailjet' );
  */
 function run_mailjet() {
 	$plugin = new Mailjet();
-    \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet class initialized ]');
+    MailjetLogger::info('[ Mailjet ] [ ' . plugin_basename(__FILE__) . ' ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet class initialized ]');
 	$plugin->run();
 }
 run_mailjet();
 
-\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ]  [ ' . plugin_basename(__FILE__) . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet - End ]');
+MailjetLogger::info('[ Mailjet ]  [ ' . plugin_basename(__FILE__) . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet - End ]');

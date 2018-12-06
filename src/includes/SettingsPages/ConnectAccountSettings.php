@@ -4,8 +4,9 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\Mailjeti18n;
+use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetMail;
 
 /**
  * Register all actions and filters for the plugin.
@@ -60,7 +61,7 @@ class ConnectAccountSettings
 
         // check user capabilities
         if (!current_user_can('manage_options')) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
 
@@ -90,17 +91,17 @@ class ConnectAccountSettings
             // Validate Mailjet API credentials
             $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (false == $isValidAPICredentials) {
-//                \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
+//                ailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet'), 'error');
             } else {
-//            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
+//            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
                 // Initialize PhpMailer
                 //
                 if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
                     require_once ABSPATH . WPINC . '/class-phpmailer.php';
                     require_once ABSPATH . WPINC . '/class-smtp.php';
                     $phpmailer = new \PHPMailer();
-//                \MailjetPlugin\Includes\MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
+//                MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
                 }
 
                 // Update From Email and Name
@@ -109,7 +110,7 @@ class ConnectAccountSettings
 
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
-//            \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
+//            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
 

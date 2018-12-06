@@ -5,7 +5,7 @@
 [api_credential]: https://app.mailjet.com/account/api_keys
 [mailjet]: http://www.mailjet.com
 
-![alt text](http://cdn.appstorm.net/web.appstorm.net/files/2012/02/mailjet_logo_200x200.png "Mailjet")
+![alt text](https://www.mailjet.com/images/email/transac/logo_header.png "Mailjet")
 
 
 
@@ -59,6 +59,7 @@ $mailjetIframe
         'campaigns',
         'contacts',
         'stats',
+        'email_automation',
     ))
     ->turnDocumentationProperties(MailjetIframe::OFF)
     ->turnNewContactListCreation(MailjetIframe::OFF)
@@ -71,10 +72,11 @@ $mailjetIframe
 
 /**
  *
- * Show the iframe whereever you want
+ * Show the iframe wherever you want
  */
 echo $mailjetIframe->getHtml();
 ```
+* Available initial pages: PAGE_STATS, PAGE_CAMPAIGNS, PAGE_CONTACTS, PAGE_AUTOMATION
 
 ## Send a pull request
 

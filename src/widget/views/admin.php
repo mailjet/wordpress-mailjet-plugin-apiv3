@@ -1,4 +1,7 @@
 <?php
+
+use MailjetPlugin\Includes\Mailjeti18n;
+
 $activeLanguages = array();
 foreach ($languages as $language => $locale) {
     if (isset($instance[$locale]) && isset($instance[$locale]['language_checkbox']) && $instance[$locale]['language_checkbox']) {
@@ -246,7 +249,7 @@ if($numberActiveLanguages == 1) {
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Email address field placeholder text', 'mailjet'); ?></span>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
-                                    $yourEmailTranslation = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'your@email.com');
+                                    $yourEmailTranslation = Mailjeti18n::getTranslationsFromFile($locale, 'your@email.com');
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
                                     <!--Languages label-->
@@ -259,7 +262,7 @@ if($numberActiveLanguages == 1) {
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Button label', 'mailjet'); ?></span>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
-                                    $subscribeTranslation = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscribe');
+                                    $subscribeTranslation = Mailjeti18n::getTranslationsFromFile($locale, 'Subscribe');
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
                                     <!--Languages label-->
@@ -288,7 +291,7 @@ if($numberActiveLanguages == 1) {
                                     foreach ($activeLanguages as $language => $locale) {
                                         $n++;
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $subscriptionConfirmationEmailSent = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm your subscription.');
+                                        $subscriptionConfirmationEmailSent = Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm your subscription.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -305,7 +308,7 @@ if($numberActiveLanguages == 1) {
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $subscriptionConfirmed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
+                                        $subscriptionConfirmed = Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group"  style="width: <?php echo $percent . '%' ?>">
@@ -321,7 +324,7 @@ if($numberActiveLanguages == 1) {
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $provideEmail = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
+                                        $provideEmail = Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -337,7 +340,7 @@ if($numberActiveLanguages == 1) {
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $emailAlreadySubscribed = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'This email address has already been subscribed.');
+                                        $emailAlreadySubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'This email address has already been subscribed.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -353,7 +356,7 @@ if($numberActiveLanguages == 1) {
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $incorectValue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
+                                        $incorectValue = Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -369,7 +372,7 @@ if($numberActiveLanguages == 1) {
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $technicalIssue = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
+                                        $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -392,7 +395,7 @@ if($numberActiveLanguages == 1) {
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    $subscriptionConfirmation = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
+                                    $subscriptionConfirmation = Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -409,7 +412,7 @@ if($numberActiveLanguages == 1) {
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    $confirmYourSubscription = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription');
+                                    $confirmYourSubscription = Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription');
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -425,7 +428,7 @@ if($numberActiveLanguages == 1) {
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    $toReceiveNewslettersFrom = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:');
+                                    $toReceiveNewslettersFrom = Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:');
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -440,7 +443,7 @@ if($numberActiveLanguages == 1) {
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                    $yesSubscribeMe = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list');
+                                    $yesSubscribeMe = Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list');
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
@@ -454,7 +457,7 @@ if($numberActiveLanguages == 1) {
                                 </div>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
-                                    $ignoreMessage = \MailjetPlugin\Includes\Mailjeti18n::getTranslationsFromFile($locale, "If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message.");
+                                    $ignoreMessage = Mailjeti18n::getTranslationsFromFile($locale, "If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message.");
                                     extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                     ?>
                                     <!--Languages label-->

@@ -19,6 +19,7 @@ class MailjetIframe
     const PAGE_STATS = 'stats';
     const PAGE_CAMPAIGNS = 'campaigns';
     const PAGE_CONTACTS = 'contacts';
+    const PAGE_AUTOMATION = 'workflow';
 
     const SESSION_NAME = 'MailjetIframeToken';
     const SESSION_SET = 'MailjetIframeTokenSet';
@@ -42,7 +43,8 @@ class MailjetIframe
     private $allowedPages = array(
         self::PAGE_STATS,
         self::PAGE_CONTACTS,
-        self::PAGE_CAMPAIGNS
+        self::PAGE_CAMPAIGNS,
+        self::PAGE_AUTOMATION,
     );
 
     /**
@@ -77,6 +79,7 @@ class MailjetIframe
         'campaigns',
         'contacts',
         'stats',
+        'email_automation',
     );
 
     /**
