@@ -225,6 +225,11 @@ function mailjet_subscribe_comment_author($id){
     $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
     $userId = filter_var($comment->user_id, FILTER_SANITIZE_NUMBER_INT);
 
+    // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
+    if (empty($authorEmail)) {
+        return;
+    }
+
     if (!mailjet_validate_email($authorEmail)) {
         _e('Invalid email', 'wp-mailjet');
         die;
@@ -233,6 +238,7 @@ function mailjet_subscribe_comment_author($id){
     $subscribe = filter_var($_POST['mailjet_comment_authors_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
     mailjet_subscribe_confirmation_from_comment_form($subscribe, $authorEmail);
 }
+
 function mailjet_validate_email($email)
 {
     return (preg_match("/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/", $email) ||
@@ -300,6 +306,11 @@ function mailjet_subscribe_confirmation_from_comment_form($subscribe, $user_emai
         die;
     }
 
+    // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
+    if (empty($user_email)) {
+        return;
+    }
+    
     if (!mailjet_validate_email($user_email)) {
         _e('Invalid email', 'wp-mailjet-subscription-widget');
         die;
