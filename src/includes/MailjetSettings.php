@@ -232,7 +232,7 @@ class MailjetSettings
      */
     public function mailjet_settings_link($links, $file)
     {
-        if ($file != plugin_basename(dirname(dirname(dirname(__FILE__)))) . '/mailjet.php') {
+        if ($file != plugin_basename(dirname(dirname(dirname(__FILE__)))) . '/wp-mailjet.php') {
             return $links;
         }
 
