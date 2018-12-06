@@ -4,7 +4,7 @@ Contributors: mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 4.9
-Stable tag: 4.3.0
+Stable tag: 4.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,9 @@ function getMailjetSubscriptionEmailTemplate($templatePath) {
 4. Get instant insight on your campaign's performance with detailed statistics
 
 == Changelog ==
+
+= 4.4.0 =
+* Add proxy support
 
 = 4.3.0 =
 * Update the confirmation email template for English, French, German and Spanish

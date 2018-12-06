@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet for wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-03 17:54+0300\n"
-"PO-Revision-Date: 2018-07-03 17:54+0300\n"
+"POT-Creation-Date: 2018-07-10 17:30+0300\n"
+"PO-Revision-Date: 2018-07-10 17:30+0300\n"
 "Last-Translator: Mailjet <plugins@mailjet.com>\n"
 "Language-Team: Mailjet <info@mailjet.com>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -384,7 +384,7 @@ msgstr "Ermöglicht Ihren Besuchern die Anmeldung für eine Ihrer Listen"
 msgid "Mailjet Subscription widget"
 msgstr "Das Mailjet-Abonnement-Widget"
 
-#: mailjet-widget.php:117
+#: mailjet-widget.php:118
 msgid ""
 "You are either v1 user or we could not fetch user contact properties. Please "
 "contact our <a target=\"_blank\" href=\"https://www.mailjet.com/support"
@@ -400,57 +400,70 @@ msgstr ""
 "Mailjet-Abonnement-Widget konfigurieren, indem Sie auf die Schaltfläche "
 "\"Weiter\" klicken und Schritt 2 und Schritt 3 durchführen."
 
-#: mailjet-widget.php:472
+#: mailjet-widget.php:516
 msgid "Email field is empty"
 msgstr ""
 
-#: mailjet-widget.php:477
+#: mailjet-widget.php:521
 msgid "Missing list id"
 msgstr ""
 
-#: mailjet-widget.php:482 wp-mailjet.php:229 wp-mailjet.php:304
+#: mailjet-widget.php:526 wp-mailjet.php:229 wp-mailjet.php:304
 msgid "Invalid email"
 msgstr "Ungültige E-Mail-Adresse"
 
-#: mailjet-widget.php:492
+#: mailjet-widget.php:536
 #, php-format
 msgid "The contact %s is already subscribed"
 msgstr "Der Kontakt %s hat sich bereits angemeldet"
 
-#: mailjet-widget.php:545 wp-mailjet.php:310
+#: mailjet-widget.php:564
+msgid ""
+"You have entered a contact property with wrong data type, for example a "
+"string instead of a number."
+msgstr ""
+
+#: mailjet-widget.php:574
+msgid ""
+"You have entered a Datetime contact property with Invalid date value. Valid "
+"format for date time property is \"dd-mm-YYYY\" or \"dd/mm/YYYY\"."
+msgstr ""
+
+#: mailjet-widget.php:590 wp-mailjet.php:310
 msgid "Confirm your mailing list subscription"
-msgstr "Bestätigen Sie Ihre Anmeldung für die Mailing-Liste"
+msgstr "Bitte bestätigen Sie Ihr Abonnement"
 
-#: mailjet-widget.php:546 wp-mailjet.php:311
+#: mailjet-widget.php:591 wp-mailjet.php:311
 msgid "Please Confirm Your Subscription To"
-msgstr "Bitte bestätigen Sie Ihre Anmeldung für"
+msgstr ""
+"Um den Newsletter von %s zu erhalten, bestätigen Sie bitte Ihr Abonnement, "
+"indem Sie auf den folgenden Button klicken:"
 
-#: mailjet-widget.php:549 wp-mailjet.php:314
+#: mailjet-widget.php:594 wp-mailjet.php:314
 msgid "Click here to confirm"
-msgstr "Klicken Sie hier, um zu bestätigen"
+msgstr "Ja, ich möchte diesen Newsletter abonnieren"
 
-#: mailjet-widget.php:550 wp-mailjet.php:315
+#: mailjet-widget.php:595 wp-mailjet.php:315
 msgid "You may copy/paste this link into your browser:"
 msgstr "Sie können diesen Link in Ihren Browser kopieren:"
 
-#: mailjet-widget.php:552 wp-mailjet.php:317
+#: mailjet-widget.php:597 wp-mailjet.php:317
 msgid ""
 "Did not ask to subscribe to this list? Or maybe you have changed your mind? "
 "Then simply ignore this email and you will not be subscribed"
 msgstr ""
-"Sie haben sich nicht bei dieser Liste angemeldet? Oder haben Sie vielleicht "
-"Ihre Meinung geändert? Dann ignorieren Sie diese E-Mail einfach, und Sie "
-"werden nicht angemeldet"
+"Wenn Sie diese E-Mail versehentlich erhalten haben oder sich nicht mehr "
+"anmelden möchten, ignorieren Sie diese E-Mail einfach."
 
-#: mailjet-widget.php:553 wp-mailjet.php:318
+#: mailjet-widget.php:599 wp-mailjet.php:318
 msgid "Thanks,"
 msgstr "Vielen Dank,"
 
-#: mailjet-widget.php:560 wp-mailjet.php:324
+#: mailjet-widget.php:606 wp-mailjet.php:324
 msgid "Subscription Confirmation"
 msgstr "Bestätigung für die Anmeldung"
 
-#: mailjet-widget.php:561
+#: mailjet-widget.php:608
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "the subscription."
@@ -458,16 +471,16 @@ msgstr ""
 "Bestätigungsmail für die Anmeldung wurde gesendet. Bitte überprüfen Sie "
 "Ihren Posteingang und bestätigen Sie die Anmeldung."
 
-#: mailjet-widget.php:575
+#: mailjet-widget.php:623
 msgid "Error. Token verification failed."
 msgstr "Fehler. Tokenüberprüfung konnte nicht durchgeführt werden."
 
-#: mailjet-widget.php:620 wp-mailjet.php:262
+#: mailjet-widget.php:668 wp-mailjet.php:262
 #, php-format
 msgid "Thanks for subscribing with %s"
 msgstr "Vielen Dank für Ihre Anmeldung bei %s"
 
-#: mailjet-widget.php:697
+#: mailjet-widget.php:751
 msgid "your@email.com"
 msgstr "your@email.com"
 
