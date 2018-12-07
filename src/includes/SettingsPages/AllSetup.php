@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\Mailjeti18n;
+use MailjetPlugin\Includes\MailjetLogger;
 
 /**
  * Register all actions and filters for the plugin.
@@ -26,7 +27,7 @@ class AllSetup
     {
         // check user capabilities
         if (!current_user_can('manage_options')) {
-            \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
 

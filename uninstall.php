@@ -47,7 +47,6 @@ delete_option('activate_mailjet_initial_sync');
 delete_option('create_contact_list_btn');
 delete_option('create_list_name');
 
-
 delete_option('mailjet_enabled');
 delete_option('mailjet_from_name');
 delete_option('mailjet_from_email');
@@ -67,3 +66,8 @@ delete_option('mailjet_access_editor');
 delete_option('mailjet_access_author');
 delete_option('mailjet_access_contributor');
 delete_option('mailjet_access_subscriber');
+
+
+delete_option('activate_mailjet_woo_integration');
+delete_option('activate_mailjet_woo_sync');
+delete_option('mailjet_woo_list');

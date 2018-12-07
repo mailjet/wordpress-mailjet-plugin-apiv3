@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes;
 
 use Analog\Analog;
+use MailjetPlugin\Includes\MailjetLogger;
 
 /**
  * Register all actions and filters for the plugin.
@@ -67,10 +68,10 @@ class MailjetMail
 
     public function phpmailer_init_smtp(\PHPMailer $phpmailer)
     {
-       // \MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - Start ]');
+       // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - Start ]');
 
         if (!get_option('mailjet_enabled') || 0 == get_option('mailjet_enabled')) {
-          //  \MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet not enabled ]');
+          //  MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet not enabled ]');
             return;
         }
 
@@ -92,7 +93,7 @@ class MailjetMail
 
         $phpmailer->AddCustomHeader(self::MJ_MAILER);
 
-        //\MailjetPlugin\Includes\MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - End ]');
+        //MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - End ]');
     }
 
 
@@ -121,7 +122,7 @@ class MailjetMail
     {
         $testSent = false;
         if (empty(get_option('mailjet_test_address'))) {
-            //\MailjetPlugin\Includes\MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Missing email address to send test email to ]');
+            //MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Missing email address to send test email to ]');
             return;
         }
         // Send a test mail

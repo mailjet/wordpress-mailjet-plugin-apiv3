@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Includes;
 
+use MailjetPlugin\Includes\MailjetLogger;
+
 /**
  * Register all actions and filters for the plugin.
  *
