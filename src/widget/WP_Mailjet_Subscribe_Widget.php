@@ -102,7 +102,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Submited but empty
         if (empty($_POST['subscription_email'])) {
-            return Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
+            return !empty($instance[$locale]['empty_email_message_input']) ? $instance[$locale]['empty_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
         }
 
         // Send subscription email
@@ -113,9 +113,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
         if ($sendingResult) {
-            return Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
+           return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
-        return Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
+        return !empty($instance[$locale]['technical_error_message_input']) ? $instance[$locale]['technical_error_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
     }
 
     /**
@@ -166,7 +166,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             if (!empty($mailjetContactProperties)) {
                 foreach ($mailjetContactProperties as $property) {
                     if (isset($properties[$property['ID']])) {
-                        $dataProperties[$property['Name']] = $properties[$property['ID']];
+                        if ($property['Datatype'] == 'datetime') {
+                            $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
+                            echo $properties[$property['ID']];
+                            if ($datetime instanceof \DateTime) {
+                                $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
+                            }else {
+                                // Prevent adding wrong date but subscribe user with all other stuffs
+                            }
+                        } else {
+                            $dataProperties[$property['Name']] = $properties[$property['ID']];
+                        }
                     }
                 }
             }
@@ -184,7 +194,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 die;
             }
 
-            $result = MailjetApi::syncMailjetContacts($contactListId, $contacts);
+            $result = MailjetApi::syncMailjetContact($contactListId, $contact);
             if (!$result) {
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 echo $technicalIssue;
@@ -841,7 +851,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     private function getMailjetContactProperties()
     {
         if ($this->mailjetContactProperties == null) {
-            $this->mailjetContactProperties = MailjetApi::getContactProperties();
+            try {
+                $this->mailjetContactProperties = MailjetApi::getContactProperties();
+            } catch (Exception $ex) {
+                return false;
+            }
         }
         return $this->mailjetContactProperties;
     }
@@ -857,7 +871,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     function wp_ajax_mailjet_add_contact_property()
     {
         if (!empty($_POST['propertyName'])) {
-            $type = !empty($_POST['propertyType']) ? $_POST['propertyType'] : 'Text';
+            $type = !empty($_POST['propertyType']) ? $_POST['propertyType'] : 'str';
             echo json_encode(MailjetApi::createMailjetContactProperty($_POST['propertyName'], $type));
         }
         die;
