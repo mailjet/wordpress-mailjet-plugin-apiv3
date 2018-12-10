@@ -52,7 +52,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $this->get_widget_slug(), __('Mailjet Subscription Widget', $this->get_widget_slug()), $widget_options
         );
 
-//        var_dump($this->get_settings());
         // Register site styles and scripts
         add_action('admin_print_styles', array($this, 'register_widget_styles'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
@@ -156,9 +155,13 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             // List id is not provided
             if (!$contactListId) {
-                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided! ]');
-                echo $technicalIssue;
-                die;
+                // Use en_US list id as default
+                $listIdEn = get_option('mailjet_locale_subscription_list_en_US');
+                if(!$listIdEn) {
+                    MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided for '.$locale.'! ]');
+                    die;
+                }
+                $contactListId = $listIdEn;
             }
 
             $dataProperties = array();
