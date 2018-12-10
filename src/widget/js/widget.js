@@ -33,8 +33,8 @@
             var removeLanguage = !$(this).prop('checked');
             if (removeLanguage) {
                 // Reset Title and List ?
-                $(this).parent().find('.title-input').val('');
-                $(this).parent().find('.language-select-list').val(0);
+//                $(this).parent().find('.title-input').val('');
+//                $(this).parent().find('.language-select-list').val(0);
             } else {
                 // Add specific language
                 var languageListId = $(this).parent().find('.language-select-list').val();
