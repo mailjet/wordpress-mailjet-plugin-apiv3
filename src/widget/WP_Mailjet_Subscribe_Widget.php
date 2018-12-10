@@ -184,7 +184,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 }
             }
 
-            $contacts[] = array(
+            $contact = array(
                 'Email' => $subscription_email,
 //                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
                 'Properties' => $dataProperties
