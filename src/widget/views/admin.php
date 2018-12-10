@@ -188,11 +188,11 @@ if($numberActiveLanguages == 1) {
                                                 <label for="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>"><?php _e('Property type', 'mailjet') ?></label>
                                             <?php } ?>
                                             <select class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>">
-                                                <option value="str">Text</option>
-                                                <option value="int">Int</option>
-                                                <option value="float">Float / Number</option>
+                                                <option value="str">String</option>
+                                                <option value="int">Integer</option>
+                                                <option value="float">Decimal</option>
                                                 <option value="datetime">Date</option>
-                                                <option value="bool">Bool</option>
+                                                <option value="bool">Boolean</option>
                                             </select>
                                         </div>
                                         <?php 
