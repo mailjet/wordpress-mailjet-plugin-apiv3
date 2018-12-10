@@ -193,9 +193,9 @@
         $(document).on('change', $("input[name='savewidget']"), function () {
             var isSaveButtonDisabled = $(this).is(":disabled");
             if (isSaveButtonDisabled) {
-                $("div#advanced-form-link-wrap").show();
+                $("div.advanced-form-link-wrap").show();
             } else {
-                $("div#advanced-form-link-wrap").hide();
+                $("div.advanced-form-link-wrap").hide();
             }
 //           $("div#advanced-form-link-wrap").hide();
 //           $("span#advanced-form-link").hide();
