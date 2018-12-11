@@ -29,8 +29,10 @@ class ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a
         'M' => 
         array (
             'MailjetPlugin\\Widget\\' => 21,
+            'MailjetPlugin\\Includes\\SettingsPages\\' => 37,
             'MailjetPlugin\\Includes\\' => 23,
             'MailjetPlugin\\Front\\' => 20,
+            'MailjetPlugin\\Admin\\Partials\\' => 29,
             'MailjetPlugin\\Admin\\' => 20,
             'MailjetPlugin\\' => 14,
             'MailjetIframe\\' => 14,
@@ -72,6 +74,10 @@ class ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a
         array (
             0 => __DIR__ . '/../..' . '/src/widget',
         ),
+        'MailjetPlugin\\Includes\\SettingsPages\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/includes/SettingsPages',
+        ),
         'MailjetPlugin\\Includes\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/includes',
@@ -79,6 +85,10 @@ class ComposerStaticInit073753720e09a5e433c92da9ecf0ce4a
         'MailjetPlugin\\Front\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/front',
+        ),
+        'MailjetPlugin\\Admin\\Partials\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/admin/partials',
         ),
         'MailjetPlugin\\Admin\\' => 
         array (

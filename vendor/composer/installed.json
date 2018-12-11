@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/jbroadway/analog.git",
-            "reference": "c2188a8201da657b78f55f7e757490c9f7b9a1f6"
+            "reference": "f04906be5a740794959ecceaaae307792cfe3b58"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jbroadway/analog/zipball/c2188a8201da657b78f55f7e757490c9f7b9a1f6",
-            "reference": "c2188a8201da657b78f55f7e757490c9f7b9a1f6",
+            "url": "https://api.github.com/repos/jbroadway/analog/zipball/f04906be5a740794959ecceaaae307792cfe3b58",
+            "reference": "f04906be5a740794959ecceaaae307792cfe3b58",
             "shasum": ""
         },
         "require": {
@@ -21,7 +21,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5"
         },
-        "time": "2018-10-24T15:36:31+00:00",
+        "time": "2018-12-08T15:36:38+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -52,7 +52,7 @@
             "syslog"
         ],
         "support": {
-            "source": "https://github.com/jbroadway/analog/tree/master",
+            "source": "https://github.com/jbroadway/analog/tree/1.0.11-stable",
             "issues": "https://github.com/jbroadway/analog/issues"
         }
     },
@@ -185,15 +185,16 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "8db1967d92f55de1b94b175478ed16a7dfc53a90"
+            "reference": "9799bbcb90ed2df488adb0924169163156483e52"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8db1967d92f55de1b94b175478ed16a7dfc53a90",
-            "reference": "8db1967d92f55de1b94b175478ed16a7dfc53a90",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9799bbcb90ed2df488adb0924169163156483e52",
+            "reference": "9799bbcb90ed2df488adb0924169163156483e52",
             "shasum": ""
         },
         "require": {
+            "ext-json": "*",
             "guzzlehttp/promises": "^1.0",
             "guzzlehttp/psr7": "^1.4",
             "php": ">=5.5"
@@ -206,7 +207,7 @@
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2018-11-24T20:31:03+00:00",
+        "time": "2018-12-07T08:18:25+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -305,18 +306,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/psr7.git",
-            "reference": "53662d6688033a5eccde987bdd5a4a98ebe2d952"
+            "reference": "5e61346ab1e1ca7d01d2f633bad9574d35717781"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/psr7/zipball/53662d6688033a5eccde987bdd5a4a98ebe2d952",
-            "reference": "53662d6688033a5eccde987bdd5a4a98ebe2d952",
+            "url": "https://api.github.com/repos/guzzle/psr7/zipball/5e61346ab1e1ca7d01d2f633bad9574d35717781",
+            "reference": "5e61346ab1e1ca7d01d2f633bad9574d35717781",
             "shasum": ""
         },
         "require": {
             "php": ">=5.4.0",
             "psr/http-message": "~1.0",
-            "ralouphie/getallheaders": "^2.0.5"
+            "ralouphie/getallheaders": "^2.0.5 || ^3.0.0"
         },
         "provide": {
             "psr/http-message-implementation": "1.0"
@@ -324,7 +325,10 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
         },
-        "time": "2018-12-03T05:07:51+00:00",
+        "suggest": {
+            "zendframework/zend-httphandlerrunner": "Emit PSR-7 responses"
+        },
+        "time": "2018-12-07T15:04:46+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

@@ -90,16 +90,16 @@ if($numberActiveLanguages == 1) {
 
     $hideAdvancedLinkClass = $numberActiveLanguages === 0 ? 'hidden_default': ''; 
     ?>
-    <div id="advanced-form-link-wrap" class="some-space <?php echo $hideAdvancedLinkClass ?>">
+    <div class="some-space advanced-form-link-wrap <?php echo $hideAdvancedLinkClass ?>">
         <p>
-            <span id="advanced-form-link" data-toggle="modal" data-target=".advanced-form-popup"><?php _e('Advanced form customization', 'mailjet') ?></span>
+            <span id="advanced-form-link" data-toggle="modal" data-target=".<?php echo $this->id ?>"><?php _e('Advanced form customization', 'mailjet') ?></span>
             <span id="advanced-form-link-info" data-toggle="tooltip" data-placement="bottom" title="<?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet'); ?>">
             <svg viewBox="0 0 16 16" style="height: 12px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
             </span>
         </p>
     </div>
 
-    <div class="modal fade advanced-form-popup" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="margin: 35px 0 0 165px!important;">
+    <div class="modal fade <?php echo $this->id ?>" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="margin: 35px 0 0 165px!important;">
         <div class="modal-dialog modal-lg modal-mailjet-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -188,11 +188,11 @@ if($numberActiveLanguages == 1) {
                                                 <label for="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>"><?php _e('Property type', 'mailjet') ?></label>
                                             <?php } ?>
                                             <select class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>">
-                                                <option value="str">Text</option>
-                                                <option value="int">Int</option>
-                                                <option value="float">Float / Number</option>
+                                                <option value="str">String</option>
+                                                <option value="int">Integer</option>
+                                                <option value="float">Decimal</option>
                                                 <option value="datetime">Date</option>
-                                                <option value="bool">Bool</option>
+                                                <option value="bool">Boolean</option>
                                             </select>
                                         </div>
                                         <?php 

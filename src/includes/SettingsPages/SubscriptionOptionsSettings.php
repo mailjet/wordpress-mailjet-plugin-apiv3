@@ -519,7 +519,7 @@ class SubscriptionOptionsSettings
         }
 
         $email_subject = __('Subscription Confirmation', 'mailjet');
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         wp_mail($_POST['email'], $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
@@ -561,7 +561,7 @@ class SubscriptionOptionsSettings
         }
 
         $email_subject = __('Subscription Confirmation', 'mailjet');
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         $res = wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
@@ -603,17 +603,22 @@ class SubscriptionOptionsSettings
             '__WP_URL__' => $homeUrl,
             '__CONFIRM_URL__' => $thankYouURI . $confirmUrl . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => $email_button_value,
-            '__FROM_NAME__' => get_option('blogname'),
+            '__FROM_NAME__' => $homeUrl, //get_option('blogname'),
             '__IGNORE__' => $email_content_after_button,
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
         foreach ($emailParams as $key => $value) {
             $message = str_replace($key, $value, $message);
         }
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         return wp_mail($subscription_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
 //        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet') . '</p>';
 //        die;
+    }
+
+    public function set_html_content_type()
+    {
+        return 'text/html';
     }
 
 }

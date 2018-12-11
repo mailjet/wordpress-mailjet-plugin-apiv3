@@ -33,8 +33,8 @@
             var removeLanguage = !$(this).prop('checked');
             if (removeLanguage) {
                 // Reset Title and List ?
-                $(this).parent().find('.title-input').val('');
-                $(this).parent().find('.language-select-list').val(0);
+//                $(this).parent().find('.title-input').val('');
+//                $(this).parent().find('.language-select-list').val(0);
             } else {
                 // Add specific language
                 var languageListId = $(this).parent().find('.language-select-list').val();
@@ -193,9 +193,9 @@
         $(document).on('change', $("input[name='savewidget']"), function () {
             var isSaveButtonDisabled = $(this).is(":disabled");
             if (isSaveButtonDisabled) {
-                $("div#advanced-form-link-wrap").show();
+                $("div.advanced-form-link-wrap").show();
             } else {
-                $("div#advanced-form-link-wrap").hide();
+                $("div.advanced-form-link-wrap").hide();
             }
 //           $("div#advanced-form-link-wrap").hide();
 //           $("span#advanced-form-link").hide();
