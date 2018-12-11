@@ -171,7 +171,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                     if (isset($properties[$property['ID']])) {
                         if ($property['Datatype'] == 'datetime') {
                             $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
-                            echo $properties[$property['ID']];
                             if ($datetime instanceof \DateTime) {
                                 $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
                             }else {
