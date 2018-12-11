@@ -142,8 +142,8 @@ function deactivate_mailjet()
     MailjetDeactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_mailjet');
-register_deactivation_hook(__FILE__, 'deactivate_mailjet');
+//register_activation_hook(__FILE__, 'activate_mailjet');
+//register_deactivation_hook(__FILE__, 'deactivate_mailjet');
 
 /**
  * Begins execution of the plugin.
