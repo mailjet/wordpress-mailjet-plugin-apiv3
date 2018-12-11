@@ -41,7 +41,9 @@
         "psr-4": {
             "MailjetPlugin\\": "src/",
             "MailjetPlugin\\Includes\\": "src/includes/",
+            "MailjetPlugin\\Includes\\SettingsPages\\": "src/includes/SettingsPages/",
             "MailjetPlugin\\Admin\\": "src/admin/",
+            "MailjetPlugin\\Admin\\Partials\\": "src/admin/partials/",
             "MailjetPlugin\\Front\\": "src/front/",
             "MailjetPlugin\\Widget\\": "src/widget/"
         }
