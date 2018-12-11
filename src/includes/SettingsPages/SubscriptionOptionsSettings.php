@@ -519,7 +519,7 @@ class SubscriptionOptionsSettings
         }
 
         $email_subject = __('Subscription Confirmation', 'mailjet');
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         wp_mail($_POST['email'], $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
@@ -561,7 +561,7 @@ class SubscriptionOptionsSettings
         }
 
         $email_subject = __('Subscription Confirmation', 'mailjet');
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         $res = wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
@@ -610,10 +610,15 @@ class SubscriptionOptionsSettings
         foreach ($emailParams as $key => $value) {
             $message = str_replace($key, $value, $message);
         }
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         return wp_mail($subscription_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
 //        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet') . '</p>';
 //        die;
+    }
+
+    public function set_html_content_type()
+    {
+        return 'text/html';
     }
 
 }

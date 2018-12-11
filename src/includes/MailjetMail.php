@@ -126,13 +126,16 @@ class MailjetMail
             return;
         }
         // Send a test mail
-        add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+        add_filter('wp_mail_content_type', array('MailjetPlugin\Includes\MailjetMail', 'set_html_content_type'));
         $subject = __('Your test mail from Mailjet', 'mailjet');
         $message = sprintf(__('Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port: %s', 'mailjet'), get_home_url(), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
         $testSent = wp_mail(get_option('mailjet_test_address'), $subject, $message);
-
         return $testSent;
+    }
 
+    public static function set_html_content_type()
+    {
+        return 'text/html';
     }
 
     public function wp_sender_email($original_email_address) {
