@@ -822,15 +822,15 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function register_widget_styles()
     {
-        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__));
-        wp_register_style('prefix_bootstrap', plugins_url('css/bootstrap.css', __FILE__));
+        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
+        wp_register_style('prefix_bootstrap', plugins_url('css/bootstrap.css', __FILE__), array(), MAILJET_VERSION, 'all');
 //        wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
         wp_enqueue_style('prefix_bootstrap');
     }
 
     public function register_widget_front_styles()
     {
-        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/front-widget.css', __FILE__));
+        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/front-widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
     }
 
 // end register_widget_styles

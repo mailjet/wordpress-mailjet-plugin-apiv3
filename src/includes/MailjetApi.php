@@ -34,6 +34,7 @@ class MailjetApi
         }
 
         $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
+        $mjClient->addRequestOption(CURLOPT_USERAGENT, 'wordpress-' . MAILJET_VERSION);
 
         // Add proxy options for guzzle requests - if the Wordpress site is configured to use Proxy
         if (defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
