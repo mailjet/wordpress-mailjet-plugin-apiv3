@@ -213,7 +213,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
                 $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
-                $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates/thankyou.php');
+                $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates'.DIRECTORY_SEPARATOR.'thankyou.php');
                 // Default page is selected
                 include($tankyouPageTemplate);
                 die;
@@ -758,7 +758,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if (false == $validApiCredentials) {
-            include(plugin_dir_path(__FILE__) . 'views/designforfailure.php');
+            include(plugin_dir_path(__FILE__) . 'views'.DIRECTORY_SEPARATOR.'designforfailure.php');
             return false;
         }
 
@@ -773,7 +773,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         try {
             $mailjetContactLists = MailjetApi::getMailjetContactLists();
         } catch (\Exception $ex) {
-            include(plugin_dir_path(__FILE__) . 'views/designforfailure.php');
+            include(plugin_dir_path(__FILE__) . 'views'.DIRECTORY_SEPARATOR.'designforfailure.php');
             return false;
         }
 
@@ -799,7 +799,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Display the admin form
         $languages = Mailjeti18n::getSupportedLocales();
         $pages = get_pages();
-        include(plugin_dir_path(__FILE__) . 'views/admin.php');
+        include(plugin_dir_path(__FILE__) . 'views'.DIRECTORY_SEPARATOR.'admin.php');
     }
 
     /* -------------------------------------------------- */
