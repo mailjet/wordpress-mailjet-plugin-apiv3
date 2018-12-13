@@ -114,7 +114,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $mailjetContactProperties = $this->getMailjetContactProperties();
         $incorectTypeValue = !empty($instance[$locale]['invalid_data_format_message_input']) ? $instance[$locale]['invalid_data_format_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
 
-        $dataProperties = array();
         if(!empty($properties) && is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
             foreach($properties as $propertyId => $propertyName) {
                 if($propertyName == '') {
@@ -144,8 +143,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                             case "datetime":
                                 $propertyDate = str_replace('-', '/', $properties[$propertyId]);
                                 $datetime = \DateTime::createFromFormat("d/m/Y", $propertyDate);
+                                $errors = \DateTime::getLastErrors();
                                 if (!$datetime instanceof \DateTime) {
                                     return $incorectTypeValue;
+                                }
+                                if (!empty($errors['warning_count'])) {
+                                     return $incorectTypeValue;
                                 }
                                 break;
                             case "bool":
@@ -236,7 +239,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                                 break;
                             case "bool":
                                 $positiveBooleans = array('true', '1', 'yes', 'ok');
-                                if(in_array($propertyName, $positiveBooleans)) {
+                                if(in_array($properties[$property['ID']], $positiveBooleans)) {
                                     $dataProperties[$property['Name']] = true;
                                 }else{
                                     $dataProperties[$property['Name']] = false;
