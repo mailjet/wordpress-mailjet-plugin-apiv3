@@ -110,9 +110,60 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return Mailjeti18n::getTranslationsFromFile($locale, 'Invalid email');
         }
 
+        $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
+        $mailjetContactProperties = $this->getMailjetContactProperties();
+        $incorectTypeValue = !empty($instance[$locale]['invalid_data_format_message_input']) ? $instance[$locale]['invalid_data_format_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
+
+        $dataProperties = array();
+        if(!empty($properties) && is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
+            foreach($properties as $propertyId => $propertyName) {
+                if($propertyName == '') {
+                    continue;
+                }
+                foreach($mailjetContactProperties as $mailjetContactProperty) {
+                    if($propertyId == $mailjetContactProperty['ID']) {
+                        $dataType = $mailjetContactProperty['Datatype'];
+                        switch($dataType) {
+                            case "str":
+                                // by default
+                                break;
+                            case "int":
+                                $propertyNameCopy = $propertyName;
+                                $intProperty = (int) $propertyNameCopy;
+                                if ($intProperty == 0 && $propertyName !== "0") {
+                                    return $incorectTypeValue;
+                                }
+                                break;
+                            case "float":
+                                $propertyNameCopy = $propertyName;
+                                $fProperty = (float) $propertyNameCopy;
+                                if ($fProperty == 0 && $propertyName !== "0") {
+                                    return $incorectTypeValue;
+                                }
+                                break;
+                            case "datetime":
+                                $propertyDate = str_replace('-', '/', $properties[$propertyId]);
+                                $datetime = \DateTime::createFromFormat("d/m/Y", $propertyDate);
+                                if (!$datetime instanceof \DateTime) {
+                                    return $incorectTypeValue;
+                                }
+                                break;
+                            case "bool":
+                                $booleans = array('true', 'false', '1', '0','yes', 'no', 'ok');
+                                if(!in_array($propertyName, $booleans)) {
+                                    return $incorectTypeValue;
+                                }
+                                break;
+                        }
+                        continue;
+                    }
+                }
+            }
+        }
+
         $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
         if ($sendingResult) {
-           return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
+            return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
         return !empty($instance[$locale]['technical_error_message_input']) ? $instance[$locale]['technical_error_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
     }
@@ -137,7 +188,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
         if (!$subscription_email) {
-           MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
             echo $technicalIssue;
             die;
         }
@@ -157,8 +208,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             if (!$contactListId) {
                 // Use en_US list id as default
                 $listIdEn = get_option('mailjet_locale_subscription_list_en_US');
-                if(!$listIdEn) {
-                    MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided for '.$locale.'! ]');
+                if (!$listIdEn) {
+                    MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided for ' . $locale . '! ]');
                     die;
                 }
                 $contactListId = $listIdEn;
@@ -168,16 +219,33 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $mailjetContactProperties = $this->getMailjetContactProperties();
             if (!empty($mailjetContactProperties)) {
                 foreach ($mailjetContactProperties as $property) {
-                    if (isset($properties[$property['ID']])) {
-                        if ($property['Datatype'] == 'datetime') {
-                            $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
-                            if ($datetime instanceof \DateTime) {
-                                $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
-                            }else {
-                                // Prevent adding wrong date but subscribe user with all other stuffs
-                            }
-                        } else {
-                            $dataProperties[$property['Name']] = $properties[$property['ID']];
+                    if (isset($properties[$property['ID']]) && $properties[$property['ID']] == '' ) {
+                        $dataType = $property['Datatype'];
+                        switch ($dataType) {
+                            case "datetime":
+                                $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
+                                if ($datetime instanceof \DateTime) {
+                                    $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
+                                }
+                                break;
+                            case "int":
+                                $dataProperties[$property['Name']] = (int)$properties[$property['ID']];
+                                break;
+                            case "float":
+                                $dataProperties[$property['Name']] = (float)$properties[$property['ID']];
+                                break;
+                            case "bool":
+                                $positiveBooleans = array('true', '1', 'yes', 'ok');
+                                if(in_array($propertyName, $positiveBooleans)) {
+                                    $dataProperties[$property['Name']] = true;
+                                }else{
+                                    $dataProperties[$property['Name']] = false;
+                                }
+                                break;
+                            case "str":
+                            default:
+                                $dataProperties[$property['Name']] = $properties[$property['ID']];
+                                break;
                         }
                     }
                 }
@@ -213,7 +281,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
                 $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
-                $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates'.DIRECTORY_SEPARATOR.'thankyou.php');
+                $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
                 // Default page is selected
                 include($tankyouPageTemplate);
                 die;
@@ -409,12 +477,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     /**
      *  Transition widget settings from v4 t ov5
      */
-	private function checkTransition($instance)
+    private function checkTransition($instance)
     {
-        if(isset($instance['enableTaben']) && $instance['enableTaben'] == 'on') {
-            $contactProperties0name = isset($instance['metaPropertyName1en']) ? $instance['metaPropertyName1en'] : false;// -> contactProperties0
-            $contactProperties1name = isset($instance['metaPropertyName2en']) ? $instance['metaPropertyName2en'] : false;// -> contactProperties1
-            $contactProperties2name = isset($instance['metaPropertyName3en']) ? $instance['metaPropertyName3en'] : false;// -> contactProperties2
+        if (isset($instance['enableTaben']) && $instance['enableTaben'] == 'on') {
+            $contactProperties0name = isset($instance['metaPropertyName1en']) ? $instance['metaPropertyName1en'] : false; // -> contactProperties0
+            $contactProperties1name = isset($instance['metaPropertyName2en']) ? $instance['metaPropertyName2en'] : false; // -> contactProperties1
+            $contactProperties2name = isset($instance['metaPropertyName3en']) ? $instance['metaPropertyName3en'] : false; // -> contactProperties2
             $property0Id = MailjetApi::getPropertyIdByName($contactProperties0name);
             $property1Id = MailjetApi::getPropertyIdByName($contactProperties1name);
             $property2Id = MailjetApi::getPropertyIdByName($contactProperties2name);
@@ -450,301 +518,301 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $property2Es = isset($instance['metaProperty3es']) ? $instance['metaProperty3es'] : '';
             $buttonТextЕs = isset($instance['button_textes']) ? $instance['button_textes'] : '';
 
-            $data = array (
-            'en_US' => 
-            array (
-              'language_checkbox' => true,
-              'title' => $titleEn,
-              'list' => $listEn,
-              'language_mandatory_email' => '',
-              'language_mandatory_button' => $buttonТextЕn,
-              'contactProperties0' => $property0Id,
-              'propertyDataType0' => '0',
-              'EnglishLabel0' => $property0En,
-              'FrenchLabel0' => $property0Fr,
-              'GermanLabel0' => $property0De,
-              'SpanishLabel0' => $property0Es,
-              'ItalianLabel0' => '',
-              'contactProperties1' => $property1Id,
-              'propertyDataType1' => '0',
-              'EnglishLabel1' => $property1En,
-              'FrenchLabel1' => $property1Fr,
-              'GermanLabel1' => $property1Fr,
-              'SpanishLabel1' => $property1Fr,
-              'ItalianLabel1' => '',
-              'contactProperties2' => $property2Id,
-              'propertyDataType2' => '0',
-              'EnglishLabel2' => $property2En,
-              'FrenchLabel2' => $property2Fr,
-              'GermanLabel2' => $property2De,
-              'SpanishLabel2' => $property2Es,
-              'ItalianLabel2' => '',
-              'contactProperties3' => '',
-              'propertyDataType3' => '0',
-              'EnglishLabel3' => '',
-              'FrenchLabel3' => '',
-              'GermanLabel3' => '',
-              'SpanishLabel3' => '',
-              'ItalianLabel3' => '',
-              'contactProperties4' => '',
-              'propertyDataType4' => '0',
-              'EnglishLabel4' => '',
-              'FrenchLabel4' => '',
-              'GermanLabel4' => '',
-              'SpanishLabel4' => '',
-              'ItalianLabel4' => '',
-              'confirmation_email_message_input' => '',
-              'subscription_confirmed_message_input' => '',
-              'empty_email_message_input' => '',
-              'already_subscribed_message_input' => '',
-              'invalid_data_format_message_input' => '',
-              'generic_technical_error_message_input' => '',
-              'email_subject' => '',
-              'email_content_title' => '',
-              'email_content_main_text' => '',
-              'email_content_confirm_button' => '',
-              'email_content_after_button' => '',
-            ),
-            'English' => 
-            array (
-              'thank_you' => 0,
-            ),
-            'fr_FR' => 
-            array (
-              'language_checkbox' => $enableFr,
-              'title' => $titleFr,
-              'list' => $listFr,
-              'language_mandatory_email' => '',
-              'language_mandatory_button' => $buttonТextFr,
-              'contactProperties0' => $property0Id,
-              'propertyDataType0' => '0',
-              'EnglishLabel0' => $property0En,
-              'FrenchLabel0' => $property0Fr,
-              'GermanLabel0' => $property0De,
-              'SpanishLabel0' => $property0Es,
-              'ItalianLabel0' => '',
-              'contactProperties1' => $property1Id,
-              'propertyDataType1' => '0',
-              'EnglishLabel1' => $property1En,
-              'FrenchLabel1' => $property1Fr,
-              'GermanLabel1' => $property1Fr,
-              'SpanishLabel1' => $property1Fr,
-              'ItalianLabel1' => '',
-              'contactProperties2' => $property2Id,
-              'propertyDataType2' => '0',
-              'EnglishLabel2' => $property2En,
-              'FrenchLabel2' => $property2Fr,
-              'GermanLabel2' => $property2De,
-              'SpanishLabel2' => $property2Es,
-              'ItalianLabel2' => '',
-              'contactProperties3' => '',
-              'propertyDataType3' => '',
-              'EnglishLabel3' => '',
-              'FrenchLabel3' => '',
-              'GermanLabel3' => '',
-              'SpanishLabel3' => '',
-              'ItalianLabel3' => '',
-              'contactProperties4' => '',
-              'propertyDataType4' => '',
-              'EnglishLabel4' => '',
-              'FrenchLabel4' => '',
-              'GermanLabel4' => '',
-              'SpanishLabel4' => '',
-              'ItalianLabel4' => '',
-              'confirmation_email_message_input' => '',
-              'subscription_confirmed_message_input' => '',
-              'empty_email_message_input' => '',
-              'already_subscribed_message_input' => '',
-              'invalid_data_format_message_input' => '',
-              'generic_technical_error_message_input' => '',
-              'email_subject' => '',
-              'email_content_title' => '',
-              'email_content_main_text' => '',
-              'email_content_confirm_button' => '',
-              'email_content_after_button' => '',
-            ),
-            'French' => 
-            array (
-              'thank_you' => 0,
-            ),
-            'de_DE' => 
-            array (
-              'language_checkbox' => $enableDe,
-              'title' => $titleDe,
-              'list' => $listDe,
-              'language_mandatory_email' => '',
-              'language_mandatory_button' => $buttonТextDe,
-              'contactProperties0' => $property0Id,
-              'propertyDataType0' => '0',
-              'EnglishLabel0' => $property0En,
-              'FrenchLabel0' => $property0Fr,
-              'GermanLabel0' => $property0De,
-              'SpanishLabel0' => $property0Es,
-              'ItalianLabel0' => '',
-              'contactProperties1' => $property1Id,
-              'propertyDataType1' => '0',
-              'EnglishLabel1' => $property1En,
-              'FrenchLabel1' => $property1Fr,
-              'GermanLabel1' => $property1Fr,
-              'SpanishLabel1' => $property1Fr,
-              'ItalianLabel1' => '',
-              'contactProperties2' => $property2Id,
-              'propertyDataType2' => '0',
-              'EnglishLabel2' => $property2En,
-              'FrenchLabel2' => $property2Fr,
-              'GermanLabel2' => $property2De,
-              'SpanishLabel2' => $property2Es,
-              'ItalianLabel2' => '',
-              'contactProperties3' => '',
-              'propertyDataType3' => '',
-              'EnglishLabel3' => '',
-              'FrenchLabel3' => '',
-              'GermanLabel3' => '',
-              'SpanishLabel3' => '',
-              'ItalianLabel3' => '',
-              'contactProperties4' => '',
-              'propertyDataType4' => '',
-              'EnglishLabel4' => '',
-              'FrenchLabel4' => '',
-              'GermanLabel4' => '',
-              'SpanishLabel4' => '',
-              'ItalianLabel4' => '',
-              'confirmation_email_message_input' => '',
-              'subscription_confirmed_message_input' => '',
-              'empty_email_message_input' => '',
-              'already_subscribed_message_input' => '',
-              'invalid_data_format_message_input' => '',
-              'generic_technical_error_message_input' => '',
-              'email_subject' => '',
-              'email_content_title' => '',
-              'email_content_main_text' => '',
-              'email_content_confirm_button' => '',
-              'email_content_after_button' => '',
-            ),
-            'German' => 
-            array (
-              'thank_you' => 0,
-            ),
-            'es_ES' => 
-            array (
-              'language_checkbox' => $enableEs,
-              'title' => $titleEs,
-              'list' => $listEs,
-              'language_mandatory_email' => '',
-              'language_mandatory_button' => $buttonТextЕs,
-              'contactProperties0' => $property0Id,
-              'propertyDataType0' => '0',
-              'EnglishLabel0' => $property0En,
-              'FrenchLabel0' => $property0Fr,
-              'GermanLabel0' => $property0De,
-              'SpanishLabel0' => $property0Es,
-              'ItalianLabel0' => '',
-              'contactProperties1' => $property1Id,
-              'propertyDataType1' => '0',
-              'EnglishLabel1' => $property1En,
-              'FrenchLabel1' => $property1Fr,
-              'GermanLabel1' => $property1Fr,
-              'SpanishLabel1' => $property1Fr,
-              'ItalianLabel1' => '',
-              'contactProperties2' => $property2Id,
-              'propertyDataType2' => '0',
-              'EnglishLabel2' => $property2En,
-              'FrenchLabel2' => $property2Fr,
-              'GermanLabel2' => $property2De,
-              'SpanishLabel2' => $property2Es,
-              'ItalianLabel2' => '',
-              'contactProperties3' => '',
-              'propertyDataType3' => '',
-              'EnglishLabel3' => '',
-              'FrenchLabel3' => '',
-              'GermanLabel3' => '',
-              'SpanishLabel3' => '',
-              'ItalianLabel3' => '',
-              'contactProperties4' => '',
-              'propertyDataType4' => '',
-              'EnglishLabel4' => '',
-              'FrenchLabel4' => '',
-              'GermanLabel4' => '',
-              'SpanishLabel4' => '',
-              'ItalianLabel4' => '',
-              'confirmation_email_message_input' => '',
-              'subscription_confirmed_message_input' => '',
-              'empty_email_message_input' => '',
-              'already_subscribed_message_input' => '',
-              'invalid_data_format_message_input' => '',
-              'generic_technical_error_message_input' => '',
-              'email_subject' => '',
-              'email_content_title' => '',
-              'email_content_main_text' => '',
-              'email_content_confirm_button' => '',
-              'email_content_after_button' => '',
-            ),
-            'Spanish' => 
-            array (
-              'thank_you' => 0,
-            ),
-            'it_IT' => 
-            array (
-              'language_checkbox' => false,
-              'title' => '',
-              'list' => '0',
-              'language_mandatory_email' => '',
-              'language_mandatory_button' => '',
-              'contactProperties0' => '',
-              'propertyDataType0' => '',
-              'EnglishLabel0' => '',
-              'FrenchLabel0' => '',
-              'GermanLabel0' => '',
-              'SpanishLabel0' => '',
-              'ItalianLabel0' => '',
-              'contactProperties1' => '',
-              'propertyDataType1' => '',
-              'EnglishLabel1' => '',
-              'FrenchLabel1' => '',
-              'GermanLabel1' => '',
-              'SpanishLabel1' => '',
-              'ItalianLabel1' => '',
-              'contactProperties2' => '',
-              'propertyDataType2' => '',
-              'EnglishLabel2' => '',
-              'FrenchLabel2' => '',
-              'GermanLabel2' => '',
-              'SpanishLabel2' => '',
-              'ItalianLabel2' => '',
-              'contactProperties3' => '',
-              'propertyDataType3' => '',
-              'EnglishLabel3' => '',
-              'FrenchLabel3' => '',
-              'GermanLabel3' => '',
-              'SpanishLabel3' => '',
-              'ItalianLabel3' => '',
-              'contactProperties4' => '',
-              'propertyDataType4' => '',
-              'EnglishLabel4' => '',
-              'FrenchLabel4' => '',
-              'GermanLabel4' => '',
-              'SpanishLabel4' => '',
-              'ItalianLabel4' => '',
-              'confirmation_email_message_input' => '',
-              'subscription_confirmed_message_input' => '',
-              'empty_email_message_input' => '',
-              'already_subscribed_message_input' => '',
-              'invalid_data_format_message_input' => '',
-              'generic_technical_error_message_input' => '',
-              'email_subject' => '',
-              'email_content_title' => '',
-              'email_content_main_text' => '',
-              'email_content_confirm_button' => '',
-              'email_content_after_button' => '',
-            ),
-            'Italian' => 
-            array (
-              'thank_you' => 0,
-            )
-          );
+            $data = array(
+                'en_US' =>
+                array(
+                    'language_checkbox' => true,
+                    'title' => $titleEn,
+                    'list' => $listEn,
+                    'language_mandatory_email' => '',
+                    'language_mandatory_button' => $buttonТextЕn,
+                    'contactProperties0' => $property0Id,
+                    'propertyDataType0' => '0',
+                    'EnglishLabel0' => $property0En,
+                    'FrenchLabel0' => $property0Fr,
+                    'GermanLabel0' => $property0De,
+                    'SpanishLabel0' => $property0Es,
+                    'ItalianLabel0' => '',
+                    'contactProperties1' => $property1Id,
+                    'propertyDataType1' => '0',
+                    'EnglishLabel1' => $property1En,
+                    'FrenchLabel1' => $property1Fr,
+                    'GermanLabel1' => $property1Fr,
+                    'SpanishLabel1' => $property1Fr,
+                    'ItalianLabel1' => '',
+                    'contactProperties2' => $property2Id,
+                    'propertyDataType2' => '0',
+                    'EnglishLabel2' => $property2En,
+                    'FrenchLabel2' => $property2Fr,
+                    'GermanLabel2' => $property2De,
+                    'SpanishLabel2' => $property2Es,
+                    'ItalianLabel2' => '',
+                    'contactProperties3' => '',
+                    'propertyDataType3' => '0',
+                    'EnglishLabel3' => '',
+                    'FrenchLabel3' => '',
+                    'GermanLabel3' => '',
+                    'SpanishLabel3' => '',
+                    'ItalianLabel3' => '',
+                    'contactProperties4' => '',
+                    'propertyDataType4' => '0',
+                    'EnglishLabel4' => '',
+                    'FrenchLabel4' => '',
+                    'GermanLabel4' => '',
+                    'SpanishLabel4' => '',
+                    'ItalianLabel4' => '',
+                    'confirmation_email_message_input' => '',
+                    'subscription_confirmed_message_input' => '',
+                    'empty_email_message_input' => '',
+                    'already_subscribed_message_input' => '',
+                    'invalid_data_format_message_input' => '',
+                    'generic_technical_error_message_input' => '',
+                    'email_subject' => '',
+                    'email_content_title' => '',
+                    'email_content_main_text' => '',
+                    'email_content_confirm_button' => '',
+                    'email_content_after_button' => '',
+                ),
+                'English' =>
+                array(
+                    'thank_you' => 0,
+                ),
+                'fr_FR' =>
+                array(
+                    'language_checkbox' => $enableFr,
+                    'title' => $titleFr,
+                    'list' => $listFr,
+                    'language_mandatory_email' => '',
+                    'language_mandatory_button' => $buttonТextFr,
+                    'contactProperties0' => $property0Id,
+                    'propertyDataType0' => '0',
+                    'EnglishLabel0' => $property0En,
+                    'FrenchLabel0' => $property0Fr,
+                    'GermanLabel0' => $property0De,
+                    'SpanishLabel0' => $property0Es,
+                    'ItalianLabel0' => '',
+                    'contactProperties1' => $property1Id,
+                    'propertyDataType1' => '0',
+                    'EnglishLabel1' => $property1En,
+                    'FrenchLabel1' => $property1Fr,
+                    'GermanLabel1' => $property1Fr,
+                    'SpanishLabel1' => $property1Fr,
+                    'ItalianLabel1' => '',
+                    'contactProperties2' => $property2Id,
+                    'propertyDataType2' => '0',
+                    'EnglishLabel2' => $property2En,
+                    'FrenchLabel2' => $property2Fr,
+                    'GermanLabel2' => $property2De,
+                    'SpanishLabel2' => $property2Es,
+                    'ItalianLabel2' => '',
+                    'contactProperties3' => '',
+                    'propertyDataType3' => '',
+                    'EnglishLabel3' => '',
+                    'FrenchLabel3' => '',
+                    'GermanLabel3' => '',
+                    'SpanishLabel3' => '',
+                    'ItalianLabel3' => '',
+                    'contactProperties4' => '',
+                    'propertyDataType4' => '',
+                    'EnglishLabel4' => '',
+                    'FrenchLabel4' => '',
+                    'GermanLabel4' => '',
+                    'SpanishLabel4' => '',
+                    'ItalianLabel4' => '',
+                    'confirmation_email_message_input' => '',
+                    'subscription_confirmed_message_input' => '',
+                    'empty_email_message_input' => '',
+                    'already_subscribed_message_input' => '',
+                    'invalid_data_format_message_input' => '',
+                    'generic_technical_error_message_input' => '',
+                    'email_subject' => '',
+                    'email_content_title' => '',
+                    'email_content_main_text' => '',
+                    'email_content_confirm_button' => '',
+                    'email_content_after_button' => '',
+                ),
+                'French' =>
+                array(
+                    'thank_you' => 0,
+                ),
+                'de_DE' =>
+                array(
+                    'language_checkbox' => $enableDe,
+                    'title' => $titleDe,
+                    'list' => $listDe,
+                    'language_mandatory_email' => '',
+                    'language_mandatory_button' => $buttonТextDe,
+                    'contactProperties0' => $property0Id,
+                    'propertyDataType0' => '0',
+                    'EnglishLabel0' => $property0En,
+                    'FrenchLabel0' => $property0Fr,
+                    'GermanLabel0' => $property0De,
+                    'SpanishLabel0' => $property0Es,
+                    'ItalianLabel0' => '',
+                    'contactProperties1' => $property1Id,
+                    'propertyDataType1' => '0',
+                    'EnglishLabel1' => $property1En,
+                    'FrenchLabel1' => $property1Fr,
+                    'GermanLabel1' => $property1Fr,
+                    'SpanishLabel1' => $property1Fr,
+                    'ItalianLabel1' => '',
+                    'contactProperties2' => $property2Id,
+                    'propertyDataType2' => '0',
+                    'EnglishLabel2' => $property2En,
+                    'FrenchLabel2' => $property2Fr,
+                    'GermanLabel2' => $property2De,
+                    'SpanishLabel2' => $property2Es,
+                    'ItalianLabel2' => '',
+                    'contactProperties3' => '',
+                    'propertyDataType3' => '',
+                    'EnglishLabel3' => '',
+                    'FrenchLabel3' => '',
+                    'GermanLabel3' => '',
+                    'SpanishLabel3' => '',
+                    'ItalianLabel3' => '',
+                    'contactProperties4' => '',
+                    'propertyDataType4' => '',
+                    'EnglishLabel4' => '',
+                    'FrenchLabel4' => '',
+                    'GermanLabel4' => '',
+                    'SpanishLabel4' => '',
+                    'ItalianLabel4' => '',
+                    'confirmation_email_message_input' => '',
+                    'subscription_confirmed_message_input' => '',
+                    'empty_email_message_input' => '',
+                    'already_subscribed_message_input' => '',
+                    'invalid_data_format_message_input' => '',
+                    'generic_technical_error_message_input' => '',
+                    'email_subject' => '',
+                    'email_content_title' => '',
+                    'email_content_main_text' => '',
+                    'email_content_confirm_button' => '',
+                    'email_content_after_button' => '',
+                ),
+                'German' =>
+                array(
+                    'thank_you' => 0,
+                ),
+                'es_ES' =>
+                array(
+                    'language_checkbox' => $enableEs,
+                    'title' => $titleEs,
+                    'list' => $listEs,
+                    'language_mandatory_email' => '',
+                    'language_mandatory_button' => $buttonТextЕs,
+                    'contactProperties0' => $property0Id,
+                    'propertyDataType0' => '0',
+                    'EnglishLabel0' => $property0En,
+                    'FrenchLabel0' => $property0Fr,
+                    'GermanLabel0' => $property0De,
+                    'SpanishLabel0' => $property0Es,
+                    'ItalianLabel0' => '',
+                    'contactProperties1' => $property1Id,
+                    'propertyDataType1' => '0',
+                    'EnglishLabel1' => $property1En,
+                    'FrenchLabel1' => $property1Fr,
+                    'GermanLabel1' => $property1Fr,
+                    'SpanishLabel1' => $property1Fr,
+                    'ItalianLabel1' => '',
+                    'contactProperties2' => $property2Id,
+                    'propertyDataType2' => '0',
+                    'EnglishLabel2' => $property2En,
+                    'FrenchLabel2' => $property2Fr,
+                    'GermanLabel2' => $property2De,
+                    'SpanishLabel2' => $property2Es,
+                    'ItalianLabel2' => '',
+                    'contactProperties3' => '',
+                    'propertyDataType3' => '',
+                    'EnglishLabel3' => '',
+                    'FrenchLabel3' => '',
+                    'GermanLabel3' => '',
+                    'SpanishLabel3' => '',
+                    'ItalianLabel3' => '',
+                    'contactProperties4' => '',
+                    'propertyDataType4' => '',
+                    'EnglishLabel4' => '',
+                    'FrenchLabel4' => '',
+                    'GermanLabel4' => '',
+                    'SpanishLabel4' => '',
+                    'ItalianLabel4' => '',
+                    'confirmation_email_message_input' => '',
+                    'subscription_confirmed_message_input' => '',
+                    'empty_email_message_input' => '',
+                    'already_subscribed_message_input' => '',
+                    'invalid_data_format_message_input' => '',
+                    'generic_technical_error_message_input' => '',
+                    'email_subject' => '',
+                    'email_content_title' => '',
+                    'email_content_main_text' => '',
+                    'email_content_confirm_button' => '',
+                    'email_content_after_button' => '',
+                ),
+                'Spanish' =>
+                array(
+                    'thank_you' => 0,
+                ),
+                'it_IT' =>
+                array(
+                    'language_checkbox' => false,
+                    'title' => '',
+                    'list' => '0',
+                    'language_mandatory_email' => '',
+                    'language_mandatory_button' => '',
+                    'contactProperties0' => '',
+                    'propertyDataType0' => '',
+                    'EnglishLabel0' => '',
+                    'FrenchLabel0' => '',
+                    'GermanLabel0' => '',
+                    'SpanishLabel0' => '',
+                    'ItalianLabel0' => '',
+                    'contactProperties1' => '',
+                    'propertyDataType1' => '',
+                    'EnglishLabel1' => '',
+                    'FrenchLabel1' => '',
+                    'GermanLabel1' => '',
+                    'SpanishLabel1' => '',
+                    'ItalianLabel1' => '',
+                    'contactProperties2' => '',
+                    'propertyDataType2' => '',
+                    'EnglishLabel2' => '',
+                    'FrenchLabel2' => '',
+                    'GermanLabel2' => '',
+                    'SpanishLabel2' => '',
+                    'ItalianLabel2' => '',
+                    'contactProperties3' => '',
+                    'propertyDataType3' => '',
+                    'EnglishLabel3' => '',
+                    'FrenchLabel3' => '',
+                    'GermanLabel3' => '',
+                    'SpanishLabel3' => '',
+                    'ItalianLabel3' => '',
+                    'contactProperties4' => '',
+                    'propertyDataType4' => '',
+                    'EnglishLabel4' => '',
+                    'FrenchLabel4' => '',
+                    'GermanLabel4' => '',
+                    'SpanishLabel4' => '',
+                    'ItalianLabel4' => '',
+                    'confirmation_email_message_input' => '',
+                    'subscription_confirmed_message_input' => '',
+                    'empty_email_message_input' => '',
+                    'already_subscribed_message_input' => '',
+                    'invalid_data_format_message_input' => '',
+                    'generic_technical_error_message_input' => '',
+                    'email_subject' => '',
+                    'email_content_title' => '',
+                    'email_content_main_text' => '',
+                    'email_content_confirm_button' => '',
+                    'email_content_after_button' => '',
+                ),
+                'Italian' =>
+                array(
+                    'thank_you' => 0,
+                )
+            );
 
-          update_option('widget_wp_mailjet_subscribe_widget', $data);
-          $instance = get_option('widget_wp_mailjet_subscribe_widget');
+            update_option('widget_wp_mailjet_subscribe_widget', $data);
+            $instance = get_option('widget_wp_mailjet_subscribe_widget');
         }
         return $instance;
     }
@@ -758,7 +826,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if (false == $validApiCredentials) {
-            include(plugin_dir_path(__FILE__) . 'views'.DIRECTORY_SEPARATOR.'designforfailure.php');
+            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
             return false;
         }
 
@@ -773,7 +841,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         try {
             $mailjetContactLists = MailjetApi::getMailjetContactLists();
         } catch (\Exception $ex) {
-            include(plugin_dir_path(__FILE__) . 'views'.DIRECTORY_SEPARATOR.'designforfailure.php');
+            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
             return false;
         }
 
@@ -799,7 +867,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Display the admin form
         $languages = Mailjeti18n::getSupportedLocales();
         $pages = get_pages();
-        include(plugin_dir_path(__FILE__) . 'views'.DIRECTORY_SEPARATOR.'admin.php');
+        include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'admin.php');
     }
 
     /* -------------------------------------------------- */
