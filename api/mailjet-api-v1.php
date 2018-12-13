@@ -99,7 +99,7 @@ class WP_Mailjet_Api_V1
 		curl_setopt($curl_handle, CURLOPT_USERPWD, $this->apiKey . ':' . $this->secretKey);
 		curl_setopt($curl_handle, CURLOPT_VERBOSE, true);
 		curl_setopt($curl_handle, CURLINFO_HEADER_OUT, true);
-        curl_setopt($curl_handle, CURLOPT_USERAGENT, 'wordpress-v1.4.4.0');
+        curl_setopt($curl_handle, CURLOPT_USERAGENT, 'wordpress-v1.4.4.1');
 
         // Add Proxy support for Mailjet API requests
         if(defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
