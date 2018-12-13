@@ -136,6 +136,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                             case "float":
                                 $propertyNameCopy = $propertyName;
                                 $fProperty = (float) $propertyNameCopy;
+                                if(!is_float($fProperty) || $fProperty == 0) {
+                                    return $incorectTypeValue;
+                                }
                                 if ($fProperty == 0 && $propertyName !== "0") {
                                     return $incorectTypeValue;
                                 }
@@ -222,7 +225,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $mailjetContactProperties = $this->getMailjetContactProperties();
             if (!empty($mailjetContactProperties)) {
                 foreach ($mailjetContactProperties as $property) {
-                    if (isset($properties[$property['ID']]) && $properties[$property['ID']] == '' ) {
+                    if (isset($properties[$property['ID']]) && $properties[$property['ID']] != '' ) {
                         $dataType = $property['Datatype'];
                         switch ($dataType) {
                             case "datetime":
