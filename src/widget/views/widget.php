@@ -125,66 +125,6 @@ use MailjetPlugin\Includes\Mailjeti18n;
             ?>
             <input type="submit" value="<?php echo $buttonLabel ?>" onclick="mjSubmitWidgetForm(event)">
         </form>
-        <span><?php echo $form_message; ?></span>
+        <span><?php echo $form_message ?></span>
     </div>
 </div>
-<script>
-    (function ($) {
-//        "use strict";
-        $(function () {
-            $('#mjForm').on('submit', function (e) {
-                var dates = $('.mjDate');
-                $.each(dates, function (index, value) {
-                    var dateInputValue = $(value).val();
-                    if (dateInputValue !== "") {
-                        var isOkDate = validatedate(dateInputValue);
-                        if (isOkDate === false) {
-                            $(value).addClass('mjWrongDateInput');
-                            e.preventDefault();
-                            return false;
-                        }
-                    }
-                });
-                return true;
-            });
-
-            function validatedate(dateText) {
-                if (dateText) {
-                    var splitComponents = dateText.split('/');
-                    if (splitComponents.length !== 3) {
-                        return false;
-                    }
-                    var day = parseInt(splitComponents[0]);
-                    var month = parseInt(splitComponents[1]);
-                    var year = parseInt(splitComponents[2]);
-                    if (isNaN(day) || isNaN(month) || isNaN(year)) {
-                        return false;
-                    }
-                    var now = new Date;
-                    var theYear = now.getYear();
-                    if (theYear < 1900) {
-                        theYear = theYear + 1900;
-                    }
-                    if (day <= 0 || month <= 0 || year <= 0 || year <= 1900 || year > theYear) {
-                        return false;
-                    }
-                    if (month > 12) {
-                        return false;
-                    }
-                    // assuming no leap year by default
-                    var daysPerMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-                    if (year % 4 === 0) {
-                        // current year is a leap year
-                        daysPerMonth[1] = 29;
-                    }
-                    if (day > daysPerMonth[month - 1]) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-        });
-    }(jQuery));
-
-</script>

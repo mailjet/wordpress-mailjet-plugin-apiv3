@@ -302,7 +302,7 @@ if($numberActiveLanguages == 1) {
                                     <?php } ?>
                                 </div>
 
-                                <div class="validation_message_row">
+<!--                                <div class="validation_message_row">
                                     <div class="floatLeft">
                                         <div class="form-control validation_messages_labels"><?php _e('Subscription confirmed (displayed after the user has clicked the confirmation email)', 'mailjet'); ?></div>
                                     </div>
@@ -311,7 +311,7 @@ if($numberActiveLanguages == 1) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                         $subscriptionConfirmed = Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
                                         ?>
-                                        <!--Languages label-->
+                                        Languages label
                                         <div class="floatLeft form-group"  style="width: <?php echo $percent . '%' ?>">
                                             <textarea class="form-control form-validation-confirmed" name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>"><?php echo esc_attr($subscription_confirmed_message_input); ?></textarea>
                                         </div>
@@ -327,7 +327,7 @@ if($numberActiveLanguages == 1) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                         $provideEmail = Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
                                         ?>
-                                        <!--Languages label-->
+                                        Languages label
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                             <textarea class="form-control form-validation-email-empty"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>"><?php echo esc_attr($empty_email_message_input); ?></textarea>
                                         </div>
@@ -343,12 +343,12 @@ if($numberActiveLanguages == 1) {
                                         extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
                                         $emailAlreadySubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'This email address has already been subscribed.');
                                         ?>
-                                        <!--Languages label-->
+                                        Languages label
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
                                             <textarea class="form-control form-validation-email-already-subscribed" name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>"><?php echo esc_attr($already_subscribed_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
-                                </div>
+                                </div>-->
 
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
