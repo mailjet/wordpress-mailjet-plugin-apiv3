@@ -95,6 +95,7 @@ Add the following code to your template functions.php file. Uncomment the messag
  * @param array $emailData -default Mailjet email template parameters
  * @return string
  */
+
 function updateMailjetSubscriptionEmailParameters($emailData) {
 add_filter( 'mailjet_subscription_widget_email_params', 'updateMailjetSubscriptionEmailParameters' );
 
@@ -123,7 +124,8 @@ You need to have a php file with your custom template uploaded to your WordPress
  * Replace default Mailjet template path with a your own
  * @param string $templatePath - the path of the default mailjet template
  * @return string
- */ 
+ */
+
 add_filter( 'mailjet_confirmation_email_filename', 'useCustomConfirmationEmail' );
 function useCustomConfirmationEmail($templatePath) {
     return './custom_subscription_path.php';
@@ -131,12 +133,13 @@ function useCustomConfirmationEmail($templatePath) {
 </code></pre>
 
 = How to use filters to set your own Thank You page =
+You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
 <pre><code>
 /**
  * Replace default Mailjet Thank You page template path with a your own
  * @param string $templatePath - the path of the default Mailjet Thank You page template
  * @return string
- */ 
+ */
 
 add_filter( 'mailjet_thank_you_page_template', 'updateThankYouPagePath' );
 function updateThankYouPagePath($templatePath) {
@@ -145,52 +148,24 @@ function updateThankYouPagePath($templatePath) {
 </code></pre>
 
 = How to use filters to replace the widget form file =
+You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
 <pre><code>
 /**
  * Replace default Mailjet widget form file with your own
  * @param string $templatePath - the path of the default Mailjet widget form file
  * @return string
- */ 
+ */
+
 add_filter( 'mailjet_widget_form_filename', 'useMailjetCustomWidgetFormTemplate' );
 function useMailjetCustomWidgetFormTemplate($templatePath) {
     return './custom_mailjet_widget_template.php';
 }
 </code></pre>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 = For developers - before pushing any new changes, make sure you run the following command. It will remove unneeded .git direcotries from vendors =
 <pre><code>
 find vendor/ -type d -name ".git" -exec rm -rf {} \;
 </code></pre>
-
-
-
-
-
-
-
-
-
 
 == Screenshots ==
 
