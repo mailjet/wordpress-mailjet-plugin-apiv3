@@ -123,7 +123,7 @@ class ConnectAccountSettings
             <div class="mainContainer">
             
                 <div class="backToDashboard">
-                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                     <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
                     <?php _e('Back to dashboard', 'mailjet') ?>
                     </a>

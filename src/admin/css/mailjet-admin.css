@@ -5,7 +5,17 @@
  */
 .mj-pluginPage {
     font-family: Roboto;
+    font-size: 14px;
     color: #555;
+}
+.mj-pluginPage h1,
+.mj-pluginPage h2,
+.mj-pluginPage h3,
+.mj-pluginPage h4,
+.mj-pluginPage h5,
+.mj-pluginPage h6 {
+    font-weight: 500;
+    color: inherit;
 }
 .mj-pluginPage a {
     text-decoration: none;
@@ -16,12 +26,16 @@
     text-decoration: underline;
     color: #33D6B6;
 }
+.mj-pluginPage a:focus {
+    outline: 0;
+    box-shadow: none;
+}
 .mj-pluginPage a:visited {
     text-decoration: underline;
     color: #9B59B6;
 }
 .mj-pluginPage b {
-    font-weight: 650;
+    font-weight: 500;
 }
 .mj-pluginPage p {
     margin-bottom: 24px;    
@@ -32,15 +46,49 @@
     font-size: 14px;
 }
 .mj-pluginPage input[type="text"] {
-    /* font-family: Roboto; */
     width: 100%;
     max-width: 311px;
     height: 36px;
     margin-bottom: 16px;
     border: 1px solid #888;
     border-radius: 3px;
+    font-family: Roboto;
     color: inherit;
+    background-color: #fff;
     box-shadow: none;
+}
+.mj-pluginPage input[type="text"]:focus {
+    border-color: #19BC9C;
+}
+::-webkit-input-placeholder {
+    font-family: Roboto;
+    color: #a2a2a2;
+}
+::-moz-placeholder{
+    font-family: Roboto;
+    color: #a2a2a2;
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    font-family: Roboto;
+    color: #a2a2a2;
+}
+::placeholder {
+    font-family: Roboto;
+    color: #a2a2a2;
+}
+:focus::-webkit-input-placeholder {
+    color: #555;
+}
+:focus::-moz-placeholder {
+    color: #555;
+    opacity: 1;
+}
+:focus:-ms-input-placeholder {
+    color: #555;
+}
+:focus::placeholder {
+    color: #555;
 }
 .mj-show {
     min-height: 0;
@@ -134,6 +182,7 @@
     font-weight: 500;
     background-color: transparent;
     box-shadow: none;
+    cursor: pointer;
 }
 .mj-pluginPage .mj-btn:hover,
 .mj-pluginPage .mj-btn:focus,
@@ -162,16 +211,22 @@
 .mj-pluginPage .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus {    
     background-color: rgba(254,173,13,0.1);
 }
+.mj-pluginPage .btnCancel {
+    border-color: transparent;
+    color: #888;
+}
+.mj-pluginPage .btnCancel:hover {
+    color: #555;
+    background-color: #f2f2f2;
+}
+.btnCancel:active, .btnCancel:focus {
+    color: #555;
+    background-color: #e5e5e5;
+}
 .mj-pluginPage .btnSmall {
     min-width: 0;
     height: 28px;
     padding: 4px 16px;
-}
-.mj-pluginPage .btnCancel {
-    padding-left: 0;
-    padding-right: 0;
-    border-color: transparent;
-    color: #888;
 }
 .mj-btn + .mj-btn {
     margin-left: 16px;
@@ -540,8 +595,9 @@
     display: flex;
     align-items: center;
     height: 40px;
-    line-height: 40px;
+    line-height: 24px;
     padding: 8px;
+    font-size: 16px;
     font-weight: 500;
     color: #555;
 }
@@ -747,10 +803,6 @@
     line-height: 20px;
     text-align: center;
     margin-left:10px;
-    
-    
-    
-    
     color: #FCB340;
 }
 

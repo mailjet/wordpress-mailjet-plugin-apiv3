@@ -86,8 +86,8 @@ class InitialContactListsSettings
                     <input type="text" size="30" name="create_list_name" id="create_list_name" />
                 </div>
                 <div class="create_contact_list_btns">
-                    <input type="submit" value="<?php _e('Save', 'mailjet') ?>" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"/>
-                    <input name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList" type="button" id="cancel_create_list" value="<?= __('Cancel', 'mailjet') ?>">
+                    <button type="submit" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"><?php _e('Save', 'mailjet') ?></button>
+                    <button name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList"  id="cancel_create_list"><?= __('Cancel', 'mailjet') ?></button>
                 </div>
             </div>
         </div>
