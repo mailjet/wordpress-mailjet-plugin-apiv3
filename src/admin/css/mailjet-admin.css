@@ -53,9 +53,13 @@
     border: 1px solid #888;
     border-radius: 3px;
     font-family: Roboto;
-    color: inherit;
+    font-size: 14px;
+    color: #555;
     background-color: #fff;
     box-shadow: none;
+}
+.mj-pluginPage input[type="text"]:hover {
+    border-color: #555;
 }
 .mj-pluginPage input[type="text"]:focus {
     border-color: #19BC9C;
@@ -120,6 +124,7 @@
     max-width: max-content;
     line-height: 20px;
     margin: 0 0 8px !important;
+    cursor: inherit;
 }
 .mj-select-wrapper {
     position: relative;
@@ -137,10 +142,12 @@
     height: 100%;
     line-height: 20px;
     padding: 8px 32px 8px 16px;
+    border: 1px solid #888;
     border-radius: 3px;
     font-weight: 500;
     color: #555;
-    background-color: #f2f2f2;
+    background-color: #fff;
+    outline: none;
 }
 .mj-select-wrapper:after {
     content: '';
@@ -156,10 +163,10 @@
     border-color: #555 transparent transparent transparent;
 }
 .mj-select-wrapper:hover:before {
-    background-color: #e5e5e5;
+    border-color: #555;
 }
 .mj-select-wrapper.mj-select-focus:before {
-    background-color: #d9d9d9;
+    border-color: #19BC9C;
 }
 .mj-select-wrapper select {
     position: relative;
@@ -612,10 +619,13 @@
     color: #555;
     outline: 0;
 }
+
 .settingsMenuLink a:not(.active):hover,
-.settingsMenuLink a:not(.active):active,
-.settingsMenuLink a:not(.active):focus {
+.settingsMenuLink a:not(.active):active {
     background-color: #f2f2f2;
+}
+.settingsMenuLink a:not(.active):focus {
+    background-color: #e5e5e5;
 }
 .settingsMenuLink a:visited {
     color: #555;
