@@ -181,8 +181,8 @@ class IntegrationsSettings
                                 do_settings_sections('mailjet_integrations_page');
                                 // output save settings button
                                 $saveButton = __('Save', 'mailjet');
-                                submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'integrationsSubmit'));
                                 ?>
+                                <button type="submit" id="integrationsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>"> -->
                             </form>
                         </div>

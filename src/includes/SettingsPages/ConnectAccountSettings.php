@@ -43,10 +43,10 @@ class ConnectAccountSettings
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
             <label class="mj-label" for="mailjet_apikey"><?php _e('<b>Api Key</b>', 'mailjet'); ?></label>
-            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php echo $mailjetApikey ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e('Your Mailjet API Key', 'mailjet'); ?>">
+            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php echo $mailjetApikey ?>" class="regular-text code" required="required">
 
             <label class="mj-label" for="mailjet_apisecret"><?php _e('<b>Secret Key</b>', 'mailjet'); ?></label>
-            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php echo $mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e('Your Mailjet API Secret', 'mailjet'); ?>">
+            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php echo $mailjetApiSecret ?>" class="regular-text code" required="required">
         </fieldset>
         <?php
     }
@@ -150,8 +150,8 @@ class ConnectAccountSettings
                         do_settings_sections('mailjet_connect_account_page');
                         // output save settings button
                         $saveButton = __('Save', 'mailjet');
-                        submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
                         ?>
+                        <button type="submit" id="connectAccountSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href = location.href" value="<?= __('Cancel', 'mailjet') ?>"> -->
                             </form>
                         </div>

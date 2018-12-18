@@ -61,9 +61,9 @@ class InitialSettings
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
             <label class="mj-label" for="mailjet_apikey"><?php _e('<b>Api Key</b>', 'mailjet'); ?></label>
-            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?= $mailjetApikey ?>" class="mailjet_apikey" required="required" placeholder="<?php esc_html_e('Your Mailjet API Key', 'mailjet'); ?>">
+            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?= $mailjetApikey ?>" class="mailjet_apikey" required="required">
             <label class="mj-label" for="mailjet_apisecret"><?php _e('<b>Secret Key</b>', 'mailjet'); ?></label>
-            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?= $mailjetApiSecret ?>" class="mailjet_apisecret" required="required" placeholder="<?php esc_html_e('Your Mailjet API Secret', 'mailjet'); ?>">
+            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?= $mailjetApiSecret ?>" class="mailjet_apisecret" required="required">
         </fieldset>
 
         <!--        <br />-->
@@ -180,13 +180,13 @@ class InitialSettings
         do_settings_sections('mailjet_initial_settings_page');
         // output save settings button
         $connectYourAccount = __('Connect your account', 'mailjet');
-        submit_button($connectYourAccount, 'mj-btn btnPrimary', 'submit', false, array('id' => 'initialSettingsSubmit'));
         /* No Next btn on Initial API settings page - we redirect automatically
           if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
           <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet')?>">
           <?php }
          */
         ?>
+        <button type="submit" id="initialSettingsSubmit" class="mj-btn btnPrimary" name="submit"><?= $connectYourAccount; ?></button>
                             <p class="dont_have_account">
                             <?php esc_html_e('You don\'t have a Mailjet account yet?', 'mailjet'); ?>
                                 <br />

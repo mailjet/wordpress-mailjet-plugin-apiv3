@@ -202,8 +202,8 @@ class SubscriptionOptionsSettings
                                 do_settings_sections('mailjet_subscription_options_page');
                                 // output save settings button
                                 $saveButton = __('Save', 'mailjet');
-                                submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
                                 ?>
+                                <button type="submit" id="subscriptionOptionsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>"> -->
                             </form>
                         </div>
