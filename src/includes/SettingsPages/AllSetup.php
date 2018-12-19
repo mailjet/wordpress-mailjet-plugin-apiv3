@@ -37,7 +37,7 @@ class AllSetup
             <div class="mainContainer allsetup">
                 <!--            <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
                 <h1 class="page_top_title"><?php echo __('You\'re all set up!', 'mailjet'); ?></h1>
-                <div class="section_inner_title_slave"><?php echo __('What would you like to do next?', 'mailjet'); ?></div>
+                <p class="page_top_subtitle"><?php echo __('What would you like to do next?', 'mailjet'); ?></p>
                 <div class="allsetup_blocks">
                     <div class="block_single">
                         <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_signup_to_newsletter.png'; ?>" />

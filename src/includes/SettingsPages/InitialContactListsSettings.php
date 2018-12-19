@@ -239,12 +239,11 @@ class InitialContactListsSettings
                 <div>
                     <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
                     <p class="page_top_subtitle">
-        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
+                        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
                     </p>
                 </div>
 
                 <div id="initialContactListsForm">
-                    <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
                     <form action="options.php" method="post">
                    <?php
                     // output security fields for the registered setting "mailjet"
