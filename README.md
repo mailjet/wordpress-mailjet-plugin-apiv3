@@ -174,7 +174,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 == Screenshots ==
 
-1. The initial setup wizard will guide you through the quick steps to get started.
+1. The initial setup wizard will guide you through the quick steps to get started
 2. Access all features from the plugin dashboard
 3. Create and send beautiful email campaigns
 4. Configure a subscription widget to collect subscribers from your site
