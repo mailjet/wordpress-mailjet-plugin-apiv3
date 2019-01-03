@@ -12,7 +12,9 @@ Use Mailjet to create, send and track beautiful and engaging marketing and trans
 
 == What's new ==
 * The all new V5 Mailjet plugin for Wordpress has been completely redesigned and includes many new features.
-* Integration with WooCommerce is included - you can allow customers to subscribe to your newsletter during checkout. More integrations are coming soon.
+* Improved plugin settings for simplified configuration
+* Redesigned subscription widget for easier setup and more options - mandatory, optional or hidden form fields, custom subscription confirmation page, and more.
+* Integration with WooCommerce is included - customers can subscribe to your newsletter during checkout. More integrations are coming soon.
 * More flexibility - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form.
 
 == Description ==
@@ -20,15 +22,16 @@ Use Mailjet to create, send and track beautiful and engaging marketing and trans
 Mailjet's official plugin on WordPress gives you access to:
 
 * Easy Email Management:
-Create and manage all of your marketing and transactional email campaigns directly from your WordPress Admin.
+Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
 
 * Sign Up Form & Contact Lists Management:
 Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
 
 * Automated Contact Synchronization:
-Automatically synchronize your WordPress contacts into their own separate Mailjet email lists. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. 
-Comment authors can be added to a selected Mailjet contact list too as a second channel for collection of subscribers. With ongoing synchronization, you never have to think about contact management again.
-Another cool option is to subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+3 channels to build your contact lists:
+- Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+- Comment authors can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
+- A new cool option is to subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
 
 * Campaign Builder Tool:
 Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
@@ -74,13 +77,13 @@ Yes. You can [create one for free](https://app.mailjet.com/signup?aff=wordpressm
 
 = How to get started with this plugin? =
 Once you have a Mailjet account, an installation Wizard will guide you through.
-In case you want to use Mailjet as an SMTP relay, so you will need to change these parameters in your WordPress email configuration: username and password. These credentials are provided in your Mailjet Account > API Keys section [HERE](https://app.mailjet.com/account/api_keys).
+In case you want to use Mailjet as an SMTP relay you will need to change these parameters in your WordPress email configuration: username and password. These credentials are provided in your Mailjet Account > API Keys section [HERE](https://app.mailjet.com/account/api_keys).
 For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj).
 
 = How do I create a signup form or use the contact widget? =
-Once your Mailjet plugin is installed and configured, click on "Appearance" in the left-side WordPress admin menu and then choose the "Widgets" section. Just drag the "Mailjet Subscription Widget" widget and drop it where you want it to appear (i.e. the sidebar). For more precisions, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
+Once your Mailjet plugin is installed and configured, click on "Appearance" in the left-side WordPress admin menu and then choose the "Widgets" section. Just drag the "Mailjet Subscription Widget" widget and drop it where you want it to appear (i.e. the sidebar). For more details, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
 
-= How do  I synchronize my contact lists? =
+= How do I synchronize my contact lists? =
 Synchronization is automatic, that's the beauty of this plugin! It doesn't matter whether your lists were updated on your WordPress interface or on your Mailjet account: they will always remain up-to-date on both sides.
 
 = In which languages is this plugin available? =
