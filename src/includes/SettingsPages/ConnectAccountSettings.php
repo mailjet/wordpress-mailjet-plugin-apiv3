@@ -43,10 +43,10 @@ class ConnectAccountSettings
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
             <label class="mj-label" for="mailjet_apikey"><?php _e('<b>Api Key</b>', 'mailjet'); ?></label>
-            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php echo $mailjetApikey ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e('Your Mailjet API Key', 'mailjet'); ?>">
+            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php echo $mailjetApikey ?>" class="regular-text code" required="required">
 
             <label class="mj-label" for="mailjet_apisecret"><?php _e('<b>Secret Key</b>', 'mailjet'); ?></label>
-            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php echo $mailjetApiSecret ?>" class="regular-text code" required="required" placeholder="<?php esc_html_e('Your Mailjet API Secret', 'mailjet'); ?>">
+            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php echo $mailjetApiSecret ?>" class="regular-text code" required="required">
         </fieldset>
         <?php
     }
@@ -123,7 +123,7 @@ class ConnectAccountSettings
             <div class="mainContainer">
             
                 <div class="backToDashboard">
-                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                     <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
                     <?php _e('Back to dashboard', 'mailjet') ?>
                     </a>
@@ -150,8 +150,8 @@ class ConnectAccountSettings
                         do_settings_sections('mailjet_connect_account_page');
                         // output save settings button
                         $saveButton = __('Save', 'mailjet');
-                        submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'connectAccountSubmit'));
                         ?>
+                        <button type="submit" id="connectAccountSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href = location.href" value="<?= __('Cancel', 'mailjet') ?>"> -->
                             </form>
                         </div>

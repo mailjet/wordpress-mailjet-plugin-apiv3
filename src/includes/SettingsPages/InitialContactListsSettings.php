@@ -82,12 +82,12 @@ class InitialContactListsSettings
             </a>
             <div class="mj-hide create_contact_list_popup" id="create_contact_list_popup">
                 <div class="create_contact_list_fields">
-                    <label class="mj-label" for="create_list_name"><?php _e('Name your list (max. 50 characters)', 'mailjet'); ?></label>
+                    <label class="mj-label" for="create_list_name"><b><?php _e('Name your list (max. 50 characters)', 'mailjet'); ?></b></label>
                     <input type="text" size="30" name="create_list_name" id="create_list_name" />
                 </div>
                 <div class="create_contact_list_btns">
-                    <input type="submit" value="<?php _e('Save', 'mailjet') ?>" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"/>
-                    <input name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList" type="button" id="cancel_create_list" value="<?= __('Cancel', 'mailjet') ?>">
+                    <button type="submit" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn"><?php _e('Save', 'mailjet') ?></button>
+                    <button name="nextBtn" class="mj-btn btnCancel btnSmall nextBtn closeCreateList"  id="cancel_create_list"><?= __('Cancel', 'mailjet') ?></button>
                 </div>
             </div>
         </div>
@@ -239,12 +239,11 @@ class InitialContactListsSettings
                 <div>
                     <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
                     <p class="page_top_subtitle">
-        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
+                        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
                     </p>
                 </div>
 
                 <div id="initialContactListsForm">
-                    <p class="section_title"><?php echo esc_html(get_admin_page_title()); ?></p>
                     <form action="options.php" method="post">
                    <?php
                     // output security fields for the registered setting "mailjet"
@@ -253,9 +252,9 @@ class InitialContactListsSettings
                     // (sections are registered for "mailjet", each field is registered to a specific section)
                     do_settings_sections('mailjet_initial_contact_lists_page');
                     // output save settings button
-                    if (MailjetApi::isValidAPICredentials()) {
-                        submit_button(__('Apply & Continue', 'mailjet'), 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'initialContactListsSubmit'));
-                    } else {
+                    if (MailjetApi::isValidAPICredentials()) { ?>
+                        <button type="submit" id="initialContactListsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= __('Apply & Continue', 'mailjet'); ?></button>
+                    <?php } else {
                         update_option('settings_step', 'initial_step')
                         ?>
                             <input name="nextBtn" class="mj-btn btnPrimary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'mailjet')?>">

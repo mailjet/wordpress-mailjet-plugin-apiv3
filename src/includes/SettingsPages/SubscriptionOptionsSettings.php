@@ -175,7 +175,7 @@ class SubscriptionOptionsSettings
             <div class="mainContainer">
 
                 <div class="backToDashboard">
-                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                     <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
                     <?php _e('Back to dashboard', 'mailjet') ?>
                     </a>
@@ -202,8 +202,8 @@ class SubscriptionOptionsSettings
                                 do_settings_sections('mailjet_subscription_options_page');
                                 // output save settings button
                                 $saveButton = __('Save', 'mailjet');
-                                submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'subscriptionOptionsSubmit'));
                                 ?>
+                                <button type="submit" id="subscriptionOptionsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>"> -->
                             </form>
                         </div>
