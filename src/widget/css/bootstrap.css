@@ -743,7 +743,17 @@ a:hover {
 .glyphicon-menu-up:before {
   content: "\e260";
 }
-
+.mj-select-wrapper {
+   -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.mj-select-wrapper:before,
+.mj-select-wrapper:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
 /*
 input,
 button,
