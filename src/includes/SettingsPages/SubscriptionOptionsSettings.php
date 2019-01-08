@@ -469,10 +469,10 @@ class SubscriptionOptionsSettings
         $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
         $contactproperties = [];
         if (!empty($first_name)) {
-            $contactproperties['first_name'] = $first_name;
+            $contactproperties['firstname'] = $first_name;
         }
         if (!empty($last_name)) {
-            $contactproperties['last_name'] = $last_name;
+            $contactproperties['lastname'] = $last_name;
         }
 
         // Add the user to a contact list
