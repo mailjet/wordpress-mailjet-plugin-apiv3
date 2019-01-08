@@ -109,13 +109,21 @@ class MailjetMenu
                 add_submenu_page(null, __('Integrations', 'mailjet'), null, 'read', 'mailjet_integrations_page',
                     array(new IntegrationsSettings(), 'mailjet_integrations_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Integrations\' sub-menu added ]');
+
+                // Add old initial page to fix settings link after update
+                add_submenu_page(null, __('Temporary page', 'mailjet'), null, 'read', 'wp_mailjet_options_top_menu', array($this, 'wp_mailjet_options_top'));
+
             }
         } else {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have required permissions to see Mailjet plugin ]');
         }
     }
 
-
+    public function wp_mailjet_options_top()
+    {
+        // Redirect to current initial page
+        MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
+    }
 
     public function show_settings_page()
     {
