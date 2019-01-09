@@ -182,4 +182,4 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 == Changelog ==
 
 = 5.0.1 =
-* Plugin redesign and major improvements
+* Updated supported WP version to 5.0

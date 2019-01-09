@@ -22,7 +22,11 @@ use MailjetPlugin\Includes\Mailjeti18n;
         <!--Widget title-->
         <div id="mailjet_widget_title_wrap">
             <span id="mailjet_widget_title">
-                <?php echo $before_title . $title . $after_title ?>
+                <?php
+                    do_action('before_title_widget_mailjet');
+                    echo $before_title . $title . $after_title;
+                    do_action('after_title_widget_mailjet');
+                ?>
             </span>
         </div>
         <!--End Widget title-->

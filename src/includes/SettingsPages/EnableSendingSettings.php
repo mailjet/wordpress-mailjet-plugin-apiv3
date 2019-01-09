@@ -54,7 +54,7 @@ class EnableSendingSettings
             <div id="enable_mj_emails" class="sending_options_div <?php echo $mailjetEnabled ? 'mj-show' : 'mj-hide' ?>">
                 <div>
                     <label class="mj-label" for="mailjet_from_name"><b><?php _e('From: Name', 'mailjet'); ?></b></label>
-                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php echo $mailjetFromName ?>" class="regular-text code" placeholder="<?php esc_html_e( 'e.g. Jenny Ford', 'mailjet' ); ?>">
+                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php echo $mailjetFromName ?>" class="regular-text code">
                 </div>
                 <div id="mailjet_from_email_fields" class="fromFld">
                     <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'mailjet'); ?></b></label>
@@ -104,8 +104,10 @@ class EnableSendingSettings
             <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet')?></button>
             <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
                 <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet'); ?></b></label>
-                <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                <input type="submit" value="<?php _e('Send', 'mailjet')?>" name="send_test_email_btn" class="button mj-btn btnPrimary MailjetSubmit" id="send_test_email_btn"/>
+                <div class="test_email_fields_group">
+                    <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
+                    <input type="submit" value="<?php _e('Send', 'mailjet')?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
+                </div>
             </div>
         </fieldset>
         <?php
@@ -214,7 +216,7 @@ class EnableSendingSettings
             <div class="mainContainer">
                 
             <div class="backToDashboard">
-                    <a href="admin.php?page=mailjet_dashboard_page">
+                    <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                     <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
                     <?php _e('Back to dashboard', 'mailjet') ?>
                     </a>
@@ -241,8 +243,8 @@ class EnableSendingSettings
                                 do_settings_sections('mailjet_sending_settings_page');
                                 // output save settings button
                                 $saveButton = __('Save', 'mailjet');
-                                submit_button($saveButton, 'mj-btn btnPrimary MailjetSubmit', 'submit', false, array('id' => 'enableSendingSubmit'));
                                 ?>
+                                <button type="submit" id="enableSendingSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'mailjet') ?>"> -->
                             </form>
                         </div>

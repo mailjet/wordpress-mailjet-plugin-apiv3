@@ -5,7 +5,17 @@
  */
 .mj-pluginPage {
     font-family: Roboto;
+    font-size: 14px;
     color: #555;
+}
+.mj-pluginPage h1,
+.mj-pluginPage h2,
+.mj-pluginPage h3,
+.mj-pluginPage h4,
+.mj-pluginPage h5,
+.mj-pluginPage h6 {
+    font-weight: 500;
+    color: inherit;
 }
 .mj-pluginPage a {
     text-decoration: none;
@@ -16,31 +26,74 @@
     text-decoration: underline;
     color: #33D6B6;
 }
+.mj-pluginPage a:focus {
+    outline: 0;
+    box-shadow: none;
+}
 .mj-pluginPage a:visited {
     text-decoration: underline;
     color: #9B59B6;
 }
 .mj-pluginPage b {
-    font-weight: 650;
-}
-.mj-pluginPage p {
-    margin-bottom: 24px;    
+    font-weight: 500;
 }
 .mj-pluginPage p {
     max-width: 550px;
     line-height: 20px;
+    margin-top: 0;
+    margin-bottom: 24px;    
     font-size: 14px;
 }
 .mj-pluginPage input[type="text"] {
-    /* font-family: Roboto; */
     width: 100%;
     max-width: 311px;
     height: 36px;
     margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
     border: 1px solid #888;
     border-radius: 3px;
-    color: inherit;
+    font-family: Roboto;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
     box-shadow: none;
+}
+.mj-pluginPage input[type="text"]:hover {
+    border-color: #555;
+}
+.mj-pluginPage input[type="text"]:focus {
+    border-color: #19BC9C;
+}
+::-webkit-input-placeholder {
+    font-family: Roboto;
+    color: #a2a2a2;
+}
+::-moz-placeholder{
+    font-family: Roboto;
+    color: #a2a2a2;
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    font-family: Roboto;
+    color: #a2a2a2;
+}
+::placeholder {
+    font-family: Roboto;
+    color: #a2a2a2;
+}
+:focus::-webkit-input-placeholder {
+    color: #555;
+}
+:focus::-moz-placeholder {
+    color: #555;
+    opacity: 1;
+}
+:focus:-ms-input-placeholder {
+    color: #555;
+}
+:focus::placeholder {
+    color: #555;
 }
 .mj-show {
     min-height: 0;
@@ -72,6 +125,7 @@
     max-width: max-content;
     line-height: 20px;
     margin: 0 0 8px !important;
+    cursor: inherit;
 }
 .mj-select-wrapper {
     position: relative;
@@ -89,10 +143,12 @@
     height: 100%;
     line-height: 20px;
     padding: 8px 32px 8px 16px;
+    border: 1px solid #888;
     border-radius: 3px;
     font-weight: 500;
     color: #555;
-    background-color: #f2f2f2;
+    background-color: #fff;
+    outline: none;
 }
 .mj-select-wrapper:after {
     content: '';
@@ -108,10 +164,10 @@
     border-color: #555 transparent transparent transparent;
 }
 .mj-select-wrapper:hover:before {
-    background-color: #e5e5e5;
+    border-color: #555;
 }
 .mj-select-wrapper.mj-select-focus:before {
-    background-color: #d9d9d9;
+    border-color: #19BC9C;
 }
 .mj-select-wrapper select {
     position: relative;
@@ -121,8 +177,13 @@
     opacity: 0;
 }
 
-/* Buttons */
-.mj-pluginPage .mj-btn {
+/**
+* Buttons
+  No choice but to override styles of buttons created with submit_button function ("button" class),
+  having styles in load-styles.php (loaded after mailjet-admin.css)
+*/
+.mj-pluginPage .mj-btn,
+.mj-pluginPage .mj-btn.button {
     min-width: 84px;
     height: 36px;
     line-height: 20px;
@@ -134,47 +195,66 @@
     font-weight: 500;
     background-color: transparent;
     box-shadow: none;
+    cursor: pointer;
 }
 .mj-pluginPage .mj-btn:hover,
 .mj-pluginPage .mj-btn:focus,
-.mj-pluginPage .mj-btn:active {
+.mj-pluginPage .mj-btn:active,
+.mj-pluginPage .mj-btn.button:hover,
+.mj-pluginPage .mj-btn.button:focus,
+.mj-pluginPage .mj-btn.button:active {
     transform: none;
     outline: 0;
     box-shadow: none;
 }
 .mj-pluginPage .btnPrimary,
-.mj-pluginPage .btnPrimary:hover {
+.mj-pluginPage .btnPrimary:hover,
+.mj-pluginPage .button.btnPrimary,
+.mj-pluginPage .button.btnPrimary:hover {
     border-color: transparent;
     color: white;
     background-color: #FEAD0D;
 }
-.mj-pluginPage .btnPrimary:hover {
+.mj-pluginPage .btnPrimary:hover,
+.mj-pluginPage .button.btnPrimary:hover {
     background-color: #FFBA1A;
 }
 .mj-pluginPage .btnPrimary:focus,
-.mj-pluginPage .btnPrimary:active {
+.mj-pluginPage .btnPrimary:active,
+.mj-pluginPage .button.btnPrimary:focus,
+.mj-pluginPage .button.btnPrimary:active {
     background-color: #F1A000;
 }
-.mj-pluginPage .btnSecondary {
+.mj-pluginPage .btnSecondary,
+.mj-pluginPage .button.btnSecondary {
     color: #FEAD0D;
     border-color: currentColor;
 }
-.mj-pluginPage .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus {    
+.mj-pluginPage .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus,
+.mj-pluginPage .button.btnSecondary:hover, .button.btnSecondary:active, .button.btnSecondary:focus {
     background-color: rgba(254,173,13,0.1);
+}
+.mj-pluginPage .btnCancel,
+.mj-pluginPage .button.btnCancel {
+    border-color: transparent;
+    color: #888;
+}
+
+.mj-pluginPage .btnCancel:active, .mj-pluginPage .btnCancel:focus,
+.mj-pluginPage .button.btnCancel:active, .button.mj-pluginPage .button.btnCancel:focus {
+    color: #555;
+    background-color: #e5e5e5;
 }
 .mj-pluginPage .btnSmall {
     min-width: 0;
     height: 28px;
     padding: 4px 16px;
 }
-.mj-pluginPage .btnCancel {
-    padding-left: 0;
-    padding-right: 0;
-    border-color: transparent;
-    color: #888;
-}
 .mj-btn + .mj-btn {
     margin-left: 16px;
+}
+.btnSmall + .btnSmall {
+    margin-left: 8px;
 }
 
 /**
@@ -267,7 +347,7 @@
 }
 #availableContactListsContainerParent::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: linear-gradient(left, #fff, #e4e4e4);
+    background: linear-gradient(to left, #fff, #e4e4e4);
     border: 1px solid #aaa;
 }
 #availableContactListsContainerParent::-webkit-scrollbar-thumb:hover {
@@ -275,7 +355,7 @@
 }
 
 #availableContactListsContainerParent::-webkit-scrollbar-thumb:active {
-    background: linear-gradient(left, #22ADD4, #1E98BA);
+    background: linear-gradient(to left, #22ADD4, #1E98BA);
 }
 .mj-pluginPage .checkboxLabel,
 .mj-pluginPage .form-table td fieldset .checkboxLabel {
@@ -415,19 +495,14 @@
     margin-bottom: 8px;
     font-size: 16px;
 }
-#initialContactListsForm input[type="text"] {
-    height: 36px;
-    width: 311px;
-    border: 1px solid #888888;
-    border-radius: 3px;
-}
 .mjSettings {
     min-height: 450px;
     display: flex;
     align-items: stretch;
 }
 .mjSettings .left {
-    width: 268px;
+    /* width: 268px; */
+    padding-right: 16px;
     border-right: 1px solid #e5e5e5;
 }
 .mjSettings .left .centered h1 {
@@ -483,6 +558,7 @@
     color: #19BC9C;
     background: transparent;
     outline: 0;
+    cursor: pointer;
 }
 .mjSettings .sendTestEmailBtn:before {
     content: '';
@@ -507,8 +583,11 @@
 .mjSettings .test_email_collapsible label {
     margin-top: 16px !important;
 }
+.mjSettings .test_email_collapsible .test_email_fields_group {
+    display: flex;
+}
 .mjSettings .test_email_collapsible input {
-    margin-bottom: 0;
+    margin: 0 8px 0 0;
 }
 
 .mjSettings .mailjet_sync_comment_authors_div .mj-select-wrapper {
@@ -533,15 +612,20 @@
 .needHelpDiv img {
     margin-right: 8px;
 }
-.bottom_links a:hover {
-    text-decoration: none;
+.bottom_links a:visited {
+    color: inherit;
+}
+.bottom_links a:hover,
+.bottom_links a:focus {
+    color: #33D6B6;
 }
 .settingsMenuLink a {
     display: flex;
     align-items: center;
     height: 40px;
-    line-height: 40px;
+    line-height: 24px;
     padding: 8px;
+    font-size: 16px;
     font-weight: 500;
     color: #555;
 }
@@ -556,10 +640,13 @@
     color: #555;
     outline: 0;
 }
+
 .settingsMenuLink a:not(.active):hover,
-.settingsMenuLink a:not(.active):active,
-.settingsMenuLink a:not(.active):focus {
+.settingsMenuLink a:not(.active):active {
     background-color: #f2f2f2;
+}
+.settingsMenuLink a:not(.active):focus {
+    background-color: #e5e5e5;
 }
 .settingsMenuLink a:visited {
     color: #555;
@@ -581,6 +668,7 @@
     overflow: auto;
     margin-bottom: 24px;
     border: 1px solid #E5E5E5;
+    border-radius: 3px;
 }
 .availableContactListsRow {
     display: flex;
@@ -605,10 +693,10 @@
     max-width: max-content;
     line-height: 20px;
     margin: 0 0 8px !important;
-    padding-bottom: 8px;
 }
 #create_contact_list {
     display: flex;
+    align-items: center;
     line-height: 20px;
     text-decoration: none;
     color: #19BC9C;
@@ -649,6 +737,7 @@
 /* Dashboard */
 .dashboard .initialSettingsMainCtn {
    display: flex;
+   margin-top: 24px;
 }
 .dashboard .block {
     position: relative;
@@ -693,6 +782,7 @@
 }
 .dashboard .rightCol .blockText {
     flex-grow: 1;
+    margin-top: 0;
 }
 .dashboard .rightCol img {
     width: 96px;
@@ -747,10 +837,6 @@
     line-height: 20px;
     text-align: center;
     margin-left:10px;
-    
-    
-    
-    
     color: #FCB340;
 }
 
@@ -764,17 +850,17 @@
     margin-left: 20px;
 }
 
-.page_top_title {
+.mainContainer .page_top_title {
     line-height: 40px;
     margin: 0 0 16px;
     font-weight: 500;
     font-size: 32px;
 }
-.page_top_subtitle {
+.mainContainer .page_top_subtitle {
     line-height: 24px;
     font-size: 16px;
 }
-.section_title {
+.mainContainer .section_title {
     font-weight: 500;
     font-size: 16px;
 }
