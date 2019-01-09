@@ -11,7 +11,6 @@ use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
 //use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
-use const MAILJET_VERSION;
 
 /**
  * The core plugin class.
