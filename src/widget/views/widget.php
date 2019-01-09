@@ -43,6 +43,10 @@ use MailjetPlugin\Includes\Mailjeti18n;
             // Check for the additional properties from the admin advanced settings
             for ($i = 0; $i < 5; $i++) {
 
+                if(!isset($instance[$locale])) {
+                    continue;
+                }
+
                 // Property id - '0' there is no selected property
                 $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
                 
