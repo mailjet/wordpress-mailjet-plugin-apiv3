@@ -481,7 +481,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
-     *  Transition widget settings from v4 t ov5
+     *  Transition widget settings from v4 to v5
      */
     private function checkTransition($instance)
     {
@@ -497,7 +497,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $listEn = isset($instance['list_iden']) ? $instance['list_iden'] : '';
             $property0En = isset($instance['metaProperty1en']) ? $instance['metaProperty1en'] : '';
             $property1En = isset($instance['metaProperty2en']) ? $instance['metaProperty2en'] : '';
-            $property2En = isset($instance['metaProperty2en']) ? $instance['metaProperty3en'] : '';
+            $property2En = isset($instance['metaProperty3en']) ? $instance['metaProperty3en'] : '';
             $buttonТextЕn = isset($instance['button_texten']) ? $instance['button_texten'] : '';
 
             $enableFr = isset($instance['enableTabfr']) && $instance['enableTabfr'] == 'on';
