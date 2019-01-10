@@ -83,7 +83,7 @@ if($numberActiveLanguages == 1) {
     $advancedFormDefaults['language_mandatory_button'] = '';
     $advancedFormDefaults['thank_you'] = '';
 
-    $pass_args_data = isset($instance[$locale]) ? $instance[$admin_locale]: array();
+    $pass_args_data = isset($instance[$admin_locale]) ? $instance[$admin_locale]: array();
     extract(wp_parse_args($pass_args_data, $advancedFormDefaults));
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
