@@ -99,6 +99,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return false;
         }
 
+        $subscription_locale = $locale;
+        if (isset($_POST['subscription_locale'])) {
+            $subscription_locale = $_POST['subscription_locale'];
+        }
+
         // Submited but empty
         if (empty($_POST['subscription_email'])) {
             return !empty($instance[$locale]['empty_email_message_input']) ? $instance[$locale]['empty_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
@@ -167,7 +172,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
         }
 
-        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
+        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale);
         if ($sendingResult) {
             return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
@@ -183,11 +188,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         $locale = Mailjeti18n::getLocale();
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
-        $contacts = array();
 
         // Check if subscription email is confirmed
         if (empty($_GET['mj_sub_token'])) {
             return true;
+        }
+
+        if (!empty($_GET['subscription_locale'])) {
+            $locale = $_GET['subscription_locale'];
         }
 
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
@@ -202,6 +210,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
+            'subscription_locale' => $locale,
             'properties' => $properties,
         ));
 
@@ -283,7 +292,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             // If no selected page, select default template
             if (!$thankYouPageId) {
-                $locale = Mailjeti18n::getLocaleByPll();
+//                $locale = Mailjeti18n::getLocaleByPll();
                 $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
                 $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
