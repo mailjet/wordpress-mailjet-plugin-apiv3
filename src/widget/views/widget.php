@@ -37,6 +37,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
             <!--Subscription email input(mandatory)-->
             <div class="form-group">
                 <input type="email" name="subscription_email" id="mailjet_widget_email" required="required" placeholder="* <?php echo $emailLabel ?>">
+                <input type="hidden" name="subscription_locale" id="mailjet_widget_locale" value="<?php echo $locale ?>">
             </div>
             <?php
 

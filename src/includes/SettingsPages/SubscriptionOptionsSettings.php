@@ -568,7 +568,7 @@ class SubscriptionOptionsSettings
 
 
 
-    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance)
+    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale)
     {
         $homeUrl = get_home_url();
         $language = Mailjeti18n::getCurrentUserLanguage();
@@ -588,6 +588,7 @@ class SubscriptionOptionsSettings
         $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
+            'subscription_locale' => $subscription_locale,
             'properties' => $properties,
 //            'thank_id' => $thankYouURI
         ));
