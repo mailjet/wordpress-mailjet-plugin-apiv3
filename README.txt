@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 5.0.2
-Stable tag: 5.0.4
+Stable tag: 5.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,6 +180,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 == Changelog ==
+
+= 5.0.5 =
+* Fix subscription widget issues for multilanguage sites
+* Fix fatal error for WooCommerce integration
 
 = 5.0.4 =
 * Fix widget contact properties to be compatible with polylang
