@@ -273,12 +273,12 @@ class SubscriptionOptionsSettings
 
             $contactProperties = array();
             if (!empty($userMetadata['first_name'][0])) {
-                $contactProperties['first_name'] = $userMetadata['first_name'][0];
-                $userNames = $contactProperties['first_name'];
+                $contactProperties['firstname'] = $userMetadata['first_name'][0];
+                $userNames = $contactProperties['firstname'];
             }
             if (!empty($userMetadata['last_name'][0])) {
-                $contactProperties['last_name'] = $userMetadata['last_name'][0];
-                $userNames.= ' ' . $contactProperties['last_name'];
+                $contactProperties['lastname'] = $userMetadata['last_name'][0];
+                $userNames.= ' ' . $contactProperties['lastname'];
             }
             if (!empty($userRoles[0])) {
                 $contactProperties['wp_user_role'] = $userRoles[0];
@@ -365,7 +365,7 @@ class SubscriptionOptionsSettings
 
 
 
-    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance)
+    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale)
     {
         $homeUrl = get_home_url();
         $language = Mailjeti18n::getCurrentUserLanguage();
@@ -385,6 +385,7 @@ class SubscriptionOptionsSettings
         $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
+            'subscription_locale' => $subscription_locale,
             'properties' => $properties,
 //            'thank_id' => $thankYouURI
         ));
