@@ -21,16 +21,25 @@ class WooCommerceSettings
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
-        // Display the checkbox only for NOT-logged in users
-        if (!$user->exists() && get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')) {
-            if (!function_exists('woocommerce_form_field')) {
-                return;
+
+        // Display the checkbox only for NOT-logged in users or for logged-in but not subscribed to the Woo list
+        if (get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')){
+
+            // Check if user is logged-in and already Subscribed to the contact list
+            if ($user->exists()) {
+                $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, get_option('mailjet_woo_list'));
             }
-            woocommerce_form_field( 'mailjet_woo_subscribe_ok', array(
-                'type'          => 'checkbox',
-                'label'         => __('Subscribe to our newsletter', 'mailjet'),
-                'required'  => false,
-            ), $checkout->get_value( 'mailjet_woo_subscribe_ok' ));
+
+            if (!$user->exists() || false == $contactAlreadySubscribedToList) {
+                if (!function_exists('woocommerce_form_field')) {
+                    return;
+                }
+                woocommerce_form_field('mailjet_woo_subscribe_ok', array(
+                    'type' => 'checkbox',
+                    'label' => __('Subscribe to our newsletter', 'mailjet'),
+                    'required' => false,
+                ), $checkout->get_value('mailjet_woo_subscribe_ok'));
+            }
         }
     }
 
@@ -66,12 +75,12 @@ class WooCommerceSettings
         $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
         $contactproperties = [];
         if (!empty($first_name)) {
-            MailjetApi::createMailjetContactProperty('first_name');
-            $contactproperties['first_name'] = $first_name;
+            MailjetApi::createMailjetContactProperty('firstname');
+            $contactproperties['firstname'] = $first_name;
         }
         if (!empty($last_name)) {
-            MailjetApi::createMailjetContactProperty('last_name');
-            $contactproperties['last_name'] = $last_name;
+            MailjetApi::createMailjetContactProperty('lastname');
+            $contactproperties['lastname'] = $last_name;
         }
 
         // Add the user to a contact list

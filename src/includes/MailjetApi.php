@@ -254,4 +254,40 @@ class MailjetApi
         }
     }
 
+
+
+    /**
+     * Return TRUE if a contact already subscribed to the list and FALSE if it is not, or is added to the list but Unsubscribed
+     *
+     * @param $email
+     * @param $listId
+     * @return bool
+     */
+    public static function checkContactSubscribedToList($email, $listId)
+    {
+        $exists = false;
+        $existsAndSubscribed = false;
+
+        $mjApiClient = self::getApiClient();
+
+        $filters = [
+            'ContactEmail' => $email,
+            'ContactsList' => $listId,
+        ];
+
+        $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
+
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+            $exists = true;
+            if (isset($data[0]['IsUnsubscribed']) && false == $data[0]['IsUnsubscribed']) {
+                $existsAndSubscribed = true;
+            }
+        }
+
+        return $exists && $existsAndSubscribed;
+    }
+
+
+
 }
