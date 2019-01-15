@@ -99,6 +99,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return false;
         }
 
+        $subscription_locale = $locale;
+        if (isset($_POST['subscription_locale'])) {
+            $subscription_locale = $_POST['subscription_locale'];
+        }
+
         // Submited but empty
         if (empty($_POST['subscription_email'])) {
             return !empty($instance[$locale]['empty_email_message_input']) ? $instance[$locale]['empty_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
@@ -167,7 +172,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
         }
 
-        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance);
+        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale);
         if ($sendingResult) {
             return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
@@ -183,11 +188,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         $locale = Mailjeti18n::getLocale();
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
-        $contacts = array();
 
         // Check if subscription email is confirmed
         if (empty($_GET['mj_sub_token'])) {
             return true;
+        }
+
+        if (!empty($_GET['subscription_locale'])) {
+            $locale = $_GET['subscription_locale'];
         }
 
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
@@ -202,6 +210,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
+            'subscription_locale' => $locale,
             'properties' => $properties,
         ));
 
@@ -283,7 +292,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             // If no selected page, select default template
             if (!$thankYouPageId) {
-                $locale = Mailjeti18n::getLocaleByPll();
+//                $locale = Mailjeti18n::getLocaleByPll();
                 $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
                 $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
@@ -399,8 +408,14 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
-
+        
         $languages = Mailjeti18n::getSupportedLocales();
+        $admin_locale = Mailjeti18n::getLocale();
+
+//        echo "<pre>";
+//        print_r($admin_locale);
+//        echo "<hr></pre>";exit;
+
         foreach ($languages as $language => $locale) {
             // Do not save if language is active but there is no contact list chosen for it
             if (isset($new_instance[$locale]['language_checkbox']) && $new_instance[$locale]['list'] == "0") {
@@ -420,15 +435,15 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale]['language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_button']) : '';
 
             for ($i = 0; $i <= 4; $i++) {
-                $instance[$locale]['contactProperties' . $i] = isset($new_instance[$locale]['contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$locale]['contactProperties' . $i]) : '';
-                $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$locale]['propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$locale]['propertyDataType' . $i]) : '';
+                $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale]['contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['contactProperties' . $i]) : '';
+                $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale]['propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['propertyDataType' . $i]) : '';
 
 //                $instance[$locale][$language.'Label'.$i] = isset($new_instance[$locale][$language.'Label'.$i]) ? wp_strip_all_tags($new_instance[$locale][$language.'Label'.$i]) : '';
-                $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$locale]['EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['EnglishLabel' . $i]) : '';
-                $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['FrenchLabel' . $i]) : '';
-                $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['GermanLabel' . $i]) : '';
-                $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['SpanishLabel' . $i]) : '';
-                $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$locale]['ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$locale]['ItalianLabel' . $i]) : '';
+                $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$admin_locale]['EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['EnglishLabel' . $i]) : '';
+                $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$admin_locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['FrenchLabel' . $i]) : '';
+                $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$admin_locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['GermanLabel' . $i]) : '';
+                $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$admin_locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['SpanishLabel' . $i]) : '';
+                $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$admin_locale]['ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['ItalianLabel' . $i]) : '';
             }
 
             // Tab 2
@@ -454,6 +469,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
         $this->instance = $instance;
+//        echo "<pre>";
+//        print_r($instance);
+//        echo "<hr></pre>";exit;
         return $instance;
     }
 
@@ -481,7 +499,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
-     *  Transition widget settings from v4 t ov5
+     *  Transition widget settings from v4 to v5
      */
     private function checkTransition($instance)
     {
@@ -497,7 +515,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $listEn = isset($instance['list_iden']) ? $instance['list_iden'] : '';
             $property0En = isset($instance['metaProperty1en']) ? $instance['metaProperty1en'] : '';
             $property1En = isset($instance['metaProperty2en']) ? $instance['metaProperty2en'] : '';
-            $property2En = isset($instance['metaProperty2en']) ? $instance['metaProperty3en'] : '';
+            $property2En = isset($instance['metaProperty3en']) ? $instance['metaProperty3en'] : '';
             $buttonТextЕn = isset($instance['button_texten']) ? $instance['button_texten'] : '';
 
             $enableFr = isset($instance['enableTabfr']) && $instance['enableTabfr'] == 'on';
@@ -543,8 +561,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                     'propertyDataType1' => '0',
                     'EnglishLabel1' => $property1En,
                     'FrenchLabel1' => $property1Fr,
-                    'GermanLabel1' => $property1Fr,
-                    'SpanishLabel1' => $property1Fr,
+                    'GermanLabel1' => $property1De,
+                    'SpanishLabel1' => $property1Es,
                     'ItalianLabel1' => '',
                     'contactProperties2' => $property2Id,
                     'propertyDataType2' => '0',

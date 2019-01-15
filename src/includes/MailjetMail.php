@@ -103,7 +103,9 @@ class MailjetMail
         if(!get_option('mailjet_enabled')) {
             return false;
         }
-        add_settings_error('mailjet_messages', 'mailjet_message', 'ERROR - '. $wpError->get_error_message(), 'error');
+        if (function_exists('add_settings_error')) {
+            add_settings_error('mailjet_messages', 'mailjet_message', 'ERROR - '. $wpError->get_error_message(), 'error');
+        }
     }
 
 

@@ -37,11 +37,16 @@ use MailjetPlugin\Includes\Mailjeti18n;
             <!--Subscription email input(mandatory)-->
             <div class="form-group">
                 <input type="email" name="subscription_email" id="mailjet_widget_email" required="required" placeholder="* <?php echo $emailLabel ?>">
+                <input type="hidden" name="subscription_locale" id="mailjet_widget_locale" value="<?php echo $locale ?>">
             </div>
             <?php
 
             // Check for the additional properties from the admin advanced settings
             for ($i = 0; $i < 5; $i++) {
+
+                if(!isset($instance[$locale])) {
+                    continue;
+                }
 
                 // Property id - '0' there is no selected property
                 $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
