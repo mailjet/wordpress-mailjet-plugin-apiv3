@@ -273,12 +273,12 @@ class SubscriptionOptionsSettings
 
             $contactProperties = array();
             if (!empty($userMetadata['first_name'][0])) {
-                $contactProperties['first_name'] = $userMetadata['first_name'][0];
-                $userNames = $contactProperties['first_name'];
+                $contactProperties['firstname'] = $userMetadata['first_name'][0];
+                $userNames = $contactProperties['firstname'];
             }
             if (!empty($userMetadata['last_name'][0])) {
-                $contactProperties['last_name'] = $userMetadata['last_name'][0];
-                $userNames.= ' ' . $contactProperties['last_name'];
+                $contactProperties['lastname'] = $userMetadata['last_name'][0];
+                $userNames.= ' ' . $contactProperties['lastname'];
             }
             if (!empty($userRoles[0])) {
                 $contactProperties['wp_user_role'] = $userRoles[0];
