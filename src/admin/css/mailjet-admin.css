@@ -400,9 +400,9 @@
 .mailjet_row input[type="checkbox"]:checked:before {
     color: #FFF;
 }
-#wpbody-content {
+/*#wpbody-content {
     padding-right: 20px;
-}
+}*/
 .mainContainer {
     border-radius: 3px;
     background-color: #FFFFFF;
@@ -768,7 +768,7 @@
 .dashboard .rightCol .block {
     display: flex;
     flex-direction: column;
-    width: calc(50% - 16px);
+    width: calc(40% - 16px);
     margin: 0 0 16px 16px;
     text-align: center;
 }
