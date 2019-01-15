@@ -52,34 +52,35 @@ class IntegrationsSettings
         ?>
 
         <fieldset class="settingsSubscrFldset">
-            <legend class="screen-reader-text"><span><?php  _e('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
+            <fieldset style="border: 2px dashed #d9d9d9; padding: 10px; margin-bottom: 50px;">
+                <legend style="font-weight: bold; padding: 10px;"><?php  _e('WooCommerce integration', 'mailjet'); ?></legend>
 
-            <label class="checkboxLabel">
-                <input name="activate_mailjet_woo_integration" type="checkbox" id="activate_mailjet_woo_integration" value="1" <?php echo ($mailjetWooIntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>  autocomplete="off">
-                <span><?php _e('Enable WooCommerce integration', 'mailjet'); ?></span>
-            </label>
-
-            <div id="activate_mailjet_woo_form" class="<?=($mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
                 <label class="checkboxLabel">
-                    <input name="activate_mailjet_woo_sync" type="checkbox" id="activate_mailjet_woo_sync" value="1" <?php echo ($mailjetWooSyncActivated == 1 ? ' checked="checked"' : '') ?> <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?> autocomplete="off">
-                    <span><?php _e('Display "Subscribe to our newsletter" checkbox in the checkout page and add subscibers to this list', 'mailjet'); ?></span>
+                    <input name="activate_mailjet_woo_integration" type="checkbox" id="activate_mailjet_woo_integration" value="1" <?php echo ($mailjetWooIntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>  autocomplete="off">
+                    <span><?php _e('Enable WooCommerce integration', 'mailjet'); ?></span>
                 </label>
 
-                <div id="woo_contact_list" class="<?php echo ($mailjetWooSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_woo_div">
-                    <select class="mj-select" name="mailjet_woo_list" id="mailjet_woo_list" type="select" <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>>
-                        <?php
-                        foreach ($mailjetContactLists as $mailjetContactList) {
-                            if ($mailjetContactList["IsDeleted"] == true) {
-                                continue;
-                            }
-                            ?>
-                            <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetWooList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
+                <div id="activate_mailjet_woo_form" class="<?=($mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
+                    <label class="checkboxLabel">
+                        <input name="activate_mailjet_woo_sync" type="checkbox" id="activate_mailjet_woo_sync" value="1" <?php echo ($mailjetWooSyncActivated == 1 ? ' checked="checked"' : '') ?> <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?> autocomplete="off">
+                        <span><?php _e('Display "Subscribe to our newsletter" checkbox in the checkout page and add subscibers to this list', 'mailjet'); ?></span>
+                    </label>
+
+                    <div id="woo_contact_list" class="<?php echo ($mailjetWooSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_woo_div">
+                        <select class="mj-select" name="mailjet_woo_list" id="mailjet_woo_list" type="select" <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>>
                             <?php
-                        } ?>
-                    </select>
+                            foreach ($mailjetContactLists as $mailjetContactList) {
+                                if ($mailjetContactList["IsDeleted"] == true) {
+                                    continue;
+                                }
+                                ?>
+                                <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetWooList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
+                                <?php
+                            } ?>
+                        </select>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
+            </fieldset>
 
         <input name="settings_step" type="hidden" id="settings_step" value="integrations_step">
 
@@ -134,9 +135,10 @@ class IntegrationsSettings
 
             // Check if selected Contact list - only if the Sync checkbox is checked
             if (!empty(get_option('activate_mailjet_woo_sync')) && !intval(get_option('mailjet_woo_list')) > 0) {
-                    $executionError = true;
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet'), 'error');
+                $executionError = true;
+                add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet'), 'error');
             }
+            
 
             if (false === $executionError) {
                 // add settings saved message with the class of "updated"
@@ -204,21 +206,5 @@ class IntegrationsSettings
     }
 
 
-    /**
-     * Function to change the "Thank you" text for WooCommerce order processed page - to add message that user has received subscription confirmation email
-     *
-     * @param $str
-     * @param $order
-     * @return string
-     */
-    public function woo_change_order_received_text($str, $order)
-    {
-        if (!empty($order)) {
-            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
-                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b> ' . $order->get_billing_email() . ' </b>). To confirm your subscription you have to click on the provided link.</i></b>';
-            }
-        }
-        return $str;
-    }
 
 }
