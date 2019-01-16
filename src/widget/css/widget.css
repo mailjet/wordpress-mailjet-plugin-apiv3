@@ -269,9 +269,9 @@
 }
 
 .mandatoryEmailLanguageInput input {
-    width: 100%;
+    width: 100%!important;
     height: 32px;
-    width: 136px;
+    /*width: 136px;*/
 }
 
 .mandatoryButtonLanguage{
