@@ -215,7 +215,7 @@ class IntegrationsSettings
     {
         if (!empty($order)) {
             if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
-                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b> ' . $order->get_billing_email() . ' </b>). To confirm your subscription you have to click on the provided link.</i></b>';
+                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
             }
         }
         return $str;
