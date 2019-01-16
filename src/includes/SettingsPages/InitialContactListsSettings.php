@@ -24,9 +24,9 @@ class InitialContactListsSettings
     public function mailjet_section_initial_contact_lists_cb($args)
     {
         ?>
-        <h2 class="section_inner_title"><?php _e('Configure your lists.', 'mailjet'); ?> </h2>
+        <h2 class="section_inner_title"><?php _e('Configure your lists.', 'wp-mailjet'); ?> </h2>
         <p class="top_descrption_helper" id="<?php echo esc_attr($args['id']); ?>">
-            <?php _e('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress subscribers to one of them, or use them to collect new email addresses.', 'mailjet'); ?>
+            <?php _e('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress subscribers to one of them, or use them to collect new email addresses.', 'wp-mailjet'); ?>
         </p>
         <?php
     }
@@ -53,7 +53,7 @@ class InitialContactListsSettings
         ?>
 
         <div class="availableContactLists">
-            <h3 class="section_inner_title_slave"> <?php echo __('Your Mailjet contact lists', 'mailjet'); ?></h3>
+            <h3 class="section_inner_title_slave"> <?php echo __('Your Mailjet contact lists', 'wp-mailjet'); ?></h3>
             <div class="availableContactListsContainerParent" id="availableContactListsContainerParent">
                 <div class="availableContactListsContainer">
                     <?php
@@ -66,9 +66,9 @@ class InitialContactListsSettings
                         <div class="availableContactListsRow">
                             <span class="availableContactListsNameCell"><?php echo $mailjetContactList['Name'] ?></span>
                             <?php if($mailjetContactList['SubscriberCount'] == 1) {
-                                ?><b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contact', 'mailjet'); ?></b><?php
+                                ?><b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contact', 'wp-mailjet'); ?></b><?php
                             } else {
-                                ?><b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contacts', 'mailjet'); ?></b><?php
+                                ?><b class="availableContactListsCountCell"><?php echo $mailjetContactList['SubscriberCount'] ?> <?php _e('contacts', 'wp-mailjet'); ?></b><?php
                             } ?>
                         </div>
                         <?php
@@ -77,29 +77,29 @@ class InitialContactListsSettings
                 </div>
             </div>
             <a id="create_contact_list" class="mj-toggleBtn" data-target="create_contact_list_popup">
-                <img width="16" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'mailjet'); ?>" />
-        <?php echo __('Create a new list', 'mailjet'); ?>
+                <img width="16" id="createContactListImg" src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/create_contact_list.svg'; ?>" alt="<?php echo __('Create a new list', 'wp-mailjet'); ?>" />
+        <?php echo __('Create a new list', 'wp-mailjet'); ?>
             </a>
             <div class="mj-hide create_contact_list_popup" id="create_contact_list_popup">
                 <div class="create_contact_list_fields">
-                    <label class="mj-label" for="create_list_name"><b><?php _e('Name your list (max. 50 characters)', 'mailjet'); ?></b></label>
+                    <label class="mj-label" for="create_list_name"><b><?php _e('Name your list (max. 50 characters)', 'wp-mailjet'); ?></b></label>
                     <input type="text" size="30" name="create_list_name" id="create_list_name" />
                 </div>
                 <div class="create_contact_list_btns">
-                    <input type="submit" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn" value="<?php _e('Save', 'mailjet') ?>" >
-                    <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancel_create_list" value="<?= __('Cancel', 'mailjet') ?>">
+                    <input type="submit" name="create_contact_list_btn" class="MailjetSubmit mj-btn btnPrimary btnSmall nextBtn" id="create_contact_list_btn" value="<?php _e('Save', 'wp-mailjet') ?>" >
+                    <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancel_create_list" value="<?= __('Cancel', 'wp-mailjet') ?>">
                 </div>
             </div>
         </div>
 
         <fieldset class="initialContactListsFieldset">
-            <h2 class="section_inner_title"><?php _e('Synchronize your Wordpress users', 'mailjet'); ?></h2>
-            <p><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet'); ?></p>
-            <legend class="screen-reader-text"><span><?php echo __('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
+            <h2 class="section_inner_title"><?php _e('Synchronize your Wordpress users', 'wp-mailjet'); ?></h2>
+            <p><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'wp-mailjet'); ?></p>
+            <legend class="screen-reader-text"><span><?php echo __('Automatically add Wordpress subscribers to a specific list', 'wp-mailjet'); ?></span></legend>
             <div class="activate_mailjet_sync_field">
                 <label class="checkboxLabel" for="activate_mailjet_sync">
                 <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?=($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
-                    <span><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet'); ?></span>
+                    <span><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'wp-mailjet'); ?></span>
                 </label>
                 
                 <div id="activate_mailjet_sync_form" class="<?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
@@ -119,7 +119,7 @@ class InitialContactListsSettings
                         </select>
                         <label class="checkboxLabel" for="activate_mailjet_initial_sync">
                             <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                            <span><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet'), $wpUsersCount); ?></span>
+                            <span><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'wp-mailjet'), $wpUsersCount); ?></span>
                         </label>
                     </div>
                 </div>
@@ -149,7 +149,7 @@ class InitialContactListsSettings
         add_settings_field(
                 'mailjet_enable_sending', // as of WP 4.6 this value is used only internally
                 // use $args' label_for to populate the id inside the callback
-                __('Enable sending emails through Mailjet', 'mailjet'), array($this, 'mailjet_initial_contact_lists_cb'), 'mailjet_initial_contact_lists_page', 'mailjet_initial_contact_lists_settings', [
+                __('Enable sending emails through Mailjet', 'wp-mailjet'), array($this, 'mailjet_initial_contact_lists_cb'), 'mailjet_initial_contact_lists_page', 'mailjet_initial_contact_lists_settings', [
             'label_for' => 'mailjet_initial_contact_lists',
             'class' => 'mailjet_row',
             'mailjet_custom_data' => 'custom',
@@ -177,7 +177,7 @@ class InitialContactListsSettings
                 if (false === $syncResponse) {
                     $executionError = true;
                     update_option('contacts_list_ok', 0);
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'wp-mailjet'), 'error');
                 }
             }
 
@@ -187,23 +187,23 @@ class InitialContactListsSettings
                     $createListResponse = MailjetApi::createMailjetContactList(get_option('create_list_name'));
 
                     if ($createListResponse->success()) {
-                        add_settings_error('mailjet_messages', 'mailjet_message', __('Congratulations! You have just created a new contact list!', 'mailjet'), 'updated');
+                        add_settings_error('mailjet_messages', 'mailjet_message', __('Congratulations! You have just created a new contact list!', 'wp-mailjet'), 'updated');
                     } else {
                         $executionError = true;
                         update_option('contacts_list_ok', 0);
 
                         if (isset($createListResponse->getBody()['ErrorMessage']) && stristr($createListResponse->getBody()['ErrorMessage'], 'already exists')) {
-                            add_settings_error('mailjet_messages', 'mailjet_message', sprintf(__('A contact list with name <b>%s</b> already exists', 'mailjet'), get_option('create_list_name')), 'error');
+                            add_settings_error('mailjet_messages', 'mailjet_message', sprintf(__('A contact list with name <b>%s</b> already exists', 'wp-mailjet'), get_option('create_list_name')), 'error');
                         } else {
                             $executionError = true;
                             update_option('contacts_list_ok', 0);
 
-                            add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet'), 'error');
+                            add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'wp-mailjet'), 'error');
                         }
                     }
                 } else { // New list name empty
                     $executionError = true;
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Please enter a valid contact list name', 'mailjet'), 'error');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Please enter a valid contact list name', 'wp-mailjet'), 'error');
                 }
             } else {
                 $applyAndContinueBtnClicked = true;
@@ -213,7 +213,7 @@ class InitialContactListsSettings
                 update_option('contacts_list_ok', 1);
 
                 // add settings saved message with the class of "updated"
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'wp-mailjet'), 'updated');
 
                 if (!($fromPage == 'plugins') || (!empty(get_option('contacts_list_ok')) && '1' == get_option('contacts_list_ok'))) {
 
@@ -237,9 +237,9 @@ class InitialContactListsSettings
             <div class="mainContainer">
 
                 <div>
-                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet'); ?> </h1>
+                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'wp-mailjet'); ?> </h1>
                     <p class="page_top_subtitle">
-                        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet'); ?>
+                        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'wp-mailjet'); ?>
                     </p>
                 </div>
 
@@ -253,15 +253,15 @@ class InitialContactListsSettings
                     do_settings_sections('mailjet_initial_contact_lists_page');
                     // output save settings button
                     if (MailjetApi::isValidAPICredentials()) { ?>
-                        <button type="submit" id="initialContactListsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= __('Apply & Continue', 'mailjet'); ?></button>
+                        <button type="submit" id="initialContactListsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= __('Apply & Continue', 'wp-mailjet'); ?></button>
                     <?php } else {
                         update_option('settings_step', 'initial_step')
                         ?>
-                            <input name="nextBtn" class="mj-btn btnPrimary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'mailjet')?>">
+                            <input name="nextBtn" class="mj-btn btnPrimary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_settings_page'" value="<?=__('Back', 'wp-mailjet')?>">
                     <?php
                     } ?>
 
-                        <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?php (true !== $applyAndContinueBtnClicked) ? _e('Skip this step', 'mailjet') : _e('Next', 'mailjet'); ?>">
+                        <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="button" id="nextBtn" onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" value="<?php (true !== $applyAndContinueBtnClicked) ? _e('Skip this step', 'wp-mailjet') : _e('Next', 'wp-mailjet'); ?>">
 
                         <br />
                     </form>
@@ -271,11 +271,11 @@ class InitialContactListsSettings
 
             <div class="bottom_links">
                 <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet'); ?>" />
-                <?php echo __('Need help getting started?', 'mailjet'); ?>
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'wp-mailjet'); ?>" />
+                <?php echo __('Need help getting started?', 'wp-mailjet'); ?>
                 </div>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'wp-mailjet') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'wp-mailjet') . '</a>'; ?>
             </div>
         </div>
 
