@@ -44,9 +44,20 @@
     margin-bottom: 24px;    
     font-size: 14px;
 }
+
+#mailjet_apikey{
+    width: 100%!important;
+    max-width: none;
+}
+
+#mailjet_apisecret{
+    width: 100%!important;
+    max-width: none;
+}
+
 .mj-pluginPage input[type="text"] {
-    width: 100%;
-    /*max-width: 311px;*/
+    /*width: 100%;*/
+    max-width: 311px;
     height: 36px;
     margin-bottom: 16px;
     padding-left: 16px;
