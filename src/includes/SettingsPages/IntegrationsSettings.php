@@ -52,7 +52,7 @@ class IntegrationsSettings
         ?>
 
         <fieldset class="settingsSubscrFldset">
-                <legend style="font-weight: bold; padding: 10px;"><?php  _e('WooCommerce integration', 'mailjet'); ?></legend>
+                <legend style="font-weight: bold; padding: 10px 10px 10px 0;"><?php  _e('WooCommerce integration', 'mailjet'); ?></legend>
 
             <label class="checkboxLabel">
                 <input name="activate_mailjet_woo_integration" type="checkbox" id="activate_mailjet_woo_integration" value="1" <?php echo ($mailjetWooIntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>  autocomplete="off">

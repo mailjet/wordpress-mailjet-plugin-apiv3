@@ -46,7 +46,7 @@
 }
 .mj-pluginPage input[type="text"] {
     width: 100%;
-    max-width: 311px;
+    /*max-width: 311px;*/
     height: 36px;
     margin-bottom: 16px;
     padding-left: 16px;
@@ -735,6 +735,7 @@
 
 .allsetupGreenLinkDiv {
     margin-top: 24px;
+    padding-bottom: 20px;
     text-align: center;
 }
 #initialContactListsForm .initialContactListsFieldset p {
@@ -907,4 +908,12 @@
     top: 0;
     width: 100%;
     height: 100%;
+}
+
+#initialContactListsForm #initialContactListsSubmit{
+    margin-bottom: 20px;
+}
+
+.allsetup .allsetupGreenLinkDiv{
+    
 }

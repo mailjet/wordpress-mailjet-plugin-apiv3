@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-12-03 11:06+0200\n"
-"PO-Revision-Date: 2019-01-16 18:41+0200\n"
+"PO-Revision-Date: 2019-01-17 15:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_GB\n"
@@ -117,7 +117,7 @@ msgstr "Statistics"
 #: src/includes/MailjetMenu.php:80
 #: src/includes/SettingsPages/InitialContactListsSettings.php:27
 msgid "Configure your lists."
-msgstr "Configure your lists."
+msgstr "Configure your lists"
 
 #: src/includes/MailjetMenu.php:85 src/includes/SettingsPages/AllSetup.php:39
 msgid "You're all set up!"
@@ -926,7 +926,7 @@ msgstr "\"Thank you\" page"
 
 #: src/widget/views/admin.php:124
 msgid "You can add up to 5 contact properties to collect additional data"
-msgstr "You can add up to 5 contact properties to collect additional data"
+msgstr "You can add up to 5 contact properties to collect additional data:"
 
 #: src/widget/views/admin.php:152
 msgid "Property"
