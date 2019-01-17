@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2018-12-03 11:06+0200\n"
-"PO-Revision-Date: 2019-01-08 10:44+0200\n"
+"PO-Revision-Date: 2019-01-16 18:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_GB\n"
@@ -331,11 +331,11 @@ msgstr "Cancel"
 
 #: src/includes/SettingsPages/Dashboard.php:43
 msgid "Send newsletter"
-msgstr "Send newsletter"
+msgstr "Send newsletters"
 
 #: src/includes/SettingsPages/Dashboard.php:44
 msgid "Create and manage your newsletters. Vew your campaign statistics"
-msgstr "Create and manage your newsletters. View your campaign statistics"
+msgstr "Create and manage your newsletters. View your campaign statistics."
 
 #: src/includes/SettingsPages/Dashboard.php:45
 msgid "My campaigns"

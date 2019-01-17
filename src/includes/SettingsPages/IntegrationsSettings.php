@@ -25,7 +25,7 @@ class IntegrationsSettings
     {
 //        ?>
 <!--        <p id="--><?php //echo esc_attr( $args['id'] ); ?><!--">-->
-<!--            --><?php //echo __('Select which Wordpress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet' ); ?>
+<!--            --><?php //echo __('Select which Wordpress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'wp-mailjet' ); ?>
 <!--        </p>-->
 <!--        --><?php
     }
@@ -52,17 +52,17 @@ class IntegrationsSettings
         ?>
 
         <fieldset class="settingsSubscrFldset">
-            <legend class="screen-reader-text"><span><?php  _e('Automatically add Wordpress subscribers to a specific list', 'mailjet'); ?></span></legend>
+            <legend class="screen-reader-text"><span><?php  _e('Automatically add Wordpress subscribers to a specific list', 'wp-mailjet'); ?></span></legend>
 
             <label class="checkboxLabel">
                 <input name="activate_mailjet_woo_integration" type="checkbox" id="activate_mailjet_woo_integration" value="1" <?php echo ($mailjetWooIntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>  autocomplete="off">
-                <span><?php _e('Enable WooCommerce integration', 'mailjet'); ?></span>
+                <span><?php _e('Enable WooCommerce integration', 'wp-mailjet'); ?></span>
             </label>
 
             <div id="activate_mailjet_woo_form" class="<?=($mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
                 <label class="checkboxLabel">
                     <input name="activate_mailjet_woo_sync" type="checkbox" id="activate_mailjet_woo_sync" value="1" <?php echo ($mailjetWooSyncActivated == 1 ? ' checked="checked"' : '') ?> <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?> autocomplete="off">
-                    <span><?php _e('Display "Subscribe to our newsletter" checkbox in the checkout page and add subscibers to this list', 'mailjet'); ?></span>
+                    <span><?php _e('Display "Subscribe to our newsletter" checkbox in the checkout page and add subscibers to this list', 'wp-mailjet'); ?></span>
                 </label>
 
                 <div id="woo_contact_list" class="<?php echo ($mailjetWooSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_woo_div">
@@ -113,7 +113,7 @@ class IntegrationsSettings
         add_settings_field(
             'mailjet_integrations', // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
-            __( 'Integrations', 'mailjet' ),
+            __( 'Integrations', 'wp-mailjet'),
             array($this, 'mailjet_integrations_cb'),
             'mailjet_integrations_page',
             'mailjet_integrations_settings',
@@ -135,12 +135,12 @@ class IntegrationsSettings
             // Check if selected Contact list - only if the Sync checkbox is checked
             if (!empty(get_option('activate_mailjet_woo_sync')) && !intval(get_option('mailjet_woo_list')) > 0) {
                     $executionError = true;
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet'), 'error');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'wp-mailjet'), 'error');
             }
 
             if (false === $executionError) {
                 // add settings saved message with the class of "updated"
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet'), 'updated');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'wp-mailjet'), 'updated');
             }
         }
 
@@ -156,11 +156,11 @@ class IntegrationsSettings
                 <div class="backToDashboard">
                     <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                         <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
-                        <?php _e('Back to dashboard', 'mailjet') ?>
+                        <?php _e('Back to dashboard', 'wp-mailjet') ?>
                     </a>
                 </div>
 
-                <h1 class="page_top_title"><?php _e('Settings', 'mailjet') ?></h1>
+                <h1 class="page_top_title"><?php _e('Settings', 'wp-mailjet') ?></h1>
                 <div class="mjSettings">
                     <div class="left">
                         <?php
@@ -171,7 +171,7 @@ class IntegrationsSettings
                     <div class="right">
                         <div class="centered">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                            <h2 class="section_inner_title"><?php echo __('Integrations', 'mailjet'); ?></h2>
+                            <h2 class="section_inner_title"><?php echo __('Integrations', 'wp-mailjet'); ?></h2>
                             <form action="options.php" method="post">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
@@ -180,10 +180,10 @@ class IntegrationsSettings
                                 // (sections are registered for "mailjet", each field is registered to a specific section)
                                 do_settings_sections('mailjet_integrations_page');
                                 // output save settings button
-                                $saveButton = __('Save', 'mailjet');
+                                $saveButton = __('Save', 'wp-mailjet');
                                 ?>
                                 <button type="submit" id="integrationsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
-                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet')?>"> -->
+                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'wp-mailjet')?>"> -->
                             </form>
                         </div>
                     </div>
@@ -192,11 +192,11 @@ class IntegrationsSettings
 
             <div class="bottom_links">
                 <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet'); ?>" />
-                    <?php echo __('Need help?', 'mailjet' ); ?>
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'wp-mailjet'); ?>" />
+                    <?php echo __('Need help?', 'wp-mailjet' ); ?>
                 </div>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet') . '</a>'; ?>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet') . '</a>'; ?>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'wp-mailjet') . '</a>'; ?>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'wp-mailjet') . '</a>'; ?>
             </div>
         </div>
 
@@ -215,7 +215,7 @@ class IntegrationsSettings
     {
         if (!empty($order)) {
             if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
-                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b> ' . $order->get_billing_email() . ' </b>). To confirm your subscription you have to click on the provided link.</i></b>';
+                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
             }
         }
         return $str;
