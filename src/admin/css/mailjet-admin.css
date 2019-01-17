@@ -31,8 +31,8 @@
     box-shadow: none;
 }
 .mj-pluginPage a:visited {
-    text-decoration: underline;
-    color: #9B59B6;
+/*    text-decoration: underline;
+    color: #9B59B6;*/
 }
 .mj-pluginPage b {
     font-weight: 500;
@@ -149,6 +149,9 @@
     color: #555;
     background-color: #fff;
     outline: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .mj-select-wrapper:after {
     content: '';
@@ -162,6 +165,9 @@
     border-style: solid solid none solid;
     border-width: 5px 4px 0 4px;
     border-color: #555 transparent transparent transparent;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .mj-select-wrapper:hover:before {
     border-color: #555;
@@ -400,17 +406,17 @@
 .mailjet_row input[type="checkbox"]:checked:before {
     color: #FFF;
 }
-#wpbody-content {
+/*#wpbody-content {
     padding-right: 20px;
-}
+}*/
 .mainContainer {
     border-radius: 3px;
     background-color: #FFFFFF;
     box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
-    padding: 32px;
+    padding: 16px 0 0 32px;
 }
 .backToDashboard {
-    margin-bottom: 24px;
+    /*margin-bottom: 24px;*/
 }
 .backToDashboard a {
     display: inline-flex;
@@ -460,12 +466,13 @@
     margin-left:10px;
 }
 #initialSettingsHead {
-    height: 48px;
+    /*height: 48px;*/
     border-radius: 3px 3px 0 0;
     background-color: #23282D;
     margin-top:20px;
     left:0;
-    padding:10px;
+    /*padding:10px;*/
+    padding:4px;
     padding-top:13px;
 }
 #initialSettingsDescription {
@@ -512,7 +519,7 @@
 }
 .mjSettings .right {
     max-width: 600px;
-    padding: 0 32px;
+    padding: 16px 32px;
 }
 .mjSettings .mailjet_sync_options_div {
     margin-bottom: 24px;
@@ -613,7 +620,7 @@
     margin-right: 8px;
 }
 .bottom_links a:visited {
-    color: inherit;
+    /*color: inherit;*/
 }
 .bottom_links a:hover,
 .bottom_links a:focus {
@@ -624,7 +631,7 @@
     align-items: center;
     height: 40px;
     line-height: 24px;
-    padding: 8px;
+    /*padding: 8px;*/
     font-size: 16px;
     font-weight: 500;
     color: #555;
@@ -768,7 +775,7 @@
 .dashboard .rightCol .block {
     display: flex;
     flex-direction: column;
-    width: calc(50% - 16px);
+    width: calc(40% - 16px);
     margin: 0 0 16px 16px;
     text-align: center;
 }
@@ -852,7 +859,8 @@
 
 .mainContainer .page_top_title {
     line-height: 40px;
-    margin: 0 0 16px;
+    /*margin: 0 0 16px;*/
+    margin: 0 0 0;
     font-weight: 500;
     font-size: 32px;
 }
