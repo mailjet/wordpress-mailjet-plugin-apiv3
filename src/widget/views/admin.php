@@ -229,7 +229,7 @@ if($numberActiveLanguages == 1) {
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php echo $percent . '%' ?>">
                                                 <?php if($row==0) { ?>
-                                                    <label for="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>"><?php echo $language ?></label>
+                                                    <label for="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>"><?php _e($language, 'wp-mailjet') ?></label>
                                                 <?php } ?>
                                                 <input type="text" value="<?php echo ${$language . 'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" placeholder="<?php echo $propertyDataTypeN != 2 ? $defaultPlaceholder . $language : $hiddenPlaceholder . $language ?>" />
                                             </div>
