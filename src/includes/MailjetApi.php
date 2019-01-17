@@ -35,6 +35,7 @@ class MailjetApi
 
         $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
         $mjClient->addRequestOption(CURLOPT_USERAGENT, 'wordpress-' . MAILJET_VERSION);
+        $mjClient->addRequestOption('headers', ['User-Agent' => 'wordpress-' . MAILJET_VERSION]);
 
         // Add proxy options for guzzle requests - if the Wordpress site is configured to use Proxy
         if (defined('WP_PROXY_HOST') && defined('WP_PROXY_PORT') && defined('WP_PROXY_USERNAME') && defined('WP_PROXY_PASSWORD')) {
@@ -253,5 +254,41 @@ class MailjetApi
             return false;
         }
     }
+
+
+
+    /**
+     * Return TRUE if a contact already subscribed to the list and FALSE if it is not, or is added to the list but Unsubscribed
+     *
+     * @param $email
+     * @param $listId
+     * @return bool
+     */
+    public static function checkContactSubscribedToList($email, $listId)
+    {
+        $exists = false;
+        $existsAndSubscribed = false;
+
+        $mjApiClient = self::getApiClient();
+
+        $filters = [
+            'ContactEmail' => $email,
+            'ContactsList' => $listId,
+        ];
+
+        $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
+
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+            $exists = true;
+            if (isset($data[0]['IsUnsubscribed']) && false == $data[0]['IsUnsubscribed']) {
+                $existsAndSubscribed = true;
+            }
+        }
+
+        return $exists && $existsAndSubscribed;
+    }
+
+
 
 }

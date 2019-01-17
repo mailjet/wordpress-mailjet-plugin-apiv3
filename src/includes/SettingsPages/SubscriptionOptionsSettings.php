@@ -28,7 +28,7 @@ class SubscriptionOptionsSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php esc_html_e('Automatically add Wordpress subscribers to a specific list', 'wp-mailjet'); ?>
+            <?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet' ); ?>
         </p>
         <?php
     }
@@ -133,7 +133,7 @@ class SubscriptionOptionsSettings
         add_settings_field(
             'mailjet_subscription_options', // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
-            __( 'Subscription Options', 'wp-mailjet' ),
+            __( 'Subscription Options', 'mailjet' ),
             array($this, 'mailjet_subscription_options_cb'),
             'mailjet_subscription_options_page',
             'mailjet_subscription_options_settings',
@@ -214,7 +214,7 @@ class SubscriptionOptionsSettings
             <div class="bottom_links">
                 <div class="needHelpDiv">
                     <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'wp-mailjet'); ?>" />
-                    <?php echo __('Need help?', 'wp-mailjet' ); ?>
+                    <?php echo __('Need help?', 'mailjet' ); ?>
                 </div>
                 <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'wp-mailjet') . '</a>'; ?>
                 <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'wp-mailjet') . '</a>'; ?>
@@ -273,12 +273,12 @@ class SubscriptionOptionsSettings
 
             $contactProperties = array();
             if (!empty($userMetadata['first_name'][0])) {
-                $contactProperties['first_name'] = $userMetadata['first_name'][0];
-                $userNames = $contactProperties['first_name'];
+                $contactProperties['firstname'] = $userMetadata['first_name'][0];
+                $userNames = $contactProperties['firstname'];
             }
             if (!empty($userMetadata['last_name'][0])) {
-                $contactProperties['last_name'] = $userMetadata['last_name'][0];
-                $userNames.= ' ' . $contactProperties['last_name'];
+                $contactProperties['lastname'] = $userMetadata['last_name'][0];
+                $userNames.= ' ' . $contactProperties['lastname'];
             }
             if (!empty($userRoles[0])) {
                 $contactProperties['wp_user_role'] = $userRoles[0];
@@ -297,8 +297,6 @@ class SubscriptionOptionsSettings
 
     public static function syncSingleContactEmailToMailjetList($contactListId, $email, $action, $contactProperties = [])
     {
-        $contacts = array();
-
         if (empty($email)) {
             return false;
         }
@@ -309,9 +307,7 @@ class SubscriptionOptionsSettings
             $contact['Properties'] = $contactProperties;
         }
 
-        $contacts[] = $contact;
-
-        return MailjetApi::syncMailjetContacts($contactListId, $contacts, $action);
+        return MailjetApi::syncMailjetContact($contactListId, $contact, $action);
     }
 
 
@@ -365,205 +361,6 @@ class SubscriptionOptionsSettings
                 return true;
             }
         }
-    }
-
-
-
-    public function mailjet_show_extra_comment_fields($user)
-    {
-        $user = wp_get_current_user();
-        // Display the checkbox only for NOT-logged in users
-        if (!$user->exists() && get_option('mailjet_comment_authors_list')) {
-            ?>
-            <label class="mj-label" for="admin_bar_front">
-                <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
-                <?php _e('Subscribe to our mailing list', 'wp-mailjet') ?>
-            </label>
-            <?php
-        }
-    }
-
-
-
-    public function mailjet_show_extra_woo_fields($checkout)
-    {
-        $user = wp_get_current_user();
-        // Display the checkbox only for NOT-logged in users
-        if (!$user->exists() && get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')) {
-            if (!function_exists('woocommerce_form_field')) {
-                return;
-            }
-            woocommerce_form_field( 'mailjet_woo_subscribe_ok', array(
-                'type'          => 'checkbox',
-                'label'         => __('Subscribe to our newsletter', 'wp-mailjet'),
-                'required'  => false,
-            ), $checkout->get_value( 'mailjet_woo_subscribe_ok' ));
-        }
-    }
-
-
-    public function mailjet_subscribe_comment_author($id)
-    {
-        $comment = get_comment($id);
-        $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
-        $userId = filter_var($comment->user_id, FILTER_SANITIZE_NUMBER_INT);
-
-        // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
-        if (empty($authorEmail)) {
-            return;
-        }
-
-        if (!is_email($authorEmail)) {
-            _e('Invalid email', 'wp-mailjet');
-            die;
-        }
-
-        $subscribe = filter_var($_POST['mailjet_comment_authors_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-        $this->mailjet_subscribe_confirmation_from_comment_form($subscribe, $authorEmail);
-    }
-
-
-
-    public function mailjet_subscribe_woo($order, $data)
-    {
-        $wooUserEmail = filter_var($order->get_billing_email(), FILTER_SANITIZE_EMAIL);
-        $firstName = $order->get_billing_first_name();
-        $lastName = $order->get_billing_last_name();
-
-        if (!is_email($wooUserEmail)) {
-            _e('Invalid email', 'wp-mailjet');
-            die;
-        }
-
-        if( isset($_POST['_my_field_name']) && ! empty($_POST['_my_field_name']) )
-            $order->update_meta_data( '_my_field_name', sanitize_text_field( $_POST['_my_field_name'] ) );
-
-
-        $subscribe = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-        if ($subscribe) {
-            $order->update_meta_data( 'mailjet_woo_subscribe_ok', sanitize_text_field( $_POST['mailjet_woo_subscribe_ok'] ) );
-            $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
-        }
-    }
-
-
-
-    /**
-     *  Subscribe or unsubscribe a wordpress comment author in/from a Mailjet's contact list when the comment is saved
-     */
-    public function mailjet_subscribe_unsub_comment_author_to_list($subscribe, $user_email)
-    {
-        $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
-        // Add the user to a contact list
-        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_comment_authors_list'), $user_email, $action);
-    }
-
-
-
-
-    /**
-     *  Subscribe or unsubscribe a wordpress comment author in/from a Mailjet's contact list when the comment is saved
-     */
-    public function mailjet_subscribe_unsub_woo_to_list($subscribe, $user_email, $first_name, $last_name)
-    {
-        $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
-        $contactproperties = [];
-        if (!empty($first_name)) {
-            $contactproperties['firstname'] = $first_name;
-        }
-        if (!empty($last_name)) {
-            $contactproperties['lastname'] = $last_name;
-        }
-
-        // Add the user to a contact list
-        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_woo_list'), $user_email, $action, $contactproperties);
-    }
-
-
-
-    /**
-     * Email the collected widget data to the customer with a verification token
-     * @param void
-     * @return void
-     */
-    public function mailjet_subscribe_confirmation_from_comment_form($subscribe, $user_email)
-    {
-        $error = empty($user_email) ? 'Email field is empty' : false;
-        if (false !== $error) {
-            _e($error, 'wp-mailjet');
-            die;
-        }
-
-        // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
-        if (empty($user_email)) {
-            return;
-        }
-
-        if (!is_email($user_email)) {
-            _e('Invalid email', 'wp-mailjet');
-            die;
-        }
-        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
-        $message = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
-        $emailParams = array(
-            '__EMAIL_TITLE__' => __('Please confirm your subscription', 'wp-mailjet'),
-            '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'wp-mailjet'), $wpUrl),
-            '__WP_URL__' => $wpUrl,
-            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email),
-            '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'wp-mailjet'),
-            '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'wp-mailjet'),
-        );
-        foreach ($emailParams as $key => $value) {
-            $message = str_replace($key, $value, $message);
-        }
-
-        $email_subject = __('Subscription Confirmation', 'wp-mailjet');
-        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
-        wp_mail($_POST['email'], $email_subject, $message,
-            array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
-    }
-
-
-
-
-    /**
-     * Email the collected widget data to the customer with a verification token
-     * @param void
-     * @return void
-     */
-    public function mailjet_subscribe_confirmation_from_woo_form($subscribe, $user_email, $first_name, $last_name)
-    {
-        $error = empty($user_email) ? 'Email field is empty' : false;
-        if (false !== $error) {
-            _e($error, 'wp-mailjet');
-            die;
-        }
-
-        if (!is_email($user_email)) {
-            _e('Invalid email', 'wp-mailjet');
-            die;
-        }
-        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
-
-        $message = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
-        $emailParams = array(
-            '__EMAIL_TITLE__' => __('Please confirm your subscription', 'wp-mailjet'),
-            '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'wp-mailjet'), $wpUrl),
-            '__WP_URL__' => $wpUrl,
-            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&mj_sub_woo_token=' . sha1($subscribe . $user_email . $first_name . $last_name),
-            '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'wp-mailjet'),
-            '__FROM_NAME__' => get_option('blogname'),
-            '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'wp-mailjet'),
-        );
-        foreach ($emailParams as $key => $value) {
-            $message = str_replace($key, $value, $message);
-        }
-
-        $email_subject = __('Subscription Confirmation', 'wp-mailjet');
-        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
-        $res = wp_mail($user_email, $email_subject, $message,
-            array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
 
 

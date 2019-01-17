@@ -52,7 +52,7 @@ class IntegrationsSettings
         ?>
 
         <fieldset class="settingsSubscrFldset">
-            <legend class="screen-reader-text"><span><?php  _e('Automatically add Wordpress subscribers to a specific list', 'wp-mailjet'); ?></span></legend>
+                <legend style="font-weight: bold; padding: 10px;"><?php  _e('WooCommerce integration', 'mailjet'); ?></legend>
 
             <label class="checkboxLabel">
                 <input name="activate_mailjet_woo_integration" type="checkbox" id="activate_mailjet_woo_integration" value="1" <?php echo ($mailjetWooIntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>  autocomplete="off">
@@ -204,21 +204,5 @@ class IntegrationsSettings
     }
 
 
-    /**
-     * Function to change the "Thank you" text for WooCommerce order processed page - to add message that user has received subscription confirmation email
-     *
-     * @param $str
-     * @param $order
-     * @return string
-     */
-    public function woo_change_order_received_text($str, $order)
-    {
-        if (!empty($order)) {
-            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
-                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
-            }
-        }
-        return $str;
-    }
 
 }
