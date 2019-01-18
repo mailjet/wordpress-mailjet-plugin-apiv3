@@ -3,8 +3,8 @@
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
-Tested up to: 5.0.2
-Stable tag: 5.0.5
+Tested up to: 5.0.3
+Stable tag: 5.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,6 +180,11 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 == Changelog ==
+
+= 5.0.6 =
+* Allow logged in WooCommerce customers to subscribe to the newsletter during checkout.
+* Fixed css issues in the WP admin
+* Small bugfixes and improvements
 
 = 5.0.5 =
 * Fix subscription widget issues for multilanguage sites
