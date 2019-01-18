@@ -32,8 +32,8 @@
     box-shadow: none;
 }
 .mj-pluginPage a:visited {
-/*    text-decoration: underline;
-    color: #9B59B6;*/
+    /*    text-decoration: underline;
+        color: #9B59B6;*/
 }
 .mj-pluginPage b {
     font-weight: 500;
@@ -46,12 +46,12 @@
     font-size: 14px;
 }
 
-#mailjet_apikey{
+#initialSettingsForm #mailjet_apikey{
     width: 100%!important;
     max-width: none;
 }
 
-#mailjet_apisecret{
+#initialSettingsForm #mailjet_apisecret{
     width: 100%!important;
     max-width: none;
 }
@@ -700,7 +700,7 @@
     width: 200px;
 }
 .availableContactListsNameCell {
-     flex-grow: 1;
+    flex-grow: 1;
 }
 
 /* Create new Contact List popup */
@@ -756,8 +756,9 @@
 
 /* Dashboard */
 .dashboard .initialSettingsMainCtn {
-   display: flex;
-   margin-top: 24px;
+    display: flex;
+    margin-top: 24px;
+    padding: 20px;
 }
 .dashboard .block {
     position: relative;
@@ -861,7 +862,7 @@
 }
 
 .activate_mailjet_sync_field {
-     margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 .mailjet_sync_options_div {
     margin: 16px 0 0 18px;
@@ -927,5 +928,5 @@
 }
 
 .allsetup .allsetupGreenLinkDiv{
-    
+
 }
