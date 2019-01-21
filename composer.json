@@ -1,0 +1,65 @@
+{
+    "name": "mailjet/wp-mailjet-plugin",
+    "type": "wordpress-plugin",
+    "description": "Description",
+    "license": "GPL",
+    "keywords": ["wordpress", "plugin", "mailjet"],
+    "authors": [
+        {
+            "name": "Mailjet",
+            "email": "plugins@mailjet.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:mailjet/mailjet-apiv3-php.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:mailjet/Mailjet-iframe-v3.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:jbroadway/analog.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:raulferras/PHP-po-parser.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0",
+        "mailjet/mailjet-apiv3-php": "dev-master",
+        "mailjet/Mailjet-iframe-v3": "dev-master",
+        "sepia/po-parser": "dev-master",
+        "analog/analog": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "MailjetPlugin\\": "src/",
+            "MailjetPlugin\\Includes\\": "src/includes/",
+            "MailjetPlugin\\Includes\\SettingsPages\\": "src/includes/SettingsPages/",
+            "MailjetPlugin\\Admin\\": "src/admin/",
+            "MailjetPlugin\\Admin\\Partials\\": "src/admin/partials/",
+            "MailjetPlugin\\Front\\": "src/front/",
+            "MailjetPlugin\\Widget\\": "src/widget/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "clearComposerCache": [
+            "rm -rf ~/.composer/cache*"
+        ],
+        "post-install-cmd": [
+            "@clearComposerCache"
+        ],
+        "post-update-cmd": [
+            "@clearComposerCache"
+        ]
+    }
+}
