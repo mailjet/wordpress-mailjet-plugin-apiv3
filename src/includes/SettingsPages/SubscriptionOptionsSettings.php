@@ -370,8 +370,11 @@ class SubscriptionOptionsSettings
         $homeUrl = get_home_url();
         $language = Mailjeti18n::getCurrentUserLanguage();
         $thankYouPageId = !empty($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : false;
-        $post = get_post( $thankYouPageId );
-        $thankYouURI = !empty($post->guid) ? $post->guid : $homeUrl;
+        $thankYouURI = $homeUrl;
+        if ($thankYouPageId) {
+            $post = get_post($thankYouPageId);
+            $thankYouURI = !empty($post->guid) ? $post->guid : $homeUrl;
+        }
         $locale = Mailjeti18n::getLocale();
 
         $email_subject = !empty($instance[$locale]['email_subject']) ? apply_filters('widget_email_subject', $instance[$locale]['email_subject']) : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
