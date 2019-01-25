@@ -24,9 +24,16 @@ class ConnectAccountSettings
 
     public function mailjet_section_connect_account_cb($args)
     {
+        $profileName = get_option('mj_profile_name');
+        if(!$profileName) {
+            $profileName = MailjetApi::getProfileName();
+            add_option('mj_profile_name', $profileName);
+        }
         ?>
         <p id="<?php echo esc_attr($args['id']); ?>">
-        <?php _e('In your Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials bellow', 'wp-mailjet'); ?>
+            <?php _e('Currently connected to ', 'wp-mailjet');
+            echo "<span style='color:black;'>".$profileName."</span>";
+            ?>
         </p>
         <?php
     }
@@ -40,13 +47,13 @@ class ConnectAccountSettings
         // output the field
         ?>
         <fieldset class="settingsConnectFldset">
-            <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
+            <!--<input name="settings_step" type="hidden" id="settings_step" value="initial_step">-->
 
             <label class="mj-label" for="mailjet_apikey"><?php _e('<b>Api Key</b>', 'wp-mailjet'); ?></label>
-            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php echo $mailjetApikey ?>" class="regular-text code" required="required">
+            <span style="font-size: 14px;"><?php echo $mailjetApikey ?></span>
 
-            <label class="mj-label" for="mailjet_apisecret"><?php _e('<b>Secret Key</b>', 'wp-mailjet'); ?></label>
-            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php echo $mailjetApiSecret ?>" class="regular-text code" required="required">
+            <label class="mj-label" for="mailjet_apisecret" style="margin-top:16px!important;"><?php _e('<b>Secret Key</b>', 'wp-mailjet'); ?></label>
+            <span class=""><?php echo $mailjetApiSecret ?></span>
         </fieldset>
         <?php
     }
@@ -149,9 +156,8 @@ class ConnectAccountSettings
                         // (sections are registered for "mailjet", each field is registered to a specific section)
                         do_settings_sections('mailjet_connect_account_page');
                         // output save settings button
-                        $saveButton = __('Save', 'wp-mailjet');
                         ?>
-                        <button type="submit" id="connectAccountSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
+                                <a href="admin.php?page=mailjet_settings_page&from=plugins"><?php _e('Connect to a different account','wp-mailjet') ?></a>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href = location.href" value="<?= __('Cancel', 'wp-mailjet') ?>"> -->
                             </form>
                         </div>
