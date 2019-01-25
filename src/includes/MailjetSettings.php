@@ -242,7 +242,7 @@ class MailjetSettings
             return $links;
         }
 
-        $settings_link = '<a href="admin.php?page=mailjet_settings_page&from=plugins">' . __('Settings', 'wp-mailjet') . '</a>';
+        $settings_link = '<a href="admin.php?page=mailjet_settings_page&from=plugins">' . __('Setup account', 'wp-mailjet') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }
