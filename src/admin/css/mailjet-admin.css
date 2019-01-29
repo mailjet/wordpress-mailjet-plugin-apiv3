@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
-
+.mj-connect-link{
+    margin-top:64px!important;
+}
 /**
  * Global styles and WP/bootsrap override
  */

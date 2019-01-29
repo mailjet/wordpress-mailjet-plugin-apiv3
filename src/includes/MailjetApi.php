@@ -2,7 +2,7 @@
 
 namespace MailjetPlugin\Includes;
 
-use Exception;
+//use Exception;
 use Mailjet\Client;
 use Mailjet\Resources;
 
@@ -130,7 +130,7 @@ class MailjetApi
     public static function getPropertyIdByName($name)
     {
         if (!$name) {
-           return false; 
+            return false;
         }
         $contactProperties = self::getContactProperties();
         if ($contactProperties) {
@@ -255,8 +255,6 @@ class MailjetApi
         }
     }
 
-
-
     /**
      * Return TRUE if a contact already subscribed to the list and FALSE if it is not, or is added to the list but Unsubscribed
      *
@@ -289,6 +287,18 @@ class MailjetApi
         return $exists && $existsAndSubscribed;
     }
 
-
+    public static function getProfileName()
+    {
+        $mjApiClient = self::getApiClient();
+        $response = $mjApiClient->get(Resources::$Myprofile, []);
+        $name = "";
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+            if (isset($data[0]['Firstname']) && isset($data[0]['Lastname'])) {
+                $name = $data[0]['Firstname'] . ' ' . $data[0]['Lastname'];
+            }
+        }
+        return $name;
+    }
 
 }
