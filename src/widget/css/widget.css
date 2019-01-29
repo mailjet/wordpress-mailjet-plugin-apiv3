@@ -120,6 +120,15 @@
     font-weight: bold;
     cursor: pointer;
 }
+.disabled-advanced-link span{
+    text-decoration: underline;
+    cursor: pointer;
+    height: 14px;
+    font-family: Helvetica;
+    font-size: 12px!important;
+    color: #A7A7A7!important;
+    cursor: default!important;
+}
 
 #properties-info{
     font-weight: bold;

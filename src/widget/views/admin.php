@@ -98,6 +98,9 @@ if($numberActiveLanguages == 1) {
             </span>
         </p>
     </div>
+    <div class="some-space disabled-advanced-link hidden_default" title="<?php _e('Save changes first', 'wp-mailjet'); ?>">
+        <span><?php _e('Advanced form customization', 'wp-mailjet') ?></span>
+    </div>
 
     <div class="modal fade <?php echo $this->id ?>" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="margin: 35px 0 0 165px!important;">
         <div class="modal-dialog modal-lg modal-mailjet-lg" role="document">

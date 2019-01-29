@@ -193,9 +193,11 @@
         $(document).on('change', $("input[name='savewidget']"), function () {
             var isSaveButtonDisabled = $(this).is(":disabled");
             if (isSaveButtonDisabled) {
-                $("div.advanced-form-link-wrap").show();
+                $("#disabled-advanced-link").hide();
+                $(".disabled-advanced-link").addClass('hidden_default');
             } else {
                 $("div.advanced-form-link-wrap").hide();
+                $(".disabled-advanced-link").removeClass('hidden_default');
             }
 //           $("div#advanced-form-link-wrap").hide();
 //           $("span#advanced-form-link").hide();
