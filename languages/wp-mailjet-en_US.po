@@ -1149,13 +1149,13 @@ msgstr "Could not connect to mailjet api, please try again later!"
 #~ msgstr "2924"
 
 msgid "language_checkbox"
-msgstr "1"
+msgstr ""
 
 msgid "title"
-msgstr "en"
+msgstr ""
 
 msgid "list"
-msgstr "2029279"
+msgstr "0"
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1164,16 +1164,16 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "6744"
+msgstr ""
 
 msgid "propertyDataType0"
 msgstr "0"
 
 msgid "EnglishLabel0"
-msgstr "Age"
+msgstr ""
 
 msgid "FrenchLabel0"
-msgstr "Agefr"
+msgstr ""
 
 msgid "GermanLabel0"
 msgstr ""
@@ -1269,7 +1269,7 @@ msgid "ItalianLabel4"
 msgstr ""
 
 msgid "confirmation_email_message_input"
-msgstr "Subscription sent"
+msgstr ""
 
 msgid "subscription_confirmed_message_input"
 msgstr ""
@@ -1287,7 +1287,7 @@ msgid "generic_technical_error_message_input"
 msgstr ""
 
 msgid "email_subject"
-msgstr "en"
+msgstr ""
 
 msgid "email_content_title"
 msgstr ""
