@@ -153,7 +153,7 @@
 .floatLeft{
     float: left;
     /*margin-left: 1%;*/
-    margin-left: 12px;
+    margin-left: 16px;
 }
 
 .propertyLabel{
@@ -313,7 +313,7 @@
 }
 
 .tab-info{
-    margin: 25px 10px 30px;
+    margin: 25px 16px 30px;
 }
 
 .advanced-form-validation-messages select{
