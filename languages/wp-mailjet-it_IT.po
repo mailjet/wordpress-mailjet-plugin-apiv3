@@ -1126,16 +1126,16 @@ msgid "language_mandatory_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "6744"
+msgstr ""
 
 msgid "propertyDataType0"
 msgstr "0"
 
 msgid "EnglishLabel0"
-msgstr "Age"
+msgstr ""
 
 msgid "FrenchLabel0"
-msgstr "Agefr"
+msgstr ""
 
 msgid "GermanLabel0"
 msgstr ""
