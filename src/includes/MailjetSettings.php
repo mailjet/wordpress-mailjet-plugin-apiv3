@@ -86,12 +86,12 @@ class MailjetSettings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
         if (in_array($currentPage, array(
-                    'mailjet_allsetup_pagec',
+                    'mailjet_allsetup_page',
                     'mailjet_dashboard_page',
                     'mailjet_user_access_page',
                     'mailjet_integrations_page',
                     'mailjet_subscription_options_page',
-                    'mailjet_sending_settings_pag',
+                    'mailjet_sending_settings_page',
                     'mailjet_connect_account_page',
                     'mailjet_initial_contact_lists_page',
                     'mailjet_settings_page'
