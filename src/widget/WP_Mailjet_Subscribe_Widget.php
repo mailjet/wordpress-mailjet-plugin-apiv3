@@ -412,10 +412,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $languages = Mailjeti18n::getSupportedLocales();
         $admin_locale = Mailjeti18n::getLocale();
 
-//        echo "<pre>";
-//        print_r($admin_locale);
-//        echo "<hr></pre>";exit;
-
         foreach ($languages as $language => $locale) {
             // Do not save if language is active but there is no contact list chosen for it
             if (isset($new_instance[$locale]['language_checkbox']) && $new_instance[$locale]['list'] == "0") {
@@ -469,9 +465,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
         $this->instance = $instance;
-//        echo "<pre>";
-//        print_r($instance);
-//        echo "<hr></pre>";exit;
+
         return $instance;
     }
 
