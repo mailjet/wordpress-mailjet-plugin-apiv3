@@ -160,7 +160,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                                 }
                                 break;
                             case "bool":
-                                $booleans = array('true', 'false', '1', '0','yes', 'no', 'ok');
+//                                $booleans = array('true', 'false', '1', '0','yes', 'no', 'ok');
+                                $booleans = array('on', '', 1, true, false, 0);
                                 if(!in_array($propertyName, $booleans)) {
                                     return $incorectTypeValue;
                                 }
@@ -180,7 +181,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
-     * Validete the confirmation link
+     * Validate the confirmation link
      * Subscribe to mailjet list
      * @param type $subscriptionOptionsSettings
      */
@@ -250,7 +251,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                                 $dataProperties[$property['Name']] = (float)$properties[$property['ID']];
                                 break;
                             case "bool":
-                                $positiveBooleans = array('true', '1', 'yes', 'ok');
+                                $positiveBooleans = array('true', '1', 'on', 1, true);
                                 if(in_array($properties[$property['ID']], $positiveBooleans)) {
                                     $dataProperties[$property['Name']] = true;
                                 }else{
@@ -384,7 +385,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 break;
             case 'float':
             case 'bool':
-                $inputType = 'text';
+                $inputType = 'bool';
                 break;
             default:
                 $inputType = 'text';
@@ -411,10 +412,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         
         $languages = Mailjeti18n::getSupportedLocales();
         $admin_locale = Mailjeti18n::getLocale();
-
-//        echo "<pre>";
-//        print_r($admin_locale);
-//        echo "<hr></pre>";exit;
 
         foreach ($languages as $language => $locale) {
             // Do not save if language is active but there is no contact list chosen for it
@@ -469,9 +466,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
         $this->instance = $instance;
-//        echo "<pre>";
-//        print_r($instance);
-//        echo "<hr></pre>";exit;
+
         return $instance;
     }
 
