@@ -326,6 +326,7 @@
 
 .modal-header{
     border-bottom: none!important;
+    background-color: #f3f3f3;
 }
 
 .redInput{
@@ -387,6 +388,10 @@
 
 #advanced-form-navs a{
     text-decoration: none!important;
+}
+#advanced-form-navs {
+    margin-top: 0;
+    background-color: #f3f3f3;
 }
 
 #exampleModalLabel{
