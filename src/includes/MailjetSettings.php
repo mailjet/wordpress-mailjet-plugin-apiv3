@@ -205,7 +205,7 @@ class MailjetSettings
         $mailjet_comment_authors_list = get_option('mailjet_comment_authors_list');
         if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list)) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            $mj_sub_comment_author_token = $_GET['mj_sub_comment_author_token'];
+            $mj_sub_comment_author_token = isset($_GET['mj_sub_comment_author_token']) ? $_GET['mj_sub_comment_author_token'] : null;
             if (!empty($mj_sub_comment_author_token) &&
                 $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
                 $commentAuthorsSettings = new CommentAuthorsSettings();
