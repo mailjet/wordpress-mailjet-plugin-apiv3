@@ -152,7 +152,9 @@ class SubscriptionOptionsSettings
         if (isset($_GET['settings-updated'])) {
             $executionError = false;
             // Initial sync WP users to Mailjet
-            if (!empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
+            $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
+            $mailjet_sync_list = get_option('mailjet_sync_list');
+            if (!empty($activate_mailjet_initial_sync) && intval($mailjet_sync_list) > 0) {
                 $syncResponse = self::syncAllWpUsers();
                 if (false === $syncResponse) {
                     $executionError = true;
@@ -227,7 +229,8 @@ class SubscriptionOptionsSettings
 
     public static function syncAllWpUsers()
     {
-        if (empty(get_option('mailjet_sync_list'))) {
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if (empty($mailjet_sync_list)) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please select a contact list.', 'wp-mailjet'), 'error');
             return false;
         }
@@ -319,7 +322,9 @@ class SubscriptionOptionsSettings
     public function mailjet_show_extra_profile_fields($user)
     {
         // If contact list is not selected, then do not show the extra fields
-        if (!empty(get_option('activate_mailjet_sync')) && !empty(get_option('mailjet_sync_list'))) {
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             // Update the extra fields
             if (is_object($user) && intval($user->ID) > 0) {
                 $this->mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
@@ -351,7 +356,8 @@ class SubscriptionOptionsSettings
      */
     public function mailjet_subscribe_unsub_user_to_list($subscribe, $user_id)
     {
-        if (!empty(get_option('mailjet_sync_list'))) {
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if (!empty($mailjet_sync_list)) {
             $user = get_userdata($user_id);
             $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
             // Add the user to a contact list

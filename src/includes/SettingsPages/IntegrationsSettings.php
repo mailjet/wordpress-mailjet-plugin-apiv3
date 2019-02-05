@@ -133,7 +133,9 @@ class IntegrationsSettings
             $executionError = false;
 
             // Check if selected Contact list - only if the Sync checkbox is checked
-            if (!empty(get_option('activate_mailjet_woo_sync')) && !intval(get_option('mailjet_woo_list')) > 0) {
+            $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
+            $mailjet_woo_list = get_option('mailjet_woo_list');
+            if (!empty($activate_mailjet_woo_sync) && !intval($mailjet_woo_list) > 0) {
                     $executionError = true;
                     add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'wp-mailjet'), 'error');
             }
