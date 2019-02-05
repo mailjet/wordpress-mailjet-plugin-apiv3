@@ -34,7 +34,7 @@ class Mailjeti18n
     public function load_plugin_textdomain()
     {
         load_plugin_textdomain(
-                'wp-mailjet', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/'
+                'mailjet-for-wordpress', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/'
         );
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
     }
@@ -53,7 +53,7 @@ class Mailjeti18n
             return false;
         }
 
-        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/wp-mailjet-' . $locale . '.po';
+        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-for-wordpress-' . $locale . '.po';
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
 
         // Parse a po file
@@ -81,7 +81,7 @@ class Mailjeti18n
 
     public static function getTranslationsFromFile($locale, $msgId)
     {
-        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/wp-mailjet-' . $locale . '.po';
+        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-for-wordpress-' . $locale . '.po';
         if (!file_exists($filePo)) {
             return $msgId;
         }

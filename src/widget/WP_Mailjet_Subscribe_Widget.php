@@ -475,22 +475,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     private function registerCustomLanguageTranslations()
     {
-        __('English', 'wp-mailjet');
-        __('French', 'wp-mailjet');
-        __('German', 'wp-mailjet');
-        __('Spanish', 'wp-mailjet');
-        __('Italian', 'wp-mailjet');
-        __('your@email.com', 'wp-mailjet');
-        __('Subscribe', 'wp-mailjet');
-        __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'wp-mailjet');
-        __('Your subscription was successfully confirmed.', 'wp-mailjet');
-        __('Please provide an email address', 'wp-mailjet');
-        __('Please confirm your subscription', 'wp-mailjet');
-        __('This email address has already been subscribed.', 'wp-mailjet');
-        __('The value you entered is not in the correct format.', 'wp-mailjet');
-        __('A technical issue has prevented your subscription. Please try again later.', 'wp-mailjet');
-        __('Yes, subscribe me to this list', 'wp-mailjet');
-        __("If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message", 'wp-mailjet');
+        __('English', 'mailjet-for-wordpress');
+        __('French', 'mailjet-for-wordpress');
+        __('German', 'mailjet-for-wordpress');
+        __('Spanish', 'mailjet-for-wordpress');
+        __('Italian', 'mailjet-for-wordpress');
+        __('your@email.com', 'mailjet-for-wordpress');
+        __('Subscribe', 'mailjet-for-wordpress');
+        __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'mailjet-for-wordpress');
+        __('Your subscription was successfully confirmed.', 'mailjet-for-wordpress');
+        __('Please provide an email address', 'mailjet-for-wordpress');
+        __('Please confirm your subscription', 'mailjet-for-wordpress');
+        __('This email address has already been subscribed.', 'mailjet-for-wordpress');
+        __('The value you entered is not in the correct format.', 'mailjet-for-wordpress');
+        __('A technical issue has prevented your subscription. Please try again later.', 'mailjet-for-wordpress');
+        __('Yes, subscribe me to this list', 'mailjet-for-wordpress');
+        __("If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message", 'mailjet-for-wordpress');
     }
 
     /**
@@ -903,7 +903,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget_textdomain()
     {
-        load_plugin_textdomain('wp-mailjet', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
+        load_plugin_textdomain('mailjet-for-wordpress', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ] - ' . dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
     }
 

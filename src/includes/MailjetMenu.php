@@ -47,7 +47,7 @@ class MailjetMenu
         ) {
 
             add_menu_page(
-                __('Connect your Mailjet account to get started', 'wp-mailjet'),
+                __('Connect your Mailjet account to get started', 'mailjet-for-wordpress'),
                 'Mailjet',
                 'manage_options',
                 'mailjet_settings_page',
@@ -58,60 +58,60 @@ class MailjetMenu
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet settings menu added ]');
 
             if (function_exists('add_submenu_page')) {
-                add_submenu_page('mailjet_settings_page', __('Connect your Mailjet account to get started', 'wp-mailjet'),
-                    __('Settings', 'wp-mailjet'), 'read', 'mailjet_settings_page', array($this, 'show_settings_page'));
+                add_submenu_page('mailjet_settings_page', __('Connect your Mailjet account to get started', 'mailjet-for-wordpress'),
+                    __('Settings', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_page', array($this, 'show_settings_page'));
 
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial mailjet API settings sub-menu added ]');
 
-                add_submenu_page(null, __('Manage your Mailjet lists', 'wp-mailjet'),
-                    __('Lists', 'wp-mailjet'), 'read', 'mailjet_settings_contacts_menu',
+                add_submenu_page(null, __('Manage your Mailjet lists', 'mailjet-for-wordpress'),
+                    __('Lists', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_contacts_menu',
                     array($this, 'show_contacts_page'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet lists\' sub-menu added ]');
-                add_submenu_page(null, __('Manage your Mailjet campaigns', 'wp-mailjet'),
-                    __('Campaigns', 'wp-mailjet'), 'read', 'mailjet_settings_campaigns_menu',
+                add_submenu_page(null, __('Manage your Mailjet campaigns', 'mailjet-for-wordpress'),
+                    __('Campaigns', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_campaigns_menu',
                     array($this, 'show_campaigns_page'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Manage your Mailjet campaigns\' sub-menu added ]');
-                add_submenu_page(null, __('View your Mailjet statistics', 'wp-mailjet'),
-                    __('Statistics', 'wp-mailjet'), 'read', 'mailjet_settings_stats_menu',
+                add_submenu_page(null, __('View your Mailjet statistics', 'mailjet-for-wordpress'),
+                    __('Statistics', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_stats_menu',
                     array($this, 'show_stats_page'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet statistics\' sub-menu added ]');
 
                 // Initial configuration pages
-                add_submenu_page(null, __('Configure your lists.', 'wp-mailjet'), null, 'read', 'mailjet_initial_contact_lists_page',
+                add_submenu_page(null, __('Configure your lists.', 'mailjet-for-wordpress'), null, 'read', 'mailjet_initial_contact_lists_page',
                     array(new InitialContactListsSettings(), 'mailjet_initial_contact_lists_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial contact lists configuration sub-menu added ]');
 
                 // All Setup page
-                add_submenu_page(null, __('You\'re all set up!', 'wp-mailjet'), null, 'read', 'mailjet_allsetup_page',
+                add_submenu_page(null, __('You\'re all set up!', 'mailjet-for-wordpress'), null, 'read', 'mailjet_allsetup_page',
                     array(new AllSetup(), 'mailjet_allsetup_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet All Setup sub-menu added ]');
 
 
                 // Dashboard page
-                add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'wp-mailjet'), null, 'read', 'mailjet_dashboard_page',
+                add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'), null, 'read', 'mailjet_dashboard_page',
                     array(new Dashboard(), 'mailjet_dashboard_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Dashboard sub-menu added ]');
 
 
                 // Settings pages
-                add_submenu_page(null, __('Connect your Mailjet account', 'wp-mailjet'), null, 'read', 'mailjet_connect_account_page',
+                add_submenu_page(null, __('Connect your Mailjet account', 'mailjet-for-wordpress'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
-                add_submenu_page(null, __('Sending settings', 'wp-mailjet'), null, 'read', 'mailjet_sending_settings_page',
+                add_submenu_page(null, __('Sending settings', 'mailjet-for-wordpress'), null, 'read', 'mailjet_sending_settings_page',
                     array(new EnableSendingSettings(), 'mailjet_sending_settings_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
-                add_submenu_page(null, __('Subscription options', 'wp-mailjet'), null, 'read', 'mailjet_subscription_options_page',
+                add_submenu_page(null, __('Subscription options', 'mailjet-for-wordpress'), null, 'read', 'mailjet_subscription_options_page',
                     array(new SubscriptionOptionsSettings(), 'mailjet_subscription_options_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
-                add_submenu_page(null, __('User access', 'wp-mailjet'), null, 'read', 'mailjet_user_access_page',
+                add_submenu_page(null, __('User access', 'mailjet-for-wordpress'), null, 'read', 'mailjet_user_access_page',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'User access\' sub-menu added ]');
-                add_submenu_page(null, __('Integrations', 'wp-mailjet'), null, 'read', 'mailjet_integrations_page',
+                add_submenu_page(null, __('Integrations', 'mailjet-for-wordpress'), null, 'read', 'mailjet_integrations_page',
                     array(new IntegrationsSettings(), 'mailjet_integrations_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Integrations\' sub-menu added ]');
 
                 // Add old initial page to fix settings link after update
-                add_submenu_page(null, __('Temporary page', 'wp-mailjet'), null, 'read', 'wp_mailjet_options_top_menu', array($this, 'wp_mailjet_options_top'));
+                add_submenu_page(null, __('Temporary page', 'mailjet-for-wordpress'), null, 'read', 'wp_mailjet_options_top_menu', array($this, 'wp_mailjet_options_top'));
 
             }
         } else {
@@ -128,9 +128,9 @@ class MailjetMenu
     public function show_settings_page()
     {
 //        echo '<div class="wrap"><div class="icon32"><img src="' . plugin_dir_url(dirname(__FILE__)) . '/admin/images/mj_logo_med.png" /></div><h2>';
-//        echo __('Welcome to the Mailjet plugin for Wordpress', 'wp-mailjet');
+//        echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress');
 //        echo '</h2><div style="width:70%;float:left;">';
-//        echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'wp-mailjet');
+//        echo __('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet-for-wordpress');
 //        echo '</div></div>';
     }
 
@@ -197,7 +197,7 @@ class MailjetMenu
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'wp-mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
@@ -225,7 +225,7 @@ class MailjetMenu
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'wp-mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
@@ -252,7 +252,7 @@ class MailjetMenu
             echo '</div>';
         } catch (\MailjetIframe\MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'wp-mailjet'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));

@@ -189,7 +189,7 @@ class MailjetSettings
      */
     public function apiCredentialsInvalid()
     {
-        add_settings_error('mailjet_messages', 'mailjet_message', __('Your Mailjet API credentials are invalid or not yet configured. Please check and configure them to proceed further.', 'wp-mailjet'), 'error');
+        add_settings_error('mailjet_messages', 'mailjet_message', __('Your Mailjet API credentials are invalid or not yet configured. Please check and configure them to proceed further.', 'mailjet-for-wordpress'), 'error');
     }
 
 
@@ -259,7 +259,7 @@ class MailjetSettings
             return $links;
         }
 
-        $settings_link = '<a href="admin.php?page=mailjet_settings_page&from=plugins">' . __('Setup account', 'wp-mailjet') . '</a>';
+        $settings_link = '<a href="admin.php?page=mailjet_settings_page&from=plugins">' . __('Setup account', 'mailjet-for-wordpress') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }
@@ -274,9 +274,9 @@ class MailjetSettings
             $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . '..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'thankyou.php');
             // Default page is selected
             include($tankyouPageTemplate);
-//            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully subscribed to a Mailjet contact list', 'wp-mailjet') . '</div>';
+//            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully subscribed to a Mailjet contact list', 'mailjet-for-wordpress') . '</div>';
         } else {
-            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully unsubscribed from a Mailjet contact list', 'wp-mailjet') . '</div>';
+            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully unsubscribed from a Mailjet contact list', 'mailjet-for-wordpress') . '</div>';
         }
         die; //We die here to not continue loading rest of the WP home page
     }
@@ -284,7 +284,7 @@ class MailjetSettings
 
     public function subsctiptionConfirmationAdminNoticeFailed()
     {
-        echo '<div class="notice notice-error is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #dc3232; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('Something went wrong with adding a contact to Mailjet contact list', 'wp-mailjet') . '</div>';
+        echo '<div class="notice notice-error is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #dc3232; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('Something went wrong with adding a contact to Mailjet contact list', 'mailjet-for-wordpress') . '</div>';
         die; //We die here to not continue loading rest of the WP home page
     }
 
