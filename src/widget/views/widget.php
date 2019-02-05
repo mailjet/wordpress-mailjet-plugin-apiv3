@@ -115,9 +115,19 @@ use MailjetPlugin\Includes\Mailjeti18n;
                         break;
                 }
                 $class = '';
-                if ($inputType == 'date') {
+                if ('date' === $inputType) {
                     $class = 'mjDate';
                 }
+
+                // Boolean type is checkbox
+                if ('bool' === $inputType) {
+                    ?>
+                    <div class="form-group">
+                        <input type="checkbox" <?php echo $required ?> name="properties[<?php echo $contactPropertyId ?>]" id="mailjet_property_<?php echo $i ?>" <?php echo $value ?> />
+                        <label class="mj_checkbox_label" for="mailjet_property_<?php echo $i ?>"><?php echo $requiredStar.$placeholder ?></label>
+                    </div>
+                    <?php
+                } else {
                 ?>
                 <div class="form-group">
                     <input <?php echo $required ?> type="text" class="mj_form_property <?php echo $class ?>" name="properties[<?php echo $contactPropertyId ?>]" <?php echo $value ?> placeholder="<?php
@@ -126,6 +136,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
                     ?>" style="display: <?php echo $display ?>">
                 </div>
                 <?php
+                }
             }
             ?>
             <input type="submit" value="<?php echo $buttonLabel ?>" onclick="mjSubmitWidgetForm(event)">
