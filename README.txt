@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.3.0
 Tested up to: 5.0.3
-Stable tag: 5.0.7
+Stable tag: 5.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,6 +180,15 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 == Changelog ==
+
+= 5.0.8 =
+* Improve advanced options popup style
+* Boolean type property is now checkbox
+* Check requirements on activation
+* Simplify onboarding UX
+* Improve settings
+* Advanced customisation link is always visible
+* Added link to "Setup account" inside the Plugins section
 
 = 5.0.7 =
 * Fix 'thank you' page url when moving the blog across domains
