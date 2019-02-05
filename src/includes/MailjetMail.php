@@ -123,7 +123,8 @@ class MailjetMail
     public static function sendTestEmail()
     {
         $testSent = false;
-        if (empty(get_option('mailjet_test_address'))) {
+        $mailjetTestAddress = get_option('mailjet_test_address');
+        if (empty($mailjetTestAddress)) {
             //MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Missing email address to send test email to ]');
             return;
         }

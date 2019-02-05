@@ -153,7 +153,10 @@ class InitialContactListsSettings
             $applyAndContinueBtnClicked = false;
 
             // Initial sync WP users to Mailjet - when the 'create_contact_list_btn' button is not the one that submits the form
-            if (empty(get_option('create_contact_list_btn')) && !empty(get_option('activate_mailjet_initial_sync')) && intval(get_option('mailjet_sync_list')) > 0) {
+            $create_contact_list_btn = get_option('create_contact_list_btn');
+            $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
+            $mailjet_sync_list = get_option('mailjet_sync_list');
+            if (empty($create_contact_list_btn) && !empty($activate_mailjet_initial_sync) && intval($mailjet_sync_list) > 0) {
                 $syncResponse = SubscriptionOptionsSettings::syncAllWpUsers();
                 if (false === $syncResponse) {
                     $executionError = true;
@@ -163,8 +166,9 @@ class InitialContactListsSettings
             }
 
             // Create new Contact List
-            if (!empty(get_option('create_contact_list_btn'))) {
-                if (!empty(get_option('create_list_name'))) {
+            $create_list_name = get_option('create_list_name');
+            if (!empty($create_contact_list_btn)) {
+                if (!empty($create_list_name)) {
                     $createListResponse = MailjetApi::createMailjetContactList(get_option('create_list_name'));
 
                     if ($createListResponse->success()) {
@@ -173,8 +177,9 @@ class InitialContactListsSettings
                         $executionError = true;
                         update_option('contacts_list_ok', 0);
 
-                        if (isset($createListResponse->getBody()['ErrorMessage']) && stristr($createListResponse->getBody()['ErrorMessage'], 'already exists')) {
-                            add_settings_error('mailjet_messages', 'mailjet_message', sprintf(__('A contact list with name <b>%s</b> already exists', 'wp-mailjet'), get_option('create_list_name')), 'error');
+                        $createListResponseBody = $createListResponse->getBody();
+                        if (isset($createListResponseBody['ErrorMessage']) && stristr($createListResponseBody['ErrorMessage'], 'already exists')) {
+                            add_settings_error('mailjet_messages', 'mailjet_message', sprintf(__('A contact list with name <b>%s</b> already exists', 'wp-mailjet'), $create_list_name), 'error');
                         } else {
                             $executionError = true;
                             update_option('contacts_list_ok', 0);
@@ -195,17 +200,18 @@ class InitialContactListsSettings
 
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'wp-mailjet'), 'updated');
-
-                if (!($fromPage == 'plugins') || (!empty(get_option('contacts_list_ok')) && '1' == get_option('contacts_list_ok'))) {
+                $contacts_list_ok = get_option('contacts_list_ok');
+                if (!($fromPage == 'plugins') || (!empty($contacts_list_ok) && '1' == $contacts_list_ok)) {
 
                     // Redirect if the create contact button is not set
-                    if (empty(get_option('create_contact_list_btn'))) {
+                    if (empty($create_contact_list_btn)) {
                         MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
                     }
                 }
             }
         }
-        if (!($fromPage == 'plugins') && (!empty(get_option('contacts_list_ok')) && '1' == get_option('contacts_list_ok'))) {
+        $contacts_list_ok = get_option('contacts_list_ok');
+        if (!($fromPage == 'plugins') && (!empty($contacts_list_ok) && '1' == $contacts_list_ok)) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
         }
 

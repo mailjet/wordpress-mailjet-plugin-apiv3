@@ -39,6 +39,7 @@ class EnableSendingSettings
         $mailjetFromEmail = get_option('mailjet_from_email');
         $mailjetPort = get_option('mailjet_port');
         $mailjetSsl = get_option('mailjet_ssl');
+        $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
 
         $mailjetSenders = MailjetApi::getMailjetSenders();
         $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : array();
@@ -64,8 +65,8 @@ class EnableSendingSettings
                             if ($mailjetSender['Status'] != 'Active') {
                                 continue;
                             }
-                            if (!empty(get_option('mailjet_from_email_extra'))) {
-                                if (stristr($mailjetSender['Email'],'*') && stristr(get_option('mailjet_from_email'), str_ireplace('*', '', $mailjetSender['Email']))) {
+                            if (!empty($mailjet_from_email_extra)) {
+                                if (stristr($mailjetSender['Email'],'*') && stristr($mailjetFromEmail, str_ireplace('*', '', $mailjetSender['Email']))) {
                                     $mailjetFromEmail = $mailjetSender['Email'];
                                 }
                             }
@@ -76,8 +77,8 @@ class EnableSendingSettings
                     </div>
                 </div>
                 <?php
-                    if (!empty(get_option('mailjet_from_email_extra'))) { ?>
-                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?=get_option('mailjet_from_email_extra') ?>">
+                    if (!empty($mailjet_from_email_extra)) { ?>
+                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?php _e($mailjet_from_email_extra) ?>">
                 <?php } ?>
                 <div class="smtpFld">
                     <label class="mj-label" for="mailjet_port"><b><?php _e('Port to use for SMTP communication', 'wp-mailjet'); ?></b></label>
@@ -170,8 +171,9 @@ class EnableSendingSettings
             }
 
             // If whitelisted domain is selected then we add the extra email name to that domain
-            if (!empty(get_option('mailjet_from_email_extra'))) {
-                update_option('mailjet_from_email', str_replace('*', '',get_option('mailjet_from_email_extra').get_option('mailjet_from_email')));
+            $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
+            if (!empty($mailjet_from_email_extra)) {
+                update_option('mailjet_from_email', str_replace('*', '', $mailjet_from_email_extra.get_option('mailjet_from_email')));
             }
 
             // Update From Email and Name
@@ -183,11 +185,13 @@ class EnableSendingSettings
                 $executionError = true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings. Check if a firewall is blocking connections to the Mailjet ports.', 'wp-mailjet'), 'error');
             }
-
-            if (!empty(get_option('send_test_email_btn')) && empty(get_option('mailjet_test_address'))) {
+            
+            $send_test_email_btn = get_option('send_test_email_btn');
+            $mailjet_test_address = get_option('mailjet_test_address');
+            if (!empty($send_test_email_btn) && empty($mailjet_test_address)) {
                 $executionError = true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please provide a valid email address', 'wp-mailjet'), 'error');
-            } else if (!empty(get_option('send_test_email_btn')) && !empty(get_option('mailjet_test_address'))) {
+            } else if (!empty($send_test_email_btn) && !empty($mailjet_test_address)) {
                 // Send a test email
                 $testSent = MailjetMail::sendTestEmail();
                 if (false === $testSent) {

@@ -151,7 +151,8 @@ class InitialSettings
                 //MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
-        if (!($fromPage == 'plugins') && (!empty(get_option('api_credentials_ok')) && '1' == get_option('api_credentials_ok'))) {
+        $api_credentials_ok = get_option('api_credentials_ok');
+        if (!($fromPage == 'plugins') && (!empty($api_credentials_ok) && '1' == $api_credentials_ok)) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
         }
 
