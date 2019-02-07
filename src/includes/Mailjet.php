@@ -10,7 +10,7 @@ use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
 //use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
-use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
+// use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
 /**
  * The core plugin class.
@@ -186,7 +186,12 @@ class Mailjet
 
     function wp_mailjet_register_widgets()
     {
-        register_widget(new WP_Mailjet_Subscribe_Widget());
+        // It works only for wp >= 4.6.0
+        // $widget = new WP_Mailjet_Subscribe_Widget()
+
+        // This works for wp function < 4.6
+        $widget = 'MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget';
+        register_widget($widget);
     }
 
     /**
