@@ -24,18 +24,13 @@ use MailjetPlugin\Includes\SettingsPages\CommentAuthorsSettings;
  */
 class MailjetSettings
 {
+
     /**
      * custom option and settings
      *  IMPORTANT - add each setting here, in order to be processed by the WP Settings API
      */
-    public function mailjet_settings_init()
+    public function mailjet_settings_admin_init()
     {
-        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
-
-        $this->addMailjetActions();
-
-        $this->addSubscriptionConfirmations();
-
         // register a new settings for Mailjet pages
         register_setting('mailjet_initial_settings_page', 'mailjet_apikey');
         register_setting('mailjet_initial_settings_page', 'mailjet_apisecret');
@@ -82,6 +77,15 @@ class MailjetSettings
         register_setting('mailjet_integrations_page', 'activate_mailjet_woo_sync');
         register_setting('mailjet_integrations_page', 'mailjet_woo_list');
         register_setting('mailjet_integrations_page', 'settings_step');
+    }
+
+    public function mailjet_settings_init()
+    {
+        MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
+
+        $this->addMailjetActions();
+
+        $this->addSubscriptionConfirmations();
 
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
@@ -96,7 +100,7 @@ class MailjetSettings
                 'mailjet_connect_account_page',
                 'mailjet_initial_contact_lists_page',
                 'mailjet_settings_page'
-            ))) 
+            )))
         {
             $apiCredentialsOk = get_option('api_credentials_ok');
             if (!($fromPage == 'plugins') && !empty($apiCredentialsOk) && '1' != $apiCredentialsOk) {
