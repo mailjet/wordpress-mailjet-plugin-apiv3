@@ -189,6 +189,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Improve settings
 * Advanced customisation link is always visible
 * Added link to "Setup account" inside the Plugins section
+* Improve compatibility with WP versions < 5.7
 
 = 5.0.7 =
 * Fix 'thank you' page url when moving the blog across domains
