@@ -2,7 +2,7 @@
 
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
-Requires at least: 3.3.0
+Requires at least: 4.4
 Tested up to: 5.0.3
 Stable tag: 5.0.8
 License: GPLv2 or later
