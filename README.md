@@ -1,12 +1,12 @@
 # Mailjet Email Newsletter Marketing
 
-Contributors: Mailjet
-Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
-Requires at least: 4.4
-Tested up to: 5.0.3
-Stable tag: 5.0.8
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+- Contributors: Mailjet
+- Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
+- Requires at least: 4.4
+- Tested up to: 5.0.3
+- Stable tag: 5.0.8
+- License: GPLv2 or later
+- License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Use Mailjet to create, send and track beautiful and engaging marketing and transactional emails directly from within your WordPress admin.
 
@@ -158,7 +158,7 @@ function useMailjetCustomWidgetFormTemplate($templatePath) {
 </code></pre>
 
 ## For developers
-Before pushing any new changes, make sure you run the following command. It will remove unneeded .git direcotries from vendors =
+Before pushing any new changes, make sure you run the following command. It will remove unneeded .git direcotries from vendors
 <pre><code>
 find vendor/ -type d -name ".git" -exec rm -rf {} \;
 </code></pre>
