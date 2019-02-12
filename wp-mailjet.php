@@ -79,5 +79,8 @@ function run_mailjet()
 $activator = new MailjetActivator();
 register_activation_hook( __FILE__, array( $activator, 'activation_check' ) );
 
+
+register_deactivation_hook( __FILE__, array( 'MailjetPlugin\Includes\MailjetDeactivator', 'deactivate' ) );
+
 run_mailjet();
 
