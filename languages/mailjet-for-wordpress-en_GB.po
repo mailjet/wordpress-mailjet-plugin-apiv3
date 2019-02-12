@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2019-01-29 10:40+0200\n"
-"PO-Revision-Date: 2019-01-29 10:40+0200\n"
+"PO-Revision-Date: 2019-02-12 15:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: en_GB\n"
@@ -794,10 +794,8 @@ msgid "User Access Settings Saved"
 msgstr "User Access Settings Saved"
 
 #: src/includes/SettingsPages/WooCommerceSettings.php:39
-#, fuzzy
-#| msgid "Subscribe to our mailing list"
 msgid "Subscribe to our newsletter"
-msgstr "Subscribe to our mailing list"
+msgstr "Subscribe to our newsletter"
 
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:49
 msgid "Allows your visitors to subscribe to one of your lists"

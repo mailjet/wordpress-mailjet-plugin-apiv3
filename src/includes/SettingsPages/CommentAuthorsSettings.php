@@ -29,7 +29,7 @@ class CommentAuthorsSettings
             ?>
             <label class="mj-label" for="admin_bar_front">
                 <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
-                <?php _e('Subscribe to our mailing list', 'mailjet') ?>
+                <?php _e('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>
             </label>
             <?php
         }

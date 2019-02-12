@@ -333,7 +333,7 @@ class SubscriptionOptionsSettings
             <label class="mj-label" for="admin_bar_front">
                 <input type="checkbox" name="mailjet_subscribe_ok" id="mailjet_subscribe_ok" value="1"
                     <?php echo(is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)) ? 'checked="checked" ' : ''); ?>
-                       class="checkbox" /> <?php _e('Subscribe to our mailing list', 'mailjet-for-wordpress') ?></label>
+                       class="checkbox" /><?php _e('Subscribe to our newsletter', 'mailjet-for-wordpress') ?></label>
             </br>
             <?php
         }
