@@ -4,38 +4,20 @@
 
         $(document).on('widget-updated', function (event, widget) {
             var widget_id = $(widget).attr('id');
-//            alert('On widget-updated: ' + widget_id);
-
             showCheckedLanguages();
-            // any code that needs to be run when a widget gets updated goes here
-            // widget_id holds the ID of the actual widget that got updated
-            // be sure to only run the code if one of your widgets got updated
-            // otherwise the code will be run when any widget is updated
         });
 
         $(document).on('widget-added', function (event, widget) {
             var widget_id = $(widget).attr('id');
-//            alert('On widget-added: ' + widget_id);
-            // any code that needs to be run when a new widget gets added goes here
-            // widget_id holds the ID of the actual widget that got added
-            // be sure to only run the code if one of your widgets got added
-            // otherwise the code will be run when any widget is added
         });
 
         // Toggle(show/hide) hidden language elements(title, contactList)
         $(document).on('change', '.language_checkbox', function () {
-
-            // Show/Colapse
-            var languageHiddenElementClass = getLanguageHiddenElements(this);
-            $('#' + languageHiddenElementClass).toggle("slow");
+			$(this).parent().find('div.hidden_default').toggle('slow');
 
             // Uncheck the language checkbox
             var removeLanguage = !$(this).prop('checked');
-            if (removeLanguage) {
-                // Reset Title and List ?
-//                $(this).parent().find('.title-input').val('');
-//                $(this).parent().find('.language-select-list').val(0);
-            } else {
+            if (!removeLanguage) {
                 // Add specific language
                 var languageListId = $(this).parent().find('.language-select-list').val();
                 if (languageListId === "0") {
@@ -43,9 +25,6 @@
                 }
             }
 
-
-            // Hide advanced form, changes must be saved
-//            $("div#advanced-form-link-wrap").hide();
         });
 
         $(document).on('change', '.language-select-list', function (event) {
@@ -121,16 +100,6 @@
                 // Show new property inputs
                 $(this).parent().parent().find('.createNewProperties').show();
 
-                // Do not delete 
-                // Hide all rows that are not setup
-//                $('.selectProperty').each(function (env) {
-//                    if ($(this).val() === null) {
-//                        $(this).parent().parent().hide();
-//                    }
-//                });
-
-                // Show next default property select
-//                $(this).parent().parent().next('.property').hide();
             } else {
                 // Show datatype and languages inputs/values and delete
                 $(this).parent().parent().find('.hiddenProperties').show();
@@ -199,8 +168,6 @@
                 $("div.advanced-form-link-wrap").hide();
                 $(".disabled-advanced-link").removeClass('hidden_default');
             }
-//           $("div#advanced-form-link-wrap").hide();
-//           $("span#advanced-form-link").hide();
         });
 
         // Fires when property value is changed
@@ -222,12 +189,6 @@
 
             // Reset inputs
             resetHiddenPropertiesInputs($(this));
-
-            // Show select property inputs
-//            $(this).parent().parent().find('.hiddenProperties').show();
-
-            // Show next default property select
-//            $(this).parent().parent().next('.property').show();
 
         });
 
@@ -252,23 +213,7 @@
         function init() {
             showCheckedLanguages();
             $('[data-toggle="tooltip"]').tooltip();
-//            showPropertySelect(1);
         }
-
-//        function showPropertySelect(n) {
-//            var selectProperties = $('.selectProperty');
-//            var opened = 0;
-//            selectProperties.each(function (index, value) {
-//                if (opened >= n) {
-//                    return false;
-//                }
-//                $(this).parent().parent().find('.hiddenSelectProperties').show();
-//                $(this).parent().parent().parent().find('.hiddenSelectProperties').show();
-//                $(this).parent().find('.hiddenSelectProperties').show();
-//                $(this).parent().parent().find('.hiddenSelectProperties').css({'display':'block'});
-//                opened = opened + 1;
-//            });
-//        }
 
         /**
          * Show the hidden elements of the checked languages
@@ -277,21 +222,9 @@
         function showCheckedLanguages() {
             $('.language_checkbox').each(function (index, value) {
                 if (value.checked === true) {
-                    var languageHiddenElementClass = getLanguageHiddenElements(value);
-                    $('#' + languageHiddenElementClass).show();
+					$(this).parent().find('div.hidden_default').show();
                 }
             });
-        }
-
-        /**
-         * Get the id of the hidden elements of a specific language checkbox
-         * @param {type} element
-         * @returns {String}
-         */
-        function getLanguageHiddenElements(element) {
-            var language = (element);
-            var languageId = language.getAttribute('id');
-            return 'hidden_' + languageId;
         }
 
     });

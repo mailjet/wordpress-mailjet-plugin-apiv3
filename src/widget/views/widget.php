@@ -20,8 +20,8 @@ use MailjetPlugin\Includes\Mailjeti18n;
     <div class="widget-text wp_widget_plugin_box">
 
         <!--Widget title-->
-        <div id="mailjet_widget_title_wrap">
-            <span id="mailjet_widget_title">
+        <div>
+            <span style="font-size: 12px;">
                 <?php
                     do_action('before_title_widget_mailjet');
                     echo $before_title . $title . $after_title;
@@ -35,7 +35,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
         <form method="post" action=" <?php echo esc_url($_SERVER['REQUEST_URI']) ?>" id="mjForm" name="mjForm">
             
             <!--Subscription email input(mandatory)-->
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 10px!important">
                 <input type="email" name="subscription_email" id="mailjet_widget_email" required="required" placeholder="* <?php echo $emailLabel ?>">
                 <input type="hidden" name="subscription_locale" id="mailjet_widget_locale" value="<?php echo $locale ?>">
             </div>
@@ -122,14 +122,17 @@ use MailjetPlugin\Includes\Mailjeti18n;
                 // Boolean type is checkbox
                 if ('bool' === $inputType) {
                     ?>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom: 10px!important">
                         <input type="checkbox" <?php echo $required ?> name="properties[<?php echo $contactPropertyId ?>]" id="mailjet_property_<?php echo $i ?>" <?php echo $value ?> />
-                        <label class="mj_checkbox_label" for="mailjet_property_<?php echo $i ?>"><?php echo $requiredStar.$placeholder ?></label>
+                        <label for="mailjet_property_<?php echo $i ?>" 
+                            style="text-decoration: appworkspace;margin-bottom: 20px!important;font-weight: 500!important;display: inline!important;cursor: pointer;">
+                            <?php echo $requiredStar.$placeholder ?>
+                        </label>
                     </div>
                     <?php
                 } else {
                 ?>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 10px!important">
                     <input <?php echo $required ?> type="text" class="mj_form_property <?php echo $class ?>" name="properties[<?php echo $contactPropertyId ?>]" <?php echo $value ?> placeholder="<?php
                     echo $requiredStar;
                     echo $placeholder
@@ -139,7 +142,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
                 }
             }
             ?>
-            <input type="submit" value="<?php echo $buttonLabel ?>" onclick="mjSubmitWidgetForm(event)">
+            <input type="submit" value="<?php echo $buttonLabel ?>">
         </form>
         <span><?php echo $form_message ?></span>
     </div>
