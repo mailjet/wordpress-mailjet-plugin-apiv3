@@ -51,7 +51,7 @@ class WooCommerceSettings
         $lastName = $order->get_billing_last_name();
 
         if (!is_email($wooUserEmail)) {
-            _e('Invalid email', 'mailjet');
+            _e('Invalid email', 'mailjet-for-wordpress');
             die;
         }
 
@@ -99,7 +99,7 @@ class WooCommerceSettings
     {
         $error = empty($user_email) ? 'Email field is empty' : false;
         if (false !== $error) {
-            _e($error, 'mailjet');
+            _e($error, 'mailjet-for-wordpress');
             die;
         }
 
