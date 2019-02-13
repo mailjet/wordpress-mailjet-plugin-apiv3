@@ -27,7 +27,7 @@ class CommentAuthorsSettings
         // Display the checkbox only for NOT-logged in users
         if (!$user->exists() && get_option('mailjet_comment_authors_list')) {
             ?>
-            <label class="mj-label" for="admin_bar_front">
+            <label class="mj-label" for="mailjet_comment_authors_subscribe_ok">
                 <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
                 <?php _e('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>
             </label>
