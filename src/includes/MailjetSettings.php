@@ -231,7 +231,7 @@ class MailjetSettings
         $mailjet_woo_list = get_option('mailjet_woo_list');
         if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync) && !empty($mailjet_woo_list)) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            $mj_sub_woo_token = $_GET['mj_sub_woo_token'];
+            $mj_sub_woo_token = isset($_GET['mj_sub_woo_token'])? $_GET['mj_sub_woo_token'] : false;
             if (!empty($mj_sub_woo_token) &&
                 $_GET['mj_sub_woo_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'])) {
                 $wooCommerceSettings = new WooCommerceSettings();
