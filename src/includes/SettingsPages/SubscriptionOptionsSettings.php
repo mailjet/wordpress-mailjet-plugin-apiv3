@@ -28,7 +28,7 @@ class SubscriptionOptionsSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet' ); ?>
+            <?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet-for-wordpress' ); ?>
         </p>
         <?php
     }

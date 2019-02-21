@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "POT-Creation-Date: 2019-02-12 15:15+0200\n"
-"PO-Revision-Date: 2019-02-12 15:19+0200\n"
+"PO-Revision-Date: 2019-02-21 10:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -519,6 +519,9 @@ msgid ""
 "Your settings have been saved, but your port and SSL settings were changed "
 "to ensure delivery"
 msgstr ""
+"Vos paramètres ont bien été sauvegardés, mais vos paramètres de port et SSL "
+"ont été modifiés comme indiqué ci-après pour garantir que vos messages "
+"soient bien délivrés"
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:29
 msgid ""
@@ -559,8 +562,7 @@ msgstr ""
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:31
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:55
 msgid "Automatically add Wordpress subscribers to a specific list"
-msgstr ""
-"Ajoutez automatiquement les utilisateurs de Wordpress à une liste spécifique"
+msgstr "Ajouter automatiquement des abonnés Wordpress à une liste spécifique"
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:68
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:59
