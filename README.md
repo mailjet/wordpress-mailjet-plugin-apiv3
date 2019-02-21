@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 - Requires at least: 4.4
 - Tested up to: 5.1
-- Stable tag: 5.0.8
+- Stable tag: 5.0.9
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -171,6 +171,12 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 ## Changelog
+
+##### 5.0.9
+* Remove css and js public files to reduce public page speed loading
+* Wordpress widget is now working on wordpress version < 4.4
+* Prevent fatal error on api timeout
+* Add missing translations
 
 ##### 5.0.8
 * Improve advanced options popup style
