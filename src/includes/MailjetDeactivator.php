@@ -15,16 +15,16 @@ namespace MailjetPlugin\Includes;
 class MailjetDeactivator
 {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    5.0.0
-	 */
-	public static function deactivate()
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    5.0.0
+     */
+    public static function deactivate()
     {
 
-	}
+    }
 
 }

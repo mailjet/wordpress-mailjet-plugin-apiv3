@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
-
+.mj-connect-link{
+    margin-top:64px!important;
+}
 /**
  * Global styles and WP/bootsrap override
  */
@@ -543,7 +545,7 @@
     margin-bottom: 16px;
 }
 .mjSettings .settingsConnectFldset {
-    margin-bottom: 8px;
+    margin-bottom: 38px;
 }
 .mjSettings .settingsSendingFldset {
     margin-bottom: 16px;
@@ -865,7 +867,7 @@
     margin-bottom: 24px;
 }
 .mailjet_sync_options_div {
-    margin: 16px 0 0 18px;
+    margin: 16px 0 0 0;
 }
 .mailjet_sync_comment_authors_div{
     margin-left: 20px;

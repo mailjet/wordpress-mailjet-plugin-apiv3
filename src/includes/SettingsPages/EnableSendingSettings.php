@@ -25,7 +25,7 @@ class EnableSendingSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('Enable or disable the sending of your emails through your Mailjet account', 'wp-mailjet' ); ?>
+            <?php echo __('Enable or disable the sending of your emails through your Mailjet account', 'mailjet-for-wordpress' ); ?>
         </p>
         <?php
     }
@@ -39,6 +39,7 @@ class EnableSendingSettings
         $mailjetFromEmail = get_option('mailjet_from_email');
         $mailjetPort = get_option('mailjet_port');
         $mailjetSsl = get_option('mailjet_ssl');
+        $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
 
         $mailjetSenders = MailjetApi::getMailjetSenders();
         $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : array();
@@ -49,23 +50,23 @@ class EnableSendingSettings
         <fieldset class="settingsSendingFldset">
             <label class="checkboxLabel" for="mailjet_enabled">
                 <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?php echo ($mailjetEnabled == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
-                <span><?php _e('Enable sending emails through <b>Mailjet</b>', 'wp-mailjet'); ?></span>
+                <span><?php _e('Enable sending emails through <b>Mailjet</b>', 'mailjet-for-wordpress'); ?></span>
             </label>
             <div id="enable_mj_emails" class="sending_options_div <?php echo $mailjetEnabled ? 'mj-show' : 'mj-hide' ?>">
                 <div>
-                    <label class="mj-label" for="mailjet_from_name"><b><?php _e('From: Name', 'wp-mailjet'); ?></b></label>
+                    <label class="mj-label" for="mailjet_from_name"><b><?php _e('From: Name', 'mailjet-for-wordpress'); ?></b></label>
                     <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php echo $mailjetFromName ?>" class="regular-text code">
                 </div>
                 <div id="mailjet_from_email_fields" class="fromFld">
-                    <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'wp-mailjet'); ?></b></label>
+                    <label class="mj-label" for="mailjet_from_email"><b><?php _e('From: name@email.com', 'mailjet-for-wordpress'); ?></b></label>
                     <div class="fromFldGroup">
                         <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
                         <?php foreach ($mailjetSenders as $mailjetSender) {
                             if ($mailjetSender['Status'] != 'Active') {
                                 continue;
                             }
-                            if (!empty(get_option('mailjet_from_email_extra'))) {
-                                if (stristr($mailjetSender['Email'],'*') && stristr(get_option('mailjet_from_email'), str_ireplace('*', '', $mailjetSender['Email']))) {
+                            if (!empty($mailjet_from_email_extra)) {
+                                if (stristr($mailjetSender['Email'],'*') && stristr($mailjetFromEmail, str_ireplace('*', '', $mailjetSender['Email']))) {
                                     $mailjetFromEmail = $mailjetSender['Email'];
                                 }
                             }
@@ -76,11 +77,11 @@ class EnableSendingSettings
                     </div>
                 </div>
                 <?php
-                    if (!empty(get_option('mailjet_from_email_extra'))) { ?>
-                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?=get_option('mailjet_from_email_extra') ?>">
+                    if (!empty($mailjet_from_email_extra)) { ?>
+                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?php _e($mailjet_from_email_extra) ?>">
                 <?php } ?>
                 <div class="smtpFld">
-                    <label class="mj-label" for="mailjet_port"><b><?php _e('Port to use for SMTP communication', 'wp-mailjet'); ?></b></label>
+                    <label class="mj-label" for="mailjet_port"><b><?php _e('Port to use for SMTP communication', 'mailjet-for-wordpress'); ?></b></label>
                     <select class="mj-select" name="mailjet_port" id="mailjet_port" type="select">
                         <option value="25" <?=($mailjetPort == 25 ? 'selected="selected"' : '') ?> > 25 </option>
                         <option value="465" <?=($mailjetPort == 465 ? 'selected="selected"' : '') ?> > 465 </option>
@@ -92,7 +93,7 @@ class EnableSendingSettings
                 <div class="sslFld">
                     <label class="checkboxLabel" for="mailjet_ssl">
                         <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> autocomplete="off">
-                        <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'wp-mailjet'); ?></span>
+                        <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet-for-wordpress'); ?></span>
                     </label>
                 </div>                
             </div>
@@ -101,12 +102,12 @@ class EnableSendingSettings
         </fieldset>
 
         <fieldset class="testEmailFldset">
-            <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'wp-mailjet')?></button>
+            <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet-for-wordpress')?></button>
             <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
-                <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'wp-mailjet'); ?></b></label>
+                <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet-for-wordpress'); ?></b></label>
                 <div class="test_email_fields_group">
                     <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                    <input type="submit" value="<?php _e('Send', 'wp-mailjet')?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
+                    <input type="submit" value="<?php _e('Send', 'mailjet-for-wordpress')?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
                 </div>
             </div>
         </fieldset>
@@ -134,7 +135,7 @@ class EnableSendingSettings
         add_settings_field(
             'mailjet_enable_sending', // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
-            __('Enable sending emails through Mailjet', 'wp-mailjet' ),
+            __('Enable sending emails through Mailjet', 'mailjet-for-wordpress' ),
             array($this, 'mailjet_enable_sending_cb'),
             'mailjet_sending_settings_page',
             'mailjet_enable_sending_settings',
@@ -170,8 +171,9 @@ class EnableSendingSettings
             }
 
             // If whitelisted domain is selected then we add the extra email name to that domain
-            if (!empty(get_option('mailjet_from_email_extra'))) {
-                update_option('mailjet_from_email', str_replace('*', '',get_option('mailjet_from_email_extra').get_option('mailjet_from_email')));
+            $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
+            if (!empty($mailjet_from_email_extra)) {
+                update_option('mailjet_from_email', str_replace('*', '', $mailjet_from_email_extra.get_option('mailjet_from_email')));
             }
 
             // Update From Email and Name
@@ -181,28 +183,30 @@ class EnableSendingSettings
             // Check connection with selected port and protocol
             if (false === $this->checkConnection()) {
                 $executionError = true;
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings. Check if a firewall is blocking connections to the Mailjet ports.', 'wp-mailjet'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings. Check if a firewall is blocking connections to the Mailjet ports.', 'mailjet-for-wordpress'), 'error');
             }
-
-            if (!empty(get_option('send_test_email_btn')) && empty(get_option('mailjet_test_address'))) {
+            
+            $send_test_email_btn = get_option('send_test_email_btn');
+            $mailjet_test_address = get_option('mailjet_test_address');
+            if (!empty($send_test_email_btn) && empty($mailjet_test_address)) {
                 $executionError = true;
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Please provide a valid email address', 'wp-mailjet'), 'error');
-            } else if (!empty(get_option('send_test_email_btn')) && !empty(get_option('mailjet_test_address'))) {
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Please provide a valid email address', 'mailjet-for-wordpress'), 'error');
+            } else if (!empty($send_test_email_btn) && !empty($mailjet_test_address)) {
                 // Send a test email
                 $testSent = MailjetMail::sendTestEmail();
                 if (false === $testSent) {
                     //MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
                     $executionError = true;
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('The test email could not be sent. Please make sure your server doesn\'t block the SMTP ports. Also double check that you are using correct API and Secret keys and a valid sending address from your Mailjet account.', 'wp-mailjet'), 'error');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('The test email could not be sent. Please make sure your server doesn\'t block the SMTP ports. Also double check that you are using correct API and Secret keys and a valid sending address from your Mailjet account.', 'mailjet-for-wordpress'), 'error');
                 } else {
                     // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test email has been successfully sent', 'wp-mailjet'), 'updated');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your test email has been successfully sent', 'mailjet-for-wordpress'), 'updated');
                 }
             }
 
             if (true !== $testSent && false === $executionError) {
                 // add settings saved message with the class of "updated"
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'wp-mailjet'), 'updated');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet-for-wordpress'), 'updated');
             }
         }
 
@@ -218,11 +222,11 @@ class EnableSendingSettings
             <div class="backToDashboard">
                     <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                     <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
-                    <?php _e('Back to dashboard', 'wp-mailjet') ?>
+                    <?php _e('Back to dashboard', 'mailjet-for-wordpress') ?>
                     </a>
                 </div>
 
-                <h1 class="page_top_title"><?php _e('Settings', 'wp-mailjet') ?></h1>
+                <h1 class="page_top_title"><?php _e('Settings', 'mailjet-for-wordpress') ?></h1>
                 <div class="mjSettings">
                     <div class="left">
                         <?php
@@ -233,7 +237,7 @@ class EnableSendingSettings
                     <div class="right">
                         <div class="centered"  style="width:650px;">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
-                            <h2 class="section_inner_title"><?php _e('Sending settings', 'wp-mailjet'); ?></h2>
+                            <h2 class="section_inner_title"><?php _e('Sending settings', 'mailjet-for-wordpress'); ?></h2>
                             <form action="options.php" method="post">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
@@ -242,10 +246,10 @@ class EnableSendingSettings
                                 // (sections are registered for "mailjet", each field is registered to a specific section)
                                 do_settings_sections('mailjet_sending_settings_page');
                                 // output save settings button
-                                $saveButton = __('Save', 'wp-mailjet');
+                                $saveButton = __('Save', 'mailjet-for-wordpress');
                                 ?>
                                 <button type="submit" id="enableSendingSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
-                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'wp-mailjet') ?>"> -->
+                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __('Cancel', 'mailjet-for-wordpress') ?>"> -->
                             </form>
                         </div>
                     </div>
@@ -254,11 +258,11 @@ class EnableSendingSettings
 
             <div class="bottom_links">
                 <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'wp-mailjet'); ?>" />
-                    <?php echo __('Need help?', 'wp-mailjet' ); ?>
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Need help?', 'mailjet-for-wordpress'); ?>" />
+                    <?php echo __('Need help?', 'mailjet-for-wordpress' ); ?>
                 </div>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'wp-mailjet') . '</a>'; ?>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'wp-mailjet') . '</a>'; ?>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet-for-wordpress') . '</a>'; ?>
+                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet-for-wordpress') . '</a>'; ?>
             </div>
         </div>
 
@@ -307,7 +311,7 @@ class EnableSendingSettings
                     $ssl = $configs[$i][0];
                     update_option('mailjet_ssl', $ssl);
                     update_option('mailjet_port', $port);
-                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your settings have been saved, but your port and SSL settings were changed to ensure delivery', 'wp-mailjet'), 'updated');
+                    add_settings_error('mailjet_messages', 'mailjet_message', __('Your settings have been saved, but your port and SSL settings were changed to ensure delivery', 'mailjet-for-wordpress'), 'updated');
                     break;
                 }
             }

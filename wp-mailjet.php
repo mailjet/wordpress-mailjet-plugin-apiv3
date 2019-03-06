@@ -14,7 +14,7 @@ namespace MailjetPlugin;
  * Plugin Name:       Mailjet for WordPress
  * Plugin URI:        https://www.mailjet.com/partners/wordpress/
  * Description:       The Best WordPress Plugin For Email Newsletters.
- * Version:           5.0.6
+ * Version:           5.0.10
  * Author:            Mailjet SAS
  * Author URI:        http://mailjet.com
  * License:           GPL-2.0+
@@ -46,48 +46,19 @@ if (!defined('WPINC')) {
 // Autoloading via composer
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Analog\Analog;
+//use Analog\Analog;
 use MailjetPlugin\Includes\Mailjet;
-use MailjetPlugin\Includes\MailjetActivator;
-use MailjetPlugin\Includes\MailjetDeactivator;
-use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\MailjetUpdate;
-
-// Change the handler to any other if you need to.
-//Analog::handler(\Analog\Handler\File::init(dirname(__FILE__) . '/logs.txt'));
-Analog::handler(\Analog\Handler\ChromeLogger::init());
+use MailjetPlugin\Includes\MailjetActivator;
 
 /**
- * Currently plugin version.
+ * Mailjet plugin version.
  */
-define('MAILJET_VERSION', '5.0.6');
+define('MAILJET_VERSION', '5.0.10');
 
 
 // Call the update to V5 logic
 MailjetUpdate::updateToV5();
-
-
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/MailjetActivator.php
- */
-function activate_mailjet()
-{
-    MailjetActivator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/MailjetDeactivator.php
- */
-function deactivate_mailjet()
-{
-    MailjetDeactivator::deactivate();
-}
-
-//register_activation_hook(__FILE__, 'activate_mailjet');
-//register_deactivation_hook(__FILE__, 'deactivate_mailjet');
 
 /**
  * Begins execution of the plugin.
@@ -104,4 +75,12 @@ function run_mailjet()
     $plugin->run();
 }
 
+
+$activator = new MailjetActivator();
+register_activation_hook( __FILE__, array( $activator, 'activation_check' ) );
+
+
+register_deactivation_hook( __FILE__, array( 'MailjetPlugin\Includes\MailjetDeactivator', 'deactivate' ) );
+
 run_mailjet();
+

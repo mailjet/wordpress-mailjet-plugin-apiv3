@@ -10,7 +10,7 @@ use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
 //use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
-use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
+// use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
 /**
  * The core plugin class.
@@ -70,7 +70,7 @@ class Mailjet
         if (defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '5.0.6';
+            $this->version = '5.0.10';
         }
         $this->plugin_name = 'mailjet';
 
@@ -167,7 +167,7 @@ class Mailjet
     {
         $plugin_settings = new MailjetSettings();
 
-//        $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_init');
+        $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_admin_init');
         $this->loader->add_action('init', $plugin_settings, 'mailjet_settings_init');
     }
 
@@ -179,7 +179,6 @@ class Mailjet
         $this->loader->add_action('wp_mail_failed', $plugin_mails, 'wp_mail_failed_cb');
     }
 
-
     private function registerMailjetWidget()
     {
         $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
@@ -187,7 +186,12 @@ class Mailjet
 
     function wp_mailjet_register_widgets()
     {
-        register_widget(new WP_Mailjet_Subscribe_Widget());
+        // It works only for wp >= 4.6.0
+        // $widget = new WP_Mailjet_Subscribe_Widget()
+
+        // This works for wp function < 4.6
+        $widget = 'MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget';
+        register_widget($widget);
     }
 
     /**

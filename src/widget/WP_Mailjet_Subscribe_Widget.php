@@ -160,7 +160,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                                 }
                                 break;
                             case "bool":
-                                $booleans = array('true', 'false', '1', '0','yes', 'no', 'ok');
+//                                $booleans = array('true', 'false', '1', '0','yes', 'no', 'ok');
+                                $booleans = array('on', '', 1, true, false, 0);
                                 if(!in_array($propertyName, $booleans)) {
                                     return $incorectTypeValue;
                                 }
@@ -180,7 +181,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
     /**
-     * Validete the confirmation link
+     * Validate the confirmation link
      * Subscribe to mailjet list
      * @param type $subscriptionOptionsSettings
      */
@@ -250,7 +251,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                                 $dataProperties[$property['Name']] = (float)$properties[$property['ID']];
                                 break;
                             case "bool":
-                                $positiveBooleans = array('true', '1', 'yes', 'ok');
+                                $positiveBooleans = array('true', '1', 'on', 1, true);
                                 if(in_array($properties[$property['ID']], $positiveBooleans)) {
                                     $dataProperties[$property['Name']] = true;
                                 }else{
@@ -384,7 +385,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 break;
             case 'float':
             case 'bool':
-                $inputType = 'text';
+                $inputType = 'bool';
                 break;
             default:
                 $inputType = 'text';
@@ -408,70 +409,113 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
-        
+
         $languages = Mailjeti18n::getSupportedLocales();
         $admin_locale = Mailjeti18n::getLocale();
+        $wp_version = get_bloginfo( 'version' );
 
-//        echo "<pre>";
-//        print_r($admin_locale);
-//        echo "<hr></pre>";exit;
+         if (version_compare($wp_version, '4.4', '<')) {
 
-        foreach ($languages as $language => $locale) {
-            // Do not save if language is active but there is no contact list chosen for it
-            if (isset($new_instance[$locale]['language_checkbox']) && $new_instance[$locale]['list'] == "0") {
-                continue;
+            foreach ($languages as $language => $locale) {
+                // Do not save if language is active but there is no contact list chosen for it
+                if (isset($new_instance[$locale.'[language_checkbox']) && $new_instance[$locale.'[list'] == "0") {
+                    continue;
+                }
+
+                // Initial
+                $instance[$locale]['language_checkbox'] = isset($new_instance[$locale.'[language_checkbox']) ? 1 : false;
+                $instance[$locale]['title'] = isset($new_instance[$locale.'[title']) ? wp_strip_all_tags($new_instance[$locale.'[title']) : '';
+                $instance[$locale]['list'] = isset($new_instance[$locale.'[list']) ? wp_strip_all_tags($new_instance[$locale.'[list']) : '';
+                update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
+
+                // Tab 1
+                $instance[$locale]['language_mandatory_email'] = isset($new_instance[$locale.'[language_mandatory_email']) ? wp_strip_all_tags($new_instance[$locale.'[language_mandatory_email']) : '';
+                $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale.'[language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale.'[language_mandatory_button']) : '';
+
+                for ($i = 0; $i <= 4; $i++) {
+                    $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale.'[contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[contactProperties' . $i]) : '';
+                    $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale.'[propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[propertyDataType' . $i]) : '';
+                    $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$admin_locale.'[EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[EnglishLabel' . $i]) : '';
+                    $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$admin_locale.'[FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[FrenchLabel' . $i]) : '';
+                    $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$admin_locale.'[GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[GermanLabel' . $i]) : '';
+                    $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$admin_locale.'[SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[SpanishLabel' . $i]) : '';
+                    $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$admin_locale.'[ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[ItalianLabel' . $i]) : '';
+                }
+
+                // Tab 2
+                $instance[$locale]['confirmation_email_message_input'] = isset($new_instance[$locale.'[confirmation_email_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[confirmation_email_message_input']) : '';
+                $instance[$locale]['subscription_confirmed_message_input'] = isset($new_instance[$locale.'[subscription_confirmed_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[subscription_confirmed_message_input']) : '';
+                $instance[$locale]['empty_email_message_input'] = isset($new_instance[$locale.'[empty_email_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[empty_email_message_input']) : '';
+                $instance[$locale]['already_subscribed_message_input'] = isset($new_instance[$locale.'[already_subscribed_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[already_subscribed_message_input']) : '';
+                $instance[$locale]['invalid_data_format_message_input'] = isset($new_instance[$locale.'[invalid_data_format_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[invalid_data_format_message_input']) : '';
+                $instance[$locale]['generic_technical_error_message_input'] = isset($new_instance[$locale.'[generic_technical_error_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[generic_technical_error_message_input']) : '';
+
+                // Tab 3
+                $instance[$locale]['email_subject'] = isset($new_instance[$locale.'[email_subject']) ? wp_strip_all_tags($new_instance[$locale.'[email_subject']) : '';
+                $instance[$locale]['email_content_title'] = isset($new_instance[$locale.'[email_content_title']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_title']) : '';
+                $instance[$locale]['email_content_main_text'] = isset($new_instance[$locale.'[email_content_main_text']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_main_text']) : '';
+                $instance[$locale]['email_content_confirm_button'] = isset($new_instance[$locale.'[email_content_confirm_button']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_confirm_button']) : '';
+                $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale.'[email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_after_button']) : '';
+
+                // Tab 4
+                $instance[$language]['thank_you'] = isset($new_instance[$language.'[thank_you']) ? wp_strip_all_tags($new_instance[$language.'[thank_you']) : 0;
+                update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
+
+                // Translations update
+                Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
             }
+        } else {
 
-            // Initial
-            $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
-            $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
-            $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
-            update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
+            foreach ($languages as $language => $locale) {
+                // Do not save if language is active but there is no contact list chosen for it
+                if (isset($new_instance[$locale]['language_checkbox']) && $new_instance[$locale]['list'] == "0") {
+                    continue;
+                }
 
-            // Tab 1
-            $instance[$locale]['language_mandatory_email'] = isset($new_instance[$locale]['language_mandatory_email']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_email']) : '';
-//            $buttonLabel = isset($new_instance[$locale]['language_mandatory_button']) ? apply_filters('widget_title', $new_instance[$locale]['language_mandatory_button']) : '';
-//            $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale]['language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_button']) : $buttonLabel;
-            $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale]['language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_button']) : '';
+                // Initial
+                $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
+                $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
+                $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
+                update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
 
-            for ($i = 0; $i <= 4; $i++) {
-                $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale]['contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['contactProperties' . $i]) : '';
-                $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale]['propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['propertyDataType' . $i]) : '';
+                // Tab 1
+                $instance[$locale]['language_mandatory_email'] = isset($new_instance[$locale]['language_mandatory_email']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_email']) : '';
+                $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale]['language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_button']) : '';
 
-//                $instance[$locale][$language.'Label'.$i] = isset($new_instance[$locale][$language.'Label'.$i]) ? wp_strip_all_tags($new_instance[$locale][$language.'Label'.$i]) : '';
-                $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$admin_locale]['EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['EnglishLabel' . $i]) : '';
-                $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$admin_locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['FrenchLabel' . $i]) : '';
-                $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$admin_locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['GermanLabel' . $i]) : '';
-                $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$admin_locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['SpanishLabel' . $i]) : '';
-                $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$admin_locale]['ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['ItalianLabel' . $i]) : '';
+                for ($i = 0; $i <= 4; $i++) {
+                    $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale]['contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['contactProperties' . $i]) : '';
+                    $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale]['propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['propertyDataType' . $i]) : '';
+                    $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$admin_locale]['EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['EnglishLabel' . $i]) : '';
+                    $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$admin_locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['FrenchLabel' . $i]) : '';
+                    $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$admin_locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['GermanLabel' . $i]) : '';
+                    $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$admin_locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['SpanishLabel' . $i]) : '';
+                    $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$admin_locale]['ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['ItalianLabel' . $i]) : '';
+                }
+
+                // Tab 2
+                $instance[$locale]['confirmation_email_message_input'] = isset($new_instance[$locale]['confirmation_email_message_input']) ? wp_strip_all_tags($new_instance[$locale]['confirmation_email_message_input']) : '';
+                $instance[$locale]['subscription_confirmed_message_input'] = isset($new_instance[$locale]['subscription_confirmed_message_input']) ? wp_strip_all_tags($new_instance[$locale]['subscription_confirmed_message_input']) : '';
+                $instance[$locale]['empty_email_message_input'] = isset($new_instance[$locale]['empty_email_message_input']) ? wp_strip_all_tags($new_instance[$locale]['empty_email_message_input']) : '';
+                $instance[$locale]['already_subscribed_message_input'] = isset($new_instance[$locale]['already_subscribed_message_input']) ? wp_strip_all_tags($new_instance[$locale]['already_subscribed_message_input']) : '';
+                $instance[$locale]['invalid_data_format_message_input'] = isset($new_instance[$locale]['invalid_data_format_message_input']) ? wp_strip_all_tags($new_instance[$locale]['invalid_data_format_message_input']) : '';
+                $instance[$locale]['generic_technical_error_message_input'] = isset($new_instance[$locale]['generic_technical_error_message_input']) ? wp_strip_all_tags($new_instance[$locale]['generic_technical_error_message_input']) : '';
+
+                // Tab 3
+                $instance[$locale]['email_subject'] = isset($new_instance[$locale]['email_subject']) ? wp_strip_all_tags($new_instance[$locale]['email_subject']) : '';
+                $instance[$locale]['email_content_title'] = isset($new_instance[$locale]['email_content_title']) ? wp_strip_all_tags($new_instance[$locale]['email_content_title']) : '';
+                $instance[$locale]['email_content_main_text'] = isset($new_instance[$locale]['email_content_main_text']) ? wp_strip_all_tags($new_instance[$locale]['email_content_main_text']) : '';
+                $instance[$locale]['email_content_confirm_button'] = isset($new_instance[$locale]['email_content_confirm_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_confirm_button']) : '';
+                $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale]['email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_after_button']) : '';
+
+                // Tab 4
+                $instance[$language]['thank_you'] = isset($new_instance[$language]['thank_you']) ? wp_strip_all_tags($new_instance[$language]['thank_you']) : 0;
+                update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
+
+                // Translations update
+                Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
             }
-
-            // Tab 2
-            $instance[$locale]['confirmation_email_message_input'] = isset($new_instance[$locale]['confirmation_email_message_input']) ? wp_strip_all_tags($new_instance[$locale]['confirmation_email_message_input']) : '';
-            $instance[$locale]['subscription_confirmed_message_input'] = isset($new_instance[$locale]['subscription_confirmed_message_input']) ? wp_strip_all_tags($new_instance[$locale]['subscription_confirmed_message_input']) : '';
-            $instance[$locale]['empty_email_message_input'] = isset($new_instance[$locale]['empty_email_message_input']) ? wp_strip_all_tags($new_instance[$locale]['empty_email_message_input']) : '';
-            $instance[$locale]['already_subscribed_message_input'] = isset($new_instance[$locale]['already_subscribed_message_input']) ? wp_strip_all_tags($new_instance[$locale]['already_subscribed_message_input']) : '';
-            $instance[$locale]['invalid_data_format_message_input'] = isset($new_instance[$locale]['invalid_data_format_message_input']) ? wp_strip_all_tags($new_instance[$locale]['invalid_data_format_message_input']) : '';
-            $instance[$locale]['generic_technical_error_message_input'] = isset($new_instance[$locale]['generic_technical_error_message_input']) ? wp_strip_all_tags($new_instance[$locale]['generic_technical_error_message_input']) : '';
-
-            // Tab 3
-            $instance[$locale]['email_subject'] = isset($new_instance[$locale]['email_subject']) ? wp_strip_all_tags($new_instance[$locale]['email_subject']) : '';
-            $instance[$locale]['email_content_title'] = isset($new_instance[$locale]['email_content_title']) ? wp_strip_all_tags($new_instance[$locale]['email_content_title']) : '';
-            $instance[$locale]['email_content_main_text'] = isset($new_instance[$locale]['email_content_main_text']) ? wp_strip_all_tags($new_instance[$locale]['email_content_main_text']) : '';
-            $instance[$locale]['email_content_confirm_button'] = isset($new_instance[$locale]['email_content_confirm_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_confirm_button']) : '';
-            $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale]['email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_after_button']) : '';
-
-            // Tab 4
-            $instance[$language]['thank_you'] = isset($new_instance[$language]['thank_you']) ? wp_strip_all_tags($new_instance[$language]['thank_you']) : 0;
-            update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
-
-            // Translations update
-            Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
         }
-        $this->instance = $instance;
-//        echo "<pre>";
-//        print_r($instance);
-//        echo "<hr></pre>";exit;
+
         return $instance;
     }
 
@@ -480,22 +524,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     private function registerCustomLanguageTranslations()
     {
-        __('English', 'wp-mailjet');
-        __('French', 'wp-mailjet');
-        __('German', 'wp-mailjet');
-        __('Spanish', 'wp-mailjet');
-        __('Italian', 'wp-mailjet');
-        __('your@email.com', 'wp-mailjet');
-        __('Subscribe', 'wp-mailjet');
-        __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'wp-mailjet');
-        __('Your subscription was successfully confirmed.', 'wp-mailjet');
-        __('Please provide an email address', 'wp-mailjet');
-        __('Please confirm your subscription', 'wp-mailjet');
-        __('This email address has already been subscribed.', 'wp-mailjet');
-        __('The value you entered is not in the correct format.', 'wp-mailjet');
-        __('A technical issue has prevented your subscription. Please try again later.', 'wp-mailjet');
-        __('Yes, subscribe me to this list', 'wp-mailjet');
-        __("If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message", 'wp-mailjet');
+        __('English', 'mailjet-for-wordpress');
+        __('French', 'mailjet-for-wordpress');
+        __('German', 'mailjet-for-wordpress');
+        __('Spanish', 'mailjet-for-wordpress');
+        __('Italian', 'mailjet-for-wordpress');
+        __('your@email.com', 'mailjet-for-wordpress');
+        __('Subscribe', 'mailjet-for-wordpress');
+        __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'mailjet-for-wordpress');
+        __('Your subscription was successfully confirmed.', 'mailjet-for-wordpress');
+        __('Please provide an email address', 'mailjet-for-wordpress');
+        __('Please confirm your subscription', 'mailjet-for-wordpress');
+        __('This email address has already been subscribed.', 'mailjet-for-wordpress');
+        __('The value you entered is not in the correct format.', 'mailjet-for-wordpress');
+        __('A technical issue has prevented your subscription. Please try again later.', 'mailjet-for-wordpress');
+        __('Yes, subscribe me to this list', 'mailjet-for-wordpress');
+        __("If you received this email by mistake or don't wish to subscribe anymore, simply ignore this message", 'mailjet-for-wordpress');
     }
 
     /**
@@ -908,7 +952,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget_textdomain()
     {
-        load_plugin_textdomain('wp-mailjet', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
+        load_plugin_textdomain('mailjet-for-wordpress', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ] - ' . dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/');
     }
 
@@ -977,5 +1021,3 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     }
 
 }
-
-// end class

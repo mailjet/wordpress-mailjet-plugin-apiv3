@@ -34,7 +34,7 @@ class InitialSettings
     {
         ?>
         <p class="top_descrption_helper" id="<?php echo esc_attr($args['id']); ?>">
-        <?php echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'wp-mailjet'); ?>
+        <?php echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet-for-wordpress'); ?>
         </p>
             <?php
         }
@@ -56,20 +56,20 @@ class InitialSettings
             // output the field
             ?>
         <fieldset>
-            <legend class="screen-reader-text"><span><b><?php _e('Connect your Mailjet account to get started', 'wp-mailjet'); ?></b></span></legend>
+            <legend class="screen-reader-text"><span><b><?php _e('Connect your Mailjet account to get started', 'mailjet-for-wordpress'); ?></b></span></legend>
 
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
-            <label class="mj-label" for="mailjet_apikey"><?php _e('<b>Api Key</b>', 'wp-mailjet'); ?></label>
+            <label class="mj-label" for="mailjet_apikey"><?php _e('<b>Api Key</b>', 'mailjet-for-wordpress'); ?></label>
             <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?= $mailjetApikey ?>" class="mailjet_apikey" required="required">
-            <label class="mj-label" for="mailjet_apisecret"><?php _e('<b>Secret Key</b>', 'wp-mailjet'); ?></label>
+            <label class="mj-label" for="mailjet_apisecret"><?php _e('<b>Secret Key</b>', 'mailjet-for-wordpress'); ?></label>
             <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?= $mailjetApiSecret ?>" class="mailjet_apisecret" required="required">
         </fieldset>
 
         <!--        <br />-->
         <!--        <label for="mailjet_activate_logger">-->
         <!--            <input name="mailjet_activate_logger" type="checkbox" id="mailjet_activate_logger" value="1" --><?//=($mailjetActivateLogger == 1 ? ' checked="checked"' : '') ?><!-- >-->
-        <!--            --><?php //echo __('Also activate Mailjet plugin logger, to track your expirience', 'wp-mailjet');  ?><!--</label>-->
+        <!--            --><?php //echo __('Also activate Mailjet plugin logger, to track your expirience', 'mailjet-for-wordpress');  ?><!--</label>-->
         <!--        <br />-->
         <?php
     }
@@ -99,7 +99,7 @@ class InitialSettings
         add_settings_field(
                 'mailjet_initial_settings', // as of WP 4.6 this value is used only internally
                 // use $args' label_for to populate the id inside the callback
-                __('Mailjet API credentials', 'wp-mailjet'), array($this, 'mailjet_initial_settings_cb'), 'mailjet_initial_settings_page', 'mailjet_section_initial_settings', [
+                __('Mailjet API credentials', 'mailjet-for-wordpress'), array($this, 'mailjet_initial_settings_cb'), 'mailjet_initial_settings_page', 'mailjet_section_initial_settings', [
             'label_for' => 'initial_settings',
             'class' => 'mailjet_row',
             'mailjet_custom_data' => 'custom',
@@ -120,7 +120,7 @@ class InitialSettings
                 update_option('api_credentials_ok', 0);
                 $executionError = true;
 //                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'wp-mailjet'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             } else {
 //            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
                 // Initialize PhpMailer
@@ -137,7 +137,7 @@ class InitialSettings
                 add_filter('wp_mail_from_name', array(new MailjetMail(), 'wp_sender_name'));
 
                 // add settings saved message with the class of "updated"
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'wp-mailjet'), 'updated');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet-for-wordpress'), 'updated');
                 $executionError = false;
 
                 // Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
@@ -151,7 +151,8 @@ class InitialSettings
                 //MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
-        if (!($fromPage == 'plugins') && (!empty(get_option('api_credentials_ok')) && '1' == get_option('api_credentials_ok'))) {
+        $api_credentials_ok = get_option('api_credentials_ok');
+        if (!($fromPage == 'plugins') && (!empty($api_credentials_ok) && '1' == $api_credentials_ok)) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
         }
 
@@ -163,9 +164,9 @@ class InitialSettings
             <div class="mainContainer">
 
                 <div>
-                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'wp-mailjet'); ?> </h1>
+                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'); ?> </h1>
                     <p class="page_top_subtitle">
-        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'wp-mailjet'); ?>
+        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet-for-wordpress'); ?>
                     </p>
                 </div>
                 <div class="initialSettings">
@@ -179,18 +180,18 @@ class InitialSettings
         // (sections are registered for "mailjet", each field is registered to a specific section)
         do_settings_sections('mailjet_initial_settings_page');
         // output save settings button
-        $connectYourAccount = __('Connect your account', 'wp-mailjet');
+        $connectYourAccount = __('Connect your account', 'mailjet-for-wordpress');
         /* No Next btn on Initial API settings page - we redirect automatically
           if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
-          <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'wp-mailjet')?>">
+          <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet-for-wordpress')?>">
           <?php }
          */
         ?>
         <button type="submit" id="initialSettingsSubmit" class="mj-btn btnPrimary" name="submit"><?= $connectYourAccount; ?></button>
                             <p class="dont_have_account">
-                            <?php esc_html_e('You don\'t have a Mailjet account yet?', 'wp-mailjet'); ?>
+                            <?php esc_html_e('You don\'t have a Mailjet account yet?', 'mailjet-for-wordpress'); ?>
                                 <br />
-                            <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'wp-mailjet') . '</a>'; ?>
+                            <?php echo sprintf('<a class="greenLink" target="_blank" href="https://www.mailjet.com/signup?aff=%s">', 'wordpress-3.0') . __('Create an account', 'mailjet-for-wordpress') . '</a>'; ?>
                             </p>
                         </form>
                     </div>
@@ -199,15 +200,15 @@ class InitialSettings
                         <div class="availableContactListsContainer">
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image1.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                                <p class="initialSettingsTextCell"><b><?php _e('Collect email addresses...', 'wp-mailjet'); ?></b><?php _e('Email addresses are collected from your website', 'wp-mailjet'); ?></p>
+                                <p class="initialSettingsTextCell"><b><?php _e('Collect email addresses...', 'mailjet-for-wordpress'); ?></b><?php _e('Email addresses are collected from your website', 'mailjet-for-wordpress'); ?></p>
                             </div>
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image2.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                                <p class="initialSettingsTextCell"><b><?php _e('...and add them automatically to a contact list', 'wp-mailjet'); ?></b><?php _e('Email are added to your contact list', 'wp-mailjet'); ?></p>
+                                <p class="initialSettingsTextCell"><b><?php _e('...and add them automatically to a contact list', 'mailjet-for-wordpress'); ?></b><?php _e('Email are added to your contact list', 'mailjet-for-wordpress'); ?></p>
                             </div>
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                                <p class="initialSettingsTextCell"><b><?php _e('We will take care of delivering your newsletter', 'wp-mailjet'); ?></b><?php _e('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'wp-mailjet'); ?></p>
+                                <p class="initialSettingsTextCell"><b><?php _e('We will take care of delivering your newsletter', 'mailjet-for-wordpress'); ?></b><?php _e('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet-for-wordpress'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -216,11 +217,11 @@ class InitialSettings
             <!--        <br style="clear: left;"/>-->
             <div class="bottom_links">
                 <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'wp-mailjet'); ?>" />
-            <?php echo __('Need help getting started?', 'wp-mailjet'); ?>
+                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet-for-wordpress'); ?>" />
+            <?php echo __('Need help getting started?', 'mailjet-for-wordpress'); ?>
                 </div>
-            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'wp-mailjet') . '</a>'; ?>
-            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'wp-mailjet') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet-for-wordpress') . '</a>'; ?>
+            <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet-for-wordpress') . '</a>'; ?>
             </div>
         </div>
 

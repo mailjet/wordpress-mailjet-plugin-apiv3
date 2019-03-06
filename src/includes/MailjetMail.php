@@ -115,7 +115,7 @@ class MailjetMail
         if ($pagenow == 'index.php') {
             $user = wp_get_current_user();
             if ($user->exists()) {
-                echo '<div class="notice notice-error is-dismissible">' . __('Email sending failed. Please review your smtp configuration and try again later', 'wp-mailjet') . '</div>';
+                echo '<div class="notice notice-error is-dismissible">' . __('Email sending failed. Please review your smtp configuration and try again later', 'mailjet-for-wordpress') . '</div>';
             }
         }
     }
@@ -123,14 +123,15 @@ class MailjetMail
     public static function sendTestEmail()
     {
         $testSent = false;
-        if (empty(get_option('mailjet_test_address'))) {
+        $mailjetTestAddress = get_option('mailjet_test_address');
+        if (empty($mailjetTestAddress)) {
             //MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Missing email address to send test email to ]');
             return;
         }
         // Send a test mail
         add_filter('wp_mail_content_type', array('MailjetPlugin\Includes\MailjetMail', 'set_html_content_type'));
-        $subject = __('Your test mail from Mailjet', 'wp-mailjet');
-        $message = sprintf(__('Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port: %s', 'wp-mailjet'), get_home_url(), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
+        $subject = __('Your test mail from Mailjet', 'mailjet-for-wordpress');
+        $message = sprintf(__('Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port: %s', 'mailjet-for-wordpress'), get_home_url(), (get_option('mailjet_ssl') ? 'On' : 'Off'), get_option('mailjet_port'));
         $testSent = wp_mail(get_option('mailjet_test_address'), $subject, $message);
         return $testSent;
     }

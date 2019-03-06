@@ -2,9 +2,9 @@
 
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
-Requires at least: 3.3.0
-Tested up to: 5.0.3
-Stable tag: 5.0.6
+Requires at least: 3.9
+Tested up to: 5.1
+Stable tag: 5.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,6 +180,28 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 == Changelog ==
+
+= 5.0.10 =
+* Fix subscription confirmation URL for custom thank you page
+
+= 5.0.9 =
+* Remove css and js public files to reduce public page speed loading
+* Wordpress widget is now working on wordpress version < 4.4
+* Prevent fatal error on api timeout
+* Add missing translations
+
+= 5.0.8 =
+* Improve advanced options popup style
+* Boolean type property is now checkbox
+* Check requirements on activation
+* Simplify onboarding UX
+* Improve settings
+* Advanced customisation link is always visible
+* Added link to "Setup account" inside the Plugins section
+* Improve compatibility with WP versions < 5.7
+
+= 5.0.7 =
+* Fix 'thank you' page url when moving the blog across domains
 
 = 5.0.6 =
 * Allow logged in WooCommerce customers to subscribe to the newsletter during checkout.
