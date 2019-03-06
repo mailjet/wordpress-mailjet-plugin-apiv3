@@ -2,7 +2,6 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use Analog\Handler\Mail;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
@@ -400,14 +399,14 @@ class SubscriptionOptionsSettings
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
 
-        // Check if subscription is done via home page or some post
-        $confirmUrl = $thankYouURI == $homeUrl ? '?' : '&';
+        $permalinkStructure = get_option('permalink_structure');
+        $qm = ("" === $permalinkStructure) ? '&' : '?';
 
         $emailData = array(
             '__EMAIL_TITLE__' => $email_title,
             '__EMAIL_HEADER__' => $email_main_text,
             '__WP_URL__' => $homeUrl,
-            '__CONFIRM_URL__' => $thankYouURI . $confirmUrl . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
+            '__CONFIRM_URL__' => $thankYouURI . $qm . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => $homeUrl, //get_option('blogname'),
             '__IGNORE__' => $email_content_after_button,
