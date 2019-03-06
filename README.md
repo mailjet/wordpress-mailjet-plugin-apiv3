@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 - Requires at least: 3.9
 - Tested up to: 5.1
-- Stable tag: 5.0.9
+- Stable tag: 5.0.10
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -171,6 +171,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 ## Changelog
+
+##### 5.0.10
+* Fix subscription confirmation URL for custom thank you page
 
 ##### 5.0.9
 * Remove css and js public files to reduce public page speed loading
