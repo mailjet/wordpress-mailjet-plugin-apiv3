@@ -400,7 +400,11 @@ class SubscriptionOptionsSettings
         $message = file_get_contents($subscriptionTemplate);
 
         $permalinkStructure = get_option('permalink_structure');
-        $qm = ("" === $permalinkStructure) ? '&' : '?';
+        if (!$thankYouPageId) {
+            $qm = '?';
+        } else {
+            $qm = ("" === $permalinkStructure) ? '&' : '?';
+        }
 
         $emailData = array(
             '__EMAIL_TITLE__' => $email_title,
