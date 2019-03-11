@@ -31,8 +31,20 @@ class InitialContactListsSettings
         <?php
     }
 
+    private function updateMailjetProfileName()
+    {
+        $profileName = get_option('mj_profile_name');
+        $newProfileName = MailjetApi::getProfileName();
+        if (!$profileName) {
+            add_option('mj_profile_name', $newProfileName);
+        } else {
+            update_option('mj_profile_name', $newProfileName);
+        }
+    }
+
     public function mailjet_initial_contact_lists_cb($args)
     {
+        $this->updateMailjetProfileName();
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
