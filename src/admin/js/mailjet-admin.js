@@ -30,6 +30,13 @@
      */
     jQuery(document).ready(function ($) {
 
+        $('#copy_properties').on("click", function () {
+            console.log("clicked");
+            const text = document.querySelector('#cf7_contact_properties');
+            text.select();
+            document.execCommand("copy");
+        });
+
         $('.mailjet_row [scope=row]').closest('th').hide();
 
         /**
@@ -316,8 +323,8 @@ function mjAdmin() {
     mjInitShowHide();
     mjSelect();
     if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page')
-        || document.querySelector('body.admin_page_mailjet_subscription_options_page')
-        || document.querySelector('body.admin_page_mailjet_integrations_page')) {
+            || document.querySelector('body.admin_page_mailjet_subscription_options_page')
+            || document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjSubscription();
     }
     if (document.querySelector('body.admin_page_mailjet_integrations_page')) {
