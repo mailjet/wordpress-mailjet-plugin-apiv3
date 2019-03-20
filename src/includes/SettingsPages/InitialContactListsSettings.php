@@ -31,6 +31,13 @@ class InitialContactListsSettings
         <?php
     }
 
+    private function createMailjetContactPropertiesThatWpSync()
+    {
+        MailjetApi::createMailjetContactProperty('firstname');
+        MailjetApi::createMailjetContactProperty('lastname');
+        MailjetApi::createMailjetContactProperty('wp_user_role');
+    }
+
     public function mailjet_initial_contact_lists_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
@@ -43,6 +50,7 @@ class InitialContactListsSettings
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
             die;
         }
+        $this->createMailjetContactPropertiesThatWpSync();
 
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
