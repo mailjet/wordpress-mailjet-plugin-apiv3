@@ -26,7 +26,7 @@ class Dashboard
     public function mailjet_dashboard_page_html()
     {
         // check user capabilities
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
