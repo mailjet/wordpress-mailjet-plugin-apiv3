@@ -148,7 +148,7 @@ class EnableSendingSettings
 
 
         // check user capabilities
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }

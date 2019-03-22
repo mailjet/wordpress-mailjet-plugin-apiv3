@@ -82,7 +82,7 @@ class IntegrationsSettings
         $mailjetContactLists = MailjetApi::getMailjetContactLists();
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $this->wooIntegration($mailjetContactLists);
-        $this->cf7Integration($mailjetContactLists);
+//        $this->cf7Integration($mailjetContactLists);
         ?><input name="settings_step" type="hidden" id="settings_step" value="integrations_step"><?php
     }
 
@@ -151,7 +151,7 @@ class IntegrationsSettings
     public function mailjet_integrations_page_html()
     {
         // check user capabilities
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
