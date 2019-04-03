@@ -82,7 +82,7 @@ class IntegrationsSettings
         $mailjetContactLists = MailjetApi::getMailjetContactLists();
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $this->wooIntegration($mailjetContactLists);
-//        $this->cf7Integration($mailjetContactLists);
+        $this->cf7Integration($mailjetContactLists);
         ?><input name="settings_step" type="hidden" id="settings_step" value="integrations_step"><?php
     }
 
@@ -137,8 +137,10 @@ class IntegrationsSettings
                 </div>
                 <div>
                     <div><span><?php _e('To enable the integration, include the following shortcode to your contact form:', 'mailjet') ?></span></div>
-                    <input name="cf7_contact_properties" id="cf7_contact_properties" value='[checkbox mailjet-opt-in default:0 "Subscribe to our newsletter"]' class="widefat" disabled="disabled"/>
-                    <button id="copy_properties" type="button">copy</button>
+                    <div>
+                        <input name="cf7_contact_properties" id="cf7_contact_properties" value='[checkbox mailjet-opt-in default:0 class:cf7_mailjet_checkbox "Subscribe to our newsletter"]' class="widefat" disabled="disabled"/>
+                        <button id="copy_properties" type="button">copy</button>
+                    </div>
                 </div>
             </div>
         </fieldset><?php

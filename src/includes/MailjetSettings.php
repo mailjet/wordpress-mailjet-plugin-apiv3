@@ -7,6 +7,7 @@ use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
+use MailjetPlugin\Includes\SettingsPages\ContactFormSettings;
 use MailjetPlugin\Includes\SettingsPages\CommentAuthorsSettings;
 
 //use MailjetPlugin\Includes\Mailjeti18n;
@@ -180,6 +181,12 @@ class MailjetSettings
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
 
+        $isContactFormActivated = get_option('activate_mailjet_cf7_integration');
+        $cfList = get_option('mailjet_cf7_list');
+        if($isContactFormActivated && $cfList) {
+            $contactFormSettings = new ContactFormSettings();
+            add_action( 'wpcf7_submit', array($contactFormSettings, 'sendConfirmationEmail'));
+        }
 
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
         add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
