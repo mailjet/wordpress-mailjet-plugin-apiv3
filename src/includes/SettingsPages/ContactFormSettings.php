@@ -44,13 +44,18 @@ class ContactFormSettings
             $name = $formdata[$cf7_name];
             $mailjetCF7List = get_option('mailjet_cf7_list');
 
+            $params = http_build_query(array(
+                'cf7list' => $mailjetCF7List,
+                'email' => $email,
+                'username' => $name,
+            ));
             $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
             $message = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
             $emailParams = array(
                 '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
                 '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
                 '__WP_URL__' => $wpUrl,
-                '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $mailjetCF7List . '&user_email=' . $email . '&name=' . $name . '&mj_sub_woo_token=' . sha1($mailjetCF7List . $email . $email . $name),
+                '__CONFIRM_URL__' => get_home_url() . '?'.$params.'&token=' . sha1($params),
                 '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'),
                 '__FROM_NAME__' => get_option('blogname'),
                 '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'),
