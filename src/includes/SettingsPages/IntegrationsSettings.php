@@ -230,7 +230,7 @@ class IntegrationsSettings
                     <div class="right">
                         <div class="centered">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                            <h2 class="section_inner_title"><?php echo __('Integrations', 'mailjet-for-wordpress'); ?></h2>
+                            <h2 class="section_inner_title"><?php _e('Integrations', 'mailjet-for-wordpress'); ?></h2>
                             <form action="options.php" method="post">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
