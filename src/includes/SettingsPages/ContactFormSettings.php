@@ -8,9 +8,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use MailjetPlugin\Includes\MailjetApi;
-//use MailjetPlugin\Includes\MailjetApi;
-//use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 /**
  * Description of ContactFormSettings
  *
@@ -40,9 +38,7 @@ class ContactFormSettings
         $mailjetCheckbox = $formdata[self::MAILJET_CHECKBOX];
         if ($mailjetCheckbox != '') {
             $cf7_email = trim(get_option('cf7_email'), '[]');
-//            $name = trim(get_option('cf7_fromname'), '[]');
             $email = $formdata[$cf7_email];
-//            $name = $formdata[$cf7_name];
 
             $cf7name = get_option('cf7_fromname');
             $matches = array();
