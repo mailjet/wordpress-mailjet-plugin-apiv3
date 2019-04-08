@@ -8,6 +8,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use MailjetPlugin\Includes\MailjetApi;
 //use MailjetPlugin\Includes\MailjetApi;
 //use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 /**
@@ -39,15 +40,30 @@ class ContactFormSettings
         $mailjetCheckbox = $formdata[self::MAILJET_CHECKBOX];
         if ($mailjetCheckbox != '') {
             $cf7_email = trim(get_option('cf7_email'), '[]');
-            $cf7_name = trim(get_option('cf7_fromname'), '[]');
+//            $name = trim(get_option('cf7_fromname'), '[]');
             $email = $formdata[$cf7_email];
-            $name = $formdata[$cf7_name];
+//            $name = $formdata[$cf7_name];
+
+            $cf7name = get_option('cf7_fromname');
+            $matches = array();
+            $data = array();
+            preg_match_all('/\[(.*?)\]/', $cf7name, $matches);
+
+            if (!$matches[0] && !$matches[1]) {
+                return false;
+            }
+
+            foreach($matches[1] as $match) {
+                $data[] = $formdata[$match];
+            }
+
+            $newphrase = str_replace($matches[0], $data, $cf7name);
             $mailjetCF7List = get_option('mailjet_cf7_list');
 
             $params = http_build_query(array(
                 'cf7list' => $mailjetCF7List,
                 'email' => $email,
-                'username' => $name,
+                'prop' => $newphrase,
             ));
             $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
             $message = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');

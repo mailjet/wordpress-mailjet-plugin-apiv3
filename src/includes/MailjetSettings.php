@@ -183,7 +183,7 @@ class MailjetSettings
         $isContactFormActivated = get_option('activate_mailjet_cf7_integration');
         $cfList = get_option('mailjet_cf7_list');
         if ($isContactFormActivated && $cfList) {
-            $this->activateCfUrl($cfList);
+            $this->activateCf7Url($cfList);
         }
 
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
@@ -199,7 +199,7 @@ class MailjetSettings
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - End ]');
     }
 
-    private function activateCfUrl($contactListId)
+    private function activateCf7Url($contactListId)
     {
         $locale = Mailjeti18n::getLocale();
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
@@ -208,19 +208,19 @@ class MailjetSettings
         add_action('wpcf7_submit', array($contactFormSettings, 'sendConfirmationEmail'));
         if (!empty($_GET['cf7list']) && $_GET['cf7list'] === $contactListId) {
 
-            if (empty($_GET['email']) || empty($_GET['username'])) {
+            if (empty($_GET['email']) || empty($_GET['prop'])) {
                 echo $technicalIssue;
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 die;
             }
 
             $email = $_GET['email'];
-            $username = $_GET['username'];
+            $name = $_GET['prop'];
 
             $params = http_build_query(array(
                 'cf7list' => $contactListId,
                 'email' => $email,
-                'username' => $username
+                'prop' => $name
             ));
 
             if (sha1($params) !== $_GET['token']) {
@@ -229,7 +229,8 @@ class MailjetSettings
 
             $contact = array();
             $contact['Email'] = $email;
-            $contact['Properties']['firstname'] = $username;
+            $contact['Properties']['name'] = $name;
+            MailjetApi::createMailjetContactProperty('name');
             $result = MailjetApi::syncMailjetContact($contactListId, $contact);
             if (!$result) {
                 echo $technicalIssue;
