@@ -82,7 +82,7 @@ class IntegrationsSettings
         $mailjetContactLists = MailjetApi::getMailjetContactLists();
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $this->wooIntegration($mailjetContactLists);
-//        $this->cf7Integration($mailjetContactLists);
+        $this->cf7Integration($mailjetContactLists);
         ?><input name="settings_step" type="hidden" id="settings_step" value="integrations_step"><?php
     }
 
@@ -112,8 +112,9 @@ class IntegrationsSettings
                 </label>-->
 
                 <!--<div id="woo_contact_list" class="<?php echo ($mailjetCF7IntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_cf7_div">-->
-                <div id="woo_contact_list" >
-                    <label><?php _e('Mailjet list', 'mailjet') ?></label>
+                <div id="mj-select-block">
+                    <label for="mailjet_cf7_list" class="cf7_input_label"><?php _e('Mailjet list', 'mailjet') ?></label>
+                    <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
                     <select class="mj-select" name="mailjet_cf7_list" id="mailjet_cf7_list" type="select" <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?>>
                         <option value="0"><?php _e('Select a list', 'mailjet') ?></option>
                         <?php
@@ -128,17 +129,21 @@ class IntegrationsSettings
                     </select>
                 </div>
                 <div>
-                    <label><?php _e('Email field tag', 'mailjet') ?></label>
-                    <input name="cf7_email" id="cf7_email" value="<?php echo $email ?>" placeholder="<?php _e('i.e. [your-email]', 'mailjet') ?>" class="widefat" />
+                    <label for="cf7_email" class="cf7_input_label"><?php _e('Email field tag', 'mailjet') ?></label>
+                    <input name="cf7_email" id="cf7_email" value="<?php echo $email ?>" placeholder="<?php _e('e.g. [your-email]', 'mailjet') ?>" class="widefat cf7_input" />
                 </div>
                 <div>
-                    <label><?php _e('Name field tag (optional)', 'mailjet') ?></label>
-                    <input name="cf7_fromname" id="cf7_fromname" value="<?php echo $from ?>" placeholder="<?php _e('i.e. [your-name]', 'mailjet') ?>" class="widefat" />
+                    <label for="cf7_fromname" class="cf7_input_label"><?php _e('Name field tag (optional)', 'mailjet') ?></label>
+                    <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
+                    <input name="cf7_fromname" id="cf7_fromname" value="<?php echo $from ?>" placeholder="<?php _e('e.g. [your-name]', 'mailjet') ?>" class="widefat cf7_input" />
                 </div>
                 <div>
-                    <div><span><?php _e('To enable the integration, include the following shortcode to your contact form:', 'mailjet') ?></span></div>
-                    <input name="cf7_contact_properties" id="cf7_contact_properties" value='[checkbox mailjet-opt-in default:0 "Subscribe to our newsletter"]' class="widefat" disabled="disabled"/>
-                    <button id="copy_properties" type="button">copy</button>
+                    <!--<div><span><?php _e('To enable the integration, include the following shortcode to your contact form:', 'mailjet') ?></span></div>-->
+                    <div><span><?php _e('Include the following shortcode in your contact form in order to display the newsletter subscription checkbox and complete the integration.', 'mailjet') ?></span></div>
+                    <div class="mj-copy-wrapper">
+                        <input name="cf7_contact_properties" id="cf7_contact_properties" value='[checkbox mailjet-opt-in default:0 "Subscribe to our newsletter"]' class="widefat cf7_input" disabled="disabled"/>
+                        <i class="fa fa-copy mj-copy-icon" id="copy_properties" ></i>
+                    </div>
                 </div>
             </div>
         </fieldset><?php
@@ -228,7 +233,7 @@ class IntegrationsSettings
                     <div class="right">
                         <div class="centered">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                            <h2 class="section_inner_title"><?php echo __('Integrations', 'mailjet-for-wordpress'); ?></h2>
+                            <h2 class="section_inner_title"><?php _e('Integrations', 'mailjet-for-wordpress'); ?></h2>
                             <form action="options.php" method="post">
                                 <?php
                                 // output security fields for the registered setting "mailjet"

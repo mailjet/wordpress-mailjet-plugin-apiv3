@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 .mj-connect-link{
     margin-top:64px!important;
 }
@@ -931,4 +932,66 @@
 
 .allsetup .allsetupGreenLinkDiv{
 
+}
+
+.cf7_input{
+    width: 100%;
+    padding: 12px;
+    /*margin: 8px 0;*/
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    height: 36px;
+    border: 1px solid #888;
+}
+
+.cf7_input_label {
+    font-weight: 500!important;
+    padding-bottom: 0px;
+}
+
+#mj-select-block .mj-select-wrapper{
+    display: block!important;
+}
+
+#cf7_contact_properties:after{
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: calc(100% / 2);
+    z-index: 2;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid solid none solid;
+    border-width: 5px 4px 0 4px;
+    border-color: #555 transparent transparent transparent;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.mj-copy-wrapper{
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    /*width: 120px;*/
+    position: relative;
+}
+
+.mj-select-wrapper select{
+    width: 100%;
+}
+
+.mj-copy-icon {
+    /*padding: 10px;*/
+    background: transparent;
+    color: #666;
+    width: 22px;
+    text-align: center;
+    position: absolute;
+    /*right: calc(100% / 2);*/
+    left: calc(95%);
+    top: calc(100%/5);
+    padding-right: 8px;
+    cursor: pointer;
 }
