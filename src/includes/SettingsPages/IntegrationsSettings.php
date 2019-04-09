@@ -113,10 +113,10 @@ class IntegrationsSettings
 
                 <!--<div id="woo_contact_list" class="<?php echo ($mailjetCF7IntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_cf7_div">-->
                 <div id="mj-select-block">
-                    <label for="mailjet_cf7_list" class="cf7_input_label"><?php _e('Mailjet list', 'mailjet') ?></label>
+                    <label for="mailjet_cf7_list" class="cf7_input_label"><?php _e('Mailjet list', 'mailjet-for-wordpress') ?></label>
                     <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
                     <select class="mj-select" name="mailjet_cf7_list" id="mailjet_cf7_list" type="select" <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?>>
-                        <option value="0"><?php _e('Select a list', 'mailjet') ?></option>
+                        <option value="0"><?php _e('Select a list', 'mailjet-for-wordpress') ?></option>
                         <?php
                         foreach ($mailjetContactLists as $mailjetContactList) {
                             if ($mailjetContactList["IsDeleted"] == true) {
@@ -234,6 +234,8 @@ class IntegrationsSettings
                         <div class="centered">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
                             <h2 class="section_inner_title"><?php _e('Integrations', 'mailjet-for-wordpress'); ?></h2>
+                            <p><?php _e('Enable and cofigure Mailjet integrations with other Wordpress plugins', 'mailjet-for-wordpress') ?></p>
+                            <hr>
                             <form action="options.php" method="post">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
