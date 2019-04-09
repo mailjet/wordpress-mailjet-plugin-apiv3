@@ -7,7 +7,7 @@ use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
-use MailjetPlugin\Includes\SettingsPages\ContactFormSettings;
+use MailjetPlugin\Includes\SettingsPages\ContactForm7Settings;
 use MailjetPlugin\Includes\SettingsPages\CommentAuthorsSettings;
 use MailjetPlugin\Includes\Mailjeti18n;
 
@@ -99,16 +99,16 @@ class MailjetSettings
         $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
         if (in_array($currentPage, array(
-                    'mailjet_allsetup_page',
-                    'mailjet_dashboard_page',
-                    'mailjet_user_access_page',
-                    'mailjet_integrations_page',
-                    'mailjet_subscription_options_page',
-                    'mailjet_sending_settings_page',
-                    'mailjet_connect_account_page',
-                    'mailjet_initial_contact_lists_page',
-                    'mailjet_settings_page'
-                ))) {
+                'mailjet_allsetup_page',
+                'mailjet_dashboard_page',
+                'mailjet_user_access_page',
+                'mailjet_integrations_page',
+                'mailjet_subscription_options_page',
+                'mailjet_sending_settings_page',
+                'mailjet_connect_account_page',
+                'mailjet_initial_contact_lists_page',
+                'mailjet_settings_page'
+            ))) {
             $apiCredentialsOk = get_option('api_credentials_ok');
             if (!($fromPage == 'plugins') && !empty($apiCredentialsOk) && '1' != $apiCredentialsOk) {
                 MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
@@ -204,8 +204,8 @@ class MailjetSettings
         $locale = Mailjeti18n::getLocale();
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
-        $contactFormSettings = new ContactFormSettings();
-        add_action('wpcf7_submit', array($contactFormSettings, 'sendConfirmationEmail'));
+        $contactForm7Settings = new ContactForm7Settings();
+        add_action('wpcf7_submit', array($contactForm7Settings, 'sendConfirmationEmail'));
         if (!empty($_GET['cf7list']) && $_GET['cf7list'] === $contactListId) {
 
             if (empty($_GET['email']) || empty($_GET['prop'])) {

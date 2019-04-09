@@ -10,11 +10,11 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 /**
- * Description of ContactFormSettings
+ * Description of ContactForm7Settings
  *
  * @author g.nikolov
  */
-class ContactFormSettings
+class ContactForm7Settings
 {
 
     const MAILJET_CHECKBOX = 'mailjet-opt-in';
