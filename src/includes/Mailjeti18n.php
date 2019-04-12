@@ -248,9 +248,9 @@ class Mailjeti18n
 
     private static function getTranslationFile($filename)
     {
-        if (file_exists(self::$defaultLanguagesDir . $filename)){
+        if (file_exists(self::$customLanguagesDir . $filename)){
             return self::$defaultLanguagesDir . $filename;
-        }elseif (file_exists(self::$customLanguagesDir . $filename)){
+        }elseif (file_exists(self::$defaultLanguagesDir . $filename)){
             return self::$customLanguagesDir . $filename;
         }
 
