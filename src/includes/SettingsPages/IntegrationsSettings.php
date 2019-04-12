@@ -104,8 +104,8 @@ class IntegrationsSettings
                 <span><?php _e('Enable Contact Form 7 integration', 'mailjet-for-wordpress'); ?></span>
             </label>
 
-<!--        <div id="activate_mailjet_cf7_form" class="<?=($mailjetCF7IntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?> >"-->
-            <div id="activate_mailjet_cf7_form" >
+        <div id="activate_mailjet_cf7_form" class="<?=($mailjetCF7IntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?> ">
+            <!--<div id="activate_mailjet_cf7_form" >-->
 <!--                <label class="checkboxLabel">
                     <input name="activate_mailjet_cf7_sync" type="checkbox" id="activate_mailjet_cf7_sync" value="1" <?php echo ($mailjetCF7IntegrationActivated == 1 ? ' checked="checked"' : '') ?> <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?> autocomplete="off">
                     <span><?php _e('Display "Subscribe to our newsletter" checkbox in the checkout page and add subscibers to this list', 'mailjet-for-wordpress'); ?></span>
@@ -116,7 +116,7 @@ class IntegrationsSettings
                     <label for="mailjet_cf7_list" class="cf7_input_label"><?php _e('Mailjet list', 'mailjet-for-wordpress') ?></label>
                     <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
                     <select class="mj-select" name="mailjet_cf7_list" id="mailjet_cf7_list" type="select" <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?>>
-                        <option value="0"><?php _e('Select a list', 'mailjet-for-wordpress') ?></option>
+                        <!--<option value="0"><?php _e('Select a list', 'mailjet-for-wordpress') ?></option>-->
                         <?php
                         foreach ($mailjetContactLists as $mailjetContactList) {
                             if ($mailjetContactList["IsDeleted"] == true) {

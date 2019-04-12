@@ -995,3 +995,7 @@
     padding-right: 8px;
     cursor: pointer;
 }
+
+.mj-missing-required-input{
+    border: 1px solid red;
+}

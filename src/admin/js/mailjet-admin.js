@@ -233,6 +233,30 @@ function mjSubscription() {
     });
 }
 
+function mjCF7Subscription() {
+    const activateCF7IntegrationBox = document.querySelector('#activate_mailjet_cf7_integration');
+    const cf7ActicateIntegrationForm = document.querySelector('#activate_mailjet_cf7_form');
+
+    if (activateCF7IntegrationBox === null || activateCF7IntegrationBox === undefined) {
+        return false;
+    }
+
+    activateCF7IntegrationBox.addEventListener("change", function () {
+        this.checked === true ? mjShow(cf7ActicateIntegrationForm) : mjHide(cf7ActicateIntegrationForm);
+    });
+
+    const saveButton = document.getElementById('integrationsSubmit');
+    const cf7email = document.getElementById('cf7_email');
+
+    saveButton.addEventListener("click", function (e) {
+        if(cf7email.value === '') {
+            cf7email.className+= ' mj-missing-required-input';
+            e.preventDefault();
+            return false;
+        }
+
+    });
+}
 
 function mjWooSubscription() {
 
@@ -331,6 +355,7 @@ function mjAdmin() {
     }
     if (document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjWooSubscription();
+        mjCF7Subscription();
     }
     document.querySelector('body.admin_page_mailjet_sending_settings_page') && mjSendingSettings();
 }
