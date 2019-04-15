@@ -26,8 +26,8 @@ class Mailjeti18n
         'Italian' => 'it_IT',
     );
 
-    private static $defaultLanguagesDir = (WP_PLUGIN_DIR) .DIRECTORY_SEPARATOR.'mailjet-for-wordpress'.DIRECTORY_SEPARATOR.'languages'.DIRECTORY_SEPARATOR;
-    private static $customLanguagesDir = (WP_CONTENT_DIR) .DIRECTORY_SEPARATOR. 'languages'. DIRECTORY_SEPARATOR .'plugins'.DIRECTORY_SEPARATOR;
+    const DEFAULT_LANGUAGE_DIR = (WP_PLUGIN_DIR) .DIRECTORY_SEPARATOR.'mailjet-for-wordpress'.DIRECTORY_SEPARATOR.'languages'.DIRECTORY_SEPARATOR;
+    const CUSTOM_LANGUAGE_DIR = (WP_CONTENT_DIR) .DIRECTORY_SEPARATOR. 'languages'. DIRECTORY_SEPARATOR .'plugins'.DIRECTORY_SEPARATOR;
 
     /**
      * Load the plugin text domain for translation.
@@ -36,7 +36,7 @@ class Mailjeti18n
      */
     public function load_plugin_textdomain()
     {
-        load_plugin_textdomain('mailjet-for-wordpress', false, self::$defaultLanguagesDir);
+        load_plugin_textdomain('mailjet-for-wordpress', false, self::DEFAULT_LANGUAGE_DIR);
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
     }
 
@@ -55,6 +55,11 @@ class Mailjeti18n
         }
 
         $filePo = self::getTranslationFile('mailjet-for-wordpress-' . $locale . '.po');
+        if ($filePo === false) {
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ File could\'t be found ] ');
+            return false;
+        }
+
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
 
         // Parse a po file
@@ -130,8 +135,10 @@ class Mailjeti18n
         if (empty($customLocales)){
             return self::$supportedLocales;
         }
+        $result = array_merge($customLocales, self::$supportedLocales);
+        $result = array_unique($result);
 
-        return array_merge(self::$supportedLocales, $customLocales);
+        return array_reverse($result, true);
     }
 
     /**
@@ -248,10 +255,14 @@ class Mailjeti18n
 
     private static function getTranslationFile($filename)
     {
-        if (file_exists(self::$customLanguagesDir . $filename)){
-            return self::$defaultLanguagesDir . $filename;
-        }elseif (file_exists(self::$defaultLanguagesDir . $filename)){
-            return self::$customLanguagesDir . $filename;
+        $customFIleInfo = new \SplFileInfo(self::CUSTOM_LANGUAGE_DIR . $filename);
+        if ($customFIleInfo->isFile() && $customFIleInfo->isWritable()){
+            return $customFIleInfo->getRealPath();
+        }else{
+            $defaultFileInfo = new \SplFileInfo( self::DEFAULT_LANGUAGE_DIR . $filename);
+            if ($defaultFileInfo->isFile() && $defaultFileInfo->isWritable()){
+                return $defaultFileInfo->getRealPath();
+            }
         }
 
         return false;
