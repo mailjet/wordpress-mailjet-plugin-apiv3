@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2019-04-09 13:42+0300\n"
-"PO-Revision-Date: 2019-04-09 13:46+0300\n"
+"POT-Creation-Date: 2019-04-15 16:12+0300\n"
+"PO-Revision-Date: 2019-04-15 16:20+0300\n"
 "Last-Translator: \n"
 "Language-Team: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language: fr_FR\n"
@@ -289,14 +289,14 @@ msgid "Invalid email"
 msgstr ""
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:97
-#: src/includes/SettingsPages/ContactForm7Settings.php:67
+#: src/includes/SettingsPages/ContactForm7Settings.php:69
 #: src/includes/SettingsPages/WooCommerceSettings.php:114
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:537
 msgid "Please confirm your subscription"
 msgstr "Confirmez votre abonnement"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:98
-#: src/includes/SettingsPages/ContactForm7Settings.php:68
+#: src/includes/SettingsPages/ContactForm7Settings.php:70
 #: src/includes/SettingsPages/WooCommerceSettings.php:115
 #, php-format
 msgid ""
@@ -307,14 +307,14 @@ msgstr ""
 "cliquant sur le bouton suivant :"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:101
-#: src/includes/SettingsPages/ContactForm7Settings.php:71
+#: src/includes/SettingsPages/ContactForm7Settings.php:73
 #: src/includes/SettingsPages/WooCommerceSettings.php:118
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:541
 msgid "Yes, subscribe me to this list"
 msgstr "Oui, abonnez-moi à cette liste"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:103
-#: src/includes/SettingsPages/ContactForm7Settings.php:73
+#: src/includes/SettingsPages/ContactForm7Settings.php:75
 #: src/includes/SettingsPages/WooCommerceSettings.php:120
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
@@ -324,7 +324,7 @@ msgstr ""
 "abonner, ignorer simplement cet email."
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:109
-#: src/includes/SettingsPages/ContactForm7Settings.php:79
+#: src/includes/SettingsPages/ContactForm7Settings.php:81
 #: src/includes/SettingsPages/WooCommerceSettings.php:126
 msgid "Subscription Confirmation"
 msgstr "Confirmation d'inscription"
@@ -707,7 +707,7 @@ msgstr ""
 #: src/includes/SettingsPages/IntegrationsSettings.php:48
 #, fuzzy
 #| msgid "Enable WooCommerce integration"
-msgid "WooCommerce integration"
+msgid "WooCommerce"
 msgstr "Activer l'intégration WooCommerce"
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:52
@@ -726,14 +726,12 @@ msgstr ""
 #: src/includes/SettingsPages/IntegrationsSettings.php:100
 #, fuzzy
 #| msgid "Enable WooCommerce integration"
-msgid "Contact Form 7 integration"
+msgid "Contact Form 7"
 msgstr "Activer l'intégration WooCommerce"
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:104
-#, fuzzy
-#| msgid "Enable WooCommerce integration"
 msgid "Enable Contact Form 7 integration"
-msgstr "Activer l'intégration WooCommerce"
+msgstr "Activer l'intégration Contact Form 7"
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:116
 msgid "Mailjet list"

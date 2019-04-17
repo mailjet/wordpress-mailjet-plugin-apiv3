@@ -40,17 +40,19 @@ class ContactForm7Settings
             $cf7_email = trim(get_option('cf7_email'), '[]');
             $email = $formdata[$cf7_email];
 
-            $cf7name = get_option('cf7_fromname');
+            $cf7name = get_option('cf7_fromname', '');
             $matches = array();
             $data = array();
             preg_match_all('/\[(.*?)\]/', $cf7name, $matches);
 
-            if (!$matches[0] && !$matches[1]) {
-                return false;
-            }
+//            if (!$matches[0] && !$matches[1]) {
+//                return false;
+//            }
 
-            foreach($matches[1] as $match) {
-                $data[] = $formdata[$match];
+            if(!empty($matches[1])) {
+                foreach($matches[1] as $match) {
+                    $data[] = $formdata[$match];
+                }
             }
 
             $newphrase = str_replace($matches[0], $data, $cf7name);
