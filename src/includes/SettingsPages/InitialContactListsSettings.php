@@ -31,8 +31,27 @@ class InitialContactListsSettings
         <?php
     }
 
+    private function updateMailjetProfileName()
+    {
+        $profileName = get_option('mj_profile_name');
+        $newProfileName = MailjetApi::getProfileName();
+        if (!$profileName) {
+            add_option('mj_profile_name', $newProfileName);
+        } else {
+            update_option('mj_profile_name', $newProfileName);
+        }
+    }
+
+    private function createMailjetContactPropertiesThatWpSync()
+    {
+        MailjetApi::createMailjetContactProperty('firstname');
+        MailjetApi::createMailjetContactProperty('lastname');
+        MailjetApi::createMailjetContactProperty('wp_user_role');
+    }
+
     public function mailjet_initial_contact_lists_cb($args)
     {
+        $this->updateMailjetProfileName();
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
@@ -43,6 +62,7 @@ class InitialContactListsSettings
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
             die;
         }
+        $this->createMailjetContactPropertiesThatWpSync();
 
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
@@ -139,7 +159,7 @@ class InitialContactListsSettings
 
 
         // check user capabilities
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }

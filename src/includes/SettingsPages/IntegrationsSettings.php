@@ -30,29 +30,22 @@ class IntegrationsSettings
 <!--        --><?php
     }
 
-
-    public function mailjet_integrations_cb($args)
+    private function wooIntegration($mailjetContactLists)
     {
-        // get the value of the setting we've registered with register_setting()
-        $mailjetContactLists = MailjetApi::getMailjetContactLists();
-        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetWooList = get_option('mailjet_woo_list');
         $mailjetWooSyncActivated = get_option('activate_mailjet_woo_sync');
         $mailjetWooIntegrationActivated = get_option('activate_mailjet_woo_integration');
-
         $wooCommerceNotInstalled = false;
-        if (!class_exists('WooCommerce')) { // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
+        // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
+        if (!class_exists('WooCommerce')) { 
             delete_option('activate_mailjet_woo_integration');
             delete_option('activate_mailjet_woo_sync');
             delete_option('mailjet_woo_list');
             $wooCommerceNotInstalled = true;
         }
-
-        // output the field
         ?>
-
         <fieldset class="settingsSubscrFldset">
-                <legend style="font-weight: bold; padding: 10px 10px 10px 0;"><?php  _e('WooCommerce integration', 'mailjet'); ?></legend>
+                <legend style="font-weight: bold; padding: 10px 10px 10px 0;"><?php  _e('WooCommerce', 'mailjet-for-wordpress'); ?></legend>
 
             <label class="checkboxLabel">
                 <input name="activate_mailjet_woo_integration" type="checkbox" id="activate_mailjet_woo_integration" value="1" <?php echo ($mailjetWooIntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($wooCommerceNotInstalled == true ? ' disabled="disabled"' : '') ?>  autocomplete="off">
@@ -79,15 +72,82 @@ class IntegrationsSettings
                     </select>
                 </div>
             </div>
-        </fieldset>
-
-        <input name="settings_step" type="hidden" id="settings_step" value="integrations_step">
-
+        </fieldset
         <?php
     }
 
+    public function mailjet_integrations_cb($args)
+    {
+        // get the value of the setting we've registered with register_setting()
+        $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
+        $this->wooIntegration($mailjetContactLists);
+        $this->cf7Integration($mailjetContactLists);
+        ?><input name="settings_step" type="hidden" id="settings_step" value="integrations_step"><?php
+    }
 
+    private function cf7Integration($mailjetContactLists)
+    {
+        $mailjetCF7IntegrationActivated = get_option('activate_mailjet_cf7_integration');
+        $mailjetCF7List = get_option('mailjet_cf7_list');
+        $email = get_option('cf7_email');
+        $from = get_option('cf7_fromname');
+//        $mailjetCF7SyncActivated = get_option('activate_mailjet_cf7_sync');
 
+        $isCF7Installed = class_exists('WPCF7') ? true : false;
+        ?>
+        <fieldset class="settingsSubscrFldset">
+                <legend style="font-weight: bold; padding: 10px 10px 10px 0;"><?php  _e('Contact Form 7', 'mailjet-for-wordpress'); ?></legend>
+
+            <label class="checkboxLabel">
+                <input name="activate_mailjet_cf7_integration" type="checkbox" id="activate_mailjet_cf7_integration" value="1" <?php echo ($mailjetCF7IntegrationActivated == 1 ? ' checked="checked"' : '') ?>  <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?>  autocomplete="off">
+                <span><?php _e('Enable Contact Form 7 integration', 'mailjet-for-wordpress'); ?></span>
+            </label>
+
+        <div id="activate_mailjet_cf7_form" class="<?=($mailjetCF7IntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?> ">
+            <!--<div id="activate_mailjet_cf7_form" >-->
+<!--                <label class="checkboxLabel">
+                    <input name="activate_mailjet_cf7_sync" type="checkbox" id="activate_mailjet_cf7_sync" value="1" <?php echo ($mailjetCF7IntegrationActivated == 1 ? ' checked="checked"' : '') ?> <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?> autocomplete="off">
+                    <span><?php _e('Display "Subscribe to our newsletter" checkbox in the checkout page and add subscibers to this list', 'mailjet-for-wordpress'); ?></span>
+                </label>-->
+
+                <!--<div id="woo_contact_list" class="<?php echo ($mailjetCF7IntegrationActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_cf7_div">-->
+                <div id="mj-select-block">
+                    <label for="mailjet_cf7_list" class="cf7_input_label"><?php _e('Mailjet list', 'mailjet-for-wordpress') ?></label>
+                    <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
+                    <select class="mj-select" name="mailjet_cf7_list" id="mailjet_cf7_list" type="select" <?php echo ($isCF7Installed === false ? ' disabled="disabled"' : '') ?>>
+                        <!--<option value="0"><?php _e('Select a list', 'mailjet-for-wordpress') ?></option>-->
+                        <?php
+                        foreach ($mailjetContactLists as $mailjetContactList) {
+                            if ($mailjetContactList["IsDeleted"] == true) {
+                                continue;
+                            }
+                            ?>
+                            <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetCF7List == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
+                            <?php
+                        } ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="cf7_email" class="cf7_input_label"><?php _e('Email field tag', 'mailjet-for-wordpress') ?></label>
+                    <input name="cf7_email" id="cf7_email" value="<?php echo $email ?>" placeholder="<?php _e('e.g. [your-email]', 'mailjet-for-wordpress') ?>" class="widefat cf7_input" />
+                </div>
+                <div>
+                    <label for="cf7_fromname" class="cf7_input_label"><?php _e('Name field tag (optional)', 'mailjet-for-wordpress') ?></label>
+                    <svg viewBox="0 0 16 16" style="height: 16px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
+                    <input name="cf7_fromname" id="cf7_fromname" value="<?php echo $from ?>" placeholder="<?php _e('e.g. [your-name]', 'mailjet-for-wordpress') ?>" class="widefat cf7_input" />
+                </div>
+                <div>
+                    <!--<div><span><?php _e('To enable the integration, include the following shortcode to your contact form:', 'mailjet-for-wordpress') ?></span></div>-->
+                    <div><span><?php _e('Include the following shortcode in your contact form in order to display the newsletter subscription checkbox and complete the integration.', 'mailjet-for-wordpress') ?></span></div>
+                    <div class="mj-copy-wrapper">
+                        <input name="cf7_contact_properties" id="cf7_contact_properties" value='[checkbox mailjet-opt-in default:0 "Subscribe to our newsletter"]' class="widefat cf7_input" disabled="disabled"/>
+                        <i class="fa fa-copy mj-copy-icon" id="copy_properties" ></i>
+                    </div>
+                </div>
+            </div>
+        </fieldset><?php
+    }
 
     /**
      * top level menu:
@@ -96,7 +156,7 @@ class IntegrationsSettings
     public function mailjet_integrations_page_html()
     {
         // check user capabilities
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
@@ -173,7 +233,9 @@ class IntegrationsSettings
                     <div class="right">
                         <div class="centered">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
-                            <h2 class="section_inner_title"><?php echo __('Integrations', 'mailjet-for-wordpress'); ?></h2>
+                            <h2 class="section_inner_title"><?php _e('Integrations', 'mailjet-for-wordpress'); ?></h2>
+                            <p><?php _e('Enable and cofigure Mailjet integrations with other Wordpress plugins', 'mailjet-for-wordpress') ?></p>
+                            <hr>
                             <form action="options.php" method="post">
                                 <?php
                                 // output security fields for the registered setting "mailjet"

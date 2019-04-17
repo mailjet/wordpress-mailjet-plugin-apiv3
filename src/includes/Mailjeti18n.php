@@ -26,6 +26,9 @@ class Mailjeti18n
         'Italian' => 'it_IT',
     );
 
+    const DEFAULT_LANGUAGE_DIR = (WP_PLUGIN_DIR) .DIRECTORY_SEPARATOR.'mailjet-for-wordpress'.DIRECTORY_SEPARATOR.'languages'.DIRECTORY_SEPARATOR;
+    const CUSTOM_LANGUAGE_DIR = (WP_CONTENT_DIR) .DIRECTORY_SEPARATOR. 'languages'. DIRECTORY_SEPARATOR .'plugins'.DIRECTORY_SEPARATOR;
+
     /**
      * Load the plugin text domain for translation.
      *
@@ -33,9 +36,7 @@ class Mailjeti18n
      */
     public function load_plugin_textdomain()
     {
-        load_plugin_textdomain(
-                'mailjet-for-wordpress', false, dirname(dirname(dirname(plugin_basename(__FILE__)))) . '/languages/'
-        );
+        load_plugin_textdomain('mailjet-for-wordpress', false, self::DEFAULT_LANGUAGE_DIR);
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'mailjet\' text domain loaded ]');
     }
 
@@ -53,7 +54,12 @@ class Mailjeti18n
             return false;
         }
 
-        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-for-wordpress-' . $locale . '.po';
+        $filePo = self::getTranslationFile('mailjet-for-wordpress-' . $locale . '.po');
+        if ($filePo === false) {
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ File could\'t be found ] ');
+            return false;
+        }
+
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
 
         // Parse a po file
@@ -81,8 +87,8 @@ class Mailjeti18n
 
     public static function getTranslationsFromFile($locale, $msgId)
     {
-        $filePo = dirname(dirname(dirname((__FILE__)))) . '/languages/mailjet-for-wordpress-' . $locale . '.po';
-        if (!file_exists($filePo)) {
+        $filePo = self::getTranslationFile('mailjet-for-wordpress-' . $locale . '.po');
+        if ($filePo === false) {
             return $msgId;
         }
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Translations PO file loaded ] - ' . $filePo);
@@ -93,6 +99,7 @@ class Mailjeti18n
         if (empty($entry)) {
             return $msgId;
         }
+
         return strlen($entry->getMsgStr()) > 0 ? $entry->getMsgStr() : $entry->getMsgId();
     }
 
@@ -115,7 +122,7 @@ class Mailjeti18n
         }
 
         // Use en_US if locale is not supported
-        if (!in_array($locale, array_values(self::$supportedLocales))) {
+        if (!in_array($locale, array_values(self::getSupportedLanguages()))) {
             $locale = 'en_US';
         }
 
@@ -124,7 +131,14 @@ class Mailjeti18n
 
     public static function getSupportedLocales()
     {
-        return self::$supportedLocales;
+        $customLocales = self::getSupportedLanguages();
+        if (empty($customLocales)){
+            return self::$supportedLocales;
+        }
+        $result = array_merge($customLocales, self::$supportedLocales);
+        $result = array_unique($result);
+
+        return array_reverse($result, true);
     }
 
     /**
@@ -134,11 +148,12 @@ class Mailjeti18n
     public static function getCurrentUserLanguage()
     {
         $locale = self::getLocale();
-        $languages = array_flip(self::$supportedLocales);
+        $languages = array_flip(self::getSupportedLanguages());
         if (!isset($languages[$locale])) {
             // return English if the language is not supported
             $locale = 'en_US';
         }
+
         return $languages[$locale];
     }
 
@@ -210,6 +225,47 @@ class Mailjeti18n
         }
 
         return $link;
+    }
+
+    private static function getSupportedLanguages()
+    {
+        $customLanguages = [];
+        $customLanguagesDir = (ABSPATH) . 'wp-content/languages/plugins';
+        if (!file_exists($customLanguagesDir)) {
+            return $customLanguages;
+        }
+
+        $dir = new \DirectoryIterator($customLanguagesDir);
+        foreach ($dir as $fileInfo) {
+            if (strpos($fileInfo->getFilename(), 'mailjet-for-wordpress-') === false) {
+                continue;
+            }
+
+            $fileBasename = $fileInfo->getBasename('.' . $fileInfo->getExtension());
+            if (!file_exists($customLanguagesDir . DIRECTORY_SEPARATOR . $fileBasename . '.mo') || !file_exists($customLanguagesDir . DIRECTORY_SEPARATOR . $fileBasename . '.po')) {
+                continue;
+            }
+
+            $languageCode = str_replace('mailjet-for-wordpress-', '', $fileBasename);
+            $customLanguages['Custom-' . $languageCode] = $languageCode;
+        }
+
+        return $customLanguages;
+    }
+
+    private static function getTranslationFile($filename)
+    {
+        $customFIleInfo = new \SplFileInfo(self::CUSTOM_LANGUAGE_DIR . $filename);
+        if ($customFIleInfo->isFile() && $customFIleInfo->isWritable()){
+            return $customFIleInfo->getRealPath();
+        }else{
+            $defaultFileInfo = new \SplFileInfo( self::DEFAULT_LANGUAGE_DIR . $filename);
+            if ($defaultFileInfo->isFile() && $defaultFileInfo->isWritable()){
+                return $defaultFileInfo->getRealPath();
+            }
+        }
+
+        return false;
     }
 
 }

@@ -45,11 +45,10 @@ class MailjetMenu
             ||
             (current_user_can('subscriber') && get_option('mailjet_access_subscriber') == 1)
         ) {
-
             add_menu_page(
                 __('Connect your Mailjet account to get started', 'mailjet-for-wordpress'),
                 'Mailjet',
-                'manage_options',
+                'read',
                 'mailjet_settings_page',
                 array(new InitialSettings(), 'mailjet_initial_settings_page_html'),
                 plugin_dir_url( dirname( __FILE__ ) ) . 'admin/images/mj_logo_small.png'

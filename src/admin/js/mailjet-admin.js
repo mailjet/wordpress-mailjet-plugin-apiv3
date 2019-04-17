@@ -30,6 +30,15 @@
      */
     jQuery(document).ready(function ($) {
 
+        $('#copy_properties').on("click", function () {
+            console.log("clicked");
+            const text = document.querySelector('#cf7_contact_properties');
+            text.disabled = false;
+            text.select();
+            text.disabled = true;
+            document.execCommand("copy");
+        });
+
         $('.mailjet_row [scope=row]').closest('th').hide();
 
         /**
@@ -224,6 +233,30 @@ function mjSubscription() {
     });
 }
 
+function mjCF7Subscription() {
+    const activateCF7IntegrationBox = document.querySelector('#activate_mailjet_cf7_integration');
+    const cf7ActicateIntegrationForm = document.querySelector('#activate_mailjet_cf7_form');
+
+    if (activateCF7IntegrationBox === null || activateCF7IntegrationBox === undefined) {
+        return false;
+    }
+
+    activateCF7IntegrationBox.addEventListener("change", function () {
+        this.checked === true ? mjShow(cf7ActicateIntegrationForm) : mjHide(cf7ActicateIntegrationForm);
+    });
+
+    const saveButton = document.getElementById('integrationsSubmit');
+    const cf7email = document.getElementById('cf7_email');
+
+    saveButton.addEventListener("click", function (e) {
+        if(cf7email.value === '') {
+            cf7email.className+= ' mj-missing-required-input';
+            e.preventDefault();
+            return false;
+        }
+
+    });
+}
 
 function mjWooSubscription() {
 
@@ -316,12 +349,13 @@ function mjAdmin() {
     mjInitShowHide();
     mjSelect();
     if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page')
-        || document.querySelector('body.admin_page_mailjet_subscription_options_page')
-        || document.querySelector('body.admin_page_mailjet_integrations_page')) {
+            || document.querySelector('body.admin_page_mailjet_subscription_options_page')
+            || document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjSubscription();
     }
     if (document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjWooSubscription();
+        mjCF7Subscription();
     }
     document.querySelector('body.admin_page_mailjet_sending_settings_page') && mjSendingSettings();
 }
