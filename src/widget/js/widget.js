@@ -154,7 +154,7 @@
         }
 
         $(document).on('click', '#saveAdvancedForm', function () {
-            $("input[name='savewidget']").click();
+            $(this).parents('.widget').find("[name='savewidget']").click();
             $(this).text("Saving...").prop('disabled', true);
         });
 
