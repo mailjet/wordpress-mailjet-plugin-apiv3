@@ -208,7 +208,7 @@ class MailjetSettings
         add_action('wpcf7_submit', array($contactForm7Settings, 'sendConfirmationEmail'));
         if (!empty($_GET['cf7list']) && $_GET['cf7list'] === $contactListId) {
 
-            if (empty($_GET['email']) || empty($_GET['prop'])) {
+            if (empty($_GET['email'])) {
                 echo $technicalIssue;
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 die;
