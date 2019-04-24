@@ -2,9 +2,6 @@
 
 namespace MailjetPlugin\Includes;
 
-use MailjetPlugin\Includes\MailjetLogger;
-use MailjetPlugin\Includes\MailjetLogger;
-
 /**
  * Define the internationalization functionality.
  *
