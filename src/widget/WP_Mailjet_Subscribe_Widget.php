@@ -90,15 +90,19 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @param SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
-    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance)
+    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $widget_id)
     {
+
         $locale = Mailjeti18n::getLocale();
         // Check if subscription form is submited
-        if (!isset($_POST['subscription_email'])) {
+        if (!isset($_POST['subscription_email']) || !isset($_POST['widget_id'])) {
             // Subscription form is not submited
             return false;
         }
 
+        if ($widget_id !== $_POST['widget_id']){
+            return false;
+        }
         $subscription_locale = $locale;
         if (isset($_POST['subscription_locale'])) {
             $subscription_locale = $_POST['subscription_locale'];
@@ -156,7 +160,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                                     return $incorectTypeValue;
                                 }
                                 if (!empty($errors['warning_count'])) {
-                                     return $incorectTypeValue;
+                                    return $incorectTypeValue;
                                 }
                                 break;
                             case "bool":
@@ -174,10 +178,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale);
+
         if ($sendingResult) {
             return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
         return !empty($instance[$locale]['technical_error_message_input']) ? $instance[$locale]['technical_error_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
+
     }
 
     /**
@@ -322,6 +328,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+
         $mailjetContactProperties = $this->getMailjetContactProperties();
         if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
             foreach ($mailjetContactProperties as $mjContactProperty) {
@@ -331,10 +338,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 );
             }
         }
-        $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
 
-        // Send subscription email if need
-        $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance);
+        $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
 
         // Subscribe user
 //        $this->activateConfirmSubscriptionUrl();
@@ -348,6 +353,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         if (!isset($args['widget_id'])) {
             $args['widget_id'] = $this->id;
         }
+
+        // Send subscription email if need
+        $form_message[$args['widget_id']] = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $args['widget_id']);
+
 
         if (isset($cache[$args['widget_id']])) {
             return print $cache[$args['widget_id']];
