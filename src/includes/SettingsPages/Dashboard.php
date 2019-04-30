@@ -83,6 +83,10 @@ class Dashboard
                 <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet-for-wordpress') . '</a>'; ?>
                 <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet-for-wordpress') . '</a>'; ?>
             </div>
+            <p></p>
+            <div class="needHelpDiv">
+                <p></p> If you like Mailjet please support us with a <a href="https://wordpress.org/support/plugin/mailjet-for-wordpress/reviews/?rate=5#new-post" target="_blank">🟊🟊🟊🟊🟊</a> rating on WordPress.org. Thank you <img class="heart-icon" src="https://www.mailjet.com//wp-content/uploads/mailjet-coeur.png" alt="">
+            </div>
         </div>
         <?php
     }
