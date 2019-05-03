@@ -187,15 +187,18 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     private function activateConfirmSubscriptionUrl()
     {
+echo __METHOD__."-".__LINE__."<br>";
         $locale = Mailjeti18n::getLocale();
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
-
+echo __METHOD__."-".__LINE__."<br>";
         // Check if subscription email is confirmed
         if (empty($_GET['mj_sub_token'])) {
+echo __METHOD__."-".__LINE__."<br>";
             return true;
         }
 
         if (!empty($_GET['subscription_locale'])) {
+echo __METHOD__."-".__LINE__."<br>";
             $locale = $_GET['subscription_locale'];
         }
 
@@ -203,11 +206,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
         if (!$subscription_email) {
+echo __METHOD__."-".__LINE__."<br>";
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
             echo $technicalIssue;
             die;
         }
-
+echo __METHOD__."-".__LINE__."<br>";
         $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
@@ -217,20 +221,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-
+echo __METHOD__."-".__LINE__."<br>";
             $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
 
             // List id is not provided
             if (!$contactListId) {
+echo __METHOD__."-".__LINE__."<br>";
                 // Use en_US list id as default
                 $listIdEn = get_option('mailjet_locale_subscription_list_en_US');
                 if (!$listIdEn) {
+echo __METHOD__."-".__LINE__."<br>";
                     MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided for ' . $locale . '! ]');
                     die;
                 }
                 $contactListId = $listIdEn;
             }
-
+echo __METHOD__."-".__LINE__."<br>";
             $dataProperties = array();
             $mailjetContactProperties = $this->getMailjetContactProperties();
             if (!empty($mailjetContactProperties)) {
@@ -275,6 +281,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             $isActiveList = MailjetApi::isContactListActive($contactListId);
             if (!$isActiveList) {
+echo __METHOD__."-".__LINE__."<br>";
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList: ' . $contactListId . ' is deleted and ' . $subscription_email . ' was not subscribed ]');
                 echo $technicalIssue;
                 die;
@@ -282,6 +289,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
             $result = MailjetApi::syncMailjetContact($contactListId, $contact);
             if (!$result) {
+echo __METHOD__."-".__LINE__."<br>";
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 echo $technicalIssue;
                 die;
@@ -290,9 +298,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             // Subscribed
             $language = Mailjeti18n::getCurrentUserLanguage();
             $thankYouPageId = get_option('mailjet_thank_you_page_' . $language);
-
+echo __METHOD__."-".__LINE__."<br>";
             // If no selected page, select default template
             if (!$thankYouPageId) {
+echo __METHOD__."-".__LINE__."<br>";
 //                $locale = Mailjeti18n::getLocaleByPll();
                 $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
                 $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
@@ -303,11 +312,13 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 die;
             }
         } else {
+echo __METHOD__."-".__LINE__."<br>";
             // Invalid token
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ User token is invalid.Subscription email ' . $subscription_email . ']');
             echo $technicalIssue;
             die;
         }
+echo __METHOD__."-".__LINE__."<br>";
     }
 
     /* -------------------------------------------------- */
