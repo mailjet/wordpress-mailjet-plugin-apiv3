@@ -32,7 +32,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
         <!--End Widget title-->
         
         <!--Widget form-->
-        <form method="post" action=" <?php echo esc_url($_SERVER['REQUEST_URI']) ?>" id="mjForm" name="mjForm">
+        <form method="post" action=" <?php echo esc_url($_SERVER['REQUEST_URI']) ?>" id="mjForm" name="<?php echo $widget_id ?>">
             
             <!--Subscription email input(mandatory)-->
             <div class="form-group" style="margin-bottom: 10px!important">
@@ -142,8 +142,15 @@ use MailjetPlugin\Includes\Mailjeti18n;
                 }
             }
             ?>
+            <input type="hidden" value="<?php echo $widget_id ?>" name="widget_id">
             <input type="submit" value="<?php echo $buttonLabel ?>">
         </form>
-        <span><?php echo $form_message ?></span>
+        <span>
+            <?php
+            if (isset($form_message[$widget_id])){
+                echo $form_message[$widget_id];
+            }
+            ?>
+        </span>
     </div>
 </div>
