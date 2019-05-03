@@ -90,7 +90,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @param SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
-    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $widget_id)
+    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $widgetId)
     {
 
         $locale = Mailjeti18n::getLocale();
@@ -101,7 +101,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return false;
         }
 
-        if ($widget_id !== $_POST['widget_id']){
+        if ($widgetId !== $_POST['widget_id']){
             return false;
         }
         $subscription_locale = $locale;
@@ -217,21 +217,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
 
-        if (empty($list_id)){
-            $params = http_build_query(array(
-                'subscription_email' => $subscription_email,
-                'subscription_locale' => $locale,
-                'properties' => $properties,
-            ));
-        }else{
-            $params = http_build_query(array(
-                'subscription_email' => $subscription_email,
-                'subscription_locale' => $locale,
-                'list_id' => $list_id,
-                'properties' => $properties,
-            ));
+        $params = array(
+            'subscription_email' => $subscription_email,
+            'subscription_locale' => $locale,
+            'properties' => $properties,
+        );
+
+        if (!empty($list_id)){
+            $params['list_id'] = $list_id;
         }
 
+        $params = http_build_query($params);
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
