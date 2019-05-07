@@ -61,8 +61,8 @@ class SubscriptionOptionsSettings
             <div id="activate_mailjet_sync_form" class="<?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
                 <div class="mailjet_sync_options_div">
                     <select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
-                        <?php
-                        foreach ($mailjetContactLists as $mailjetContactList) {
+                 <?php
+                 foreach ($mailjetContactLists as $mailjetContactList) {
                             if ($mailjetContactList["IsDeleted"] == true) {
                                 continue;
                             }
@@ -177,8 +177,8 @@ class SubscriptionOptionsSettings
 
                 <div class="backToDashboard">
                     <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
-                        <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
-                        <?php _e('Back to dashboard', 'mailjet-for-wordpress') ?>
+                    <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
+                    <?php _e('Back to dashboard', 'mailjet-for-wordpress') ?>
                     </a>
                 </div>
 
@@ -192,7 +192,7 @@ class SubscriptionOptionsSettings
 
                     <div class="right">
                         <div class="centered">
-                            <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
+        <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
                             <h2 class="section_inner_title"><?php echo __('Subscription options', 'mailjet-for-wordpress'); ?></h2>
                             <form action="options.php" method="post">
                                 <?php
@@ -393,11 +393,9 @@ class SubscriptionOptionsSettings
         $params = http_build_query(array(
             'subscription_email' => $subscription_email,
             'subscription_locale' => $subscription_locale,
-            'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '',
             'properties' => $properties,
 //            'thank_id' => $thankYouURI
         ));
-
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
 
@@ -421,7 +419,6 @@ class SubscriptionOptionsSettings
         foreach ($emailParams as $key => $value) {
             $message = str_replace($key, $value, $message);
         }
-
         add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         return wp_mail($subscription_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
 //        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet-for-wordpress') . '</p>';

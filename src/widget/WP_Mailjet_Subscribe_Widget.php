@@ -90,20 +90,15 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @param SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
-    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $widgetId)
+    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance)
     {
-
         $locale = Mailjeti18n::getLocale();
         // Check if subscription form is submited
-        if (!isset($_POST['subscription_email']) || !isset($_POST['widget_id'])) {
-
+        if (!isset($_POST['subscription_email'])) {
             // Subscription form is not submited
             return false;
         }
 
-        if ($widgetId !== $_POST['widget_id']){
-            return false;
-        }
         $subscription_locale = $locale;
         if (isset($_POST['subscription_locale'])) {
             $subscription_locale = $_POST['subscription_locale'];
@@ -177,13 +172,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 }
             }
         }
-        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale);
 
+        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale);
         if ($sendingResult) {
             return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
         return !empty($instance[$locale]['technical_error_message_input']) ? $instance[$locale]['technical_error_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
-
     }
 
     /**
@@ -208,7 +202,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
-        $list_id = isset($_GET['list_id']) ? $_GET['list_id'] : '';
         if (!$subscription_email) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
             echo $technicalIssue;
@@ -216,26 +209,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
-
-        $params = array(
+        $params = http_build_query(array(
             'subscription_email' => $subscription_email,
             'subscription_locale' => $locale,
             'properties' => $properties,
-        );
-
-        if (!empty($list_id)){
-            $params['list_id'] = $list_id;
-        }
-
-        $params = http_build_query($params);
+        ));
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-            $contactListId = $list_id;
 
-            if (empty($list_id)){
-                $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
-            }
+            $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
+
             // List id is not provided
             if (!$contactListId) {
                 // Use en_US list id as default
@@ -338,7 +322,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-
         $mailjetContactProperties = $this->getMailjetContactProperties();
         if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
             foreach ($mailjetContactProperties as $mjContactProperty) {
@@ -348,8 +331,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 );
             }
         }
-
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
+
+        // Send subscription email if need
+        $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance);
 
         // Subscribe user
 //        $this->activateConfirmSubscriptionUrl();
@@ -363,10 +348,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         if (!isset($args['widget_id'])) {
             $args['widget_id'] = $this->id;
         }
-
-        // Send subscription email if need
-        $form_message[$args['widget_id']] = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $args['widget_id']);
-
 
         if (isset($cache[$args['widget_id']])) {
             return print $cache[$args['widget_id']];
@@ -426,9 +407,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
+
         // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
-
         $languages = Mailjeti18n::getSupportedLocales();
         $admin_locale = Mailjeti18n::getLocale();
         $wp_version = get_bloginfo( 'version' );
@@ -447,36 +428,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $instance[$locale]['list'] = isset($new_instance[$locale.'[list']) ? wp_strip_all_tags($new_instance[$locale.'[list']) : '';
                 update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
 
-                // Tab 1
-                $instance[$locale]['language_mandatory_email'] = isset($new_instance[$locale.'[language_mandatory_email']) ? wp_strip_all_tags($new_instance[$locale.'[language_mandatory_email']) : '';
-                $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale.'[language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale.'[language_mandatory_button']) : '';
+                $customLanguages = Mailjeti18n::getSupportedLocales();
+                $getInstanceKeys = $this->getUpdateArrayKeysPairs();
 
-                for ($i = 0; $i <= 4; $i++) {
-                    $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale.'[contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[contactProperties' . $i]) : '';
-                    $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale.'[propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[propertyDataType' . $i]) : '';
-                    $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$admin_locale.'[EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[EnglishLabel' . $i]) : '';
-                    $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$admin_locale.'[FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[FrenchLabel' . $i]) : '';
-                    $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$admin_locale.'[GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[GermanLabel' . $i]) : '';
-                    $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$admin_locale.'[SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[SpanishLabel' . $i]) : '';
-                    $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$admin_locale.'[ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale.'[ItalianLabel' . $i]) : '';
+                foreach ($getInstanceKeys as $key => $val){
+                    $instance[$locale][$key] = isset($new_instance[$locale][$val]) ? wp_strip_all_tags($new_instance[$locale][$val]) : '';
                 }
 
-                // Tab 2
-                $instance[$locale]['confirmation_email_message_input'] = isset($new_instance[$locale.'[confirmation_email_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[confirmation_email_message_input']) : '';
-                $instance[$locale]['subscription_confirmed_message_input'] = isset($new_instance[$locale.'[subscription_confirmed_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[subscription_confirmed_message_input']) : '';
-                $instance[$locale]['empty_email_message_input'] = isset($new_instance[$locale.'[empty_email_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[empty_email_message_input']) : '';
-                $instance[$locale]['already_subscribed_message_input'] = isset($new_instance[$locale.'[already_subscribed_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[already_subscribed_message_input']) : '';
-                $instance[$locale]['invalid_data_format_message_input'] = isset($new_instance[$locale.'[invalid_data_format_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[invalid_data_format_message_input']) : '';
-                $instance[$locale]['generic_technical_error_message_input'] = isset($new_instance[$locale.'[generic_technical_error_message_input']) ? wp_strip_all_tags($new_instance[$locale.'[generic_technical_error_message_input']) : '';
+                for ($i = 0; $i <= 4; $i++) {
+                    $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale]['[contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['[contactProperties' . $i]) : '';
+                    $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale]['[propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['[propertyDataType' . $i]) : '';
 
-                // Tab 3
-                $instance[$locale]['email_subject'] = isset($new_instance[$locale.'[email_subject']) ? wp_strip_all_tags($new_instance[$locale.'[email_subject']) : '';
-                $instance[$locale]['email_content_title'] = isset($new_instance[$locale.'[email_content_title']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_title']) : '';
-                $instance[$locale]['email_content_main_text'] = isset($new_instance[$locale.'[email_content_main_text']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_main_text']) : '';
-                $instance[$locale]['email_content_confirm_button'] = isset($new_instance[$locale.'[email_content_confirm_button']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_confirm_button']) : '';
-                $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale.'[email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale.'[email_content_after_button']) : '';
+                    foreach ($customLanguages as $name => $code){
+                        $instance[$locale][$name . 'Label' . $i] = isset($new_instance[$admin_locale]['['. $name . 'Label' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['['. $name . 'Label' . $i]) : '';
+                    }
+                }
 
-                // Tab 4
                 $instance[$language]['thank_you'] = isset($new_instance[$language.'[thank_you']) ? wp_strip_all_tags($new_instance[$language.'[thank_you']) : 0;
                 update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
 
@@ -497,36 +464,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
                 update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
 
-                // Tab 1
-                $instance[$locale]['language_mandatory_email'] = isset($new_instance[$locale]['language_mandatory_email']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_email']) : '';
-                $instance[$locale]['language_mandatory_button'] = isset($new_instance[$locale]['language_mandatory_button']) ? wp_strip_all_tags($new_instance[$locale]['language_mandatory_button']) : '';
+                $customLanguages = Mailjeti18n::getSupportedLocales();
+                $getInstanceKeys = $this->getUpdateArrayKeysPairs();
+
+                foreach ($getInstanceKeys as $key => $val){
+                    $instance[$locale][$key] = isset($new_instance[$locale][$key]) ? wp_strip_all_tags($new_instance[$locale][$key]) : '';
+                }
 
                 for ($i = 0; $i <= 4; $i++) {
                     $instance[$locale]['contactProperties' . $i] = isset($new_instance[$admin_locale]['contactProperties' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['contactProperties' . $i]) : '';
                     $instance[$locale]['propertyDataType' . $i] = isset($new_instance[$admin_locale]['propertyDataType' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['propertyDataType' . $i]) : '';
-                    $instance[$locale]['EnglishLabel' . $i] = isset($new_instance[$admin_locale]['EnglishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['EnglishLabel' . $i]) : '';
-                    $instance[$locale]['FrenchLabel' . $i] = isset($new_instance[$admin_locale]['FrenchLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['FrenchLabel' . $i]) : '';
-                    $instance[$locale]['GermanLabel' . $i] = isset($new_instance[$admin_locale]['GermanLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['GermanLabel' . $i]) : '';
-                    $instance[$locale]['SpanishLabel' . $i] = isset($new_instance[$admin_locale]['SpanishLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['SpanishLabel' . $i]) : '';
-                    $instance[$locale]['ItalianLabel' . $i] = isset($new_instance[$admin_locale]['ItalianLabel' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale]['ItalianLabel' . $i]) : '';
+
+                    foreach ($customLanguages as $name => $code){
+                        $instance[$locale][$name . 'Label' . $i] = isset($new_instance[$admin_locale][$name . 'Label' . $i]) ? wp_strip_all_tags($new_instance[$admin_locale][$name . 'Label' . $i]) : '';
+                    }
                 }
 
-                // Tab 2
-                $instance[$locale]['confirmation_email_message_input'] = isset($new_instance[$locale]['confirmation_email_message_input']) ? wp_strip_all_tags($new_instance[$locale]['confirmation_email_message_input']) : '';
-                $instance[$locale]['subscription_confirmed_message_input'] = isset($new_instance[$locale]['subscription_confirmed_message_input']) ? wp_strip_all_tags($new_instance[$locale]['subscription_confirmed_message_input']) : '';
-                $instance[$locale]['empty_email_message_input'] = isset($new_instance[$locale]['empty_email_message_input']) ? wp_strip_all_tags($new_instance[$locale]['empty_email_message_input']) : '';
-                $instance[$locale]['already_subscribed_message_input'] = isset($new_instance[$locale]['already_subscribed_message_input']) ? wp_strip_all_tags($new_instance[$locale]['already_subscribed_message_input']) : '';
-                $instance[$locale]['invalid_data_format_message_input'] = isset($new_instance[$locale]['invalid_data_format_message_input']) ? wp_strip_all_tags($new_instance[$locale]['invalid_data_format_message_input']) : '';
-                $instance[$locale]['generic_technical_error_message_input'] = isset($new_instance[$locale]['generic_technical_error_message_input']) ? wp_strip_all_tags($new_instance[$locale]['generic_technical_error_message_input']) : '';
-
-                // Tab 3
-                $instance[$locale]['email_subject'] = isset($new_instance[$locale]['email_subject']) ? wp_strip_all_tags($new_instance[$locale]['email_subject']) : '';
-                $instance[$locale]['email_content_title'] = isset($new_instance[$locale]['email_content_title']) ? wp_strip_all_tags($new_instance[$locale]['email_content_title']) : '';
-                $instance[$locale]['email_content_main_text'] = isset($new_instance[$locale]['email_content_main_text']) ? wp_strip_all_tags($new_instance[$locale]['email_content_main_text']) : '';
-                $instance[$locale]['email_content_confirm_button'] = isset($new_instance[$locale]['email_content_confirm_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_confirm_button']) : '';
-                $instance[$locale]['email_content_after_button'] = isset($new_instance[$locale]['email_content_after_button']) ? wp_strip_all_tags($new_instance[$locale]['email_content_after_button']) : '';
-
-                // Tab 4
                 $instance[$language]['thank_you'] = isset($new_instance[$language]['thank_you']) ? wp_strip_all_tags($new_instance[$language]['thank_you']) : 0;
                 update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
 
@@ -1039,4 +992,28 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         die;
     }
 
+    private function getUpdateArrayKeysPairs()
+    {
+        $result = [
+            'language_mandatory_email' => '[language_mandatory_email',
+            'language_mandatory_button' => '[language_mandatory_button',
+//            'contactProperties' => '[contactProperties',
+//            'propertyDataType' => '[propertyDataType',
+//            'Label' => '[Label',
+            'confirmation_email_message_input' => '[confirmation_email_message_input',
+            'subscription_confirmed_message_input' => '[subscription_confirmed_message_input',
+            'empty_email_message_input' => '[empty_email_message_input',
+            'already_subscribed_message_input' => '[already_subscribed_message_input',
+            'invalid_data_format_message_input' => '[invalid_data_format_message_input',
+            'generic_technical_error_message_input' => '[generic_technical_error_message_input',
+            'email_subject' => '[email_subject',
+            'email_content_title' => '[email_content_title',
+            'email_content_main_text' => '[email_content_main_text',
+            'email_content_confirm_button' => '[email_content_confirm_button',
+            'email_content_after_button' => '[email_content_after_button',
+//            'thank_you' => '[thank_you'
+        ];
+
+        return $result;
+    }
 }
