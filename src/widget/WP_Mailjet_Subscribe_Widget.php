@@ -32,7 +32,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
     /* -------------------------------------------------- */
     /* Constructor
-      /*-------------------------------------------------- */
+    /*-------------------------------------------------- */
 
     /**
      * Specifies the classname and description, instantiates the widget,

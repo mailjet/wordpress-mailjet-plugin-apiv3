@@ -377,7 +377,7 @@ class SubscriptionOptionsSettings
         $thankYouPageId = !empty($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : false;
         $thankYouURI = $homeUrl;
         if ($thankYouPageId) {
-            $thankYouURI = get_page_link($thankYouPageId);
+           $thankYouURI = get_page_link($thankYouPageId);
         }
         $locale = Mailjeti18n::getLocale();
 

@@ -119,7 +119,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
                     $class = 'mjDate';
                 }
 
-                // Boolean type is checkbox
+                //Boolean type is checkbox
                 if ('bool' === $inputType) {
                     ?>
                     <div class="form-group" style="margin-bottom: 10px!important">
