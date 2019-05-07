@@ -90,15 +90,20 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      * @param SubscriptionOptionsSettings $subscriptionOptionsSettings
      * @return boolean
      */
-    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance)
+    private function sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $widgetId)
     {
+
         $locale = Mailjeti18n::getLocale();
         // Check if subscription form is submited
-        if (!isset($_POST['subscription_email'])) {
+        if (!isset($_POST['subscription_email']) || !isset($_POST['widget_id'])) {
+
             // Subscription form is not submited
             return false;
         }
 
+        if ($widgetId !== $_POST['widget_id']){
+            return false;
+        }
         $subscription_locale = $locale;
         if (isset($_POST['subscription_locale'])) {
             $subscription_locale = $_POST['subscription_locale'];
@@ -202,6 +207,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
+        $list_id = isset($_GET['list_id']) ? $_GET['list_id'] : '';
         if (!$subscription_email) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
             echo $technicalIssue;
@@ -209,17 +215,26 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         $properties = isset($_GET['properties']) ? $_GET['properties'] : array();
-        $params = http_build_query(array(
+
+        $params = array(
             'subscription_email' => $subscription_email,
             'subscription_locale' => $locale,
             'properties' => $properties,
-        ));
+        );
+
+        if (!empty($list_id)){
+            $params['list_id'] = $list_id;
+        }
+
+        $params = http_build_query($params);
 
         // The token is valid we can subscribe the user
         if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
+            $contactListId = $list_id;
 
-            $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
-
+            if (empty($list_id)){
+                $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
+            }
             // List id is not provided
             if (!$contactListId) {
                 // Use en_US list id as default
@@ -333,9 +348,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
 
-        // Send subscription email if need
-        $form_message = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance);
-
         // Subscribe user
 //        $this->activateConfirmSubscriptionUrl();
         // Check if there is a cached output
@@ -348,6 +360,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         if (!isset($args['widget_id'])) {
             $args['widget_id'] = $this->id;
         }
+
+        // Send subscription email if need
+        $form_message[$args['widget_id']] = $this->sendSubscriptionEmail($subscriptionOptionsSettings, $instance, $args['widget_id']);
+
 
         if (isset($cache[$args['widget_id']])) {
             return print $cache[$args['widget_id']];
