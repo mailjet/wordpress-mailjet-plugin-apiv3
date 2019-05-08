@@ -71,3 +71,5 @@ delete_option('mailjet_access_subscriber');
 delete_option('activate_mailjet_woo_integration');
 delete_option('activate_mailjet_woo_sync');
 delete_option('mailjet_woo_list');
+
+delete_option('widget_wp_mailjet_subscribe_widget');
