@@ -56,6 +56,11 @@ use MailjetPlugin\Includes\MailjetActivator;
  */
 define('MAILJET_VERSION', '5.0.12');
 
+/**
+ * Mailjet Plugid dir.
+ */
+define('MAILJET_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
+
 
 // Call the update to V5 logic
 MailjetUpdate::updateToV5();

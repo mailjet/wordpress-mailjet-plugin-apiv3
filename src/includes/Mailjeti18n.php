@@ -24,7 +24,7 @@ class Mailjeti18n
         'Italian' => 'it_IT',
     );
 
-    const DEFAULT_LANGUAGE_DIR = (WP_PLUGIN_DIR) .DIRECTORY_SEPARATOR.'mailjet-for-wordpress'.DIRECTORY_SEPARATOR.'languages'.DIRECTORY_SEPARATOR;
+    const DEFAULT_LANGUAGE_DIR = MAILJET_PLUGIN_DIR .'languages'.DIRECTORY_SEPARATOR;
     const CUSTOM_LANGUAGE_DIR = (WP_CONTENT_DIR) .DIRECTORY_SEPARATOR. 'languages'. DIRECTORY_SEPARATOR .'plugins'.DIRECTORY_SEPARATOR;
 
     /**
