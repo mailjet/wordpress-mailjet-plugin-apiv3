@@ -370,7 +370,7 @@ class SubscriptionOptionsSettings
 
 
 
-    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale)
+    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale, $widgetId = false)
     {
         $homeUrl = get_home_url();
         $language = Mailjeti18n::getCurrentUserLanguage();
@@ -390,13 +390,18 @@ class SubscriptionOptionsSettings
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', sprintf($instance[$locale]['email_content_main_text'], get_option('blogname'))) : $test;
         $email_content_after_button = !empty($instance[$locale]['email_content_after_button']) ? $instance[$locale]['email_content_after_button'] : Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.');
         $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
-        $params = http_build_query(array(
+        $params = array(
             'subscription_email' => $subscription_email,
             'subscription_locale' => $subscription_locale,
             'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '',
             'properties' => $properties,
 //            'thank_id' => $thankYouURI
-        ));
+        );
+
+        if ($widgetId){
+            $params['widget_id'] = $widgetId;
+        }
+        $params = http_build_query($params);
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
 

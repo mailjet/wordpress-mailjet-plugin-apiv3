@@ -178,7 +178,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
         }
 
-        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale);
+        $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale, $widgetId);
         if ($sendingResult) {
             return !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm the subscription.');
         }
@@ -208,6 +208,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
         $list_id = isset($_GET['list_id']) ? $_GET['list_id'] : '';
+        $widget_id = isset($_GET['widget_id']) ? $_GET['widget_id'] : false;
+
         if (!$subscription_email) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
             echo $technicalIssue;
@@ -219,11 +221,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $params = array(
             'subscription_email' => $subscription_email,
             'subscription_locale' => $locale,
+            'list_id' => $list_id,
             'properties' => $properties,
         );
 
-        if (!empty($list_id)){
-            $params['list_id'] = $list_id;
+        if ($widget_id){
+            $params['widget_id'] = $widget_id;
         }
 
         $params = http_build_query($params);
@@ -296,6 +299,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
 
             $result = MailjetApi::syncMailjetContact($contactListId, $contact);
+
             if (!$result) {
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 echo $technicalIssue;
