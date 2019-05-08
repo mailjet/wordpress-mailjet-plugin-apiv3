@@ -3,7 +3,6 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
-use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
 
 
@@ -165,15 +164,9 @@ class UserAccessSettings
                     </div>
                 </div>
             </div>
-
-            <div class="bottom_links">
-                <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Need help?', 'mailjet-for-wordpress'); ?>" />
-                    <?php _e('Need help?', 'mailjet-for-wordpress' ); ?>
-                </div>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet-for-wordpress') . '</a>'; ?>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet-for-wordpress') . '</a>'; ?>
-            </div>
+            <?php
+                 MailjetAdminDisplay::getBottomLinks();
+            ?>
         </div>
 
         <?php
