@@ -257,7 +257,7 @@ class EnableSendingSettings
             </div>
 
             <?php
-                MailjetAdminDisplay::getBottomLinks();
+                MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
 

@@ -70,7 +70,7 @@ class MailjetAdminDisplay
         <?php
     }
 
-    public static function getBottomLinks()
+    public static function renderBottomLinks()
     {
         ?>
         <div class="bottom_links">

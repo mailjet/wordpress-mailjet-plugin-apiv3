@@ -65,7 +65,7 @@ class AllSetup
 
             </div>
             <?php
-                MailjetAdminDisplay::getBottomLinks();
+                MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
         <?php

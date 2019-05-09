@@ -253,7 +253,7 @@ class IntegrationsSettings
                 </div>
             </div>
             <?php
-                 MailjetAdminDisplay::getBottomLinks();
+                 MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
 

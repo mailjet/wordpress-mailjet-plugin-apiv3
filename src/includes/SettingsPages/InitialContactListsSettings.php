@@ -278,7 +278,7 @@ class InitialContactListsSettings
 
             </div>
             <?php
-                MailjetAdminDisplay::getBottomLinks();
+                MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
 

@@ -165,7 +165,7 @@ class ConnectAccountSettings
             </div>
 
             <?php
-                 MailjetAdminDisplay::getBottomLinks();
+                 MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
 

@@ -216,7 +216,7 @@ class InitialSettings
             </div>
             <!--        <br style="clear: left;"/>-->
             <?php
-                 MailjetAdminDisplay::getBottomLinks();
+                 MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
 

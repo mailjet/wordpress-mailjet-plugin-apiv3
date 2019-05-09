@@ -212,7 +212,7 @@ class SubscriptionOptionsSettings
                 </div>
             </div>
             <?php
-            MailjetAdminDisplay::getBottomLinks();
+            MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
 
