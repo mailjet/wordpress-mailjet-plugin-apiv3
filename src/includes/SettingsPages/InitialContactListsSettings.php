@@ -2,8 +2,8 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\MailjetSettings;
 
@@ -277,15 +277,9 @@ class InitialContactListsSettings
                 </div>
 
             </div>
-
-            <div class="bottom_links">
-                <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php echo __('Connect your Mailjet account', 'mailjet-for-wordpress'); ?>" />
-                <?php echo __('Need help getting started?', 'mailjet-for-wordpress'); ?>
-                </div>
-        <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet-for-wordpress') . '</a>'; ?>
-        <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet-for-wordpress') . '</a>'; ?>
-            </div>
+            <?php
+                MailjetAdminDisplay::renderBottomLinks();
+            ?>
         </div>
 
         <?php
