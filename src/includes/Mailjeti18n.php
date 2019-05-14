@@ -120,7 +120,7 @@ class Mailjeti18n
         }
 
         // Use en_US if locale is not supported
-        if (!in_array($locale, array_values(self::getAllSupportedLanguages()))) {
+        if (!in_array($locale, array_values(self::getSupportedLocales()))) {
             $locale = 'en_US';
         }
 
