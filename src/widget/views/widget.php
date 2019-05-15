@@ -148,7 +148,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
         <span>
             <?php
             if (isset($form_message[$widget_id])){
-                echo '<span class="form-message">'. $form_message[$widget_id] .'</span>';
+                echo '<span class="mailjet_widget_form_message">'. $form_message[$widget_id] .'</span>';
             }
             ?>
         </span>
