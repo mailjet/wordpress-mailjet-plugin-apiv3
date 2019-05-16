@@ -66,9 +66,6 @@ class InitialContactListsSettings
 
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
-        if (!$mailjetSyncActivated) {
-            $mailjetSyncActivated = update_option('activate_mailjet_sync', 1);
-        }
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetSyncList = get_option('mailjet_sync_list');
 
@@ -88,7 +85,7 @@ class InitialContactListsSettings
                                     <span><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet-for-wordpress'); ?></span>
                                 </label>-->
 
-                <div id="activate_mailjet_sync_form" class="<?= ($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
+                <div id="activate_mailjet_sync_form" class="mj-show">
                     <div class="mailjet_sync_options_div">
                         <h4><?php _e('Your Mailjet contact lists', 'mailjet-for-wordpress'); ?></h4>
                         <select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
