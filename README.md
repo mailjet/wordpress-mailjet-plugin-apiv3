@@ -3,8 +3,8 @@
 - Contributors: Mailjet
 - Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 - Requires at least: 3.9
-- Tested up to: 5.1.1
-- Stable tag: 5.0.12
+- Tested up to: 5.2
+- Stable tag: 5.1
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -171,6 +171,12 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 ## Changelog
+
+##### 5.1
+* New integration with Contact Form 7 has been added
+* Added support for custom translation files
+* Multiple widgets can be added on the same page
+* Various bug fixes and improvements
 
 ##### 5.0.12
 * User can upload custom language translation files
