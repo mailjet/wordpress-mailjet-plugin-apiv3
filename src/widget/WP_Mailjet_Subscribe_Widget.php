@@ -341,6 +341,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+        $validApiCredentials = MailjetApi::isValidAPICredentials();
+        if ($validApiCredentials === false) {
+            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
+            return false;
+        }
         $mailjetContactProperties = $this->getMailjetContactProperties();
         if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
             foreach ($mailjetContactProperties as $mjContactProperty) {
@@ -890,7 +895,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         wp_enqueue_script('mailjetjs_bootstrap');
 
         $validApiCredentials = MailjetApi::isValidAPICredentials();
-        if (false == $validApiCredentials) {
+        if ($validApiCredentials === false) {
             include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
             return false;
         }

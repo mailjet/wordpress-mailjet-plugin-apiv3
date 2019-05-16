@@ -138,6 +138,9 @@ class InitialContactListsSettings
      */
     public function mailjet_initial_contact_lists_page_html()
     {
+        if (!MailjetApi::isValidAPICredentials()){
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
+        }
         $applyAndContinueBtnClicked = false;
         $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
 

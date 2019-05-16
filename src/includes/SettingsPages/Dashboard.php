@@ -3,7 +3,9 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -25,6 +27,9 @@ class Dashboard
      */
     public function mailjet_dashboard_page_html()
     {
+        if (!MailjetApi::isValidAPICredentials()){
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
+        }
         // check user capabilities
         if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
