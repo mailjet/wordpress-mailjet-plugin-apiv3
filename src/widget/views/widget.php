@@ -142,7 +142,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
                 }
             }
             ?>
-            <input type="hidden" value="<?php echo $widget_id ?>" name="widget_id">
+            <input type="hidden" name="widget_id" value="<?php echo $widget_id ?>">
             <input type="submit" value="<?php echo $buttonLabel ?>">
         </form>
         <span>

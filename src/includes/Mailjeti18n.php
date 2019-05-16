@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Includes;
 
-use MailjetPlugin\Includes\MailjetLogger;
-
 /**
  * Define the internationalization functionality.
  *
@@ -26,7 +24,7 @@ class Mailjeti18n
         'Italian' => 'it_IT',
     );
 
-    const DEFAULT_LANGUAGE_DIR = (WP_PLUGIN_DIR) .DIRECTORY_SEPARATOR.'mailjet-for-wordpress'.DIRECTORY_SEPARATOR.'languages'.DIRECTORY_SEPARATOR;
+    const DEFAULT_LANGUAGE_DIR = MAILJET_PLUGIN_DIR .'languages'.DIRECTORY_SEPARATOR;
     const CUSTOM_LANGUAGE_DIR = (WP_CONTENT_DIR) .DIRECTORY_SEPARATOR. 'languages'. DIRECTORY_SEPARATOR .'plugins'.DIRECTORY_SEPARATOR;
 
     /**
@@ -122,7 +120,7 @@ class Mailjeti18n
         }
 
         // Use en_US if locale is not supported
-        if (!in_array($locale, array_values(self::getSupportedLanguages()))) {
+        if (!in_array($locale, array_values(self::getSupportedLocales()))) {
             $locale = 'en_US';
         }
 
@@ -131,12 +129,13 @@ class Mailjeti18n
 
     public static function getSupportedLocales()
     {
-        $customLocales = self::getSupportedLanguages();
+        $customLocales = self::getAllSupportedLanguages();
         if (empty($customLocales)){
             return self::$supportedLocales;
         }
-        $result = array_merge($customLocales, self::$supportedLocales);
-        $result = array_unique($result);
+        /*This is needed so that the language language order is preserved and the customer file is loaded with priority!*/
+        $result = array_merge(self::$supportedLocales, $customLocales);
+        $result = array_unique(array_reverse($result, true));
 
         return array_reverse($result, true);
     }
@@ -148,7 +147,7 @@ class Mailjeti18n
     public static function getCurrentUserLanguage()
     {
         $locale = self::getLocale();
-        $languages = array_flip(self::getSupportedLanguages());
+        $languages = array_flip(self::getSupportedLocales());
         if (!isset($languages[$locale])) {
             // return English if the language is not supported
             $locale = 'en_US';
@@ -227,7 +226,7 @@ class Mailjeti18n
         return $link;
     }
 
-    private static function getSupportedLanguages()
+    private static function getAllSupportedLanguages()
     {
         $customLanguages = [];
         $customLanguagesDir = (ABSPATH) . 'wp-content/languages/plugins';
@@ -237,7 +236,7 @@ class Mailjeti18n
 
         $dir = new \DirectoryIterator($customLanguagesDir);
         foreach ($dir as $fileInfo) {
-            if (strpos($fileInfo->getFilename(), 'mailjet-for-wordpress-') === false) {
+            if (strpos($fileInfo->getFilename(), 'mailjet-for-wordpress-') !== 0) {
                 continue;
             }
 
@@ -247,7 +246,7 @@ class Mailjeti18n
             }
 
             $languageCode = str_replace('mailjet-for-wordpress-', '', $fileBasename);
-            $customLanguages['Custom-' . $languageCode] = $languageCode;
+            $customLanguages[$languageCode] = $languageCode;
         }
 
         return $customLanguages;

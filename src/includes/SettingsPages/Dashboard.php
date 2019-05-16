@@ -2,8 +2,10 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use MailjetPlugin\Includes\Mailjeti18n;
+use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -25,6 +27,9 @@ class Dashboard
      */
     public function mailjet_dashboard_page_html()
     {
+        if (!MailjetApi::isValidAPICredentials()){
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
+        }
         // check user capabilities
         if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
@@ -74,15 +79,9 @@ class Dashboard
                     </div>
                 </div>
             </div>
-
-            <div class="bottom_links">
-                <div class="needHelpDiv">
-                    <img src=" <?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/need_help.png'; ?>" alt="<?php _e('Connect your Mailjet account', 'mailjet-for-wordpress'); ?>" />
-                    <?php echo __('Need help?', 'mailjet-for-wordpress'); ?>
-                </div>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetUserGuideLinkByLocale() . '">' . __('Read our user guide', 'mailjet-for-wordpress') . '</a>'; ?>
-                <?php echo '<a target="_blank" href="' . Mailjeti18n::getMailjetSupportLinkByLocale() . '">' . __('Contact our support team', 'mailjet-for-wordpress') . '</a>'; ?>
-            </div>
+            <?php
+                MailjetAdminDisplay::renderBottomLinks();
+            ?>
         </div>
         <?php
     }

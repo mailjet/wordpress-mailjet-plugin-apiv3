@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes;
 
 use MailjetIframe\MailjetIframe;
+use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\SettingsPages\AllSetup;
 use MailjetPlugin\Includes\SettingsPages\ConnectAccountSettings;
 use MailjetPlugin\Includes\SettingsPages\Dashboard;
@@ -202,7 +203,8 @@ class MailjetMenu
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
 
-        echo '</div">';
+        echo '</div>';
+        MailjetAdminDisplay::renderBottomLinks();
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
     }
 
@@ -229,7 +231,8 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
-        echo '</div">';
+        echo '</div>';
+        MailjetAdminDisplay::renderBottomLinks();
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
     }
 
@@ -256,7 +259,8 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
-        echo '</div">';
+        echo '</div>';
+        MailjetAdminDisplay::renderBottomLinks();
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
