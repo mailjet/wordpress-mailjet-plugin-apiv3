@@ -205,7 +205,7 @@ class MailjetSettings
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
         $contactForm7Settings = new ContactForm7Settings();
-        add_action('wpcf7_submit', array($contactForm7Settings, 'sendConfirmationEmail'));
+        add_action('wpcf7_submit', array($contactForm7Settings, 'sendConfirmationEmail'), 10, 2);
         if (!empty($_GET['cf7list']) && $_GET['cf7list'] === $contactListId) {
 
             if (empty($_GET['email'])) {

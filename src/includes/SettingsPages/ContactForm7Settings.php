@@ -9,6 +9,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+
 /**
  * Description of ContactForm7Settings
  *
@@ -35,10 +36,15 @@ class ContactForm7Settings
             return false;
         }
 
+        $invalidFields = $submission->get_invalid_fields();
+        if (!empty($invalidFields)) {
+            return false;
+        }
+
         $mailjetCheckbox = $formdata[self::MAILJET_CHECKBOX];
         if ($mailjetCheckbox[0] != '') {
             $cf7Email = trim(get_option('cf7_email'), '[]');
-            if(!isset($formdata[$cf7Email])) {
+            if (!isset($formdata[$cf7Email])) {
                 return false;
             }
             $email = $formdata[$cf7Email];
@@ -48,8 +54,8 @@ class ContactForm7Settings
             $data = array();
             preg_match_all('/\[(.*?)\]/', $cf7name, $matches);
 
-            if(!empty($matches[1])) {
-                foreach($matches[1] as $match) {
+            if (!empty($matches[1])) {
+                foreach ($matches[1] as $match) {
                     if (isset($formdata[$match])) {
                         $data[] = $formdata[$match];
                     }
@@ -70,7 +76,7 @@ class ContactForm7Settings
                 '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
                 '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
                 '__WP_URL__' => $wpUrl,
-                '__CONFIRM_URL__' => get_home_url() . '?'.$params.'&token=' . sha1($params),
+                '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&token=' . sha1($params),
                 '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'),
                 '__FROM_NAME__' => get_option('blogname'),
                 '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'),
