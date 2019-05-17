@@ -181,6 +181,16 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 == Changelog ==
 
+= 5.1 =
+* New integration with Contact Form 7 has been added
+* Added support for custom translation files
+* Multiple widgets can be added on the same page
+* Various bug fixes and improvements
+
+= 5.0.12 =
+* User can upload custom language translation files
+* Added Contact Form 7 integration
+
 = 5.0.11 =
 * Fix confirmation link
 * Create contact properties
