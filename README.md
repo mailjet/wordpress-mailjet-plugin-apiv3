@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 - Requires at least: 3.9
 - Tested up to: 5.2
-- Stable tag: 5.1
+- Stable tag: 5.1.0
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,7 +172,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 ## Changelog
 
-##### 5.1
+##### 5.1.0
 * New integration with Contact Form 7 has been added
 * Added support for custom translation files
 * Multiple widgets can be added on the same page
