@@ -999,3 +999,23 @@
 .mj-missing-required-input{
     border: 1px solid red;
 }
+
+.mj-e-commerce-customer {
+    height: 20px;
+    width: 174px;
+    color: #888888;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.mj-integrations-label {
+    height: 20px;
+    width: 98px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}

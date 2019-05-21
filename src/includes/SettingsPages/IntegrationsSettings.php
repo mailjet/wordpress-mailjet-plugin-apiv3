@@ -44,13 +44,12 @@ class IntegrationsSettings {
         }
         ?>
         <fieldset class="settingsSubscrFldset">
-            <legend style="font-weight: bold; padding: 10px 10px 10px 0;"><?php _e( 'WooCommerce', 'mailjet-for-wordpress' ); ?></legend>
+            <legend class="mj-integrations-label"><?php _e( 'WooCommerce', 'mailjet-for-wordpress' ); ?></legend>
 
             <input name="activate_mailjet_woo_integration" class="mj-btn btnSecondary" type="button"
                    id="activate_mailjet_woo_integration"
                    value="Enable"<?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                    autocomplete="off">
-
             <div id="activate_mailjet_woo_form"
                  class="<?= ( $mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide' ) ?>">
                 <label class="checkboxLabel">
@@ -77,6 +76,11 @@ class IntegrationsSettings {
                         } ?>
                     </select>
                 </div>
+                <div>
+                    <p class="mj-e-commerce-customer">
+                        Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.
+                    </p>
+                </div>
             </div>
         </fieldset>
         <hr>
@@ -102,7 +106,7 @@ class IntegrationsSettings {
         $isCF7Installed = class_exists( 'WPCF7' ) ? true : false;
         ?>
         <fieldset class="settingsSubscrFldset">
-            <legend style="font-weight: bold; padding: 10px 10px 10px 0;"><?php _e( 'Contact Form 7', 'mailjet-for-wordpress' ); ?></legend>
+            <legend class="mj-integrations-label"><?php _e( 'Contact Form 7', 'mailjet-for-wordpress' ); ?></legend>
 
             <label class="checkboxLabel">
                 <input name="activate_mailjet_cf7_integration" type="checkbox" id="activate_mailjet_cf7_integration"
