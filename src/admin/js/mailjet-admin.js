@@ -269,8 +269,12 @@ function mjWooSubscription() {
     if (activateWooIntegrationBox === null || activateWooIntegrationBox === undefined) {
         return false;
     }
-    activateWooIntegrationBox.addEventListener("change", function () {
-        this.checked === true ? mjShow(wooActicateIntegrationForm) : mjHide(wooActicateIntegrationForm);
+    activateWooIntegrationBox.addEventListener("click", function () {
+        if (wooActicateIntegrationForm.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationForm);
+        } else {
+            mjHide(wooActicateIntegrationForm);
+        }
     });
 
 
@@ -283,6 +287,13 @@ function mjWooSubscription() {
     if (wooContactListBox === null || wooContactListBox === undefined) {
         return false;
     }
+    wooContactListBox.addEventListener("click", function () {
+        if (wooContactListBox.classList.contains('mj-hide')){
+            mjShow(wooContactList);
+        } else {
+            mjHide(wooContactList);
+        }
+    });
     wooContactListBox.addEventListener("change", function () {
         this.checked === true ? mjShow(wooContactList) : mjHide(wooContactList);
     });
@@ -349,8 +360,8 @@ function mjAdmin() {
     mjInitShowHide();
     mjSelect();
     if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page')
-            || document.querySelector('body.admin_page_mailjet_subscription_options_page')
-            || document.querySelector('body.admin_page_mailjet_integrations_page')) {
+        || document.querySelector('body.admin_page_mailjet_subscription_options_page')
+        || document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjSubscription();
     }
     if (document.querySelector('body.admin_page_mailjet_integrations_page')) {
