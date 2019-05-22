@@ -145,12 +145,10 @@ use MailjetPlugin\Includes\Mailjeti18n;
             <input type="hidden" name="widget_id" value="<?php echo $widget_id ?>">
             <input type="submit" value="<?php echo $buttonLabel ?>">
         </form>
-        <span>
-            <?php
-            if (isset($form_message[$widget_id])){
-                echo $form_message[$widget_id];
-            }
-            ?>
-        </span>
+        <?php
+        if (!empty($form_message[$widget_id])){
+            echo '<span class="mailjet_widget_form_message">'. $form_message[$widget_id] .'</span>';
+        }
+        ?>
     </div>
 </div>
