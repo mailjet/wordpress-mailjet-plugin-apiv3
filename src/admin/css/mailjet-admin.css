@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-.mj-connect-link{
-    margin-top:64px!important;
+
+.mj-connect-link {
+    margin-top: 64px !important;
 }
+
 /**
  * Global styles and WP/bootsrap override
  */
@@ -12,6 +14,7 @@
     color: #555;
     margin-right: 20px;
 }
+
 .mj-pluginPage h1,
 .mj-pluginPage h2,
 .mj-pluginPage h3,
@@ -21,41 +24,47 @@
     font-weight: 500;
     color: inherit;
 }
+
 .mj-pluginPage a {
     text-decoration: none;
     color: #19BC9C;
 }
+
 .mj-pluginPage a:hover,
 .mj-pluginPage a:focus {
     text-decoration: underline;
     color: #33D6B6;
 }
+
 .mj-pluginPage a:focus {
     outline: 0;
     box-shadow: none;
 }
+
 .mj-pluginPage a:visited {
     /*    text-decoration: underline;
         color: #9B59B6;*/
 }
+
 .mj-pluginPage b {
     font-weight: 500;
 }
+
 .mj-pluginPage p {
     max-width: 550px;
     line-height: 20px;
     margin-top: 0;
-    margin-bottom: 24px;    
+    margin-bottom: 24px;
     font-size: 14px;
 }
 
-#initialSettingsForm #mailjet_apikey{
-    width: 100%!important;
+#initialSettingsForm #mailjet_apikey {
+    width: 100% !important;
     max-width: none;
 }
 
-#initialSettingsForm #mailjet_apisecret{
-    width: 100%!important;
+#initialSettingsForm #mailjet_apisecret {
+    width: 100% !important;
     max-width: none;
 }
 
@@ -74,65 +83,82 @@
     background-color: #fff;
     box-shadow: none;
 }
+
 .mj-pluginPage input[type="text"]:hover {
     border-color: #555;
 }
+
 .mj-pluginPage input[type="text"]:focus {
     border-color: #19BC9C;
 }
+
 ::-webkit-input-placeholder {
     font-family: Roboto;
     color: #a2a2a2;
 }
-::-moz-placeholder{
+
+::-moz-placeholder {
     font-family: Roboto;
     color: #a2a2a2;
     opacity: 1;
 }
+
 :-ms-input-placeholder {
     font-family: Roboto;
     color: #a2a2a2;
 }
+
 ::placeholder {
     font-family: Roboto;
     color: #a2a2a2;
 }
+
 :focus::-webkit-input-placeholder {
     color: #555;
 }
+
 :focus::-moz-placeholder {
     color: #555;
     opacity: 1;
 }
+
 :focus:-ms-input-placeholder {
     color: #555;
 }
+
 :focus::placeholder {
     color: #555;
 }
+
 .mj-show {
     min-height: 0;
     overflow: hidden;
     transition: height 0ms ease-in 0ms, min-height 250ms ease-in 0ms;
 }
+
 .mj-hide {
     height: 0;
     overflow: hidden;
     transition: height 75ms ease-in 0ms, min-height 75ms ease-in 0ms;
 }
+
 .mj-disabled {
     opacity: .4;
     cursor: not-allowed;
 }
+
 .mj-pluginPage .form-table {
     margin-top: 0;
 }
+
 .mj-pluginPage .form-table td {
     padding: 0;
 }
+
 .mj-pluginPage .form-table td p {
     margin-top: 0;
 }
+
 .mj-pluginPage .mj-label,
 .mj-pluginPage .form-table td fieldset .label {
     display: block;
@@ -142,19 +168,23 @@
     margin: 0 0 8px !important;
     cursor: inherit;
 }
+
 .mj-select-wrapper {
     position: relative;
     display: inline-block;
     margin-bottom: 16px;
+    margin-right: 16px;
 }
+
 .mj-select-wrapper:before {
     content: attr(data-value);
     position: absolute;
     left: 0;
+    white-space: nowrap;
     top: 0;
     z-index: 1;
     display: block;
-    width: 100%;
+    width: 110%;
     height: 100%;
     line-height: 20px;
     padding: 8px 32px 8px 16px;
@@ -168,10 +198,11 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .mj-select-wrapper:after {
     content: '';
     position: absolute;
-    right: 16px;
+    right: 5px;
     top: calc(100% / 2);
     z-index: 2;
     display: block;
@@ -184,16 +215,19 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .mj-select-wrapper:hover:before {
     border-color: #555;
 }
+
 .mj-select-wrapper.mj-select-focus:before {
     border-color: #19BC9C;
 }
+
 .mj-select-wrapper select {
     position: relative;
     z-index: 3;
-    width: 312px;
+    width: 412px;
     height: 36px;
     opacity: 0;
 }
@@ -218,6 +252,7 @@
     box-shadow: none;
     cursor: pointer;
 }
+
 .mj-pluginPage .mj-btn:hover,
 .mj-pluginPage .mj-btn:focus,
 .mj-pluginPage .mj-btn:active,
@@ -228,6 +263,7 @@
     outline: 0;
     box-shadow: none;
 }
+
 .mj-pluginPage .btnPrimary,
 .mj-pluginPage .btnPrimary:hover,
 .mj-pluginPage .button.btnPrimary,
@@ -236,25 +272,30 @@
     color: white;
     background-color: #FEAD0D;
 }
+
 .mj-pluginPage .btnPrimary:hover,
 .mj-pluginPage .button.btnPrimary:hover {
     background-color: #FFBA1A;
 }
+
 .mj-pluginPage .btnPrimary:focus,
 .mj-pluginPage .btnPrimary:active,
 .mj-pluginPage .button.btnPrimary:focus,
 .mj-pluginPage .button.btnPrimary:active {
     background-color: #F1A000;
 }
+
 .mj-pluginPage .btnSecondary,
 .mj-pluginPage .button.btnSecondary {
     color: #FEAD0D;
     border-color: currentColor;
 }
+
 .mj-pluginPage .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus,
 .mj-pluginPage .button.btnSecondary:hover, .button.btnSecondary:active, .button.btnSecondary:focus {
-    background-color: rgba(254,173,13,0.1);
+    background-color: rgba(254, 173, 13, 0.1);
 }
+
 .mj-pluginPage .btnCancel,
 .mj-pluginPage .button.btnCancel {
     border-color: transparent;
@@ -266,14 +307,17 @@
     color: #555;
     background-color: #e5e5e5;
 }
+
 .mj-pluginPage .btnSmall {
     min-width: 0;
     height: 28px;
     padding: 4px 16px;
 }
+
 .mj-btn + .mj-btn {
     margin-left: 16px;
 }
+
 .btnSmall + .btnSmall {
     margin-left: 8px;
 }
@@ -284,9 +328,11 @@
 .mj-pluginPage .notice {
     margin: 16px 0 16px 0;
 }
+
 .mj-pluginPage .notice p {
     margin: .5em 0;
 }
+
 .mj-pluginPage .notice strong {
     font-weight: 500;
 }
@@ -297,43 +343,53 @@
 .mj-pluginPage .modal-backdrop {
     background-color: #2D2F37;
 }
+
 .mj-pluginPage .modal-backdrop.in {
     opacity: .6;
 }
+
 .mj-pluginPage .modal.in .modal-dialog {
     transform: translate(0, calc(50vh - 50%));
     margin-top: 0;
 }
+
 .mj-pluginPage .modal-content {
     overflow: hidden;
     border-radius: 3px;
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .2);
 }
+
 .mj-pluginPage .modal-header {
     display: flex;
     padding: 12px 32px 15px;
     border-top: 4px solid #FEAD0D;
     border-bottom: 1px solid #e5e5e5 !important;
 }
+
 .mj-pluginPage .modal-title {
     flex-grow: 1;
     line-height: 32px;
     font-size: 20px;
     font-weight: 500;
 }
+
 .mj-pluginPage .button.close {
     font-size: 0;
     color: rgba(255, 255, 255, 0);
 }
+
 .mj-pluginPage .modal-body {
     padding: 32px;
 }
+
 .mj-pluginPage .modal-body input {
     margin-bottom: 0;
 }
+
 .mj-pluginPage .modal-footer {
     padding: 16px 32px;
 }
+
 /**
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
@@ -346,31 +402,36 @@
 .admin_page_mailjet_settings_page #wpwrap,
 .admin_page_mailjet_initial_contact_lists_page #wpwrap,
 .admin_page_mailjet_dashboard_page #wpwrap,
-.toplevel_page_mailjet_settings_page  #wpwrap {
+.toplevel_page_mailjet_settings_page #wpwrap {
     background-color: #F2F2F2;
 }
+
 /* Error messages */
 #setting-error-mailjet_message {
     margin-left: 0px;
 }
+
 /*.button.MailjetSubmit, .button.MailjetSubmit:hover, .button.MailjetSubmit:focus {
     border-color: transparent;
 }*/
 /**  STYLE 11 */
 
 #availableContactListsContainerParent::-webkit-scrollbar {
-    width:10px;
+    width: 10px;
 }
+
 #availableContactListsContainerParent::-webkit-scrollbar-track {
     border-radius: 10px;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
 }
+
 #availableContactListsContainerParent::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: linear-gradient(to left, #fff, #e4e4e4);
     border: 1px solid #aaa;
 }
+
 #availableContactListsContainerParent::-webkit-scrollbar-thumb:hover {
     background: #fff;
 }
@@ -378,6 +439,7 @@
 #availableContactListsContainerParent::-webkit-scrollbar-thumb:active {
     background: linear-gradient(to left, #22ADD4, #1E98BA);
 }
+
 .mj-pluginPage .checkboxLabel,
 .mj-pluginPage .form-table td fieldset .checkboxLabel {
     display: flex;
@@ -386,6 +448,7 @@
     line-height: 20px;
     margin: 0 0 8px !important;
 }
+
 .mailjet_row input[type="checkbox"] {
     content: "\00a0";
     position: relative;
@@ -401,15 +464,18 @@
     border-radius: 3px;
     box-shadow: none;
 }
+
 .mailjet_row input[type="checkbox"]:checked::before {
     margin: -1px 0 0 -2px;
     font-size: 16px;
 }
+
 .mailjet_row input[type="checkbox"]:focus {
-    border:1px solid #19BC9C;
+    border: 1px solid #19BC9C;
     background: #FFFFFF;
-    outline:none;
+    outline: none;
 }
+
 .mailjet_row input[type="checkbox"]:checked {
     border: 1px solid #19BC9C;
     background: #33D6B6;
@@ -418,25 +484,30 @@
     text-align: center;
     font-weight: bold;
 }
+
 .mailjet_row input[type="checkbox"]:checked:before {
     color: #FFF;
 }
+
 /*#wpbody-content {
     padding-right: 20px;
 }*/
 .mainContainer {
     border-radius: 3px;
     background-color: #FFFFFF;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     padding: 16px 0 20px 32px;
 }
+
 .backToDashboard {
     /*margin-bottom: 24px;*/
 }
+
 .backToDashboard a {
     display: inline-flex;
     align-items: center;
 }
+
 .backToDashboard a,
 .backToDashboard a:hover,
 .backToDashboard a:focus,
@@ -445,51 +516,61 @@
     text-decoration: none;
     color: #888;
 }
+
 .backToDashboard svg {
     width: 8px;
     height: 8px;
     margin-right: 8px;
     fill: currentColor;
 }
+
 .mailjet_row label {
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;
 }
+
 .initialSettings {
     display: flex;
 }
+
 #initialSettingsForm {
     width: 359px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
     padding: 24px;
 }
+
 #initialSettingsForm .form-table {
     margin-bottom: 8px;
 }
+
 #initialSettingsSubmit {
     display: block;
     width: 100%;
 }
+
 #initialSettingsForm .dont_have_account {
     margin: 24px 0 0;
 }
+
 .closeCreateList,
 #subscriptionOptionsSubmit {
     float: left;
-    margin-left:10px;
+    margin-left: 10px;
 }
+
 #initialSettingsHead {
     /*height: 48px;*/
     border-radius: 3px 3px 0 0;
     background-color: #23282D;
-    margin-top:20px;
-    left:0;
+    margin-top: 20px;
+    left: 0;
     /*padding:10px;*/
-    padding:4px;
-    padding-top:13px;
+    padding: 4px;
+    padding-top: 13px;
 }
+
 #initialSettingsDescription {
     width: 550px;
     margin-left: 50px;
@@ -498,80 +579,100 @@
 .initialSettingsDescriptionContainer {
     display: table;
 }
+
 .initialSettingsDescriptionRow {
     display: flex;
     max-width: 526px;
     align-items: center;
     margin-bottom: 16px;
 }
+
 .initialSettingsDescriptionRow .initialSettingsTextCell {
     margin-bottom: 0;
 }
+
 .initialSettingsImageCell {
     width: 96px;
     height: 96px;
     margin-right: 30px;
 }
+
 .initialSettingsTextCell b {
     display: block;
     margin-bottom: 8px;
     font-size: 16px;
 }
+
 .mjSettings {
     min-height: 450px;
     display: flex;
     align-items: stretch;
 }
+
 .mjSettings .left {
     /* width: 268px; */
     padding-right: 16px;
     border-right: 1px solid #e5e5e5;
 }
+
 .mjSettings .left .centered h1 {
     font-size: 32px;
     font-weight: 500;
     line-height: 40px;
 }
+
 .mjSettings .right {
     max-width: 600px;
     padding: 16px 32px;
 }
+
 .mjSettings .mailjet_sync_options_div {
     margin-bottom: 24px;
 }
+
 .mjSettings .settingsSubscrFldset {
     margin-bottom: 24px;
 }
+
 .mjSettings .settingsAccessFldset {
     margin-bottom: 16px;
 }
+
 .mjSettings .settingsConnectFldset {
     margin-bottom: 38px;
 }
+
 .mjSettings .settingsSendingFldset {
     margin-bottom: 16px;
     padding-left: 24px;
 }
+
 .mjSettings .settingsSendingFldset .fromFld,
 .mjSettings .settingsSendingFldset .smtpFld {
     margin-bottom: 8px;
 }
+
 .mjSettings .settingsSendingFldset .smtpFld .mj-select-wrapper {
     margin-bottom: 0;
 }
+
 .mjSettings .settingsSendingFldset .smtpFld select {
     width: auto;
     min-width: 80px;
 }
+
 .mjSettings .fromFldGroup {
     display: flex;
 }
+
 .mjSettings .fromFldGroup input[type="text"] {
     margin-right: 16px;
 }
+
 .mjSettings .testEmailFldset {
     margin-bottom: 24px;
 }
+
 .mjSettings .sendTestEmailBtn {
     display: block;
     padding: 0;
@@ -582,6 +683,7 @@
     outline: 0;
     cursor: pointer;
 }
+
 .mjSettings .sendTestEmailBtn:before {
     content: '';
     display: inline-block;
@@ -595,19 +697,24 @@
     vertical-align: 2px;
     transition: transform .075s ease-in;
 }
+
 .mjSettings .sendTestEmailBtn.mj-active:before {
     transform: rotate(-45deg) translateY(1px);
     transition: transform .25s ease-in;
 }
+
 .mjSettings .test_email_collapsible {
     overflow: hidden;
 }
+
 .mjSettings .test_email_collapsible label {
     margin-top: 16px !important;
 }
+
 .mjSettings .test_email_collapsible .test_email_fields_group {
     display: flex;
 }
+
 .mjSettings .test_email_collapsible input {
     margin: 0 8px 0 0;
 }
@@ -615,6 +722,7 @@
 .mjSettings .mailjet_sync_comment_authors_div .mj-select-wrapper {
     margin-bottom: 0;
 }
+
 /*May should remove 1,2,3,4,5*/
 .bottom_links {
     display: flex;
@@ -623,24 +731,30 @@
     line-height: 20px;
     margin-top: 24px;
 }
+
 .bottom_links > * {
     margin-right: 24px;
 }
+
 .needHelpDiv {
     display: flex;
     align-items: center;
     font-weight: 500;
 }
+
 .needHelpDiv img {
     margin-right: 8px;
 }
+
 .bottom_links a:visited {
     /*color: inherit;*/
 }
+
 .bottom_links a:hover,
 .bottom_links a:focus {
     color: #33D6B6;
 }
+
 .settingsMenuLink a {
     display: flex;
     align-items: center;
@@ -651,10 +765,12 @@
     font-weight: 500;
     color: #555;
 }
+
 .settingsMenuLink a svg {
     margin-right: 16px;
     fill: currentColor;
 }
+
 .settingsMenuLink a:hover,
 .settingsMenuLink a:active,
 .settingsMenuLink a:focus {
@@ -667,15 +783,19 @@
 .settingsMenuLink a:not(.active):active {
     background-color: #f2f2f2;
 }
+
 .settingsMenuLink a:not(.active):focus {
     background-color: #e5e5e5;
 }
+
 .settingsMenuLink a:visited {
     color: #555;
 }
+
 .settingsMenuLink a.active {
     color: #19BC9C;
 }
+
 #mailjet_subscription_options_settings {
     margin-bottom: 16px;
 }
@@ -684,6 +804,7 @@
 .availableContactLists {
     margin-bottom: 24px;
 }
+
 .availableContactListsContainerParent {
     width: 615px;
     max-height: 476px;
@@ -692,16 +813,20 @@
     border: 1px solid #E5E5E5;
     border-radius: 3px;
 }
+
 .availableContactListsRow {
     display: flex;
     padding: 16px 24px;
 }
+
 .availableContactListsRow:not(:last-child) {
     border-bottom: 1px solid #E5E5E5;
 }
+
 .availableContactListsCountCell {
     width: 200px;
 }
+
 .availableContactListsNameCell {
     flex-grow: 1;
 }
@@ -710,12 +835,14 @@
 .create_contact_list_popup {
     margin-bottom: 24px;
 }
+
 .create_contact_list_popup label { /* -2,3,4*/
     display: block;
     max-width: max-content;
     line-height: 20px;
     margin: 0 0 8px !important;
 }
+
 #create_contact_list {
     display: flex;
     align-items: center;
@@ -724,26 +851,33 @@
     color: #19BC9C;
     cursor: pointer;
 }
+
 #create_contact_list.mj-active {
     display: none;
 }
+
 #create_contact_list img {
     height: 16px;
     margin-right: 8px;
 }
+
 #create_contact_list:hover {
     text-decoration: none;
 }
+
 .create_contact_list_fields {
     margin-bottom: 8px;
 }
+
 .create_contact_list_btns {
     display: flex;
 }
+
 .greenLink {
     color: #19BC9C;
     text-decoration: none;
 }
+
 .greenLink:hover {
     text-decoration: none;
 }
@@ -753,6 +887,7 @@
     /*padding-bottom: 20px;*/
     text-align: center;
 }
+
 #initialContactListsForm .initialContactListsFieldset p {
     margin-bottom: 16px;
 }
@@ -763,12 +898,14 @@
     margin-top: 24px;
     padding: 20px;
 }
+
 .dashboard .block {
     position: relative;
     padding: 24px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
 }
+
 .dashboard .leftCol {
     flex-grow: 1;
     display: flex;
@@ -776,6 +913,7 @@
     align-items: flex-start;
     min-width: 40%;
 }
+
 .dashboard .passportImage {
     flex-grow: 1;
     width: 100%;
@@ -783,12 +921,14 @@
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 .dashboard .rightCol {
     display: flex;
     flex-flow: row wrap;
     min-width: 500px;
     max-width: 650px;
 }
+
 .dashboard .rightCol .block {
     display: flex;
     flex-direction: column;
@@ -796,23 +936,28 @@
     margin: 0 0 16px 16px;
     text-align: center;
 }
+
 .dashboard .rightCol .block:nth-last-child(-n+2) {
     margin-bottom: 0;
 }
+
 .dashboard .rightCol .blockTitle {
     line-height: 24px;
     margin: 0 0 16px;
     font-size: 16px;
 }
+
 .dashboard .rightCol .blockText {
     flex-grow: 1;
     margin-top: 0;
 }
+
 .dashboard .rightCol img {
     width: 96px;
     height: 96px;
     margin: 0 auto 24px;
 }
+
 .dashboard .rightCol .mj-btn {
     width: 100%;
 }
@@ -820,6 +965,7 @@
 .allsetup_blocks {
     display: flex;
 }
+
 .allsetup .block_single {
     flex-grow: 1;
     flex-basis: 0;
@@ -830,25 +976,31 @@
     border-radius: 3px;
     text-align: center;
 }
+
 .allsetup .block_single + .block_single {
     margin-left: 24px;
 }
+
 .allsetup .block_single img {
     display: block;
     width: 96px;
     height: 96px;
     margin: 0 auto 24px;
 }
+
 .allsetup .block_single .section_inner_title {
     margin-bottom: 16px;
 }
+
 .allsetup .block_single .blockText {
     flex-grow: 1;
 }
+
 .allsetup .block_single .mj-btn {
     display: block;
     width: 100%;
 }
+
 .cancelBtn {
     background-color: #c5c5c5;
     width: 100px;
@@ -860,17 +1012,19 @@
     font-weight: 500;
     line-height: 20px;
     text-align: center;
-    margin-left:10px;
+    margin-left: 10px;
     color: #FCB340;
 }
 
 .activate_mailjet_sync_field {
     margin-bottom: 24px;
 }
+
 .mailjet_sync_options_div {
     margin: 16px 0 0 0;
 }
-.mailjet_sync_comment_authors_div{
+
+.mailjet_sync_comment_authors_div {
     margin-left: 20px;
 }
 
@@ -881,14 +1035,17 @@
     font-weight: 500;
     font-size: 32px;
 }
+
 .mainContainer .page_top_subtitle {
     line-height: 24px;
     font-size: 16px;
 }
+
 .mainContainer .section_title {
     font-weight: 500;
     font-size: 16px;
 }
+
 .top_descrption_helper {
     font-size: 14px;
 }
@@ -914,10 +1071,12 @@
     flex-direction: column;
     height: calc(100vh - 100px);
 }
+
 .iframePage .mainContainer {
     flex-grow: 1;
     position: relative;
 }
+
 .iframePage .mainContainer iframe {
     position: absolute;
     left: 0;
@@ -926,15 +1085,15 @@
     height: 100%;
 }
 
-#initialContactListsForm #initialContactListsSubmit{
+#initialContactListsForm #initialContactListsSubmit {
     margin-bottom: 20px;
 }
 
-.allsetup .allsetupGreenLinkDiv{
+.allsetup .allsetupGreenLinkDiv {
 
 }
 
-.cf7_input{
+.cf7_input {
     width: 100%;
     padding: 12px;
     /*margin: 8px 0;*/
@@ -946,15 +1105,15 @@
 }
 
 .cf7_input_label {
-    font-weight: 500!important;
+    font-weight: 500 !important;
     padding-bottom: 0px;
 }
 
-#mj-select-block .mj-select-wrapper{
-    display: block!important;
+#mj-select-block .mj-select-wrapper {
+    display: block !important;
 }
 
-#cf7_contact_properties:after{
+#cf7_contact_properties:after {
     content: '';
     position: absolute;
     right: 16px;
@@ -971,15 +1130,11 @@
     box-sizing: border-box;
 }
 
-.mj-copy-wrapper{
+.mj-copy-wrapper {
     display: -ms-flexbox; /* IE10 */
     display: flex;
     /*width: 120px;*/
     position: relative;
-}
-
-.mj-select-wrapper select{
-    width: 100%;
 }
 
 .mj-copy-icon {
@@ -991,11 +1146,211 @@
     position: absolute;
     /*right: calc(100% / 2);*/
     left: calc(95%);
-    top: calc(100%/5);
+    top: calc(100% / 5);
     padding-right: 8px;
     cursor: pointer;
 }
 
-.mj-missing-required-input{
+.mj-missing-required-input {
     border: 1px solid red;
+}
+
+.mj-e-commerce-customer {
+    height: 20px;
+    width: 174px;
+    color: #888888;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.mj-integrations-label {
+    height: 20px;
+    width: 98px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.mj-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.mj-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .mj-slider {
+    background-color: #2196F3;
+}
+
+input:focus + .mj-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .mj-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.mj-slider.mj-round {
+    border-radius: 34px;
+}
+
+.mj-slider.mj-round:before {
+    border-radius: 50%;
+}
+
+.mj-switch {
+    float: right;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.mj-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.mj-woocommerce-contacts {
+    height: 40px;
+    width: 600px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+#activate_mailjet_woo_form {
+    margin-top: 20px;
+}
+
+.mj-contact-list {
+    height: 24px;
+    width: 86px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+#woo_contact_list {
+    margin-top: 20px;
+}
+
+.mj-text-field {
+    width: 100%;
+}
+
+.mj-grid {
+    margin-right: 20px;
+}
+
+.mj-box {
+    margin-bottom: 20px;
+}
+
+.sigles-php {
+    height: 32px;
+    width: 32px;
+}
+
+.mj-woo-logo-small {
+    margin-top: -45px;
+    float: right;
+    height: 40px;
+
+}
+
+.mj-settings-btn {
+    height: 20px;
+    width: 20px;
+    color: #19BC9C;
+!important;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.mj-settings-label {
+    height: 20px;
+    width: 52px;
+    color: #19BC9C;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.mj-header {
+    display: inline-block;
+    padding: 5px 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.mj-header h1 {
+    width: 80%;
+    text-align: left;
+}
+
+#mj-top_bar {
+    position: relative;
+    float: left;
+    height: 60px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+#mj-logo_top_bar {
+    position: absolute;
+    height: 30px;
+    width: 70px;
+    left: 67%;
+    top: 15px;
+    color: #19BC9C; !important;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+#mj-logo_top_bar span{
+    font-family: Roboto;
+    font-weight: 300;
+    position: absolute;
+    vertical-align: middle;
+}
+
+#mj-title {
+    position: absolute;
+    left: 1%;
+    top: 16px;
+    color: #555;
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 2.3em;
 }

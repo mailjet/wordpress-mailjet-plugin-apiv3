@@ -18,69 +18,94 @@ use MailjetPlugin\Includes\MailjetSettings;
  * @subpackage Mailjet/includes
  * @author     Your Name <email@example.com>
  */
-class Dashboard
-{
+class Dashboard {
 
     /**
      * top level menu:
      * callback functions
      */
-    public function mailjet_dashboard_page_html()
-    {
-        if (!MailjetApi::isValidAPICredentials()){
-            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
+    public function mailjet_dashboard_page_html() {
+
+        $iconDir =    plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'admin/images/woo.svg';
+        $wooCommerceExists =  class_exists( 'WooCommerce' ) ? 'mj-show' : 'hidden';
+        if ( ! MailjetApi::isValidAPICredentials() ) {
+            MailjetSettings::redirectJs( admin_url( '/admin.php?page=mailjet_settings_page&from=plugins' ) );
         }
         // check user capabilities
-        if (!current_user_can('read')) {
-            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
+        if ( ! current_user_can( 'read' ) ) {
+            MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]' );
+
             return;
         }
-
         ?>
+
         <div class="mj-pluginPage">
-            <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>" alt="Mailjet Logo" /></div>
+            <div id="initialSettingsHead"><img
+                        src="<?php echo plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . '/admin/images/LogoMJ_White_RVB.svg'; ?>"
+                        alt="Mailjet Logo"/></div>
             <div class="mainContainer dashboard">
-                <!--            <h1>--><?php //echo esc_html(get_admin_page_title());  ?><!--</h1>-->
-                <h1  class="page_top_title"><?php echo __('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'); ?> </h1 >
+                <!--            <h1>--><?php //echo esc_html(get_admin_page_title());
+                ?><!--</h1>-->
+                <div id="mj-top_bar">
+                    <section id="mj-title"><?php _e( 'Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress' ); ?></section>
+                    <i class="dashicons dashicons-admin-generic" id="mj-logo_top_bar" ><span>Settings</span></i>
+                </div>
 
                 <div class="initialSettingsMainCtn">
-                    <div class="block leftCol">
-                        <h2 class="section_inner_title"><?php _e('Send newsletter', 'mailjet-for-wordpress'); ?></h2>
-                        <p><?php echo __('Create and manage your newsletters. Vew your campaign statistics', 'mailjet-for-wordpress'); ?></p>
-                        <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary" id="nextBtnReverseDashboard1" onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'"><?= __('My campaigns', 'mailjet-for-wordpress') ?></button>
-                        <div class="passportImage" style="background-image: url(<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_main_image.png'; ?>);"></div>
+                    <div class="col mj-grid">
+                        <div class="block mj-box">
+                            <h2 class="section-header"><?php _e( 'My campaigns', 'mailjet-for-wordpress' ); ?></h2>
+                            <p><?php echo __( 'Create and manage your newsletters. Vew your campaign statistics', 'mailjet-for-wordpress' ); ?></p>
+                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
+                                    id="nextBtnReverseDashboard1"
+                                    onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'"><?= __( 'Manage campaigns', 'mailjet-for-wordpress' ) ?></button>
+                        </div>
+                        <div class="block mj-box">
+                            <h3 class="section-header"><?php _e( 'My contact lists', 'mailjet-for-wordpress' ); ?></h3>
+                            <p class="blockText"><?php _e( 'View and manage your contact lists', 'mailjet-for-wordpress' ); ?></p>
+                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
+                                    id="nextBtnReverseDashboard2"
+                                    onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'"><?php _e( 'Manage contacts', 'mailjet-for-wordpress' ) ?></button>
+                        </div>
+                        <div class="block mj-box <?=$wooCommerceExists?>">
+                            <div>
+                                <h3 class="section-header"><?php _e( 'Order notification emails', 'mailjet-for-wordpress' ); ?></h3>
+                                <img alt="asd" class="mj-woo-logo-small" src="<?= $iconDir?>"/>
+                            </div>
+                            <p class="blockText"><?php _e( 'Activate order notification emails to inform customers of any new purchase, shipping or refund.', 'mailjet-for-wordpress' ); ?></p>
+                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
+                                    id="nextBtnReverseDashboard4"
+                                    onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
+                        </div>
                     </div>
-
-                    <div class="rightCol">
-                        <div class="block">
-                            <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_top_left_image.png'; ?>" />
-                            <h3 class="blockTitle"><?php echo __('Manage my contacts', 'mailjet-for-wordpress'); ?></h3>
-                            <p class="blockText"><?php echo __('View and manage your contact lists', 'mailjet-for-wordpress'); ?></p>
-                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary" id="nextBtnReverseDashboard2" onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'"><?php _e('My contact lists', 'mailjet-for-wordpress') ?></button>
+                    <div class="col mj-grid">
+                        <div class="block mj-box">
+                            <h3 class="section-header"><?php _e( 'Subscription form', 'mailjet-for-wordpress' ); ?></h3>
+                            <p class="blockText"><?php _e( 'Customize a subscription form and add it to your Wordpress website', 'mailjet-for-wordpress' ); ?></p>
+                            <button name="nextBtnReverseDashboard" class="mj-btn btn-info" id="nextBtnReverseDashboard3"
+                                    onclick="location.href = 'widgets.php'"><?= __( 'Add widget', 'mailjet-for-wordpress' ) ?></button>
                         </div>
-                        <div class="block">
-                            <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_top_right_image.png'; ?>" />
-                            <h3 class="blockTitle"><?php echo __('Add a subscription form', 'mailjet-for-wordpress'); ?></h3>
-                            <p class="blockText"><?php echo __('Customize a subscription form and add it to your Wordpress website', 'mailjet-for-wordpress'); ?></p>
-                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary" id="nextBtnReverseDashboard3" onclick="location.href = 'widgets.php'"><?= __('My widgets', 'mailjet-for-wordpress') ?></button>
+                        <div class="block mj-box">
+                            <h3 class="section-header"><?php _e( 'Statistics', 'mailjet-for-wordpress' ); ?></h3>
+                            <p class="blockText"><?php _e( 'View your sending statistics over a period of time', 'mailjet-for-wordpress' ); ?></p>
+                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
+                                    id="nextBtnReverseDashboard4"
+                                    onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e( 'View statistics', 'mailjet-for-wordpress' ) ?></button>
                         </div>
-                        <div class="block">
-                            <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_bottom_left_image.png'; ?>" />
-                            <h3 class="blockTitle"><?php echo __('View statistics', 'mailjet-for-wordpress'); ?></h3>
-                            <p class="blockText"><?php echo __('View your sending statistics over a period of time', 'mailjet-for-wordpress'); ?></p>
-                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary" id="nextBtnReverseDashboard4" onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e('My statistics', 'mailjet-for-wordpress') ?></button>
-                        </div>
-                        <div class="block">
-                            <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/dashboard_bottom_right_image.png'; ?>" />
-                            <h3 class="blockTitle"><?php echo __('Update settings', 'mailjet-for-wordpress'); ?></h3>
-                            <p class="blockText"><?php echo __('Review and modify your plugin settings', 'mailjet-for-wordpress'); ?></p>
-                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary" id="nextBtnReverseDashboard5" onclick="location.href = 'admin.php?page=mailjet_connect_account_page'"><?php _e('Settings', 'mailjet-for-wordpress') ?></button>
+                        <div class="block mj-box <?=$wooCommerceExists?>">
+                            <div>
+                                <h3 class="section-header"><?php _e( 'Abandoned cart email', 'mailjet-for-wordpress' ); ?></h3>
+                                <img alt="asd" class="mj-woo-logo-small" src="<?= $iconDir?>"/>
+                            </div>
+                            <p class="blockText"><?php _e( 'Recover visitors and turn them into customers but reminding them what they left in their cart.', 'mailjet-for-wordpress' ); ?></p>
+                            <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary" id="nextBtnReverseDashboard3"
+                                    onclick="location.href = 'widgets.php'"><?= __( 'Manage abandoned cart', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                     </div>
                 </div>
             </div>
             <?php
-                MailjetAdminDisplay::renderBottomLinks();
+            MailjetAdminDisplay::renderBottomLinks();
             ?>
         </div>
         <?php
