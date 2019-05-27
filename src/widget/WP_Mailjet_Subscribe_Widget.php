@@ -204,15 +204,12 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $locale = $_GET['subscription_locale'];
         }
 
-        $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
-
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
         $list_id = isset($_GET['list_id']) ? $_GET['list_id'] : '';
         $widget_id = isset($_GET['widget_id']) ? $_GET['widget_id'] : false;
 
         if (!$subscription_email) {
-            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription email is missing ]');
-            echo $technicalIssue;
+            _e('Subscription email is missing', 'wordpress-for-mailjet');
             die;
         }
 
@@ -225,106 +222,102 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             'properties' => $properties,
         );
 
-        if ($widget_id){
+        if ($widget_id) {
             $params['widget_id'] = $widget_id;
         }
 
         $params = http_build_query($params);
 
+        if ($_GET['mj_sub_token'] != sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
+            // Invalid token
+            _e('Invalid token', 'mailjet-for-wordpress');
+            die;
+        }
+
         // The token is valid we can subscribe the user
-        if ($_GET['mj_sub_token'] == sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
-            $contactListId = $list_id;
+        $contactListId = $list_id;
 
-            if (empty($list_id)){
-                $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
+        if (empty($list_id)) {
+            $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
+        }
+        // List id is not provided
+        if (!$contactListId) {
+            // Use en_US list id as default
+            $listIdEn = get_option('mailjet_locale_subscription_list_en_US');
+            if (!$listIdEn) {
+                _e('Contact list not provided', 'mailjet-for-wordpress');
+                die;
             }
-            // List id is not provided
-            if (!$contactListId) {
-                // Use en_US list id as default
-                $listIdEn = get_option('mailjet_locale_subscription_list_en_US');
-                if (!$listIdEn) {
-                    MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList ID is not provided for ' . $locale . '! ]');
-                    die;
-                }
-                $contactListId = $listIdEn;
-            }
+            $contactListId = $listIdEn;
+        }
 
-            $dataProperties = array();
-            $mailjetContactProperties = $this->getMailjetContactProperties();
-            if (!empty($mailjetContactProperties)) {
-                foreach ($mailjetContactProperties as $property) {
-                    if (isset($properties[$property['ID']]) && $properties[$property['ID']] != '' ) {
-                        $dataType = $property['Datatype'];
-                        switch ($dataType) {
-                            case "datetime":
-                                $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
-                                if ($datetime instanceof \DateTime) {
-                                    $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
-                                }
-                                break;
-                            case "int":
-                                $dataProperties[$property['Name']] = (int)$properties[$property['ID']];
-                                break;
-                            case "float":
-                                $dataProperties[$property['Name']] = (float)$properties[$property['ID']];
-                                break;
-                            case "bool":
-                                $positiveBooleans = array('true', '1', 'on', 1, true);
-                                if(in_array($properties[$property['ID']], $positiveBooleans)) {
-                                    $dataProperties[$property['Name']] = true;
-                                }else{
-                                    $dataProperties[$property['Name']] = false;
-                                }
-                                break;
-                            case "str":
-                            default:
-                                $dataProperties[$property['Name']] = $properties[$property['ID']];
-                                break;
-                        }
+        $dataProperties = array();
+        $mailjetContactProperties = $this->getMailjetContactProperties();
+        if (!empty($mailjetContactProperties)) {
+            foreach ($mailjetContactProperties as $property) {
+                if (isset($properties[$property['ID']]) && $properties[$property['ID']] != '') {
+                    $dataType = $property['Datatype'];
+                    switch ($dataType) {
+                        case "datetime":
+                            $datetime = \DateTime::createFromFormat("d/m/Y", $properties[$property['ID']]);
+                            if ($datetime instanceof \DateTime) {
+                                $dataProperties[$property['Name']] = $datetime->format(\DateTime::RFC3339);
+                            }
+                            break;
+                        case "int":
+                            $dataProperties[$property['Name']] = (int) $properties[$property['ID']];
+                            break;
+                        case "float":
+                            $dataProperties[$property['Name']] = (float) $properties[$property['ID']];
+                            break;
+                        case "bool":
+                            $positiveBooleans = array('true', '1', 'on', 1, true);
+                            if (in_array($properties[$property['ID']], $positiveBooleans)) {
+                                $dataProperties[$property['Name']] = true;
+                            } else {
+                                $dataProperties[$property['Name']] = false;
+                            }
+                            break;
+                        case "str":
+                        default:
+                            $dataProperties[$property['Name']] = $properties[$property['ID']];
+                            break;
                     }
                 }
             }
+        }
 
-            $contact = array(
-                'Email' => $subscription_email,
+        $contact = array(
+            'Email' => $subscription_email,
 //                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
-                'Properties' => $dataProperties
-            );
+            'Properties' => $dataProperties
+        );
 
-            $isActiveList = MailjetApi::isContactListActive($contactListId);
-            if (!$isActiveList) {
-                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ContactList: ' . $contactListId . ' is deleted and ' . $subscription_email . ' was not subscribed ]');
-                echo $technicalIssue;
-                die;
-            }
+        $isActiveList = MailjetApi::isContactListActive($contactListId);
+        if (!$isActiveList) {
+            _e('Contact list is not active', 'mailjet-for-wordpress');
+            die;
+        }
 
-            $result = MailjetApi::syncMailjetContact($contactListId, $contact);
+        $result = MailjetApi::syncMailjetContact($contactListId, $contact);
+        if (!$result) {
+            _e('Contact subscription failed', 'mailjet-for-wordpress');
+            die;
+        }
 
-            if (!$result) {
-                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
-                echo $technicalIssue;
-                die;
-            }
+        // Subscribed
+        $language = Mailjeti18n::getCurrentUserLanguage();
+        $thankYouPageId = get_option('mailjet_thank_you_page_' . $language);
 
-            // Subscribed
-            $language = Mailjeti18n::getCurrentUserLanguage();
-            $thankYouPageId = get_option('mailjet_thank_you_page_' . $language);
-
-            // If no selected page, select default template
-            if (!$thankYouPageId) {
+        // If no selected page, select default template
+        if (!$thankYouPageId) {
 //                $locale = Mailjeti18n::getLocaleByPll();
-                $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
-                $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
+            $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
+            $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
-                $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
-                // Default page is selected
-                include($tankyouPageTemplate);
-                die;
-            }
-        } else {
-            // Invalid token
-            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ User token is invalid.Subscription email ' . $subscription_email . ']');
-            echo $technicalIssue;
+            $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
+            // Default page is selected
+            include($tankyouPageTemplate);
             die;
         }
     }
