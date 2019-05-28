@@ -334,6 +334,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+        wp_enqueue_script($this->get_widget_slug() . '-front-script', plugins_url('js/front-widget.js', __FILE__));
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if ($validApiCredentials === false) {
             include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
@@ -973,7 +974,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         wp_register_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
         wp_localize_script($this->get_widget_slug() . '-script', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
-//        wp_enqueue_script($this->get_widget_slug() . '-script');
+        
 
         wp_register_script('mailjetjs_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
 //        wp_enqueue_script('mailjetjs_bootstrap');

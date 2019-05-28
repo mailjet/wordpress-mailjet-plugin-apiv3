@@ -31,7 +31,6 @@
     jQuery(document).ready(function ($) {
 
         $('#copy_properties').on("click", function () {
-            console.log("clicked");
             const text = document.querySelector('#cf7_contact_properties');
             text.disabled = false;
             text.select();
