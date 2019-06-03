@@ -248,7 +248,7 @@ function mjCF7Subscription() {
     const cf7email = document.getElementById('cf7_email');
 
     saveButton.addEventListener("click", function (e) {
-        if(cf7email.value === '') {
+        if(activateCF7IntegrationBox.checked === true && cf7email.value === '') {
             cf7email.className+= ' mj-missing-required-input';
             e.preventDefault();
             return false;
