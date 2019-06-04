@@ -3,8 +3,9 @@
 - Contributors: Mailjet
 - Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 - Requires at least: 3.9
-- Tested up to: 5.2
+- Tested up to: 5.2.1
 - Stable tag: 5.1.1
+- Requires PHP: 5.6
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +15,8 @@ Use Mailjet to create, send and track beautiful and engaging marketing and trans
 * The all new V5 Mailjet plugin for Wordpress has been completely redesigned and includes many new features.
 * Improved plugin settings for simplified configuration
 * Redesigned subscription widget for easier setup and more options - mandatory, optional or hidden form fields, custom subscription confirmation page, and more.
-* Integration with WooCommerce is included - customers can subscribe to your newsletter during checkout. More integrations are coming soon.
+* Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
+* Integration with **WooCommerce** - customers can subscribe to your newsletter during checkout. More integrations are coming soon.
 * More flexibility - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form.
 
 ## Description
@@ -25,12 +27,15 @@ Mailjet's official plugin on WordPress gives you access to:
 
 * **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
 
-* **Automated Contact Synchronization** - 3 ways to build your contact lists:
-  * Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+* **Automated Contact Synchronization** - 4 ways to build your contact lists:
 
+   * Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+   
    * Comment authors can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
-
-   * A new cool option is to subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+   
+   * Subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+   
+   * Use the built in Contact Form 7 integration and allow form submitters to subscribe to your newsletter.
 
 * **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
 
@@ -82,7 +87,8 @@ Synchronization is automatic, that's the beauty of this plugin! It doesn't matte
 The Mailjet Plugin is available in English, Spanish, French, German and Italian.
 Need help? Our multilingual support team is here to answer your questions in any of these languages, any day of the week, at any time via our [online helpdesk](https://app.mailjet.com/support).
 
-##### How to use filters to customize the subscription confirmation email template
+#### Using filters ####
+##### Customize the subscription confirmation email template
 Add the following code to your template functions.php file. Uncomment the messages that you would like to replace.
 <pre><code>
 /**
@@ -112,7 +118,7 @@ add_filter( 'mailjet_subscription_widget_email_params', 'updateMailjetSubscripti
 }
 </code></pre>
 
-##### How to use filters to replace the email confirmation template with my own file
+##### Replace the email confirmation template with your own file
 You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
 <pre><code>
 /**
@@ -127,7 +133,7 @@ function useCustomConfirmationEmail($templatePath) {
 }
 </code></pre>
 
-##### How to use filters to set your own Thank You page
+##### Set your own Thank You page
 You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
 <pre><code>
 /**
@@ -142,7 +148,7 @@ function updateThankYouPagePath($templatePath) {
 }
 </code></pre>
 
-##### How to use filters to replace the widget form file
+##### Replace the widget form file
 You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
 <pre><code>
 /**
@@ -154,6 +160,36 @@ You need to have a php file with your custom template uploaded to your WordPress
 add_filter( 'mailjet_widget_form_filename', 'useMailjetCustomWidgetFormTemplate' );
 function useMailjetCustomWidgetFormTemplate($templatePath) {
     return './custom_mailjet_widget_template.php';
+}
+</code></pre>
+
+##### Use a template for transactinal emails
+Mailjet allows you to take full advantage of the template language when using Mailjet's SMTP relay. For more info see [this guide](https://dev.mailjet.com/template-language/SMTP/). Add the following code to your template functions.php file.
+<pre><code>
+/**
+ * Use SMTP headers to send emails with a specific transactional template
+ * and leverage templating language to supply dynamic content to the template
+ */
+ 
+add_filter('wp_mail', 'my_wp_mail', 99);
+function my_wp_mail($args) {
+    /* Provide the transac template id */
+    $args['headers'] .= 'X-MJ-TemplateID:123456' . "\r\n";
+    /* Enable templating language */
+    $args['headers'] .= 'X-MJ-TemplateLanguage:1' . "\r\n";
+    /* Send template errors to this recipient */
+    $args['headers'] .= 'X-MJ-TemplateErrorReporting:admin@your-site.com' . "\r\n";
+    /* Send data to the template. The vars must be defined in the template in order to accept data */
+    $args['headers'] .= 'X-MJ-Vars:' .
+        json_encode(
+            array(
+                "var1" => $args['subject'], 
+                "var2" => ($recipient->first_name) ? $recipient->first_name : false, 
+                "var3" => $args['message']
+            )
+        )  
+        . "\r\n";
+    return $args;
 }
 </code></pre>
 
@@ -171,6 +207,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 ## Changelog
+
+##### 5.1.1
+* Fixed a problem when saving the WooCommerce integration settings
+* Fixed translations in the subscription confirmation email for Contact Form 7
 
 ##### 5.1.0
 * New integration with Contact Form 7 has been added
