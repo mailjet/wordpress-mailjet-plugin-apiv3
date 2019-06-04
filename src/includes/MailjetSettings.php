@@ -45,6 +45,7 @@ class MailjetSettings
         register_setting('mailjet_initial_contact_lists_page', 'create_contact_list_btn');
         register_setting('mailjet_initial_contact_lists_page', 'create_list_name');
         register_setting('mailjet_initial_contact_lists_page', 'settings_step');
+        register_setting('mailjet_initial_contact_lists_page', 'skip_mailjet_list');
 
         register_setting('mailjet_connect_account_page', 'mailjet_apikey');
         register_setting('mailjet_connect_account_page', 'mailjet_apisecret');

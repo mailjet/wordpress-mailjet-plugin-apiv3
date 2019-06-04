@@ -135,6 +135,7 @@ class InitialContactListsSettings
      */
     public function mailjet_initial_contact_lists_page_html()
     {
+
         if (MailjetApi::getContactProperties() === false) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
         }
@@ -254,7 +255,7 @@ class InitialContactListsSettings
 
                 <div id="initialContactListsForm">
                     <form action="options.php" method="post">
-                        <input id="activate_mailjet_sync" type="hidden" name="activate_mailjet_sync" value="0">
+                        <input id="skip_mailjet_list" type="hidden" name="skip_mailjet_list" value="0">
                         <?php
                         // output security fields for the registered setting "mailjet"
                         settings_fields('mailjet_initial_contact_lists_page');
@@ -276,10 +277,14 @@ class InitialContactListsSettings
                         <?php }
                         ?>
 
-                        <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="button" id="nextBtn"
-                               onclick="location.href = 'admin.php?page=mailjet_allsetup_page'"
-                               value="<?php (true !== $applyAndContinueBtnClicked) ? _e('Skip this step', 'mailjet-for-wordpress') : _e('Next', 'mailjet-for-wordpress'); ?>">
+                        <?php if ($applyAndContinueBtnClicked){ ?>
 
+                            <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="button" id="nextBtn"  onclick="location.href = 'admin.php?page=mailjet_allsetup_page'"
+                                   value="<?php _e('Next', 'mailjet-for-wordpress'); ?>">
+                        <?php }else{?>
+                            <input name="nextBtn" class="mj-btn btnSecondary nextBtn" type="submit" id="nextBtn"  onclick="skipMailjetSync()"
+                                   value="<?php _e('Skip this step', 'mailjet-for-wordpress'); ?>">
+                        <?php }?>
                         <br/>
                     </form>
                 </div>
@@ -288,6 +293,11 @@ class InitialContactListsSettings
             <script>
                 function activateMjSync() {
                     document.getElementById('activate_mailjet_sync').value = 1;
+                }
+
+                function skipMailjetSync() {
+                    document.getElementById('skip_mailjet_list').value = 1;
+                    document.getElementById('mailjet_sync_list').value = '';
                 }
             </script>
             <?php
