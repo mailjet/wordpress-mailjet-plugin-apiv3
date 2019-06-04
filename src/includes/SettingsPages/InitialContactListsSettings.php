@@ -297,7 +297,7 @@ class InitialContactListsSettings
                 }
 
                 function skipMailjetSync() {
-                    document.getElementById('skip_mailjet_list').value = 1;
+                    document.getElementById('skip_mailjet_list').value = '1';
                     document.getElementById('mailjet_sync_list').value = '';
                 }
             </script>
