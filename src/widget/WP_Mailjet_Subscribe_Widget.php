@@ -337,7 +337,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         wp_enqueue_script($this->get_widget_slug() . '-front-script', plugins_url('js/front-widget.js', __FILE__));
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if ($validApiCredentials === false) {
-            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
+//            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
             return false;
         }
         $mailjetContactProperties = $this->getMailjetContactProperties();
@@ -890,7 +890,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if ($validApiCredentials === false) {
-//            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
+            include(plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'designforfailure.php');
             return false;
         }
 
