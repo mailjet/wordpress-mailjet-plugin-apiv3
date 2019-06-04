@@ -41,7 +41,7 @@ class MailjetUpdate
         add_option('mailjet_activate_logger', 0);
         add_option('settings_step', 'user_access_step');
         add_option('api_credentials_ok', 1);
-        add_option('activate_mailjet_sync', 1);
+        add_option('activate_mailjet_sync');
         add_option('activate_mailjet_initial_sync');
         add_option('create_contact_list_btn');
         add_option('create_list_name');
