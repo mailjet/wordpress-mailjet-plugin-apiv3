@@ -27,12 +27,15 @@ Mailjet's official plugin on WordPress gives you access to:
 
 * **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
 
-* **Automated Contact Synchronization** - 3 ways to build your contact lists:
-  * Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+* **Automated Contact Synchronization** - 4 ways to build your contact lists:
 
+   * Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+   
    * Comment authors can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
-
-   * A new cool option is to subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+   
+   * Subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+   
+   * Use the built in Contact Form 7 integration and allow form submitters to subscribe to your newsletter.
 
 * **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
 
@@ -161,7 +164,7 @@ function useMailjetCustomWidgetFormTemplate($templatePath) {
 </code></pre>
 
 ##### Use a template for transactinal emails
-Mailjet also allows you to take full advantage of the template language when using Mailjet's SMTP relay. For more info see [this guide](https://dev.mailjet.com/template-language/SMTP/). Add the following code to your template functions.php file.
+Mailjet allows you to take full advantage of the template language when using Mailjet's SMTP relay. For more info see [this guide](https://dev.mailjet.com/template-language/SMTP/). Add the following code to your template functions.php file.
 <pre><code>
 /**
  * Use SMTP headers to send emails with a specific transactional template
