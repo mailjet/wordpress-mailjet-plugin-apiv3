@@ -23,18 +23,18 @@ Use Mailjet to create, send and track beautiful and engaging marketing and trans
 
 Mailjet's official plugin on WordPress gives you access to:
 
-* *Easy Email Management:* Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
-* *Sign Up Form & Contact Lists Management:* Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
-* *Automated Contact Synchronization* - 4 ways to build your contact lists:
+* **Easy Email Management:** Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
+* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
+* **Automated Contact Synchronization** - 4 ways to build your contact lists:
   * Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
   * Comment authors can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
   * Subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
   * Use the built in Contact Form 7 integration and allow form submitters to subscribe to your newsletter.
-* *Campaign Builder Tool:* Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
-* *World Class Deliverability:* Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
-* *Insight and analytics:* Access real-time statistics on your campaigns showing opens, clicks, geographies, average time to click and more to optimize your email performance.
-* *Data Compliance:* Mailjet is GDPR compliant and ISO 27001 certified, meaning that it guarantees an optimal level of email data privacy and security.
-* *International UI and Support:* Mailjet offers user interfaces, documentation and 24/7 customer support in 5 languages (English, French, German, Spanish and Italian).
+* **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
+* **World Class Deliverability:** Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
+* **Insight and analytics:** Access real-time statistics on your campaigns showing opens, clicks, geographies, average time to click and more to optimize your email performance.
+* **Data Compliance:** Mailjet is GDPR compliant and ISO 27001 certified, meaning that it guarantees an optimal level of email data privacy and security.
+* **International UI and Support:** Mailjet offers user interfaces, documentation and 24/7 customer support in 5 languages (English, French, German, Spanish and Italian).
 
 == Installation ==
 
