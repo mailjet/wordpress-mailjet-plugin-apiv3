@@ -133,6 +133,32 @@ class MailjetApi
         return false;
     }
 
+	public static function getContactListByID($contactListId)
+	{
+		if (!$contactListId || empty($contactListId)) {
+			return false;
+		}
+
+		try {
+			$mjApiClient = self::getApiClient();
+		} catch (\Exception $e) {
+			return false;
+		}
+
+		$filters = array(
+			'ID' => $contactListId
+		);
+		try{
+			$response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
+		} catch (\GuzzleHttp\Exception\ConnectException $e) {
+			return false;
+		}
+		if ($response->success()) {
+			return $response->getData();
+		}
+		return false;
+	}
+
     public static function getContactProperties()
     {
 

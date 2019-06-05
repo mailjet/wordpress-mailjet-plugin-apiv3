@@ -34,9 +34,10 @@ class IntegrationsSettings
 
     private function wooIntegration( $mailjetContactLists )
     {
-        $mailjetWooList                 = get_option( 'mailjet_woo_list' );
+
         $mailjetWooSyncActivated        = get_option( 'activate_mailjet_woo_sync' );
         $mailjetWooIntegrationActivated = get_option( 'activate_mailjet_woo_integration' );
+
         $wooCommerceNotInstalled        = false;
         // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
         if ( ! class_exists( 'WooCommerce' ) ) {
@@ -45,21 +46,23 @@ class IntegrationsSettings
             delete_option( 'mailjet_woo_list' );
             $wooCommerceNotInstalled = true;
         }
-        ?>
+	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists['Name'] . '('.$mailjetContactLists['SubscriberCount'].')' : 'No list selected';
+
+	    ?>
         <fieldset class="settingsSubscrFldset">
             <span class="mj-integrations-label"><?php _e( 'WooCommerce', 'mailjet-for-wordpress' ); ?></span>
             <label class="mj-switch">
-                <input name="activate_mailjet_woo_integration"  id="activate_mailjet_woo_integration" type="checkbox">
+                <input name="activate_mailjet_woo_integration"  id="activate_mailjet_woo_integration" type="checkbox" <?= ( $mailjetWooIntegrationActivated === 'on' ? 'checked="checked"' : '' ) ?>>
                 <span class="mj-slider mj-round"></span>
             </label>
-            <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide' ) ?>">
+            <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated === 'on' ? ' mj-show' : 'mj-hide' ) ?>">
                 <div class="mj-woocommerce-contacts">
                     Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
                 </div>
                 <div id="woo_contact_list" class="mailjet_sync_woo_div">
                     <label class="mj-contact-list"><?php _e( 'Contact List', 'mailjet-for-wordpress' ); ?></label>
                     <div class="mj-woocommerce-contacts">
-                        <?=  'the list you chose' //$mailjetWooList  ?> <span class="dashicons dashicons-editor-help"></span>
+                        <?= $mailjetContactLists ?> <span class="dashicons dashicons-editor-help tooltip" title="You can change list inside Settings > Subscription options."></span>
                     </div>
                 </div>
                 <div id="woo_contact_list" class="mailjet_sync_woo_div">
@@ -114,10 +117,13 @@ class IntegrationsSettings
     public function mailjet_integrations_cb( $args )
     {
         // get the value of the setting we've registered with register_setting()
-        $mailjetContactLists = MailjetApi::getMailjetContactLists();
-        $mailjetContactLists = ! empty( $mailjetContactLists ) ? $mailjetContactLists : array();
-        $this->wooIntegration( $mailjetContactLists );
-        $this->cf7Integration( $mailjetContactLists );
+	    $mailjetListId = get_option( 'mailjet_sync_list' );
+        $wooContactList = MailjetApi::getContactListByID($mailjetListId);
+	    $wooContactList = ! empty( $wooContactList ) ? $wooContactList[0] : array();
+	    $cf7ContactLists = MailjetApi::getMailjetContactLists();
+	    $cf7ContactLists = ! empty( $cf7ContactLists ) ? $cf7ContactLists : array();
+        $this->wooIntegration( $wooContactList );
+        $this->cf7Integration($cf7ContactLists );
         ?><input name="settings_step" type="hidden" id="settings_step" value="integrations_step"><?php
     }
 
