@@ -257,6 +257,7 @@ class InitialContactListsSettings
                 <div id="initialContactListsForm">
                     <form action="options.php" method="post">
                         <input id="skip_mailjet_list" type="hidden" name="skip_mailjet_list" value="0">
+                        <input id="activate_mailjet_sync" type="hidden" name="activate_mailjet_sync" value="1">
                         <?php
                         // output security fields for the registered setting "mailjet"
                         settings_fields('mailjet_initial_contact_lists_page');
@@ -298,6 +299,7 @@ class InitialContactListsSettings
 
                 function skipMailjetSync() {
                     document.getElementById('skip_mailjet_list').value = '1';
+                    document.getElementById('activate_mailjet_sync').value = '0';
                     document.getElementById('mailjet_sync_list').value = '';
                 }
             </script>

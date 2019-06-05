@@ -102,10 +102,10 @@ class SubscriptionOptionsSettings
 
         <input name="settings_step" type="hidden" id="settings_step" value="subscription_options_step">
 
+
+
         <?php
     }
-
-
 
 
     /**
@@ -204,13 +204,27 @@ class SubscriptionOptionsSettings
                                 // output save settings button
                                 $saveButton = __('Save', 'mailjet-for-wordpress');
                                 ?>
-                                <button type="submit" id="subscriptionOptionsSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
+                                <button type="submit" id="subscriptionOptionsSubmit" onclick="sanitizeInput()" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet-for-wordpress')?>"> -->
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <script>
+                function sanitizeInput() {
+                    let autorsCheck = document.getElementById('activate_mailjet_comment_authors_sync');
+                    let syncCheck = document.getElementById('activate_mailjet_sync');
+
+                    if (autorsCheck.checked === false){
+                        document.getElementById('mailjet_comment_authors_list').value = '';
+                    }
+
+                    if (syncCheck.checked === false){
+                        document.getElementById('mailjet_sync_list').value = '';
+                    }
+                }
+            </script>
             <?php
             MailjetAdminDisplay::renderBottomLinks();
             ?>
