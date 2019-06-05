@@ -204,7 +204,7 @@ class SubscriptionOptionsSettings
                                 // output save settings button
                                 $saveButton = __('Save', 'mailjet-for-wordpress');
                                 ?>
-                                <button type="submit" id="subscriptionOptionsSubmit" onclick="sanitiseInput()" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
+                                <button type="submit" id="subscriptionOptionsSubmit" onclick="sanitizeInput()" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet-for-wordpress')?>"> -->
                             </form>
                         </div>
@@ -212,7 +212,7 @@ class SubscriptionOptionsSettings
                 </div>
             </div>
             <script>
-                function sanitiseInput() {
+                function sanitizeInput() {
                     let autorsCheck = document.getElementById('activate_mailjet_comment_authors_sync');
                     let syncCheck = document.getElementById('activate_mailjet_sync');
 
