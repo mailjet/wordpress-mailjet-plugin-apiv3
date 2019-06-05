@@ -34,18 +34,38 @@ class IntegrationsSettings
 
     private function wooIntegration( $mailjetContactLists )
     {
+	    $wooCommerceNotInstalled        = false;
+	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
+	    if ( ! class_exists( 'WooCommerce' ) ) {
+		    delete_option( 'activate_mailjet_woo_integration' );
+		    delete_option( 'mailjet_woo_edata_sync' );
+		    delete_option( 'mailjet_woo_checkout_checkbox' );
+		    delete_option( 'mailjet_woo_checkout_box_text' );
+		    delete_option( 'mailjet_woo_banner_checkbox' );
+		    delete_option( 'mailjet_woo_banner_text' );
+		    delete_option( 'mailjet_woo_banner_label' );
+		    $wooCommerceNotInstalled = true;
+	    }
 
-        $mailjetWooSyncActivated        = get_option( 'activate_mailjet_woo_sync' );
+        $mailjetWooSyncActivated        = get_option( 'mailjet_woo_edata_sync' );
         $mailjetWooIntegrationActivated = get_option( 'activate_mailjet_woo_integration' );
 
-        $wooCommerceNotInstalled        = false;
-        // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
-        if ( ! class_exists( 'WooCommerce' ) ) {
-            delete_option( 'activate_mailjet_woo_integration' );
-            delete_option( 'activate_mailjet_woo_sync' );
-            delete_option( 'mailjet_woo_list' );
-            $wooCommerceNotInstalled = true;
+
+        $checkoutCheckbox = get_option( 'mailjet_woo_checkout_checkbox' );
+        if ($checkoutCheckbox !== '1'){
+	        delete_option( 'mailjet_woo_checkout_box_text' );
         }
+        $checkoutCheckboxText = get_option( 'mailjet_woo_checkout_box_text' );
+
+	    $bannerCheckbox = get_option( 'mailjet_woo_banner_checkbox' );
+	    if ($bannerCheckbox !== '1'){
+		    delete_option( 'mailjet_woo_banner_text' );
+		    delete_option( 'mailjet_woo_banner_label' );
+        }
+	    $bannerText = get_option( 'mailjet_woo_banner_text' );
+	    $bannerLabel = get_option( 'mailjet_woo_banner_label' );
+
+
 	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists['Name'] . '('.$mailjetContactLists['SubscriberCount'].')' : 'No list selected';
 
 	    ?>
@@ -68,8 +88,8 @@ class IntegrationsSettings
                 <div id="woo_contact_list" class="mailjet_sync_woo_div">
                     <label ><?php _e( 'Ecommerce customer data', 'mailjet-for-wordpress' ); ?></label>
                     <label class="checkboxLabel">
-                        <input name="activate_mailjet_woo_sync" type="checkbox"
-                               value="1" <?php echo( $mailjetWooSyncActivated == 1 ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
+                        <input name="mailjet_woo_edata_sync" type="checkbox"
+                               value="1" <?php echo( $mailjetWooSyncActivated === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
@@ -80,30 +100,30 @@ class IntegrationsSettings
                         Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
                     </div>
                     <label class="checkboxLabel">
-                        <input name="activate_mailjet_woo_sync" id="activate_mailjet_woo_checkbox" type="checkbox"
-                               value="1" <?php echo( $mailjetWooSyncActivated == 1 ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
+                        <input name="mailjet_woo_checkout_checkbox" id="activate_mailjet_woo_checkbox" type="checkbox"
+                               value="1" <?php echo( $checkoutCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Activate opt-in checkbox inside checkout page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
-                    <div id="mailjet_woo_sub_letter" class="<?= ( $mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide' ) ?>">
+                    <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                         <label for="sub_letter">Checkbox text</label>
-                        <input name="sub_letter" type="text"  class="mj-text-field" placeholder="Subscribe to our newsletter">
+                        <input name="mailjet_woo_checkout_box_text" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="Subscribe to our newsletter">
                     </div>
                     <label class="checkboxLabel">
-                        <input name="activate_mailjet_woo_sync" id="activate_mailjet_woo_bannerbox"  type="checkbox"
-                               value="1" <?php echo( $mailjetWooSyncActivated == 1 ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
+                        <input name="mailjet_woo_banner_checkbox" id="activate_mailjet_woo_bannerbox"  type="checkbox"
+                               value="1" <?php echo( $bannerCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Activate opt-in banner inside thank you page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
-                    <div id="mailjet_woo_sub_banner" class="<?= ( $mailjetWooIntegrationActivated == 1 ? ' mj-show' : 'mj-hide' ) ?>">
+                    <div id="mailjet_woo_sub_banner" class="<?= ( $bannerCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                         <section class="block">
                             <div>
                                 <label for="banner_text">Banner text</label>
-                                <input name="banner_text" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
+                                <input name="mailjet_woo_banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
                             </div>
                             <div>
                                 <label for="banner_label">Banner label</label>
-                                <input name="banner_label" class="mj-text-field" type="text" placeholder="Subscribe now">
+                                <input name="mailjet_woo_banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
                             </div>
                         </section>
                     </div>

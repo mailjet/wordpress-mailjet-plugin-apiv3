@@ -78,8 +78,13 @@ class MailjetSettings
 
         // Woo integration
         register_setting('mailjet_integrations_page', 'activate_mailjet_woo_integration');
-        register_setting('mailjet_integrations_page', 'activate_mailjet_woo_sync');
-        register_setting('mailjet_integrations_page', 'mailjet_woo_list');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_edata_sync');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_checkout_checkbox');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_checkout_box_text');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_banner_checkbox');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_banner_text');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_banner_label');
+
         // Contact Form 7 integration
         register_setting('mailjet_integrations_page', 'activate_mailjet_cf7_integration');
         register_setting('mailjet_integrations_page', 'activate_mailjet_cf7_sync');
