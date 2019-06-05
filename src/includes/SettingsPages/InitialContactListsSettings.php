@@ -233,7 +233,7 @@ class InitialContactListsSettings
         }
         $contacts_list_ok = get_option('contacts_list_ok');
         $skipped = get_option('skip_mailjet_list');
-        if (!($fromPage == 'plugins') && (!empty($contacts_list_ok) && '1' == $contacts_list_ok) && $skipped === '1') {
+        if (!($fromPage == 'plugins') && (!empty($contacts_list_ok) && '1' == $contacts_list_ok) && $skipped !== '') {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
         }
 
