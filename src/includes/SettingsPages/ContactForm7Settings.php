@@ -8,7 +8,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+use MailjetPlugin\Includes\Mailjeti18n;
 
 /**
  * Description of ContactForm7Settings
@@ -22,7 +22,9 @@ class ContactForm7Settings
 
     public function sendConfirmationEmail($contactForm)
     {
+        $locale = Mailjeti18n::getLocale();
         $formdata = false;
+
         if (isset($contactForm->posted_data)) {
             $formdata = $contactForm->posted_data;
         } else {
@@ -72,20 +74,21 @@ class ContactForm7Settings
             ));
             $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
             $message = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
+
             $emailParams = array(
-                '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
-                '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
+                '__EMAIL_TITLE__' =>  Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription'),
+                '__EMAIL_HEADER__' => sprintf(__( Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), 'mailjet-for-wordpress'), $wpUrl),
                 '__WP_URL__' => $wpUrl,
                 '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&token=' . sha1($params),
-                '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'),
+                '__CLICK_HERE__' => Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list'),
                 '__FROM_NAME__' => get_option('blogname'),
-                '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'),
+                '__IGNORE__' => Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.'),
             );
             foreach ($emailParams as $key => $value) {
                 $message = str_replace($key, $value, $message);
             }
 
-            $email_subject = __('Subscription Confirmation', 'mailjet');
+            $email_subject =  Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
             add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
             wp_mail($email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
         }
