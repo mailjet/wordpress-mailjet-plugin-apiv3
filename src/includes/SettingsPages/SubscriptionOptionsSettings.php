@@ -27,7 +27,7 @@ class SubscriptionOptionsSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php esc_html_e( 'Automatically add Wordpress subscribers to a specific list', 'mailjet-for-wordpress' ); ?>
+            <?php esc_html_e( 'Automatically add Wordpress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress' ); ?>
         </p>
         <?php
     }
@@ -38,47 +38,41 @@ class SubscriptionOptionsSettings
         // get the value of the setting we've registered with register_setting()
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
-        $mailjetContactLists = MailjetApi::getMailjetContactLists();
+        $mailjetContactLists = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
-        $mailjetSyncList = get_option('mailjet_sync_list');
         $mailjetCommentAuthorsList = get_option('mailjet_comment_authors_list');
         $mailjetCommentAuthorsSyncActivated = get_option('activate_mailjet_comment_authors_sync');
 
+
+	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists[0]['Name'] . '('.$mailjetContactLists[0]['SubscriberCount'].')' : 'No list selected';
 
         // output the field
         ?>
 
         <fieldset class="settingsSubscrFldset">
-            <legend class="screen-reader-text"><span><?php  _e('Automatically add Wordpress subscribers to a specific list', 'mailjet-for-wordpress'); ?></span></legend>
+<!--            <legend class="screen-reader-text"><span>--><?php // _e('Automatically add Wordpress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress'); ?><!--</span></legend>-->
 
-            <label class="checkboxLabel">
-                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?php echo ($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
-                <span><?php _e('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet-for-wordpress'); ?></span>
-            </label>
+<!--            <label class="checkboxLabel">-->
+<!--                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" --><?php //echo ($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?><!--  autocomplete="off">-->
+<!--                <span>--><?php //_e('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet-for-wordpress'); ?><!--</span>-->
+<!--            </label>-->
 
             <div id="activate_mailjet_sync_form" class="<?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
                 <div class="mailjet_sync_options_div">
-                    <select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
-                 <?php
-                 foreach ($mailjetContactLists as $mailjetContactList) {
-                            if ($mailjetContactList["IsDeleted"] == true) {
-                                continue;
-                            }
-                            ?>
-                            <option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetSyncList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
-                            <?php
-                        } ?>
-                    </select>
-                    <label class="checkboxLabel">
-                        <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                        <span><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?></span>
-                    </label>
+                    <div id="contact_list" class="mailjet_sync_woo_div">
+                        <label class="mj-contact-list"><?php _e( 'Contact List', 'mailjet-for-wordpress' ); ?></label>
+                        <div class="mj-woocommerce-contacts">
+			                <?= $mailjetContactLists ?>  <span>&nbsp&nbsp<a href="#" onclick="ajaxResync()">Resync</a>&nbsp&nbsp<a href="#">Change list</a></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-
+            <label >
+                <span class="mj-opt-in-inside-leav">Opt-in inside « Leave a reply » form</span>
+            </label>
             <label class="checkboxLabel">
                 <input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?php echo ($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
                 <span><?php _e('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet-for-wordpress'); ?></span>
@@ -119,8 +113,10 @@ class SubscriptionOptionsSettings
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
+	    add_action( 'wp_ajax_resync_mailjet', 'ajaxResync');
+	    add_action( 'wp_ajax_nopriv_resync_mailjet', 'ajaxResync');
 
-        // register a new section in the "mailjet" page
+	    // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_subscription_options_settings',
             null,
@@ -211,6 +207,7 @@ class SubscriptionOptionsSettings
                     </div>
                 </div>
             </div>
+            <script src="jquery-3.4.0.min.js"></script>
             <script>
                 function sanitizeInput() {
                     let autorsCheck = document.getElementById('activate_mailjet_comment_authors_sync');
@@ -442,6 +439,12 @@ class SubscriptionOptionsSettings
     public function set_html_content_type()
     {
         return 'text/html';
+    }
+
+    public function ajaxResync()
+    {
+            echo 'dadadadad';
+            die();
     }
 
 }
