@@ -23,7 +23,15 @@ class SubscriptionOptionsSettings
 
     const WIDGET_HASH = '[\^=34|>5i!? {xIas';
 
-    public function mailjet_section_subscription_options_cb($args)
+    public function __construct()
+    {
+	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueScripts' ]);
+
+	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
+
+    }
+
+	public function mailjet_section_subscription_options_cb($args)
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
@@ -113,8 +121,7 @@ class SubscriptionOptionsSettings
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
-	    add_action( 'wp_ajax_resync_mailjet', 'ajaxResync');
-	    add_action( 'wp_ajax_nopriv_resync_mailjet', 'ajaxResync');
+
 
 	    // register a new section in the "mailjet" page
         add_settings_section(
@@ -317,9 +324,6 @@ class SubscriptionOptionsSettings
         return MailjetApi::syncMailjetContact($contactListId, $contact, $action);
     }
 
-
-
-
     /**
      *  Adding checkboxes and extra fields for subscribing user and comment authors
      */
@@ -443,8 +447,21 @@ class SubscriptionOptionsSettings
 
     public function ajaxResync()
     {
-            echo 'dadadadad';
-            die();
+         if ($this->syncAllWpUsers()) {
+            $response = [
+                    'message' => 'Contact list resync has started. You can check the progress inside Mailjet contact list page',
+                    'ID' => 1
+            ];
+	        wp_send_json_success( $response );
+         }else{
+	         wp_send_json_error();
+         }
     }
 
+    public function enqueueScripts()
+    {
+        $path = plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src');
+	    wp_register_script('ajaxHandle',  $path,  array('jquery'), false,true);
+	    wp_enqueue_script( 'ajaxHandle' );
+    }
 }

@@ -1,12 +1,23 @@
 function ajaxResync() {
+    var data = {
+        'action': 'resync_mailjet',
+        'data': 'test uspeshen'
+    };
 
-   console.log(mjAjax.ajaxurl)
-    // var xhttp = new XMLHttpRequest();
-    // xhttp.onreadystatechange = function() {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //         document.getElementById("demo").innerHTML = this.responseText;
-    //     }
-    // };
-    // xhttp.open("GET", "admin-ajax.php", true);
-    // xhttp.send();
+    jQuery.ajax({
+        type:"POST",
+        url: ajaxurl,
+        data: data,
+        success:function(data){
+            if (data.success){
+                alert(data.data.message);
+            } else {
+                alert('error has occurred!');
+            }
+        },
+        error: function(errorThrown){
+            alert(errorThrown);
+        }
+
+    });
 }
