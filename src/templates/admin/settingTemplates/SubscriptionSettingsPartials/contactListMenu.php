@@ -1,4 +1,10 @@
-<div id="activate_mailjet_sync_form" class="<?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
+<?php
+$wpUsersCount = get_query_var('wpUsersCount', $wpUsersCount);
+$mailjetSyncList = get_query_var('mailjetSyncList', $mailjetSyncList);
+$mailjetContactLists = get_query_var('mailjetContactLists', $mailjetContactLists);
+?>
+
+<div id="activate_mailjet_sync_form" class="mj-show">
 	<div class="mailjet_sync_options_div">
 		<select class="mj-select" name="mailjet_sync_list" id="mailjet_sync_list" type="select">
 			<?php

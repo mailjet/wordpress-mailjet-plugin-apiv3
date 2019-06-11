@@ -16,8 +16,8 @@ $mailjetCommentAuthorsSyncActivated = get_query_var('mailjetCommentAuthorsSyncAc
 		<div class="mailjet_sync_options_div">
 			<div id="contact_list" class="mailjet_sync_woo_div">
 				<!--                        <label class="mj-contact-list">--><?php //_e( 'Contact List', 'mailjet-for-wordpress' ); ?><!--</label>-->
-				<div class="mj-woocommerce-contacts">
-					<?= $mailjetContactLists ?>  <span>&nbsp&nbsp<a href="#" onclick="ajaxResync()">Resync</a>&nbsp&nbsp<a href="#">Change list</a></span>
+				<div class="mj-woocommerce-contacts" id="div-for-ajax">
+					<?= $mailjetContactLists ?>  <span>&nbsp&nbsp<a href="#" onclick="ajaxResync()">Resync</a>&nbsp&nbsp<a href="#" onclick="loadLists()">Change list</a></span>
 				</div>
 			</div>
 		</div>
@@ -30,22 +30,6 @@ $mailjetCommentAuthorsSyncActivated = get_query_var('mailjetCommentAuthorsSyncAc
 		<input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?php echo ($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
 		<span><?php _e('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet-for-wordpress'); ?></span>
 	</label>
-
-
-	<div id="comment_authors_contact_list" class="<?php echo ($mailjetCommentAuthorsSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?> mailjet_sync_comment_authors_div">
-		<select class="mj-select" name="mailjet_comment_authors_list" id="mailjet_comment_authors_list" type="select">
-			<?php
-			foreach ($mailjetContactLists as $mailjetContactList) {
-				if ($mailjetContactList["IsDeleted"] == true) {
-					continue;
-				}
-				?>
-				<option value="<?=$mailjetContactList['ID'] ?>" <?=($mailjetCommentAuthorsList == $mailjetContactList['ID'] ? 'selected="selected"' : '') ?> > <?=$mailjetContactList['Name'] ?> (<?=$mailjetContactList['SubscriberCount'] ?>) </option>
-				<?php
-			} ?>
-		</select>
-	</div>
-
 </fieldset>
 
 <input name="settings_step" type="hidden" id="settings_step" value="subscription_options_step">

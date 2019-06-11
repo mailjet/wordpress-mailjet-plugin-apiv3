@@ -29,9 +29,8 @@ class SubscriptionOptionsSettings
     public function __construct()
     {
 	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueScripts' ]);
-
 	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
-
+	    add_action( 'wp_ajax_get_contact_lists', [$this, 'getContactListsMenu']);
     }
 
 	public function mailjet_section_subscription_options_cb($args)
@@ -332,7 +331,17 @@ class SubscriptionOptionsSettings
 
     public function getContactListsMenu()
     {
+	    $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
+	    $wpUsersCount = count($allWpUsers);
+	    $mailjetContactLists = MailjetApi::getMailjetContactLists();
+	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
+	    $mailjetSyncActivated = get_option('activate_mailjet_sync');
 
+	    set_query_var('wpUsersCount', $wpUsersCount);
+	    set_query_var('mailjetContactLists', $mailjetContactLists);
+	    set_query_var('mailjetSyncActivated', $mailjetSyncActivated);
+
+	    return load_template(MAILJET_ADMIN_TAMPLATE_DIR . $this->profileFields);
     }
 
     public function set_html_content_type()
@@ -344,7 +353,7 @@ class SubscriptionOptionsSettings
     {
          if ($this->syncAllWpUsers()) {
             $response = [
-                    'message' => 'Contact list resync has started. You can check the progress inside Mailjet contact list page',
+                    'message' => 'Contact list resync has started. You can check the progress inside',
                     'ID' => 1
             ];
 	        wp_send_json_success( $response );
