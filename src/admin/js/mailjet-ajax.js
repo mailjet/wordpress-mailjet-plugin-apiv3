@@ -19,21 +19,26 @@ function loadLists() {
         'action': 'get_contact_lists'
     };
     let select = jQuery('<select></select>').attr('id', 'mailjet_sync_list').attr('class', 'mj-select').attr('name', 'mailjet_sync_list');
-    let selectDiv =  jQuery('#contact_list');
+
+    let optionsDiv =  jQuery('#contact_list');
+    let selectDiv =  jQuery('<div></div>').attr('class', 'mj-select-wrapper').attr('id', 'mj-select-div');
+
     ajax("POST", data, function (response) {
         if (response.success){
             jQuery.each( response.data.mailjetContactLists, function (key, value){
                if (value.IsDeleted === false){
                    let checked =  '';
                    if (response.data.mailjetSyncList === value.ID) {
+                       selectDiv.attr('data-value', value.Name + ' (' + value.SubscriberCount + ')');
                        checked = 'selected="selected"';
                    };
                    select.append(`<option value="${value.ID}" ${checked}>${value.Name} (${value.SubscriberCount})</option>`)
                };
 
             });
-            selectDiv.children('select').remove();
+            optionsDiv.children().remove();
             selectDiv.append(select);
+            optionsDiv.append(selectDiv);
         }
     });
 }
