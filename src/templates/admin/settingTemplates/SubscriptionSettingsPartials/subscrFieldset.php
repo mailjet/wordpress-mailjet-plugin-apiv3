@@ -15,14 +15,21 @@ $mailjetCommentAuthorsSyncActivated = get_query_var('mailjetCommentAuthorsSyncAc
 	<div id="activate_mailjet_sync_form" class="<?=($mailjetSyncActivated == 1 ? ' mj-show' : 'mj-hide') ?>">
 		<div class="mailjet_sync_options_div">
 			<div id="contact_list" class="mailjet_sync_woo_div">
-				<!--                        <label class="mj-contact-list">--><?php //_e( 'Contact List', 'mailjet-for-wordpress' ); ?><!--</label>-->
 				<div class="mj-woocommerce-contacts" id="div-for-ajax">
 					<?= $mailjetContactLists ?>  <span>&nbsp&nbsp<a href="#" onclick="ajaxResync()">Resync</a>&nbsp&nbsp<a href="#" onclick="loadLists()">Change list</a></span>
 				</div>
 			</div>
 		</div>
 	</div>
-
+<!--    <div id="activate_mailjet_sync_form" class="mj-show">-->
+<!--        <div class="mailjet_sync_options_div" id="mj-settings-select">-->
+<!---->
+<!--            <label class="checkboxLabel">-->
+<!--                <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" --><?//=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?><!-- >-->
+<!--                <span>--><?php //echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?><!--</span>-->
+<!--            </label>-->
+<!--        </div>-->
+<!--    </div>-->
 	<label >
 		<span class="mj-opt-in-inside-leav">Opt-in inside « Leave a reply » form</span>
 	</label>

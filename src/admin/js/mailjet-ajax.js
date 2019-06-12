@@ -18,15 +18,22 @@ function loadLists() {
     let data = {
         'action': 'get_contact_lists'
     };
-    let msgDiv =  jQuery('#div-for-ajax');
+    let select = jQuery('<select></select>').attr('id', 'mailjet_sync_list').attr('class', 'mj-select').attr('name', 'mailjet_sync_list');
+    let selectDiv =  jQuery('#contact_list');
     ajax("POST", data, function (response) {
-        alert(response);
-        return false;
-        msgDiv.html('');
         if (response.success){
-            msgDiv.html(`<span>${response.data.message}&nbsp&nbsp <a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
-        } else {
-            msgDiv.html(`<span>Error has occurred! Please try again later. &nbsp&nbsp<a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
+            jQuery.each( response.data.mailjetContactLists, function (key, value){
+               if (value.IsDeleted === false){
+                   let checked =  '';
+                   if (response.data.mailjetSyncList === value.ID) {
+                       checked = 'selected="selected"';
+                   };
+                   select.append(`<option value="${value.ID}" ${checked}>${value.Name} (${value.SubscriberCount})</option>`)
+               };
+
+            });
+            selectDiv.children('select').remove();
+            selectDiv.append(select);
         }
     });
 }

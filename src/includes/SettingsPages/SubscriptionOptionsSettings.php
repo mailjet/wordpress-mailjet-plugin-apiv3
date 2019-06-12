@@ -333,15 +333,17 @@ class SubscriptionOptionsSettings
     {
 	    $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
 	    $wpUsersCount = count($allWpUsers);
+	    $mailjetSyncList = (int) get_option('mailjet_sync_list');
 	    $mailjetContactLists = MailjetApi::getMailjetContactLists();
 	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
 	    $mailjetSyncActivated = get_option('activate_mailjet_sync');
 
-	    set_query_var('wpUsersCount', $wpUsersCount);
-	    set_query_var('mailjetContactLists', $mailjetContactLists);
-	    set_query_var('mailjetSyncActivated', $mailjetSyncActivated);
-
-	    return load_template(MAILJET_ADMIN_TAMPLATE_DIR . $this->profileFields);
+	    wp_send_json_success([
+	            'wpUsersCount' => $wpUsersCount,
+                'mailjetContactLists' => $mailjetContactLists,
+                'mailjetSyncActivated' => $mailjetSyncActivated,
+                'mailjetSyncList' => $mailjetSyncList
+        ]);
     }
 
     public function set_html_content_type()
