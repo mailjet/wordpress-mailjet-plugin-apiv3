@@ -390,4 +390,3 @@ document.addEventListener('readystatechange', function (event) {
         mjAdmin();
     }
 });
-

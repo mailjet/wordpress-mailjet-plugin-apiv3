@@ -128,6 +128,11 @@ class IntegrationsSettings
                         </section>
                     </div>
                 </div>
+                <div>
+                    <p class="mj-e-commerce-customer">
+                        Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.
+                    </p>
+                </div>
             </div>
         </fieldset>
         <hr>
