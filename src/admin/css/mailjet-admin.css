@@ -1136,6 +1136,10 @@
     position: relative;
 }
 
+.mj-select-wrapper select{
+    width: 100%;
+}
+
 .mj-copy-icon {
     /*padding: 10px;*/
     background: transparent;
@@ -1338,6 +1342,7 @@ input:checked + .mj-slider:before {
 }
 
 #mj-logo_top_bar span{
+    margin-left: 5px;
     font-family: Roboto;
     font-weight: 300;
     position: absolute;
@@ -1353,3 +1358,10 @@ input:checked + .mj-slider:before {
     font-weight: 500;
     font-size: 2.3em;
 }
+
+.mj-btnSecondary{
+    offset: none;
+    background-color:  #F2F2F2;
+    width: 30%;
+}
+
