@@ -1193,32 +1193,32 @@
 .mj-slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
 }
 
 input:checked + .mj-slider {
-    background-color: #2196F3;
+    background-color: #19BC9C;
 }
 
 input:focus + .mj-slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #19BC9C;
 }
 
 input:checked + .mj-slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
 }
 
 /* Rounded sliders */
 .mj-slider.mj-round {
-    border-radius: 34px;
+    border-radius: 17px;
 }
 
 .mj-slider.mj-round:before {
@@ -1229,8 +1229,8 @@ input:checked + .mj-slider:before {
     float: right;
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 30px;
+    height: 17px;
 }
 
 .mj-switch input {
