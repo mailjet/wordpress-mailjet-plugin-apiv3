@@ -1365,3 +1365,14 @@ input:checked + .mj-slider:before {
     width: 30%;
 }
 
+.mj-grid {
+    margin-right: 15px;
+}
+
+.mj-box {
+    margin-bottom: 15px;
+}
+
+.mj-btn-info{
+    border: none;
+}

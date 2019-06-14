@@ -38,6 +38,7 @@ class IntegrationsSettings
 	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
 	    if ( ! class_exists( 'WooCommerce' ) ) {
 		    delete_option( 'activate_mailjet_woo_integration' );
+		    delete_option( 'mailjet_woo_list' );
 		    delete_option( 'mailjet_woo_edata_sync' );
 		    delete_option( 'mailjet_woo_checkout_checkbox' );
 		    delete_option( 'mailjet_woo_checkout_box_text' );
@@ -65,14 +66,14 @@ class IntegrationsSettings
 	    $bannerText = get_option( 'mailjet_woo_banner_text' );
 	    $bannerLabel = get_option( 'mailjet_woo_banner_label' );
 
-
 	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists['Name'] . '('.$mailjetContactLists['SubscriberCount'].')' : 'No list selected';
 
 	    ?>
+
         <fieldset class="settingsSubscrFldset">
             <span class="mj-integrations-label"><?php _e( 'WooCommerce', 'mailjet-for-wordpress' ); ?></span>
             <label class="mj-switch">
-                <input name="activate_mailjet_woo_integration"  id="activate_mailjet_woo_integration" type="checkbox" <?= ( $mailjetWooIntegrationActivated === 'on' ? 'checked="checked"' : '' ) ?>>
+                <input name="activate_mailjet_woo_integration" class="mj-inactive" id="activate_mailjet_woo_integration" type="checkbox" <?= ( $mailjetWooIntegrationActivated === 'on' ? 'checked="checked"' : '' ) ?>>
                 <span class="mj-slider mj-round"></span>
             </label>
             <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated === 'on' ? ' mj-show' : 'mj-hide' ) ?>">
