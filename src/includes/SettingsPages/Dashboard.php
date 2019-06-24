@@ -28,6 +28,7 @@ class Dashboard {
 
 		$iconDir           = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'admin/images/woo.svg';
 		$wooCommerceExists = get_option( 'activate_mailjet_woo_integration' ) === 'on' ? 'mj-show' : 'hidden';
+		$wooCommerceExists =  'mj-show';
 		if ( ! MailjetApi::isValidAPICredentials() ) {
 			MailjetSettings::redirectJs( admin_url( '/admin.php?page=mailjet_settings_page&from=plugins' ) );
 		}
@@ -77,14 +78,14 @@ class Dashboard {
                             <p class="blockText"><?php _e( 'Activate order notification emails to inform customers of any new purchase, shipping or refund.', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
                                     id="nextBtnReverseDashboard4"
-                                    onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
+                                    onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                     </div>
                     <div class="col mj-grid">
                         <div class="block mj-box">
                             <h3 class="section-header"><?php _e( 'Subscription form', 'mailjet-for-wordpress' ); ?></h3>
                             <p class="blockText"><?php _e( 'Customize a subscription form and add it to your Wordpress website', 'mailjet-for-wordpress' ); ?></p>
-                            <button name="nextBtnReverseDashboard" class="mj-btn btn-info" id="nextBtnReverseDashboard3"
+                            <button name="nextBtnReverseDashboard" class="mj-btnSecondary" id="nextBtnReverseDashboard3"
                                     onclick="location.href = 'widgets.php'"><?= __( 'Add widget', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                         <div class="block mj-box">
