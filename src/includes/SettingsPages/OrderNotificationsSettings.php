@@ -19,7 +19,7 @@ class OrderNotificationsSettings
         $fromMail = get_option('mailjet_from_email');
         $wooCommerceExists = get_option('activate_mailjet_woo_integration') === 'on' ? true : false;
 
-        if (!MailjetApi::isValidAPICredentials() || $wooCommerceExists) {
+        if (!MailjetApi::isValidAPICredentials() || !$wooCommerceExists) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
         }
         // check user capabilities
