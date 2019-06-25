@@ -1364,7 +1364,8 @@ input:checked + .mj-slider:before {
 
 .mj-btnSecondary {
     height: 36px;
-    width: 88px;
+    min-width: 88px;
+    width: fit-content;
     border-radius: 3px;
     font-family: Roboto;
     font-size: 14px;
@@ -1377,6 +1378,7 @@ input:checked + .mj-slider:before {
     line-height: 20px;
     text-align: center;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .mj-btnSecondary:hover {
@@ -1422,4 +1424,62 @@ input:checked + .mj-slider:before {
 
 .mj-notifications-from {
     margin-left: 1.75em;
+}
+
+.mj-order-notificartion-popup {
+    height: 311px;
+    width: 600px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
+    position: absolute;
+    z-index: 9999;
+    margin: 10% 0 0 30%;
+
+}
+
+.mj-popup-header {
+    /*height: 32px;*/
+    color: #555555;
+    font-family: Roboto;
+    line-height: 32px;
+    text-align: center;
+}
+
+.mj-popup-header > h1 {
+    font-weight: 300;
+    color: #555555;
+    text-align: center;
+    display: inline-block;
+}
+
+#mj-close {
+    font-size: large;
+    float: right;
+    color: #888888;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-right: 24px;
+}
+
+.mj-popup-info {
+    height: 72px;
+    width: 552px;
+    border-radius: 3px;
+    background-color: #D6EBFB;
+
+}
+
+.mj-popup-message {
+    height: 40px;
+    width: 552px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mj-popup-body {
+    align-content: center;
+    padding:  0 24px;
 }

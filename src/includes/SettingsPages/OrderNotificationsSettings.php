@@ -18,6 +18,7 @@ class OrderNotificationsSettings
         $fromName = get_option('mailjet_from_name');
         $fromMail = get_option('mailjet_from_email');
         $wooCommerceExists = get_option('activate_mailjet_woo_integration') === 'on' ? true : false;
+        $wooCommerceExists = true;
 
         if (!MailjetApi::isValidAPICredentials() || !$wooCommerceExists) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
@@ -28,7 +29,25 @@ class OrderNotificationsSettings
             return;
         }
         ?>
-
+        <div class="mj-order-notificartion-popup">
+            <div class="mj-popup-header">
+                <h1>Sending active</h1><span> <a class="buttons-desktop-04-icon-01-def" id="mj-close" href="#"> X </a></span>
+            </div>
+            <hr>
+            <div class="mj-popup-body">
+                <div class="mj-popup-info">
+                    <p>Make sure to re-activate the emails inside Woocommerce (Settings > Emails) to ensure your customers get notified for their transactions.</p>
+                </div>
+                <div class="mj-popup-message">
+                    <p>By stopping the sending of all order notification emails, your customers will no more receive communications related to their purchases. Do you wish to stop all sendings?</p>
+                </div>
+            </div>
+            <hr>
+            <div class="mj-popup-footer mailjet_row">
+                <button>Cancel</button>
+                <button class="popup-btn-primary"  type="button">Stop all sendings</button>
+            </div>
+        </div>
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img
                         src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>"
@@ -88,6 +107,7 @@ class OrderNotificationsSettings
                             <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
                             <p class="mj-notifications-from">
                                 <strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$fromMail . '&#62'; ?>
+                                <strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$fromMail . '&#62'; ?>
                             </p>
                         </div>
                         <hr>
@@ -107,10 +127,11 @@ class OrderNotificationsSettings
                         </div>
                         <hr>
                     </fieldset>
-                    <div>
-                        <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" type="submit">
+                    <div class="mailjet_row">
+                        <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" type="submit" style="margin-right: 16px">
                             Activate sending
                         </button>
+                        <button id="stop-all" class="mj-btnSecondary hidden" onclick="stopAllSending()" type="button">Stop all sendings</button>
                     </div>
                 </form>
             </div>
@@ -125,6 +146,7 @@ class OrderNotificationsSettings
                 function submitListener() {
                     let form = document.getElementById("order-notification-form");
                     let btnSubmit = document.getElementById("mj-order-notifications-submit");
+                    let btnStop = document.getElementById("stop-all");
                     let i;
                     let flag = false;
                     for (i = 0; i < form.length; i++) {
@@ -135,9 +157,15 @@ class OrderNotificationsSettings
 
                     if (flag) {
                         btnSubmit.classList.remove('mj-disabled')
+                        btnStop.classList.remove('hidden')
                     } else {
                         btnSubmit.classList.add('mj-disabled')
+                        btnStop.classList.add('hidden')
                     }
+                }
+
+                function stopAllSending() {
+
                 }
             </script>
         </div>
