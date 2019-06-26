@@ -411,4 +411,29 @@ class MailjetApi
         return $name;
     }
 
+    public static function getTemplates()
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->get(Resources::$Template, ['filters' => ['OwnerType' => 'user']]);
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            return false;
+        }
+        $templateNames = [];
+
+
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+
+            foreach ($data as $template){
+                $templateNames[] = $template['Name'] ;
+            }
+
+        }
+        return  $templateNames;
+    }
 }

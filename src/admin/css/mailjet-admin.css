@@ -1413,7 +1413,7 @@ input:checked + .mj-slider:before {
 
 .mj-checkbox-label {
     height: 24px;
-    width: 136px;
+    width: fit-content;
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
@@ -1424,6 +1424,11 @@ input:checked + .mj-slider:before {
 
 .mj-notifications-from {
     margin-left: 1.75em;
+    height: 20px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .mj-order-notificartion-popup {
@@ -1439,7 +1444,7 @@ input:checked + .mj-slider:before {
 }
 
 .mj-popup-header {
-    /*height: 32px;*/
+    height: 60px;
     color: #555555;
     font-family: Roboto;
     line-height: 32px;
@@ -1470,16 +1475,50 @@ input:checked + .mj-slider:before {
 
 }
 
+.mj-popup-footer {
+    padding: 1em 8px 0 1em;
+    text-align: center;
+    margin-bottom: 0em;
+}
+
+.mj-popup-footer button {
+
+    float: right;
+    margin-right: 16px;
+}
+
 .mj-popup-message {
     height: 40px;
-    width: 552px;
+
     color: #555555;
     font-family: Roboto;
     font-size: 14px;
     line-height: 20px;
+    margin-bottom: 1.5em;
+    margin-top: 1.5em;
 }
 
 .mj-popup-body {
     align-content: center;
-    padding:  0 24px;
+    padding: 0 24px;
+}
+
+.mj-badge {
+    display: inline-block;
+    height: 16px;
+    width: 85px;
+    border-radius: 12px;
+    background-color: #DBF2DE;
+    padding-left: 7px;
+    margin-left: 8px;
+}
+
+.mj-badge > p {
+    display: inline-block;
+    height: 16px;
+    width: 78px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 16px;
 }

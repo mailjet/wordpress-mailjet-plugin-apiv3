@@ -17,8 +17,29 @@ class OrderNotificationsSettings
 
         $fromName = get_option('mailjet_from_name');
         $fromMail = get_option('mailjet_from_email');
+
+
+        $orderConfirmationBadge = get_option('mailjet_order_confirmation') === '1' ? '' : 'style="visibility: hidden"'; // Processing Order
+        $shippingConfirmationBadge = get_option('mailjet_shipping_confirmation') === '1' ? '' : 'style="visibility: hidden"'; //Order complected WC
+        $refundConfirmationBadge = get_option('mailjet_refund_confirmation') === '1' ? '' : 'style="visibility: hidden"'; // Refunded order
+
+        $orderConfirmationBox = $orderConfirmationBadge !== '' ?: 'style="visibility: hidden"';
+        $shippingConfirmationBox = $shippingConfirmationBadge !== '' ?: 'style="visibility: hidden"';
+        $refundConfirmationBox = $refundConfirmationBadge !== '' ?: 'style="visibility: hidden"';
+
+
+        $shippingConfirmationSubject = 'blaladsasdadsadsasdasdadadadsadadsalal';
         $wooCommerceExists = get_option('activate_mailjet_woo_integration') === 'on' ? true : false;
         $wooCommerceExists = true;
+
+        $tamplates = MailjetApi::getTemplates();
+
+
+        echo '<pre>';
+        var_dump($tamplates);
+        echo '</pre>';
+        exit;
+
 
         if (!MailjetApi::isValidAPICredentials() || !$wooCommerceExists) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
@@ -29,7 +50,7 @@ class OrderNotificationsSettings
             return;
         }
         ?>
-        <div class="mj-order-notificartion-popup">
+        <div class="mj-pluginPage mj-order-notificartion-popup hidden" id="mj-popup">
             <div class="mj-popup-header">
                 <h1>Sending active</h1><span> <a class="buttons-desktop-04-icon-01-def" id="mj-close" href="#"> X </a></span>
             </div>
@@ -44,11 +65,13 @@ class OrderNotificationsSettings
             </div>
             <hr>
             <div class="mj-popup-footer mailjet_row">
-                <button>Cancel</button>
-                <button class="popup-btn-primary"  type="button">Stop all sendings</button>
+                <button class="mj-btn btnPrimary"  type="button">Stop all sendings</button>
+                <button class="mj-btnSecondary" data-toggle="hide" onclick="toggleMailjetPopup(this)">Cancel</button>
             </div>
         </div>
-        <div class="mj-pluginPage">
+
+
+        <div>
             <div id="initialSettingsHead"><img
                         src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>"
                         alt="Mailjet Logo"/></div>
@@ -82,56 +105,61 @@ class OrderNotificationsSettings
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" name="mailjet_order_confirmation"
+                                <input class="checkbox mj-order-checkbox" <?=$orderConfirmationBox?> name="mailjet_order_confirmation"
                                        type="checkbox"
                                        id="order_confirmation" value="1">
                                 <section class="mj-checkbox-label">
                                     <?php _e('Order confirmation', 'mailjet-for-wordpress'); ?>
                                 </section>
                             </label>
+                            <div class="mj-badge" <?=$orderConfirmationBadge?>><p>Sending active</p></div>
                             <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
                             <p class="mj-notifications-from">
-                                <strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?>
+                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?></span>
+                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
                             </p>
                         </div>
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" name="mailjet_shipping_confirmation"
+                                <input class="checkbox mj-order-checkbox" <?=$shippingConfirmationBox?> name="mailjet_shipping_confirmation"
                                        type="checkbox"
                                        id="shipping_confirmation" value="1">
                                 <section class="mj-checkbox-label">
                                     <?php _e('Shipping confirmation', 'mailjet-for-wordpress'); ?>
                                 </section>
                             </label>
+                            <div class="mj-badge" <?=$shippingConfirmationBadge?>><p>Sending active</p></div>
                             <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
                             <p class="mj-notifications-from">
-                                <strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$fromMail . '&#62'; ?>
-                                <strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$fromMail . '&#62'; ?>
+                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$fromMail . '&#62'; ?></span>
+                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
                             </p>
                         </div>
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" name="mailjet_refund_confirmation"
+                                <input class="checkbox mj-order-checkbox" <?=$refundConfirmationBox?> name="mailjet_refund_confirmation"
                                        type="checkbox"
                                        id="refund_confirmation" value="1">
                                 <section class="mj-checkbox-label">
                                     <?php _e('Refund confirmation', 'mailjet-for-wordpress'); ?>
                                 </section>
                             </label>
+                            <div class="mj-badge" <?=$refundConfirmationBadge?>><p>Sending active</p></div>
                             <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
                             <p class="mj-notifications-from">
-                                <strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?>
+                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?></span>
+                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
                             </p>
                         </div>
                         <hr>
                     </fieldset>
-                    <div class="mailjet_row">
+                    <div class="mailjet_row mj-pluginPage">
                         <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" type="submit" style="margin-right: 16px">
                             Activate sending
                         </button>
-                        <button id="stop-all" class="mj-btnSecondary hidden" onclick="stopAllSending()" type="button">Stop all sendings</button>
+                        <button id="stop-all" class="mj-btnSecondary hidden" data-toggle="show" onclick="toggleMailjetPopup(this)" type="button">Stop all sendings</button>
                     </div>
                 </form>
             </div>
@@ -164,8 +192,15 @@ class OrderNotificationsSettings
                     }
                 }
 
-                function stopAllSending() {
+                function toggleMailjetPopup(element) {
+                    let popupBox = document.getElementById('mj-popup');
+                    let action = element.getAttribute('data-toggle');
 
+                    if (action === 'show'){
+                        popupBox.classList.remove('hidden')
+                    } else {
+                        popupBox.classList.add('hidden')
+                    }
                 }
             </script>
         </div>

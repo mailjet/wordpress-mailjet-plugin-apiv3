@@ -98,6 +98,7 @@ class Client
      */
     private function _call($method, $resource, $action, $args)
     {
+
         $args = array_merge(
                 [
             'id' => '',
@@ -117,6 +118,7 @@ class Client
         $request = new Request(
                 $auth, $method, $url, $args['filters'], $args['body'], $contentType, $this->requestOptions
         );
+
         return $request->call($this->call);
     }
 
@@ -178,7 +180,9 @@ class Client
         if (!empty($options)) {
             $this->setOptions($options, $resource);
         }
+
         $result = $this->_call('GET', $resource[0], $resource[1], $args);
+
         if (!empty($this->changed)) {
             $this->setSettings();
         }
@@ -239,6 +243,7 @@ class Client
         }
 
         $arrayFilter = [$path, $resource, $id, $action, $actionid];
+
         return $this->getApiUrl() . join('/', array_filter($arrayFilter));
     }
 
