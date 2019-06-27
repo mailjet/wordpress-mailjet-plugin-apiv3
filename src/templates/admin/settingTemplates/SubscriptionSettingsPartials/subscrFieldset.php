@@ -9,6 +9,7 @@ $changeList = $mailjetContactLists === 'No list selected' ? 'Select List' : 'Cha
 ?>
 
 <fieldset class="settingsSubscrFldset">
+    <label class="mailjet-label" for="activate_mailjet_sync"><?php _e('Automatically add Wordpress users to a Mailjet list', 'mailjet-for-wordpress'); ?></label>
 	<label class="checkboxLabel">
 		<input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?php echo ($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
 		<span><?php _e('Automatically add Wordpress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress'); ?></span>
@@ -23,9 +24,7 @@ $changeList = $mailjetContactLists === 'No list selected' ? 'Select List' : 'Cha
 			</div>
 		</div>
 	</div>
-	<label >
-		<span class="mj-opt-in-inside-leav">Opt-in inside « Leave a reply » form</span>
-	</label>
+	<label class="mailjet-label" for="activate_mailjet_comment_authors_sync">Opt-in inside « Leave a reply » form</label>
 	<label class="checkboxLabel">
 		<input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?php echo ($mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '') ?> autocomplete="off">
 		<span><?php _e('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet-for-wordpress'); ?></span>

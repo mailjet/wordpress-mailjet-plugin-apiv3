@@ -70,7 +70,7 @@
 
 .mj-pluginPage input[type="text"] {
     /*width: 100%;*/
-    max-width: 311px;
+    max-width: 98%;
     height: 36px;
     margin-bottom: 16px;
     padding-left: 16px;
@@ -445,7 +445,6 @@
     display: flex;
     max-width: -moz-max-content;
     max-width: max-content;
-    width: 70%;
     line-height: 20px;
     margin: 0 0 8px !important;
 }
@@ -553,12 +552,6 @@
 
 #initialSettingsForm .dont_have_account {
     margin: 24px 0 0;
-}
-
-.closeCreateList,
-#subscriptionOptionsSubmit {
-    float: left;
-    margin-left: 10px;
 }
 
 #initialSettingsHead {
@@ -1333,22 +1326,25 @@ input:checked + .mj-slider:before {
 }
 
 #mj-logo_top_bar {
+    display: inline-flex;
     position: absolute;
     height: 30px;
     width: 70px;
-    left: 67%;
+    left: 92.5%;
     top: 15px;
-    color: #19BC9C;
-!important;
+    color: #19BC9C; !important;
     cursor: pointer;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
 }
 
 #mj-logo_top_bar span {
-    margin-left: 5px;
+    margin-top: 4px;
+    margin-left: 6px;
     font-family: Roboto;
-    font-weight: 300;
-    position: absolute;
+    font-weight: 500;
+    font-size: 14px;
+    display: inline-flex;
+    /*position: absolute;*/
     vertical-align: middle;
 }
 
@@ -1475,12 +1471,37 @@ input:checked + .mj-slider:before {
 
 }
 
+.mj-grid {
+    margin-right: 15px;
+    width: 50%;
+}
+
+.mj-box {
+    margin-bottom: 15px;
+
+}
+
+.mj-btn-info {
+    border: none;
+}
 .mj-popup-footer {
     padding: 1em 8px 0 1em;
     text-align: center;
     margin-bottom: 0em;
 }
 
+.mailjet-label {
+    height: 24px;
+    width: 361px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.mj-text-div{
+    margin-left: 24px;
+}
 .mj-popup-footer button {
 
     float: right;
