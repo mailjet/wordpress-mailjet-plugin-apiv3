@@ -106,9 +106,9 @@ class IntegrationsSettings
                                autocomplete="off">
                         <span><?php _e( 'Activate opt-in checkbox inside checkout page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
-                    <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">
-                        <label for="sub_letter">Checkbox text</label>
-                        <input name="mailjet_woo_checkout_box_text" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="Subscribe to our newsletter">
+                    <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?> mj-text-div">
+                        <label  class="mailjet-label" for="sub_letter">Checkbox text</label>
+                        <input name="mailjet_woo_checkout_box_text" id="sub_letter" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="Subscribe to our newsletter">
                     </div>
                     <label class="checkboxLabel">
                         <input name="mailjet_woo_banner_checkbox" id="activate_mailjet_woo_bannerbox"  type="checkbox"
@@ -117,16 +117,14 @@ class IntegrationsSettings
                         <span><?php _e( 'Activate opt-in banner inside thank you page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                     <div id="mailjet_woo_sub_banner" class="<?= ( $bannerCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">
-                        <section class="block">
-                            <div>
-                                <label for="banner_text">Banner text</label>
-                                <input name="mailjet_woo_banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
-                            </div>
-                            <div>
-                                <label for="banner_label">Banner label</label>
-                                <input name="mailjet_woo_banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
-                            </div>
-                        </section>
+                        <div class="mj-text-div" >
+                            <label class="mailjet-label" for="banner_text">Banner text</label>
+                            <input name="mailjet_woo_banner_text" id="banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
+                        </div>
+                        <div class="mj-text-div" >
+                            <label class="mailjet-label" for="banner_label">Banner label</label>
+                            <input name="mailjet_woo_banner_label" id="banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
+                        </div>
                     </div>
                 </div>
 

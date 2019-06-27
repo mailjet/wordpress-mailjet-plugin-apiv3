@@ -6,9 +6,9 @@ function ajaxResync() {
     ajax("POST", data, function (response) {
         msgDiv.html('');
         if (response.success){
-            msgDiv.html(`<span>${response.data.message}&nbsp&nbsp <a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
+            msgDiv.html(`<span>${response.data.message}&nbsp<a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
         } else {
-            msgDiv.html(`<span>Error has occurred! Please try again later. &nbsp&nbsp<a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
+            msgDiv.html(`<span>Error has occurred! Please try again later. <a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
         }
     });
 

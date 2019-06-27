@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-.mj-connect-link{
-    margin-top:64px!important;
+
+.mj-connect-link {
+    margin-top: 64px !important;
 }
 
 /**
@@ -69,7 +70,7 @@
 
 .mj-pluginPage input[type="text"] {
     /*width: 100%;*/
-    max-width: 311px;
+    max-width: 98%;
     height: 36px;
     margin-bottom: 16px;
     padding-left: 16px;
@@ -551,12 +552,6 @@
 
 #initialSettingsForm .dont_have_account {
     margin: 24px 0 0;
-}
-
-.closeCreateList,
-#subscriptionOptionsSubmit {
-    float: left;
-    margin-left: 10px;
 }
 
 #initialSettingsHead {
@@ -1136,7 +1131,7 @@
     position: relative;
 }
 
-.mj-select-wrapper select{
+.mj-select-wrapper select {
     width: 100%;
 }
 
@@ -1269,6 +1264,9 @@ input:checked + .mj-slider:before {
     width: 100%;
 }
 
+#banner_text {
+    width: 100%;
+}
 .mj-grid {
     margin-right: 20px;
 }
@@ -1331,21 +1329,26 @@ input:checked + .mj-slider:before {
 }
 
 #mj-logo_top_bar {
+    display: inline-flex;
     position: absolute;
     height: 30px;
     width: 70px;
-    left: 67%;
+    left: 92.5%;
     top: 15px;
-    color: #19BC9C; !important;
+    color: #19BC9C;
+!important;
     cursor: pointer;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
 }
 
-#mj-logo_top_bar span{
-    margin-left: 5px;
+#mj-logo_top_bar span {
+    margin-top: 4px;
+    margin-left: 6px;
     font-family: Roboto;
-    font-weight: 300;
-    position: absolute;
+    font-weight: 500;
+    font-size: 14px;
+    display: inline-flex;
+    /*position: absolute;*/
     vertical-align: middle;
 }
 
@@ -1359,20 +1362,35 @@ input:checked + .mj-slider:before {
     font-size: 2.3em;
 }
 
-.mj-btnSecondary{
+.mj-btnSecondary {
     offset: none;
-    background-color:  #F2F2F2;
+    background-color: #F2F2F2;
     width: 30%;
 }
 
 .mj-grid {
     margin-right: 15px;
+    width: 50%;
 }
 
 .mj-box {
     margin-bottom: 15px;
+
 }
 
-.mj-btn-info{
+.mj-btn-info {
     border: none;
+}
+
+.mailjet-label {
+    height: 24px;
+    width: 361px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.mj-text-div{
+    margin-left: 24px;
 }
