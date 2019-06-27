@@ -34,18 +34,18 @@ class IntegrationsSettings
 
     private function wooIntegration( $mailjetContactLists )
     {
-	    $wooCommerceNotInstalled        = false;
-	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
-	    if ( ! class_exists( 'WooCommerce' ) ) {
-		    delete_option( 'activate_mailjet_woo_integration' );
-		    delete_option( 'mailjet_woo_edata_sync' );
-		    delete_option( 'mailjet_woo_checkout_checkbox' );
-		    delete_option( 'mailjet_woo_checkout_box_text' );
-		    delete_option( 'mailjet_woo_banner_checkbox' );
-		    delete_option( 'mailjet_woo_banner_text' );
-		    delete_option( 'mailjet_woo_banner_label' );
-		    $wooCommerceNotInstalled = true;
-	    }
+        $wooCommerceNotInstalled        = false;
+        // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
+        if ( ! class_exists( 'WooCommerce' ) ) {
+            delete_option( 'activate_mailjet_woo_integration' );
+            delete_option( 'mailjet_woo_edata_sync' );
+            delete_option( 'mailjet_woo_checkout_checkbox' );
+            delete_option( 'mailjet_woo_checkout_box_text' );
+            delete_option( 'mailjet_woo_banner_checkbox' );
+            delete_option( 'mailjet_woo_banner_text' );
+            delete_option( 'mailjet_woo_banner_label' );
+            $wooCommerceNotInstalled = true;
+        }
 
         $mailjetWooSyncActivated        = get_option( 'mailjet_woo_edata_sync' );
         $mailjetWooIntegrationActivated = get_option( 'activate_mailjet_woo_integration' );
@@ -53,22 +53,23 @@ class IntegrationsSettings
 
         $checkoutCheckbox = get_option( 'mailjet_woo_checkout_checkbox' );
         if ($checkoutCheckbox !== '1'){
-	        delete_option( 'mailjet_woo_checkout_box_text' );
+            delete_option( 'mailjet_woo_checkout_box_text' );
         }
         $checkoutCheckboxText = get_option( 'mailjet_woo_checkout_box_text' );
 
-	    $bannerCheckbox = get_option( 'mailjet_woo_banner_checkbox' );
-	    if ($bannerCheckbox !== '1'){
-		    delete_option( 'mailjet_woo_banner_text' );
-		    delete_option( 'mailjet_woo_banner_label' );
+        $bannerCheckbox = get_option( 'mailjet_woo_banner_checkbox' );
+        if ($bannerCheckbox !== '1'){
+            delete_option( 'mailjet_woo_banner_text' );
+            delete_option( 'mailjet_woo_banner_label' );
         }
-	    $bannerText = get_option( 'mailjet_woo_banner_text' );
-	    $bannerLabel = get_option( 'mailjet_woo_banner_label' );
+        $bannerText = get_option( 'mailjet_woo_banner_text' );
+        $bannerLabel = get_option( 'mailjet_woo_banner_label' );
 
 
-	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists['Name'] . '('.$mailjetContactLists['SubscriberCount'].')' : 'No list selected';
 
-	    ?>
+        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists['Name'] . '('.$mailjetContactLists['SubscriberCount'].')' : 'No list selected';
+
+        ?>
         <fieldset class="settingsSubscrFldset">
             <span class="mj-integrations-label"><?php _e( 'WooCommerce', 'mailjet-for-wordpress' ); ?></span>
             <label class="mj-switch">
@@ -138,11 +139,11 @@ class IntegrationsSettings
     public function mailjet_integrations_cb( $args )
     {
         // get the value of the setting we've registered with register_setting()
-	    $mailjetListId = get_option( 'mailjet_sync_list' );
+        $mailjetListId = get_option( 'mailjet_sync_list' );
         $wooContactList = MailjetApi::getContactListByID($mailjetListId);
-	    $wooContactList = ! empty( $wooContactList ) ? $wooContactList[0] : array();
-	    $cf7ContactLists = MailjetApi::getMailjetContactLists();
-	    $cf7ContactLists = ! empty( $cf7ContactLists ) ? $cf7ContactLists : array();
+        $wooContactList = ! empty( $wooContactList ) ? $wooContactList[0] : array();
+        $cf7ContactLists = MailjetApi::getMailjetContactLists();
+        $cf7ContactLists = ! empty( $cf7ContactLists ) ? $cf7ContactLists : array();
         $this->wooIntegration( $wooContactList );
         $this->cf7Integration($cf7ContactLists );
         ?><input name="settings_step" type="hidden" id="settings_step" value="integrations_step"><?php
@@ -266,7 +267,6 @@ class IntegrationsSettings
             ]
         );
 
-
         // add error/update messages
 
         // check if the user have submitted the settings
@@ -290,6 +290,10 @@ class IntegrationsSettings
 
         // show error/update messages
         settings_errors( 'mailjet_messages' );
+
+
+        add_action('admin_post_mailjet_custom_hook',  [$this, 'mailjet_custom_hook']);
+        $nonce = wp_create_nonce();
 
 
         ?>
@@ -324,16 +328,19 @@ class IntegrationsSettings
                             <h2 class="section_inner_title"><?php _e( 'Integrations', 'mailjet-for-wordpress' ); ?></h2>
                             <p><?php _e( 'Enable and cofigure Mailjet integrations with other Wordpress plugins', 'mailjet-for-wordpress' ) ?></p>
                             <hr>
-                            <form action="options.php" method="post">
+                            <form action="<?= admin_url('admin-post.php')?>" method="post">
+
                                 <?php
                                 // output security fields for the registered setting "mailjet"
-                                settings_fields( 'mailjet_integrations_page' );
+                                //                                settings_fields( 'mailjet_integrations_page' );
                                 // output setting sections and their fields
                                 // (sections are registered for "mailjet", each field is registered to a specific section)
                                 do_settings_sections( 'mailjet_integrations_page' );
                                 // output save settings button
                                 $saveButton = __( 'Save', 'mailjet-for-wordpress' );
                                 ?>
+                                <input type="hidden" name="action" value="admin_post_mailjet_custom_hook">
+                                <input type="hidden" name="custom_nonce" value="<?= $nonce?>">
                                 <button type="submit" id="integrationsSubmit" class="mj-btn btnPrimary MailjetSubmit"
                                         name="submit"><?= $saveButton; ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __( 'Cancel', 'mailjet-for-wordpress' ) ?>"> -->
@@ -349,6 +356,13 @@ class IntegrationsSettings
 
         <?php
     }
+    public function mailjet_custom_hook()
+    {
 
+        echo '<pre>';
+        var_dump('dadad');
+        echo '</pre>';
+        exit;
 
+    }
 }

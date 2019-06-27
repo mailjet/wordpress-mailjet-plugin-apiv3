@@ -430,10 +430,40 @@ class MailjetApi
             $data = $response->getData();
 
             foreach ($data as $template){
-                $templateNames[] = $template['Name'] ;
+
+                $templateNames[] = ['Name' => $template['Name'], 'id' => $template['ID']] ;
+
             }
 
         }
+
+
         return  $templateNames;
+    }
+
+    public static function getTemplateDetails($id)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->get(Resources::$TemplateDetailcontent, ['id' => $id]);
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            return false;
+        }
+        $templateDetails = [];
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+
+            foreach ($data as $template){
+                $templateDetails['Subject'] = $template['Headers']['Subject'] ;
+                $templateDetails['SenderName'] = $template['Headers']['SenderName'] ;
+                $templateDetails['SenderEmail'] = $template['Headers']['SenderEmail'] ;
+            }
+
+        }
+        return  $templateDetails;
     }
 }

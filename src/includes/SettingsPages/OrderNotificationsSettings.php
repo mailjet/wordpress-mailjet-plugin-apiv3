@@ -30,15 +30,7 @@ class OrderNotificationsSettings
 
         $shippingConfirmationSubject = 'blaladsasdadsadsasdasdadadadsadadsalal';
         $wooCommerceExists = get_option('activate_mailjet_woo_integration') === 'on' ? true : false;
-        $wooCommerceExists = true;
 
-        $tamplates = MailjetApi::getTemplates();
-
-
-        echo '<pre>';
-        var_dump($tamplates);
-        echo '</pre>';
-        exit;
 
 
         if (!MailjetApi::isValidAPICredentials() || !$wooCommerceExists) {
@@ -113,7 +105,7 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge" <?=$orderConfirmationBadge?>><p>Sending active</p></div>
-                            <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
+                            <a class="mj-btnSecondary mj-inrow" href="https://app.mailjet.com/template/888062/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
