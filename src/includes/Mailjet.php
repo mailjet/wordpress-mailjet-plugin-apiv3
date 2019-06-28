@@ -9,6 +9,8 @@ use MailjetPlugin\Includes\MailjetLoader;
 use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
+use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
+
 //use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 // use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
@@ -139,6 +141,7 @@ class Mailjet
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
     }
 
     /**

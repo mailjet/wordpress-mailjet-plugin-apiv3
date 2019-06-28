@@ -22,14 +22,8 @@ class IntegrationsSettings
 
     public function mailjet_section_integrations_cb( $args )
     {
-//
-        ?>
-        <!--        <p id="--><?php //echo esc_attr( $args['id'] );
-        ?><!--">-->
-        <!--            --><?php //echo __('Select which Wordpress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet-for-wordpress' );
-        ?>
-        <!--        </p>-->
-        <!--        --><?php
+
+
     }
 
     private function wooIntegration( $mailjetContactLists )
@@ -73,10 +67,10 @@ class IntegrationsSettings
         <fieldset class="settingsSubscrFldset">
             <span class="mj-integrations-label"><?php _e( 'WooCommerce', 'mailjet-for-wordpress' ); ?></span>
             <label class="mj-switch">
-                <input name="activate_mailjet_woo_integration"  id="activate_mailjet_woo_integration" type="checkbox" <?= ( $mailjetWooIntegrationActivated === 'on' ? 'checked="checked"' : '' ) ?>>
+                <input name="woocommerce[activate_mailjet_woo_integration]" value="1"  id="activate_mailjet_woo_integration" type="checkbox" <?= ( $mailjetWooIntegrationActivated === '1' ? 'checked="checked"' : '' ) ?>>
                 <span class="mj-slider mj-round"></span>
             </label>
-            <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated === 'on' ? ' mj-show' : 'mj-hide' ) ?>">
+            <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                 <div class="mj-woocommerce-contacts">
                     Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
                 </div>
@@ -89,7 +83,7 @@ class IntegrationsSettings
                 <div id="woo_contact_list" class="mailjet_sync_woo_div">
                     <label ><?php _e( 'Ecommerce customer data', 'mailjet-for-wordpress' ); ?></label>
                     <label class="checkboxLabel">
-                        <input name="mailjet_woo_edata_sync" type="checkbox"
+                        <input name="woocommerce[mailjet_woo_edata_sync]" type="checkbox"
                                value="1" <?php echo( $mailjetWooSyncActivated === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.', 'mailjet-for-wordpress' ); ?></span>
@@ -101,17 +95,17 @@ class IntegrationsSettings
                         Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
                     </div>
                     <label class="checkboxLabel">
-                        <input name="mailjet_woo_checkout_checkbox" id="activate_mailjet_woo_checkbox" type="checkbox"
+                        <input name="woocommerce[mailjet_woo_checkout_checkbox]" id="activate_mailjet_woo_checkbox" type="checkbox"
                                value="1" <?php echo( $checkoutCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Activate opt-in checkbox inside checkout page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                     <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?> mj-text-div">
                         <label  class="mailjet-label" for="sub_letter">Checkbox text</label>
-                        <input name="mailjet_woo_checkout_box_text" id="sub_letter" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="Subscribe to our newsletter">
+                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="Subscribe to our newsletter">
                     </div>
                     <label class="checkboxLabel">
-                        <input name="mailjet_woo_banner_checkbox" id="activate_mailjet_woo_bannerbox"  type="checkbox"
+                        <input name="woocommerce[mailjet_woo_banner_checkbox]" id="activate_mailjet_woo_bannerbox"  type="checkbox"
                                value="1" <?php echo( $bannerCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Activate opt-in banner inside thank you page.', 'mailjet-for-wordpress' ); ?></span>
@@ -119,11 +113,11 @@ class IntegrationsSettings
                     <div id="mailjet_woo_sub_banner" class="<?= ( $bannerCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                         <div class="mj-text-div" >
                             <label class="mailjet-label" for="banner_text">Banner text</label>
-                            <input name="mailjet_woo_banner_text" id="banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
+                            <input name="woocommerce[mailjet_woo_banner_text]" id="banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
                         </div>
                         <div class="mj-text-div" >
                             <label class="mailjet-label" for="banner_label">Banner label</label>
-                            <input name="mailjet_woo_banner_label" id="banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
+                            <input name="woocommerce[mailjet_woo_banner_label]" id="banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
                         </div>
                     </div>
                 </div>
@@ -235,6 +229,7 @@ class IntegrationsSettings
      */
     public function mailjet_integrations_page_html()
     {
+
         // check user capabilities
         if ( ! current_user_can( 'read' ) ) {
             MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]' );
@@ -290,9 +285,7 @@ class IntegrationsSettings
         settings_errors( 'mailjet_messages' );
 
 
-        add_action('admin_post_mailjet_custom_hook',  [$this, 'mailjet_custom_hook']);
-        $nonce = wp_create_nonce();
-
+        $nonce = wp_create_nonce('mailjet_integrations_page_html');
 
         ?>
         <div class="mj-pluginPage">
@@ -326,8 +319,7 @@ class IntegrationsSettings
                             <h2 class="section_inner_title"><?php _e( 'Integrations', 'mailjet-for-wordpress' ); ?></h2>
                             <p><?php _e( 'Enable and cofigure Mailjet integrations with other Wordpress plugins', 'mailjet-for-wordpress' ) ?></p>
                             <hr>
-                            <form action="<?= admin_url('admin-post.php')?>" method="post">
-
+                            <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="POST">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
                                 //                                settings_fields( 'mailjet_integrations_page' );
@@ -337,7 +329,7 @@ class IntegrationsSettings
                                 // output save settings button
                                 $saveButton = __( 'Save', 'mailjet-for-wordpress' );
                                 ?>
-                                <input type="hidden" name="action" value="admin_post_mailjet_custom_hook">
+                                <input type="hidden" name="action" value="integrationsSettings_custom_hook">
                                 <input type="hidden" name="custom_nonce" value="<?= $nonce?>">
                                 <button type="submit" id="integrationsSubmit" class="mj-btn btnPrimary MailjetSubmit"
                                         name="submit"><?= $saveButton; ?></button>
@@ -353,14 +345,91 @@ class IntegrationsSettings
         </div>
 
         <?php
+
     }
-    public function mailjet_custom_hook()
+    public function integrations_post_handler()
     {
+        $postData = (object)$_POST;
 
-        echo '<pre>';
-        var_dump('dadad');
-        echo '</pre>';
-        exit;
+        if (!isset($postData->custom_nonce) || !wp_verify_nonce($postData->custom_nonce, 'mailjet_integrations_page_html')){
+            add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'Your permissions don\'t match! Please refresh your session and if the problem persists, contact our support team.', 'mailjet-for-wordpress' ), 'error' );
+            settings_errors( 'mailjet_messages' );
+            exit;
+        }
+
+        $this->activateWoocommerce((object) $postData->woocommerce);
+
 
     }
+
+    private function activateWoocommerce($data)
+    {
+        $activate = true;
+        if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
+            update_option('activate_mailjet_woo_integration', '');
+            $activate = false;
+        }
+        foreach ($data as $key => $val) {
+            $optionVal = $activate ? $val : '';
+            update_option($key, sanitize_text_field($optionVal));
+        }
+
+        if ($activate){
+           $templates['abandoned_cart'] = get_option('mailjet_wc_abandoned_cart_template');
+           $templates['order_confirmation'] = get_option('mailjet_wc_order_confirmation_template');
+           $templates['refund_confirmation'] = get_option('mailjet_wc_refund_confirmation_template');
+           $templates['shipping_confirmation'] = get_option('mailjet_wc_shipping_confirmation_template');
+
+           foreach ($templates as $name => $value){
+               if (!$value || empty($value)){
+                    $templateArgs = [
+                        "Author" => "Mailjet WC integration",
+                        "Categories" => ['e-commerce'],
+                        "Copyright" => "Mailjet",
+                        "Description" => "Used to send automation emails.",
+                        "EditMode" => 1,
+                        "IsStarred" => false,
+                        "IsTextPartGenerationEnabled" => true,
+                        "Locale" => "en_US",
+                        "Name" => ucwords(str_replace('_', ' ', $name . ' Template')),
+                        "OwnerType" => "user",
+                        "Presets" => "string",
+                        "Purposes" => ['automation']
+                    ];
+
+                    $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
+
+                    if ($template && !empty($template)){
+                        $templateContent = [];
+                        $templateContent['id'] = $template[0]['ID'];
+                        $templateContent['body'] = $this->getTemplateContent($name);
+                        $templateContent['filters'] = [];
+
+
+
+                    }
+
+               }
+           }
+        }
+
+    }
+
+    private function getTemplateContent($templateName)
+    {
+        $content = [];
+
+        $fromEmail = get_option('mailjet_from_email');
+
+        $content['Headers'] = [
+                'Subject' => "There's something in your cart",
+                'SenderName' => "{{var:store_name}}",
+                'SenderEmail' => $fromEmail,
+                'ReplyEmail' => '',
+                'From' => "{{var:store_name}} <$fromEmail>",
+                'Reply-To' => ''
+        ];
+
+    }
+
 }

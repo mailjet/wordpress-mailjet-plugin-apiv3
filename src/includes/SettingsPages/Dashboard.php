@@ -27,7 +27,7 @@ class Dashboard {
 	public function mailjet_dashboard_page_html() {
 
 		$iconDir           = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'admin/images/woo.svg';
-		$wooCommerceExists = get_option( 'activate_mailjet_woo_integration' ) === 'on' ? 'mj-show' : 'hidden';
+		$wooCommerceExists = get_option( 'activate_mailjet_woo_integration' ) === '1' ? 'mj-show' : 'hidden';
 		if ( ! MailjetApi::isValidAPICredentials() ) {
 			MailjetSettings::redirectJs( admin_url( '/admin.php?page=mailjet_settings_page&from=plugins' ) );
 		}

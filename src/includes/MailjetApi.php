@@ -466,4 +466,45 @@ class MailjetApi
         }
         return  $templateDetails;
     }
+
+    public static function createAutomationTemplate(array $arguments)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->post(Resources::$Template, $arguments);
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            return $response->getData();
+        }
+
+        return  false;
+    }
+
+
+    public static function createAutomationTemplateContent(array $content)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->post(Resources::$TemplateDetailcontent, $content);
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            return $response->getData();
+        }
+
+        return  false;
+    }
 }

@@ -29,7 +29,7 @@ class OrderNotificationsSettings
 
 
         $shippingConfirmationSubject = 'blaladsasdadsadsasdasdadadadsadadsalal';
-        $wooCommerceExists = get_option('activate_mailjet_woo_integration') === 'on' ? true : false;
+        $wooCommerceExists = get_option('activate_mailjet_woo_integration') === '1' ? true : false;
 
 
 
