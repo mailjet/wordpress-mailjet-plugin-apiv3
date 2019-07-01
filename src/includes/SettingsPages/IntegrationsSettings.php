@@ -375,13 +375,13 @@ class IntegrationsSettings
         }
 
         if ($activate){
-           $templates['abandoned_cart'] = get_option('mailjet_wc_abandoned_cart_template');
-           $templates['order_confirmation'] = get_option('mailjet_wc_order_confirmation_template');
-           $templates['refund_confirmation'] = get_option('mailjet_wc_refund_confirmation_template');
-           $templates['shipping_confirmation'] = get_option('mailjet_wc_shipping_confirmation_template');
+           $templates['mailjet_wc_abandoned_cart_template'] = get_option('mailjet_wc_abandoned_cart_template');
+           $templates['mailjet_wc_order_confirmation_template'] = get_option('mailjet_wc_order_confirmation_template');
+           $templates['mailjet_wc_refund_confirmation_template'] = get_option('mailjet_wc_refund_confirmation_template');
+           $templates['mailjet_wc_shipping_confirmation_template'] = get_option('mailjet_wc_shipping_confirmation_template');
 
-           foreach ($templates as $name => $value){
-               if (!$value || empty($value)){
+            foreach ($templates as $name => $value){
+                if (!$value || empty($value)){
                     $templateArgs = [
                         "Author" => "Mailjet WC integration",
                         "Categories" => ['e-commerce'],
@@ -391,7 +391,7 @@ class IntegrationsSettings
                         "IsStarred" => false,
                         "IsTextPartGenerationEnabled" => true,
                         "Locale" => "en_US",
-                        "Name" => ucwords(str_replace('_', ' ', $name . ' Template')),
+                        "Name" => ucwords(str_replace('_', ' ', $name)),
                         "OwnerType" => "user",
                         "Presets" => "string",
                         "Purposes" => ['automation']
@@ -399,36 +399,48 @@ class IntegrationsSettings
 
                     $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
 
-                    if ($template && !empty($template)){
+                   if ($template && !empty($template)){
                         $templateContent = [];
                         $templateContent['id'] = $template[0]['ID'];
                         $templateContent['body'] = $this->getTemplateContent($name);
                         $templateContent['filters'] = [];
-
-
-
-                    }
+                        update_option($name, $template[0]['ID']);
+                        MailjetApi::createAutomationTemplateContent($templateContent);
+                   }
 
                }
            }
         }
 
+
+
+
     }
 
     private function getTemplateContent($templateName)
     {
-        $content = [];
-
-        $fromEmail = get_option('mailjet_from_email');
-
-        $content['Headers'] = [
-                'Subject' => "There's something in your cart",
-                'SenderName' => "{{var:store_name}}",
-                'SenderEmail' => $fromEmail,
-                'ReplyEmail' => '',
-                'From' => "{{var:store_name}} <$fromEmail>",
-                'Reply-To' => ''
+        $templateFiles = [
+                'mailjet_wc_abandoned_cart_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceAbandonedCart.txt',
+                'mailjet_wc_order_confirmation_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceOrderConfirmation.txt',
+                'mailjet_wc_refund_confirmation_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceRefundConfirmation.txt',
+                'mailjet_wc_shipping_confirmation_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceShippingConfirmation.txt',
         ];
+
+        $fileTemp = file_get_contents($templateFiles[$templateName]);
+
+        if (!$fileTemp || empty($fileTemp)){
+            MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Teplate ('.$templateName.') can\'t be found!]' );
+            return [];
+        }
+
+        $fileTemp = json_decode($fileTemp, true);
+        $fileTemp = $fileTemp['Data'][0];
+
+       //Add sender Email to headers
+        $fromEmail = get_option('mailjet_from_email');
+        $fileTemp['Headers']['SenderEmail'] = $fromEmail;
+
+        return $fileTemp;
 
     }
 
