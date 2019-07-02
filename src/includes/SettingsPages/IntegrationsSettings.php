@@ -283,10 +283,13 @@ class IntegrationsSettings
 
         // show error/update messages
         settings_errors( 'mailjet_messages' );
-
-
         $nonce = wp_create_nonce('mailjet_integrations_page_html');
 
+        $post_update = get_option('mailjet_post_update_message');
+
+        if ($post_update) {
+            update_option('mailjet_post_update_message', '');
+        }
         ?>
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img
@@ -304,7 +307,9 @@ class IntegrationsSettings
                 </div>
 
                 <h1 class="page_top_title"><?php _e( 'Settings', 'mailjet-for-wordpress' ) ?></h1>
+
                 <div class="mjSettings">
+
                     <div class="left">
                         <?php
                         MailjetAdminDisplay::getSettingsLeftMenu();
@@ -312,6 +317,10 @@ class IntegrationsSettings
                     </div>
 
                     <div class="right">
+                        <?php if ($post_update) {
+                           echo $this->displayMessage($post_update);
+                        }
+                        ?>
                         <div class="centered">
                             <!--                    <h1>--><?php //echo esc_html(get_admin_page_title());
                             ?><!--</h1>-->
@@ -364,9 +373,15 @@ class IntegrationsSettings
 
     private function activateWoocommerce($data)
     {
+        $result = [
+            'success' => true,
+            'message' => 'Integrations updated successfully.'
+        ];
+
         $activate = true;
         if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
             update_option('activate_mailjet_woo_integration', '');
+            $this->toggleWooSettings('yes');
             $activate = false;
         }
         foreach ($data as $key => $val) {
@@ -374,14 +389,16 @@ class IntegrationsSettings
             update_option($key, sanitize_text_field($optionVal));
         }
 
-        if ($activate){
-           $templates['mailjet_wc_abandoned_cart_template'] = get_option('mailjet_wc_abandoned_cart_template');
-           $templates['mailjet_wc_order_confirmation_template'] = get_option('mailjet_wc_order_confirmation_template');
-           $templates['mailjet_wc_refund_confirmation_template'] = get_option('mailjet_wc_refund_confirmation_template');
-           $templates['mailjet_wc_shipping_confirmation_template'] = get_option('mailjet_wc_shipping_confirmation_template');
+        if ($activate) {
+            $templates['mailjet_wc_abandoned_cart_template'] = get_option('mailjet_wc_abandoned_cart_template');
+            $templates['mailjet_wc_order_confirmation_template'] = get_option('mailjet_wc_order_confirmation_template');
+            $templates['mailjet_wc_refund_confirmation_template'] = get_option('mailjet_wc_refund_confirmation_template');
+            $templates['mailjet_wc_shipping_confirmation_template'] = get_option('mailjet_wc_shipping_confirmation_template');
 
-            foreach ($templates as $name => $value){
-                if (!$value || empty($value)){
+            $this->toggleWooSettings('no');
+
+            foreach ($templates as $name => $value) {
+                if (!$value || empty($value)) {
                     $templateArgs = [
                         "Author" => "Mailjet WC integration",
                         "Categories" => ['e-commerce'],
@@ -399,21 +416,25 @@ class IntegrationsSettings
 
                     $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
 
-                   if ($template && !empty($template)){
+                    if ($template && !empty($template)) {
                         $templateContent = [];
                         $templateContent['id'] = $template[0]['ID'];
                         $templateContent['body'] = $this->getTemplateContent($name);
                         $templateContent['filters'] = [];
                         update_option($name, $template[0]['ID']);
-                        MailjetApi::createAutomationTemplateContent($templateContent);
-                   }
+                        $contentCreation = MailjetApi::createAutomationTemplateContent($templateContent);
 
-               }
-           }
+                        if (!$contentCreation || empty($contentCreation)) {
+                            $result['success'] = false;
+                            $result['message'] = 'Something went wrong! Please try again later.';
+                        }
+                    }
+                }
+            }
         }
 
-
-
+        update_option('mailjet_post_update_message', $result);
+        wp_redirect(add_query_arg(array('page' => 'mailjet_integrations_page'), admin_url('admin.php')));
 
     }
 
@@ -444,4 +465,42 @@ class IntegrationsSettings
 
     }
 
+    private function displayMessage($data)
+    {
+        $type = $data['success'] === true ? 'notice-success' : 'notice-error';
+        $msg = $data['message'];
+        $div = "<div class=\"notice is-dismissible $type \" style=\"display: inline-block; height: 39px; width: 100%;\">
+                    <p><strong>$msg</strong></p>
+                    <button type=\"button\" class=\"notice-dismiss\"><span class=\"screen-reader-text\">Dismiss this notice.</span>
+                    </button>
+                </div>";
+
+        return $div;
+    }
+
+    private function toggleWooSettings($status)
+    {
+        $settings = [
+            'woocommerce_customer_processing_order_settings',
+            'woocommerce_customer_completed_order_settings',
+            'woocommerce_customer_refunded_order_settings',
+        ];
+
+        foreach ($settings as $name){
+            $wooSettings = get_option($name);
+            if ($wooSettings) {
+                $wooSettings['enabled'] = $status;
+            } else {
+                $wooSettings = [
+                    'enabled' => $status,
+                    'subject' => '',
+                    'heading' => '',
+                    'email_type' => 'html',
+                ];
+            }
+            update_option($name, $wooSettings);
+        }
+
+        return true;
+    }
 }
