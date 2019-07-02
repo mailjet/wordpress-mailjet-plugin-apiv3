@@ -481,13 +481,14 @@ class IntegrationsSettings
     private function toggleWooSettings($status)
     {
         $settings = [
-            'woocommerce_customer_processing_order_settings',
-            'woocommerce_customer_completed_order_settings',
-            'woocommerce_customer_refunded_order_settings',
+            'woocommerce_customer_processing_order_settings' => 'woocommerce_order_status_processing',
+            'woocommerce_customer_completed_order_settings' => 'woocommerce_order_status_completed',
+            'woocommerce_customer_refunded_order_settings' => 'woocommerce_order_status_refunded'
         ];
 
-        foreach ($settings as $name){
+        foreach ($settings as $name => $action){
             $wooSettings = get_option($name);
+            $this->toogleActions($action, $status);
             if ($wooSettings) {
                 $wooSettings['enabled'] = $status;
             } else {
@@ -502,5 +503,15 @@ class IntegrationsSettings
         }
 
         return true;
+    }
+
+    private function toogleActions($actionName, $status)
+    {
+        if ($status === 'yes'){
+            remove_action($actionName, 'mysite_pending', 10);
+        }else{
+            add_action( $actionName, 'mysite_pending', 10, 1);
+        }
+
     }
 }
