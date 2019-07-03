@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
+use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
 /**
@@ -174,5 +175,146 @@ class WooCommerceSettings
 
 	    return false;
     }
+
+    public static function getWooTemplate($templateType)
+    {
+        $templateId = get_option($templateType);
+
+        if (!$templateId || empty($templateId)){
+//            MailjetApi::cr
+        }
+
+    }
+
+    private function toggleWooSettings($status)
+    {
+        $settings = [
+            'woocommerce_customer_processing_order_settings' => 'woocommerce_order_status_processing',
+            'woocommerce_customer_completed_order_settings' => 'woocommerce_order_status_completed',
+            'woocommerce_customer_refunded_order_settings' => 'woocommerce_order_status_refunded'
+        ];
+
+        foreach ($settings as $name => $action){
+            $wooSettings = get_option($name);
+            $this->toogleActions($action, $status);
+            if ($wooSettings) {
+                $wooSettings['enabled'] = $status;
+            } else {
+                $wooSettings = [
+                    'enabled' => $status,
+                    'subject' => '',
+                    'heading' => '',
+                    'email_type' => 'html',
+                ];
+            }
+            update_option($name, $wooSettings);
+        }
+
+        return true;
+    }
+
+    private function toogleActions($actionName, $status)
+    {
+        if ($status === 'yes'){
+            remove_action($actionName, 'mysite_pending', 10);
+        }else{
+            add_action( $actionName, 'mysite_pending', 10, 1);
+        }
+
+    }
+
+    private function getTemplateContent($templateName)
+    {
+        $templateFiles = [
+            'woocommerce_abandoned_cart' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceAbandonedCart.txt',
+            'woocommerce_order_confirmation' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceOrderConfirmation.txt',
+            'woocommerce_refund_confirmation' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceRefundConfirmation.txt',
+            'woocommerce_shipping_confirmation' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceShippingConfirmation.txt',
+        ];
+
+        $fileTemp = file_get_contents($templateFiles[$templateName]);
+
+        if (!$fileTemp || empty($fileTemp)){
+            MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Teplate ('.$templateName.') can\'t be found!]' );
+            return [];
+        }
+
+        $fileTemp = json_decode($fileTemp, true);
+        $fileTemp = $fileTemp['Data'][0];
+
+        //Add sender Email to headers
+        $fromEmail = get_option('mailjet_from_email');
+        $fileTemp['Headers']['SenderEmail'] = $fromEmail;
+
+        return $fileTemp;
+
+    }
+
+    public function activateWoocommerce($data)
+    {
+        $result['success'] = true;
+
+        $activate = true;
+        if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
+            update_option('activate_mailjet_woo_integration', '');
+            $this->toggleWooSettings('yes');
+            $activate = false;
+        }
+        foreach ($data as $key => $val) {
+            $optionVal = $activate ? $val : '';
+            update_option($key, sanitize_text_field($optionVal));
+        }
+
+        if ($activate) {
+            $templates['woocommerce_abandoned_cart'] = get_option('mailjet_woocommerce_abandoned_cart');
+            $templates['woocommerce_order_confirmation'] = get_option('mailjet_woocommerce_order_confirmation');
+            $templates['woocommerce_refund_confirmation'] = get_option('mailjet_woocommerce_refund_confirmation');
+            $templates['woocommerce_shipping_confirmation'] = get_option('mailjet_woocommerce_shipping_confirmation');
+
+            $this->toggleWooSettings('no');
+
+            foreach ($templates as $name => $value) {
+                if (!$value || empty($value)) {
+                    $templateArgs = [
+                        "Author" => "Mailjet WC integration",
+                        "Categories" => ['e-commerce'],
+                        "Copyright" => "Mailjet",
+                        "Description" => "Used to send automation emails.",
+                        "EditMode" => 1,
+                        "IsStarred" => false,
+                        "IsTextPartGenerationEnabled" => true,
+                        "Locale" => "en_US",
+                        "Name" => ucwords(str_replace('_', ' ', $name)),
+                        "OwnerType" => "user",
+                        "Presets" => "string",
+                        "Purposes" => ['automation']
+                    ];
+
+                    $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
+
+                    if ($template && !empty($template)) {
+                        $templateContent = [];
+                        $templateContent['id'] = $template['ID'];
+                        $templateContent['body'] = $this->getTemplateContent($name);
+                        $templateContent['filters'] = [];
+                        add_option('mailjet_' .$name, $template['ID']);
+                        $contentCreation = MailjetApi::createAutomationTemplateContent($templateContent);
+                        if (!$contentCreation || empty($contentCreation)) {
+                            $result['success'] = false;
+                        }
+                    }else{
+                        $result['success'] = false;
+                    }
+                }
+            }
+        }
+
+        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.': 'Something went wrong! Please try again later.';
+
+        update_option('mailjet_post_update_message', $result);
+        wp_redirect(add_query_arg(array('page' => 'mailjet_integrations_page'), admin_url('admin.php')));
+
+    }
+
 
 }

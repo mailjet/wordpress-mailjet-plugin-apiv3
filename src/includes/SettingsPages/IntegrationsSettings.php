@@ -356,6 +356,7 @@ class IntegrationsSettings
         <?php
 
     }
+
     public function integrations_post_handler()
     {
         $postData = (object)$_POST;
@@ -366,102 +367,9 @@ class IntegrationsSettings
             exit;
         }
 
-        $this->activateWoocommerce((object) $postData->woocommerce);
+        $wooSettings = new WooCommerceSettings();
 
-
-    }
-
-    private function activateWoocommerce($data)
-    {
-        $result = [
-            'success' => true,
-            'message' => 'Integrations updated successfully.'
-        ];
-
-        $activate = true;
-        if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
-            update_option('activate_mailjet_woo_integration', '');
-            $this->toggleWooSettings('yes');
-            $activate = false;
-        }
-        foreach ($data as $key => $val) {
-            $optionVal = $activate ? $val : '';
-            update_option($key, sanitize_text_field($optionVal));
-        }
-
-        if ($activate) {
-            $templates['mailjet_wc_abandoned_cart_template'] = get_option('mailjet_wc_abandoned_cart_template');
-            $templates['mailjet_wc_order_confirmation_template'] = get_option('mailjet_wc_order_confirmation_template');
-            $templates['mailjet_wc_refund_confirmation_template'] = get_option('mailjet_wc_refund_confirmation_template');
-            $templates['mailjet_wc_shipping_confirmation_template'] = get_option('mailjet_wc_shipping_confirmation_template');
-
-            $this->toggleWooSettings('no');
-
-            foreach ($templates as $name => $value) {
-                if (!$value || empty($value)) {
-                    $templateArgs = [
-                        "Author" => "Mailjet WC integration",
-                        "Categories" => ['e-commerce'],
-                        "Copyright" => "Mailjet",
-                        "Description" => "Used to send automation emails.",
-                        "EditMode" => 1,
-                        "IsStarred" => false,
-                        "IsTextPartGenerationEnabled" => true,
-                        "Locale" => "en_US",
-                        "Name" => ucwords(str_replace('_', ' ', $name)),
-                        "OwnerType" => "user",
-                        "Presets" => "string",
-                        "Purposes" => ['automation']
-                    ];
-
-                    $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
-
-                    if ($template && !empty($template)) {
-                        $templateContent = [];
-                        $templateContent['id'] = $template[0]['ID'];
-                        $templateContent['body'] = $this->getTemplateContent($name);
-                        $templateContent['filters'] = [];
-                        update_option($name, $template[0]['ID']);
-                        $contentCreation = MailjetApi::createAutomationTemplateContent($templateContent);
-
-                        if (!$contentCreation || empty($contentCreation)) {
-                            $result['success'] = false;
-                            $result['message'] = 'Something went wrong! Please try again later.';
-                        }
-                    }
-                }
-            }
-        }
-
-        update_option('mailjet_post_update_message', $result);
-        wp_redirect(add_query_arg(array('page' => 'mailjet_integrations_page'), admin_url('admin.php')));
-
-    }
-
-    private function getTemplateContent($templateName)
-    {
-        $templateFiles = [
-                'mailjet_wc_abandoned_cart_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceAbandonedCart.txt',
-                'mailjet_wc_order_confirmation_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceOrderConfirmation.txt',
-                'mailjet_wc_refund_confirmation_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceRefundConfirmation.txt',
-                'mailjet_wc_shipping_confirmation_template' => MAILJET_ADMIN_TAMPLATE_DIR . '\IntegrationAutomationTemplates\WooCommerceShippingConfirmation.txt',
-        ];
-
-        $fileTemp = file_get_contents($templateFiles[$templateName]);
-
-        if (!$fileTemp || empty($fileTemp)){
-            MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Teplate ('.$templateName.') can\'t be found!]' );
-            return [];
-        }
-
-        $fileTemp = json_decode($fileTemp, true);
-        $fileTemp = $fileTemp['Data'][0];
-
-       //Add sender Email to headers
-        $fromEmail = get_option('mailjet_from_email');
-        $fileTemp['Headers']['SenderEmail'] = $fromEmail;
-
-        return $fileTemp;
+        $wooSettings->activateWoocommerce((object) $postData->woocommerce);
 
     }
 
@@ -478,40 +386,4 @@ class IntegrationsSettings
         return $div;
     }
 
-    private function toggleWooSettings($status)
-    {
-        $settings = [
-            'woocommerce_customer_processing_order_settings' => 'woocommerce_order_status_processing',
-            'woocommerce_customer_completed_order_settings' => 'woocommerce_order_status_completed',
-            'woocommerce_customer_refunded_order_settings' => 'woocommerce_order_status_refunded'
-        ];
-
-        foreach ($settings as $name => $action){
-            $wooSettings = get_option($name);
-            $this->toogleActions($action, $status);
-            if ($wooSettings) {
-                $wooSettings['enabled'] = $status;
-            } else {
-                $wooSettings = [
-                    'enabled' => $status,
-                    'subject' => '',
-                    'heading' => '',
-                    'email_type' => 'html',
-                ];
-            }
-            update_option($name, $wooSettings);
-        }
-
-        return true;
-    }
-
-    private function toogleActions($actionName, $status)
-    {
-        if ($status === 'yes'){
-            remove_action($actionName, 'mysite_pending', 10);
-        }else{
-            add_action( $actionName, 'mysite_pending', 10, 1);
-        }
-
-    }
 }

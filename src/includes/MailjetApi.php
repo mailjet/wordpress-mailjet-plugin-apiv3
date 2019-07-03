@@ -411,7 +411,7 @@ class MailjetApi
         return $name;
     }
 
-    public static function getTemplates()
+    public static function getTemplates($filterByName = null)
     {
         try {
             $mjApiClient = self::getApiClient();
@@ -425,19 +425,16 @@ class MailjetApi
         }
         $templateNames = [];
 
-
         if ($response->success() && $response->getCount() > 0) {
             $data = $response->getData();
-
             foreach ($data as $template){
-
+                if (!is_null($filterByName) && $template['Name'] === $filterByName){
+                    return $template;
+                }
                 $templateNames[] = ['Name' => $template['Name'], 'id' => $template['ID']] ;
-
             }
 
         }
-
-
         return  $templateNames;
     }
 
@@ -474,14 +471,19 @@ class MailjetApi
         } catch (\Exception $e) {
             return false;
         }
+
         try {
             $response = $mjApiClient->post(Resources::$Template, $arguments);
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             return false;
         }
-
+        $data = $response->getData();
         if ($response->success() && $response->getCount() > 0) {
-            return $response->getData();
+            return $data[0];
+        }else{
+            if ($data['ErrorCode'] === 'ps-0015'){
+                return self::getTemplates($arguments['body']['Name']);
+            }
         }
 
         return  false;
