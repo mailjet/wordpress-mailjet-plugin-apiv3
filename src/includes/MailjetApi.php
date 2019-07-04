@@ -450,18 +450,12 @@ class MailjetApi
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             return false;
         }
-        $templateDetails = [];
+
         if ($response->success() && $response->getCount() > 0) {
             $data = $response->getData();
-
-            foreach ($data as $template){
-                $templateDetails['Subject'] = $template['Headers']['Subject'] ;
-                $templateDetails['SenderName'] = $template['Headers']['SenderName'] ;
-                $templateDetails['SenderEmail'] = $template['Headers']['SenderEmail'] ;
-            }
-
+            return $data[0];
         }
-        return  $templateDetails;
+        return  false;
     }
 
     public static function createAutomationTemplate(array $arguments)

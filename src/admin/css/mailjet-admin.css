@@ -1332,7 +1332,8 @@ input:checked + .mj-slider:before {
     width: 70px;
     left: 92.5%;
     top: 15px;
-    color: #19BC9C; !important;
+    color: #19BC9C;
+!important;
     cursor: pointer;
     /*vertical-align: middle;*/
 }
@@ -1484,6 +1485,7 @@ input:checked + .mj-slider:before {
 .mj-btn-info {
     border: none;
 }
+
 .mj-popup-footer {
     padding: 1em 8px 0 1em;
     text-align: center;
@@ -1499,9 +1501,10 @@ input:checked + .mj-slider:before {
     line-height: 24px;
 }
 
-.mj-text-div{
+.mj-text-div {
     margin-left: 24px;
 }
+
 .mj-popup-footer button {
 
     float: right;
@@ -1542,4 +1545,10 @@ input:checked + .mj-slider:before {
     font-family: Roboto;
     font-size: 12px;
     line-height: 16px;
+}
+
+.mj-linkBtn {
+    text-decoration: none;
+    padding-bottom: 0px;
+    height: 38px; !important;
 }

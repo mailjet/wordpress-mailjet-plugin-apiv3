@@ -3,6 +3,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
+use MailjetPlugin\Includes\MailjetLoader;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
@@ -19,19 +20,22 @@ use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
  */
 class WooCommerceSettings
 {
+
+    private $loader;
+
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
-		$chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
-		$chaeckoutText = get_option('mailjet_woo_checkout_box_text');
+        $chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
+        $chaeckoutText = get_option('mailjet_woo_checkout_box_text');
 
-		$contactList = $this->getWooContactList();
+        $contactList = $this->getWooContactList();
         // Display the checkbox only for NOT-logged in users or for logged-in but not subscribed to the Woo list
 //        if (get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')){
-        if ($contactList !== false){
+        if ($contactList !== false) {
 
             // Check if user is logged-in and already Subscribed to the contact list
-	        $contactAlreadySubscribedToList = false;
+            $contactAlreadySubscribedToList = false;
             if ($user->exists()) {
                 $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, $contactList);
             }
@@ -40,7 +44,7 @@ class WooCommerceSettings
                 if (!function_exists('woocommerce_form_field')) {
                     return;
                 }
-                $boxMsg = get_option('mailjet_woo_checkout_box_text')?: 'Subscribe to our newsletter';
+                $boxMsg = get_option('mailjet_woo_checkout_box_text') ?: 'Subscribe to our newsletter';
 
                 woocommerce_form_field('mailjet_woo_subscribe_ok', array(
                     'type' => 'checkbox',
@@ -50,7 +54,6 @@ class WooCommerceSettings
             }
         }
     }
-
 
     public function mailjet_subscribe_woo($order, $data)
     {
@@ -63,17 +66,16 @@ class WooCommerceSettings
             die;
         }
 
-        if( isset($_POST['_my_field_name']) && ! empty($_POST['_my_field_name']) )
-            $order->update_meta_data( '_my_field_name', sanitize_text_field( $_POST['_my_field_name'] ) );
+        if (isset($_POST['_my_field_name']) && !empty($_POST['_my_field_name']))
+            $order->update_meta_data('_my_field_name', sanitize_text_field($_POST['_my_field_name']));
 
 
         $subscribe = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
         if ($subscribe) {
-            $order->update_meta_data( 'mailjet_woo_subscribe_ok', sanitize_text_field( $_POST['mailjet_woo_subscribe_ok'] ) );
+            $order->update_meta_data('mailjet_woo_subscribe_ok', sanitize_text_field($_POST['mailjet_woo_subscribe_ok']));
             $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
         }
     }
-
 
     /**
      *  Subscribe or unsubscribe a wordpress comment author in/from a Mailjet's contact list when the comment is saved
@@ -94,9 +96,6 @@ class WooCommerceSettings
         // Add the user to a contact list
         return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList($this->getWooContactList(), $user_email, $action, $contactproperties);
     }
-
-
-
 
     /**
      * Email the collected widget data to the customer with a verification token
@@ -137,7 +136,6 @@ class WooCommerceSettings
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
 
-
     /**
      * Function to change the "Thank you" text for WooCommerce order processed page - to add message that user has received subscription confirmation email
      *
@@ -148,7 +146,7 @@ class WooCommerceSettings
     public function woo_change_order_received_text($str, $order)
     {
         if (!empty($order)) {
-            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
+            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true)) {
                 $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
             }
         }
@@ -157,36 +155,44 @@ class WooCommerceSettings
 
     private function getWooContactList()
     {
-	    $wooActiv = get_option('activate_mailjet_woo_integration');
-	    if (!$wooActiv){
+        $wooActiv = get_option('activate_mailjet_woo_integration');
+        if (!$wooActiv) {
 
-		    return false;
-	    }
-	    $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
-	    $mainList = get_option('mailjet_sync_list');
-	    $wooList = get_option('mailjet_woo_list');
-	    if (!empty($wooList)){
+            return false;
+        }
+        $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
+        $mainList = get_option('mailjet_sync_list');
+        $wooList = get_option('mailjet_woo_list');
+        if (!empty($wooList)) {
 
-	    	return $wooList;
-	    }elseif (!empty($mainList) && !empty($checkoutBox)){
+            return $wooList;
+        } elseif (!empty($mainList) && !empty($checkoutBox)) {
 
-			return $mainList;
-	    }
+            return $mainList;
+        }
 
-	    return false;
+        return false;
     }
 
     public static function getWooTemplate($templateType)
     {
         $templateId = get_option($templateType);
 
-        if (!$templateId || empty($templateId)){
-//            MailjetApi::cr
+        if (!$templateId || empty($templateId)) {
+            return false;
+        }
+        $templateDetails = MailjetApi::getTemplateDetails($templateId);
+
+        if (!$templateDetails || empty($templateDetails)) {
+            return false;
         }
 
+        $templateDetails['Headers']['ID'] = $templateId;
+
+        return $templateDetails;
     }
 
-    private function toggleWooSettings($status)
+    public function toggleWooSettings($status)
     {
         $settings = [
             'woocommerce_customer_processing_order_settings' => 'woocommerce_order_status_processing',
@@ -194,9 +200,9 @@ class WooCommerceSettings
             'woocommerce_customer_refunded_order_settings' => 'woocommerce_order_status_refunded'
         ];
 
-        foreach ($settings as $name => $action){
+        foreach ($settings as $name => $action) {
             $wooSettings = get_option($name);
-            $this->toogleActions($action, $status);
+            $this->toggleActions($action, $status);
             if ($wooSettings) {
                 $wooSettings['enabled'] = $status;
             } else {
@@ -213,12 +219,13 @@ class WooCommerceSettings
         return true;
     }
 
-    private function toogleActions($actionName, $status)
+    private function toggleActions($actionName, $status)
     {
-        if ($status === 'yes'){
-            remove_action($actionName, 'mysite_pending', 10);
-        }else{
-            add_action( $actionName, 'mysite_pending', 10, 1);
+
+        if ($status === 'yes') {
+            remove_action($actionName, [$this, $actionName], 10);
+        } else {
+            add_action($actionName, [$this, $actionName], 10, 1);
         }
 
     }
@@ -234,8 +241,8 @@ class WooCommerceSettings
 
         $fileTemp = file_get_contents($templateFiles[$templateName]);
 
-        if (!$fileTemp || empty($fileTemp)){
-            MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Teplate ('.$templateName.') can\'t be found!]' );
+        if (!$fileTemp || empty($fileTemp)) {
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Teplate (' . $templateName . ') can\'t be found!]');
             return [];
         }
 
@@ -257,7 +264,6 @@ class WooCommerceSettings
         $activate = true;
         if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
             update_option('activate_mailjet_woo_integration', '');
-            $this->toggleWooSettings('yes');
             $activate = false;
         }
         foreach ($data as $key => $val) {
@@ -270,8 +276,6 @@ class WooCommerceSettings
             $templates['woocommerce_order_confirmation'] = get_option('mailjet_woocommerce_order_confirmation');
             $templates['woocommerce_refund_confirmation'] = get_option('mailjet_woocommerce_refund_confirmation');
             $templates['woocommerce_shipping_confirmation'] = get_option('mailjet_woocommerce_shipping_confirmation');
-
-            $this->toggleWooSettings('no');
 
             foreach ($templates as $name => $value) {
                 if (!$value || empty($value)) {
@@ -297,24 +301,66 @@ class WooCommerceSettings
                         $templateContent['id'] = $template['ID'];
                         $templateContent['body'] = $this->getTemplateContent($name);
                         $templateContent['filters'] = [];
-                        add_option('mailjet_' .$name, $template['ID']);
+                        add_option('mailjet_' . $name, $template['ID']);
                         $contentCreation = MailjetApi::createAutomationTemplateContent($templateContent);
                         if (!$contentCreation || empty($contentCreation)) {
                             $result['success'] = false;
                         }
-                    }else{
+                    } else {
                         $result['success'] = false;
                     }
                 }
             }
         }
 
-        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.': 'Something went wrong! Please try again later.';
+        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
 
-        update_option('mailjet_post_update_message', $result);
-        wp_redirect(add_query_arg(array('page' => 'mailjet_integrations_page'), admin_url('admin.php')));
+        return $result;
 
     }
 
+    public function woocommerce_order_status_refunded($order_id)
+    {
+        echo '<pre>';
+        var_dump($order_id);
+        echo '</pre>';
+        exit;
+    }
+
+    public function woocommerce_order_status_processing($order_id)
+    {
+        echo '<pre>';
+        var_dump('woocommerce_order_status_processing');
+        echo '</pre>';
+        exit;
+    }
+
+    public function sendAbandonedCartEmail($order_id)
+    {
+        echo '<pre>';
+        var_dump('sendAbandonedCartEmail');
+        echo '</pre>';
+        exit;
+    }
+
+    public function woocommerce_order_status_completed($order_id)
+    {
+        echo '<pre>';
+        var_dump('woocommerce_order_status_completed');
+        echo '</pre>';
+        exit;
+    }
+
+    public function orders_automation_settings_post()
+    {
+        $data = $_POST;
+
+
+        echo '<pre>';
+        var_dump($data);
+        echo '</pre>';
+        exit;
+
+    }
 
 }

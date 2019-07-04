@@ -369,7 +369,10 @@ class IntegrationsSettings
 
         $wooSettings = new WooCommerceSettings();
 
-        $wooSettings->activateWoocommerce((object) $postData->woocommerce);
+        $response =  $wooSettings->activateWoocommerce((object) $postData->woocommerce);
+
+        update_option('mailjet_post_update_message', $response);
+        wp_redirect(add_query_arg(array('page' => 'mailjet_integrations_page'), admin_url('admin.php')));
 
     }
 

@@ -32,6 +32,12 @@ class OrderNotificationsSettings
         $wooCommerceExists = get_option('activate_mailjet_woo_integration') === '1' ? true : false;
 
 
+        $orderConfTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_order_confirmation');
+        $abandonedCartTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_abandoned_cart');
+        $refundTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_refund_confirmation');
+        $shippingTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_shipping_confirmation');
+        $nonce = wp_create_nonce('mailjet_order_notifications_settings_page_html');
+
 
         if (!MailjetApi::isValidAPICredentials() || !$wooCommerceExists) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
@@ -77,7 +83,7 @@ class OrderNotificationsSettings
                         <?php _e('Back to dashboard', 'mailjet-for-wordpress') ?>
                     </a>
                 </div>
-                <form action="options.php" method="post" id="order-notification-form">
+                <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post" id="order-notification-form">
                     <fieldset class="order-notification-field">
                         <div id="mj-top_bar">
                             <h1><?php _e('Order notification emails', 'mailjet-for-wordpress'); ?> </h1>
@@ -105,10 +111,10 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge" <?=$orderConfirmationBadge?>><p>Sending active</p></div>
-                            <a class="mj-btnSecondary mj-inrow" href="https://app.mailjet.com/template/888062/build" target="_blank" type="button">Edit</a>
+                            <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $orderConfTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
-                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?></span>
-                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
+                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$orderConfTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
+                                <span><strong>Subject: &nbsp;</strong>  <?= $orderConfTemplate['Headers']['Subject']?></span>
                             </p>
                         </div>
                         <hr>
@@ -122,10 +128,10 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge" <?=$shippingConfirmationBadge?>><p>Sending active</p></div>
-                            <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
+                            <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $shippingTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
-                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$fromMail . '&#62'; ?></span>
-                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
+                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$shippingTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
+                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingTemplate['Headers']['Subject']?></span>
                             </p>
                         </div>
                         <hr>
@@ -139,10 +145,10 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge" <?=$refundConfirmationBadge?>><p>Sending active</p></div>
-                            <button class="mj-btnSecondary mj-inrow" type="button">Edit</button>
+                            <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $refundTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
-                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$fromMail . '&#62'; ?></span>
-                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingConfirmationSubject?></span>
+                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$refundTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
+                                <span><strong>Subject: &nbsp;</strong>  <?= $refundTemplate['Headers']['Subject']?></span>
                             </p>
                         </div>
                         <hr>
@@ -153,6 +159,8 @@ class OrderNotificationsSettings
                         </button>
                         <button id="stop-all" class="mj-btnSecondary hidden" data-toggle="show" onclick="toggleMailjetPopup(this)" type="button">Stop all sendings</button>
                     </div>
+                    <input type="hidden" name="action" value="order_notification_settings_custom_hook">
+                    <input type="hidden" name="custom_nonce" value="<?=$nonce?>">
                 </form>
             </div>
             <?php
@@ -198,4 +206,8 @@ class OrderNotificationsSettings
         </div>
         <?php
     }
+
+
+
+
 }
