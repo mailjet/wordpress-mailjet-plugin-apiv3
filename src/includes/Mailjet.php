@@ -145,6 +145,7 @@ class Mailjet
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
         $this->loader->add_action('admin_post_order_notification_settings_custom_hook', new WooCommerceSettings(), 'orders_automation_settings_post');
+
         if (get_option('activate_mailjet_woo_integration') === '1'){
             $this->addWoocommerceActions();
         }

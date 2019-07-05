@@ -47,6 +47,12 @@ class OrderNotificationsSettings
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
             return;
         }
+
+        $post_update = get_option('mailjet_post_update_message');
+
+        if ($post_update) {
+            update_option('mailjet_post_update_message', '');
+        }
         ?>
         <div class="mj-pluginPage mj-order-notificartion-popup hidden" id="mj-popup">
             <div class="mj-popup-header">
@@ -99,11 +105,16 @@ class OrderNotificationsSettings
                                 <?php _e('Templates', 'mailjet-for-wordpress'); ?>
                             </h3>
                         </div>
-
+                        <div style="width: fit-content">
+                            <?php if ($post_update) {
+                                echo $this->displayMessage($post_update);
+                            }
+                            ?>
+                        </div>
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?=$orderConfirmationBox?> name="mailjet_order_confirmation"
+                                <input class="checkbox mj-order-checkbox" <?=$orderConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_order_confirmation]"
                                        type="checkbox"
                                        id="order_confirmation" value="1">
                                 <section class="mj-checkbox-label">
@@ -120,7 +131,7 @@ class OrderNotificationsSettings
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?=$shippingConfirmationBox?> name="mailjet_shipping_confirmation"
+                                <input class="checkbox mj-order-checkbox" <?=$shippingConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_shipping_confirmation]"
                                        type="checkbox"
                                        id="shipping_confirmation" value="1">
                                 <section class="mj-checkbox-label">
@@ -137,7 +148,7 @@ class OrderNotificationsSettings
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?=$refundConfirmationBox?> name="mailjet_refund_confirmation"
+                                <input class="checkbox mj-order-checkbox" <?=$refundConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_refund_confirmation]"
                                        type="checkbox"
                                        id="refund_confirmation" value="1">
                                 <section class="mj-checkbox-label">
@@ -207,7 +218,18 @@ class OrderNotificationsSettings
         <?php
     }
 
+    private function displayMessage($data)
+    {
+        $type = $data['success'] === true ? 'notice-success' : 'notice-error';
+        $msg = $data['message'];
+        $div = "<div class=\"notice is-dismissible $type \" style=\"display: inline-block; height: 39px; width: 100%;\">
+                    <p><strong>$msg</strong></p>
+                    <button type=\"button\" class=\"notice-dismiss\"><span class=\"screen-reader-text\">Dismiss this notice.</span>
+                    </button>
+                </div>";
 
+        return $div;
+    }
 
 
 }

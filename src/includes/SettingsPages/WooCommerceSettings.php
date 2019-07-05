@@ -355,12 +355,20 @@ class WooCommerceSettings
     {
         $data = $_POST;
 
+        if (!wp_verify_nonce($data['custom_nonce'],'mailjet_order_notifications_settings_page_html')){
+            update_option('mailjet_post_update_message', ['success' => false, 'message' => 'Invalid credentials!']);
+            wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
+        }
 
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
-        exit;
+        if (!isset($data['mailjet_wc_active_hooks'])){
+           $data['mailjet_wc_active_hooks'] = [];
+        }
 
+        update_option('mailjet_wc_active_hooks', $data['mailjet_wc_active_hooks']);
+
+        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!']);
+        wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
+
 
 }
