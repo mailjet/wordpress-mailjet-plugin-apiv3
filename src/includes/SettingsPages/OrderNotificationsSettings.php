@@ -42,7 +42,7 @@ class OrderNotificationsSettings
         }
 
         $post_update = get_option('mailjet_post_update_message');
-
+        $editIconSrc = plugin_dir_url(MAILJET_PLUGIN_DIR . '/src/admin/images/eye.svg') . 'eye.svg';
         if ($post_update) {
             update_option('mailjet_post_update_message', '');
         }
@@ -68,7 +68,7 @@ class OrderNotificationsSettings
         </div>
 
 
-        <div>
+        <div class="mailjet-options-page">
             <div id="initialSettingsHead"><img
                         src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg'; ?>"
                         alt="Mailjet Logo"/></div>
@@ -115,11 +115,10 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge <?= empty($orderConfirmationBox)? 'mj-hidden' : ''; ?>"><p>Sending active</p></div>
-                            <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $orderConfTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$orderConfTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $orderConfTemplate['Headers']['Subject']?></span>
-                            </p>
+                                <a class="mj-inrow <?= empty($orderConfirmationBox)? 'mj-hidden' : ''; ?>" href="https://app.mailjet.com/template/<?= $orderConfTemplate['Headers']['ID']?>/build" target="_blank"><img class="edit-img" alt="edit icon" src="<?=$editIconSrc?>">Edit</a>                            </p>
                         </div>
                         <hr>
                         <div class="mailjet_row mj-notifications">
@@ -132,10 +131,10 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge <?= empty($shippingConfirmationBox)? 'mj-hidden' : ''; ?>"><p>Sending active</p></div>
-                            <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $shippingTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$shippingTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $shippingTemplate['Headers']['Subject']?></span>
+                                <a class="mj-inrow <?= empty($shippingConfirmationBox)? 'mj-hidden' : ''; ?>" href="https://app.mailjet.com/template/<?= $shippingTemplate['Headers']['ID']?>/build" target="_blank" ><img class="edit-img" alt="edit icon" src="<?=$editIconSrc?>">Edit</a>
                             </p>
                         </div>
                         <hr>
@@ -149,11 +148,11 @@ class OrderNotificationsSettings
                                 </section>
                             </label>
                             <div class="mj-badge <?= empty($refundConfirmationBox)? 'mj-hidden' : ''; ?>"><p>Sending active</p></div>
-                            <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $refundTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
-                            <p class="mj-notifications-from">
+                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$refundTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $refundTemplate['Headers']['Subject']?></span>
-                            </p>
+                                <a class="mj-inrow  <?= empty($refundConfirmationBox)? 'mj-hidden' : ''; ?>" href="https://app.mailjet.com/template/<?= $refundTemplate['Headers']['ID']?>/build" target="_blank"><img class="edit-img" alt="edit icon" src="<?=$editIconSrc?>">Edit</a>
+                             </p>
                         </div>
                         <hr>
                     </fieldset>
@@ -161,7 +160,6 @@ class OrderNotificationsSettings
                         <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" disabled type="submit" style="margin-right: 16px">
                             Activate sending
                         </button>
-                        <button id="stop-all" class="mj-btnSecondary hidden "  data-toggle="show" onclick="toggleMailjetPopup(this)" type="button">Stop all sendings</button>
                         <button id="edit-all" class="mj-btnSecondary " data-toggle="visible" onclick="toggleEddit(this)" type="button">Edit Options</button>
                     </div>
                     <input type="hidden" name="action" value="order_notification_settings_custom_hook">

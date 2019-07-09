@@ -192,43 +192,43 @@ class WooCommerceSettings
         return $templateDetails;
     }
 
-    public function toggleWooSettings($status)
+    public function toggleWooSettings($activeHooks)
     {
-        $settings = [
-            'woocommerce_customer_processing_order_settings' => 'woocommerce_order_status_processing',
-            'woocommerce_customer_completed_order_settings' => 'woocommerce_order_status_completed',
-            'woocommerce_customer_refunded_order_settings' => 'woocommerce_order_status_refunded'
+        $avaliableActions = [
+            'woocommerce_order_status_processing' => 'woocommerce_customer_processing_order_settings',
+            'woocommerce_order_status_completed' => 'woocommerce_customer_completed_order_settings',
+            'woocommerce_order_status_refunded' => 'woocommerce_customer_refunded_order_settings'
         ];
 
-        foreach ($settings as $name => $action) {
-            $wooSettings = get_option($name);
-            $this->toggleActions($action, $status);
+        $hooks = [];
+
+        foreach ($activeHooks as $activeHook){
+            $hooks[] = $activeHook['hook'];
+        }
+
+        $defaultSettings = [
+            'enabled' => 'yes',
+            'subject' => '',
+            'heading' => '',
+            'email_type' => 'html',
+        ];
+
+        foreach ($avaliableActions as $key => $hook) {
+            $wooSettings = get_option($hook);
+            $setting = $defaultSettings;
             if ($wooSettings) {
-                $wooSettings['enabled'] = $status;
-            } else {
-                $wooSettings = [
-                    'enabled' => $status,
-                    'subject' => '',
-                    'heading' => '',
-                    'email_type' => 'html',
-                ];
+                $setting = $wooSettings;
+                $setting['enabled'] = 'yes';
             }
-            update_option($name, $wooSettings);
+            if (in_array($key, $hooks)){
+                $setting['enabled'] = 'no';
+            }
+            update_option($hook, $setting);
         }
 
         return true;
     }
 
-    private function toggleActions($actionName, $status)
-    {
-
-        if ($status === 'yes') {
-            remove_action($actionName, [$this, $actionName], 10);
-        } else {
-            add_action($actionName, [$this, $actionName], 10, 1);
-        }
-
-    }
 
     private function getTemplateContent($templateName)
     {
@@ -361,6 +361,9 @@ class WooCommerceSettings
         }
 
         $activeHooks = $this->prepareAutomationHooks($data);
+
+        $this->toggleWooSettings($activeHooks);
+
         $notifications = isset($data['mailjet_wc_active_hooks']) ? $data['mailjet_wc_active_hooks'] : [];
 
         update_option('mailjet_wc_active_hooks', $activeHooks);
