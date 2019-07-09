@@ -16,20 +16,13 @@ class OrderNotificationsSettings
     {
 
         $fromName = get_option('mailjet_from_name');
-        $fromMail = get_option('mailjet_from_email');
-
-
-        $orderConfirmationBadge = get_option('mailjet_order_confirmation') === '1' ? '' : 'style="visibility: hidden"'; // Processing Order
-        $shippingConfirmationBadge = get_option('mailjet_shipping_confirmation') === '1' ? '' : 'style="visibility: hidden"'; //Order complected WC
-        $refundConfirmationBadge = get_option('mailjet_refund_confirmation') === '1' ? '' : 'style="visibility: hidden"'; // Refunded order
-
-        $orderConfirmationBox = $orderConfirmationBadge !== '' ?: 'style="visibility: hidden"';
-        $shippingConfirmationBox = $shippingConfirmationBadge !== '' ?: 'style="visibility: hidden"';
-        $refundConfirmationBox = $refundConfirmationBadge !== '' ?: 'style="visibility: hidden"';
-
-
-        $shippingConfirmationSubject = 'blaladsasdadsadsasdasdadadadsadadsalal';
         $wooCommerceExists = get_option('activate_mailjet_woo_integration') === '1' ? true : false;
+
+        $notifications = get_option('mailjet_order_notifications');
+
+        $orderConfirmationBox = !isset($notifications['mailjet_order_confirmation']) ? '' : 'checked="checked"'; // Processing Order
+        $shippingConfirmationBox = !isset($notifications['mailjet_shipping_confirmation']) ? '' : 'checked="checked"'; //Order complected WC
+        $refundConfirmationBox = !isset($notifications['mailjet_refund_confirmation']) ? '' : 'checked="checked"'; // Refunded order
 
 
         $orderConfTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_order_confirmation');
@@ -114,14 +107,14 @@ class OrderNotificationsSettings
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?=$orderConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_order_confirmation]"
+                                <input class="checkbox mj-order-checkbox" style="visibility: hidden" <?=$orderConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_order_confirmation]"
                                        type="checkbox"
                                        id="order_confirmation" value="1">
                                 <section class="mj-checkbox-label">
                                     <?php _e('Order confirmation', 'mailjet-for-wordpress'); ?>
                                 </section>
                             </label>
-                            <div class="mj-badge" <?=$orderConfirmationBadge?>><p>Sending active</p></div>
+                            <div class="mj-badge <?= empty($orderConfirmationBox)? 'mj-hidden' : ''; ?>"><p>Sending active</p></div>
                             <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $orderConfTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$orderConfTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
@@ -131,14 +124,14 @@ class OrderNotificationsSettings
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?=$shippingConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_shipping_confirmation]"
+                                <input class="checkbox mj-order-checkbox"style="visibility: hidden" <?=$shippingConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_shipping_confirmation]"
                                        type="checkbox"
                                        id="shipping_confirmation" value="1">
                                 <section class="mj-checkbox-label">
                                     <?php _e('Shipping confirmation', 'mailjet-for-wordpress'); ?>
                                 </section>
                             </label>
-                            <div class="mj-badge" <?=$shippingConfirmationBadge?>><p>Sending active</p></div>
+                            <div class="mj-badge <?= empty($shippingConfirmationBox)? 'mj-hidden' : ''; ?>"><p>Sending active</p></div>
                             <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $shippingTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$shippingTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
@@ -148,14 +141,14 @@ class OrderNotificationsSettings
                         <hr>
                         <div class="mailjet_row mj-notifications">
                             <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?=$refundConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_refund_confirmation]"
+                                <input class="checkbox mj-order-checkbox" style="visibility: hidden" <?=$refundConfirmationBox?> name="mailjet_wc_active_hooks[mailjet_refund_confirmation]"
                                        type="checkbox"
                                        id="refund_confirmation" value="1">
                                 <section class="mj-checkbox-label">
                                     <?php _e('Refund confirmation', 'mailjet-for-wordpress'); ?>
                                 </section>
                             </label>
-                            <div class="mj-badge" <?=$refundConfirmationBadge?>><p>Sending active</p></div>
+                            <div class="mj-badge <?= empty($refundConfirmationBox)? 'mj-hidden' : ''; ?>"><p>Sending active</p></div>
                             <a class="mj-btnSecondary mj-inrow mj-linkBtn" href="https://app.mailjet.com/template/<?= $refundTemplate['Headers']['ID']?>/build" target="_blank" type="button">Edit</a>
                             <p class="mj-notifications-from">
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$refundTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
@@ -165,10 +158,11 @@ class OrderNotificationsSettings
                         <hr>
                     </fieldset>
                     <div class="mailjet_row mj-pluginPage">
-                        <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" type="submit" style="margin-right: 16px">
+                        <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" disabled type="submit" style="margin-right: 16px">
                             Activate sending
                         </button>
-                        <button id="stop-all" class="mj-btnSecondary hidden" data-toggle="show" onclick="toggleMailjetPopup(this)" type="button">Stop all sendings</button>
+                        <button id="stop-all" class="mj-btnSecondary hidden "  data-toggle="show" onclick="toggleMailjetPopup(this)" type="button">Stop all sendings</button>
+                        <button id="edit-all" class="mj-btnSecondary " data-toggle="visible" onclick="toggleEddit(this)" type="button">Edit Options</button>
                     </div>
                     <input type="hidden" name="action" value="order_notification_settings_custom_hook">
                     <input type="hidden" name="custom_nonce" value="<?=$nonce?>">
@@ -196,6 +190,7 @@ class OrderNotificationsSettings
 
                     if (flag) {
                         btnSubmit.classList.remove('mj-disabled')
+                        btnSubmit.disabled = false;
                         btnStop.classList.remove('hidden')
                     } else {
                         btnSubmit.classList.add('mj-disabled')
@@ -212,6 +207,24 @@ class OrderNotificationsSettings
                     } else {
                         popupBox.classList.add('hidden')
                     }
+                }
+
+                function toggleEddit(element) {
+                    let action = element.getAttribute('data-toggle');
+                    let refund = document.getElementById("refund_confirmation");
+                    let confirm = document.getElementById("order_confirmation");
+                    let shipping = document.getElementById("shipping_confirmation");
+
+                    refund.style.visibility = action;
+                    confirm.style.visibility = action;
+                    shipping.style.visibility = action;
+
+                    if(action === 'visible'){
+                        element.setAttribute('data-toggle', 'hidden')
+                    }else {
+                        element.setAttribute('data-toggle', 'visible')
+                    }
+
                 }
             </script>
         </div>

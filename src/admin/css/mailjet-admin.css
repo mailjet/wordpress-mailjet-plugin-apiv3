@@ -1552,3 +1552,7 @@ input:checked + .mj-slider:before {
     padding-bottom: 0px;
     height: 38px; !important;
 }
+
+.mj-hidden {
+    visibility: hidden;
+}

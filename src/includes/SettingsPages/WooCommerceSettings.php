@@ -319,7 +319,7 @@ class WooCommerceSettings
 
     }
 
-    public function woocommerce_order_status_refunded($order_id)
+    public function send_order_status_refunded($order_id)
     {
         echo '<pre>';
         var_dump($order_id);
@@ -327,7 +327,7 @@ class WooCommerceSettings
         exit;
     }
 
-    public function woocommerce_order_status_processing($order_id)
+    public function send_order_status_processing($order_id)
     {
         echo '<pre>';
         var_dump('woocommerce_order_status_processing');
@@ -335,7 +335,7 @@ class WooCommerceSettings
         exit;
     }
 
-    public function sendAbandonedCartEmail($order_id)
+    public function send_abandoned_cart($order_id)
     {
         echo '<pre>';
         var_dump('sendAbandonedCartEmail');
@@ -343,7 +343,7 @@ class WooCommerceSettings
         exit;
     }
 
-    public function woocommerce_order_status_completed($order_id)
+    public function send_order_status_completed($order_id)
     {
         echo '<pre>';
         var_dump('woocommerce_order_status_completed');
@@ -360,15 +360,35 @@ class WooCommerceSettings
             wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
         }
 
-        if (!isset($data['mailjet_wc_active_hooks'])){
-           $data['mailjet_wc_active_hooks'] = [];
-        }
+        $activeHooks = $this->prepareAutomationHooks($data);
+        $notifications = isset($data['mailjet_wc_active_hooks']) ? $data['mailjet_wc_active_hooks'] : [];
 
-        update_option('mailjet_wc_active_hooks', $data['mailjet_wc_active_hooks']);
+        update_option('mailjet_wc_active_hooks', $activeHooks);
+        update_option('mailjet_order_notifications', $notifications);
 
         update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!']);
         wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
 
+    private function prepareAutomationHooks($data)
+    {
+        if (!isset($data['mailjet_wc_active_hooks'])){
+           return [];
+        }
 
+        $actions = [
+            'mailjet_order_confirmation' => ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
+            'mailjet_shipping_confirmation' =>  ['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed'],
+            'mailjet_refund_confirmation' =>  ['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']
+        ];
+        $result = [];
+        foreach ($data['mailjet_wc_active_hooks'] as $key => $val){
+            if ($val === '1'){
+                $result[] = $actions[$key];
+            }
+        };
+
+        return $result;
+
+    }
 }

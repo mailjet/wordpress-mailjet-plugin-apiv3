@@ -256,9 +256,9 @@ class Mailjet
         if (!$activeActions || empty($activeActions)){
             return false;
         }
-
+        $woocommerceObject =  new WooCommerceSettings();
         foreach ($activeActions as $action){
-            $this->loader->add_action($action['hook'], new WooCommerceSettings(), $action['callable'], 10, 1);
+            $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
         }
         return true;
     }
