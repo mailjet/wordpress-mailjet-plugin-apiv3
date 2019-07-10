@@ -361,6 +361,16 @@ class WooCommerceSettings
             return false;
         }
         $items = $order->get_items();
+        $products = [];
+        foreach ($items as $item){
+            $itemData = $item->get_data();
+            $data['variant_title'] = $itemData['name'];
+            $data['price'] = $itemData['total'];
+            $data['title'] = $itemData['name'];
+            $data['quantity'] = $itemData['quantity'];
+            $products[] = $data;
+        }
+
         $vars = [
             'customer_firstname' => $order->get_billing_first_name(),
             'order_number' => $orderId,
@@ -373,6 +383,10 @@ class WooCommerceSettings
         ];
 
 
+        echo '<pre>';
+        var_dump($products);
+        echo '</pre>';
+        exit;
 
 
         $templateId = get_option('mailjet_woocommerce_refund_confirmation');

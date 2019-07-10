@@ -161,15 +161,6 @@ class Client
         if (!empty($options)) {
             $this->setOptions($options, $resource);
         }
-
-
-        echo '<pre>';
-        var_dump($resource);
-        var_dump($args);
-        var_dump($options);
-        echo '</pre>';
-        exit;
-
         $result = $this->_call('POST', $resource[0], $resource[1], $args);
 
         if (!empty($this->changed)) {
