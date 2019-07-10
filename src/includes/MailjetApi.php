@@ -503,4 +503,24 @@ class MailjetApi
 
         return  false;
     }
+
+    public static function sendEmail($content)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->post(Resources::$Email, $content);
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            return $response->getData();
+        }
+
+        return  false;
+    }
 }

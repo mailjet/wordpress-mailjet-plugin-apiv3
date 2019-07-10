@@ -5,6 +5,7 @@ namespace MailjetPlugin\Includes\SettingsPages;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLoader;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
 /**
@@ -194,6 +195,11 @@ class WooCommerceSettings
 
     public function toggleWooSettings($activeHooks)
     {
+
+        if (get_option('mailjet_enabled') !== '1'){
+            return false;
+        }
+
         $avaliableActions = [
             'woocommerce_order_status_processing' => 'woocommerce_customer_processing_order_settings',
             'woocommerce_order_status_completed' => 'woocommerce_customer_completed_order_settings',
@@ -319,36 +325,107 @@ class WooCommerceSettings
 
     }
 
-    public function send_order_status_refunded($order_id)
+    public function send_order_status_refunded($orderId)
     {
-        echo '<pre>';
-        var_dump($order_id);
-        echo '</pre>';
-        exit;
+        $order = wc_get_order( $orderId );
+
+        if (!$order || empty($order)){
+            return false;
+        }
+
+        $vars = [
+            'customer_firstname' => $order->get_billing_first_name(),
+            'order_number' => $orderId,
+            'order_total' => $order->get_total(),
+            'store_email' => get_option('mailjet_from_email'),
+            'store_phone' => '',
+            'store_name' => get_bloginfo(),
+            'store_address' => get_option('woocommerce_store_address'),
+        ];
+
+        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
+
+        $data = $this->getFormattedEmailData($order, $vars, $templateId);
+
+        MailjetApi::sendEmail($data);
+
+
+
     }
 
-    public function send_order_status_processing($order_id)
+    public function send_order_status_processing($orderId)
     {
-        echo '<pre>';
-        var_dump('woocommerce_order_status_processing');
-        echo '</pre>';
-        exit;
+        $order = wc_get_order( $orderId );
+
+        if (!$order || empty($order)){
+            return false;
+        }
+        $items = $order->get_items();
+        $vars = [
+            'customer_firstname' => $order->get_billing_first_name(),
+            'order_number' => $orderId,
+            'order_total' => $order->get_formatted_order_total(),
+            'store_email' => get_option('mailjet_from_email'),
+            'store_phone' => '',
+            'store_name' => get_bloginfo(),
+            'store_address' => get_option('woocommerce_store_address'),
+            'products' => $order->get_items(),
+        ];
+
+
+
+
+        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
+
+        $data = $this->getFormattedEmailData($order, $vars, $templateId);
+
+
     }
 
-    public function send_abandoned_cart($order_id)
+    public function send_abandoned_cart($orderId)
     {
-        echo '<pre>';
-        var_dump('sendAbandonedCartEmail');
-        echo '</pre>';
-        exit;
+        $order = wc_get_order( $orderId );
+
+        if (!$order || empty($order)){
+            return false;
+        }
+
+        $vars = [
+            'customer_firstname' => $order->get_billing_first_name(),
+            'order_number' => $orderId,
+            'order_total' => $order->get_formatted_order_total(),
+            'store_email' => '',
+            'store_phone' => '',
+            'store_name' => get_bloginfo(),
+            'store_address' => get_option('woocommerce_store_address'),
+        ];
+
+        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
+
+        $data = $this->getFormattedEmailData($order, $vars, $templateId);
     }
 
-    public function send_order_status_completed($order_id)
+    public function send_order_status_completed($orderId)
     {
-        echo '<pre>';
-        var_dump('woocommerce_order_status_completed');
-        echo '</pre>';
-        exit;
+        $order = wc_get_order( $orderId );
+
+        if (!$order || empty($order)){
+            return false;
+        }
+
+        $vars = [
+            'customer_firstname' => $order->get_billing_first_name(),
+            'order_number' => $orderId,
+            'order_shipping_address' => $order->get_shipping_address_1(),
+            'tracking_number' => $order->get_shipping_state(),
+            'store_phone' => '',
+            'store_name' => get_bloginfo(),
+            'store_address' => get_option('woocommerce_store_address'),
+        ];
+
+        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
+
+        $data = $this->getFormattedEmailData($order, $vars, $templateId);
     }
 
     public function orders_automation_settings_post()
@@ -393,5 +470,23 @@ class WooCommerceSettings
 
         return $result;
 
+    }
+
+    private function getFormattedEmailData($order, $vars, $templateId)
+    {
+        $recipients = [
+            'Email' => $order->get_billing_email(),
+            'Name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+            'Vars' => json_encode($vars)
+        ];
+
+        $data = [];
+        $data['FromEmail'] = get_option('mailjet_from_email');
+        $data['FromName'] = get_option('mailjet_from_name');
+        $data['Recipients'] = json_encode([$recipients]);
+        $data['Mj-TemplateID'] = $templateId;
+        $data['Mj-TemplateLanguage'] = true;
+
+        return $data;
     }
 }
