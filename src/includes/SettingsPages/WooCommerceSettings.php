@@ -334,29 +334,34 @@ class WooCommerceSettings
         }
 
         $vars = [
-            'customer_firstname' => $order->get_billing_first_name(),
+            'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
             'order_total' => $order->get_total(),
             'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
+            'order_link' => $order->get_view_order_url(),
         ];
 
         $templateId = get_option('mailjet_woocommerce_refund_confirmation');
-
         $data = $this->getFormattedEmailData($order, $vars, $templateId);
+        $response = MailjetApi::sendEmail($data);
+        if ($response === false){
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . json_encode($data));
+            return false;
+        }
 
-        MailjetApi::sendEmail($data);
-
-
-
+        return true;
     }
 
     public function send_order_status_processing($orderId)
     {
         $order = wc_get_order( $orderId );
-
+        $templateId = get_option('mailjet_woocommerce_order_confirmation');
+        if (!$order || empty($order) || !$templateId || empty($templateId)){
+            return false;
+        }
         if (!$order || empty($order)){
             return false;
         }
@@ -368,44 +373,56 @@ class WooCommerceSettings
             $data['price'] = $itemData['total'];
             $data['title'] = $itemData['name'];
             $data['quantity'] = $itemData['quantity'];
+            $product = wc_get_product( $item['product_id'] );
+            $data['image'] =  $product->get_image();
             $products[] = $data;
         }
 
         $vars = [
-            'customer_firstname' => $order->get_billing_first_name(),
+            'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
+            'order_subtotal' => $order->get_subtotal(),
+            'order_discount_total' => $order->get_discount_total(),
+            'order_total_tax' => $order->get_tax_totals(),
+            'order_shipping_total' => $order->get_shipping_total(),
+            'order_shipping_address' => $order->get_shipping_address_1(),
+            'order_billing_address' => $order->get_billing_address_1(),
             'order_total' => $order->get_formatted_order_total(),
+            'order_link' => $order->get_view_order_url(),
             'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
-            'products' => $order->get_items(),
+            'products' => $products,
         ];
+
+        $data = $this->getFormattedEmailData($order, $vars, $templateId);
+        $response = MailjetApi::sendEmail($data);
 
 
         echo '<pre>';
-        var_dump($products);
+        var_dump($response);
         echo '</pre>';
         exit;
+        if ($response === false){
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . json_encode($data));
+            return false;
+        }
 
-
-        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
-
-        $data = $this->getFormattedEmailData($order, $vars, $templateId);
-
+        return true;
 
     }
 
     public function send_abandoned_cart($orderId)
     {
         $order = wc_get_order( $orderId );
-
-        if (!$order || empty($order)){
+        $templateId = get_option('mailjet_woocommerce_abandoned_cart');
+        if (!$order || empty($order) || !$templateId || empty($templateId)){
             return false;
         }
 
         $vars = [
-            'customer_firstname' => $order->get_billing_first_name(),
+            'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
             'order_total' => $order->get_formatted_order_total(),
             'store_email' => '',
@@ -414,32 +431,47 @@ class WooCommerceSettings
             'store_address' => get_option('woocommerce_store_address'),
         ];
 
-        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
-
         $data = $this->getFormattedEmailData($order, $vars, $templateId);
+        $response = MailjetApi::sendEmail($data);
+        if ($response === false){
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . json_encode($data));
+            return false;
+        }
+
+        return true;
     }
 
     public function send_order_status_completed($orderId)
     {
         $order = wc_get_order( $orderId );
-
-        if (!$order || empty($order)){
+        $templateId = get_option('mailjet_woocommerce_shipping_confirmation');
+        if (!$order || empty($order) || !$templateId || empty($templateId)){
             return false;
         }
 
         $vars = [
-            'customer_firstname' => $order->get_billing_first_name(),
+            'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
             'order_shipping_address' => $order->get_shipping_address_1(),
             'tracking_number' => $order->get_shipping_state(),
+            'order_total' => $order->get_total(),
+            'order_link' => $order->get_view_order_url(),
+            'tracking_url' => $order->get_shipping_state(),
+            'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
         ];
 
-        $templateId = get_option('mailjet_woocommerce_refund_confirmation');
-
         $data = $this->getFormattedEmailData($order, $vars, $templateId);
+        $response = MailjetApi::sendEmail($data);
+
+        if ($response === false){
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . json_encode($data));
+            return false;
+        }
+
+        return true;
     }
 
     public function orders_automation_settings_post()
@@ -491,16 +523,18 @@ class WooCommerceSettings
         $recipients = [
             'Email' => $order->get_billing_email(),
             'Name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
-            'Vars' => json_encode($vars)
+            'Vars' => $vars
         ];
 
         $data = [];
         $data['FromEmail'] = get_option('mailjet_from_email');
         $data['FromName'] = get_option('mailjet_from_name');
-        $data['Recipients'] = json_encode([$recipients]);
+        $data['Recipients'][] = $recipients;
         $data['Mj-TemplateID'] = $templateId;
         $data['Mj-TemplateLanguage'] = true;
-
+        $data['Mj-TemplateErrorReporting'] = 'yangelov@mailjet.com';
+        $data['Mj-TemplateErrorDeliver'] = true;
+        $data['body'] = $data;
         return $data;
     }
 }

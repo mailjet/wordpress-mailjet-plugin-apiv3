@@ -5,6 +5,7 @@ namespace MailjetPlugin\Includes;
 //use Exception;
 use Mailjet\Client;
 use Mailjet\Resources;
+use GuzzleHttp\Exception\ConnectException;
 
 /**
  * Define the internationalization functionality.
@@ -69,7 +70,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -97,7 +98,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$Contactslist, ['body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         return $response;
@@ -120,7 +121,7 @@ class MailjetApi
         );
         try{
             $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -150,7 +151,7 @@ class MailjetApi
 		);
 		try{
 			$response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
-		} catch (\GuzzleHttp\Exception\ConnectException $e) {
+		} catch (ConnectException $e) {
 			return false;
 		}
 		if ($response->success()) {
@@ -174,7 +175,7 @@ class MailjetApi
 
         try {
             $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
@@ -225,7 +226,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$Contactmetadata, ['body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -250,7 +251,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Sender, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -276,7 +277,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Contactmetadata, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -310,7 +311,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -340,7 +341,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagecontact, ['id' => $contactListId, 'body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -374,7 +375,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
@@ -398,7 +399,7 @@ class MailjetApi
         }
         try {
             $response = $mjApiClient->get(Resources::$Myprofile, []);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         $name = "";
@@ -420,7 +421,7 @@ class MailjetApi
         }
         try {
             $response = $mjApiClient->get(Resources::$Template, ['filters' => ['OwnerType' => 'user']]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         $templateNames = [];
@@ -447,7 +448,7 @@ class MailjetApi
         }
         try {
             $response = $mjApiClient->get(Resources::$TemplateDetailcontent, ['id' => $id]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
@@ -468,7 +469,7 @@ class MailjetApi
 
         try {
             $response = $mjApiClient->post(Resources::$Template, $arguments);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         $data = $response->getData();
@@ -493,7 +494,7 @@ class MailjetApi
         }
         try {
             $response = $mjApiClient->post(Resources::$TemplateDetailcontent, $content);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
@@ -513,11 +514,11 @@ class MailjetApi
         }
         try {
             $response = $mjApiClient->post(Resources::$Email, $content);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
-        if ($response->success() && $response->getCount() > 0) {
+        if ($response->success()) {
             return $response->getData();
         }
 

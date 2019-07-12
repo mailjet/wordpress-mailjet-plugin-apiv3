@@ -114,7 +114,6 @@ class Client
 
         $isBasicAuth = $this->isBasicAuthentication($this->apikey, $this->apisecret);
         $auth = $isBasicAuth ? [$this->apikey, $this->apisecret] : [$this->apitoken];
-
         $request = new Request(
                 $auth, $method, $url, $args['filters'], $args['body'], $contentType, $this->requestOptions
         );
