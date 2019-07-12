@@ -160,6 +160,7 @@ class Client
         if (!empty($options)) {
             $this->setOptions($options, $resource);
         }
+
         $result = $this->_call('POST', $resource[0], $resource[1], $args);
 
         if (!empty($this->changed)) {
