@@ -171,10 +171,9 @@ class MailjetSettings
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
         $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
-        $mailjet_woo_list = get_option('mailjet_woo_list');
-        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync) && !empty($mailjet_woo_list)) {
-            $wooCommerceSettings = new WooCommerceSettings();
 
+        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync)) {
+            $wooCommerceSettings = new WooCommerceSettings();
             // Add the checkbox
             add_action('woocommerce_after_checkout_billing_form', array($wooCommerceSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
             // Process the checkbox on submit
@@ -285,8 +284,7 @@ class MailjetSettings
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
         $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
-        $mailjet_woo_list = get_option('mailjet_woo_list');
-        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync) && !empty($mailjet_woo_list)) {
+        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync)) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             $mj_sub_woo_token = isset($_GET['mj_sub_woo_token']) ? $_GET['mj_sub_woo_token'] : false;
             if (!empty($mj_sub_woo_token) &&

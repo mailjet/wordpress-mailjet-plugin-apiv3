@@ -18,28 +18,34 @@ use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
  */
 class WooCommerceSettings
 {
+    public function __construct()
+    {
+        $this->enqueueScripts();
+        add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
+    }
+
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
-		$chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
-		$chaeckoutText = get_option('mailjet_woo_checkout_box_text');
+        $chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
+        $chaeckoutText = get_option('mailjet_woo_checkout_box_text');
+        $contactList = $this->getWooContactList();
 
-		$contactList = $this->getWooContactList();
         // Display the checkbox only for NOT-logged in users or for logged-in but not subscribed to the Woo list
 //        if (get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')){
-        if ($contactList !== false){
 
+        if ($contactList !== false) {
             // Check if user is logged-in and already Subscribed to the contact list
-	        $contactAlreadySubscribedToList = false;
+            $contactAlreadySubscribedToList = false;
+
             if ($user->exists()) {
                 $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, $contactList);
             }
-
             if (!$contactAlreadySubscribedToList) {
                 if (!function_exists('woocommerce_form_field')) {
                     return;
                 }
-                $boxMsg = get_option('mailjet_woo_checkout_box_text')?: 'Subscribe to our newsletter';
+                $boxMsg = get_option('mailjet_woo_checkout_box_text') ?: 'Subscribe to our newsletter';
 
                 woocommerce_form_field('mailjet_woo_subscribe_ok', array(
                     'type' => 'checkbox',
@@ -62,13 +68,13 @@ class WooCommerceSettings
             die;
         }
 
-        if( isset($_POST['_my_field_name']) && ! empty($_POST['_my_field_name']) )
-            $order->update_meta_data( '_my_field_name', sanitize_text_field( $_POST['_my_field_name'] ) );
+        if (isset($_POST['_my_field_name']) && !empty($_POST['_my_field_name']))
+            $order->update_meta_data('_my_field_name', sanitize_text_field($_POST['_my_field_name']));
 
 
         $subscribe = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
         if ($subscribe) {
-            $order->update_meta_data( 'mailjet_woo_subscribe_ok', sanitize_text_field( $_POST['mailjet_woo_subscribe_ok'] ) );
+            $order->update_meta_data('mailjet_woo_subscribe_ok', sanitize_text_field($_POST['mailjet_woo_subscribe_ok']));
             $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
         }
     }
@@ -93,8 +99,6 @@ class WooCommerceSettings
         // Add the user to a contact list
         return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList($this->getWooContactList(), $user_email, $action, $contactproperties);
     }
-
-
 
 
     /**
@@ -147,8 +151,11 @@ class WooCommerceSettings
     public function woo_change_order_received_text($str, $order)
     {
         if (!empty($order)) {
-            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
+            $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true);
+            if ($subscribe == '1') {
                 $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
+            } elseif (get_option('mailjet_woo_banner_checkbox') === '1') {
+                $str = $this->addThankYouSubscription($order);
             }
         }
         return $str;
@@ -156,23 +163,56 @@ class WooCommerceSettings
 
     private function getWooContactList()
     {
-	    $wooActiv = get_option('activate_mailjet_woo_integration');
-	    if (!$wooActiv){
+        $wooActiv = get_option('activate_mailjet_woo_integration');
+        if (!$wooActiv) {
+            return false;
+        }
 
-		    return false;
-	    }
-	    $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
-	    $mainList = get_option('mailjet_sync_list');
-	    $wooList = get_option('mailjet_woo_list');
-	    if (!empty($wooList)){
+        $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
+        $mainList = get_option('mailjet_sync_list');
 
-	    	return $wooList;
-	    }elseif (!empty($mainList) && !empty($checkoutBox)){
+        if (!empty($mainList) && !empty($checkoutBox)) {
+            return $mainList;
+        }
 
-			return $mainList;
-	    }
-
-	    return false;
+        return false;
     }
 
+    private function addThankYouSubscription($order)
+    {
+        $text = get_option('mailjet_woo_banner_text');
+        $label = get_option('mailjet_woo_banner_label');
+        set_query_var('orderId', $order->get_id());
+        set_query_var('text', !empty($text) ? $text : 'Subscribe to our newsletter to get product updates.');
+        set_query_var('btnLabel', !empty($label) ? $label : 'Subscribe now!');
+
+        return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
+    }
+
+
+
+    public function enqueueScripts()
+    {
+        $cssPath = plugins_url('/src/front/css/mailjet-front.css', MAILJET_PLUGIN_DIR . 'src');
+        $scryptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
+        wp_register_style('mailjet-front', $cssPath);
+        wp_register_script('ajaxHandle', $scryptPath, array('jquery'), false, true);
+        $url = 'dada';
+        wp_localize_script('ajaxHandle', 'mailjet', ['url' => $url]);
+        wp_enqueue_style('mailjet-front');
+        wp_enqueue_script('ajaxHandle');
+    }
+
+    public function subscribeViaAjax()
+    {
+        if ('da') {
+            $response = [
+                'message' => 'Contact list resync has started. You can check the progress inside',
+                'ID' => 1
+            ];
+            wp_send_json_success($response);
+        } else {
+            wp_send_json_error();
+        }
+    }
 }

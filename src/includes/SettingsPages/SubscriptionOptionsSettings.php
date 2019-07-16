@@ -366,7 +366,7 @@ class SubscriptionOptionsSettings
 
     public function enqueueScripts()
     {
-        $path = plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src');
+        $path = plugins_url('/src/admin/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
 	    wp_register_script('ajaxHandle',  $path,  array('jquery'), false,true);
 	    wp_enqueue_script( 'ajaxHandle' );
     }

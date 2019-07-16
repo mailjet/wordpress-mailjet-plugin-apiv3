@@ -1267,6 +1267,7 @@ input:checked + .mj-slider:before {
 #banner_text {
     width: 100%;
 }
+
 .mj-grid {
     margin-right: 20px;
 }
@@ -1391,6 +1392,7 @@ input:checked + .mj-slider:before {
     line-height: 24px;
 }
 
-.mj-text-div{
+.mj-text-div {
     margin-left: 24px;
 }
+

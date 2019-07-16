@@ -38,8 +38,7 @@ class IntegrationsSettings
 	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
 	    if ( ! class_exists( 'WooCommerce' ) ) {
 		    delete_option( 'activate_mailjet_woo_integration' );
-		    delete_option( 'mailjet_woo_list' );
-		    delete_option( 'mailjet_woo_edata_sync' );
+		    delete_option( 'activate_mailjet_woo_sync' );
 		    delete_option( 'mailjet_woo_checkout_checkbox' );
 		    delete_option( 'mailjet_woo_checkout_box_text' );
 		    delete_option( 'mailjet_woo_banner_checkbox' );
@@ -48,7 +47,7 @@ class IntegrationsSettings
 		    $wooCommerceNotInstalled = true;
 	    }
 
-        $mailjetWooSyncActivated        = get_option( 'mailjet_woo_edata_sync' );
+        $mailjetWooSyncActivated        = get_option( 'activate_mailjet_woo_sync' );
         $mailjetWooIntegrationActivated = get_option( 'activate_mailjet_woo_integration' );
 
 
@@ -89,7 +88,7 @@ class IntegrationsSettings
                 <div id="woo_contact_list" class="mailjet_sync_woo_div">
                     <label ><?php _e( 'Ecommerce customer data', 'mailjet-for-wordpress' ); ?></label>
                     <label class="checkboxLabel">
-                        <input name="mailjet_woo_edata_sync" type="checkbox"
+                        <input name="activate_mailjet_woo_sync" type="checkbox"
                                value="1" <?php echo( $mailjetWooSyncActivated === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
                                autocomplete="off">
                         <span><?php _e( 'Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.', 'mailjet-for-wordpress' ); ?></span>
@@ -275,7 +274,7 @@ class IntegrationsSettings
 
             // Check if selected Contact list - only if the Sync checkbox is checked
             $activate_mailjet_woo_sync = get_option( 'activate_mailjet_woo_sync' );
-            $mailjet_woo_list          = get_option( 'mailjet_woo_list' );
+            $mailjet_woo_list          = get_option( 'mailjet_sync_list' );
             if ( ! empty( $activate_mailjet_woo_sync ) && ! intval( $mailjet_woo_list ) > 0 ) {
                 $executionError = true;
                 add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet-for-wordpress' ), 'error' );
