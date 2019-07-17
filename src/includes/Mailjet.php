@@ -4,13 +4,6 @@ namespace MailjetPlugin\Includes;
 
 use MailjetPlugin\Admin\MailjetAdmin;
 use MailjetPlugin\Front\MailjetPublic;
-use MailjetPlugin\Includes\Mailjeti18n;
-use MailjetPlugin\Includes\MailjetLoader;
-use MailjetPlugin\Includes\MailjetMail;
-use MailjetPlugin\Includes\MailjetMenu;
-use MailjetPlugin\Includes\MailjetSettings;
-//use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
-// use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
 /**
  * The core plugin class.

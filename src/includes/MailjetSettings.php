@@ -178,6 +178,8 @@ class MailjetSettings
             add_action('woocommerce_after_checkout_billing_form', array($wooCommerceSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
             // Process the checkbox on submit
             add_action('woocommerce_checkout_create_order', array($wooCommerceSettings, 'mailjet_subscribe_woo'), 10, 2);
+            add_action('wp_ajax_nopriv_mj_ajax_subscribe', array($wooCommerceSettings, 'subscribeViaAjax'));
+            add_action('wp_ajax_mj_ajax_subscribe', array($wooCommerceSettings, 'subscribeViaAjax'));
 
             // Add filter for changing "Thank you" text on order processed page
             add_filter('woocommerce_thankyou_order_received_text', array($wooCommerceSettings, 'woo_change_order_received_text'), 10, 2);

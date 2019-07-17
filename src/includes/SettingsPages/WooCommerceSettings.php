@@ -185,10 +185,8 @@ class WooCommerceSettings
         set_query_var('orderId', $order->get_id());
         set_query_var('text', !empty($text) ? $text : 'Subscribe to our newsletter to get product updates.');
         set_query_var('btnLabel', !empty($label) ? $label : 'Subscribe now!');
-
         return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
     }
-
 
 
     public function enqueueScripts()
@@ -197,22 +195,53 @@ class WooCommerceSettings
         $scryptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
         wp_register_style('mailjet-front', $cssPath);
         wp_register_script('ajaxHandle', $scryptPath, array('jquery'), false, true);
-        $url = 'dada';
-        wp_localize_script('ajaxHandle', 'mailjet', ['url' => $url]);
+        wp_localize_script('ajaxHandle', 'mailjet', ['url' => admin_url( 'admin-ajax.php' ), 'security' => wp_create_nonce()]);
         wp_enqueue_style('mailjet-front');
         wp_enqueue_script('ajaxHandle');
     }
 
     public function subscribeViaAjax()
     {
-        if ('da') {
-            $response = [
-                'message' => 'Contact list resync has started. You can check the progress inside',
-                'ID' => 1
-            ];
-            wp_send_json_success($response);
+        $post = $_POST;
+
+        if (isset($post['orderId'], $post['nonce']) && wp_verify_nonce($post['nonce'])) {
+            $order = wc_get_order($post['orderId']);
+            $message = 'You\'v subscribed successfully to our mail list.';
+            $success = true;
+
+            if (empty($order)){
+                $message = 'Something went wrong.';
+                $success = false;
+            }else{
+                $subscribe = $this->ajaxSubscription($order->get_billing_email(), $order->get_billing_first_name(), $order->get_billing_last_name());
+                wp_send_json_success($subscribe);
+            }
+
+            wp_send_json_success([
+                'message' => $message,
+                'success' => $success
+            ]);
         } else {
             wp_send_json_error();
         }
+    }
+
+    private function ajaxSubscription($email, $fName, $lName)
+    {
+       $listId = $this->getWooContactList();
+
+       if (!$listId){
+           return ['success' => false, 'message' => 'You can\'t be subscribed at this moment.'];
+       }
+
+       if (MailjetApi::checkContactSubscribedToList($email, $listId)){
+           return ['success' => true, 'message' => 'You are already subscribed.'];
+       }
+
+       if ($this->mailjet_subscribe_unsub_woo_to_list(1, $email, $fName, $lName)){
+           return ['success' => true, 'message' => 'You\'re successfully subscribed to our E-mail list.'];
+       }
+
+       return ['success' => false, 'message' => 'Something went wrong.'];
     }
 }
