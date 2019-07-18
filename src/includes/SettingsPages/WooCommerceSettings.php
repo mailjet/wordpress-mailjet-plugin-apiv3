@@ -148,7 +148,7 @@ class WooCommerceSettings
     {
         if (!empty($order)) {
             if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true )) {
-                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
+                $str .= '<p id="mj-woo-confirmation-msg"><b>' . __('We have sent the newsletter subscription confirmation link to you', 'mailjet-for-wordpress'). ' ' . $order->get_billing_email() . __('To confirm your subscription you have to click on the provided link.', 'mailjet-for-wordpress') . '</b></p>';
             }
         }
         return $str;
