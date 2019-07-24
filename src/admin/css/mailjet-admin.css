@@ -1264,9 +1264,6 @@ input:checked + .mj-slider:before {
     width: 100%;
 }
 
-#banner_text {
-    width: 100%;
-}
 .mj-grid {
     margin-right: 20px;
 }
@@ -1363,9 +1360,117 @@ input:checked + .mj-slider:before {
 }
 
 .mj-btnSecondary {
+    height: 36px;
+    min-width: 88px;
+    width: fit-content;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
     offset: none;
-    background-color: #F2F2F2;
-    width: 30%;
+    color: #555;
+    border: none;
+    background: #f7f7f7;
+    vertical-align: top;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.mj-btnSecondary:hover {
+    background: #e2e4e7;
+}
+
+.mj-notifications {
+    vertical-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.mj-order-notifications-labels {
+    display: inline-flex;
+    max-width: -moz-max-content;
+    max-width: max-content;
+    line-height: 24px;
+    font-weight: 500;
+    font-size: 2.3em;
+    margin-top: 3px !important;
+}
+
+.mj-inrow {
+    display: inline-block;
+    float: right;
+    margin-right: 5.75em;
+
+}
+
+.order-notification-field {
+    /*margin-left: 20px;*/
+}
+
+.mj-checkbox-label {
+    height: 24px;
+    width: fit-content;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    /*line-height: 24px;*/
+    white-space: nowrap;
+}
+
+.mj-notifications-from {
+    margin-left: 1.75em;
+    height: 20px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.mj-order-notificartion-popup {
+    height: 311px;
+    width: 600px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
+    position: absolute;
+    z-index: 9999;
+    margin: 10% 0 0 30%;
+
+}
+
+.mj-popup-header {
+    height: 60px;
+    color: #555555;
+    font-family: Roboto;
+    line-height: 32px;
+    text-align: center;
+}
+
+.mj-popup-header > h1 {
+    font-weight: 300;
+    color: #555555;
+    text-align: center;
+    display: inline-block;
+}
+
+#mj-close {
+    font-size: large;
+    float: right;
+    color: #888888;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-right: 24px;
+}
+
+.mj-popup-info {
+    height: 72px;
+    width: 552px;
+    border-radius: 3px;
+    background-color: #D6EBFB;
+
 }
 
 .mj-grid {
@@ -1382,6 +1487,12 @@ input:checked + .mj-slider:before {
     border: none;
 }
 
+.mj-popup-footer {
+    padding: 1em 8px 0 1em;
+    text-align: center;
+    margin-bottom: 0em;
+}
+
 .mailjet-label {
     height: 24px;
     width: 361px;
@@ -1391,6 +1502,72 @@ input:checked + .mj-slider:before {
     line-height: 24px;
 }
 
-.mj-text-div{
+.mj-text-div {
     margin-left: 24px;
+}
+
+.mj-popup-footer button {
+
+    float: right;
+    margin-right: 16px;
+}
+
+.mj-popup-message {
+    height: 40px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 1.5em;
+    margin-top: 1.5em;
+}
+
+.mj-popup-body {
+    align-content: center;
+    padding: 0 24px;
+}
+
+.mj-badge {
+    display: inline-flex;
+    height: 16px;
+    width: 96.1px;
+    border-radius: 12px;
+    background-color: #4DBC5C;
+    padding-left: 7px;
+    margin-left: 8px;
+
+}
+
+.mj-badge > p {
+    display: inline-flex;
+    height: 16px;
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-top: 0px;
+    margin-left: 5px;
+
+}
+
+.mj-linkBtn {
+    text-decoration: none;
+    padding-bottom: 0px;
+    height: 38px; !important;
+}
+
+.mj-hidden {
+    visibility: hidden;
+}
+
+.mailjet-options-page {
+    margin-right: 1em;
+}
+
+.edit-img {
+    margin-right: 0.5em;
+    display: inline-flex;
+    height: 1em;
+    width: 1em;
 }

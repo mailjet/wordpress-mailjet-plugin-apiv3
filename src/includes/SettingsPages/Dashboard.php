@@ -27,8 +27,7 @@ class Dashboard {
 	public function mailjet_dashboard_page_html() {
 
 		$iconDir           = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'admin/images/woo.svg';
-		$wooIntegrated = get_option( 'activate_mailjet_woo_integration' ) === 'on' ? 'mj-show' : 'hidden';
-
+		$wooCommerceExists = get_option( 'activate_mailjet_woo_integration' ) === '1' ? 'mj-show' : 'hidden';
 		if ( ! MailjetApi::isValidAPICredentials() ) {
 			MailjetSettings::redirectJs( admin_url( '/admin.php?page=mailjet_settings_page&from=plugins' ) );
 		}
@@ -50,7 +49,7 @@ class Dashboard {
                 <div id="mj-top_bar">
                     <section
                             id="mj-title"><?php _e( 'Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress' ); ?></section>
-                    <i onclick="location.href = 'admin.php?page=mailjet_allsetup_page'" style="height: 20px"
+                    <i onclick="location.href = 'admin.php?page=mailjet_allsetup_page'"
                        class="dashicons dashicons-admin-generic" id="mj-logo_top_bar"><span>Settings</span></i>
                 </div>
 
@@ -70,7 +69,7 @@ class Dashboard {
                                     id="nextBtnReverseDashboard2"
                                     onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'"><?php _e( 'Manage contacts', 'mailjet-for-wordpress' ) ?></button>
                         </div>
-                        <div class="block mj-box <?= $wooIntegrated ?>">
+                        <div class="block mj-box <?= $wooCommerceExists ?>">
                             <div>
                                 <h3 class="section-header"><?php _e( 'Order notification emails', 'mailjet-for-wordpress' ); ?></h3>
                                 <img alt="asd" class="mj-woo-logo-small" src="<?= $iconDir ?>"/>
@@ -78,14 +77,14 @@ class Dashboard {
                             <p class="blockText"><?php _e( 'Activate order notification emails to inform customers of any new purchase, shipping or refund.', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
                                     id="nextBtnReverseDashboard4"
-                                    onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
+                                    onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                     </div>
                     <div class="col mj-grid">
                         <div class="block mj-box">
                             <h3 class="section-header"><?php _e( 'Subscription form', 'mailjet-for-wordpress' ); ?></h3>
                             <p class="blockText"><?php _e( 'Customize a subscription form and add it to your Wordpress website', 'mailjet-for-wordpress' ); ?></p>
-                            <button name="nextBtnReverseDashboard" class="mj-btn mj-btnSecondary" id="nextBtnReverseDashboard3"
+                            <button name="nextBtnReverseDashboard" class="mj-btnSecondary" id="nextBtnReverseDashboard3"
                                     onclick="location.href = 'widgets.php'"><?= __( 'Add widget', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                         <div class="block mj-box">
@@ -95,7 +94,7 @@ class Dashboard {
                                     id="nextBtnReverseDashboard4"
                                     onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e( 'View statistics', 'mailjet-for-wordpress' ) ?></button>
                         </div>
-                        <div class="block mj-box <?= $wooIntegrated ?>">
+                        <div class="block mj-box <?= $wooCommerceExists ?>">
                             <div>
                                 <h3 class="section-header"><?php _e( 'Abandoned cart email', 'mailjet-for-wordpress' ); ?></h3>
                                 <img alt="asd" class="mj-woo-logo-small" src="<?= $iconDir ?>"/>
