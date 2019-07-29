@@ -59,7 +59,6 @@
                 $('#mailjet_from_email_extra').remove();
             }
         }
-        ;
         $('select[name="mailjet_from_email"]').change(function (e) {
             showExtraFromEmailInput($(this));
         });
@@ -264,15 +263,36 @@ function mjWooSubscription() {
      */
     const activateWooIntegrationBox = document.querySelector('#activate_mailjet_woo_integration');
     const wooActicateIntegrationForm = document.querySelector('#activate_mailjet_woo_form');
+    const wooActicateIntegrationCheckbox = document.querySelector('#activate_mailjet_woo_checkbox');
+    const wooActicateIntegrationSubbox= document.querySelector('#mailjet_woo_sub_letter');
+    const wooActicateIntegrationBannerbox = document.querySelector('#activate_mailjet_woo_bannerbox');
+    const wooActicateIntegrationBanner= document.querySelector('#mailjet_woo_sub_banner');
+
 
     if (activateWooIntegrationBox === null || activateWooIntegrationBox === undefined) {
         return false;
     }
     activateWooIntegrationBox.addEventListener("change", function () {
-        this.checked === true ? mjShow(wooActicateIntegrationForm) : mjHide(wooActicateIntegrationForm);
+        if (wooActicateIntegrationForm.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationForm);
+        } else {
+            mjHide(wooActicateIntegrationForm);
+        }
     });
-
-
+    wooActicateIntegrationCheckbox.addEventListener("change", function () {
+        if (wooActicateIntegrationSubbox.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationSubbox);
+        } else {
+            mjHide(wooActicateIntegrationSubbox);
+        }
+    });
+    wooActicateIntegrationBannerbox.addEventListener("change", function () {
+        if (wooActicateIntegrationBanner.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationBanner);
+        } else {
+            mjHide(wooActicateIntegrationBanner);
+        }
+    });
     /**
      * Show / Hide WooCommerce Sync div
      */
@@ -282,6 +302,13 @@ function mjWooSubscription() {
     if (wooContactListBox === null || wooContactListBox === undefined) {
         return false;
     }
+    wooContactListBox.addEventListener("click", function () {
+        if (wooContactListBox.classList.contains('mj-hide')){
+            mjShow(wooContactList);
+        } else {
+            mjHide(wooContactList);
+        }
+    });
     wooContactListBox.addEventListener("change", function () {
         this.checked === true ? mjShow(wooContactList) : mjHide(wooContactList);
     });
@@ -348,8 +375,8 @@ function mjAdmin() {
     mjInitShowHide();
     mjSelect();
     if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page')
-            || document.querySelector('body.admin_page_mailjet_subscription_options_page')
-            || document.querySelector('body.admin_page_mailjet_integrations_page')) {
+        || document.querySelector('body.admin_page_mailjet_subscription_options_page')
+        || document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjSubscription();
     }
     if (document.querySelector('body.admin_page_mailjet_integrations_page')) {
