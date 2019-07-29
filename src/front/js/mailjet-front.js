@@ -4,7 +4,6 @@ function subscribeMe(element) {
         let data = {
             'action': 'mj_ajax_subscribe',
             'orderId': id,
-            'nonce': mailjet.security
         };
         ajax("POST", data, subscriptionHandler);
     }
