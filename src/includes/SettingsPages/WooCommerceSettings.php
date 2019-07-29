@@ -3,10 +3,8 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\MailjetLoader;
 use MailjetPlugin\Includes\MailjetLogger;
-use MailjetPlugin\Includes\MailjetMail;
-use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
+
 
 /**
  * Register all actions and filters for the plugin.
@@ -22,15 +20,19 @@ use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 class WooCommerceSettings
 {
 
-    private $loader;
+    public function __construct()
+    {
+        $this->enqueueScripts();
+        add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
+    }
 
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
         $chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
         $chaeckoutText = get_option('mailjet_woo_checkout_box_text');
-
         $contactList = $this->getWooContactList();
+
         // Display the checkbox only for NOT-logged in users or for logged-in but not subscribed to the Woo list
 //        if (get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')){
         if ($contactList !== false) {
@@ -40,7 +42,6 @@ class WooCommerceSettings
             if ($user->exists()) {
                 $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, $contactList);
             }
-
             if (!$contactAlreadySubscribedToList) {
                 if (!function_exists('woocommerce_form_field')) {
                     return;
@@ -147,8 +148,11 @@ class WooCommerceSettings
     public function woo_change_order_received_text($str, $order)
     {
         if (!empty($order)) {
-            if ('1' == get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true)) {
+            $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true);
+            if ($subscribe == '1') {
                 $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
+            } elseif (get_option('mailjet_woo_banner_checkbox') === '1') {
+                $str = $this->addThankYouSubscription($order);
             }
         }
         return $str;
@@ -588,4 +592,70 @@ class WooCommerceSettings
         return $templateDetail;
     }
 
+    private function addThankYouSubscription($order)
+    {
+        $text = get_option('mailjet_woo_banner_text');
+        $label = get_option('mailjet_woo_banner_label');
+        set_query_var('orderId', $order->get_id());
+        set_query_var('text', !empty($text) ? $text : 'Subscribe to our newsletter to get product updates.');
+        set_query_var('btnLabel', !empty($label) ? $label : 'Subscribe now!');
+        return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
+    }
+
+
+    public function enqueueScripts()
+    {
+        $cssPath = plugins_url('/src/front/css/mailjet-front.css', MAILJET_PLUGIN_DIR . 'src');
+        $scryptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
+        wp_register_style('mailjet-front', $cssPath);
+        wp_register_script('ajaxHandle', $scryptPath, array('jquery'), false, true);
+        wp_localize_script('ajaxHandle', 'mailjet', ['url' => admin_url( 'admin-ajax.php' )]);
+        wp_enqueue_style('mailjet-front');
+        wp_enqueue_script('ajaxHandle');
+    }
+
+    public function subscribeViaAjax()
+    {
+        $post = $_POST;
+
+        if (isset($post['orderId'])) {
+            $order = wc_get_order($post['orderId']);
+            $message = 'You\'v subscribed successfully to our mail list.';
+            $success = true;
+
+            if (empty($order)){
+                $message = 'Something went wrong.';
+                $success = false;
+            }else{
+                $subscribe = $this->ajaxSubscription($order->get_billing_email(), $order->get_billing_first_name(), $order->get_billing_last_name());
+                wp_send_json_success($subscribe);
+            }
+
+            wp_send_json_success([
+                'message' => $message,
+                'success' => $success
+            ]);
+        } else {
+            wp_send_json_error();
+        }
+    }
+
+    private function ajaxSubscription($email, $fName, $lName)
+    {
+       $listId = $this->getWooContactList();
+
+       if (!$listId){
+           return ['success' => false, 'message' => 'You can\'t be subscribed at this moment.'];
+       }
+
+       if (MailjetApi::checkContactSubscribedToList($email, $listId)){
+           return ['success' => true, 'message' => 'You are already subscribed.'];
+       }
+
+       if ($this->mailjet_subscribe_unsub_woo_to_list(1, $email, $fName, $lName)){
+           return ['success' => true, 'message' => 'You\'re successfully subscribed to our E-mail list.'];
+       }
+
+       return ['success' => false, 'message' => 'Something went wrong.'];
+    }
 }

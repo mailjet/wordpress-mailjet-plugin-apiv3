@@ -1,0 +1,31 @@
+.mj-front-container {
+    height: 46px;
+    width: 100%;
+    background-color: #F8F8F8;
+    padding: 8px 21px;
+
+}
+
+.mj-front-container > span {
+    height: 20px;
+    width: 274px;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.mj-subscribe-btn {
+    height: 30px;
+    width: fit-content;
+    display: inline-flex;
+    border: 1px solid #555555;
+    float: right;
+    color: #555555;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    vertical-align: center;
+    padding-top: 5px;
+}
