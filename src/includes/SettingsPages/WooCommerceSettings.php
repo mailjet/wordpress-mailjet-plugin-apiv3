@@ -655,8 +655,50 @@ class WooCommerceSettings
 
        return ['success' => false, 'message' => 'Something went wrong.'];
     }
-    private function edataSync($order)
+    public function customer_edata_sync($orderId)
     {
+        $properties = [
+            'woo_total_orders_count' => 'int',
+            'woo_total_spent' => 'float',
+            'woo_last_order_date' => 'datetime',
+            'woo_account_creation_date' => 'datetime'
+        ];
+
+        $order = wc_get_order($orderId);
+        $email = $order->get_billing_email();
+        $email = 'yangelov+777@mailjet.com';
+        $listId = get_option('mailjet_sync_list');
+
+        if (empty($email) || empty($listId) || !MailjetApi::checkContactSubscribedToList($email, $listId)){
+            return false;
+        }
+
+        $contact = MailjetApi::getContactDataByEmail($email);
+
+        $updatedProperties = [];
+
+        foreach ($contact[0]['Data'] as $clientProp){
+            if (key_exists($clientProp['Name'],$properties)){
+                $updatedProperties[$clientProp['Name']] = $clientProp['Value'];
+                unset($properties[$clientProp['Name']]);
+            }
+        }
+
+        if (!empty($properties)){
+          foreach ($properties as $val){
+              echo '<pre>';
+              var_dump( MailjetApi::updateContactData($email, $val, true));
+              echo '</pre>';
+              exit;
+              MailjetApi::updateContactData($email, $val, true);
+          }
+        }
+
+
+        echo '<pre>';
+        var_dump($contact);
+        echo '</pre>';
+        exit;
 
     }
 }

@@ -358,7 +358,7 @@ class MailjetApi
      * @param $listId
      * @return bool
      */
-    public static function checkContactSubscribedToList($email, $listId)
+    public static function checkContactSubscribedToList($email, $listId, $getContactId = false)
     {
         $exists = false;
         $existsAndSubscribed = false;
@@ -385,9 +385,45 @@ class MailjetApi
             if (isset($data[0]['IsUnsubscribed']) && false == $data[0]['IsUnsubscribed']) {
                 $existsAndSubscribed = true;
             }
+            if ($getContactId && $exists && $existsAndSubscribed){
+                return $data[0]['ContactID'];
+            }
         }
 
         return $exists && $existsAndSubscribed;
+    }
+
+    public static function getContactDataByEmail($contactEmail)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $response = $mjApiClient->get(['contactdata', $contactEmail], []);
+
+        if ($response->success() && $response->getCount() > 0) {
+
+            return $response->getData();
+        }
+
+        return false;
+    }
+
+    public static function updateContactData($contactEmail, $data, $create = false)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        if ($create){
+            $response = $mjApiClient->post(['contactdata', $contactEmail], $data);
+        }else{
+            $response = $mjApiClient->put(['contactdata', $contactEmail], $data);
+        }
+        return $response;
     }
 
     public static function getProfileName()
