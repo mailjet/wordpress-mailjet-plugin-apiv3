@@ -28,18 +28,19 @@ class IntegrationsSettings
 
     private function wooIntegration( $mailjetContactLists )
     {
-        $wooCommerceNotInstalled        = false;
-        // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
-        if ( ! class_exists( 'WooCommerce' ) ) {
-            delete_option( 'activate_mailjet_woo_integration' );
-            delete_option( 'mailjet_woo_edata_sync' );
-            delete_option( 'mailjet_woo_checkout_checkbox' );
-            delete_option( 'mailjet_woo_checkout_box_text' );
-            delete_option( 'mailjet_woo_banner_checkbox' );
-            delete_option( 'mailjet_woo_banner_text' );
-            delete_option( 'mailjet_woo_banner_label' );
-            $wooCommerceNotInstalled = true;
-        }
+	    $wooCommerceNotInstalled        = false;
+	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
+	    if ( ! class_exists( 'WooCommerce' ) ) {
+		    delete_option( 'activate_mailjet_woo_integration' );
+		    delete_option( 'activate_mailjet_woo_sync' );
+        delete_option( 'mailjet_woo_edata_sync' );
+		    delete_option( 'mailjet_woo_checkout_checkbox' );
+		    delete_option( 'mailjet_woo_checkout_box_text' );
+		    delete_option( 'mailjet_woo_banner_checkbox' );
+		    delete_option( 'mailjet_woo_banner_text' );
+		    delete_option( 'mailjet_woo_banner_label' );
+		    $wooCommerceNotInstalled = true;
+	    }
 
         $mailjetWooSyncActivated        = get_option( 'mailjet_woo_edata_sync' );
         $mailjetWooIntegrationActivated = get_option( 'activate_mailjet_woo_integration' );
@@ -47,7 +48,7 @@ class IntegrationsSettings
 
         $checkoutCheckbox = get_option( 'mailjet_woo_checkout_checkbox' );
         if ($checkoutCheckbox !== '1'){
-            delete_option( 'mailjet_woo_checkout_box_text' );
+	        delete_option( 'mailjet_woo_checkout_box_text' );
         }
         $checkoutCheckboxText = get_option( 'mailjet_woo_checkout_box_text' );
 
@@ -229,7 +230,6 @@ class IntegrationsSettings
      */
     public function mailjet_integrations_page_html()
     {
-
         // check user capabilities
         if ( ! current_user_can( 'read' ) ) {
             MailjetLogger::error( '[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]' );
@@ -269,7 +269,7 @@ class IntegrationsSettings
 
             // Check if selected Contact list - only if the Sync checkbox is checked
             $activate_mailjet_woo_sync = get_option( 'activate_mailjet_woo_sync' );
-            $mailjet_woo_list          = get_option( 'mailjet_woo_list' );
+            $mailjet_woo_list          = get_option( 'mailjet_sync_list' );
             if ( ! empty( $activate_mailjet_woo_sync ) && ! intval( $mailjet_woo_list ) > 0 ) {
                 $executionError = true;
                 add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet-for-wordpress' ), 'error' );
@@ -307,9 +307,7 @@ class IntegrationsSettings
                 </div>
 
                 <h1 class="page_top_title"><?php _e( 'Settings', 'mailjet-for-wordpress' ) ?></h1>
-
                 <div class="mjSettings">
-
                     <div class="left">
                         <?php
                         MailjetAdminDisplay::getSettingsLeftMenu();
@@ -331,7 +329,7 @@ class IntegrationsSettings
                             <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="POST">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
-                                //                                settings_fields( 'mailjet_integrations_page' );
+                                settings_fields( 'mailjet_integrations_page' );
                                 // output setting sections and their fields
                                 // (sections are registered for "mailjet", each field is registered to a specific section)
                                 do_settings_sections( 'mailjet_integrations_page' );
@@ -354,7 +352,6 @@ class IntegrationsSettings
         </div>
 
         <?php
-
     }
 
     public function integrations_post_handler()

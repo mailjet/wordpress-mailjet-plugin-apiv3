@@ -1264,6 +1264,10 @@ input:checked + .mj-slider:before {
     width: 100%;
 }
 
+#banner_text {
+    width: 100%;
+}
+
 .mj-grid {
     margin-right: 20px;
 }
