@@ -60,8 +60,8 @@ define('MAILJET_VERSION', '5.1.1');
  * Mailjet Plugid dir.
  */
 define('MAILJET_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
-define('MAILJET_ADMIN_TAMPLATE_DIR', plugin_dir_path( __FILE__ ) . '/src/templates/admin');
-define('MAILJET_FRONT_TEMPLATE_DIR', plugin_dir_path( __FILE__ ). '/src/templates/front');
+define('MAILJET_ADMIN_TAMPLATE_DIR', plugin_dir_path( __FILE__ ) . 'src/templates/admin');
+define('MAILJET_FRONT_TEMPLATE_DIR', plugin_dir_path( __FILE__ ). 'src/templates/front');
 
 
 // Call the update to V5 logic

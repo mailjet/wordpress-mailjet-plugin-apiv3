@@ -13,7 +13,8 @@ use MailjetPlugin\Includes\SettingsPages\InitialSettings;
 use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
-use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\SettingsPages\OrderNotificationsSettings;
+
 
 /**
  * Register all actions and filters for the plugin.
@@ -92,8 +93,14 @@ class MailjetMenu
                     array(new Dashboard(), 'mailjet_dashboard_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Dashboard sub-menu added ]');
 
+				// Order Notification page
+	            add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'), null, 'read', 'mailjet_order_notifications_page',
+		            array(new OrderNotificationsSettings(), 'mailjet_order_notifications_settings_page_html'));
+	            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Order Notifications sub-menu added ]');
 
-                // Settings pages
+
+
+	            // Settings pages
                 add_submenu_page(null, __('Connect your Mailjet account', 'mailjet-for-wordpress'), null, 'read', 'mailjet_connect_account_page',
                     array(new ConnectAccountSettings(), 'mailjet_connect_account_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Connect your Mailjet account\' sub-menu added ]');
