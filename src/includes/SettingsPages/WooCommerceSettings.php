@@ -20,6 +20,7 @@ use MailjetPlugin\Includes\MailjetLogger;
  */
 class WooCommerceSettings
 {
+    private  $debuggerEmail = '';
 
     public function __construct()
     {
@@ -531,7 +532,7 @@ class WooCommerceSettings
         $data['Recipients'][] = $recipients;
         $data['Mj-TemplateID'] = $templateId;
         $data['Mj-TemplateLanguage'] = true;
-        $data['Mj-TemplateErrorReporting'] = get_option('mailjet_from_email');
+        $data['Mj-TemplateErrorReporting'] = $this->debuggerEmail;
         $data['Mj-TemplateErrorDeliver'] = true;
         $data['body'] = $data;
         return $data;
