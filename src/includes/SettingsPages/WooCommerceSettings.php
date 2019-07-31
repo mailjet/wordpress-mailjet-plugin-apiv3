@@ -531,7 +531,7 @@ class WooCommerceSettings
         $data['Recipients'][] = $recipients;
         $data['Mj-TemplateID'] = $templateId;
         $data['Mj-TemplateLanguage'] = true;
-        $data['Mj-TemplateErrorReporting'] = 'yangelov@mailjet.com';
+        $data['Mj-TemplateErrorReporting'] = get_option('mailjet_from_email');
         $data['Mj-TemplateErrorDeliver'] = true;
         $data['body'] = $data;
         return $data;
@@ -666,7 +666,6 @@ class WooCommerceSettings
 
         $order = wc_get_order($orderId);
         $email = $order->get_billing_email();
-        $email = 'yangelov+777@mailjet.com';
         $listId = get_option('mailjet_sync_list');
 
         if (empty($email) || empty($listId) || !MailjetApi::checkContactSubscribedToList($email, $listId)){
@@ -685,20 +684,20 @@ class WooCommerceSettings
         }
 
         if (!empty($properties)){
-          foreach ($properties as $val){
-              echo '<pre>';
-              var_dump( MailjetApi::updateContactData($email, $val, true));
-              echo '</pre>';
-              exit;
+          foreach ($properties as $key => $val){
+//              echo '<pre>';
+//              var_dump( MailjetApi::updateContactData($email, ['ContactID' => $contact[0]['ContactID'] , 'Data' => (object)['Datatype' => $val, 'Name' => $key]]));
+//              echo '</pre>';
+//              exit;
               MailjetApi::updateContactData($email, $val, true);
           }
         }
 
 
-        echo '<pre>';
-        var_dump($contact);
-        echo '</pre>';
-        exit;
+//        echo '<pre>';
+//        var_dump($contact);
+//        echo '</pre>';
+//        exit;
 
     }
 }
