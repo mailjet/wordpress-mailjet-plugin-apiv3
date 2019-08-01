@@ -1575,3 +1575,37 @@ input:checked + .mj-slider:before {
     height: 1em;
     width: 1em;
 }
+
+.mj-toggleTextBtn {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: #19BC9C;
+    background: transparent;
+    outline: 0;
+    cursor: pointer;
+}
+
+.mj-toggleTextBtn:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+    transform-origin: center;
+    vertical-align: 2px;
+    transition: transform .075s ease-in;
+}
+
+.mj-toggleTextBtn.mj-active:before {
+    transform: rotate(-45deg) translateY(1px);
+    transition: transform .25s ease-in;
+}
+
+.mj-text-collapsible {
+    overflow: hidden;
+}

@@ -73,3 +73,6 @@ delete_option('activate_mailjet_woo_sync');
 delete_option('mailjet_woo_list');
 
 delete_option('widget_wp_mailjet_subscribe_widget');
+
+delete_option('mailjet_woo_abandoned_cart_activate');
+delete_option('mailjet_woo_abandoned_cart_sending_time');

@@ -317,6 +317,10 @@ class WooCommerceSettings
                     }
                 }
             }
+
+            // Abandoned cart default data
+            add_option('mailjet_woo_abandoned_cart_activate');
+            add_option('mailjet_woo_abandoned_cart_sending_time', 1200); // 20 * 60 = 1200s
         }
 
         $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
@@ -515,6 +519,32 @@ class WooCommerceSettings
 
         return $result;
 
+    }
+
+    public function abandoned_cart_settings_post()
+    {
+        $data = $_POST;
+
+        if (!wp_verify_nonce($data['custom_nonce'],'mailjet_order_notifications_settings_page_html')){
+            update_option('mailjet_post_update_message', ['success' => false, 'message' => 'Invalid credentials!']);
+            wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
+        }
+
+        if (isset($_POST['activate_ac'])) {
+            update_option('mailjet_woo_abandoned_cart_activate', $_POST['activate_ac']);
+        }
+        if (isset($_POST['abandonedCartTimeScale']) && isset($_POST['abandonedCartSendingTime']) && is_numeric($_POST['abandonedCartSendingTime'])) {
+            if ($_POST['abandonedCartTimeScale'] === 'HOURS') {
+                $sendingTimeInSeconds = (int)$_POST['abandonedCartSendingTime'] * 3600; // 1h == 3600s
+            }
+            else {
+                $sendingTimeInSeconds = (int)$_POST['abandonedCartSendingTime'] * 60;
+            }
+            update_option('mailjet_woo_abandoned_cart_sending_time', $sendingTimeInSeconds);
+        }
+
+        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Abandoned cart settings updated!']);
+        wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
     }
 
     private function getFormattedEmailData($order, $vars, $templateId)
