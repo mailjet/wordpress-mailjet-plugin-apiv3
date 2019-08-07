@@ -6,9 +6,9 @@ function ajaxResync() {
     ajax("POST", data, function (response) {
         msgDiv.html('');
         if (response.success){
-            msgDiv.html(`<span>${response.data.message}&nbsp<a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
+            msgDiv.html(`<span>${response.data.message}&nbsp<a href="${response.data.url}">Mailjet contact list page</a></span>`);
         } else {
-            msgDiv.html(`<span>Error has occurred! Please try again later. <a href="#" onclick="loadLists()">Mailjet contact list page</a></span>`);
+            msgDiv.html(`<span>Error has occurred! Please try again later. <a href="#" onclick="ajaxResync()">Resync contact list</a></span>`);
         }
     });
 
@@ -35,6 +35,11 @@ function loadLists() {
                    select.append(`<option value="${value.ID}" ${checked}>${value.Name} (${value.SubscriberCount})</option>`)
                };
 
+            });
+
+            select.on('change',function ()   {
+                let optionValue = jQuery('#'+jQuery(this).attr('id') + " option:selected").text();
+                selectDiv.attr('data-value', optionValue);
             });
             optionsDiv.children().remove();
             selectDiv.append(select);
