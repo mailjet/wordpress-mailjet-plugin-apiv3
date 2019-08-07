@@ -317,6 +317,10 @@ class WooCommerceSettings
                     }
                 }
             }
+
+            // Abandoned cart default data
+            add_option('mailjet_woo_abandoned_cart_activate');
+            add_option('mailjet_woo_abandoned_cart_sending_time', 1200); // 20 * 60 = 1200s
         }
 
         $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
@@ -517,6 +521,34 @@ class WooCommerceSettings
 
     }
 
+    public function abandoned_cart_settings_post()
+    {
+        $data = $_POST;
+
+        if (!wp_verify_nonce($data['custom_nonce'],'mailjet_order_notifications_settings_page_html')){
+            update_option('mailjet_post_update_message', ['success' => false, 'message' => 'Invalid credentials!']);
+            wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
+        }
+
+        $wasActivated = false;
+        if (isset($_POST['activate_ac'])) {
+            update_option('mailjet_woo_abandoned_cart_activate', $_POST['activate_ac']);
+            $wasActivated = $_POST['activate_ac'] === '1';
+        }
+        if (isset($_POST['abandonedCartTimeScale']) && isset($_POST['abandonedCartSendingTime']) && is_numeric($_POST['abandonedCartSendingTime'])) {
+            if ($_POST['abandonedCartTimeScale'] === 'HOURS') {
+                $sendingTimeInSeconds = (int)$_POST['abandonedCartSendingTime'] * 3600; // 1h == 3600s
+            }
+            else {
+                $sendingTimeInSeconds = (int)$_POST['abandonedCartSendingTime'] * 60;
+            }
+            update_option('mailjet_woo_abandoned_cart_sending_time', $sendingTimeInSeconds);
+        }
+
+        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Abandoned cart settings updated!', 'mjACWasActivated' => $wasActivated]);
+        wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
+    }
+
     private function getFormattedEmailData($order, $vars, $templateId)
     {
         $recipients = [
@@ -541,10 +573,12 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCartArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCart.html');
+        $senderName = option('mailjet_from_name');
+        $senderEmail = option('mailjet_from_email');
         $templateDetail['Headers']= [
             'Subject' => 'There\'s something in your cart',
-            'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}} <{{var:store_email:""}}>',
+            'SenderName' => $senderName,
+            'From' => $senderName . ' <' . $senderEmail . '>'
         ];
 
         return $templateDetail;

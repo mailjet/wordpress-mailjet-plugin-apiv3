@@ -1445,6 +1445,20 @@ input:checked + .mj-slider:before {
 
 }
 
+.mj-popup {
+    height: auto;
+    width: 600px;
+    max-height: 80%;
+    max-width: 80%;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
+    position: absolute;
+    z-index: 9999;
+    margin: 10% 0 0 30%;
+
+}
+
 .mj-popup-header {
     height: 60px;
     color: #555555;
@@ -1514,6 +1528,7 @@ input:checked + .mj-slider:before {
 
     float: right;
     margin-right: 16px;
+    margin-bottom: 16px;
 }
 
 .mj-popup-message {
@@ -1574,4 +1589,116 @@ input:checked + .mj-slider:before {
     display: inline-flex;
     height: 1em;
     width: 1em;
+}
+
+.mj-toggleTextBtn {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: #19BC9C;
+    background: transparent;
+    outline: 0;
+    cursor: pointer;
+}
+
+.mj-toggleTextBtn:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+    transform-origin: center;
+    vertical-align: 2px;
+    transition: transform .075s ease-in;
+}
+
+.mj-toggleTextBtn.mj-active:before {
+    transform: rotate(-45deg) translateY(1px);
+    transition: transform .25s ease-in;
+}
+
+.mj-text-collapsible {
+    overflow: hidden;
+}
+
+.mj-mask-popup {
+    display: block;
+    background-color: rgba(45, 47, 55, 0.6);
+    bottom: 0px;
+    left: 0px;
+    pointer-events: auto;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    z-index: 1999;
+}
+
+.mj-time-setting {
+    display: flex;
+}
+
+.mj-time-setting p {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.mj-pluginPage input[type="number"] {
+     /*width: 100%;*/
+     max-width: 98%;
+     height: 36px;
+     padding-left: 16px;
+     padding-right: 16px;
+     border: 1px solid #888;
+     border-radius: 3px;
+     font-family: Roboto;
+     font-size: 14px;
+     color: #555;
+     background-color: #fff;
+     box-shadow: none;
+ }
+
+.mj-pluginPage input[type="number"]:hover {
+    border-color: #555;
+}
+
+.mj-pluginPage input[type="number"]:focus {
+    border-color: #19BC9C;
+}
+
+.mj-pluginPage input[type="number"]::-webkit-outer-spin-button,
+.mj-pluginPage input[type="number"]::-webkit-inner-spin-button {
+    opacity: 1;
+    width: 1em;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.mj-pluginPage select {
+    /*width: 100%;*/
+    max-width: 98%;
+    height: 36px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border: 1px solid #888;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    box-shadow: none;
+}
+
+.mj-pluginPage select:hover {
+    border-color: #555;
+}
+
+.mj-pluginPage select:focus {
+    border-color: #19BC9C;
 }

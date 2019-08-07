@@ -4,6 +4,7 @@ namespace MailjetPlugin\Includes;
 
 use MailjetIframe\MailjetIframe;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetPlugin\Includes\SettingsPages\AbandonedCartSettings;
 use MailjetPlugin\Includes\SettingsPages\AllSetup;
 use MailjetPlugin\Includes\SettingsPages\ConnectAccountSettings;
 use MailjetPlugin\Includes\SettingsPages\Dashboard;
@@ -97,6 +98,11 @@ class MailjetMenu
 	            add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'), null, 'read', 'mailjet_order_notifications_page',
 		            array(new OrderNotificationsSettings(), 'mailjet_order_notifications_settings_page_html'));
 	            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Order Notifications sub-menu added ]');
+
+                // Abandoned Cart page
+                add_submenu_page(null, __('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'), null, 'read', 'mailjet_abandoned_cart_page',
+                    array(new AbandonedCartSettings(), 'mailjet_abandoned_cart_settings_page_html'));
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet Order Notifications sub-menu added ]');
 
 
 

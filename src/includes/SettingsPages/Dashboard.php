@@ -102,7 +102,7 @@ class Dashboard {
                             <p class="blockText"><?php _e( 'Recover visitors and turn them into customers but reminding them what they left in their cart.', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
                                     id="nextBtnReverseDashboard3"
-                                    onclick="location.href = 'widgets.php'"><?= __( 'Manage abandoned cart', 'mailjet-for-wordpress' ) ?></button>
+                                    onclick="location.href = 'admin.php?page=mailjet_abandoned_cart_page'"><?= __( 'Manage abandoned cart', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                     </div>
                 </div>

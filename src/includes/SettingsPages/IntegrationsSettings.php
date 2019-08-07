@@ -39,6 +39,8 @@ class IntegrationsSettings
 		    delete_option( 'mailjet_woo_banner_checkbox' );
 		    delete_option( 'mailjet_woo_banner_text' );
 		    delete_option( 'mailjet_woo_banner_label' );
+            delete_option('mailjet_woo_abandoned_cart_activate');
+            delete_option('mailjet_woo_abandoned_cart_sending_time');
 		    $wooCommerceNotInstalled = true;
 	    }
 

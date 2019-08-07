@@ -26,7 +26,6 @@ class OrderNotificationsSettings
 
 
         $orderConfTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_order_confirmation');
-        $abandonedCartTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_abandoned_cart');
         $refundTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_refund_confirmation');
         $shippingTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_shipping_confirmation');
         $nonce = wp_create_nonce('mailjet_order_notifications_settings_page_html');
