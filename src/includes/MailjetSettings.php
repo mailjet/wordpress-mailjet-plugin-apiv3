@@ -228,16 +228,21 @@ class MailjetSettings
                 return false;
             }
 
+            // Hardcode this in order to pass the check inside `$this->>subsctiptionConfirmationAdminNoticeSuccess()`
+            $_GET['subscribe'] = 1;
+
             $contact = array();
             $contact['Email'] = $email;
             $contact['Properties']['name'] = $name;
             MailjetApi::createMailjetContactProperty('name');
-            $result = MailjetApi::syncMailjetContact($contactListId, $contact);
-            if (!$result) {
+            $syncSingleContactEmailToMailjetList = MailjetApi::syncMailjetContact($contactListId, $contact);
+            if (false === $syncSingleContactEmailToMailjetList) {
                 echo $technicalIssue;
-                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
-                die;
+            } else {
+                $this->subsctiptionConfirmationAdminNoticeSuccess();
             }
+
+            die;
         }
     }
 

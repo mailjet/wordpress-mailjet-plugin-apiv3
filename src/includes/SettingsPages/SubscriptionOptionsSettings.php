@@ -132,7 +132,7 @@ class SubscriptionOptionsSettings
         add_settings_field(
             'mailjet_subscription_options', // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
-            __( 'Subscription Options', 'mailjet' ),
+            __( 'Subscription Options', 'mailjet-for-wordpress' ),
             array($this, 'mailjet_subscription_options_cb'),
             'mailjet_subscription_options_page',
             'mailjet_subscription_options_settings',
