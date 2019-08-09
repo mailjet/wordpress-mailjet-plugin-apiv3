@@ -76,3 +76,9 @@ delete_option('widget_wp_mailjet_subscribe_widget');
 
 delete_option('mailjet_woo_abandoned_cart_activate');
 delete_option('mailjet_woo_abandoned_cart_sending_time');
+
+// Delete all table  for Mailjet plugin
+$table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
+$sql_delete = "DROP TABLE " . $table_name ;
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+$wpdb->get_results( $sql_delete );

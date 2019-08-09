@@ -253,12 +253,16 @@ class Mailjet
     private function addWoocommerceActions()
     {
         $activeActions = get_option('mailjet_wc_active_hooks');
+        $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
 
         if (!$activeActions || empty($activeActions)){
             return false;
         }
         $woocommerceObject =  new WooCommerceSettings();
         foreach ($activeActions as $action){
+            $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
+        }
+        foreach ($abandonedCartActiveActions as $action){
             $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
         }
         return true;
