@@ -27,6 +27,16 @@ class WooCommerceSettings
     {
         $this->enqueueScripts();
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
+        // cron settings for abandoned cart feature
+        add_filter('cron_schedules', [$this, 'add_cron_schedule']);
+    }
+
+    public function add_cron_schedule($schedules) {
+        $schedules['one_minute'] = array(
+            'interval'  => 60,
+            'display'   => __('Once Every Minute'),
+        );
+        return $schedules;
     }
 
     public function mailjet_show_extra_woo_fields($checkout)
@@ -321,7 +331,7 @@ class WooCommerceSettings
             }
 
             // Abandoned cart default data
-            add_option('mailjet_woo_abandoned_cart_activate');
+            update_option('mailjet_woo_abandoned_cart_activate', 0);
             add_option('mailjet_woo_abandoned_cart_sending_time', 1200); // 20 * 60 = 1200s
 
             //Abandoned carts DB table
@@ -352,6 +362,7 @@ class WooCommerceSettings
                     ) $wcap_collate AUTO_INCREMENT=1 ";
             dbDelta( $sql );
         }
+        $this->toggleAbandonedCart();
 
         $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
 
@@ -509,7 +520,11 @@ class WooCommerceSettings
         }
     }
 
-    public function send_abandoned_cart($cart) {
+    public function send_abandoned_cart_emails() {
+
+    }
+
+    private function send_abandoned_cart($cart) {
         $templateId = get_option('mailjet_woocommerce_abandoned_cart');
         if (!$cart || empty($cart) || !$templateId || empty($templateId)){
             return false;
@@ -645,8 +660,7 @@ class WooCommerceSettings
         if (isset($data['activate_ac'])) {
             update_option('mailjet_woo_abandoned_cart_activate', $data['activate_ac']);
             $wasActivated = $data['activate_ac'] === '1';
-            $hooks = $this->prepareAbandonedCartHook();
-            update_option('mailjet_wc_abandoned_cart_active_hooks', $hooks);
+            $this->toggleAbandonedCart();
         }
         if (isset($data['abandonedCartTimeScale']) && isset($data['abandonedCartSendingTime']) && is_numeric($data['abandonedCartSendingTime'])) {
             if ($data['abandonedCartTimeScale'] === 'HOURS') {
@@ -662,20 +676,27 @@ class WooCommerceSettings
         wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
     }
 
-    private function prepareAbandonedCartHook() {
+    private function toggleAbandonedCart() {
         $activeHooks = [];
 
         if (get_option('mailjet_woo_abandoned_cart_activate') === '1') {
+            if ( ! wp_next_scheduled( 'abandoned_cart_cron_hook' ) ) {
+                wp_schedule_event( time(), 'one_minute', 'abandoned_cart_cron_hook' );
+            }
             $activeHooks = [
                 ['hook' => 'woocommerce_add_to_cart', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_cart_item_removed', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_cart_item_restored', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_after_cart_item_quantity_update', 'callable' => 'cart_change_timestamp'],
-                ['hook' => 'woocommerce_calculate_totals', 'callable' => 'cart_change_timestamp']
+                ['hook' => 'woocommerce_calculate_totals', 'callable' => 'cart_change_timestamp'],
+                ['hook' => 'abandoned_cart_cron_hook', 'callable' => 'send_abandoned_cart_emails']
             ];
         }
-
-        return $activeHooks;
+        else {
+            $timestamp = wp_next_scheduled( 'abandoned_cart_cron_hook' );
+            wp_unschedule_event( $timestamp, 'abandoned_cart_cron_hook' );
+        }
+        update_option('mailjet_wc_abandoned_cart_active_hooks', $activeHooks);
     }
 
     private function getAbandonedCartRecipients($cart, $vars) {
