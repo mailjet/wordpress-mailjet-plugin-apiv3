@@ -82,3 +82,8 @@ $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
 $sql_delete = "DROP TABLE " . $table_name ;
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $wpdb->get_results( $sql_delete );
+
+$table_name = $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails';
+$sql_delete = "DROP TABLE " . $table_name ;
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+$wpdb->get_results( $sql_delete );
