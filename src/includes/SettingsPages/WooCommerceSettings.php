@@ -358,6 +358,7 @@ class WooCommerceSettings
             $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `abandoned_cart_id` text NOT NULL,
+                    `sent_time` int(11) NOT NULL,
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=1 ";
             dbDelta( $sql );
@@ -522,7 +523,35 @@ class WooCommerceSettings
     }
 
     public function send_abandoned_cart_emails() {
+        global $wpdb;
+        $sendingDelay = get_option( 'mailjet_woo_abandoned_cart_sending_time' );
+        $compareTime = current_time('timestamp') - $sendingDelay;
+        $query = 'SELECT cart.*, wpuser.display_name as user_name, wpuser.user_email 
+                  FROM `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts` AS cart 
+                  LEFT JOIN `' . $wpdb->prefix . 'users` AS wpuser ON cart.user_id = wpuser.id 
+                  WHERE cart_ignored = 0
+                  AND abandoned_cart_time < %d';
+        $results = $wpdb->get_results($wpdb->prepare($query, $compareTime));
+        foreach ($results as $cart) {
+            if ($this->send_abandoned_cart($cart)) {
+                $this->email_sent_validation($cart);
+            }
+        }
+    }
 
+    private function email_sent_validation($cart) {
+        global $wpdb;
+        $cartId = $cart->id;
+        $currentTime = current_time('timestamp');
+        $insert_query = 'INSERT INTO `' . $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails`
+                         (abandoned_cart_id, sent_time)
+                         VALUES (%d, %d)';
+        $wpdb->query($wpdb->prepare($insert_query, $cartId, $currentTime));
+
+        $query_update = 'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
+                         SET cart_ignored = %d
+                         WHERE id  = %d';
+        $wpdb->query($wpdb->prepare($query_update, 1, $cartId));
     }
 
     private function send_abandoned_cart($cart) {
@@ -569,6 +598,8 @@ class WooCommerceSettings
 
         return true;
     }
+
+
 
     public function send_order_status_completed($orderId)
     {
