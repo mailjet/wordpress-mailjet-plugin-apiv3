@@ -480,7 +480,7 @@ class WooCommerceSettings
                     $insert_query = 'INSERT INTO `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
                                      (user_id, abandoned_cart_info, abandoned_cart_time, cart_ignored, user_type)
                                      VALUES (%d, %s, %d, %d, %s)';
-                    $wpdb->query($wpdb->prepare($insert_query, $user_id, $cart, $currentTime, $ignoreCart, $userType)); // !
+                    $wpdb->query($wpdb->prepare($insert_query, $user_id, $cart, $currentTime, $ignoreCart, $userType));
                 }
             }
             elseif (isset( $results[0]->abandoned_cart_time ) && $results[0]->abandoned_cart_time + $sendingDelay > $currentTime) {
@@ -491,7 +491,7 @@ class WooCommerceSettings
                                      WHERE user_id  = %d 
                                      AND user_type = %s
                                      AND cart_ignored = %s';
-                    $wpdb->query($wpdb->prepare($query_update, $cart, $currentTime, $user_id, $userType, $ignoreCart)); // !
+                    $wpdb->query($wpdb->prepare($query_update, $cart, $currentTime, $user_id, $userType, $ignoreCart));
                 }
                 else { // ignore cart if empty
                     $query_update = 'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
@@ -499,8 +499,9 @@ class WooCommerceSettings
                                          abandoned_cart_time = %d,
                                          cart_ignored = %d
                                      WHERE user_id  = %d
-                                     AND user_type = %s';
-                    $wpdb->query($wpdb->prepare($query_update, $cart, $currentTime, !$ignoreCart, $user_id, $userType));
+                                     AND user_type = %s
+                                     AND cart_ignored = %s';
+                    $wpdb->query($wpdb->prepare($query_update, $cart, $currentTime, !$ignoreCart, $user_id, $userType, $ignoreCart));
                 }
             }
             else {
@@ -689,14 +690,45 @@ class WooCommerceSettings
                 ['hook' => 'woocommerce_cart_item_restored', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_after_cart_item_quantity_update', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_calculate_totals', 'callable' => 'cart_change_timestamp'],
+                ['hook' => 'woocommerce_cart_is_empty', 'callable' => 'cart_change_timestamp'],
+                ['hook' => 'woocommerce_order_status_changed', 'callable' => 'update_status_on_order'],
                 ['hook' => 'abandoned_cart_cron_hook', 'callable' => 'send_abandoned_cart_emails']
+
             ];
         }
         else {
+            global $wpdb;
             $timestamp = wp_next_scheduled( 'abandoned_cart_cron_hook' );
             wp_unschedule_event( $timestamp, 'abandoned_cart_cron_hook' );
+            // empty tables to not send irrelevant emails when reactivating
+            $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails';
+            $sql_delete = "TRUNCATE " . $table_name ;
+            $wpdb->get_results( $sql_delete );
+            $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
+            $sql_delete = "TRUNCATE " . $table_name ;
+            $wpdb->get_results( $sql_delete );
         }
         update_option('mailjet_wc_abandoned_cart_active_hooks', $activeHooks);
+    }
+
+    public function update_status_on_order($order_id) {
+        global $wpdb, $woocommerce;
+        $order = wc_get_order( $order_id );
+        if ($order->get_status() == 'processing' || $order->get_status() == 'completed') {
+            if (is_user_logged_in()) {
+                $userType = 'REGISTERED';
+                $user_id = get_current_user_id();
+                $query_update = 'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
+                                     SET cart_ignored = %d
+                                     WHERE user_id  = %d
+                                     AND user_type = %s
+                                     AND cart_ignored = %d';
+                $wpdb->query($wpdb->prepare($query_update, 1, $user_id, $userType, 0));
+            }
+        }
+        else if ($order->get_status() !== 'refunded') {
+            $this->cart_change_timestamp();
+        }
     }
 
     private function getAbandonedCartRecipients($cart, $vars) {
