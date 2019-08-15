@@ -92,7 +92,7 @@ class EnableSendingSettings
                 </div>
                 <div class="sslFld">
                     <label class="checkboxLabel" for="mailjet_ssl">
-                        <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' ? ' checked="checked"' : '') ?> autocomplete="off">
+                        <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' || $mailjetSsl == 'tls' ? ' checked="checked"' : '') ?> autocomplete="off">
                         <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet-for-wordpress'); ?></span>
                     </label>
                 </div>                
@@ -280,11 +280,21 @@ class EnableSendingSettings
 
         $connected = FALSE;
         $protocol = '';
-        if (get_option('mailjet_ssl')) {
+        $encryption = '';
+        if (get_option('mailjet_ssl') && get_option('mailjet_port') == 465) {
+            $encryption = 'ssl';
             $protocol = 'ssl://';
+        } else if (get_option('mailjet_ssl')) {
+            $protocol = 'tls://';
+            $encryption = 'tls';
         }
-
-        $soc = @fsockopen($protocol . MailjetMail::MJ_HOST, get_option('mailjet_port'), $errno, $errstr, 5);
+        if ($encryption == 'ssl' || $encryption == '') {
+            $soc = @fsockopen($protocol . MailjetMail::MJ_HOST, get_option('mailjet_port'), $errno, $errstr, 5);
+        } else if ($encryption == 'tls') {
+            $remote_socket = MailjetMail::MJ_HOST.":587";
+            $soc = @stream_socket_client($remote_socket, $errno, $errstr);
+            @stream_socket_enable_crypto($soc, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+        }
 
         if ($soc) {
             $connected = TRUE;
