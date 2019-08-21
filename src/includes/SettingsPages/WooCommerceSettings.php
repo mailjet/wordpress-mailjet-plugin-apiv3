@@ -51,6 +51,11 @@ class WooCommerceSettings
             $key = $_GET['key'];
             $this->retrieve_cart($emailId, $key);
         }
+        else if ($action_name == 'to_cart') {
+            if (is_user_logged_in()) {
+                wp_safe_redirect(get_permalink(wc_get_page_id('cart')));
+            }
+        }
         return $template;
     }
 
@@ -1002,18 +1007,20 @@ class WooCommerceSettings
 
     private function retrieve_cart($emailId, $key) {
         global $wpdb;
+        $url = get_permalink(wc_get_page_id('shop'));
         $query = 'SELECT * FROM `' . $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails` AS email
                     RIGHT JOIN `wp_mailjet_wc_abandoned_carts` AS cart ON email.abandoned_cart_id = cart.id
                     WHERE email.id = %d';
         $result = $wpdb->get_results($wpdb->prepare($query, $emailId));
         if ($result && $result[0]->security_key === $key) { // check if the key corresponds to the one in DB
             $userId = $result[0]->user_id;
-            $user = wp_set_current_user($userId);
             if ($result[0]->user_type === 'REGISTERED') {
-                $user_login = $user->data->user_login;
-                wp_set_auth_cookie($userId);
-                do_action('wp_login', $user_login, $user);
-                $url = is_user_logged_in() ? get_permalink(wc_get_page_id('cart')) : get_permalink(wc_get_page_id('shop'));
+                if (is_user_logged_in()) {
+                    $url = get_permalink(wc_get_page_id('cart'));
+                }
+                else {
+                    $url = get_permalink(wc_get_page_id('myaccount')) . '?mj_action=to_cart';
+                }
             }
             else {
                 $query = 'SELECT * FROM `' . $wpdb->prefix . 'mailjet_wc_guests`
@@ -1024,21 +1031,14 @@ class WooCommerceSettings
                     $session->set('billing_email', $result[0]->billing_email);
                     $url = get_permalink(wc_get_page_id('cart'));
                 }
-                else {
-                    $url = get_permalink(wc_get_page_id('shop'));
-                }
             }
-            if ( WC()->cart->get_cart_contents_count() == 0 ) {
+            if (WC()->cart->get_cart_contents_count() == 0) {
                 $cartInfo = json_decode($result[0]->abandoned_cart_info, true);
                 foreach ($cartInfo as $productKey => $product) {
                     WC()->cart->add_to_cart($product['product_id'], $product['quantity']);
                 }
             }
-            header( 'Location: ' . $url);
         }
-        else {
-            wp_safe_redirect(get_permalink(wc_get_page_id('shop')));
-            exit;
-        }
+        header( 'Location: ' . $url);
     }
 }
