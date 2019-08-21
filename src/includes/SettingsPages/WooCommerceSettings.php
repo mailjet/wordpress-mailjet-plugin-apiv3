@@ -29,6 +29,7 @@ class WooCommerceSettings
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
         // cron settings for abandoned cart feature
         add_filter('cron_schedules', [$this, 'add_cron_schedule']);
+        add_filter( 'template_include', [$this, 'manage_action']);
     }
 
     public function add_cron_schedule($schedules) {
@@ -37,6 +38,20 @@ class WooCommerceSettings
             'display'   => __('Once Every Minute'),
         );
         return $schedules;
+    }
+
+    public function manage_action($template) {
+        $action_name = '';
+
+        if (isset( $_GET['mj_action'])) {
+            $action_name = $_GET['mj_action'];
+        }
+        if ($action_name == 'track_cart') {
+            $emailId = $_GET['email_id'];
+            $key = $_GET['key'];
+            $this->retrieve_cart($emailId, $key);
+        }
+        return $template;
     }
 
     public function mailjet_show_extra_woo_fields($checkout)
@@ -359,6 +374,7 @@ class WooCommerceSettings
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `abandoned_cart_id` text NOT NULL,
                     `sent_time` int(11) NOT NULL,
+                    `security_key` text NOT NULL,
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=1 ";
             dbDelta( $sql );
@@ -551,24 +567,23 @@ class WooCommerceSettings
         $results = $wpdb->get_results($wpdb->prepare($query, $compareTime));
         foreach ($results as $cart) {
             if ($this->send_abandoned_cart($cart)) {
-                $this->email_sent_validation($cart);
+                $query_update = 'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
+                         SET cart_ignored = %d
+                         WHERE id  = %d';
+                $wpdb->query($wpdb->prepare($query_update, 1, $cart->id));
             }
         }
     }
 
-    private function email_sent_validation($cart) {
+    private function register_sent_email($cart, $securityKey) {
         global $wpdb;
         $cartId = $cart->id;
         $currentTime = current_time('timestamp');
         $insert_query = 'INSERT INTO `' . $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails`
-                         (abandoned_cart_id, sent_time)
-                         VALUES (%d, %d)';
-        $wpdb->query($wpdb->prepare($insert_query, $cartId, $currentTime));
-
-        $query_update = 'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
-                         SET cart_ignored = %d
-                         WHERE id  = %d';
-        $wpdb->query($wpdb->prepare($query_update, 1, $cartId));
+                         (abandoned_cart_id, sent_time, security_key)
+                         VALUES (%d, %d, %s)';
+        $wpdb->query($wpdb->prepare($insert_query, $cartId, $currentTime, $securityKey));
+        return $wpdb->insert_id;
     }
 
     private function send_abandoned_cart($cart) {
@@ -594,13 +609,16 @@ class WooCommerceSettings
             array_push($products, $product);
         }
 
+        // generate a random 5 characters string as security
+        $securityKey = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
+        $mailId = $this->register_sent_email($cart, $securityKey);
+        $abandoned_cart_link = get_permalink(wc_get_page_id('cart')) . '?mj_action=track_cart&email_id=' . $mailId . '&key=' . $securityKey;
         $vars = [
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
-            'abandoned_cart_link' => get_permalink(wc_get_page_id('cart')),
+            'abandoned_cart_link' => $abandoned_cart_link,
             'products' => $products
         ];
-
 
         $recipients = $this->getAbandonedCartRecipients($cart, $vars);
         if (!isset($recipients) || empty($recipients)) {
@@ -615,8 +633,6 @@ class WooCommerceSettings
 
         return true;
     }
-
-
 
     public function send_order_status_completed($orderId)
     {
@@ -981,6 +997,48 @@ class WooCommerceSettings
                 $session->set('user_id', $user_id);
             }
             $this->cart_change_timestamp();
+        }
+    }
+
+    private function retrieve_cart($emailId, $key) {
+        global $wpdb;
+        $query = 'SELECT * FROM `' . $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails` AS email
+                    RIGHT JOIN `wp_mailjet_wc_abandoned_carts` AS cart ON email.abandoned_cart_id = cart.id
+                    WHERE email.id = %d';
+        $result = $wpdb->get_results($wpdb->prepare($query, $emailId));
+        if ($result && $result[0]->security_key === $key) { // check if the key corresponds to the one in DB
+            $userId = $result[0]->user_id;
+            $user = wp_set_current_user($userId);
+            if ($result[0]->user_type === 'REGISTERED') {
+                $user_login = $user->data->user_login;
+                wp_set_auth_cookie($userId);
+                do_action('wp_login', $user_login, $user);
+                $url = is_user_logged_in() ? get_permalink(wc_get_page_id('cart')) : get_permalink(wc_get_page_id('shop'));
+            }
+            else {
+                $query = 'SELECT * FROM `' . $wpdb->prefix . 'mailjet_wc_guests`
+                    WHERE id = %d';
+                $result = $wpdb->get_results($wpdb->prepare($query, $userId));
+                if ($result) {
+                    $session = WC()->session;
+                    $session->set('billing_email', $result[0]->billing_email);
+                    $url = get_permalink(wc_get_page_id('cart'));
+                }
+                else {
+                    $url = get_permalink(wc_get_page_id('shop'));
+                }
+            }
+            if ( WC()->cart->get_cart_contents_count() == 0 ) {
+                $cartInfo = json_decode($result[0]->abandoned_cart_info, true);
+                foreach ($cartInfo as $productKey => $product) {
+                    WC()->cart->add_to_cart($product['product_id'], $product['quantity']);
+                }
+            }
+            header( 'Location: ' . $url);
+        }
+        else {
+            wp_safe_redirect(get_permalink(wc_get_page_id('shop')));
+            exit;
         }
     }
 }
