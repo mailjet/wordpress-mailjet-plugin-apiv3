@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
 Requires at least: 3.9
 Tested up to: 5.2.1
-Stable tag: 5.1.1
+Stable tag: 5.1.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,11 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 4. Configure a subscription widget to collect subscribers from your site
 
 == Changelog ==
+
+= 5.1.2 =
+* Allow use of TLS for ports 587 / 588
+* Show the default thank you page when subscribing via CF7
+* Translations fixes
 
 = 5.1.1 =
 * Fixed a problem when saving the WooCommerce integration settings
