@@ -30,7 +30,7 @@ class SubscriptionOptionsSettings
     {
 	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueScripts' ]);
 	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
-	    add_action( 'wp_ajax_get_contact_lists', [$this, 'getContactListsMenu']);
+	    add_action( 'wp_ajax_get_contact_lists_menu', [$this, 'getContactListsMenu']);
     }
 
 	public function mailjet_section_subscription_options_cb($args)
@@ -114,7 +114,7 @@ class SubscriptionOptionsSettings
             // Initial sync WP users to Mailjet
             $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
             $mailjet_sync_list = get_option('mailjet_sync_list');
-            if (!empty($activate_mailjet_initial_sync) && intval($mailjet_sync_list) > 0) {
+            if (!empty($activate_mailjet_initial_sync) && (int)$mailjet_sync_list > 0) {
                 $syncResponse = self::syncAllWpUsers();
                 if (false === $syncResponse) {
                     $executionError = true;
@@ -369,5 +369,6 @@ class SubscriptionOptionsSettings
         $path = plugins_url('/src/admin/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
 	    wp_register_script('ajaxHandle',  $path,  array('jquery'), false,true);
 	    wp_enqueue_script( 'ajaxHandle' );
+        wp_enqueue_script('mailjet-ajax', plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src'));
     }
 }

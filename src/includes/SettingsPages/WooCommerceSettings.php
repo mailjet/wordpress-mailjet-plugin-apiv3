@@ -164,17 +164,14 @@ class WooCommerceSettings
     {
         $wooActiv = get_option('activate_mailjet_woo_integration');
         if (!$wooActiv) {
-
             return false;
         }
         $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
         $mainList = get_option('mailjet_sync_list');
         $wooList = get_option('mailjet_woo_list');
         if (!empty($wooList)) {
-
             return $wooList;
         } elseif (!empty($mainList) && !empty($checkoutBox)) {
-
             return $mainList;
         }
 
@@ -678,7 +675,7 @@ class WooCommerceSettings
         $updatedProperties = [];
 
         foreach ($contact[0]['Data'] as $clientProp){
-            if (key_exists($clientProp['Name'],$properties)){
+            if (array_key_exists($clientProp['Name'],$properties)){
                 $updatedProperties[$clientProp['Name']] = $clientProp['Value'];
                 unset($properties[$clientProp['Name']]);
             }
