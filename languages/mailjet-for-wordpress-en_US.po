@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-09 12:21+0300\n"
-"PO-Revision-Date: 2019-07-18 07:08+0000\n"
+"PO-Revision-Date: 2019-08-23 09:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (USA)\n"
 "Language: en-US\n"
@@ -77,12 +77,13 @@ msgid "Your test mail from Mailjet"
 msgstr "Your test mail from Mailjet"
 
 #: src/includes/MailjetMail.php:134
-#, fuzzy
 #, php-format
 msgid ""
 "Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
 "Port: %s"
-msgstr "Your Mailjet configuration is ok!SSL: %s Port: %s"
+msgstr ""
+"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> Encryption: %s "
+"<br /> Port: %s"
 
 #: src/includes/MailjetMenu.php:49 src/includes/MailjetMenu.php:60 
 #: src/includes/SettingsPages/InitialSettings.php:59
@@ -460,8 +461,7 @@ msgstr "Port to use for SMTP communication"
 #: src/includes/SettingsPages/EnableSendingSettings.php:96
 msgid ""
 "Enable SSL communication with mailjet.com (only available with port 465)"
-msgstr ""
-"Enable SSL communication with mailjet.com (only available with port 465)"
+msgstr "Use SSL/TLS encryption"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:105
 msgid "Send a test"
@@ -1131,9 +1131,3 @@ msgstr "Default page"
 #: src/widget/views/designforfailure.php:6
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
-
-msgid "We have sent the newsletter subscription confirmation link to you"
-msgstr "A confirmation email has been sent to"
-
-msgid "To confirm your subscription you have to click on the provided link."
-msgstr ". To confirm your subscription you have to click on the provided link."

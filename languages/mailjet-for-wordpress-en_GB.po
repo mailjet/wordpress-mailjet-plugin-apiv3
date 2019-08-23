@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-09 12:22+0300\n"
-"PO-Revision-Date: 2019-07-18 07:07+0000\n"
+"PO-Revision-Date: 2019-08-23 09:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (UK)\n"
 "Language: en-GB\n"
@@ -63,8 +63,6 @@ msgid ""
 "Mailjet for WordPress requires PHP 5.5 or later. Your server currently runs "
 "on PHP %s. Please upgrade your PHP and activate the plugin again."
 msgstr ""
-"Mailjet for WordPress requires PHP 5.5 or later. Your server currently runs "
-"on PHP %s. Please upgrade your PHP and activate the plugin again."
 
 #: src/includes/MailjetMail.php:118
 msgid ""
@@ -84,8 +82,8 @@ msgid ""
 "Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
 "Port: %s"
 msgstr ""
-"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
-"Port: %s"
+"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> Encryption: %s "
+"<br /> Port: %s"
 
 #: src/includes/MailjetMenu.php:49 src/includes/MailjetMenu.php:60 
 #: src/includes/SettingsPages/InitialSettings.php:59
@@ -143,7 +141,7 @@ msgstr "Welcome to the Mailjet plugin for Wordpress"
 
 #: src/includes/MailjetMenu.php:113
 msgid "Temporary page"
-msgstr "Temporary page"
+msgstr ""
 
 #: src/includes/MailjetMenu.php:199 src/includes/MailjetMenu.php:227 
 #: src/includes/MailjetMenu.php:254 
@@ -334,7 +332,7 @@ msgstr "Subscription Confirmation"
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:34
 msgid "Currently connected to "
-msgstr "Currently connected to "
+msgstr ""
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:52 
 #: src/includes/SettingsPages/InitialSettings.php:63
@@ -464,8 +462,7 @@ msgstr "Port to use for SMTP communication"
 #: src/includes/SettingsPages/EnableSendingSettings.php:96
 msgid ""
 "Enable SSL communication with mailjet.com (only available with port 465)"
-msgstr ""
-"Enable SSL communication with mailjet.com (only available with port 465)"
+msgstr "Use SSL/TLS encryption"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:105
 msgid "Send a test"
@@ -746,31 +743,27 @@ msgstr "Error: email field is empty"
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:133
 msgid "e.g. [your-email]"
-msgstr "e.g. [your-email]"
+msgstr ""
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:136
 msgid "Name field tag (optional)"
-msgstr "Name field tag (optional)"
+msgstr ""
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:138
 msgid "e.g. [your-name]"
-msgstr "e.g. [your-name]"
+msgstr ""
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:141
 msgid ""
 "To enable the integration, include the following shortcode to your contact "
 "form:"
 msgstr ""
-"To enable the integration, include the following shortcode to your contact "
-"form:"
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:142
 msgid ""
 "Include the following shortcode in your contact form in order to display the "
 "newsletter subscription checkbox and complete the integration."
 msgstr ""
-"Include the following shortcode in your contact form in order to display the "
-"newsletter subscription checkbox and complete the integration."
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:200
 #, fuzzy
@@ -964,7 +957,7 @@ msgstr ""
 
 #: src/widget/views/admin.php:101
 msgid "Save changes first"
-msgstr "Save changes first"
+msgstr ""
 
 #: src/widget/views/admin.php:110
 msgid "Customize your subscription form"
@@ -1141,9 +1134,3 @@ msgstr "Default page"
 #: src/widget/views/designforfailure.php:6
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
-
-msgid "We have sent the newsletter subscription confirmation link to you"
-msgstr "A confirmation email has been sent to"
-
-msgid "To confirm your subscription you have to click on the provided link."
-msgstr ". To confirm your subscription you have to click on the provided link."
