@@ -32,10 +32,10 @@
     "require": {
         "php": ">=5.4",
         "composer/installers": "~1.0",
-        "mailjet/mailjet-apiv3-php": "dev-master",
-        "mailjet/Mailjet-iframe-v3": "dev-master",
-        "sepia/po-parser": "dev-master",
-        "analog/analog": "dev-master"
+        "mailjet/mailjet-apiv3-php": "^v1.4.1",
+        "mailjet/Mailjet-iframe-v3": "^v1.3.0",
+        "sepia/po-parser": "^5.1.7",
+        "analog/analog": "^1.0.13-stable"
     },
     "autoload": {
         "psr-4": {

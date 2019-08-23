@@ -123,7 +123,7 @@ class WooCommerceSettings
             $message = str_replace($key, $value, $message);
         }
 
-        $email_subject = __('Subscription Confirmation', 'mailjet');
+        $email_subject = __('Subscription Confirmation', 'mailjet-for-wordpress');
         add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
         $res = wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
