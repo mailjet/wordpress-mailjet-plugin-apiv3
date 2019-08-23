@@ -653,14 +653,31 @@ class WooCommerceSettings
 
        return ['success' => false, 'message' => 'Something went wrong.'];
     }
-    public function customer_edata_sync($orderId)
-    {
-        $properties = [
+
+    public function check_properties_exist() {
+        $propertyTypes = [
             'woo_total_orders_count' => 'int',
             'woo_total_spent' => 'float',
             'woo_last_order_date' => 'datetime',
             'woo_account_creation_date' => 'datetime'
         ];
+        $properties = MailjetApi::getContactProperties();
+
+        foreach ($properties as $prop){
+            if (array_key_exists($prop['Name'], $propertyTypes)){
+                unset($propertyTypes[$prop['Name']]);
+            }
+        }
+
+        if (!empty($propertyTypes)){
+            foreach ($propertyTypes as $propKey => $propType){
+                MailjetApi::createMailjetContactProperty($propKey, $propType);
+            }
+        }
+    }
+
+    public function customer_edata_sync($orderId)
+    {
 
         $order = wc_get_order($orderId);
         $email = $order->get_billing_email();
@@ -671,31 +688,5 @@ class WooCommerceSettings
         }
 
         $contact = MailjetApi::getContactDataByEmail($email);
-
-        $updatedProperties = [];
-
-        foreach ($contact[0]['Data'] as $clientProp){
-            if (array_key_exists($clientProp['Name'],$properties)){
-                $updatedProperties[$clientProp['Name']] = $clientProp['Value'];
-                unset($properties[$clientProp['Name']]);
-            }
-        }
-
-        if (!empty($properties)){
-          foreach ($properties as $key => $val){
-//              echo '<pre>';
-//              var_dump( MailjetApi::updateContactData($email, ['ContactID' => $contact[0]['ContactID'] , 'Data' => (object)['Datatype' => $val, 'Name' => $key]]));
-//              echo '</pre>';
-//              exit;
-              MailjetApi::updateContactData($email, $val, true);
-          }
-        }
-
-
-//        echo '<pre>';
-//        var_dump($contact);
-//        echo '</pre>';
-//        exit;
-
     }
 }
