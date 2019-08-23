@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-09 12:22+0300\n"
-"PO-Revision-Date: 2019-08-23 08:24+0000\n"
+"PO-Revision-Date: 2019-08-23 09:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (UK)\n"
 "Language: en-GB\n"
@@ -21,7 +21,6 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 "X-Poedit-SearchPathExcluded-1: assets\n"
-"\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: src/admin/partials/MailjetAdminDisplay.php:27 
@@ -83,8 +82,8 @@ msgid ""
 "Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
 "Port: %s"
 msgstr ""
-"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
-"Port: %s"
+"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> Encryption: %s "
+"<br /> Port: %s"
 
 #: src/includes/MailjetMenu.php:49 src/includes/MailjetMenu.php:60 
 #: src/includes/SettingsPages/InitialSettings.php:59

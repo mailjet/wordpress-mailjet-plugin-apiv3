@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-09 12:23+0300\n"
-"PO-Revision-Date: 2019-08-23 09:13+0000\n"
+"PO-Revision-Date: 2019-08-23 09:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: German (Germany)\n"
 "Language: de-DE\n"
@@ -84,6 +84,8 @@ msgid ""
 "Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
 "Port: %s"
 msgstr ""
+"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> Encryption: %s "
+"<br /> Port: %s"
 
 #: src/includes/MailjetMenu.php:49 src/includes/MailjetMenu.php:60 
 #: src/includes/SettingsPages/InitialSettings.php:59
