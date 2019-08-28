@@ -270,6 +270,16 @@ class WooCommerceSettings
             update_option('activate_mailjet_woo_integration', '');
             $activate = false;
         }
+
+        if ($activate && isset($data->mailjet_woo_edata_sync) && $data->mailjet_woo_edata_sync === '1') {
+            if (get_option('mailjet_woo_edata_sync') !== '1') {
+                $this->all_customers_edata_sync();
+            }
+        }
+        else {
+            update_option('mailjet_woo_edata_sync', '');
+        }
+
         foreach ($data as $key => $val) {
             $optionVal = $activate ? $val : '';
             update_option($key, sanitize_text_field($optionVal));
@@ -654,7 +664,7 @@ class WooCommerceSettings
        return ['success' => false, 'message' => 'Something went wrong.'];
     }
 
-    public function check_properties_exist() {
+    public function init_edata() {
         $propertyTypes = [
             'woo_total_orders_count' => 'int',
             'woo_total_spent' => 'float',
@@ -676,17 +686,68 @@ class WooCommerceSettings
         }
     }
 
-    public function customer_edata_sync($orderId)
-    {
+    public function all_customers_edata_sync() {
+        $this->init_edata();
+        $users = get_users(array('fields' => array('ID', 'user_email')));
+        foreach($users as $user) {
+            $this->customer_edata_sync($user->ID);
+        }
+    }
 
-        $order = wc_get_order($orderId);
-        $email = $order->get_billing_email();
+    public function customer_edata_sync($userId) {
         $listId = get_option('mailjet_sync_list');
+        $userData = get_userdata($userId);
 
-        if (empty($email) || empty($listId) || !MailjetApi::checkContactSubscribedToList($email, $listId)){
+        $userEmail = $userData->user_email;
+        if (empty($userEmail) || empty($listId) || !MailjetApi::checkContactSubscribedToList($userEmail, $listId)){
             return false;
         }
 
-        $contact = MailjetApi::getContactDataByEmail($email);
+        $currentValues = [];
+        $userRoles = $userData->roles;
+        if ($userRoles[0] === 'customer') {
+            $args = array(
+                'customer_id' => $userId,
+                'status' => ['completed', 'processing'],
+                'limit' => -1,
+            );
+            $orders = wc_get_orders($args);
+            $customer = new \WC_Customer($userId);
+            $currentValues['woo_total_orders_count'] = (string)count($orders);
+            $currentValues['woo_total_spent'] = (string)$customer->get_total_spent();
+            $currentValues['woo_account_creation_date'] = $customer->get_date_created();
+            if (is_array($orders) && !empty($orders)) {
+                $currentValues['woo_last_order_date'] = $orders[0]->get_date_paid();
+            }
+        }
+        $contactData = MailjetApi::getContactDataByEmail($userEmail)[0]['Data'];
+        $contactProperties = [];
+        foreach ($contactData as $property) {
+            $contactProperties[$property['Name']] = $property['Value'];
+        }
+
+        foreach ($currentValues as $propKey => $propValue) {
+            if (!array_key_exists($propKey, $contactProperties) || $contactProperties[$propKey] !== $propValue) {
+                if ($propValue instanceof \WC_DateTime) {
+                    // convert date to mailjet format to check if the value is the same, if it isn't it updates it
+                    $dateStr = $propValue->date(\DateTime::RFC3339);
+                    $dateStr = substr($dateStr, 0, strpos($dateStr, '+')) . 'Z';
+                    if ($contactProperties[$propKey] !== $dateStr) {
+                        $data[] = array(
+                            'Name' => $propKey,
+                            'Value' => $dateStr
+                        );
+                        MailjetApi::updateContactData($userEmail, $data);
+                    }
+                }
+                else {
+                    $data[] = array(
+                        'Name' => $propKey,
+                        'Value' => $propValue
+                    );
+                    MailjetApi::updateContactData($userEmail, $data);
+                }
+            }
+        }
     }
 }

@@ -411,17 +411,20 @@ class MailjetApi
         return false;
     }
 
-    public static function updateContactData($contactEmail, $data, $create = false)
+    public static function updateContactData($contactEmail, $data)
     {
         try {
             $mjApiClient = self::getApiClient();
         } catch (\Exception $e) {
             return false;
         }
-        if ($create){
-            $response = $mjApiClient->post(['contactdata', $contactEmail], $data);
-        }else{
-            $response = $mjApiClient->put(['contactdata', $contactEmail], $data);
+        $body = [
+            'Data' => $data
+        ];
+        try {
+            $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
+        } catch (ConnectException $e) {
+            return false;
         }
         return $response;
     }
