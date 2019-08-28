@@ -33,7 +33,7 @@ class IntegrationsSettings
 	    if ( ! class_exists( 'WooCommerce' ) ) {
 		    delete_option( 'activate_mailjet_woo_integration' );
 		    delete_option( 'activate_mailjet_woo_sync' );
-        delete_option( 'mailjet_woo_edata_sync' );
+            delete_option( 'mailjet_woo_edata_sync' );
 		    delete_option( 'mailjet_woo_checkout_checkbox' );
 		    delete_option( 'mailjet_woo_checkout_box_text' );
 		    delete_option( 'mailjet_woo_banner_checkbox' );
@@ -44,6 +44,9 @@ class IntegrationsSettings
 
         $mailjetWooSyncActivated        = get_option( 'mailjet_woo_edata_sync' );
         $mailjetWooIntegrationActivated = get_option( 'activate_mailjet_woo_integration' );
+        if ($mailjetWooIntegrationActivated !== '1') {
+            $mailjetWooSyncActivated = '1';
+        }
 
 
         $checkoutCheckbox = get_option( 'mailjet_woo_checkout_checkbox' );
