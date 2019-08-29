@@ -31,14 +31,11 @@ class WooCommerceSettings
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
-        $chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
-        $chaeckoutText = get_option('mailjet_woo_checkout_box_text');
+        $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
         $contactList = $this->getWooContactList();
 
         // Display the checkbox only for NOT-logged in users or for logged-in but not subscribed to the Woo list
-//        if (get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')){
-        if ($contactList !== false) {
-
+        if ($contactList !== false && $checkoutBox === '1') {
             // Check if user is logged-in and already Subscribed to the contact list
             $contactAlreadySubscribedToList = false;
             if ($user->exists()) {
@@ -166,12 +163,8 @@ class WooCommerceSettings
         if (!$wooActiv) {
             return false;
         }
-        $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
         $mainList = get_option('mailjet_sync_list');
-        $wooList = get_option('mailjet_woo_list');
-        if (!empty($wooList)) {
-            return $wooList;
-        } elseif (!empty($mainList) && !empty($checkoutBox)) {
+        if ((int)$mainList > 0) {
             return $mainList;
         }
 

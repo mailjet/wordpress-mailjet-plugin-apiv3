@@ -48,7 +48,6 @@ class IntegrationsSettings
             $mailjetWooSyncActivated = '1';
         }
 
-
         $checkoutCheckbox = get_option( 'mailjet_woo_checkout_checkbox' );
         if ($checkoutCheckbox !== '1'){
 	        delete_option( 'mailjet_woo_checkout_box_text' );
@@ -273,7 +272,7 @@ class IntegrationsSettings
             // Check if selected Contact list - only if the Sync checkbox is checked
             $activate_mailjet_woo_sync = get_option( 'activate_mailjet_woo_sync' );
             $mailjet_woo_list          = get_option( 'mailjet_sync_list' );
-            if ( ! empty( $activate_mailjet_woo_sync ) && ! intval( $mailjet_woo_list ) > 0 ) {
+            if ($activate_mailjet_woo_sync === '1' && (int)$mailjet_woo_list <= 0 ) {
                 $executionError = true;
                 add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet-for-wordpress' ), 'error' );
             }
