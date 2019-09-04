@@ -261,7 +261,7 @@ class Mailjet
             $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
         }
         if (get_option('mailjet_woo_edata_sync') === '1'){
-            $this->loader->add_action('woocommerce_new_order',$woocommerceObject, 'customer_edata_sync', 10, 1);
+            $this->loader->add_action('woocommerce_order_status_changed',$woocommerceObject, 'order_edata_sync', 10, 1);
         }
         return true;
     }

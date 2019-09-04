@@ -745,6 +745,33 @@ class WooCommerceSettings
         return $success;
     }
 
+    public function order_edata_sync($orderId) {
+        $order = wc_get_order($orderId);
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if ($order === false || empty($mailjet_sync_list) || $mailjet_sync_list < 0) {
+            return false;
+        }
+        $status = $order->get_status();
+        if ($status === 'processing' || $status === 'completed' || $status === 'cancelled' || $status === 'refunded') {
+            $user = $order->get_user();
+            if ($user === false) {
+                return false;
+            }
+            $properties = $this->get_customer_edata($user->ID);
+            if (is_array($properties) && !empty($properties)) {
+                $contact = array(array(
+                    'Email' => $user->user_email,
+                    'Properties' => $properties
+                ));
+                $isSubscribed = MailjetApi::checkContactSubscribedToList($user->user_email, $mailjet_sync_list, true);
+                $action = $isSubscribed ? 'addnoforce' : 'unsub';
+                MailjetApi::syncMailjetContacts($mailjet_sync_list, $contact, $action);
+            }
+        }
+
+        return true;
+    }
+
     public function get_customer_edata($userId) {
         $userData = get_userdata($userId);
 
