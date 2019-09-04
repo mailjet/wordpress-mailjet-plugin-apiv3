@@ -134,6 +134,9 @@ class MailjetSettings
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
 
+            // Check after login if the user is subscribed to the contact list
+            add_action('wp_login', array($subscriptionOptionsSettings, 'checkUserSubscription'), 10, 2);
+
             // When user is viewing another users profile page (not their own).
             add_action('edit_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
             // - If you want to apply your hook to ALL profile pages (including the current user) then you also need to use this one.

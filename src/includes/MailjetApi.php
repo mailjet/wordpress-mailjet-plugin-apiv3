@@ -160,6 +160,44 @@ class MailjetApi
 		return false;
 	}
 
+	public static function getSubscribersFromList($contactListId) {
+        if (!$contactListId || empty($contactListId)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $limit = 1000;
+        $dataArray = array();
+        $offset = 0;
+        do {
+            $filters = array(
+                'ContactsList' => $contactListId,
+                'Unsub' => false,
+                'Offset' => $offset,
+                'Limit' => $limit,
+                'Style' => 'Full'
+            );
+
+            try {
+                $response = $mjApiClient->get(Resources::$Listrecipient, array('filters' => $filters));
+            } catch (ConnectException $e) {
+                return false;
+            }
+            if ($response->success()) {
+                array_push($dataArray, $response->getData());
+            } else {
+                return false;
+            }
+            $offset += $limit;
+        } while ($response->getCount() >= $limit);
+        return array_merge(...$dataArray);
+    }
+
     public static function getContactProperties()
     {
 

@@ -70,9 +70,8 @@ class WooCommerceSettings
         if (isset($_POST['_my_field_name']) && !empty($_POST['_my_field_name']))
             $order->update_meta_data('_my_field_name', sanitize_text_field($_POST['_my_field_name']));
 
-
-        $subscribe = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-        if ($subscribe) {
+        $subscribe = (int)filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
+        if ($subscribe === 1) {
             $order->update_meta_data('mailjet_woo_subscribe_ok', sanitize_text_field($_POST['mailjet_woo_subscribe_ok']));
             $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
         }
@@ -83,7 +82,7 @@ class WooCommerceSettings
      */
     public function mailjet_subscribe_unsub_woo_to_list($subscribe, $user_email, $first_name, $last_name)
     {
-        $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
+        $action = (int)$subscribe === 1 ? 'addforce' : 'unsub';
         $contactproperties = [];
         if (!empty($first_name)) {
             MailjetApi::createMailjetContactProperty('firstname');
