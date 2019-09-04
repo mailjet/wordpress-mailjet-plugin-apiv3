@@ -265,7 +265,11 @@ class WooCommerceSettings
 
         if ($activate && isset($data->mailjet_woo_edata_sync) && $data->mailjet_woo_edata_sync === '1') {
             if (get_option('mailjet_woo_edata_sync') !== '1') {
-                $this->all_customers_edata_sync();
+                if ($this->all_customers_edata_sync() === false) {
+                    $result['success'] = false;
+                    $result['message'] = __('An error occured during e-commerce data sync! Please try again later.');
+                    return $result;
+                }
             }
         }
         else {
@@ -679,23 +683,72 @@ class WooCommerceSettings
     }
 
     public function all_customers_edata_sync() {
-        $this->init_edata();
-        $users = get_users(array('fields' => array('ID', 'user_email')));
-        foreach($users as $user) {
-            $this->customer_edata_sync($user->ID);
-        }
-    }
-
-    public function customer_edata_sync($userId) {
-        $listId = get_option('mailjet_sync_list');
-        $userData = get_userdata($userId);
-
-        $userEmail = $userData->user_email;
-        if (empty($userEmail) || empty($listId) || !MailjetApi::checkContactSubscribedToList($userEmail, $listId)){
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if (empty($mailjet_sync_list) || $mailjet_sync_list < 0) {
             return false;
         }
 
-        $currentValues = [];
+        $this->init_edata();
+        $users = get_users(array('fields' => array('ID', 'user_email'), 'role__in' => 'customer'));
+
+        $unsubUsers = array();
+        foreach ($users as $user) {
+            $unsubUsers[$user->user_email] = $user;
+        }
+
+        $subscribedContacts = array();
+        $unsubContacts = array();
+        $subscribers = MailjetApi::getSubscribersFromList($mailjet_sync_list);
+        if ($subscribers === false) {
+            return false;
+        }
+        foreach ($subscribers as $sub) {
+            $email = $sub['Contact']['Email']['Email'];
+            if (array_key_exists($email, $unsubUsers)) {
+                $user = $unsubUsers[$email];
+                $properties = $this->get_customer_edata($user->ID);
+                if (is_array($properties) && !empty($properties)) {
+                    array_push($subscribedContacts, array(
+                        'Email' => $user->user_email,
+                        'Properties' => $properties
+                    ));
+                }
+                unset($unsubUsers[$email]);
+            }
+        }
+
+        foreach($unsubUsers as $user) {
+            $userEmail = $user->user_email;
+            if (!empty($userEmail)) {
+                $properties = $this->get_customer_edata($user->ID);
+                if (is_array($properties) && !empty($properties)) {
+                    array_push($unsubContacts, array(
+                        'Email' => $user->user_email,
+                        'Properties' => $properties
+                    ));
+                }
+            }
+        }
+
+        $success = true;
+        if (!empty($subscribedContacts)) {
+            if (false === MailjetApi::syncMailjetContacts($mailjet_sync_list, $subscribedContacts, 'addnoforce')) {
+                $success = false;
+            }
+        }
+        if (!empty($unsubContacts)) {
+            if (false === MailjetApi::syncMailjetContacts($mailjet_sync_list, $unsubContacts, 'unsub')) {
+                $success = false;
+            }
+        }
+
+        return $success;
+    }
+
+    public function get_customer_edata($userId) {
+        $userData = get_userdata($userId);
+
+        $customerProperties = [];
         $userRoles = $userData->roles;
         if ($userRoles[0] === 'customer') {
             $args = array(
@@ -705,41 +758,13 @@ class WooCommerceSettings
             );
             $orders = wc_get_orders($args);
             $customer = new \WC_Customer($userId);
-            $currentValues['woo_total_orders_count'] = (string)count($orders);
-            $currentValues['woo_total_spent'] = (string)$customer->get_total_spent();
-            $currentValues['woo_account_creation_date'] = $customer->get_date_created();
+            $customerProperties['woo_total_orders_count'] = (string)count($orders);
+            $customerProperties['woo_total_spent'] = (string)$customer->get_total_spent();
+            $customerProperties['woo_account_creation_date'] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
             if (is_array($orders) && !empty($orders)) {
-                $currentValues['woo_last_order_date'] = $orders[0]->get_date_paid();
+                $customerProperties['woo_last_order_date'] = $orders[0]->get_date_paid()->date('Y-m-d\TH:i:s\Z');
             }
         }
-        $contactData = MailjetApi::getContactDataByEmail($userEmail)[0]['Data'];
-        $contactProperties = [];
-        foreach ($contactData as $property) {
-            $contactProperties[$property['Name']] = $property['Value'];
-        }
-
-        foreach ($currentValues as $propKey => $propValue) {
-            if (!array_key_exists($propKey, $contactProperties) || $contactProperties[$propKey] !== $propValue) {
-                if ($propValue instanceof \WC_DateTime) {
-                    // convert date to mailjet format to check if the value is the same, if it isn't it updates it
-                    $dateStr = $propValue->date(\DateTime::RFC3339);
-                    $dateStr = substr($dateStr, 0, strpos($dateStr, '+')) . 'Z';
-                    if ($contactProperties[$propKey] !== $dateStr) {
-                        $data[] = array(
-                            'Name' => $propKey,
-                            'Value' => $dateStr
-                        );
-                        MailjetApi::updateContactData($userEmail, $data);
-                    }
-                }
-                else {
-                    $data[] = array(
-                        'Name' => $propKey,
-                        'Value' => $propValue
-                    );
-                    MailjetApi::updateContactData($userEmail, $data);
-                }
-            }
-        }
+        return $customerProperties;
     }
 }

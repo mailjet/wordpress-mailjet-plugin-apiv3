@@ -152,7 +152,7 @@ class SubscriptionOptionsSettings
             }
         }
 
-        $subscribers = MailjetApi::getSubscribersFromList(10209637);
+        $subscribers = MailjetApi::getSubscribersFromList($mailjet_sync_list);
         foreach ($subscribers as $sub) {
             $email = $sub['Contact']['Email']['Email'];
             if (array_key_exists($email, $unsubContacts)) {
