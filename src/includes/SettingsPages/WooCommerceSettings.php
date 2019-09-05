@@ -105,9 +105,9 @@ class WooCommerceSettings
             if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_woo_sync === 1) {
                 $mailjet_sync_list = get_option('mailjet_sync_list');
                 if (!empty($mailjet_sync_list) && $mailjet_sync_list > 0) {
-                    $edataGuestProperties = self::get_guest_edata($user_email);
+                    $edataGuestProperties = $this->get_guest_edata($user_email);
                     if (is_array($edataGuestProperties) && !empty($edataGuestProperties)) {
-                        $contactproperties = array_merge($contactproperties, $edataGuestProperties[$user_email]);
+                        $contactproperties = array_merge($contactproperties, $edataGuestProperties);
                     }
                 }
             }
@@ -722,7 +722,7 @@ class WooCommerceSettings
         if ($subscribers === false) {
             return false;
         }
-        $guestProperties = self::get_guest_edata();
+        $guestProperties = $this->get_guest_edata();
         foreach ($subscribers as $sub) {
             $email = $sub['Contact']['Email']['Email'];
             $properties = array();
@@ -780,16 +780,23 @@ class WooCommerceSettings
         $status = $order->get_status();
         if ($status === 'processing' || $status === 'completed' || $status === 'cancelled' || $status === 'refunded') {
             $user = $order->get_user();
-            if ($user === false) {
+            if ($user === false) { // guest user
+                $email = $order->get_billing_email();
+                $properties = $this->get_guest_edata($email);
+            }
+            else {
+                $email = $user->user_email;
+                $properties = $this->get_customer_edata($user->ID);
+            }
+            $isSubscribed = MailjetApi::checkContactSubscribedToList($email, $mailjet_sync_list);
+            if (!$isSubscribed && $user === false) { // do not save into contact list unsubscribed guest
                 return false;
             }
-            $properties = $this->get_customer_edata($user->ID);
             if (is_array($properties) && !empty($properties)) {
                 $contact = array(array(
-                    'Email' => $user->user_email,
+                    'Email' => $email,
                     'Properties' => $properties
                 ));
-                $isSubscribed = MailjetApi::checkContactSubscribedToList($user->user_email, $mailjet_sync_list, true);
                 $action = $isSubscribed ? 'addnoforce' : 'unsub';
                 MailjetApi::syncMailjetContacts($mailjet_sync_list, $contact, $action);
             }
@@ -798,7 +805,7 @@ class WooCommerceSettings
         return true;
     }
 
-    public function get_customer_edata($userId) {
+    private function get_customer_edata($userId) {
         $userData = get_userdata($userId);
 
         $customerProperties = [];
@@ -827,7 +834,7 @@ class WooCommerceSettings
      * @param string $guestEmail
      * @return array
      */
-    public static function get_guest_edata($guestEmail = '') {
+    private function get_guest_edata($guestEmail = '') {
         $args = array(
             'customer_id' => 0,
             'status' => ['processing', 'completed'],
@@ -856,6 +863,11 @@ class WooCommerceSettings
                 }
             }
         }
-        return $guestProperties;
+        if (!empty($guestEmail)) {
+            return $guestProperties[$guestEmail];
+        }
+        else {
+            return $guestProperties;
+        }
     }
 }
