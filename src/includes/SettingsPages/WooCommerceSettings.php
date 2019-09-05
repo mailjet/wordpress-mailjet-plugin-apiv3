@@ -98,6 +98,21 @@ class WooCommerceSettings
             $contactproperties['lastname'] = $last_name;
         }
 
+        // e-data sync if needed for WooCommerce guest subscription
+        if ($action === 'addforce' && get_user_by_email($user_email) === false) { // check for guest subscription
+            $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
+            $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
+            if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_woo_sync === 1) {
+                $mailjet_sync_list = get_option('mailjet_sync_list');
+                if (!empty($mailjet_sync_list) && $mailjet_sync_list > 0) {
+                    $edataGuestProperties = self::get_guest_edata($user_email);
+                    if (is_array($edataGuestProperties) && !empty($edataGuestProperties)) {
+                        $contactproperties = array_merge($contactproperties, $edataGuestProperties[$user_email]);
+                    }
+                }
+            }
+        }
+
         // Add the user to a contact list
         return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList($this->getWooContactList(), $user_email, $action, $contactproperties);
     }
