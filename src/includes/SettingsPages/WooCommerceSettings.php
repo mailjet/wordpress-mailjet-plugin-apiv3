@@ -20,6 +20,11 @@ use MailjetPlugin\Includes\MailjetLogger;
  */
 class WooCommerceSettings
 {
+    CONST WOO_PROP_TOTAL_ORDERS = 'woo_total_orders_count';
+    CONST WOO_PROP_TOTAL_SPENT = 'woo_total_spent';
+    CONST WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
+    CONST WOO_PROP_ACCOUNT_CREATION_DATE = 'woo_account_creation_date';
+
     private  $debuggerEmail = '';
 
     public function __construct()
@@ -662,10 +667,10 @@ class WooCommerceSettings
 
     public function init_edata() {
         $propertyTypes = [
-            'woo_total_orders_count' => 'int',
-            'woo_total_spent' => 'float',
-            'woo_last_order_date' => 'datetime',
-            'woo_account_creation_date' => 'datetime'
+            self::WOO_PROP_TOTAL_ORDERS => 'int',
+            self::WOO_PROP_TOTAL_SPENT => 'float',
+            self::WOO_PROP_LAST_ORDER_DATE => 'datetime',
+            self::WOO_PROP_ACCOUNT_CREATION_DATE => 'datetime'
         ];
         $properties = MailjetApi::getContactProperties();
 
@@ -702,18 +707,24 @@ class WooCommerceSettings
         if ($subscribers === false) {
             return false;
         }
+        $guestProperties = self::get_guest_edata();
         foreach ($subscribers as $sub) {
             $email = $sub['Contact']['Email']['Email'];
+            $properties = array();
             if (array_key_exists($email, $unsubUsers)) {
                 $user = $unsubUsers[$email];
                 $properties = $this->get_customer_edata($user->ID);
-                if (is_array($properties) && !empty($properties)) {
-                    array_push($subscribedContacts, array(
-                        'Email' => $user->user_email,
-                        'Properties' => $properties
-                    ));
-                }
                 unset($unsubUsers[$email]);
+            }
+            else if (array_key_exists($email, $guestProperties)) {
+                $properties = $guestProperties[$email];
+            }
+
+            if (is_array($properties) && !empty($properties)) {
+                $subscribedContacts[] = array(
+                    'Email' => $email,
+                    'Properties' => $properties
+                );
             }
         }
 
@@ -722,10 +733,10 @@ class WooCommerceSettings
             if (!empty($userEmail)) {
                 $properties = $this->get_customer_edata($user->ID);
                 if (is_array($properties) && !empty($properties)) {
-                    array_push($unsubContacts, array(
+                    $unsubContacts[] = array(
                         'Email' => $user->user_email,
                         'Properties' => $properties
-                    ));
+                    );
                 }
             }
         }
@@ -781,17 +792,55 @@ class WooCommerceSettings
             $args = array(
                 'customer_id' => $userId,
                 'status' => ['completed', 'processing'],
+                'type' => 'shop_order',
                 'limit' => -1,
             );
             $orders = wc_get_orders($args);
             $customer = new \WC_Customer($userId);
-            $customerProperties['woo_total_orders_count'] = (string)count($orders);
-            $customerProperties['woo_total_spent'] = (string)$customer->get_total_spent();
-            $customerProperties['woo_account_creation_date'] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
+            $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = (string)count($orders);
+            $customerProperties[self::WOO_PROP_TOTAL_SPENT] = (string)$customer->get_total_spent();
+            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
             if (is_array($orders) && !empty($orders)) {
-                $customerProperties['woo_last_order_date'] = $orders[0]->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+                $customerProperties[self::WOO_PROP_LAST_ORDER_DATE] = $orders[0]->get_date_paid()->date('Y-m-d\TH:i:s\Z');
             }
         }
         return $customerProperties;
+    }
+
+    /**
+     * Get e-commerce data for a particular guest if email address is given or for all guest if not
+     * @param string $guestEmail
+     * @return array
+     */
+    public static function get_guest_edata($guestEmail = '') {
+        $args = array(
+            'customer_id' => 0,
+            'status' => ['processing', 'completed'],
+            'type' => 'shop_order',
+            'limit' => -1,
+        );
+        if (!empty($guestEmail)) {
+            $args['customer'] = $guestEmail;
+        }
+        $orders = wc_get_orders($args);
+        $guestProperties = array();
+        foreach ($orders as $order) {
+            $email = $order->get_billing_email();
+            $date = $order->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+            if (!array_key_exists($email, $guestProperties)) {
+                $guestProperties[$email] = array();
+                $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS] = 1;
+                $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] = $order->get_total();
+                $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE] = $date;
+            }
+            else {
+                $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS]++;
+                $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
+                if ($date > $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) {
+                    $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE] = $date;
+                }
+            }
+        }
+        return $guestProperties;
     }
 }
