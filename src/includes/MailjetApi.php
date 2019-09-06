@@ -275,6 +275,53 @@ class MailjetApi
         }
     }
 
+    public static function getMailjetSegments() {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        try {
+            $response = $mjApiClient->get(Resources::$Contactfilter);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+        }
+    }
+
+    public static function createMailjetSegment($name, $expression, $description = '') {
+        if (empty($name) || empty($expression)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $body = [
+            'Description' => $description,
+            'Expression' => $expression,
+            'Name' => $name
+        ];
+        try {
+            $response = $mjApiClient->post(Resources::$Contactfilter, ['body' => $body]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+        }
+    }
+
     public static function getMailjetSenders()
     {
         try {

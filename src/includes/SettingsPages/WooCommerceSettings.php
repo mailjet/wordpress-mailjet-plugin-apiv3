@@ -681,6 +681,7 @@ class WooCommerceSettings
     }
 
     public function init_edata() {
+        // check properties creation
         $propertyTypes = [
             self::WOO_PROP_TOTAL_ORDERS => 'int',
             self::WOO_PROP_TOTAL_SPENT => 'float',
@@ -699,6 +700,43 @@ class WooCommerceSettings
             foreach ($propertyTypes as $propKey => $propType){
                 MailjetApi::createMailjetContactProperty($propKey, $propType);
             }
+        }
+
+        // check predefined segments creation
+        $segments = MailjetApi::getMailjetSegments();
+        $newSegments = array(
+            'Newcomers' => array(
+                'expr' => '(IsInPreviousDays(' . self::WOO_PROP_ACCOUNT_CREATION_DATE . ',30))',
+                'description' => __('Customers who have created an account in the past 30 days')
+            ),
+            'Potential customers' => array(
+                'expr' => '(' . self::WOO_PROP_TOTAL_ORDERS . '<1)',
+                'description' => __('Contacts that don\'t have any orders')
+            ),
+            'First time customers' => array(
+                'expr' => '(' . self::WOO_PROP_TOTAL_ORDERS . '=1) and (IsInPreviousDays(' . self::WOO_PROP_LAST_ORDER_DATE . ',30))',
+                'description' => __('Customers who have made their first purchase in the past 30 days')
+            ),
+            'Recent customers' => array(
+                'expr' => '(IsInPreviousDays(' . self::WOO_PROP_LAST_ORDER_DATE . ',30))',
+                'description' => __('Customers who have purchased in the past 30 days')
+            ),
+            'Repeat customers' => array(
+                'expr' => '(' . self::WOO_PROP_TOTAL_ORDERS . '>1)',
+                'description' => __('Customers who have purchased more than once')
+            ),
+            'Lapsed customers' => array(
+                'expr' => '(not IsInPreviousDays(' . self::WOO_PROP_LAST_ORDER_DATE . ',180))',
+                'description' => __('Customers who haven\'t purchased in the past 6 months')
+            )
+        );
+        foreach ($segments as $seg) {
+            if (array_key_exists($seg['Name'], $newSegments)) {
+                unset($newSegments[$seg['Name']]);
+            }
+        }
+        foreach ($newSegments as $segKey => $segValues){
+            MailjetApi::createMailjetSegment($segKey, $segValues['expr'], $segValues['description']);
         }
     }
 
