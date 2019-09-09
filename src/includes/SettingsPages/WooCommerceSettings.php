@@ -33,6 +33,36 @@ class WooCommerceSettings
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
     }
 
+    /**
+     *  Adding checkboxes and extra fields in WooCommerce profile edition
+     */
+    public function mailjet_show_extra_woo_profile_fields() {
+        // If contact list is not selected, then do not show the extra fields
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $userId = get_current_user_id();
+        if ((int)$activate_mailjet_sync === 1 && (int)$mailjet_sync_list > 0 && $userId > 0) {
+            $mailjet_subscribed = esc_attr(get_the_author_meta('mailjet_subscribe_ok', $userId));
+            woocommerce_form_field('mailjet_woo_subscribe_ok', array(
+                'type' => 'checkbox',
+                'label' => __('Subscribe to our newsletter', 'mailjet-for-wordpress'),
+                'required' => false,
+            ), $mailjet_subscribed);
+        }
+    }
+
+    public function save_mailjet_extra_woo_profile_fields($userId) {
+        if ((int)$userId > 0) {
+            $firstName = filter_var($_POST['account_first_name'], FILTER_SANITIZE_STRING);
+            $lastName = filter_var($_POST['account_last_name'], FILTER_SANITIZE_STRING);
+            $accountEmail = filter_var($_POST['account_email'], FILTER_SANITIZE_EMAIL);
+            $mailjetSubscribed = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
+            $subscribe = isset($mailjetSubscribed) &&(int)$mailjetSubscribed === 1 ? '1' : '';
+            update_user_meta($userId, 'mailjet_subscribe_ok', $subscribe);
+            $this->mailjet_subscribe_unsub_woo_to_list($subscribe, $accountEmail, $firstName, $lastName);
+        }
+    }
+
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
