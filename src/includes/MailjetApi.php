@@ -160,6 +160,44 @@ class MailjetApi
 		return false;
 	}
 
+	public static function getSubscribersFromList($contactListId) {
+        if (!$contactListId || empty($contactListId)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $limit = 1000;
+        $dataArray = array();
+        $offset = 0;
+        do {
+            $filters = array(
+                'ContactsList' => $contactListId,
+                'Unsub' => false,
+                'Offset' => $offset,
+                'Limit' => $limit,
+                'Style' => 'Full'
+            );
+
+            try {
+                $response = $mjApiClient->get(Resources::$Listrecipient, array('filters' => $filters));
+            } catch (ConnectException $e) {
+                return false;
+            }
+            if ($response->success()) {
+                array_push($dataArray, $response->getData());
+            } else {
+                return false;
+            }
+            $offset += $limit;
+        } while ($response->getCount() >= $limit);
+        return array_merge(...$dataArray);
+    }
+
     public static function getContactProperties()
     {
 
@@ -358,7 +396,7 @@ class MailjetApi
      * @param $listId
      * @return bool
      */
-    public static function checkContactSubscribedToList($email, $listId)
+    public static function checkContactSubscribedToList($email, $listId, $getContactId = false)
     {
         $exists = false;
         $existsAndSubscribed = false;
@@ -385,9 +423,48 @@ class MailjetApi
             if (isset($data[0]['IsUnsubscribed']) && false == $data[0]['IsUnsubscribed']) {
                 $existsAndSubscribed = true;
             }
+            if ($getContactId && $exists && $existsAndSubscribed){
+                return $data[0]['ContactID'];
+            }
         }
 
         return $exists && $existsAndSubscribed;
+    }
+
+    public static function getContactDataByEmail($contactEmail)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $response = $mjApiClient->get(['contactdata', $contactEmail], []);
+
+        if ($response->success() && $response->getCount() > 0) {
+
+            return $response->getData();
+        }
+
+        return false;
+    }
+
+    public static function updateContactData($contactEmail, $data)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        $body = [
+            'Data' => $data
+        ];
+        try {
+            $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        return $response;
     }
 
     public static function getProfileName()

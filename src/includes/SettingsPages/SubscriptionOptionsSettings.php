@@ -30,7 +30,7 @@ class SubscriptionOptionsSettings
     {
 	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueScripts' ]);
 	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
-	    add_action( 'wp_ajax_get_contact_lists', [$this, 'getContactListsMenu']);
+	    add_action( 'wp_ajax_get_contact_lists_menu', [$this, 'getContactListsMenu']);
     }
 
 	public function mailjet_section_subscription_options_cb($args)
@@ -114,7 +114,7 @@ class SubscriptionOptionsSettings
             // Initial sync WP users to Mailjet
             $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
             $mailjet_sync_list = get_option('mailjet_sync_list');
-            if (!empty($activate_mailjet_initial_sync) && intval($mailjet_sync_list) > 0) {
+            if (!empty($activate_mailjet_initial_sync) && (int)$mailjet_sync_list > 0) {
                 $syncResponse = self::syncAllWpUsers();
                 if (false === $syncResponse) {
                     $executionError = true;
@@ -136,19 +136,44 @@ class SubscriptionOptionsSettings
     public static function syncAllWpUsers()
     {
         $mailjet_sync_list = get_option('mailjet_sync_list');
-        if (empty($mailjet_sync_list)) {
+        if ((int)$mailjet_sync_list <= 0) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please select a contact list.', 'mailjet-for-wordpress'), 'error');
             return false;
         }
-        $contactListId = get_option('mailjet_sync_list');
 
-        $users = get_users(array('fields' => array('ID', 'user_email')));
-        if (!(count($users) > 0)) {
+        $subContacts = array();
+        $unsubContacts = array();
+        foreach (get_users() as $user) {
+            if ($user->roles[0] === 'customer') {
+                $unsubContacts[$user->user_email] = $user;
+            }
+            else {
+                $subContacts[$user->user_email] = $user;
+            }
+        }
+
+        $subscribers = MailjetApi::getSubscribersFromList($mailjet_sync_list);
+        foreach ($subscribers as $sub) {
+            $email = $sub['Contact']['Email']['Email'];
+            if (array_key_exists($email, $unsubContacts)) {
+                $subContacts[$email] = $unsubContacts[$email];
+                unset($unsubContacts[$email]);
+            }
+        }
+        if (count($subContacts) <= 0 && count($unsubContacts) <= 0) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('No Wordpress users to add to Mailjet contact list', 'mailjet-for-wordpress'), 'error');
             return false;
         }
 
-        if (false === self::syncContactsToMailjetList($contactListId, $users, 'addforce')) {
+        $error = false;
+        if (false === self::syncContactsToMailjetList($mailjet_sync_list, $subContacts, 'addnoforce')) {
+            $error = true;
+        }
+        if (false === self::syncContactsToMailjetList($mailjet_sync_list, $unsubContacts, 'unsub')) {
+            $error = true;
+        }
+
+        if ($error) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing Wordpress users to your Mailjet contact list', 'mailjet-for-wordpress'), 'error');
             return false;
         } else {
@@ -219,6 +244,15 @@ class SubscriptionOptionsSettings
         return MailjetApi::syncMailjetContact($contactListId, $contact, $action);
     }
 
+    public function checkUserSubscription($userLogin, $user) {
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
+            $subscribed = MailjetApi::checkContactSubscribedToList($user->user_email, $mailjet_sync_list);
+            update_user_meta($user->ID, 'mailjet_subscribe_ok', $subscribed ? '1' : '');
+        }
+    }
+
     /**
      *  Adding checkboxes and extra fields for subscribing user and comment authors
      */
@@ -229,10 +263,10 @@ class SubscriptionOptionsSettings
         $mailjet_sync_list = get_option('mailjet_sync_list');
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             // Update the extra fields
-            if (is_object($user) && intval($user->ID) > 0) {
+            if (is_object($user) && (int)$user->ID > 0) {
                 $this->mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
             }
-            $checked = (is_object($user) && intval($user->ID) > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID))) ? 'checked="checked" ' : '';
+            $checked = (is_object($user) && (int)$user->ID > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID))) ? 'checked="checked" ' : '';
             set_query_var('checked', $checked);
             load_template(MAILJET_ADMIN_TAMPLATE_DIR . $this->profileFields);
         }
@@ -258,9 +292,9 @@ class SubscriptionOptionsSettings
         $mailjet_sync_list = get_option('mailjet_sync_list');
         if (!empty($mailjet_sync_list)) {
             $user = get_userdata($user_id);
-            $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
+            $action = (int)$subscribe === 1 ? 'addforce' : 'unsub';
             // Add the user to a contact list
-            if (false == SubscriptionOptionsSettings::syncContactsToMailjetList(get_option('mailjet_sync_list'), $user, $action)) {
+            if (false === self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action)) {
                 return false;
             } else {
                 return true;
@@ -369,5 +403,6 @@ class SubscriptionOptionsSettings
         $path = plugins_url('/src/admin/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
 	    wp_register_script('ajaxHandle',  $path,  array('jquery'), false,true);
 	    wp_enqueue_script( 'ajaxHandle' );
+        wp_enqueue_script('mailjet-ajax', plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src'));
     }
 }
