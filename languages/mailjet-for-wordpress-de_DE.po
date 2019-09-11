@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-09 12:23+0300\n"
-"PO-Revision-Date: 2019-07-18 07:11+0000\n"
+"PO-Revision-Date: 2019-08-23 09:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: German (Germany)\n"
 "Language: de-DE\n"
@@ -84,6 +84,8 @@ msgid ""
 "Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> "
 "Port: %s"
 msgstr ""
+"Your Mailjet configuration is ok! <br /> Site URL: %s <br /> Encryption: %s "
+"<br /> Port: %s"
 
 #: src/includes/MailjetMenu.php:49 src/includes/MailjetMenu.php:60 
 #: src/includes/SettingsPages/InitialSettings.php:59
@@ -347,7 +349,7 @@ msgstr "<b>Geheimer Key</b>"
 #: src/includes/SettingsPages/ConnectAccountSettings.php:85 
 #: src/includes/SettingsPages/InitialSettings.php:102
 msgid "Mailjet API credentials"
-msgstr "Ihre API-Anmeldedaten"
+msgstr ""
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:119 
 #: src/includes/SettingsPages/EnableSendingSettings.php:209 
@@ -466,8 +468,7 @@ msgstr "Port für die SMTP-Kommunikation"
 #: src/includes/SettingsPages/EnableSendingSettings.php:96
 msgid ""
 "Enable SSL communication with mailjet.com (only available with port 465)"
-msgstr ""
-"Enable SSL communication with mailjet.com (only available with port 465)"
+msgstr "Aktivieren der Kommunikation mit SSL/TLS-Verschlüsselung"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:105
 msgid "Send a test"
@@ -640,7 +641,7 @@ msgstr "Anwenden & Fortfahren"
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:269
 msgid "Back"
-msgstr "Zurück"
+msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:273
 msgid "Skip this step"
@@ -1149,10 +1150,9 @@ msgstr ""
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr ""
 
-msgid "We have sent the newsletter subscription confirmation link to you"
-msgstr "Eine Bestätigungs-E-Mail wurde an:"
-
-msgid "To confirm your subscription you have to click on the provided link."
+msgid ""
+"If you like Mailjet please support us with a %s rating on WordPress.org. "
+"Thank you %s"
 msgstr ""
-" gesendet. Bitte überprüfen Sie Ihren E-Mail-Posteingang und klicken Sie auf "
-"den Link, um Ihre Anmeldung zu bestätigen."
+"Wenn Sie von Mailjet überzeugt sind, unterstützen Sie uns doch bitte mit "
+"einer %s Bewertung auf WordPress.org. Vielen Dank! %s"

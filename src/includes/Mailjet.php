@@ -74,7 +74,7 @@ class Mailjet
         if (defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '5.1.1';
+            $this->version = '5.1.3';
         }
         $this->plugin_name = 'mailjet';
 
@@ -252,13 +252,18 @@ class Mailjet
 
     private function addWoocommerceActions()
     {
+        $woocommerceObject =  new WooCommerceSettings();
+        if (get_option('mailjet_woo_edata_sync') === '1'){
+            $this->loader->add_action('woocommerce_order_status_changed', $woocommerceObject, 'order_edata_sync', 10, 1);
+        }
+        $this->loader->add_action('woocommerce_edit_account_form', $woocommerceObject, 'mailjet_show_extra_woo_profile_fields', 10, 1);
+        $this->loader->add_action('woocommerce_save_account_details', $woocommerceObject, 'save_mailjet_extra_woo_profile_fields', 10, 1);
+
         $activeActions = get_option('mailjet_wc_active_hooks');
         $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
-
         if (!$activeActions || empty($activeActions)){
             return false;
         }
-        $woocommerceObject =  new WooCommerceSettings();
         foreach ($activeActions as $action){
             $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
         }

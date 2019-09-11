@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-09 12:24+0300\n"
-"PO-Revision-Date: 2019-07-18 07:09+0000\n"
+"PO-Revision-Date: 2019-08-23 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: Italian (Italy)\n"
 "Language: it-IT\n"
@@ -347,7 +347,7 @@ msgstr "<b>Chiave Segreta</b>"
 #: src/includes/SettingsPages/ConnectAccountSettings.php:85 
 #: src/includes/SettingsPages/InitialSettings.php:102
 msgid "Mailjet API credentials"
-msgstr "Le tue credenziali API"
+msgstr ""
 
 #: src/includes/SettingsPages/ConnectAccountSettings.php:119 
 #: src/includes/SettingsPages/EnableSendingSettings.php:209 
@@ -464,9 +464,7 @@ msgstr "Porta da utilizzare per la comunicazione SMTP"
 #: src/includes/SettingsPages/EnableSendingSettings.php:96
 msgid ""
 "Enable SSL communication with mailjet.com (only available with port 465)"
-msgstr ""
-"Abilitare la comunicazione SSL con mailjet.com (disponibile solo con la "
-"porta 465)"
+msgstr "Utilizza una crittografia SSL/TLS"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:105
 msgid "Send a test"
@@ -637,7 +635,7 @@ msgstr "Applica e continua"
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:269
 msgid "Back"
-msgstr "Torna "
+msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:273
 msgid "Skip this step"
@@ -1143,10 +1141,9 @@ msgstr ""
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr ""
 
-msgid "We have sent the newsletter subscription confirmation link to you"
-msgstr "Un'email di conferma è stata inviata a"
-
-msgid "To confirm your subscription you have to click on the provided link."
+msgid ""
+"If you like Mailjet please support us with a %s rating on WordPress.org. "
+"Thank you %s"
 msgstr ""
-". Controlla la tua casella di posta elettronica e clicca sul link per "
-"confermare la tua registrazione."
+"Se ti piace la Mailjet, sostienici con una recensione %s su WordPress.org. "
+"Grazie! %s"

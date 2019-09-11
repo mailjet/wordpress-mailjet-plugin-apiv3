@@ -20,6 +20,10 @@ use MailjetPlugin\Includes\MailjetLogger;
  */
 class WooCommerceSettings
 {
+    CONST WOO_PROP_TOTAL_ORDERS = 'woo_total_orders_count';
+    CONST WOO_PROP_TOTAL_SPENT = 'woo_total_spent';
+    CONST WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
+    CONST WOO_PROP_ACCOUNT_CREATION_DATE = 'woo_account_creation_date';
 
     const ERROR_REPORTING_MAIL_ADRESS = 'plugins@mailjet.com';
 
@@ -59,17 +63,44 @@ class WooCommerceSettings
         return $template;
     }
 
+    /**
+     *  Adding checkboxes and extra fields in WooCommerce profile edition
+     */
+    public function mailjet_show_extra_woo_profile_fields() {
+        // If contact list is not selected, then do not show the extra fields
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $userId = get_current_user_id();
+        if ((int)$activate_mailjet_sync === 1 && (int)$mailjet_sync_list > 0 && $userId > 0) {
+            $mailjet_subscribed = esc_attr(get_the_author_meta('mailjet_subscribe_ok', $userId));
+            woocommerce_form_field('mailjet_woo_subscribe_ok', array(
+                'type' => 'checkbox',
+                'label' => __('Subscribe to our newsletter', 'mailjet-for-wordpress'),
+                'required' => false,
+            ), $mailjet_subscribed);
+        }
+    }
+
+    public function save_mailjet_extra_woo_profile_fields($userId) {
+        if ((int)$userId > 0) {
+            $firstName = filter_var($_POST['account_first_name'], FILTER_SANITIZE_STRING);
+            $lastName = filter_var($_POST['account_last_name'], FILTER_SANITIZE_STRING);
+            $accountEmail = filter_var($_POST['account_email'], FILTER_SANITIZE_EMAIL);
+            $mailjetSubscribed = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
+            $subscribe = isset($mailjetSubscribed) &&(int)$mailjetSubscribed === 1 ? '1' : '';
+            update_user_meta($userId, 'mailjet_subscribe_ok', $subscribe);
+            $this->mailjet_subscribe_unsub_woo_to_list($subscribe, $accountEmail, $firstName, $lastName);
+        }
+    }
+
     public function mailjet_show_extra_woo_fields($checkout)
     {
         $user = wp_get_current_user();
-        $chaeckoutBox = get_option('mailjet_woo_checkout_checkbox');
-        $chaeckoutText = get_option('mailjet_woo_checkout_box_text');
+        $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
         $contactList = $this->getWooContactList();
 
         // Display the checkbox only for NOT-logged in users or for logged-in but not subscribed to the Woo list
-//        if (get_option('activate_mailjet_woo_integration') && get_option('mailjet_woo_list')){
-        if ($contactList !== false) {
-
+        if ($contactList !== false && $checkoutBox === '1') {
             // Check if user is logged-in and already Subscribed to the contact list
             $contactAlreadySubscribedToList = false;
             if ($user->exists()) {
@@ -104,9 +135,8 @@ class WooCommerceSettings
         if (isset($_POST['_my_field_name']) && !empty($_POST['_my_field_name']))
             $order->update_meta_data('_my_field_name', sanitize_text_field($_POST['_my_field_name']));
 
-
-        $subscribe = filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-        if ($subscribe) {
+        $subscribe = (int)filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
+        if ($subscribe === 1) {
             $order->update_meta_data('mailjet_woo_subscribe_ok', sanitize_text_field($_POST['mailjet_woo_subscribe_ok']));
             $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
         }
@@ -117,7 +147,7 @@ class WooCommerceSettings
      */
     public function mailjet_subscribe_unsub_woo_to_list($subscribe, $user_email, $first_name, $last_name)
     {
-        $action = intval($subscribe) === 1 ? 'addforce' : 'remove';
+        $action = (int)$subscribe === 1 ? 'addforce' : 'unsub';
         $contactproperties = [];
         if (!empty($first_name)) {
             MailjetApi::createMailjetContactProperty('firstname');
@@ -126,6 +156,21 @@ class WooCommerceSettings
         if (!empty($last_name)) {
             MailjetApi::createMailjetContactProperty('lastname');
             $contactproperties['lastname'] = $last_name;
+        }
+
+        // e-data sync if needed for WooCommerce guest subscription
+        if ($action === 'addforce' && get_user_by_email($user_email) === false) { // check for guest subscription
+            $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
+            $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
+            if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_woo_sync === 1) {
+                $mailjet_sync_list = get_option('mailjet_sync_list');
+                if (!empty($mailjet_sync_list) && $mailjet_sync_list > 0) {
+                    $edataGuestProperties = $this->get_guest_edata($user_email);
+                    if (is_array($edataGuestProperties) && !empty($edataGuestProperties)) {
+                        $contactproperties = array_merge($contactproperties, $edataGuestProperties);
+                    }
+                }
+            }
         }
 
         // Add the user to a contact list
@@ -151,7 +196,9 @@ class WooCommerceSettings
         }
         $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
 
-        $message = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
+        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
+        $message = file_get_contents($subscriptionTemplate);
+
         $emailParams = array(
             '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
             '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
@@ -165,7 +212,7 @@ class WooCommerceSettings
             $message = str_replace($key, $value, $message);
         }
 
-        $email_subject = __('Subscription Confirmation', 'mailjet');
+        $email_subject = __('Subscription Confirmation', 'mailjet-for-wordpress');
         add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
         $res = wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
@@ -195,17 +242,10 @@ class WooCommerceSettings
     {
         $wooActiv = get_option('activate_mailjet_woo_integration');
         if (!$wooActiv) {
-
             return false;
         }
-        $checkoutBox = get_option('mailjet_woo_checkout_checkbox');
         $mainList = get_option('mailjet_sync_list');
-        $wooList = get_option('mailjet_woo_list');
-        if (!empty($wooList)) {
-
-            return $wooList;
-        } elseif (!empty($mainList) && !empty($checkoutBox)) {
-
+        if ((int)$mainList > 0) {
             return $mainList;
         }
 
@@ -304,6 +344,20 @@ class WooCommerceSettings
             update_option('activate_mailjet_woo_integration', '');
             $activate = false;
         }
+
+        if ($activate && isset($data->mailjet_woo_edata_sync) && $data->mailjet_woo_edata_sync === '1') {
+            if (get_option('mailjet_woo_edata_sync') !== '1') {
+                if ($this->all_customers_edata_sync() === false) {
+                    $result['success'] = false;
+                    $result['message'] = __('An error occured during e-commerce data sync! Please try again later.');
+                    return $result;
+                }
+            }
+        }
+        else {
+            update_option('mailjet_woo_edata_sync', '');
+        }
+
         foreach ($data as $key => $val) {
             $optionVal = $activate ? $val : '';
             update_option($key, sanitize_text_field($optionVal));
@@ -1040,5 +1094,196 @@ class WooCommerceSettings
             }
         }
         header( 'Location: ' . $url);
+    }
+
+    public function init_edata() {
+        $propertyTypes = [
+            self::WOO_PROP_TOTAL_ORDERS => 'int',
+            self::WOO_PROP_TOTAL_SPENT => 'float',
+            self::WOO_PROP_LAST_ORDER_DATE => 'datetime',
+            self::WOO_PROP_ACCOUNT_CREATION_DATE => 'datetime'
+        ];
+        $properties = MailjetApi::getContactProperties();
+
+        foreach ($properties as $prop){
+            if (array_key_exists($prop['Name'], $propertyTypes)){
+                unset($propertyTypes[$prop['Name']]);
+            }
+        }
+
+        if (!empty($propertyTypes)){
+            foreach ($propertyTypes as $propKey => $propType){
+                MailjetApi::createMailjetContactProperty($propKey, $propType);
+            }
+        }
+    }
+
+    public function all_customers_edata_sync() {
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if (empty($mailjet_sync_list) || $mailjet_sync_list < 0) {
+            return false;
+        }
+
+        $this->init_edata();
+        $users = get_users(array('fields' => array('ID', 'user_email'), 'role__in' => 'customer'));
+
+        $unsubUsers = array();
+        foreach ($users as $user) {
+            $unsubUsers[$user->user_email] = $user;
+        }
+
+        $subscribedContacts = array();
+        $unsubContacts = array();
+        $subscribers = MailjetApi::getSubscribersFromList($mailjet_sync_list);
+        if ($subscribers === false) {
+            return false;
+        }
+        $guestProperties = $this->get_guest_edata();
+        foreach ($subscribers as $sub) {
+            $email = $sub['Contact']['Email']['Email'];
+            $properties = array();
+            if (array_key_exists($email, $unsubUsers)) {
+                $user = $unsubUsers[$email];
+                $properties = $this->get_customer_edata($user->ID);
+                unset($unsubUsers[$email]);
+            }
+            else if (array_key_exists($email, $guestProperties)) {
+                $properties = $guestProperties[$email];
+            }
+
+            if (is_array($properties) && !empty($properties)) {
+                $subscribedContacts[] = array(
+                    'Email' => $email,
+                    'Properties' => $properties
+                );
+            }
+        }
+
+        foreach($unsubUsers as $user) {
+            $userEmail = $user->user_email;
+            if (!empty($userEmail)) {
+                $properties = $this->get_customer_edata($user->ID);
+                if (is_array($properties) && !empty($properties)) {
+                    $unsubContacts[] = array(
+                        'Email' => $user->user_email,
+                        'Properties' => $properties
+                    );
+                }
+            }
+        }
+
+        $success = true;
+        if (!empty($subscribedContacts)) {
+            if (false === MailjetApi::syncMailjetContacts($mailjet_sync_list, $subscribedContacts, 'addnoforce')) {
+                $success = false;
+            }
+        }
+        if (!empty($unsubContacts)) {
+            if (false === MailjetApi::syncMailjetContacts($mailjet_sync_list, $unsubContacts, 'unsub')) {
+                $success = false;
+            }
+        }
+
+        return $success;
+    }
+
+    public function order_edata_sync($orderId) {
+        $order = wc_get_order($orderId);
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        if ($order === false || empty($mailjet_sync_list) || $mailjet_sync_list < 0) {
+            return false;
+        }
+        $status = $order->get_status();
+        if ($status === 'processing' || $status === 'completed' || $status === 'cancelled' || $status === 'refunded') {
+            $user = $order->get_user();
+            if ($user === false) { // guest user
+                $email = $order->get_billing_email();
+                $properties = $this->get_guest_edata($email);
+            }
+            else {
+                $email = $user->user_email;
+                $properties = $this->get_customer_edata($user->ID);
+            }
+            $isSubscribed = MailjetApi::checkContactSubscribedToList($email, $mailjet_sync_list);
+            if (!$isSubscribed && $user === false) { // do not save into contact list unsubscribed guest
+                return false;
+            }
+            if (is_array($properties) && !empty($properties)) {
+                $contact = array(array(
+                    'Email' => $email,
+                    'Properties' => $properties
+                ));
+                $action = $isSubscribed ? 'addnoforce' : 'unsub';
+                MailjetApi::syncMailjetContacts($mailjet_sync_list, $contact, $action);
+            }
+        }
+
+        return true;
+    }
+
+    private function get_customer_edata($userId) {
+        $userData = get_userdata($userId);
+
+        $customerProperties = [];
+        $userRoles = $userData->roles;
+        if ($userRoles[0] === 'customer') {
+            $args = array(
+                'customer_id' => $userId,
+                'status' => ['completed', 'processing'],
+                'type' => 'shop_order',
+                'limit' => -1,
+            );
+            $orders = wc_get_orders($args);
+            $customer = new \WC_Customer($userId);
+            $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = (string)count($orders);
+            $customerProperties[self::WOO_PROP_TOTAL_SPENT] = (string)$customer->get_total_spent();
+            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
+            if (is_array($orders) && !empty($orders)) {
+                $customerProperties[self::WOO_PROP_LAST_ORDER_DATE] = $orders[0]->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+            }
+        }
+        return $customerProperties;
+    }
+
+    /**
+     * Get e-commerce data for a particular guest if email address is given or for all guest if not
+     * @param string $guestEmail
+     * @return array
+     */
+    private function get_guest_edata($guestEmail = '') {
+        $args = array(
+            'customer_id' => 0,
+            'status' => ['processing', 'completed'],
+            'type' => 'shop_order',
+            'limit' => -1,
+        );
+        if (!empty($guestEmail)) {
+            $args['customer'] = $guestEmail;
+        }
+        $orders = wc_get_orders($args);
+        $guestProperties = array();
+        foreach ($orders as $order) {
+            $email = $order->get_billing_email();
+            $date = $order->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+            if (!array_key_exists($email, $guestProperties)) {
+                $guestProperties[$email] = array();
+                $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS] = 1;
+                $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] = $order->get_total();
+                $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE] = $date;
+            }
+            else {
+                $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS]++;
+                $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
+                if ($date > $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) {
+                    $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE] = $date;
+                }
+            }
+        }
+        if (!empty($guestEmail)) {
+            return $guestProperties[$guestEmail];
+        }
+        else {
+            return $guestProperties;
+        }
     }
 }

@@ -199,6 +199,7 @@ class PoCompiler
             $maxIterations = max($nPlurals, $pluralsFound);
             for ($i = 0; $i < $maxIterations; $i++) {
                 $value = isset($plurals[$i]) ? $plurals[$i] : '';
+                $output .= $entry->isObsolete() ? self::TOKEN_OBSOLETE : '';
                 $output .= 'msgstr['.$i.'] '.$this->cleanExport($value).$this->eol();
             }
 
@@ -220,7 +221,10 @@ class PoCompiler
             return '';
         }
 
-        return 'msgid_plural '.$this->cleanExport($value).$this->eol();
+        $output = '';
+        $output .= $entry->isObsolete() ? self::TOKEN_OBSOLETE : '';
+        $output .= 'msgid_plural '.$this->cleanExport($value).$this->eol();
+        return $output;
     }
 
     protected function buildProperty($property, $value, $obsolete = false)
@@ -265,21 +269,11 @@ class PoCompiler
 
     /**
      * @param string $value
-     *
      * @return array
      */
     private function wrapString($value)
     {
-        $length = mb_strlen($value);
-        if ($length > $this->wrappingColumn) {
-            $tokens = array();
-            for ($i = 0; $i < $length; $i += $this->wrappingColumn) {
-                $tokens[] = mb_substr($value, $i, $this->wrappingColumn);
-            }
-        } else {
-            $tokens = array($value);
-        }
-
-        return $tokens;
+        $wrapped = wordwrap($value, $this->wrappingColumn, " \n");
+        return explode("\n", $wrapped);
     }
 }
