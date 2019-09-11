@@ -21,7 +21,7 @@ use MailjetPlugin\Includes\MailjetLogger;
 class WooCommerceSettings
 {
 
-    const ERROR_REPORTING_MAIL_ADRESS = 'egicquel@mailjet.com';
+    const ERROR_REPORTING_MAIL_ADRESS = 'plugins@mailjet.com';
 
     public function __construct()
     {
