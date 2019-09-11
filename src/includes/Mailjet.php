@@ -260,10 +260,14 @@ class Mailjet
         $this->loader->add_action('woocommerce_save_account_details', $woocommerceObject, 'save_mailjet_extra_woo_profile_fields', 10, 1);
 
         $activeActions = get_option('mailjet_wc_active_hooks');
+        $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
         if (!$activeActions || empty($activeActions)){
             return false;
         }
         foreach ($activeActions as $action){
+            $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
+        }
+        foreach ($abandonedCartActiveActions as $action){
             $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
         }
         return true;
