@@ -138,7 +138,9 @@ class WooCommerceSettings
         $subscribe = (int)filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
         if ($subscribe === 1) {
             $order->update_meta_data('mailjet_woo_subscribe_ok', sanitize_text_field($_POST['mailjet_woo_subscribe_ok']));
-            $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
+            if (!$this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName)) {
+                die;
+            }
         }
     }
 
@@ -187,12 +189,12 @@ class WooCommerceSettings
         $error = empty($user_email) ? 'Email field is empty' : false;
         if (false !== $error) {
             _e($error, 'mailjet-for-wordpress');
-            die;
+            return false;
         }
 
         if (!is_email($user_email)) {
             _e('Invalid email', 'mailjet-for-wordpress');
-            die;
+            return false;
         }
         $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
 
@@ -216,6 +218,7 @@ class WooCommerceSettings
         add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
         $res = wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+        return $res;
     }
 
     /**
@@ -1005,15 +1008,17 @@ class WooCommerceSettings
        $listId = $this->getWooContactList();
 
        if (!$listId){
-           return ['success' => false, 'message' => 'You can\'t be subscribed at this moment.'];
+           return ['success' => false, 'message' => 'You can\'t subscribe at this moment.'];
        }
 
        if (MailjetApi::checkContactSubscribedToList($email, $listId)){
            return ['success' => true, 'message' => 'You are already subscribed.'];
        }
 
-       if ($this->mailjet_subscribe_unsub_woo_to_list(1, $email, $fName, $lName)){
-           return ['success' => true, 'message' => 'You\'re successfully subscribed to our E-mail list.'];
+       if ($this->mailjet_subscribe_confirmation_from_woo_form(1, $email, $fName, $lName)){
+           $message = __('We have sent the newsletter subscription confirmation link to you ') . '(' . $email . '). '
+               . __('To confirm your subscription you have to click on the provided link.');
+           return ['success' => true, 'message' => $message];
        }
 
        return ['success' => false, 'message' => 'Something went wrong.'];

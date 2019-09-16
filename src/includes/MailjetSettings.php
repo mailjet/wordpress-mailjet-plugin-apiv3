@@ -173,9 +173,9 @@ class MailjetSettings
 
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
-        $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
 
-        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync)) {
+        if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_sync === 1) {
             $wooCommerceSettings = new WooCommerceSettings();
             // Add the checkbox
             add_action('woocommerce_after_checkout_billing_form', array($wooCommerceSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
