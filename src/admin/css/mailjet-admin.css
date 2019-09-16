@@ -1331,13 +1331,13 @@ input:checked + .mj-slider:before {
 
 #mj-logo_top_bar {
     display: inline-flex;
-    position: absolute;
+    position: relative;
+    float: right;
+    margin-right: 35px;
     height: 30px;
-    width: 70px;
-    left: 92.5%;
+    width: 80px;
     top: 15px;
     color: #19BC9C;
-!important;
     cursor: pointer;
     /*vertical-align: middle;*/
 }
