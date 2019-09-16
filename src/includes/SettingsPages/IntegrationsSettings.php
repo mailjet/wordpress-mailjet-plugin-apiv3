@@ -121,7 +121,7 @@ class IntegrationsSettings
                             <input name="woocommerce[mailjet_woo_banner_text]" id="banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
                         </div>
                         <div class="mj-text-div" >
-                            <label class="mailjet-label" for="banner_label">Banner label</label>
+                            <label class="mailjet-label" for="banner_label">Button label</label>
                             <input name="woocommerce[mailjet_woo_banner_label]" id="banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
                         </div>
                     </div>
