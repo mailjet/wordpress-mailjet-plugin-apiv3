@@ -1234,6 +1234,10 @@ input:checked + .mj-slider:before {
     height: 0;
 }
 
+.mj-switch input:disabled {
+    opacity: 0;
+}
+
 .mj-woocommerce-contacts {
     height: 40px;
     width: 600px;
