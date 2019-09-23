@@ -386,18 +386,18 @@ class WooCommerceSettings
                         "Name" => ucwords(str_replace('_', ' ', $name)),
                         "OwnerType" => "user",
                         "Presets" => "string",
-                        "Purposes" => ['automation']
+                        "Purposes" => ['transactional']
                     ];
 
-                    $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
+                    $template = MailjetApi::createTemplate(['body' => $templateArgs, 'filters' => []]);
 
                     if ($template && !empty($template)) {
                         $templateContent = [];
                         $templateContent['id'] = $template['ID'];
                         $templateContent['body'] = $this->getTemplateContent($value['callable']);
                         $templateContent['filters'] = [];
-                        add_option('mailjet_' . $name, $template['ID']);
-                        $contentCreation = MailjetApi::createAutomationTemplateContent($templateContent);
+                        update_option('mailjet_' . $name, $template['ID']);
+                        $contentCreation = MailjetApi::createTemplateContent($templateContent);
                         if (!$contentCreation || empty($contentCreation)) {
                             $result['success'] = false;
                         }

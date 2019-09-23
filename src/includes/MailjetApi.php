@@ -583,7 +583,7 @@ class MailjetApi
         return  false;
     }
 
-    public static function createAutomationTemplate(array $arguments)
+    public static function createTemplate(array $arguments)
     {
         try {
             $mjApiClient = self::getApiClient();
@@ -609,7 +609,7 @@ class MailjetApi
     }
 
 
-    public static function createAutomationTemplateContent(array $content)
+    public static function createTemplateContent(array $content)
     {
         try {
             $mjApiClient = self::getApiClient();
