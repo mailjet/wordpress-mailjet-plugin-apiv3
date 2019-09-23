@@ -77,7 +77,7 @@ class Dashboard {
                             <p class="blockText"><?php _e( 'Activate order notification emails to inform customers of any new purchase, shipping or refund.', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
                                     id="nextBtnReverseDashboard4"
-                                    onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
+                                    onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage transactional emails', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                     </div>
                     <div class="col mj-grid">

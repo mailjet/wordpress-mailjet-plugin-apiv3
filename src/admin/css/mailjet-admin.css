@@ -1435,18 +1435,7 @@ input:checked + .mj-slider:before {
     font-family: Roboto;
     font-size: 14px;
     line-height: 20px;
-}
-
-.mj-order-notificartion-popup {
-    height: 311px;
-    width: 600px;
-    border-radius: 3px;
-    background-color: #FFFFFF;
-    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
-    position: absolute;
-    z-index: 9999;
-    margin: 10% 0 0 30%;
-
+    display: flex;
 }
 
 .mj-popup {
@@ -1459,7 +1448,7 @@ input:checked + .mj-slider:before {
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
     position: absolute;
     z-index: 9999;
-    margin: 10% 0 0 30%;
+    margin: 10% 0 0 25%;
 
 }
 
@@ -1485,14 +1474,6 @@ input:checked + .mj-slider:before {
     text-decoration: none;
     margin-top: 20px;
     margin-right: 24px;
-}
-
-.mj-popup-info {
-    height: 72px;
-    width: 552px;
-    border-radius: 3px;
-    background-color: #D6EBFB;
-
 }
 
 .mj-grid {
@@ -1536,13 +1517,28 @@ input:checked + .mj-slider:before {
 }
 
 .mj-popup-message {
-    height: 40px;
     color: #555555;
     font-family: Roboto;
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 1.5em;
     margin-top: 1.5em;
+}
+
+.mj-popup-message > p {
+    margin-bottom: 0px;
+}
+
+.mj-popup-info {
+    border-radius: 3px;
+    background-color: #D6EBFB;
+    padding: 15px;
+    display: flex;
+}
+
+.mj-popup-info > svg {
+    fill: #555555;
+    padding-right: 15px;
 }
 
 .mj-popup-body {

@@ -738,7 +738,13 @@ class WooCommerceSettings
             wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
         }
 
-        $activeHooks = $this->prepareAutomationHooks($data);
+        if (isset($data['submitAction']) && $data['submitAction'] === 'stop') {
+            $activeHooks = [];
+            $data['mailjet_wc_active_hooks'] = [];
+        }
+        else {
+            $activeHooks = $this->prepareAutomationHooks($data);
+        }
 
         $this->toggleWooSettings($activeHooks);
 
@@ -747,7 +753,7 @@ class WooCommerceSettings
         update_option('mailjet_wc_active_hooks', $activeHooks);
         update_option('mailjet_order_notifications', $notifications);
 
-        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!']);
+        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!', 'mj_order_notif_activate' => !empty($activeHooks)]);
         wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
 
