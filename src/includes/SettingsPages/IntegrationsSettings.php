@@ -381,6 +381,9 @@ class IntegrationsSettings
 
     private function toggleCF7Feature($data) {
         $activate = ((int)$data->activate_mailjet_cf7_integration === 1);
+        if (!$activate) {
+            update_option('activate_mailjet_cf7_integration', '');
+        }
         foreach ($data as $key => $val) {
             $optionVal = $activate ? $val : '';
             update_option($key, sanitize_text_field($optionVal));
