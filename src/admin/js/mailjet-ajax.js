@@ -19,8 +19,11 @@ function loadLists() {
         'action': 'get_contact_lists_menu'
     };
     let select = jQuery('<select></select>').attr('id', 'mailjet_sync_list').attr('class', 'mj-select').attr('name', 'mailjet_sync_list');
+    let label = jQuery('<label>Mailjet contact lists</label>').attr('for', 'mailjet_sync_list').attr('class', 'mj-wp-sync-label');
 
+    let checkboxAddUsers = document.getElementById('checkbox-add-users');
     let optionsDiv =  jQuery('#contact_list');
+    let initialDiv =  jQuery('#div-for-ajax');
     let selectDiv =  jQuery('<div></div>').attr('class', 'mj-select-wrapper').attr('id', 'mj-select-div');
     jQuery.post(ajaxurl, data, function (response) {
         if (response.success){
@@ -39,9 +42,11 @@ function loadLists() {
                 let optionValue = jQuery('#'+jQuery(this).attr('id') + " option:selected").text();
                 selectDiv.attr('data-value', optionValue);
             });
-            optionsDiv.children().remove();
             selectDiv.append(select);
-            optionsDiv.append(selectDiv);
+            optionsDiv.prepend(selectDiv, initialDiv);
+            optionsDiv.prepend(label);
+            initialDiv.remove();
+            mjShow(checkboxAddUsers);
         }
     });
 }

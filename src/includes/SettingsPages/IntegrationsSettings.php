@@ -79,13 +79,13 @@ class IntegrationsSettings
                 <div class="mj-woocommerce-contacts">
                     Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
                 </div>
-                <div id="woo_contact_list" class="mailjet_sync_woo_div">
+                <div id="woo_contact_list">
                     <label class="mj-contact-list"><?php _e( 'Contact List', 'mailjet-for-wordpress' ); ?></label>
                     <div class="mj-woocommerce-contacts">
                         <?= $mailjetContactLists ?> <span class="dashicons dashicons-editor-help tooltip" title="You can change list inside Settings > Subscription options."></span>
                     </div>
                 </div>
-                <div id="woo_contact_list" class="mailjet_sync_woo_div">
+                <div id="woo_contact_list">
                     <label ><?php _e( 'Ecommerce customer data', 'mailjet-for-wordpress' ); ?></label>
                     <label class="checkboxLabel">
                         <input name="woocommerce[mailjet_woo_edata_sync]" type="checkbox"
@@ -94,7 +94,7 @@ class IntegrationsSettings
                         <span><?php _e( 'Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                 </div>
-                <div id="woo_contact_list" class="mailjet_sync_woo_div">
+                <div id="woo_contact_list">
                     <label ><?php _e( 'Opti-in inside checkout', 'mailjet-for-wordpress' ); ?></label>
                     <div class="mj-woocommerce-contacts" style="margin-bottom: 20px;">
                         Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).

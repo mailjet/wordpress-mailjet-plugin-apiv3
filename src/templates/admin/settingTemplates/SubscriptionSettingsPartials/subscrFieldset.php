@@ -1,4 +1,5 @@
 <?php
+$wpUsersCount = get_query_var('wpUsersCount');
 $mailjetSyncActivated = get_query_var('mailjetSyncActivated');
 $mailjetContactLists = get_query_var('mailjetContactLists');
 $mailjetCommentAuthorsList = get_query_var('mailjetCommentAuthorsList');
@@ -21,6 +22,10 @@ $changeList = $mailjetContactLists === 'No list selected' ? 'Select List' : 'Cha
 				<div class="mj-woocommerce-contacts" id="div-for-ajax">
 					<?= $mailjetContactLists ?>  <span><?= $resyncBtn?>&nbsp&nbsp<a href="#" onclick="loadLists()"><?= $changeList?></a></span>
 				</div>
+                <label id="checkbox-add-users" class="checkboxLabel mj-hide">
+                    <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" checked="checked">
+                    <span><?php echo sprintf(__('Also, add existing %s Wordpress users (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?></span>
+                </label>
 			</div>
 		</div>
 	</div>

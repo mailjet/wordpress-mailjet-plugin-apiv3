@@ -46,7 +46,8 @@ class SubscriptionOptionsSettings
     public function mailjet_subscription_options_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
-
+        $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
+        $wpUsersCount = count($allWpUsers);
 
         $mailjetContactLists = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
@@ -57,6 +58,7 @@ class SubscriptionOptionsSettings
 
 	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists[0]['Name'] . ' ('.$mailjetContactLists[0]['SubscriberCount'].')' : 'No list selected';
 
+        set_query_var('wpUsersCount', $wpUsersCount);
 	    set_query_var('mailjetContactLists', $mailjetContactLists);
 	    set_query_var('mailjetSyncActivated', $mailjetSyncActivated);
 	    set_query_var('mailjetCommentAuthorsList', $mailjetCommentAuthorsList);
@@ -114,7 +116,7 @@ class SubscriptionOptionsSettings
             // Initial sync WP users to Mailjet
             $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
             $mailjet_sync_list = get_option('mailjet_sync_list');
-            if (!empty($activate_mailjet_initial_sync) && (int)$mailjet_sync_list > 0) {
+            if ((int)$activate_mailjet_initial_sync === 1 && (int)$mailjet_sync_list > 0) {
                 $syncResponse = self::syncAllWpUsers();
                 if (false === $syncResponse) {
                     $executionError = true;

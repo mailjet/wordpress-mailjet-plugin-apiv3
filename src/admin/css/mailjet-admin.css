@@ -172,7 +172,7 @@
 .mj-select-wrapper {
     position: relative;
     display: inline-block;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     margin-right: 16px;
 }
 
@@ -620,10 +620,6 @@
     padding: 16px 32px;
 }
 
-.mjSettings .mailjet_sync_options_div {
-    margin-bottom: 24px;
-}
-
 .mjSettings .settingsSubscrFldset {
     margin-bottom: 24px;
 }
@@ -1014,8 +1010,9 @@
     margin-bottom: 24px;
 }
 
-.mailjet_sync_options_div {
-    margin: 16px 0 0 0;
+.mj-wp-sync-label {
+    display:block !important;
+    font-weight: 500 !important;
 }
 
 .mailjet_sync_comment_authors_div {
@@ -1262,6 +1259,10 @@ input:checked + .mj-slider:before {
 
 #woo_contact_list {
     margin-top: 20px;
+}
+
+.mailjet_sync_woo_div {
+    margin-left: 24px;
 }
 
 .mj-text-field {
