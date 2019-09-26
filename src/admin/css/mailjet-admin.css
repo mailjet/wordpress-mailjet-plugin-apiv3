@@ -1087,7 +1087,7 @@
 
 }
 
-.cf7_input {
+.cf7_input, .mailjet_subscribe_shortcode {
     width: 100%;
     padding: 12px;
     /*margin: 8px 0;*/
@@ -1107,7 +1107,7 @@
     display: block !important;
 }
 
-#cf7_contact_properties:after {
+#cf7_contact_properties:after, .mailjet_subscribe_shortcode:after {
     content: '';
     position: absolute;
     right: 16px;
@@ -1124,6 +1124,14 @@
     box-sizing: border-box;
 }
 
+.span_mailjet_subscribe_shortcode {
+    color: #555555;
+    font-family: Roboto;
+    font-size: 14px;
+    padding: 5px;
+    display: inline-block;
+}
+
 .mj-copy-wrapper {
     display: -ms-flexbox; /* IE10 */
     display: flex;
@@ -1131,6 +1139,10 @@
     position: relative;
 }
 
+.mailjet_subscribe_shortcode-copy-wrapper {
+    margin:auto 5px;
+    padding-right: 0;
+}
 .mj-select-wrapper select {
     width: 100%;
 }

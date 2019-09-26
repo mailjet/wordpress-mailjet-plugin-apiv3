@@ -91,6 +91,34 @@ class Mailjet
         $this->addMailjetSettings();
         $this->addMailjetPHPMailer();
         $this->registerMailjetWidget();
+
+        add_shortcode('mailjet_subscribe', array($this, 'display_mailjet_widget'));
+    }
+
+
+    public static function display_mailjet_widget($atts = [], $content = null, $tag = '')
+    {
+        extract(shortcode_atts(array(
+            'widget_id' => null
+        ), $atts, $tag));
+
+        // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
+        $instance = get_option('widget_wp_mailjet_subscribe_widget');
+
+        // In case we don't have 'widget_id' attribute in the shrotcode defined by user - we use the first widget id from the collection
+        if (empty($widget_id)) {
+            $widgetIds = [];
+            foreach (array_keys($instance) as $key) {
+                if (is_integer($key)) {
+                    $widgetIds[] = $key;
+                }
+            }
+            $widget_id = min($widgetIds);
+        }
+
+        ob_start();
+        the_widget('MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget', $instance[intval($widget_id)]);
+        return ob_get_clean();
     }
 
     /**

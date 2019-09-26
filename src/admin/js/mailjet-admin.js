@@ -38,6 +38,17 @@
             document.execCommand("copy");
         });
 
+        // Copy Subscription widget shortcode
+        $('.copy_mailjet_shortcode').on("click", function () {
+            // Hide new property inputs
+            const text_shortcode = document.querySelector('#' + $(this).attr('data-input_id'));
+            text_shortcode.disabled = false;
+            text_shortcode.select();
+            text_shortcode.disabled = true;
+            document.execCommand("copy");
+        });
+
+
         $('.mailjet_row [scope=row]').closest('th').hide();
 
         /**

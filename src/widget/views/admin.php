@@ -88,7 +88,8 @@ if($numberActiveLanguages == 1) {
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
 
-    $hideAdvancedLinkClass = $numberActiveLanguages === 0 ? 'hidden_default': ''; 
+    $hideAdvancedLinkClass = $numberActiveLanguages === 0 ? 'hidden_default': '';
+    $hideShortCodeSectionClass = $numberActiveLanguages === 0 ? 'hidden_default': '';
     ?>
     <div class="some-space advanced-form-link-wrap <?php echo $hideAdvancedLinkClass ?>">
         <p>
@@ -503,4 +504,16 @@ if($numberActiveLanguages == 1) {
             </div>
         </div>
     </div>
+
+    <!--SHORTCODE-->
+    <div class="some-space <?php echo $hideShortCodeSectionClass ?>" style="background: #fbfbfb;border: 1px solid #c8d1d4;border-radius: 4px;">
+        <span class="span_mailjet_subscribe_shortcode"><?php _e('Add the following shortcode anywhere in your Posts or Pages to display the widget', 'mailjet-for-wordpress') ?></span>
+        <div class="mj-copy-wrapper mailjet_subscribe_shortcode-copy-wrapper">
+            <input class="mailjet_subscribe_shortcode" name="mailjet_subscribe_shortcode_<?=$this->id?>" id="mailjet_subscribe_shortcode_<?=$this->id?>" value='[mailjet_subscribe widget_id="<?=substr($this->id, strpos($this->id, '-') + 1)?>"]' class="widefat" disabled="disabled"/>
+            <i class="copy_mailjet_shortcode fa fa-copy mj-copy-icon" data-input_id="mailjet_subscribe_shortcode_<?=$this->id?>" id="copy_mailjet_shortcode_<?=$this->id?>" style="width:12px;" ></i>
+        </div>
+    </div>
+
 </div>
+
+
