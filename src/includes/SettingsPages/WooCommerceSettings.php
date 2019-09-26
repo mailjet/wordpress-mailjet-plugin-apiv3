@@ -367,44 +367,10 @@ class WooCommerceSettings
         }
 
         if ($activate) {
-            $templates['woocommerce_abandoned_cart'] = ['id' => get_option('mailjet_woocommerce_abandoned_cart'), 'callable' => 'abandonedCartTemplateContent'];
-            $templates['woocommerce_order_confirmation'] = ['id' => get_option('mailjet_woocommerce_order_confirmation'), 'callable' => 'orderCreatedTemplateContent'];
-            $templates['woocommerce_refund_confirmation'] = ['id' => get_option('mailjet_woocommerce_refund_confirmation'), 'callable' => 'orderRefundTemplateContent'];
-            $templates['woocommerce_shipping_confirmation'] = ['id' => get_option('mailjet_woocommerce_shipping_confirmation'), 'callable' => 'shippingConfirmationTemplateContent'];
-
-            foreach ($templates as $name => $value) {
-                if (!$value['id'] || empty($value['id'])) {
-                    $templateArgs = [
-                        "Author" => "Mailjet WC integration",
-                        "Categories" => ['e-commerce'],
-                        "Copyright" => "Mailjet",
-                        "Description" => "Used to send automation emails.",
-                        "EditMode" => 1,
-                        "IsStarred" => false,
-                        "IsTextPartGenerationEnabled" => true,
-                        "Locale" => "en_US",
-                        "Name" => ucwords(str_replace('_', ' ', $name)),
-                        "OwnerType" => "user",
-                        "Presets" => "string",
-                        "Purposes" => ['transactional']
-                    ];
-
-                    $template = MailjetApi::createTemplate(['body' => $templateArgs, 'filters' => []]);
-
-                    if ($template && !empty($template)) {
-                        $templateContent = [];
-                        $templateContent['id'] = $template['ID'];
-                        $templateContent['body'] = $this->getTemplateContent($value['callable']);
-                        $templateContent['filters'] = [];
-                        update_option('mailjet_' . $name, $template['ID']);
-                        $contentCreation = MailjetApi::createTemplateContent($templateContent);
-                        if (!$contentCreation || empty($contentCreation)) {
-                            $result['success'] = false;
-                        }
-                    } else {
-                        $result['success'] = false;
-                    }
-                }
+            if ($this->createTemplates() === false) {
+                $result['success'] = false;
+                $result['message'] = __('An error occured during templates creation! Please try again later.');
+                return $result;
             }
 
             // Abandoned cart default data
@@ -456,6 +422,56 @@ class WooCommerceSettings
 
         return $result;
 
+    }
+
+    private function createTemplates($forAbandonedCart = true, $forOrderNotif = true) {
+        if ($forAbandonedCart) {
+            $templates['woocommerce_abandoned_cart'] = ['id' => get_option('mailjet_woocommerce_abandoned_cart'), 'callable' => 'abandonedCartTemplateContent'];
+        }
+        if ($forOrderNotif) {
+            $templates['woocommerce_order_confirmation'] = ['id' => get_option('mailjet_woocommerce_order_confirmation'), 'callable' => 'orderCreatedTemplateContent'];
+            $templates['woocommerce_refund_confirmation'] = ['id' => get_option('mailjet_woocommerce_refund_confirmation'), 'callable' => 'orderRefundTemplateContent'];
+            $templates['woocommerce_shipping_confirmation'] = ['id' => get_option('mailjet_woocommerce_shipping_confirmation'), 'callable' => 'shippingConfirmationTemplateContent'];
+        }
+
+        $templateArgs = [
+            "Author" => "Mailjet WC integration",
+            "Categories" => ['e-commerce'],
+            "Copyright" => "Mailjet",
+            "Description" => "Used to send automation emails.",
+            "EditMode" => 1,
+            "IsStarred" => false,
+            "IsTextPartGenerationEnabled" => true,
+            "Locale" => "en_US",
+            "Name" => "",
+            "OwnerType" => "user",
+            "Presets" => "string",
+            "Purposes" => ['transactional']
+        ];
+
+        foreach ($templates as $name => $value) {
+            $templateArgs['Name'] = ucwords(str_replace('_', ' ', $name));
+
+            // Create template or retrieve it if exists
+            $template = MailjetApi::createTemplate(['body' => $templateArgs, 'filters' => []]);
+            if ($template && !empty($template)) {
+                $templateContent = MailjetApi::getTemplateDetails($template['ID']);
+                if (!$templateContent || empty($templateContent)) {
+                    $templateContent = [];
+                    $templateContent['id'] = $template['ID'];
+                    $templateContent['body'] = $this->getTemplateContent($value['callable']);
+                    $templateContent['filters'] = [];
+                    $contentCreation = MailjetApi::createTemplateContent($templateContent);
+                    if (!$contentCreation || empty($contentCreation)) {
+                        return false;
+                    }
+                }
+                update_option('mailjet_' . $name, $template['ID']);
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     public function send_order_status_refunded($orderId)
@@ -744,6 +760,7 @@ class WooCommerceSettings
         }
         else {
             $activeHooks = $this->prepareAutomationHooks($data);
+            $this->createTemplates(false, true);
         }
 
         $this->toggleWooSettings($activeHooks);
@@ -813,6 +830,7 @@ class WooCommerceSettings
         $activeHooks = [];
 
         if (get_option('mailjet_woo_abandoned_cart_activate') === '1') {
+            $this->createTemplates(true, false);
             if ( ! wp_next_scheduled( 'abandoned_cart_cron_hook' ) ) {
                 wp_schedule_event( time(), 'one_minute', 'abandoned_cart_cron_hook' );
             }
