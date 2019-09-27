@@ -20,6 +20,9 @@ class MailjetIframe
     const PAGE_CAMPAIGNS = 'campaigns';
     const PAGE_CONTACTS = 'contacts';
     const PAGE_AUTOMATION = 'workflow';
+    const PAGE_WIDGET = 'widget';
+    const PAGE_TEMPLATES = 'templates';
+    const PAGE_EDIT_TEMPLATE = 'template/{param}/build';
 
     const SESSION_NAME = 'MailjetIframeToken';
     const SESSION_SET = 'MailjetIframeTokenSet';
@@ -45,6 +48,9 @@ class MailjetIframe
         self::PAGE_CONTACTS,
         self::PAGE_CAMPAIGNS,
         self::PAGE_AUTOMATION,
+        self::PAGE_WIDGET,
+        self::PAGE_TEMPLATES,
+        self::PAGE_EDIT_TEMPLATE,
     );
 
     /**
@@ -80,6 +86,8 @@ class MailjetIframe
         'contacts',
         'stats',
         'email_automation',
+        'widget',
+        'transactional',
     );
 
     /**
@@ -360,15 +368,23 @@ class MailjetIframe
     /**
      *
      * @param string $page
+     * @param string $param
      * @return \MailjetIframe
      * @throws MailjetException
      */
-    public function setInitialPage($page = self::PAGE_STATS)
+    public function setInitialPage($page = self::PAGE_STATS, $param = null)
     {
         if (!in_array($page, $this->allowedPages)) {
             throw new MailjetException(
-                "{$page} is uknown."
+                "{$page} is unknown."
             );
+        }
+
+        if (strpos($page, '{param}') !== false) {
+            if (!isset($param)) {
+                throw new MailjetException("{$page} need a parameter");
+            }
+            $page = str_replace('{param}', $param, $page);
         }
 
         $this->initialPage = $page;

@@ -146,7 +146,7 @@ class OrderNotificationsSettings
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$orderConfTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $orderConfTemplate['Headers']['Subject']?></span>
                                 <div style="flex: auto">
-                                    <button class="mj-btnSecondary mj-inrow" onclick="window.open('https://app.mailjet.com/template/<?= $orderConfTemplate['Headers']['ID']?>/build')" type="button">
+                                    <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=ordernotif&id=<?= $orderConfTemplate['Headers']['ID']?>'" type="button">
                                         <?php _e('Edit', 'mailjet-for-wordpress'); ?>
                                     </button>
                                 </div>
@@ -167,7 +167,7 @@ class OrderNotificationsSettings
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$shippingTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $shippingTemplate['Headers']['Subject']?></span>
                                 <div style="flex: auto">
-                                    <button class="mj-btnSecondary mj-inrow" onclick="window.open('https://app.mailjet.com/template/<?= $shippingTemplate['Headers']['ID']?>/build')" type="button">
+                                    <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=ordernotif&id=<?= $shippingTemplate['Headers']['ID']?>'" type="button">
                                         <?php _e('Edit', 'mailjet-for-wordpress'); ?>
                                     </button>
                                 </div>
@@ -188,7 +188,7 @@ class OrderNotificationsSettings
                                 <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$refundTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                                 <span><strong>Subject: &nbsp;</strong>  <?= $refundTemplate['Headers']['Subject']?></span>
                                 <div style="flex: auto">
-                                    <button class="mj-btnSecondary mj-inrow" onclick="window.open('https://app.mailjet.com/template/<?= $refundTemplate['Headers']['ID']?>/build')" type="button">
+                                    <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=ordernotif&id=<?= $refundTemplate['Headers']['ID'] ?>'" type="button">
                                         <?php _e('Edit', 'mailjet-for-wordpress'); ?>
                                     </button>
                                 </div>

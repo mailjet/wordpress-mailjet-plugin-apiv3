@@ -141,7 +141,7 @@ class AbandonedCartSettings
                             <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $abandonedCartTemplate['Headers']['SenderName'] . ' &#60' .$abandonedCartTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                             <span><strong>Subject: &nbsp;</strong>  <?= $abandonedCartTemplate['Headers']['Subject'] ?></span>
                             <div style="flex: auto">
-                                <button class="mj-btnSecondary mj-inrow" onclick="window.open('https://app.mailjet.com/template/<?= $abandonedCartTemplate['Headers']['ID']?>/build')" type="button">
+                                <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=abandonedcart&id=<?= $abandonedCartTemplate['Headers']['ID']?>'" type="button">
                                     <?php _e('Edit', 'mailjet-for-wordpress'); ?>
                                 </button>
                             <div>

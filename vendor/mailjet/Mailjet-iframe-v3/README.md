@@ -60,6 +60,8 @@ $mailjetIframe
         'contacts',
         'stats',
         'email_automation',
+        'widget',
+        'transactional',
     ))
     ->turnDocumentationProperties(MailjetIframe::OFF)
     ->turnNewContactListCreation(MailjetIframe::OFF)
@@ -76,7 +78,7 @@ $mailjetIframe
  */
 echo $mailjetIframe->getHtml();
 ```
-* Available initial pages: PAGE_STATS, PAGE_CAMPAIGNS, PAGE_CONTACTS, PAGE_AUTOMATION
+* Available initial pages: PAGE_STATS, PAGE_CAMPAIGNS, PAGE_CONTACTS, PAGE_AUTOMATION, PAGE_WIDGET, PAGE_TEMPLATES, PAGE_EDIT_TEMPLATE
 
 ## Send a pull request
 
