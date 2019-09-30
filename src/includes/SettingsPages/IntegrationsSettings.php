@@ -26,7 +26,7 @@ class IntegrationsSettings
 
     }
 
-    private function wooIntegration( $mailjetContactLists )
+    private function wooIntegration($mailjetSyncContactList )
     {
 	    $wooCommerceNotInstalled        = false;
 	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
@@ -61,9 +61,10 @@ class IntegrationsSettings
         $bannerText = get_option( 'mailjet_woo_banner_text' );
         $bannerLabel = get_option( 'mailjet_woo_banner_label' );
 
+        $isSyncListSelected = !empty($mailjetSyncContactList);
 
-
-        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists['Name'] . '('.$mailjetContactLists['SubscriberCount'].')' : 'No list selected';
+        $mailjetSyncContactListName = $isSyncListSelected ? $mailjetSyncContactList['Name'] . '('.$mailjetSyncContactList['SubscriberCount'].')' : 'No list selected';
+        $syncNotActivatedTooltipMessage = __('To use this option you need to select a contact list', 'mailjet-for-wordpress' );
 
         ?>
         <fieldset class="settingsSubscrFldset">
@@ -77,32 +78,32 @@ class IntegrationsSettings
             </label>
             <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                 <div class="mj-woocommerce-contacts">
-                    Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
+                    <?php _e( 'Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).', 'mailjet-for-wordpress' ); ?>
                 </div>
                 <div id="woo_contact_list">
                     <label class="mj-contact-list"><?php _e( 'Contact List', 'mailjet-for-wordpress' ); ?></label>
-                    <div class="mj-woocommerce-contacts">
-                        <?= $mailjetContactLists ?> <span class="dashicons dashicons-editor-help tooltip" title="You can change list inside Settings > Subscription options."></span>
+                    <div>
+                        <?= $mailjetSyncContactListName ?> <span class="dashicons dashicons-editor-help tooltip" title="You can change list inside Settings > Subscription options."></span>
                     </div>
                 </div>
                 <div id="woo_contact_list">
                     <label ><?php _e( 'Ecommerce customer data', 'mailjet-for-wordpress' ); ?></label>
                     <label class="checkboxLabel">
                         <input name="woocommerce[mailjet_woo_edata_sync]" type="checkbox"
-                               value="1" <?php echo( $mailjetWooSyncActivated === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
-                               autocomplete="off">
+                               value="1" <?php echo( $mailjetWooSyncActivated === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled' : '' ) ?>
+                               autocomplete="off" <?= $isSyncListSelected ? '' : 'disabled class="tooltip" title="' . $syncNotActivatedTooltipMessage . '"' ?>>
                         <span><?php _e( 'Import e-commerce data for all synced customers (total orders count, total spent, account creation date, last order date) and store it as a contact property inside Mailjet. This will allow you to segment your list and personalise your email content and sending.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                 </div>
                 <div id="woo_contact_list">
                     <label ><?php _e( 'Opti-in inside checkout', 'mailjet-for-wordpress' ); ?></label>
                     <div class="mj-woocommerce-contacts" style="margin-bottom: 20px;">
-                        Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).
+                        <?php _e( 'Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).', 'mailjet-for-wordpress' ); ?>
                     </div>
                     <label class="checkboxLabel">
                         <input name="woocommerce[mailjet_woo_checkout_checkbox]" id="activate_mailjet_woo_checkbox" type="checkbox"
-                               value="1" <?php echo( $checkoutCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
-                               autocomplete="off">
+                               value="1" <?php echo( $checkoutCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled' : '' ) ?>
+                               autocomplete="off" <?= $isSyncListSelected ? '' : 'disabled class="tooltip" title="' . $syncNotActivatedTooltipMessage . '"' ?>>
                         <span><?php _e( 'Activate opt-in checkbox inside checkout page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                     <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?> mj-text-div">
@@ -111,8 +112,8 @@ class IntegrationsSettings
                     </div>
                     <label class="checkboxLabel">
                         <input name="woocommerce[mailjet_woo_banner_checkbox]" id="activate_mailjet_woo_bannerbox"  type="checkbox"
-                               value="1" <?php echo( $bannerCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled="disabled"' : '' ) ?>
-                               autocomplete="off">
+                               value="1" <?php echo( $bannerCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled' : '' ) ?>
+                               autocomplete="off" <?= $isSyncListSelected ? '' : 'disabled class="tooltip" title="' . $syncNotActivatedTooltipMessage . '"' ?>>
                         <span><?php _e( 'Activate opt-in banner inside thank you page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                     <div id="mailjet_woo_sub_banner" class="<?= ( $bannerCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">

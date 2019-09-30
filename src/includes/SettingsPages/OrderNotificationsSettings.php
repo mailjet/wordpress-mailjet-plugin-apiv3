@@ -250,7 +250,6 @@ class OrderNotificationsSettings
                     document.getElementById("mj-button-stop-order-notif").onclick = () => {displayPopup = true;};
                     document.getElementById("mj-button-edit-order-notif").onclick = () => {displayPopup = false;};
                     function submitListener(e) {
-                        console.log(displayPopup);
                         if (displayPopup) {
                             e.preventDefault();
                             togglePopup("mj-popup_confirm_stop");

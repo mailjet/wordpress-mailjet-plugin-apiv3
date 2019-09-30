@@ -465,6 +465,10 @@
     box-shadow: none;
 }
 
+.mailjet_row input[type="checkbox"]:disabled {
+    background-color: #dddddd;
+}
+
 .mailjet_row input[type="checkbox"]:checked::before {
     margin: -1px 0 0 -2px;
     font-size: 16px;
