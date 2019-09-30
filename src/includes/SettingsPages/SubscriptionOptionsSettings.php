@@ -49,17 +49,19 @@ class SubscriptionOptionsSettings
         $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
         $wpUsersCount = count($allWpUsers);
 
-        $mailjetContactLists = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
-        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
+        $mailjetSyncContactLists = MailjetApi::getMailjetContactLists();
+        $mailjetSyncContactList = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
+        $mailjetSyncContactList = !empty($mailjetSyncContactList) ? $mailjetSyncContactList : array();
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetCommentAuthorsList = get_option('mailjet_comment_authors_list');
         $mailjetCommentAuthorsSyncActivated = get_option('activate_mailjet_comment_authors_sync');
 
-	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists[0]['Name'] . ' ('.$mailjetContactLists[0]['SubscriberCount'].')' : 'No list selected';
+	    $mailjetSyncContactList = !empty($mailjetSyncContactList) ? $mailjetSyncContactList[0]['Name'] . ' ('.$mailjetSyncContactList[0]['SubscriberCount'].')' : 'No list selected';
 
         set_query_var('wpUsersCount', $wpUsersCount);
-	    set_query_var('mailjetContactLists', $mailjetContactLists);
+        set_query_var('mailjetContactLists', $mailjetSyncContactLists);
+	    set_query_var('mailjetSyncContactList', $mailjetSyncContactList);
 	    set_query_var('mailjetSyncActivated', $mailjetSyncActivated);
 	    set_query_var('mailjetCommentAuthorsList', $mailjetCommentAuthorsList);
 	    set_query_var('mailjetInitialSyncActivated', $mailjetInitialSyncActivated);
