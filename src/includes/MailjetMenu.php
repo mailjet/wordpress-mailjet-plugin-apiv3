@@ -77,6 +77,10 @@ class MailjetMenu
                     __('Statistics', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_stats_menu',
                     array($this, 'show_stats_page'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet statistics\' sub-menu added ]');
+                add_submenu_page(null, __('View your Mailjet template', 'mailjet-for-wordpress'),
+                    __('Template', 'mailjet-for-wordpress'), 'read', 'mailjet_template',
+                    array($this, 'show_template_page'));
+                MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'View your Mailjet templatess\' sub-menu added ]');
 
                 // Initial configuration pages
                 add_submenu_page(null, __('Configure your lists.', 'mailjet-for-wordpress'), null, 'read', 'mailjet_initial_contact_lists_page',
@@ -277,4 +281,45 @@ class MailjetMenu
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
+    public function show_template_page()
+    {
+        try {
+            $mailjetIframe = $this->getMailjetIframe();
+            $templateId = $_GET['id'];
+            if (isset($templateId)) {
+                $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_EDIT_TEMPLATE, $templateId);
+            }
+            else {
+                $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_TEMPLATES);
+            }
+            $iframeHtml = $mailjetIframe->getHtml();
+        } catch (\MailjetIframe\MailjetException $e) {
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+            settings_errors('mailjet_messages');
+            update_option('api_credentials_ok', 0);
+            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
+        }
+
+        switch ($_GET['backto']) {
+            case 'ordernotif' :
+                $backButtonText = __('Back to order notification emails', 'mailjet-for-wordpress');
+                $backButtonLink = 'admin.php?page=mailjet_order_notifications_page';
+                break;
+            case 'abandonedcart' :
+                $backButtonText = __('Back to abandoned cart', 'mailjet-for-wordpress');
+                $backButtonLink = 'admin.php?page=mailjet_abandoned_cart_page';
+                break;
+            default :
+                $backButtonText = __('Back to dashboard', 'mailjet-for-wordpress');
+                $backButtonLink = 'admin.php?page=mailjet_dashboard_page';
+                break;
+        }
+        set_query_var('iframeHtml', $iframeHtml);
+        set_query_var('backButtonLink', $backButtonLink);
+        set_query_var('backButtonText', $backButtonText);
+
+        load_template(MAILJET_ADMIN_TAMPLATE_DIR . '/Iframe/longerIframePage.php');
+        MailjetAdminDisplay::renderBottomLinks();
+    }
 }

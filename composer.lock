@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "948fd43a8033c15b851b46b09edd8e4a",
+    "content-hash": "8126f8a93ce47b11c7e4057589501943",
     "packages": [
         {
             "name": "analog/analog",
@@ -63,16 +63,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
+                "reference": "141b272484481432cda342727a427dc1e206bfa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
-                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "url": "https://api.github.com/repos/composer/installers/zipball/141b272484481432cda342727a427dc1e206bfa0",
+                "reference": "141b272484481432cda342727a427dc1e206bfa0",
                 "shasum": ""
             },
             "require": {
@@ -128,6 +128,7 @@
                 "RadPHP",
                 "SMF",
                 "Thelia",
+                "Whmcs",
                 "WolfCMS",
                 "agl",
                 "aimeos",
@@ -150,6 +151,7 @@
                 "installer",
                 "itop",
                 "joomla",
+                "known",
                 "kohana",
                 "laravel",
                 "lavalite",
@@ -179,7 +181,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2018-08-27T06:10:37+00:00"
+            "time": "2019-08-12T15:00:31+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -187,12 +189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "de7437d73816cb67ed35d476784d69e010a688b5"
+                "reference": "a7010cc9b52ecfa00051bb26e4ae025958fe9851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/de7437d73816cb67ed35d476784d69e010a688b5",
-                "reference": "de7437d73816cb67ed35d476784d69e010a688b5",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/a7010cc9b52ecfa00051bb26e4ae025958fe9851",
+                "reference": "a7010cc9b52ecfa00051bb26e4ae025958fe9851",
                 "shasum": ""
             },
             "require": {
@@ -245,7 +247,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-08-05T16:15:18+00:00"
+            "time": "2019-08-23T22:16:30+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -304,12 +306,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "239400de7a173fe9901b9ac7c06497751f00727a"
+                "reference": "2595b33c1c924889b474d324f3d719fa40b6954e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/239400de7a173fe9901b9ac7c06497751f00727a",
-                "reference": "239400de7a173fe9901b9ac7c06497751f00727a",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2595b33c1c924889b474d324f3d719fa40b6954e",
+                "reference": "2595b33c1c924889b474d324f3d719fa40b6954e",
                 "shasum": ""
             },
             "require": {
@@ -367,20 +369,20 @@
                 "uri",
                 "url"
             ],
-            "time": "2019-07-01T23:21:34+00:00"
+            "time": "2019-08-13T16:05:52+00:00"
         },
         {
             "name": "mailjet/Mailjet-iframe-v3",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:mailjet/Mailjet-iframe-v3.git",
-                "reference": "c7e5c5b98e76f1501b4a90d869e83934c0137234"
+                "reference": "d054bf7059fec37272291f8e2a76a113368c342c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailjet/Mailjet-iframe-v3/zipball/c7e5c5b98e76f1501b4a90d869e83934c0137234",
-                "reference": "c7e5c5b98e76f1501b4a90d869e83934c0137234",
+                "url": "https://api.github.com/repos/mailjet/Mailjet-iframe-v3/zipball/d054bf7059fec37272291f8e2a76a113368c342c",
+                "reference": "d054bf7059fec37272291f8e2a76a113368c342c",
                 "shasum": ""
             },
             "require": {
@@ -414,10 +416,10 @@
                 "php"
             ],
             "support": {
-                "source": "https://github.com/mailjet/Mailjet-iframe-v3/tree/master",
+                "source": "https://github.com/mailjet/Mailjet-iframe-v3/tree/v1.4.0",
                 "issues": "https://github.com/mailjet/Mailjet-iframe-v3/issues"
             },
-            "time": "2018-11-19T08:24:34+00:00"
+            "time": "2019-09-24T08:15:43+00:00"
         },
         {
             "name": "mailjet/mailjet-apiv3-php",
@@ -478,12 +480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+                "reference": "efd67d1dc14a7ef4fc4e518e7dee91c271d524e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/efd67d1dc14a7ef4fc4e518e7dee91c271d524e4",
+                "reference": "efd67d1dc14a7ef4fc4e518e7dee91c271d524e4",
                 "shasum": ""
             },
             "require": {
@@ -520,7 +522,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2019-08-29T13:16:46+00:00"
         },
         {
             "name": "psr/log",
@@ -669,12 +671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "b42a2f66e8f1b15ccf25652c3424265923eb4f17"
+                "reference": "a874bbf9135bd76175baa2c26d14312c9ef25543"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/b42a2f66e8f1b15ccf25652c3424265923eb4f17",
-                "reference": "b42a2f66e8f1b15ccf25652c3424265923eb4f17",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/a874bbf9135bd76175baa2c26d14312c9ef25543",
+                "reference": "a874bbf9135bd76175baa2c26d14312c9ef25543",
                 "shasum": ""
             },
             "require": {
@@ -720,7 +722,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-08-06T08:03:45+00:00"
+            "time": "2019-09-17T10:46:08+00:00"
         }
     ],
     "packages-dev": [],

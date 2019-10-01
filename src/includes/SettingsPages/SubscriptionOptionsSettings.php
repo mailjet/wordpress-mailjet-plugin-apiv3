@@ -46,18 +46,23 @@ class SubscriptionOptionsSettings
     public function mailjet_subscription_options_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
+        $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
+        $wpUsersCount = count($allWpUsers);
 
-
-        $mailjetContactLists = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
-        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
+        $mailjetSyncContactLists = MailjetApi::getMailjetContactLists();
+        $mailjetSyncContactList = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
         $mailjetCommentAuthorsList = get_option('mailjet_comment_authors_list');
         $mailjetCommentAuthorsSyncActivated = get_option('activate_mailjet_comment_authors_sync');
 
-	    $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists[0]['Name'] . ' ('.$mailjetContactLists[0]['SubscriberCount'].')' : 'No list selected';
+        $mailjetSyncContactListId = !empty($mailjetSyncContactList) ? $mailjetSyncContactList[0]['ID'] : -1;
+        $mailjetSyncContactListName = !empty($mailjetSyncContactList) ? $mailjetSyncContactList[0]['Name'] . ' ('.$mailjetSyncContactList[0]['SubscriberCount'].')' : 'No list selected';
 
-	    set_query_var('mailjetContactLists', $mailjetContactLists);
+        set_query_var('wpUsersCount', $wpUsersCount);
+        set_query_var('mailjetContactLists', $mailjetSyncContactLists);
+        set_query_var('mailjetSyncContactListId', $mailjetSyncContactListId);
+	    set_query_var('mailjetSyncContactListName', $mailjetSyncContactListName);
 	    set_query_var('mailjetSyncActivated', $mailjetSyncActivated);
 	    set_query_var('mailjetCommentAuthorsList', $mailjetCommentAuthorsList);
 	    set_query_var('mailjetInitialSyncActivated', $mailjetInitialSyncActivated);
@@ -114,12 +119,17 @@ class SubscriptionOptionsSettings
             // Initial sync WP users to Mailjet
             $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
             $mailjet_sync_list = get_option('mailjet_sync_list');
-            if (!empty($activate_mailjet_initial_sync) && (int)$mailjet_sync_list > 0) {
+            if ((int)$activate_mailjet_initial_sync === 1 && (int)$mailjet_sync_list > 0) {
                 $syncResponse = self::syncAllWpUsers();
                 if (false === $syncResponse) {
                     $executionError = true;
                     add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet-for-wordpress'), 'error');
                 }
+            }
+            if ((int)$mailjet_sync_list <= 0) {
+                update_option('mailjet_woo_edata_sync', '');
+                update_option('mailjet_woo_checkout_checkbox', '');
+                update_option('mailjet_woo_banner_checkbox', '');
             }
             if (false === $executionError) {
                 // add settings saved message with the class of "updated"

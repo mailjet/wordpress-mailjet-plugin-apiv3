@@ -536,31 +536,23 @@ class MailjetApi
         return $name;
     }
 
-    public static function getTemplates($filterByName = null)
-    {
+    public static function getTemplateByName($templateName) {
         try {
             $mjApiClient = self::getApiClient();
         } catch (\Exception $e) {
             return false;
         }
         try {
-            $response = $mjApiClient->get(Resources::$Template, ['filters' => ['OwnerType' => 'user']]);
+            $response = $mjApiClient->get(Resources::$Template, ['id' => 'user|' . $templateName]);
         } catch (ConnectException $e) {
             return false;
         }
-        $templateNames = [];
 
         if ($response->success() && $response->getCount() > 0) {
-            $data = $response->getData();
-            foreach ($data as $template){
-                if (!is_null($filterByName) && $template['Name'] === $filterByName){
-                    return $template;
-                }
-                $templateNames[] = ['Name' => $template['Name'], 'id' => $template['ID']] ;
-            }
-
+            return $response->getData()[0];
+        } else {
+            return false;
         }
-        return  $templateNames;
     }
 
     public static function getTemplateDetails($id)
@@ -583,7 +575,7 @@ class MailjetApi
         return  false;
     }
 
-    public static function createAutomationTemplate(array $arguments)
+    public static function createTemplate(array $arguments)
     {
         try {
             $mjApiClient = self::getApiClient();
@@ -601,7 +593,7 @@ class MailjetApi
             return $data[0];
         }else{
             if ($data['ErrorCode'] === 'ps-0015'){
-                return self::getTemplates($arguments['body']['Name']);
+                return self::getTemplateByName($arguments['body']['Name']);
             }
         }
 
@@ -609,7 +601,7 @@ class MailjetApi
     }
 
 
-    public static function createAutomationTemplateContent(array $content)
+    public static function createTemplateContent(array $content)
     {
         try {
             $mjApiClient = self::getApiClient();

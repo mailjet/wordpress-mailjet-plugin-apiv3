@@ -138,7 +138,9 @@ class WooCommerceSettings
         $subscribe = (int)filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
         if ($subscribe === 1) {
             $order->update_meta_data('mailjet_woo_subscribe_ok', sanitize_text_field($_POST['mailjet_woo_subscribe_ok']));
-            $this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName);
+            if (!$this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $wooUserEmail, $firstName, $lastName)) {
+                die;
+            }
         }
     }
 
@@ -187,12 +189,12 @@ class WooCommerceSettings
         $error = empty($user_email) ? 'Email field is empty' : false;
         if (false !== $error) {
             _e($error, 'mailjet-for-wordpress');
-            die;
+            return false;
         }
 
         if (!is_email($user_email)) {
             _e('Invalid email', 'mailjet-for-wordpress');
-            die;
+            return false;
         }
         $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
 
@@ -216,6 +218,7 @@ class WooCommerceSettings
         add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
         $res = wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+        return $res;
     }
 
     /**
@@ -364,44 +367,10 @@ class WooCommerceSettings
         }
 
         if ($activate) {
-            $templates['woocommerce_abandoned_cart'] = ['id' => get_option('mailjet_woocommerce_abandoned_cart'), 'callable' => 'abandonedCartTemplateContent'];
-            $templates['woocommerce_order_confirmation'] = ['id' => get_option('mailjet_woocommerce_order_confirmation'), 'callable' => 'orderCreatedTemplateContent'];
-            $templates['woocommerce_refund_confirmation'] = ['id' => get_option('mailjet_woocommerce_refund_confirmation'), 'callable' => 'orderRefundTemplateContent'];
-            $templates['woocommerce_shipping_confirmation'] = ['id' => get_option('mailjet_woocommerce_shipping_confirmation'), 'callable' => 'shippingConfirmationTemplateContent'];
-
-            foreach ($templates as $name => $value) {
-                if (!$value['id'] || empty($value['id'])) {
-                    $templateArgs = [
-                        "Author" => "Mailjet WC integration",
-                        "Categories" => ['e-commerce'],
-                        "Copyright" => "Mailjet",
-                        "Description" => "Used to send automation emails.",
-                        "EditMode" => 1,
-                        "IsStarred" => false,
-                        "IsTextPartGenerationEnabled" => true,
-                        "Locale" => "en_US",
-                        "Name" => ucwords(str_replace('_', ' ', $name)),
-                        "OwnerType" => "user",
-                        "Presets" => "string",
-                        "Purposes" => ['automation']
-                    ];
-
-                    $template = MailjetApi::createAutomationTemplate(['body' => $templateArgs, 'filters' => []]);
-
-                    if ($template && !empty($template)) {
-                        $templateContent = [];
-                        $templateContent['id'] = $template['ID'];
-                        $templateContent['body'] = $this->getTemplateContent($value['callable']);
-                        $templateContent['filters'] = [];
-                        add_option('mailjet_' . $name, $template['ID']);
-                        $contentCreation = MailjetApi::createAutomationTemplateContent($templateContent);
-                        if (!$contentCreation || empty($contentCreation)) {
-                            $result['success'] = false;
-                        }
-                    } else {
-                        $result['success'] = false;
-                    }
-                }
+            if ($this->createTemplates() === false) {
+                $result['success'] = false;
+                $result['message'] = __('An error occured during templates creation! Please try again later.');
+                return $result;
             }
 
             // Abandoned cart default data
@@ -453,6 +422,56 @@ class WooCommerceSettings
 
         return $result;
 
+    }
+
+    private function createTemplates($forAbandonedCart = true, $forOrderNotif = true) {
+        if ($forAbandonedCart) {
+            $templates['woocommerce_abandoned_cart'] = ['id' => get_option('mailjet_woocommerce_abandoned_cart'), 'callable' => 'abandonedCartTemplateContent'];
+        }
+        if ($forOrderNotif) {
+            $templates['woocommerce_order_confirmation'] = ['id' => get_option('mailjet_woocommerce_order_confirmation'), 'callable' => 'orderCreatedTemplateContent'];
+            $templates['woocommerce_refund_confirmation'] = ['id' => get_option('mailjet_woocommerce_refund_confirmation'), 'callable' => 'orderRefundTemplateContent'];
+            $templates['woocommerce_shipping_confirmation'] = ['id' => get_option('mailjet_woocommerce_shipping_confirmation'), 'callable' => 'shippingConfirmationTemplateContent'];
+        }
+
+        $templateArgs = [
+            "Author" => "Mailjet WC integration",
+            "Categories" => ['e-commerce'],
+            "Copyright" => "Mailjet",
+            "Description" => "Used to send automation emails.",
+            "EditMode" => 1,
+            "IsStarred" => false,
+            "IsTextPartGenerationEnabled" => true,
+            "Locale" => "en_US",
+            "Name" => "",
+            "OwnerType" => "user",
+            "Presets" => "string",
+            "Purposes" => ['transactional']
+        ];
+
+        foreach ($templates as $name => $value) {
+            $templateArgs['Name'] = ucwords(str_replace('_', ' ', $name));
+
+            // Create template or retrieve it if exists
+            $template = MailjetApi::createTemplate(['body' => $templateArgs, 'filters' => []]);
+            if ($template && !empty($template)) {
+                $templateContent = MailjetApi::getTemplateDetails($template['ID']);
+                if (!$templateContent || empty($templateContent)) {
+                    $templateContent = [];
+                    $templateContent['id'] = $template['ID'];
+                    $templateContent['body'] = $this->getTemplateContent($value['callable']);
+                    $templateContent['filters'] = [];
+                    $contentCreation = MailjetApi::createTemplateContent($templateContent);
+                    if (!$contentCreation || empty($contentCreation)) {
+                        return false;
+                    }
+                }
+                update_option('mailjet_' . $name, $template['ID']);
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     public function send_order_status_refunded($orderId)
@@ -735,7 +754,14 @@ class WooCommerceSettings
             wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
         }
 
-        $activeHooks = $this->prepareAutomationHooks($data);
+        if (isset($data['submitAction']) && $data['submitAction'] === 'stop') {
+            $activeHooks = [];
+            $data['mailjet_wc_active_hooks'] = [];
+        }
+        else {
+            $activeHooks = $this->prepareAutomationHooks($data);
+            $this->createTemplates(false, true);
+        }
 
         $this->toggleWooSettings($activeHooks);
 
@@ -744,7 +770,7 @@ class WooCommerceSettings
         update_option('mailjet_wc_active_hooks', $activeHooks);
         update_option('mailjet_order_notifications', $notifications);
 
-        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!']);
+        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!', 'mj_order_notif_activate' => !empty($activeHooks)]);
         wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
 
@@ -804,6 +830,7 @@ class WooCommerceSettings
         $activeHooks = [];
 
         if (get_option('mailjet_woo_abandoned_cart_activate') === '1') {
+            $this->createTemplates(true, false);
             if ( ! wp_next_scheduled( 'abandoned_cart_cron_hook' ) ) {
                 wp_schedule_event( time(), 'one_minute', 'abandoned_cart_cron_hook' );
             }
@@ -1005,15 +1032,17 @@ class WooCommerceSettings
        $listId = $this->getWooContactList();
 
        if (!$listId){
-           return ['success' => false, 'message' => 'You can\'t be subscribed at this moment.'];
+           return ['success' => false, 'message' => 'You can\'t subscribe at this moment.'];
        }
 
        if (MailjetApi::checkContactSubscribedToList($email, $listId)){
            return ['success' => true, 'message' => 'You are already subscribed.'];
        }
 
-       if ($this->mailjet_subscribe_unsub_woo_to_list(1, $email, $fName, $lName)){
-           return ['success' => true, 'message' => 'You\'re successfully subscribed to our E-mail list.'];
+       if ($this->mailjet_subscribe_confirmation_from_woo_form(1, $email, $fName, $lName)){
+           $message = __('We have sent the newsletter subscription confirmation link to you ') . '(' . $email . '). '
+               . __('To confirm your subscription you have to click on the provided link.');
+           return ['success' => true, 'message' => $message];
        }
 
        return ['success' => false, 'message' => 'Something went wrong.'];

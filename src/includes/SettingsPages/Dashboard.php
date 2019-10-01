@@ -49,7 +49,7 @@ class Dashboard {
                 <div id="mj-top_bar">
                     <section
                             id="mj-title"><?php _e( 'Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress' ); ?></section>
-                    <i onclick="location.href = 'admin.php?page=mailjet_allsetup_page'"
+                    <i onclick="location.href = 'admin.php?page=mailjet_connect_account_page'"
                        class="dashicons dashicons-admin-generic" id="mj-logo_top_bar"><span>Settings</span></i>
                 </div>
 
@@ -77,7 +77,7 @@ class Dashboard {
                             <p class="blockText"><?php _e( 'Activate order notification emails to inform customers of any new purchase, shipping or refund.', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
                                     id="nextBtnReverseDashboard4"
-                                    onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage tansactional emails', 'mailjet-for-wordpress' ) ?></button>
+                                    onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage transactional emails', 'mailjet-for-wordpress' ) ?></button>
                         </div>
                     </div>
                     <div class="col mj-grid">

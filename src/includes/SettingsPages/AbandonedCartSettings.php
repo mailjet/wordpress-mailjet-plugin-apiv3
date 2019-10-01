@@ -85,8 +85,10 @@ class AbandonedCartSettings
             <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post" id="abandoned-cart-form">
                 <fieldset>
                     <div>
-                        <h1 class="page_top_title mj-order-notifications-labels"><?php _e('Abandoned cart', 'mailjet-for-wordpress'); ?> </h1>
-                        <div class="mj-badge <?= !$isAbandonedCartActivated ? 'mj-hidden' : '' ?>"><p><?php _e('Sending active', 'mailjet-for-wordpress'); ?></p></div>
+                        <div id="mj-top_bar">
+                            <h1 class="page_top_title mj-order-notifications-labels"><?php _e('Abandoned cart', 'mailjet-for-wordpress'); ?> </h1>
+                            <div class="mj-badge <?= !$isAbandonedCartActivated ? 'mj-hidden' : '' ?>"><p><?php _e('Sending active', 'mailjet-for-wordpress'); ?></p></div>
+                        </div>
                         <p class="page_top_subtitle">
                             <?php _e('Recover visitors and turn them into customers by reminding them what they left in their carts.', 'mailjet-for-wordpress'); ?>
                         </p>
@@ -138,9 +140,11 @@ class AbandonedCartSettings
                         <div class="mj-notifications-from">
                             <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $abandonedCartTemplate['Headers']['SenderName'] . ' &#60' .$abandonedCartTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
                             <span><strong>Subject: &nbsp;</strong>  <?= $abandonedCartTemplate['Headers']['Subject'] ?></span>
-                            <button class="mj-btnSecondary mj-inrow" onclick="window.open('https://app.mailjet.com/template/<?= $abandonedCartTemplate['Headers']['ID']?>/build')" type="button">
-                                <?php _e('Edit', 'mailjet-for-wordpress'); ?>
-                            </button>
+                            <div style="flex: auto">
+                                <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=abandonedcart&id=<?= $abandonedCartTemplate['Headers']['ID']?>'" type="button">
+                                    <?php _e('Edit', 'mailjet-for-wordpress'); ?>
+                                </button>
+                            <div>
                         </div>
                     </div>
                     <hr>
