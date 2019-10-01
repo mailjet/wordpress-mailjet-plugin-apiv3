@@ -272,6 +272,5 @@ class Mailjet
                 $this->loader->add_action($action['hook'], $woocommerceObject, $action['callable'], 10, 1);
             }
         }
-        return true;
     }
 }
