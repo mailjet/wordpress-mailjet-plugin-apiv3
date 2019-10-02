@@ -1261,7 +1261,7 @@ class WooCommerceSettings
             return false;
         }
         $status = $order->get_status();
-        if ($status === 'processing' || $status === 'completed' || $status === 'cancelled' || $status === 'refunded') {
+        if ($status === 'completed' || $status === 'refunded') {
             $user = $order->get_user();
             if ($user === false) { // guest user
                 $email = $order->get_billing_email();
@@ -1296,17 +1296,21 @@ class WooCommerceSettings
         if ($userRoles[0] === 'customer') {
             $args = array(
                 'customer_id' => $userId,
-                'status' => ['completed', 'processing'],
+                'status' => ['completed'],
                 'type' => 'shop_order',
                 'limit' => -1,
             );
             $orders = wc_get_orders($args);
             $customer = new \WC_Customer($userId);
             $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = (string)count($orders);
-            $customerProperties[self::WOO_PROP_TOTAL_SPENT] = (string)$customer->get_total_spent();
+            $totalSpent = 0;
+            foreach ($orders as $order) {
+                $totalSpent += $order->get_total();
+            }
+            $customerProperties[self::WOO_PROP_TOTAL_SPENT] = $totalSpent;
             $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
             if (is_array($orders) && !empty($orders)) {
-                $customerProperties[self::WOO_PROP_LAST_ORDER_DATE] = $orders[0]->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+                $customerProperties[self::WOO_PROP_LAST_ORDER_DATE] = $orders[0]->get_date_completed()->date('Y-m-d\TH:i:s\Z');
             }
         }
         return $customerProperties;
@@ -1320,7 +1324,7 @@ class WooCommerceSettings
     private function get_guest_edata($guestEmail = '') {
         $args = array(
             'customer_id' => 0,
-            'status' => ['processing', 'completed'],
+            'status' => ['completed'],
             'type' => 'shop_order',
             'limit' => -1,
         );
@@ -1331,7 +1335,7 @@ class WooCommerceSettings
         $guestProperties = array();
         foreach ($orders as $order) {
             $email = $order->get_billing_email();
-            $date = $order->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+            $date = $order->get_date_completed()->date('Y-m-d\TH:i:s\Z');
             if (!array_key_exists($email, $guestProperties)) {
                 $guestProperties[$email] = array();
                 $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS] = 1;
