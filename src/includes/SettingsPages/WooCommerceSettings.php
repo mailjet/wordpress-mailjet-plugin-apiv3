@@ -343,12 +343,12 @@ class WooCommerceSettings
         $result['success'] = true;
 
         $activate = true;
-        if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
+        if (!isset($data['activate_mailjet_woo_integration']) || $data['activate_mailjet_woo_integration'] !== '1') {
             update_option('activate_mailjet_woo_integration', '');
             $activate = false;
         }
 
-        if ($activate && isset($data->mailjet_woo_edata_sync) && $data->mailjet_woo_edata_sync === '1') {
+        if ($activate && isset($data['mailjet_woo_edata_sync']) && $data['mailjet_woo_edata_sync'] === '1') {
             if (get_option('mailjet_woo_edata_sync') !== '1') {
                 if ($this->all_customers_edata_sync() === false) {
                     $result['success'] = false;
@@ -357,13 +357,20 @@ class WooCommerceSettings
                 }
             }
         }
-        else {
-            update_option('mailjet_woo_edata_sync', '');
-        }
 
-        foreach ($data as $key => $val) {
-            $optionVal = $activate ? $val : '';
-            update_option($key, sanitize_text_field($optionVal));
+        $checkboxesNames = array(
+            'activate_mailjet_woo_integration',
+            'mailjet_woo_edata_sync',
+            'mailjet_woo_checkout_checkbox',
+            'mailjet_woo_banner_checkbox'
+        );
+        foreach ($checkboxesNames as $checkboxName) {
+            if ($activate && (int)$data[$checkboxName] === 1) {
+                update_option($checkboxName, '1');
+            }
+            else {
+                update_option($checkboxName, '');
+            }
         }
 
         if ($activate) {
