@@ -4,7 +4,7 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
-
+use MailjetPlugin\Includes\MailjetSettings;
 
 
 /**
@@ -205,7 +205,7 @@ class WooCommerceSettings
             '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
             '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
             '__WP_URL__' => $wpUrl,
-            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&mj_sub_woo_token=' . sha1($subscribe . $user_email . $first_name . $last_name),
+            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&mj_sub_woo_token=' . sha1($subscribe . $user_email . $first_name . $last_name . MailjetSettings::getCryptoHash()),
             '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'),
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'),

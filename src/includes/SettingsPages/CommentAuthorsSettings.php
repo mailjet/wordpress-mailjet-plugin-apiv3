@@ -7,6 +7,7 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -21,7 +22,7 @@ use MailjetPlugin\Includes\MailjetLogger;
  */
 class CommentAuthorsSettings
 {
-    public function mailjet_show_extra_comment_fields($user)
+    public function mailjet_show_extra_comment_fields()
     {
         $user = wp_get_current_user();
         // Display the checkbox only for NOT-logged in users
@@ -99,7 +100,7 @@ class CommentAuthorsSettings
             '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
             '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
             '__WP_URL__' => $wpUrl,
-            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email),
+            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . sha1($subscribe . $user_email . MailjetSettings::getCryptoHash()),
             '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'),
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'),

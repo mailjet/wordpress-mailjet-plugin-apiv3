@@ -6,6 +6,7 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -20,8 +21,6 @@ use MailjetPlugin\Includes\MailjetLogger;
  */
 class SubscriptionOptionsSettings
 {
-
-    const WIDGET_HASH = '[\^=34|>5i!? {xIas';
 
     private $subscrFieldset = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
     private $profileFields = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
@@ -358,7 +357,7 @@ class SubscriptionOptionsSettings
             '__EMAIL_TITLE__' => $email_title,
             '__EMAIL_HEADER__' => $email_main_text,
             '__WP_URL__' => $homeUrl,
-            '__CONFIRM_URL__' => $thankYouURI . $qm . $params . '&mj_sub_token=' . sha1($params . self::WIDGET_HASH),
+            '__CONFIRM_URL__' => $thankYouURI . $qm . $params . '&mj_sub_token=' . sha1($params . MailjetSettings::getCryptoHash()),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => $homeUrl, //get_option('blogname'),
             '__IGNORE__' => $email_content_after_button,
