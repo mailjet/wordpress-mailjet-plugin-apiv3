@@ -24,37 +24,42 @@ class CommentAuthorsSettings
 {
     public function mailjet_show_extra_comment_fields()
     {
-        $user = wp_get_current_user();
-        // Display the checkbox only for NOT-logged in users
-        if (!$user->exists() && get_option('mailjet_comment_authors_list')) {
-            ?>
-            <label class="mj-label" for="mailjet_comment_authors_subscribe_ok">
-                <input type="checkbox" name="mailjet_comment_authors_subscribe_ok" id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox" />
-                <?php _e('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>
-            </label>
-            <?php
+        $commentAuthorsListId = (int)get_option('mailjet_comment_authors_list');
+        if ((int)get_option('activate_mailjet_comment_authors_sync') === 1 && $commentAuthorsListId > 0) {
+            $user = wp_get_current_user();
+            // Display the checkbox for NOT-logged in or unsubscribed users
+            if (empty($user->data->user_email) || !MailjetApi::checkContactSubscribedToList($user->data->user_email, $commentAuthorsListId)) {
+                ?>
+                <label class="mj-label" for="mailjet_comment_authors_subscribe_ok">
+                    <input type="checkbox" name="mailjet_comment_authors_subscribe_ok"
+                           id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox"/>
+                    <?php _e('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>
+                </label>
+                <?php
+            }
         }
     }
 
 
     public function mailjet_subscribe_comment_author($id)
     {
-        $comment = get_comment($id);
-        $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
-        $userId = filter_var($comment->user_id, FILTER_SANITIZE_NUMBER_INT);
-
-        // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
-        if (empty($authorEmail)) {
-            return;
-        }
-
-        if (!is_email($authorEmail)) {
-            _e('Invalid email', 'mailjet-for-wordpress');
-            die;
-        }
-
         $subscribe = filter_var($_POST['mailjet_comment_authors_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-        $this->mailjet_subscribe_confirmation_from_comment_form($subscribe, $authorEmail);
+        if ($subscribe === '1') {
+            $comment = get_comment($id);
+            $authorEmail = filter_var($comment->comment_author_email, FILTER_SANITIZE_EMAIL);
+
+            // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
+            if (empty($authorEmail)) {
+                return;
+            }
+
+            if (!is_email($authorEmail)) {
+                _e('Invalid email', 'mailjet-for-wordpress');
+                die;
+            }
+
+            $this->mailjet_subscribe_confirmation_from_comment_form($subscribe, $authorEmail);
+        }
     }
 
 
@@ -111,7 +116,7 @@ class CommentAuthorsSettings
 
         $email_subject = __('Subscription Confirmation', 'mailjet-for-wordpress');
         add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
-        wp_mail($_POST['email'], $email_subject, $message,
+        wp_mail($user_email, $email_subject, $message,
             array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
     }
 }

@@ -160,12 +160,16 @@ class MailjetSettings
         }
 
         /* Add custom field to comment form and process it on form submit */
-        $activate_mailjet_comment_authors_sync = get_option('activate_mailjet_comment_authors_sync');
-        $mailjet_comment_authors_list = get_option('mailjet_comment_authors_list');
-        if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list)) {
+        $activate_mailjet_comment_authors_sync = (int)get_option('activate_mailjet_comment_authors_sync');
+        $mailjet_comment_authors_list = (int)get_option('mailjet_comment_authors_list');
+        if ($activate_mailjet_comment_authors_sync === 1 && $mailjet_comment_authors_list > 1) {
             $commentAuthorsSettings = new CommentAuthorsSettings();
-
-            add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            if (wp_get_current_user()->exists()) {
+                add_action('comment_form', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            }
+            else {
+                add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            }
             add_action('wp_insert_comment', array($commentAuthorsSettings, 'mailjet_subscribe_comment_author'));
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
