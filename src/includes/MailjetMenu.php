@@ -220,8 +220,8 @@ class MailjetMenu
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
 
-        echo '</div>';
         MailjetAdminDisplay::renderBottomLinks();
+        echo '</div>';
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
     }
 
@@ -248,8 +248,8 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
-        echo '</div>';
         MailjetAdminDisplay::renderBottomLinks();
+        echo '</div>';
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
     }
 
@@ -276,8 +276,8 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
-        echo '</div>';
         MailjetAdminDisplay::renderBottomLinks();
+        echo '</div>';
       //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
@@ -320,6 +320,5 @@ class MailjetMenu
         set_query_var('backButtonText', $backButtonText);
 
         load_template(MAILJET_ADMIN_TAMPLATE_DIR . '/Iframe/longerIframePage.php');
-        MailjetAdminDisplay::renderBottomLinks();
     }
 }

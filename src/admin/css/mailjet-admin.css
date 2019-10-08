@@ -1349,22 +1349,20 @@ input:checked + .mj-slider:before {
     left: 0;
     top: 0;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-#mj-logo_top_bar {
-    display: inline-flex;
-    position: relative;
-    float: right;
+#mj-settings_top_bar {
     margin-right: 35px;
-    height: 30px;
-    width: 80px;
-    top: 15px;
     color: #19BC9C;
     cursor: pointer;
-    /*vertical-align: middle;*/
+    display: flex;
+    align-items: center;
+    margin-left: auto;
 }
 
-#mj-logo_top_bar span {
+#mj-settings_top_bar span {
     margin-top: 4px;
     margin-left: 6px;
     font-family: Roboto;
@@ -1391,12 +1389,13 @@ input:checked + .mj-slider:before {
     width: fit-content;
     border-radius: 3px;
     font-family: Roboto;
+    padding: 8px 16px;
     font-size: 14px;
     font-weight: 500;
     offset: none;
     color: #555;
     border: none;
-    background: #f7f7f7;
+    background: #f2f2f2;
     vertical-align: top;
     line-height: 20px;
     text-align: center;
@@ -1408,35 +1407,39 @@ input:checked + .mj-slider:before {
     background: #e2e4e7;
 }
 
-.mj-notifications {
-    vertical-align: center;
-    margin-bottom: 30px;
-    margin-top: 30px;
+.mj-btnSpaced {
+    margin-right: 16px;
 }
 
-.mj-order-notifications-labels {
+.mj-template-info {
+    margin-bottom: 22px;
+    margin-top: 12px;
+}
+
+.mj-template-info-header {
+    display: flex;
+    align-items: center;
+}
+
+.mj-template-labels {
     display: inline-flex;
     max-width: -moz-max-content;
     max-width: max-content;
     line-height: 24px;
     font-weight: 500;
     font-size: 2.3em;
-    margin-top: 3px !important;
 }
 
 .mj-inrow {
-    display: inline-block;
-    float: right;
-    margin-right: 5.75em;
-
+    margin-left: auto;
+    margin-right: 0.5em;
 }
 
-.order-notification-field {
-    /*margin-left: 20px;*/
+.mj-form-content {
+    margin-right: 32px;
 }
 
 .mj-checkbox-label {
-    height: 24px;
     width: fit-content;
     color: #555555;
     font-family: Roboto;
@@ -1446,13 +1449,8 @@ input:checked + .mj-slider:before {
     white-space: nowrap;
 }
 
-.mj-notifications-from {
+.mj-template-from {
     margin-left: 1.75em;
-    height: 20px;
-    color: #555555;
-    font-family: Roboto;
-    font-size: 14px;
-    line-height: 20px;
     display: flex;
 }
 
@@ -1567,10 +1565,10 @@ input:checked + .mj-slider:before {
 .mj-badge {
     display: inline-flex;
     height: 16px;
-    width: 96.1px;
     border-radius: 12px;
-    background-color: #4DBC5C;
-    padding-left: 7px;
+    background-color: #DBF2DE;
+    padding-left: 8px;
+    padding-right: 8px;
     margin-left: 8px;
 
 }
@@ -1578,14 +1576,9 @@ input:checked + .mj-slider:before {
 .mj-badge > p {
     display: inline-flex;
     height: 16px;
-    color: #FFFFFF;
-    font-family: Roboto;
+    color: #555555;
     font-size: 12px;
-    font-weight: 500;
     line-height: 16px;
-    margin-top: 0px;
-    margin-left: 5px;
-
 }
 
 .mj-linkBtn {
@@ -1719,4 +1712,13 @@ input:checked + .mj-slider:before {
 
 .mj-pluginPage select:focus {
     border-color: #19BC9C;
+}
+
+.mj-row-btn {
+    margin-top: 10px;
+}
+
+hr {
+    border-color: #F2F2F2;
+    border-top: 1px;
 }

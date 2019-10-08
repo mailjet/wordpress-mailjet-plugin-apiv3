@@ -1,4 +1,6 @@
 <?php
+    use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+
     $backButtonText = get_query_var('backButtonText');
     $backButtonLink = get_query_var('backButtonLink');
     $iframeHtml = get_query_var('iframeHtml');
@@ -21,4 +23,5 @@
             <?= $iframeHtml ?>
         </div>
     </div>
+    <?php MailjetAdminDisplay::renderBottomLinks(); ?>
 </div>
