@@ -78,7 +78,7 @@ class IntegrationsSettings
             </label>
             <div id="activate_mailjet_woo_form" class="<?= ( $mailjetWooIntegrationActivated === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                 <div class="mj-woocommerce-contacts">
-                    <?php _e( 'Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).', 'mailjet-for-wordpress' ); ?>
+                    <?php _e( 'WooCommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).', 'mailjet-for-wordpress' ); ?>
                 </div>
                 <div id="woo_contact_list">
                     <label class="mj-contact-list"><?php _e( 'Contact List', 'mailjet-for-wordpress' ); ?></label>
@@ -98,7 +98,7 @@ class IntegrationsSettings
                 <div id="woo_contact_list">
                     <label ><?php _e( 'Opti-in inside checkout', 'mailjet-for-wordpress' ); ?></label>
                     <div class="mj-woocommerce-contacts" style="margin-bottom: 20px;">
-                        <?php _e( 'Woocommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).', 'mailjet-for-wordpress' ); ?>
+                        <?php _e('WooCommerce contacts will be automatically synced to your Mailjet list (with a “customer” contact property).', 'mailjet-for-wordpress'); ?>
                     </div>
                     <label class="checkboxLabel">
                         <input name="woocommerce[mailjet_woo_checkout_checkbox]" id="activate_mailjet_woo_checkbox" type="checkbox"
@@ -107,8 +107,8 @@ class IntegrationsSettings
                         <span><?php _e( 'Activate opt-in checkbox inside checkout page.', 'mailjet-for-wordpress' ); ?></span>
                     </label>
                     <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?> mj-text-div">
-                        <label  class="mailjet-label" for="sub_letter">Checkbox text</label>
-                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="Subscribe to our newsletter">
+                        <label  class="mailjet-label" for="sub_letter"><?= __('Checkbox text', 'mailjet-for-wordpress') ?></label>
+                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="<?= __('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>">
                     </div>
                     <label class="checkboxLabel">
                         <input name="woocommerce[mailjet_woo_banner_checkbox]" id="activate_mailjet_woo_bannerbox"  type="checkbox"
@@ -118,12 +118,12 @@ class IntegrationsSettings
                     </label>
                     <div id="mailjet_woo_sub_banner" class="<?= ( $bannerCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?>">
                         <div class="mj-text-div" >
-                            <label class="mailjet-label" for="banner_text">Banner text</label>
-                            <input name="woocommerce[mailjet_woo_banner_text]" id="banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="Subscribe to our newsletter">
+                            <label class="mailjet-label" for="banner_text"><?= __('Banner text', 'mailjet-for-wordpress') ?></label>
+                            <input name="woocommerce[mailjet_woo_banner_text]" id="banner_text" value="<?= $bannerText ?>" class="mj-text-field" type="text" placeholder="<?= __('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>">
                         </div>
                         <div class="mj-text-div" >
-                            <label class="mailjet-label" for="banner_label">Button label</label>
-                            <input name="woocommerce[mailjet_woo_banner_label]" id="banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="Subscribe now">
+                            <label class="mailjet-label" for="banner_label"><?= __('Button label', 'mailjet-for-wordpress') ?></label>
+                            <input name="woocommerce[mailjet_woo_banner_label]" id="banner_label" value="<?= $bannerLabel?>" class="mj-text-field" type="text" placeholder="<?= __('Subscribe now', 'mailjet-for-wordpress') ?>">
                         </div>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ class IntegrationsSettings
                     </div>
                     <div class="mj-copy-wrapper">
                         <input name="cf7[cf7_contact_properties]" id="cf7_contact_properties"
-                               value='[checkbox mailjet-opt-in default:0 "Subscribe to our newsletter"]'
+                               value='[checkbox mailjet-opt-in default:0 "<?= __('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>"]'
                                class="widefat cf7_input" disabled="disabled"/>
                         <i class="fa fa-copy mj-copy-icon" id="copy_properties"></i>
                     </div>
@@ -330,7 +330,7 @@ class IntegrationsSettings
                             ?><!--</h1>-->
 
                             <h2 class="section_inner_title"><?php _e( 'Integrations', 'mailjet-for-wordpress' ); ?></h2>
-                            <p><?php _e( 'Enable and configure Mailjet integrations with other Wordpress plugins', 'mailjet-for-wordpress' ) ?></p>
+                            <p><?php _e( 'Enable and configure Mailjet integrations with other WordPress plugins', 'mailjet-for-wordpress' ) ?></p>
                             <hr>
                             <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="POST">
                                 <?php

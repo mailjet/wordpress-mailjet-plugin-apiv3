@@ -39,7 +39,7 @@ class WooCommerceSettings
     public function add_cron_schedule($schedules) {
         $schedules['one_minute'] = array(
             'interval'  => 60,
-            'display'   => __('Once Every Minute'),
+            'display'   => 'Once Every Minute',
         );
         return $schedules;
     }
@@ -781,7 +781,7 @@ class WooCommerceSettings
         update_option('mailjet_wc_active_hooks', $activeHooks);
         update_option('mailjet_order_notifications', $notifications);
 
-        update_option('mailjet_post_update_message', ['success' => true, 'message' => 'Automation settings updated!', 'mj_order_notif_activate' => !empty($activeHooks)]);
+        update_option('mailjet_post_update_message', ['success' => true, 'message' => __('Automation settings updated!', 'mailjet-for-wordpress'), 'mj_order_notif_activate' => !empty($activeHooks)]);
         wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
 

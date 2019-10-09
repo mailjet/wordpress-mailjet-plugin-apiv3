@@ -1267,7 +1267,6 @@ input:checked + .mj-slider:before {
 
 .mj-contact-list {
     height: 24px;
-    width: 86px;
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
@@ -1515,8 +1514,6 @@ input:checked + .mj-slider:before {
 }
 
 .mailjet-label {
-    height: 24px;
-    width: 361px;
     color: #555555;
     font-family: Roboto;
     font-size: 16px;

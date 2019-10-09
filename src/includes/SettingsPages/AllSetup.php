@@ -53,8 +53,8 @@ class AllSetup
                     </div>
                     <div class="block_single">
                         <img src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/all_setup_screen_configure.png'; ?>" />
-                        <div class="section_inner_title"><?php echo __('Configure Wordpress email sending', 'mailjet-for-wordpress'); ?></div>
-                        <p class="blockText"><?php _e('Enable and configure sending of all your Wordpress emails (transactional emails, etc...) through Mailjet.', 'mailjet-for-wordpress'); ?></p>
+                        <div class="section_inner_title"><?php echo __('Configure WordPress email sending', 'mailjet-for-wordpress'); ?></div>
+                        <p class="blockText"><?php _e('Enable and configure sending of all your WordPress emails (transactional emails, etc...) through Mailjet.', 'mailjet-for-wordpress'); ?></p>
                         <div class="bottomBtn"><input name="nextBtnReverse" class="mj-btn btnPrimary" type="button" id="nextBtnReverse3" onclick="location.href = 'admin.php?page=mailjet_sending_settings_page'" value="<?php _e('Configure', 'mailjet-for-wordpress') ?>"></div>
                     </div>
                 </div>

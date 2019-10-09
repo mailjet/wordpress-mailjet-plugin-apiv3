@@ -46,11 +46,11 @@ class Dashboard {
             <div class="mainContainer dashboard">
                 <div id="mj-top_bar">
                     <section
-                            id="mj-title"><?php _e( 'Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress' ); ?></section>
+                            id="mj-title"><?php _e('Welcome to the Mailjet plugin for WordPress', 'mailjet-for-wordpress'); ?></section>
                     <div id="mj-settings_top_bar">
                         <i onclick="location.href = 'admin.php?page=mailjet_connect_account_page'"
                            class="dashicons dashicons-admin-generic">
-                            <span>Settings</span>
+                            <span><?php _e('Settings', 'mailjet-for-wordpress'); ?></span>
                         </i>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ class Dashboard {
                     <div class="col mj-grid">
                         <div class="block mj-box">
                             <h2 class="section-header"><?php _e( 'My campaigns', 'mailjet-for-wordpress' ); ?></h2>
-                            <p><?php echo __( 'Create and manage your newsletters. Vew your campaign statistics', 'mailjet-for-wordpress' ); ?></p>
+                            <p><?php echo __( 'Create and manage your newsletters. View your campaign statistics', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btn btnPrimary"
                                     id="nextBtnReverseDashboard1"
                                     onclick="location.href = 'admin.php?page=mailjet_settings_campaigns_menu'"><?= __( 'Manage campaigns', 'mailjet-for-wordpress' ) ?></button>
@@ -87,7 +87,7 @@ class Dashboard {
                     <div class="col mj-grid">
                         <div class="block mj-box">
                             <h3 class="section-header"><?php _e( 'Subscription form', 'mailjet-for-wordpress' ); ?></h3>
-                            <p class="blockText"><?php _e( 'Customize a subscription form and add it to your Wordpress website', 'mailjet-for-wordpress' ); ?></p>
+                            <p class="blockText"><?php _e( 'Customize a subscription form and add it to your WordPress website', 'mailjet-for-wordpress' ); ?></p>
                             <button name="nextBtnReverseDashboard" class="mj-btnSecondary" id="nextBtnReverseDashboard3"
                                     onclick="location.href = 'widgets.php'"><?= __( 'Add widget', 'mailjet-for-wordpress' ) ?></button>
                         </div>
