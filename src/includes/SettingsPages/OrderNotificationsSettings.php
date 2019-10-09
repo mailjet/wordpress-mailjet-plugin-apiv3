@@ -23,7 +23,7 @@ class OrderNotificationsSettings
         $isShippingConfirmationActive = isset($notifications['mailjet_shipping_confirmation']); //Order complected WC
         $isRefundConfirmationActive = isset($notifications['mailjet_refund_confirmation']); // Refunded order
 
-        $isConfirmationActive = $isOrderConfirmationActive || $isShippingConfirmationActive || $isRefundConfirmationActive;
+        $isEditActive = $isOrderConfirmationActive || $isShippingConfirmationActive || $isRefundConfirmationActive;
 
         $orderConfTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_order_confirmation');
         $refundTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_refund_confirmation');
@@ -47,6 +47,10 @@ class OrderNotificationsSettings
             }
             update_option('mailjet_post_update_message', '');
         }
+
+        $templateRowTemplate = MAILJET_ADMIN_TAMPLATE_DIR . '/WooCommerceSettingsTemplates/rowTemplate.php';
+        set_query_var('isEditModeAvailable', true);
+        set_query_var('isEditActive', $isEditActive);
         ?>
         <div class="mj-pluginPage mj-mask-popup mj-hidden" id="mj-popup_confirm_stop">
             <div class="mj-popup">
@@ -113,7 +117,7 @@ class OrderNotificationsSettings
                     </a>
                 </div>
                 <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post" id="order-notification-form">
-                    <fieldset class="order-notification-field">
+                    <fieldset class="mj-form-content">
                         <div id="mj-top_bar">
                             <h1><?php _e('Order notification emails', 'mailjet-for-wordpress'); ?> </h1>
                         </div>
@@ -132,72 +136,42 @@ class OrderNotificationsSettings
                             ?>
                         </div>
                         <hr>
-                        <div class="mailjet_row mj-notifications">
-                            <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?= $isConfirmationActive ? 'style="visibility: hidden"' : '' ?> <?= $isOrderConfirmationActive ? 'checked' : '' ?>
-                                       name="mailjet_wc_active_hooks[mailjet_order_confirmation]"
-                                       type="checkbox" id="order_confirmation" value="1">
-                                <section class="mj-checkbox-label">
-                                    <?php _e('Order confirmation', 'mailjet-for-wordpress'); ?>
-                                </section>
-                            </label>
-                            <div class="mj-badge <?= $isOrderConfirmationActive? '' : 'mj-hidden' ?>"><p>Sending active</p></div>
-                            <div class="mj-notifications-from">
-                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$orderConfTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
-                                <span><strong>Subject: &nbsp;</strong>  <?= $orderConfTemplate['Headers']['Subject']?></span>
-                                <div style="flex: auto">
-                                    <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=ordernotif&id=<?= $orderConfTemplate['Headers']['ID']?>'" type="button">
-                                        <?php _e('Edit', 'mailjet-for-wordpress'); ?>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        set_query_var('title', __('Order confirmation', 'mailjet-for-wordpress'));
+                        set_query_var('isNotificationActive', $isOrderConfirmationActive);
+                        set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_order_confirmation]');
+                        set_query_var('checkboxId', 'order_confirmation');
+                        set_query_var('templateFrom', sprintf('%s &lt%s&gt', $orderConfTemplate['Headers']['SenderName'], $orderConfTemplate['Headers']['SenderEmail']));
+                        set_query_var('templateSubject', $orderConfTemplate['Headers']['Subject']);
+                        set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $orderConfTemplate['Headers']['ID']);
+                        load_template($templateRowTemplate, false);
+                        ?>
                         <hr>
-                        <div class="mailjet_row mj-notifications">
-                            <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?= $isConfirmationActive ? 'style="visibility: hidden"' : '' ?> <?= $isShippingConfirmationActive ? 'checked' : '' ?>
-                                       name="mailjet_wc_active_hooks[mailjet_shipping_confirmation]"
-                                       type="checkbox" id="shipping_confirmation" value="1">
-                                <section class="mj-checkbox-label">
-                                    <?php _e('Shipping confirmation', 'mailjet-for-wordpress'); ?>
-                                </section>
-                            </label>
-                            <div class="mj-badge <?= $isShippingConfirmationActive ? '' : 'mj-hidden' ?>"><p>Sending active</p></div>
-                            <div class="mj-notifications-from">
-                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong>  <?php echo $fromName . '&nbsp; &#60' .$shippingTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
-                                <span><strong>Subject: &nbsp;</strong>  <?= $shippingTemplate['Headers']['Subject']?></span>
-                                <div style="flex: auto">
-                                    <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=ordernotif&id=<?= $shippingTemplate['Headers']['ID']?>'" type="button">
-                                        <?php _e('Edit', 'mailjet-for-wordpress'); ?>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        set_query_var('title', __('Shipping confirmation', 'mailjet-for-wordpress'));
+                        set_query_var('isNotificationActive', $isShippingConfirmationActive);
+                        set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_shipping_confirmation]');
+                        set_query_var('checkboxId', 'shipping_confirmation');
+                        set_query_var('templateFrom', sprintf('%s &lt%s&gt', $shippingTemplate['Headers']['SenderName'], $shippingTemplate['Headers']['SenderEmail']));
+                        set_query_var('templateSubject', $shippingTemplate['Headers']['Subject']);
+                        set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $shippingTemplate['Headers']['ID']);
+                        load_template($templateRowTemplate, false);
+                        ?>
                         <hr>
-                        <div class="mailjet_row mj-notifications">
-                            <label class="mj-order-notifications-labels">
-                                <input class="checkbox mj-order-checkbox" <?= $isConfirmationActive ? 'style="visibility: hidden"' : '' ?> <?= $isRefundConfirmationActive ? 'checked' : '' ?>
-                                       name="mailjet_wc_active_hooks[mailjet_refund_confirmation]"
-                                       type="checkbox" id="refund_confirmation" value="1">
-                                <section class="mj-checkbox-label">
-                                    <?php _e('Refund confirmation', 'mailjet-for-wordpress'); ?>
-                                </section>
-                            </label>
-                            <div class="mj-badge <?= $isRefundConfirmationActive ? '' : 'mj-hidden' ?>"><p>Sending active</p></div>
-                            <div class="mj-notifications-from">
-                                <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $fromName . ' &#60' .$refundTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
-                                <span><strong>Subject: &nbsp;</strong>  <?= $refundTemplate['Headers']['Subject']?></span>
-                                <div style="flex: auto">
-                                    <button class="mj-btnSecondary mj-inrow" onclick="location.href='admin.php?page=mailjet_template&backto=ordernotif&id=<?= $refundTemplate['Headers']['ID'] ?>'" type="button">
-                                        <?php _e('Edit', 'mailjet-for-wordpress'); ?>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        set_query_var('title', __('Refund confirmation', 'mailjet-for-wordpress'));
+                        set_query_var('isNotificationActive', $isRefundConfirmationActive);
+                        set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_refund_confirmation]');
+                        set_query_var('checkboxId', 'refund_confirmation');
+                        set_query_var('templateFrom', sprintf('%s &lt%s&gt', $refundTemplate['Headers']['SenderName'], $refundTemplate['Headers']['SenderEmail']));
+                        set_query_var('templateSubject', $refundTemplate['Headers']['Subject']);
+                        set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $refundTemplate['Headers']['ID']);
+                        load_template($templateRowTemplate, false);
+                        ?>
                         <hr>
                     </fieldset>
-                    <div class="mailjet_row mj-pluginPage">
-                        <?php if (!$isConfirmationActive) { ?>
+                    <div class="mailjet_row mj-row-btn">
+                        <?php if (!$isEditActive) { ?>
                         <div>
                             <button id="mj-order-notifications-submit" class="mj-btn btnPrimary mj-disabled" disabled type="submit" name="submitAction" value="save">
                                 <?= __('Activate sending', 'mailjet-for-wordpress') ?>
@@ -205,11 +179,11 @@ class OrderNotificationsSettings
                         </div>
                         <?php } else { ?>
                         <div id="edit-not-active-buttons">
-                            <button class="mj-btn btnPrimary" onclick="toggleEdit(true)" type="button"><?= __('Edit sendings', 'mailjet-for-wordpress') ?></button>
+                            <button class="mj-btn btnPrimary mj-btnSpaced" onclick="toggleEdit(true)" type="button"><?= __('Edit sendings', 'mailjet-for-wordpress') ?></button>
                             <button id="mj-button-stop-order-notif" class="mj-btnSecondary "type="submit"><?= __('Stop all sendings', 'mailjet-for-wordpress') ?></button>
                         </div>
                         <div id="edit-active-buttons" class="hidden">
-                            <button id="mj-button-edit-order-notif" class="mj-btn btnPrimary" type="submit" name="submitAction" value="save"><?= __('Save changes', 'mailjet-for-wordpress') ?></button>
+                            <button id="mj-button-edit-order-notif" class="mj-btn btnPrimary mj-btnSpaced" type="submit" name="submitAction" value="save"><?= __('Save changes', 'mailjet-for-wordpress') ?></button>
                             <button class="mj-btnSecondary " onclick="toggleEdit(false)" type="button"><?= __('Cancel', 'mailjet-for-wordpress') ?></button>
                         </div>
                         <?php } ?>
@@ -222,7 +196,7 @@ class OrderNotificationsSettings
             MailjetAdminDisplay::renderBottomLinks();
             ?>
             <script>
-                <?php if (!$isConfirmationActive) { ?>
+                <?php if (!$isEditActive) { ?>
                     document.getElementById("refund_confirmation").addEventListener("click", submitListener);
                     document.getElementById("order_confirmation").addEventListener("click", submitListener);
                     document.getElementById("shipping_confirmation").addEventListener("click", submitListener);

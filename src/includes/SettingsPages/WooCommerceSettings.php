@@ -4,7 +4,7 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
-
+use MailjetPlugin\Includes\MailjetSettings;
 
 
 /**
@@ -205,7 +205,7 @@ class WooCommerceSettings
             '__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'),
             '__EMAIL_HEADER__' => sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl),
             '__WP_URL__' => $wpUrl,
-            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&mj_sub_woo_token=' . sha1($subscribe . $user_email . $first_name . $last_name),
+            '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&mj_sub_woo_token=' . sha1($subscribe . $user_email . $first_name . $last_name . MailjetSettings::getCryptoHash()),
             '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'),
             '__FROM_NAME__' => get_option('blogname'),
             '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'),
@@ -343,12 +343,12 @@ class WooCommerceSettings
         $result['success'] = true;
 
         $activate = true;
-        if (!isset($data->activate_mailjet_woo_integration) || $data->activate_mailjet_woo_integration !== '1') {
+        if (!isset($data['activate_mailjet_woo_integration']) || $data['activate_mailjet_woo_integration'] !== '1') {
             update_option('activate_mailjet_woo_integration', '');
             $activate = false;
         }
 
-        if ($activate && isset($data->mailjet_woo_edata_sync) && $data->mailjet_woo_edata_sync === '1') {
+        if ($activate && isset($data['mailjet_woo_edata_sync']) && $data['mailjet_woo_edata_sync'] === '1') {
             if (get_option('mailjet_woo_edata_sync') !== '1') {
                 if ($this->all_customers_edata_sync() === false) {
                     $result['success'] = false;
@@ -357,13 +357,20 @@ class WooCommerceSettings
                 }
             }
         }
-        else {
-            update_option('mailjet_woo_edata_sync', '');
-        }
 
-        foreach ($data as $key => $val) {
-            $optionVal = $activate ? $val : '';
-            update_option($key, sanitize_text_field($optionVal));
+        $checkboxesNames = array(
+            'activate_mailjet_woo_integration',
+            'mailjet_woo_edata_sync',
+            'mailjet_woo_checkout_checkbox',
+            'mailjet_woo_banner_checkbox'
+        );
+        foreach ($checkboxesNames as $checkboxName) {
+            if ($activate && (int)$data[$checkboxName] === 1) {
+                update_option($checkboxName, '1');
+            }
+            else {
+                update_option($checkboxName, '');
+            }
         }
 
         if ($activate) {
@@ -377,14 +384,24 @@ class WooCommerceSettings
             update_option('mailjet_woo_abandoned_cart_activate', 0);
             add_option('mailjet_woo_abandoned_cart_sending_time', 1200); // 20 * 60 = 1200s
 
-            //Abandoned carts DB table
-            global $wpdb;
-            $wcap_collate = '';
-            if ( $wpdb->has_cap( 'collation' ) ) {
-                $wcap_collate = $wpdb->get_charset_collate();
-            }
-            $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            $this->createAbandonedCartTables();
+        }
+        $this->toggleAbandonedCart();
+
+        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
+
+        return $result;
+
+    }
+
+    private function createAbandonedCartTables() {
+        global $wpdb;
+        $wcap_collate = '';
+        if ( $wpdb->has_cap( 'collation' ) ) {
+            $wcap_collate = $wpdb->get_charset_collate();
+        }
+        $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `user_id` int(11) NOT NULL,
                     `abandoned_cart_info` text NOT NULL,
@@ -394,34 +411,27 @@ class WooCommerceSettings
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=1 ";
 
-            require_once ( ABSPATH . 'wp-admin/includes/upgrade.php' );
-            dbDelta( $sql );
+        require_once ( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
 
-            $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails';
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails';
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `abandoned_cart_id` text NOT NULL,
                     `sent_time` int(11) NOT NULL,
                     `security_key` text NOT NULL,
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=1 ";
-            dbDelta( $sql );
+        dbDelta( $sql );
 
-            $table_name = $wpdb->prefix . 'mailjet_wc_guests';
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        $table_name = $wpdb->prefix . 'mailjet_wc_guests';
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `billing_email` text NOT NULL,
                     `guest_name` text,
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=75000000";
-            dbDelta( $sql );
-        }
-        $this->toggleAbandonedCart();
-
-        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
-
-        return $result;
-
+        dbDelta( $sql );
     }
 
     private function createTemplates($forAbandonedCart = true, $forOrderNotif = true) {
@@ -472,6 +482,7 @@ class WooCommerceSettings
                 return false;
             }
         }
+        return true;
     }
 
     public function send_order_status_refunded($orderId)
@@ -834,6 +845,7 @@ class WooCommerceSettings
             if ( ! wp_next_scheduled( 'abandoned_cart_cron_hook' ) ) {
                 wp_schedule_event( time(), 'one_minute', 'abandoned_cart_cron_hook' );
             }
+            $this->createAbandonedCartTables();
             $activeHooks = [
                 ['hook' => 'woocommerce_add_to_cart', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_cart_item_removed', 'callable' => 'cart_change_timestamp'],
@@ -1261,7 +1273,7 @@ class WooCommerceSettings
             return false;
         }
         $status = $order->get_status();
-        if ($status === 'processing' || $status === 'completed' || $status === 'cancelled' || $status === 'refunded') {
+        if ($status === 'completed' || $status === 'refunded') {
             $user = $order->get_user();
             if ($user === false) { // guest user
                 $email = $order->get_billing_email();
@@ -1296,17 +1308,21 @@ class WooCommerceSettings
         if ($userRoles[0] === 'customer') {
             $args = array(
                 'customer_id' => $userId,
-                'status' => ['completed', 'processing'],
+                'status' => ['completed'],
                 'type' => 'shop_order',
                 'limit' => -1,
             );
             $orders = wc_get_orders($args);
             $customer = new \WC_Customer($userId);
             $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = (string)count($orders);
-            $customerProperties[self::WOO_PROP_TOTAL_SPENT] = (string)$customer->get_total_spent();
+            $totalSpent = 0;
+            foreach ($orders as $order) {
+                $totalSpent += $order->get_total();
+            }
+            $customerProperties[self::WOO_PROP_TOTAL_SPENT] = $totalSpent;
             $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
             if (is_array($orders) && !empty($orders)) {
-                $customerProperties[self::WOO_PROP_LAST_ORDER_DATE] = $orders[0]->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+                $customerProperties[self::WOO_PROP_LAST_ORDER_DATE] = $orders[0]->get_date_completed()->date('Y-m-d\TH:i:s\Z');
             }
         }
         return $customerProperties;
@@ -1320,7 +1336,7 @@ class WooCommerceSettings
     private function get_guest_edata($guestEmail = '') {
         $args = array(
             'customer_id' => 0,
-            'status' => ['processing', 'completed'],
+            'status' => ['completed'],
             'type' => 'shop_order',
             'limit' => -1,
         );
@@ -1331,7 +1347,7 @@ class WooCommerceSettings
         $guestProperties = array();
         foreach ($orders as $order) {
             $email = $order->get_billing_email();
-            $date = $order->get_date_paid()->date('Y-m-d\TH:i:s\Z');
+            $date = $order->get_date_completed()->date('Y-m-d\TH:i:s\Z');
             if (!array_key_exists($email, $guestProperties)) {
                 $guestProperties[$email] = array();
                 $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS] = 1;

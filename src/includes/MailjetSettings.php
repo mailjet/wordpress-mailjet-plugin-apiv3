@@ -160,12 +160,16 @@ class MailjetSettings
         }
 
         /* Add custom field to comment form and process it on form submit */
-        $activate_mailjet_comment_authors_sync = get_option('activate_mailjet_comment_authors_sync');
-        $mailjet_comment_authors_list = get_option('mailjet_comment_authors_list');
-        if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list)) {
+        $activate_mailjet_comment_authors_sync = (int)get_option('activate_mailjet_comment_authors_sync');
+        $mailjet_comment_authors_list = (int)get_option('mailjet_comment_authors_list');
+        if ($activate_mailjet_comment_authors_sync === 1 && $mailjet_comment_authors_list > 1) {
             $commentAuthorsSettings = new CommentAuthorsSettings();
-
-            add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            if (wp_get_current_user()->exists()) {
+                add_action('comment_form', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            }
+            else {
+                add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            }
             add_action('wp_insert_comment', array($commentAuthorsSettings, 'mailjet_subscribe_comment_author'));
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
@@ -234,7 +238,7 @@ class MailjetSettings
                 'prop' => $name
             ));
 
-            if (sha1($params) !== $_GET['token']) {
+            if (sha1($params . MailjetSettings::getCryptoHash()) !== $_GET['token']) {
                 return false;
             }
 
@@ -277,8 +281,8 @@ class MailjetSettings
         if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list)) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             $mj_sub_comment_author_token = isset($_GET['mj_sub_comment_author_token']) ? $_GET['mj_sub_comment_author_token'] : null;
-            if (!empty($mj_sub_comment_author_token) &&
-                    $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+            $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . MailjetSettings::getCryptoHash());
+            if (!empty($mj_sub_comment_author_token) && $mj_sub_comment_author_token === $tokenCheck) {
                 $commentAuthorsSettings = new CommentAuthorsSettings();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
                 $syncSingleContactEmailToMailjetList = $commentAuthorsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
@@ -294,12 +298,11 @@ class MailjetSettings
 
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
-        $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
-        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync)) {
+        if (!empty($activate_mailjet_woo_integration)) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             $mj_sub_woo_token = isset($_GET['mj_sub_woo_token']) ? $_GET['mj_sub_woo_token'] : false;
-            if (!empty($mj_sub_woo_token) &&
-                    $_GET['mj_sub_woo_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'])) {
+            $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'] . MailjetSettings::getCryptoHash());
+            if (!empty($mj_sub_woo_token) && $mj_sub_woo_token === $tokenCheck) {
                 $wooCommerceSettings = new WooCommerceSettings();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
                 $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']), $_GET['first_name'], $_GET['last_name']);
@@ -373,4 +376,17 @@ class MailjetSettings
         exit;
     }
 
+    public static function getCryptoHash() {
+        $hash = get_option('crypto_hash');
+        if (empty($hash)) {
+            try {
+                $hash = bin2hex(random_bytes(10));
+            }
+            catch (Exception $e) {
+                $hash = (string)mt_rand();
+            }
+            update_option('crypto_hash', $hash);
+        }
+        return get_option('crypto_hash');
+    }
 }

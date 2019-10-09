@@ -373,7 +373,7 @@ class IntegrationsSettings
         $this->toggleCF7Feature((object)$postData->cf7);
 
         $wooSettings = new WooCommerceSettings();
-        $response = $wooSettings->activateWoocommerce((object)$postData->woocommerce);
+        $response = $wooSettings->activateWoocommerce($postData->woocommerce);
 
         update_option('mailjet_post_update_message', $response);
         wp_redirect(add_query_arg(array('page' => 'mailjet_integrations_page'), admin_url('admin.php')));

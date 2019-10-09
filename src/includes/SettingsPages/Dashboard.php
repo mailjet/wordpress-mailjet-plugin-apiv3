@@ -26,8 +26,8 @@ class Dashboard {
 	 */
 	public function mailjet_dashboard_page_html() {
 
-		$iconDir           = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'admin/images/woo.svg';
-		$wooCommerceExists = get_option( 'activate_mailjet_woo_integration' ) === '1' ? 'mj-show' : 'hidden';
+		$iconDir = plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'admin/images/woo.svg';
+		$wooCommerceIntegActivated = get_option( 'activate_mailjet_woo_integration' ) === '1';
 		if ( ! MailjetApi::isValidAPICredentials() ) {
 			MailjetSettings::redirectJs( admin_url( '/admin.php?page=mailjet_settings_page&from=plugins' ) );
 		}
@@ -44,13 +44,14 @@ class Dashboard {
                         src="<?php echo plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . '/admin/images/LogoMJ_White_RVB.svg'; ?>"
                         alt="Mailjet Logo"/></div>
             <div class="mainContainer dashboard">
-                <!--            <h1>--><?php //echo esc_html(get_admin_page_title());
-				?><!--</h1>-->
                 <div id="mj-top_bar">
                     <section
                             id="mj-title"><?php _e( 'Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress' ); ?></section>
-                    <i onclick="location.href = 'admin.php?page=mailjet_connect_account_page'"
-                       class="dashicons dashicons-admin-generic" id="mj-logo_top_bar"><span>Settings</span></i>
+                    <div id="mj-settings_top_bar">
+                        <i onclick="location.href = 'admin.php?page=mailjet_connect_account_page'"
+                           class="dashicons dashicons-admin-generic"></i>
+                        <span>Settings</span></i>
+                    </div>
                 </div>
 
                 <div class="initialSettingsMainCtn">
@@ -69,7 +70,8 @@ class Dashboard {
                                     id="nextBtnReverseDashboard2"
                                     onclick="location.href = 'admin.php?page=mailjet_settings_contacts_menu'"><?php _e( 'Manage contacts', 'mailjet-for-wordpress' ) ?></button>
                         </div>
-                        <div class="block mj-box <?= $wooCommerceExists ?>">
+                        <?php if ($wooCommerceIntegActivated) { ?>
+                        <div class="block mj-box">
                             <div>
                                 <h3 class="section-header"><?php _e( 'Order notification emails', 'mailjet-for-wordpress' ); ?></h3>
                                 <img alt="asd" class="mj-woo-logo-small" src="<?= $iconDir ?>"/>
@@ -79,6 +81,7 @@ class Dashboard {
                                     id="nextBtnReverseDashboard4"
                                     onclick="location.href = 'admin.php?page=mailjet_order_notifications_page'"><?php _e( 'Manage transactional emails', 'mailjet-for-wordpress' ) ?></button>
                         </div>
+                        <?php } ?>
                     </div>
                     <div class="col mj-grid">
                         <div class="block mj-box">
@@ -94,7 +97,8 @@ class Dashboard {
                                     id="nextBtnReverseDashboard4"
                                     onclick="location.href = 'admin.php?page=mailjet_settings_stats_menu'"><?php _e( 'View statistics', 'mailjet-for-wordpress' ) ?></button>
                         </div>
-                        <div class="block mj-box <?= $wooCommerceExists ?>">
+                        <?php if ($wooCommerceIntegActivated) { ?>
+                        <div class="block mj-box">
                             <div>
                                 <h3 class="section-header"><?php _e( 'Abandoned cart email', 'mailjet-for-wordpress' ); ?></h3>
                                 <img alt="asd" class="mj-woo-logo-small" src="<?= $iconDir ?>"/>
@@ -104,6 +108,7 @@ class Dashboard {
                                     id="nextBtnReverseDashboard3"
                                     onclick="location.href = 'admin.php?page=mailjet_abandoned_cart_page'"><?= __( 'Manage abandoned cart', 'mailjet-for-wordpress' ) ?></button>
                         </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
