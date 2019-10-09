@@ -384,14 +384,24 @@ class WooCommerceSettings
             update_option('mailjet_woo_abandoned_cart_activate', 0);
             add_option('mailjet_woo_abandoned_cart_sending_time', 1200); // 20 * 60 = 1200s
 
-            //Abandoned carts DB table
-            global $wpdb;
-            $wcap_collate = '';
-            if ( $wpdb->has_cap( 'collation' ) ) {
-                $wcap_collate = $wpdb->get_charset_collate();
-            }
-            $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            $this->createAbandonedCartTables();
+        }
+        $this->toggleAbandonedCart();
+
+        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
+
+        return $result;
+
+    }
+
+    private function createAbandonedCartTables() {
+        global $wpdb;
+        $wcap_collate = '';
+        if ( $wpdb->has_cap( 'collation' ) ) {
+            $wcap_collate = $wpdb->get_charset_collate();
+        }
+        $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_carts';
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `user_id` int(11) NOT NULL,
                     `abandoned_cart_info` text NOT NULL,
@@ -401,34 +411,27 @@ class WooCommerceSettings
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=1 ";
 
-            require_once ( ABSPATH . 'wp-admin/includes/upgrade.php' );
-            dbDelta( $sql );
+        require_once ( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
 
-            $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails';
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        $table_name = $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails';
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `abandoned_cart_id` text NOT NULL,
                     `sent_time` int(11) NOT NULL,
                     `security_key` text NOT NULL,
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=1 ";
-            dbDelta( $sql );
+        dbDelta( $sql );
 
-            $table_name = $wpdb->prefix . 'mailjet_wc_guests';
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        $table_name = $wpdb->prefix . 'mailjet_wc_guests';
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `billing_email` text NOT NULL,
                     `guest_name` text,
                     PRIMARY KEY (`id`)
                     ) $wcap_collate AUTO_INCREMENT=75000000";
-            dbDelta( $sql );
-        }
-        $this->toggleAbandonedCart();
-
-        $result['message'] = $result['success'] === true ? 'Integrations updated successfully.' : 'Something went wrong! Please try again later.';
-
-        return $result;
-
+        dbDelta( $sql );
     }
 
     private function createTemplates($forAbandonedCart = true, $forOrderNotif = true) {
@@ -479,6 +482,7 @@ class WooCommerceSettings
                 return false;
             }
         }
+        return true;
     }
 
     public function send_order_status_refunded($orderId)
@@ -841,6 +845,7 @@ class WooCommerceSettings
             if ( ! wp_next_scheduled( 'abandoned_cart_cron_hook' ) ) {
                 wp_schedule_event( time(), 'one_minute', 'abandoned_cart_cron_hook' );
             }
+            $this->createAbandonedCartTables();
             $activeHooks = [
                 ['hook' => 'woocommerce_add_to_cart', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_cart_item_removed', 'callable' => 'cart_change_timestamp'],
