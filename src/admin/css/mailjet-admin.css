@@ -1362,15 +1362,17 @@ input:checked + .mj-slider:before {
     margin-left: auto;
 }
 
+#mj-settings_top_bar i {
+    display: flex;
+    width: auto;
+}
+
 #mj-settings_top_bar span {
     margin-top: 4px;
-    margin-left: 6px;
+    margin-left: 5px;
     font-family: Roboto;
     font-weight: 500;
     font-size: 14px;
-    display: inline-flex;
-    /*position: absolute;*/
-    vertical-align: middle;
 }
 
 #mj-title {

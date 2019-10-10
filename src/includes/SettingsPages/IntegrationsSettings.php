@@ -163,7 +163,7 @@ class IntegrationsSettings
         $from                           = get_option( 'cf7_fromname' );
         ?>
         <fieldset class="settingsSubscrFldset">
-            <legend class="mj-integrations-label"><?php _e( 'Contact Form 7', 'mailjet-for-wordpress' ); ?></legend>
+            <span class="mj-integrations-label"><?php _e( 'Contact Form 7', 'mailjet-for-wordpress' ); ?></span>
             <label class="mj-switch">
                 <input name="cf7[activate_mailjet_cf7_integration]"  id="activate_mailjet_cf7_integration" value="1"
                        type="checkbox" <?= ($mailjetCF7IntegrationActivated === '1' ? 'checked="checked"' : '') ?>
