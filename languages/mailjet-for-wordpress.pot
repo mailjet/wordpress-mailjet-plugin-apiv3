@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
-"POT-Creation-Date: 2019-10-09 17:38+0200\n"
+"POT-Creation-Date: 2019-10-10 11:05+0200\n"
 "PO-Revision-Date: 2015-01-29 12:40-0000\n"
 "Last-Translator: Ferhan Ismailov <fismailov@mailjet.com>\n"
 "Language-Team: Enora Gicquel <egicquel@mailjet.com>\n"
@@ -71,7 +71,7 @@ msgid "View your Mailjet statistics"
 msgstr ""
 
 #: src/includes/MailjetMenu.php:73
-#: src/includes/SettingsPages/Dashboard.php:94
+#: src/includes/SettingsPages/Dashboard.php:95
 msgid "Statistics"
 msgstr ""
 
@@ -126,8 +126,8 @@ msgid "User access"
 msgstr ""
 
 #: src/includes/MailjetMenu.php:122
-#: src/includes/SettingsPages/IntegrationsSettings.php:258
-#: src/includes/SettingsPages/IntegrationsSettings.php:332
+#: src/includes/SettingsPages/IntegrationsSettings.php:256
+#: src/includes/SettingsPages/IntegrationsSettings.php:330
 #: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/leftMenu.php:46
 msgid "Integrations"
 msgstr ""
@@ -154,7 +154,7 @@ msgstr ""
 #: src/includes/SettingsPages/AbandonedCartSettings.php:84
 #: src/includes/SettingsPages/ConnectAccountSettings.php:134
 #: src/includes/SettingsPages/EnableSendingSettings.php:225
-#: src/includes/SettingsPages/IntegrationsSettings.php:311
+#: src/includes/SettingsPages/IntegrationsSettings.php:309
 #: src/includes/SettingsPages/OrderNotificationsSettings.php:116
 #: src/includes/SettingsPages/UserAccessSettings.php:134
 #: src/templates/admin/settingTemplates/mainSettingsTemplate.php:12
@@ -212,7 +212,7 @@ msgstr ""
 #: src/includes/SettingsPages/ConnectAccountSettings.php:160
 #: src/includes/SettingsPages/EnableSendingSettings.php:252
 #: src/includes/SettingsPages/InitialContactListsSettings.php:109
-#: src/includes/SettingsPages/IntegrationsSettings.php:349
+#: src/includes/SettingsPages/IntegrationsSettings.php:347
 #: src/includes/SettingsPages/OrderNotificationsSettings.php:75
 #: src/includes/SettingsPages/OrderNotificationsSettings.php:187
 #: src/includes/SettingsPages/UserAccessSettings.php:161
@@ -273,7 +273,7 @@ msgstr ""
 #: src/includes/SettingsPages/AbandonedCartSettings.php:122
 #: src/includes/SettingsPages/EnableSendingSettings.php:249
 #: src/includes/SettingsPages/InitialContactListsSettings.php:108
-#: src/includes/SettingsPages/IntegrationsSettings.php:343
+#: src/includes/SettingsPages/IntegrationsSettings.php:341
 #: src/includes/SettingsPages/UserAccessSettings.php:158
 #: src/templates/admin/settingTemplates/mainSettingsTemplate.php:36
 #: src/widget/views/admin.php:206 src/widget/views/admin.php:501
@@ -345,6 +345,7 @@ msgstr ""
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:36
 #: src/includes/SettingsPages/IntegrationsSettings.php:111
 #: src/includes/SettingsPages/IntegrationsSettings.php:122
+#: src/includes/SettingsPages/IntegrationsSettings.php:220
 #: src/includes/SettingsPages/WooCommerceSettings.php:78
 #: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/profileFields.php:7
 msgid "Subscribe to our newsletter"
@@ -412,7 +413,7 @@ msgstr ""
 #: src/includes/SettingsPages/EnableSendingSettings.php:209
 #: src/includes/SettingsPages/InitialContactListsSettings.php:217
 #: src/includes/SettingsPages/InitialSettings.php:140
-#: src/includes/SettingsPages/IntegrationsSettings.php:286
+#: src/includes/SettingsPages/IntegrationsSettings.php:284
 #: src/includes/SettingsPages/SubscriptionOptionsSettings.php:135
 msgid "Settings Saved"
 msgstr ""
@@ -420,7 +421,7 @@ msgstr ""
 #: src/includes/SettingsPages/ConnectAccountSettings.php:138
 #: src/includes/SettingsPages/Dashboard.php:53
 #: src/includes/SettingsPages/EnableSendingSettings.php:229
-#: src/includes/SettingsPages/IntegrationsSettings.php:315
+#: src/includes/SettingsPages/IntegrationsSettings.php:313
 #: src/includes/SettingsPages/UserAccessSettings.php:138
 #: src/templates/admin/settingTemplates/mainSettingsTemplate.php:16
 msgid "Settings"
@@ -430,76 +431,76 @@ msgstr ""
 msgid "Connect to a different account"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:60
+#: src/includes/SettingsPages/Dashboard.php:61
 msgid "My campaigns"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:61
+#: src/includes/SettingsPages/Dashboard.php:62
 msgid "Create and manage your newsletters. View your campaign statistics"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:64
+#: src/includes/SettingsPages/Dashboard.php:65
 msgid "Manage campaigns"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:67
+#: src/includes/SettingsPages/Dashboard.php:68
 msgid "My contact lists"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:68
+#: src/includes/SettingsPages/Dashboard.php:69
 msgid "View and manage your contact lists"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:71
+#: src/includes/SettingsPages/Dashboard.php:72
 msgid "Manage contacts"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:76
+#: src/includes/SettingsPages/Dashboard.php:77
 #: src/includes/SettingsPages/OrderNotificationsSettings.php:122
 msgid "Order notification emails"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:79
+#: src/includes/SettingsPages/Dashboard.php:80
 msgid ""
 "Activate order notification emails to inform customers of any new "
 "purchase, shipping or refund."
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:82
+#: src/includes/SettingsPages/Dashboard.php:83
 msgid "Manage transactional emails"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:88
+#: src/includes/SettingsPages/Dashboard.php:89
 msgid "Subscription form"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:89
+#: src/includes/SettingsPages/Dashboard.php:90
 msgid "Customize a subscription form and add it to your WordPress website"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:91
+#: src/includes/SettingsPages/Dashboard.php:92
 msgid "Add widget"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:95
+#: src/includes/SettingsPages/Dashboard.php:96
 msgid "View your sending statistics over a period of time"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:98
+#: src/includes/SettingsPages/Dashboard.php:99
 msgid "View statistics"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:103
+#: src/includes/SettingsPages/Dashboard.php:104
 msgid "Abandoned cart email"
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:106
+#: src/includes/SettingsPages/Dashboard.php:107
 msgid ""
 "Recover visitors and turn them into customers but reminding them what they "
 "left in their cart."
 msgstr ""
 
-#: src/includes/SettingsPages/Dashboard.php:109
+#: src/includes/SettingsPages/Dashboard.php:110
 msgid "Manage abandoned cart"
 msgstr ""
 
@@ -773,50 +774,40 @@ msgstr ""
 msgid "Mailjet list"
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:184
-msgid "Select a list"
-msgstr ""
-
-#: src/includes/SettingsPages/IntegrationsSettings.php:200
+#: src/includes/SettingsPages/IntegrationsSettings.php:199
 msgid "Email field tag"
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:202
+#: src/includes/SettingsPages/IntegrationsSettings.php:201
 msgid "e.g. [your-email]"
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:207
+#: src/includes/SettingsPages/IntegrationsSettings.php:206
 msgid "Name field tag (optional)"
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:212
+#: src/includes/SettingsPages/IntegrationsSettings.php:211
 msgid "e.g. [your-name]"
 msgstr ""
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:216
 msgid ""
-"To enable the integration, include the following shortcode to your contact "
-"form:"
-msgstr ""
-
-#: src/includes/SettingsPages/IntegrationsSettings.php:218
-msgid ""
 "Include the following shortcode in your contact form in order to display "
 "the newsletter subscription checkbox and complete the integration."
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:281
+#: src/includes/SettingsPages/IntegrationsSettings.php:279
 msgid ""
 "The settings could not be saved. Please select a contact list to subscribe "
 "WooCommerce users to."
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:333
+#: src/includes/SettingsPages/IntegrationsSettings.php:331
 msgid ""
 "Enable and configure Mailjet integrations with other WordPress plugins"
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:368
+#: src/includes/SettingsPages/IntegrationsSettings.php:366
 msgid ""
 "Your permissions don't match! Please refresh your session and if the "
 "problem persists, contact our support team."

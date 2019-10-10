@@ -181,7 +181,6 @@ class IntegrationsSettings
                     </svg>
                     <select class="mj-select" name="cf7[mailjet_cf7_list]" id="mailjet_cf7_list"
                             type="select" <?php echo( $isCF7Installed === false ? ' disabled="disabled"' : '' ) ?>>
-                        <!--<option value="0"><?php _e( 'Select a list', 'mailjet-for-wordpress' ) ?></option>-->
                         <?php
                         foreach ( $mailjetContactLists as $mailjetContactList ) {
                             if ( $mailjetContactList["IsDeleted"] == true ) {
@@ -213,7 +212,6 @@ class IntegrationsSettings
                            class="widefat cf7_input"/>
                 </div>
                 <div>
-                    <!--<div><span><?php _e( 'To enable the integration, include the following shortcode to your contact form:', 'mailjet-for-wordpress' ) ?></span></div>-->
                     <div>
                         <span><?php _e( 'Include the following shortcode in your contact form in order to display the newsletter subscription checkbox and complete the integration.', 'mailjet-for-wordpress' ) ?></span>
                     </div>
