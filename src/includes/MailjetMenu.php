@@ -175,7 +175,7 @@ class MailjetMenu
         if (in_array($locale, array('de_DE', 'de_DE_formal'))) {
             $locale = 'de_DE';
         }
-        if (!in_array($locale, array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES'))) {
+        if (!in_array($locale, array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES', 'it_IT'))) {
             $locale = 'en_US';
         }
         return $locale;
@@ -277,7 +277,7 @@ class MailjetMenu
             else {
                 $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_TEMPLATES);
             }
-            $iframeHtml = $mailjetIframe->getHtml();
+            $iframeHtml = $mailjetIframe->getHtml(true);
         } catch (\MailjetIframe\MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
