@@ -49,8 +49,9 @@ class Dashboard {
                             id="mj-title"><?php _e( 'Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress' ); ?></section>
                     <div id="mj-settings_top_bar">
                         <i onclick="location.href = 'admin.php?page=mailjet_connect_account_page'"
-                           class="dashicons dashicons-admin-generic"></i>
-                        <span>Settings</span></i>
+                           class="dashicons dashicons-admin-generic">
+                            <span>Settings</span>
+                        </i>
                     </div>
                 </div>
 
