@@ -1,21 +1,26 @@
 .mailjet_widget_front_container {
-    /*background-color: #5F862F;*/
+
 }
 
-.widget-text{
-    
-}
-
-.wp_widget_plugin_box{
-    
+#mailjet-widget-title-wrap {
+    display: inline;
+    font-size: 12px;
 }
 
 .mj_form_property{
     
 }
 
-#mailjet_widget_title_wrap{
-    
+.mailjet-widget-form-group {
+    margin-bottom: 10px;
+}
+
+.mailjet-widget-label {
+    text-decoration: appworkspace;
+    margin-bottom: 20px;
+    font-weight: 500;
+    display: inline;
+    cursor: pointer;
 }
 
 #mjForm{
