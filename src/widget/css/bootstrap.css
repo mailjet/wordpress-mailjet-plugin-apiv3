@@ -12,7 +12,7 @@
 a:active,
 a:hover {
   outline: 0;
-}*/
+}
 
 @font-face {
   font-family: 'Glyphicons Halflings';
@@ -742,19 +742,7 @@ a:hover {
 }
 .glyphicon-menu-up:before {
   content: "\e260";
-}
-.mj-select-wrapper {
-   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-.mj-select-wrapper:before,
-.mj-select-wrapper:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
+}*/
 .row {
   margin-right: -15px;
   margin-left: -15px;
@@ -4813,9 +4801,10 @@ button.close {
 .show {
   display: block !important;
 }
+/*
 .invisible {
   visibility: hidden;
-}
+}*/
 .text-hide {
   font: 0/0 a;
   color: transparent;
