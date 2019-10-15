@@ -1,7 +1,3 @@
-.form-group{
-    margin-bottom: 10px!important;
-}
-
 .form-control{
     border-radius: 0px!important;
     background-color: #FFF !important;
@@ -32,9 +28,6 @@
     margin-top: 10px;
     margin-bottom: 10px;
     /*background-color: #00a0d2;*/
-}
-.mailjet_widget_front_container {
-    /*background-color: #5F862F;*/
 }
 
 #chooseLangLabelWrap {
