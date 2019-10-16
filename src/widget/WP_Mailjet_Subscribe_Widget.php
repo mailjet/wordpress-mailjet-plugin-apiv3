@@ -46,10 +46,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Build widget
         $widget_options = array(
             'classname' => 'WP_Mailjet_Subscribe_Widget',
-            'description' => __('Allows your visitors to subscribe to one of your lists', $this->get_widget_slug())
+            'description' => __('Allows your visitors to subscribe to one of your lists', 'mailjet-for-wordpress')
         );
         parent::__construct(
-            $this->get_widget_slug(), __('Mailjet Subscription Widget', $this->get_widget_slug()), $widget_options
+            $this->get_widget_slug(), __('Mailjet Subscription Widget', 'mailjet-for-wordpress'), $widget_options
         );
 
         // Register site styles and scripts
