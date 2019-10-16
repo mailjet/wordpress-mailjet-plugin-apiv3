@@ -19,7 +19,7 @@ $mailjetContactLists = get_query_var('mailjetContactLists', $mailjetContactLists
 		</select>
 		<label class="checkboxLabel">
 			<input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?=($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-			<span><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?></span>
+			<span><?php echo sprintf(__('Also, add existing <b>%s WordPress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?></span>
 		</label>
 	</div>
 </div>

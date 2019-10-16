@@ -36,7 +36,7 @@ class SubscriptionOptionsSettings
     {
         ?>
 <!--        <p id="--><?php //echo esc_attr( $args['id'] ); ?><!--">-->
-<!--            --><?php //esc_html_e( 'Automatically add Wordpress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress' ); ?>
+<!--            --><?php //esc_html_e( 'Automatically add WordPress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress' ); ?>
 <!--        </p>-->
         <?php
     }
@@ -170,7 +170,7 @@ class SubscriptionOptionsSettings
             }
         }
         if (count($subContacts) <= 0 && count($unsubContacts) <= 0) {
-            add_settings_error('mailjet_messages', 'mailjet_message', __('No Wordpress users to add to Mailjet contact list', 'mailjet-for-wordpress'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('No WordPress users to add to Mailjet contact list', 'mailjet-for-wordpress'), 'error');
             return false;
         }
 
@@ -183,10 +183,10 @@ class SubscriptionOptionsSettings
         }
 
         if ($error) {
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing Wordpress users to your Mailjet contact list', 'mailjet-for-wordpress'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Something went wrong with adding existing WordPress users to your Mailjet contact list', 'mailjet-for-wordpress'), 'error');
             return false;
         } else {
-            add_settings_error('mailjet_messages', 'mailjet_message', __('All Wordpress users were successfully added to your Mailjet contact list', 'mailjet-for-wordpress'), 'updated');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('All WordPress users were successfully added to your Mailjet contact list', 'mailjet-for-wordpress'), 'updated');
         }
         return true;
     }

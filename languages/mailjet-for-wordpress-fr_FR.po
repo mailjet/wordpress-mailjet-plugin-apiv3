@@ -2,61 +2,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-15 16:12+0300\n"
-"PO-Revision-Date: 2019-08-23 08:31+0000\n"
+"POT-Creation-Date: 2019-10-09 17:38+0200\n"
+"PO-Revision-Date: 2019-10-09 17:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: French (France)\n"
-"Language: fr-FR\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Loco-Source-Locale: bg_BG\n"
-"X-Generator: Loco https://localise.biz/\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Loco-Parser: loco_parse_po\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 "X-Poedit-SearchPathExcluded-1: assets\n"
-"\n"
-"X-Loco-Parser: loco_parse_po"
-
-#: src/admin/partials/MailjetAdminDisplay.php:27 
-#: src/includes/MailjetMenu.php:96 src/includes/SettingsPages/AllSetup.php:70 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:150 
-#: src/includes/SettingsPages/Dashboard.php:80 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:283 
-#: src/includes/SettingsPages/InitialSettings.php:220
-msgid "Connect your Mailjet account"
-msgstr "Connecter votre compte Mailjet"
-
-#: src/admin/partials/MailjetAdminDisplay.php:36 
-#: src/includes/MailjetMenu.php:99 
-#: src/includes/SettingsPages/EnableSendingSettings.php:240
-msgid "Sending settings"
-msgstr "Paramètres d'envoi"
-
-#: src/admin/partials/MailjetAdminDisplay.php:45 
-#: src/includes/MailjetMenu.php:102 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:196
-msgid "Subscription options"
-msgstr "Options d'inscription"
-
-#: src/admin/partials/MailjetAdminDisplay.php:54 
-#: src/includes/MailjetMenu.php:105 
-#: src/includes/SettingsPages/UserAccessSettings.php:150
-msgid "User access"
-msgstr "Accès utilisateur"
-
-#: src/admin/partials/MailjetAdminDisplay.php:63 
-#: src/includes/MailjetMenu.php:108 
-#: src/includes/SettingsPages/IntegrationsSettings.php:176 
-#: src/includes/SettingsPages/IntegrationsSettings.php:236
-msgid "Integrations"
-msgstr "Intégrations"
 
 #: src/includes/MailjetActivator.php:29 src/includes/MailjetActivator.php:52
 #, php-format
@@ -64,6 +29,9 @@ msgid ""
 "Mailjet for WordPress requires PHP 5.5 or later. Your server currently runs "
 "on PHP %s. Please upgrade your PHP and activate the plugin again."
 msgstr ""
+"Mailjet pour WordPress nécessite PHP 5.5 ou supérieur. Votre serveur "
+"fonctionne actuellement sur PHP %s. S'il vous plaît mettez à niveau votre "
+"PHP et activer le plugin à nouveau."
 
 #: src/includes/MailjetMail.php:118
 msgid ""
@@ -86,96 +54,261 @@ msgid ""
 "Port: %s"
 msgstr ""
 
-#: src/includes/MailjetMenu.php:49 src/includes/MailjetMenu.php:60 
+#: src/includes/MailjetMenu.php:52
 #: src/includes/SettingsPages/InitialSettings.php:59
 msgid "Connect your Mailjet account to get started"
 msgstr "Connecter votre compte Mailjet pour commencer"
 
-#: src/includes/MailjetMenu.php:61 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:139 
-#: src/includes/SettingsPages/Dashboard.php:72 
-#: src/includes/SettingsPages/EnableSendingSettings.php:229 
-#: src/includes/SettingsPages/IntegrationsSettings.php:225 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:185 
-#: src/includes/SettingsPages/UserAccessSettings.php:139
-msgid "Settings"
-msgstr "Paramètres"
+#: src/includes/MailjetMenu.php:64
+msgid "Manage your Mailjet lists"
+msgstr "Gérer vos listes de contacts"
 
 #: src/includes/MailjetMenu.php:65
-msgid "Manage your Mailjet lists"
-msgstr "Gérer les campagnes"
-
-#: src/includes/MailjetMenu.php:66
 msgid "Lists"
-msgstr ""
+msgstr "Listes"
+
+#: src/includes/MailjetMenu.php:68
+msgid "Manage your Mailjet campaigns"
+msgstr "Gérer vos campagnes"
 
 #: src/includes/MailjetMenu.php:69
-msgid "Manage your Mailjet campaigns"
-msgstr ""
-
-#: src/includes/MailjetMenu.php:70
 msgid "Campaigns"
 msgstr "Campagnes"
 
-#: src/includes/MailjetMenu.php:73
+#: src/includes/MailjetMenu.php:72
 msgid "View your Mailjet statistics"
 msgstr "Consulter les statistiques"
 
-#: src/includes/MailjetMenu.php:74
+#: src/includes/MailjetMenu.php:73 src/includes/SettingsPages/Dashboard.php:94
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: src/includes/MailjetMenu.php:79 
+#: src/includes/MailjetMenu.php:76
+msgid "View your Mailjet template"
+msgstr "Consulter les modèles"
+
+#: src/includes/MailjetMenu.php:77
+#: src/includes/SettingsPages/AbandonedCartSettings.php:132
+msgid "Template"
+msgstr "Modèle"
+
+#: src/includes/MailjetMenu.php:82
 #: src/includes/SettingsPages/InitialContactListsSettings.php:27
 msgid "Configure your lists."
-msgstr "Configurez vos listes"
+msgstr "Configurez vos listes."
 
-#: src/includes/MailjetMenu.php:84 src/includes/SettingsPages/AllSetup.php:39
+#: src/includes/MailjetMenu.php:87 src/includes/SettingsPages/AllSetup.php:39
 msgid "You're all set up!"
 msgstr "Vous êtes prêts !"
 
-#: src/includes/MailjetMenu.php:90 src/includes/SettingsPages/Dashboard.php:39 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:247 
+#: src/includes/MailjetMenu.php:93 src/includes/MailjetMenu.php:98
+#: src/includes/MailjetMenu.php:103 src/includes/SettingsPages/Dashboard.php:49
+#: src/includes/SettingsPages/InitialContactListsSettings.php:245
 #: src/includes/SettingsPages/InitialSettings.php:167
-msgid "Welcome to the Mailjet plugin for Wordpress"
+msgid "Welcome to the Mailjet plugin for WordPress"
 msgstr "Bienvenue dans le plugin Mailjet pour WordPress"
 
-#: src/includes/MailjetMenu.php:113
-msgid "Temporary page"
-msgstr ""
+#: src/includes/MailjetMenu.php:110
+#: src/includes/SettingsPages/ConnectAccountSettings.php:149
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/leftMenu.php:10
+msgid "Connect your Mailjet account"
+msgstr "Connecter votre compte Mailjet"
 
-#: src/includes/MailjetMenu.php:199 src/includes/MailjetMenu.php:227 
-#: src/includes/MailjetMenu.php:254 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:102 
-#: src/includes/SettingsPages/InitialSettings.php:123 
-#: src/widget/views/designforfailure.php:4
+#: src/includes/MailjetMenu.php:113
+#: src/includes/SettingsPages/EnableSendingSettings.php:240
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/leftMenu.php:19
+msgid "Sending settings"
+msgstr "Paramètres d'envoi"
+
+#: src/includes/MailjetMenu.php:116
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/leftMenu.php:28
+#: src/templates/admin/settingTemplates/mainSettingsTemplate.php:27
+msgid "Subscription options"
+msgstr "Options d'inscription"
+
+#: src/includes/MailjetMenu.php:119
+#: src/includes/SettingsPages/UserAccessSettings.php:149
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/leftMenu.php:37
+msgid "User access"
+msgstr "Accès utilisateur"
+
+#: src/includes/MailjetMenu.php:122
+#: src/includes/SettingsPages/IntegrationsSettings.php:258
+#: src/includes/SettingsPages/IntegrationsSettings.php:332
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/leftMenu.php:46
+msgid "Integrations"
+msgstr "Intégrations"
+
+#: src/includes/MailjetMenu.php:202 src/includes/MailjetMenu.php:231
+#: src/includes/MailjetMenu.php:259 src/includes/MailjetMenu.php:283
+#: src/includes/SettingsPages/ConnectAccountSettings.php:101
+#: src/includes/SettingsPages/InitialSettings.php:123
 msgid ""
 "Please make sure that you are using the correct API key and Secret key "
-"associated to your Mailjet account: <a href=\"https://app.mailjet."
-"com/account/api_keys\">https://app.mailjet.com/account/api_keys</a>"
+"associated to your Mailjet account: <a href=\"https://app.mailjet.com/"
+"account/api_keys\">https://app.mailjet.com/account/api_keys</a>"
 msgstr ""
 "Veuillez vous assurer que vous utilisez une API et la clé secrète associés à "
-"votre compte Mailjet : <a href=\"https://app.mailjet.com/account/api_keys\">"
-"https://app.mailjet.com/account/api_keys</a>"
+"votre compte Mailjet : <a href=\"https://app.mailjet.com/account/api_keys"
+"\">https://app.mailjet.com/account/api_keys</a>"
 
-#: src/includes/MailjetSettings.php:248
+#: src/includes/MailjetMenu.php:291
+msgid "Back to order notification emails"
+msgstr "Retour au emails de notification de commande"
+
+#: src/includes/MailjetMenu.php:295
+msgid "Back to abandoned cart"
+msgstr "Retour au panier abandonné"
+
+#: src/includes/MailjetMenu.php:299
+#: src/includes/SettingsPages/AbandonedCartSettings.php:84
+#: src/includes/SettingsPages/ConnectAccountSettings.php:134
+#: src/includes/SettingsPages/EnableSendingSettings.php:225
+#: src/includes/SettingsPages/IntegrationsSettings.php:311
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:116
+#: src/includes/SettingsPages/UserAccessSettings.php:134
+#: src/templates/admin/settingTemplates/mainSettingsTemplate.php:12
+msgid "Back to dashboard"
+msgstr "Retour au tableau de bord"
+
+#: src/includes/MailjetSettings.php:268
 msgid ""
 "Your Mailjet API credentials are invalid or not yet configured. Please check "
 "and configure them to proceed further."
 msgstr ""
 
-#: src/includes/MailjetSettings.php:315
-#, fuzzy
+#: src/includes/MailjetSettings.php:333
 msgid "Setup account"
-msgstr "Connecter votre compte Mailjet"
-
-#: src/includes/MailjetSettings.php:331
-msgid "You have been successfully unsubscribed from a Mailjet contact list"
 msgstr ""
 
-#: src/includes/MailjetSettings.php:338
+#: src/includes/MailjetSettings.php:356
 msgid "Something went wrong with adding a contact to Mailjet contact list"
 msgstr ""
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:39
+#: src/includes/SettingsPages/AbandonedCartSettings.php:92
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:58
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:83
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:15
+msgid "Sending active"
+msgstr "Envoi activé"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:44
+msgid ""
+"Abandoned cart emails have been enabled for sending. You can change and stop "
+"the sending at any time."
+msgstr ""
+"Les emails de rappel de panier abandonné sont activés. Vous pouvez modifier "
+"ou désactiver l’envoi à tout moment."
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:49
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:99
+msgid "Close"
+msgstr "Fermer"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:58
+#: src/includes/SettingsPages/AbandonedCartSettings.php:68
+#: src/includes/SettingsPages/AbandonedCartSettings.php:153
+msgid "Stop sending"
+msgstr "Désactiver l’envoi"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:63
+msgid ""
+"By stopping the sending of abandoned cart emails, your visitors will no more "
+"be notified of the items they left inside their cart. Do you wish to stop "
+"the sending?"
+msgstr ""
+"En désactivant l’envoi des rappels de panier abandonné, vos utilisateurs ne "
+"recevront pas d’emails concernant les produits qu’ils ont laissés dans leur "
+"panier. Voulez-vous vraiment désactiver les envois ?"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:69
+#: src/includes/SettingsPages/AbandonedCartSettings.php:125
+#: src/includes/SettingsPages/ConnectAccountSettings.php:160
+#: src/includes/SettingsPages/EnableSendingSettings.php:252
+#: src/includes/SettingsPages/InitialContactListsSettings.php:109
+#: src/includes/SettingsPages/IntegrationsSettings.php:349
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:75
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:187
+#: src/includes/SettingsPages/UserAccessSettings.php:161
+#: src/templates/admin/settingTemplates/mainSettingsTemplate.php:39
+#: src/widget/views/admin.php:207 src/widget/views/admin.php:500
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:91
+msgid "Abandoned cart"
+msgstr "Panier abandonné"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:95
+msgid ""
+"Recover visitors and turn them into customers by reminding them what they "
+"left in their carts."
+msgstr ""
+"Incitez les visiteurs à revenir et à finaliser leur commande en leur "
+"rappelant les articles qu’ils ont ajoutés à leur panier."
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:97
+msgid "Who's going to receive this email?"
+msgstr "Qui recevra cet email ?"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:99
+msgid ""
+"This email will be automatically sent to those customers that have added at "
+"least one item to the cart and then have left you store without completing "
+"the purchase."
+msgstr ""
+"Cet email sera automatiquement envoyé aux clients ayant ajouté au moins un "
+"article à leur panier et quitté le site sans avoir finalisé leur achat."
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:100
+msgid ""
+"We will send abandoned cart emails only to those customers that have "
+"accepted marketing communication and that are active."
+msgstr ""
+"Les emails de rappel de panier abandonné sont uniquement envoyés aux clients "
+"ayant accepté de recevoir des communications marketing."
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:105
+msgid "Sending time"
+msgstr "Heure d’expédition"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:111
+#: src/includes/SettingsPages/AbandonedCartSettings.php:116
+msgid "minutes"
+msgstr "minutes"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:112
+#: src/includes/SettingsPages/AbandonedCartSettings.php:116
+msgid "hours"
+msgstr "heures"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:117
+msgid "after cart abandonment."
+msgstr "après l’abandon du panier."
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:119
+msgid "Edit sending time"
+msgstr "Modifier l’heure d’envoi"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:122
+#: src/includes/SettingsPages/EnableSendingSettings.php:249
+#: src/includes/SettingsPages/InitialContactListsSettings.php:108
+#: src/includes/SettingsPages/IntegrationsSettings.php:343
+#: src/includes/SettingsPages/UserAccessSettings.php:158
+#: src/templates/admin/settingTemplates/mainSettingsTemplate.php:36
+#: src/widget/views/admin.php:206 src/widget/views/admin.php:501
+msgid "Save"
+msgstr "Enregistrer"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:137
+msgid "Abandoned Cart"
+msgstr "Panier abandonné"
+
+#: src/includes/SettingsPages/AbandonedCartSettings.php:148
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:177
+msgid "Activate sending"
+msgstr "Activer l’envoi"
 
 #: src/includes/SettingsPages/AllSetup.php:40
 msgid "What would you like to do next?"
@@ -216,12 +349,12 @@ msgid "Create a campaign"
 msgstr "Créer une campagne"
 
 #: src/includes/SettingsPages/AllSetup.php:56
-msgid "Configure Wordpress email sending"
+msgid "Configure WordPress email sending"
 msgstr "Configurer l'envoi d'email WordPress"
 
 #: src/includes/SettingsPages/AllSetup.php:57
 msgid ""
-"Enable and configure sending of all your Wordpress emails (transactional "
+"Enable and configure sending of all your WordPress emails (transactional "
 "emails, etc...) through Mailjet."
 msgstr ""
 "Autoriser et configurer l'envoie de tous les emails de WordPress (emails "
@@ -239,68 +372,29 @@ msgstr ""
 "ou <a class=\"greenLink\" href=\"%s\">Rendez-vous sur la page de plugin "
 "Mailjet</a>"
 
-#: src/includes/SettingsPages/AllSetup.php:71 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:170 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:171 
-#: src/includes/SettingsPages/Dashboard.php:81 
-#: src/includes/SettingsPages/EnableSendingSettings.php:261 
-#: src/includes/SettingsPages/EnableSendingSettings.php:262 
-#: src/includes/SettingsPages/IntegrationsSettings.php:259 
-#: src/includes/SettingsPages/IntegrationsSettings.php:260 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:217 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:218 
-#: src/includes/SettingsPages/UserAccessSettings.php:171 
-#: src/includes/SettingsPages/UserAccessSettings.php:172
-msgid "Need help?"
-msgstr "Besoin d'aide ?"
-
-#: src/includes/SettingsPages/AllSetup.php:73 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:173 
-#: src/includes/SettingsPages/Dashboard.php:83 
-#: src/includes/SettingsPages/EnableSendingSettings.php:264 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:286 
-#: src/includes/SettingsPages/InitialSettings.php:223 
-#: src/includes/SettingsPages/IntegrationsSettings.php:262 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:220 
-#: src/includes/SettingsPages/UserAccessSettings.php:174
-msgid "Read our user guide"
-msgstr "Accéder au guide"
-
-#: src/includes/SettingsPages/AllSetup.php:74 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:174 
-#: src/includes/SettingsPages/Dashboard.php:84 
-#: src/includes/SettingsPages/EnableSendingSettings.php:265 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:287 
-#: src/includes/SettingsPages/InitialSettings.php:224 
-#: src/includes/SettingsPages/IntegrationsSettings.php:263 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:221 
-#: src/includes/SettingsPages/UserAccessSettings.php:175
-msgid "Contact our support team"
-msgstr "Contacter notre équipe de support"
-
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:32 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:335 
-#: src/includes/SettingsPages/WooCommerceSettings.php:39
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:36
+#: src/includes/SettingsPages/IntegrationsSettings.php:111
+#: src/includes/SettingsPages/IntegrationsSettings.php:122
+#: src/includes/SettingsPages/WooCommerceSettings.php:78
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/profileFields.php:7
 msgid "Subscribe to our newsletter"
 msgstr "Abonnez-vous à notre newsletter"
 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:51 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:91 
-#: src/includes/SettingsPages/WooCommerceSettings.php:54 
-#: src/includes/SettingsPages/WooCommerceSettings.php:107
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:57
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:97
+#: src/includes/SettingsPages/WooCommerceSettings.php:131
+#: src/includes/SettingsPages/WooCommerceSettings.php:196
 msgid "Invalid email"
-msgstr ""
+msgstr "Adresse invalide"
 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:97 
-#: src/includes/SettingsPages/ContactForm7Settings.php:69 
-#: src/includes/SettingsPages/WooCommerceSettings.php:114 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:537
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:105
+#: src/includes/SettingsPages/WooCommerceSettings.php:205
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:528
 msgid "Please confirm your subscription"
 msgstr "Confirmez votre abonnement"
 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:98 
-#: src/includes/SettingsPages/ContactForm7Settings.php:70 
-#: src/includes/SettingsPages/WooCommerceSettings.php:115
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:106
+#: src/includes/SettingsPages/WooCommerceSettings.php:206
 #, php-format
 msgid ""
 "To receive newsletters from %s please confirm your subscription by clicking "
@@ -309,16 +403,14 @@ msgstr ""
 "Pour recevoir la newsletter de %s  veuillez confirmer votre abonnement en "
 "cliquant sur le bouton suivant :"
 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:101 
-#: src/includes/SettingsPages/ContactForm7Settings.php:73 
-#: src/includes/SettingsPages/WooCommerceSettings.php:118 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:541
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:109
+#: src/includes/SettingsPages/WooCommerceSettings.php:209
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:532
 msgid "Yes, subscribe me to this list"
 msgstr "Oui, abonnez-moi à cette liste"
 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:103 
-#: src/includes/SettingsPages/ContactForm7Settings.php:75 
-#: src/includes/SettingsPages/WooCommerceSettings.php:120
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:111
+#: src/includes/SettingsPages/WooCommerceSettings.php:211
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message."
@@ -326,120 +418,131 @@ msgstr ""
 "Si vous recevez cet email par erreur ou si vous ne souhaitez plus vous "
 "abonner, ignorer simplement cet email."
 
-#: src/includes/SettingsPages/CommentAuthorsSettings.php:109 
-#: src/includes/SettingsPages/ContactForm7Settings.php:81 
-#: src/includes/SettingsPages/WooCommerceSettings.php:126
+#: src/includes/SettingsPages/CommentAuthorsSettings.php:117
+#: src/includes/SettingsPages/WooCommerceSettings.php:217
 msgid "Subscription Confirmation"
 msgstr "Confirmation d'inscription"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:34
+#: src/includes/SettingsPages/ConnectAccountSettings.php:33
 msgid "Currently connected to "
 msgstr "Actuellement connecté à "
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:52 
+#: src/includes/SettingsPages/ConnectAccountSettings.php:51
 #: src/includes/SettingsPages/InitialSettings.php:63
 msgid "<b>Api Key</b>"
 msgstr "<b>Clé API</b>"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:55 
+#: src/includes/SettingsPages/ConnectAccountSettings.php:54
 #: src/includes/SettingsPages/InitialSettings.php:65
 msgid "<b>Secret Key</b>"
 msgstr "<b>Clé secrète</b>"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:85 
+#: src/includes/SettingsPages/ConnectAccountSettings.php:84
 #: src/includes/SettingsPages/InitialSettings.php:102
 msgid "Mailjet API credentials"
-msgstr ""
+msgstr "Vos identifiants de l'API Mailjet"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:119 
-#: src/includes/SettingsPages/EnableSendingSettings.php:209 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:222 
-#: src/includes/SettingsPages/InitialSettings.php:140 
-#: src/includes/SettingsPages/IntegrationsSettings.php:205 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:165
+#: src/includes/SettingsPages/ConnectAccountSettings.php:118
+#: src/includes/SettingsPages/EnableSendingSettings.php:209
+#: src/includes/SettingsPages/InitialContactListsSettings.php:217
+#: src/includes/SettingsPages/InitialSettings.php:140
+#: src/includes/SettingsPages/IntegrationsSettings.php:286
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:135
 msgid "Settings Saved"
 msgstr "Vos modifications ont été enregistrées"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:135 
-#: src/includes/SettingsPages/EnableSendingSettings.php:225 
-#: src/includes/SettingsPages/IntegrationsSettings.php:221 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:181 
-#: src/includes/SettingsPages/UserAccessSettings.php:135
-msgid "Back to dashboard"
-msgstr "Retour au tableau de bord"
+#: src/includes/SettingsPages/ConnectAccountSettings.php:138
+#: src/includes/SettingsPages/Dashboard.php:53
+#: src/includes/SettingsPages/EnableSendingSettings.php:229
+#: src/includes/SettingsPages/IntegrationsSettings.php:315
+#: src/includes/SettingsPages/UserAccessSettings.php:138
+#: src/templates/admin/settingTemplates/mainSettingsTemplate.php:16
+msgid "Settings"
+msgstr "Paramètres"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:160
+#: src/includes/SettingsPages/ConnectAccountSettings.php:159
 msgid "Connect to a different account"
 msgstr "Connecter à un autre compte"
 
-#: src/includes/SettingsPages/ConnectAccountSettings.php:161 
-#: src/includes/SettingsPages/EnableSendingSettings.php:252 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:118 
-#: src/includes/SettingsPages/IntegrationsSettings.php:250 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:208 
-#: src/includes/SettingsPages/UserAccessSettings.php:162 
-#: src/widget/views/admin.php:207 src/widget/views/admin.php:500
-msgid "Cancel"
-msgstr "Annuler"
-
-#: src/includes/SettingsPages/Dashboard.php:43
-msgid "Send newsletter"
-msgstr "Envoyer des newsletters"
-
-#: src/includes/SettingsPages/Dashboard.php:44
-msgid "Create and manage your newsletters. Vew your campaign statistics"
-msgstr ""
-"Créer et gérer vos newsletters. Consulter les statistiques de votre campagne."
-
-#: src/includes/SettingsPages/Dashboard.php:45
+#: src/includes/SettingsPages/Dashboard.php:60
 msgid "My campaigns"
 msgstr "Mes campagnes"
 
-#: src/includes/SettingsPages/Dashboard.php:52
-msgid "Manage my contacts"
-msgstr "Gérer mes contacts"
+#: src/includes/SettingsPages/Dashboard.php:61
+msgid "Create and manage your newsletters. View your campaign statistics"
+msgstr ""
+"Créer et gérer vos newsletters. Consulter les statistiques de votre campagne"
 
-#: src/includes/SettingsPages/Dashboard.php:53
-msgid "View and manage your contact lists"
-msgstr "Consulter et gérer vos listes de contacts"
+#: src/includes/SettingsPages/Dashboard.php:64
+msgid "Manage campaigns"
+msgstr "Gérer les campagnes"
 
-#: src/includes/SettingsPages/Dashboard.php:54
+#: src/includes/SettingsPages/Dashboard.php:67
 msgid "My contact lists"
 msgstr "Mes listes de contacts"
 
-#: src/includes/SettingsPages/Dashboard.php:58
-msgid "Add a subscription form"
-msgstr "Ajouter un formulaire d'inscription"
+#: src/includes/SettingsPages/Dashboard.php:68
+msgid "View and manage your contact lists"
+msgstr "Consulter et gérer vos listes de contacts"
 
-#: src/includes/SettingsPages/Dashboard.php:59
-msgid "Customize a subscription form and add it to your Wordpress website"
+#: src/includes/SettingsPages/Dashboard.php:71
+msgid "Manage contacts"
+msgstr "Gérer les contacts"
+
+#: src/includes/SettingsPages/Dashboard.php:76
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:122
+msgid "Order notification emails"
+msgstr "Emails de notification de commande"
+
+#: src/includes/SettingsPages/Dashboard.php:79
+msgid ""
+"Activate order notification emails to inform customers of any new purchase, "
+"shipping or refund."
+msgstr ""
+"Activez les emails de notification de commande pour informer vos clients sur "
+"leurs achats récents, l’expédition de leur commande ou leurs remboursements."
+
+#: src/includes/SettingsPages/Dashboard.php:82
+msgid "Manage transactional emails"
+msgstr "Gestion des emails transactionnels"
+
+#: src/includes/SettingsPages/Dashboard.php:88
+msgid "Subscription form"
+msgstr "Formulaire d'inscription"
+
+#: src/includes/SettingsPages/Dashboard.php:89
+msgid "Customize a subscription form and add it to your WordPress website"
 msgstr ""
 "Personnalisez votre formulaire de souscription et ajoutez-le à votre site "
 "Web WordPress"
 
-#: src/includes/SettingsPages/Dashboard.php:60
-msgid "My widgets"
-msgstr "Mes widgets"
+#: src/includes/SettingsPages/Dashboard.php:91
+msgid "Add widget"
+msgstr "Ajouter un widget"
 
-#: src/includes/SettingsPages/Dashboard.php:64
-msgid "View statistics"
-msgstr "Voir les statistiques"
-
-#: src/includes/SettingsPages/Dashboard.php:65
+#: src/includes/SettingsPages/Dashboard.php:95
 msgid "View your sending statistics over a period of time"
 msgstr "Consulter vos statistiques sur une période"
 
-#: src/includes/SettingsPages/Dashboard.php:66
-msgid "My statistics"
-msgstr "Mes statistiques"
+#: src/includes/SettingsPages/Dashboard.php:98
+msgid "View statistics"
+msgstr "Voir les statistiques"
 
-#: src/includes/SettingsPages/Dashboard.php:70
-msgid "Update settings"
-msgstr "Mettre à jour les paramètres"
+#: src/includes/SettingsPages/Dashboard.php:103
+msgid "Abandoned cart email"
+msgstr "Email de panier abandonné"
 
-#: src/includes/SettingsPages/Dashboard.php:71
-msgid "Review and modify your plugin settings"
-msgstr "Réviser et modifier vos paramètres de plugin"
+#: src/includes/SettingsPages/Dashboard.php:106
+msgid ""
+"Recover visitors and turn them into customers but reminding them what they "
+"left in their cart."
+msgstr ""
+"Incitez les visiteurs à revenir et à finaliser leur commande en leur "
+"rappelant les articles qu’ils ont ajoutés à leur panier."
+
+#: src/includes/SettingsPages/Dashboard.php:109
+msgid "Manage abandoned cart"
+msgstr "Gestion des paniers abandonnés"
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:28
 msgid ""
@@ -479,8 +582,8 @@ msgstr "Destinataire de votre email"
 msgid "Send"
 msgstr "Envoi"
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:138 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:153
+#: src/includes/SettingsPages/EnableSendingSettings.php:138
+#: src/includes/SettingsPages/InitialContactListsSettings.php:148
 msgid "Enable sending emails through Mailjet"
 msgstr "Autoriser les emails d'envoi via Mailjet"
 
@@ -509,16 +612,7 @@ msgstr ""
 msgid "Your test email has been successfully sent"
 msgstr "Votre email de test a bien été envoyé"
 
-#: src/includes/SettingsPages/EnableSendingSettings.php:249 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:117 
-#: src/includes/SettingsPages/IntegrationsSettings.php:247 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:205 
-#: src/includes/SettingsPages/UserAccessSettings.php:159 
-#: src/widget/views/admin.php:206 src/widget/views/admin.php:501
-msgid "Save"
-msgstr "Enregistrer"
-
-#: src/includes/SettingsPages/EnableSendingSettings.php:314
+#: src/includes/SettingsPages/EnableSendingSettings.php:319
 msgid ""
 "Your settings have been saved, but your port and SSL settings were changed "
 "to ensure delivery"
@@ -530,77 +624,58 @@ msgstr ""
 #: src/includes/SettingsPages/InitialContactListsSettings.php:29
 msgid ""
 "Here are the contact lists we have detected on your Mailjet account. You can "
-"add your Wordpress subscribers to one of them, or use them to collect new "
+"add your WordPress subscribers to one of them, or use them to collect new "
 "email addresses."
 msgstr ""
 "Voici les listes de contact que nous avons détecté sur votre compte Mailjet. "
 "Vous pouvez ajouter vos utilisateurs WordPress à l'une d'entre elles ou "
 "utilisez-les pour collecter de nouvelles adresses email."
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:81
-msgid "Synchronize your Wordpress users"
+#: src/includes/SettingsPages/InitialContactListsSettings.php:78
+msgid "Synchronize your WordPress users"
 msgstr "Synchroniser vos utilisateurs WordPress"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:82
-msgid ""
-"If you wish, you can add your Wordpress website users (readers, authors, "
-"administrators, …) to a contact list."
-msgstr ""
-"Si vous le souhaitez, vous pouvez ajouter vos utilisateurs de site WordPress "
-"(lecteurs, auteurs, administrateur…) à une liste de contacts."
-
-#: src/includes/SettingsPages/InitialContactListsSettings.php:83
+#: src/includes/SettingsPages/InitialContactListsSettings.php:79
 msgid ""
 "Please select a Mailjet contact list below to automatically add all future "
-"Wordpress users. Each new user's email address and role (subscriber, "
+"WordPress users. Each new user's email address and role (subscriber, "
 "administrator, author, …) will be synchronized to the list and available for "
 "use inside Mailjet."
 msgstr ""
 "Veuillez sélectionner une liste de contacts Mailjet ci-dessous pour y "
-"ajouter automatiquement tous les futurs utilisateurs Wordpress. L'adresse "
+"ajouter automatiquement tous les futurs utilisateurs WordPress. L'adresse "
 "email et le rôle de chaque nouvel utilisateur (abonné, administrateur, "
 "auteur...) seront synchronisés avec la liste et pourront être utilisés sur "
 "la plateforme Mailjet."
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:84 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:30 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:54
-msgid "Automatically add Wordpress subscribers to a specific list"
-msgstr "Ajouter automatiquement des abonnés Wordpress à une liste spécifique"
+#: src/includes/SettingsPages/InitialContactListsSettings.php:80
+msgid "Automatically add WordPress subscribers to a specific list"
+msgstr "Ajouter automatiquement des abonnés WordPress à une liste spécifique"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:88 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:58
-msgid ""
-"Automatically add all my future Wordpress subscribers to a specific contact "
-"list"
-msgstr ""
-"Ajoutez automatiquement tous mes futurs utilisateurs WordPress à la liste "
-"suivante"
-
-#: src/includes/SettingsPages/InitialContactListsSettings.php:93
+#: src/includes/SettingsPages/InitialContactListsSettings.php:84
 msgid "Your Mailjet contact lists"
 msgstr "Vos listes de contacts Mailjet"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:108 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:109
+#: src/includes/SettingsPages/InitialContactListsSettings.php:99
+#: src/includes/SettingsPages/InitialContactListsSettings.php:100
 msgid "Create a new list"
 msgstr "Créer une nouvelle liste"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:113
+#: src/includes/SettingsPages/InitialContactListsSettings.php:104
 msgid "Name your list (max. 50 characters)"
 msgstr "Nommez votre liste (50 caractères maximum)"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:123 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:76
+#: src/includes/SettingsPages/InitialContactListsSettings.php:114
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/contactListMenu.php:22
 #, php-format
-msgid "Also, add existing <b>%s Wordpress users</b> (initial synchronization)"
+msgid "Also, add existing <b>%s WordPress users</b> (initial synchronization)"
 msgstr ""
-"Egalement, ajouter les <b>%s utilisateurs Wordpress</b> existants "
+"Egalement, ajouter les <b>%s utilisateurs WordPress</b> existants "
 "(synchronisation initiale)"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:184 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:207 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:160
+#: src/includes/SettingsPages/InitialContactListsSettings.php:179
+#: src/includes/SettingsPages/InitialContactListsSettings.php:202
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:125
 msgid ""
 "The settings could not be saved. Please try again or in case the problem "
 "persists contact Mailjet support."
@@ -608,58 +683,53 @@ msgstr ""
 "Les paramètres peuvent être sauvegardés. Veuillez essayer de nouveau ou si "
 "le problème persiste, contactez le support de Mailjet."
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:195
+#: src/includes/SettingsPages/InitialContactListsSettings.php:190
 msgid "Congratulations! You have just created a new contact list!"
 msgstr ""
 "Félicitations! Vous venez tout juste de créer une nouvelle liste de contacts!"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:202
+#: src/includes/SettingsPages/InitialContactListsSettings.php:197
 #, php-format
 msgid "A contact list with name <b>%s</b> already exists"
 msgstr ""
 "Ce nom <b>%s</b> est déjà utilisé pour une autre liste de contacts. Veuillez "
 "réessayer"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:212
+#: src/includes/SettingsPages/InitialContactListsSettings.php:207
 msgid "Please enter a valid contact list name"
-msgstr ""
+msgstr "Veuillez saisir un nom de liste de contacts valide"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:249 
+#: src/includes/SettingsPages/InitialContactListsSettings.php:247
 #: src/includes/SettingsPages/InitialSettings.php:169
 msgid ""
 "Mailjet is an email service provider. With this plugin, easily send "
-"newsletters to your website users, directly from Wordpress."
+"newsletters to your website users, directly from WordPress."
 msgstr ""
 "Mailjet est un fournisseur de service email. Avec ce plugin, vous pouvez "
 "envoyer facilement les newsletters à vos utilisateurs de site Web, "
 "directement depuis WordPress."
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:264
+#: src/includes/SettingsPages/InitialContactListsSettings.php:265
 msgid "Apply & Continue"
 msgstr "Appliquer & Continuer"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:269
+#: src/includes/SettingsPages/InitialContactListsSettings.php:272
 msgid "Back"
-msgstr ""
+msgstr "Retour"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:273
-msgid "Skip this step"
-msgstr "Passez cette étape"
-
-#: src/includes/SettingsPages/InitialContactListsSettings.php:273
+#: src/includes/SettingsPages/InitialContactListsSettings.php:279
 msgid "Next"
 msgstr "Suivant"
 
-#: src/includes/SettingsPages/InitialContactListsSettings.php:284 
-#: src/includes/SettingsPages/InitialSettings.php:221
-msgid "Need help getting started?"
-msgstr "Besoin d'aide pour vous lancer?"
+#: src/includes/SettingsPages/InitialContactListsSettings.php:282
+msgid "Skip this step"
+msgstr "Passez cette étape"
 
 #: src/includes/SettingsPages/InitialSettings.php:37
 msgid ""
-"If you already have a Mailjet account, go to <a class=\"greenLink\" "
-"target=\"_blank\" href=\"https://app.mailjet.com/account/api_keys\">My "
-"Account > API Keys</a> and paste your credentials below"
+"If you already have a Mailjet account, go to <a class=\"greenLink\" target="
+"\"_blank\" href=\"https://app.mailjet.com/account/api_keys\">My Account > "
+"API Keys</a> and paste your credentials below"
 msgstr ""
 "Aller dans <a class=\"greenLink\" target=\"_blank\" href=\"https://app."
 "mailjet.com/account/api_keys\">Mon compte > Clés API</a> et copier les "
@@ -699,71 +769,115 @@ msgstr "Nous nous chargerons de l'envoi de vos newsletters"
 
 #: src/includes/SettingsPages/InitialSettings.php:211
 msgid ""
-"Easily create and send newsletters to your subscribers from Wordpress. "
+"Easily create and send newsletters to your subscribers from WordPress. "
 "Mailjet will deliver them!"
 msgstr ""
 "Créer facilement et envoyez des newsletters à vos inscrits depuis WordPress. "
 "Mailjet les enverra !"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:48
-#, fuzzy
-msgid "WooCommerce"
-msgstr "Activer l'intégration WooCommerce"
-
-#: src/includes/SettingsPages/IntegrationsSettings.php:52
-msgid "Enable WooCommerce integration"
-msgstr "Activer l'intégration WooCommerce"
-
-#: src/includes/SettingsPages/IntegrationsSettings.php:58 
-#: src/includes/SettingsPages/IntegrationsSettings.php:111
-msgid ""
-"Display \"Subscribe to our newsletter\" checkbox in the checkout page and "
-"add subscibers to this list"
+#: src/includes/SettingsPages/IntegrationsSettings.php:67
+msgid "To use this option you need to select a contact list"
 msgstr ""
-"Afficher la case à cocher \"S'inscrire à notre newsletter\" sur la page de "
-"paiement et ajouter les abonnés à cette liste"
+"Pour utiliser cette option, vous devez sélectionner une liste de contacts"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:100
-#, fuzzy
+#: src/includes/SettingsPages/IntegrationsSettings.php:71
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:81
+#: src/includes/SettingsPages/IntegrationsSettings.php:101
+msgid ""
+"WooCommerce contacts will be automatically synced to your Mailjet list (with "
+"a “customer” contact property)."
+msgstr ""
+"Les contacts WooCommerce seront automatiquement synchronisés à votre liste "
+"Mailjet (avec une propriété de contact \"customer\")."
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:84
+msgid "Contact List"
+msgstr "Liste de contacts"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:90
+msgid "Ecommerce customer data"
+msgstr "Données client e-commerce"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:95
+msgid ""
+"Import e-commerce data for all synced customers (total orders count, total "
+"spent, account creation date, last order date) and store it as a contact "
+"property inside Mailjet. This will allow you to segment your list and "
+"personalise your email content and sending."
+msgstr ""
+"Importez les données e-commerce de tous vos clients synchronisés (nombre "
+"total de commandes, total dépensé, date de création du compte, date de la "
+"dernière commande) et stockez-les en tant que propriétés de contact dans "
+"Mailjet. Cela vous permettra de segmenter votre liste et de personnaliser "
+"les contenus de vos emails."
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:99
+msgid "Opti-in inside checkout"
+msgstr "Inscription à l’étape de paiement"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:107
+msgid "Activate opt-in checkbox inside checkout page."
+msgstr "Activez la case d’inscription sur la page de paiement."
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:110
+msgid "Checkbox text"
+msgstr "Texte de la case à cocher"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:117
+msgid "Activate opt-in banner inside thank you page."
+msgstr "Activez la bannière d’inscription sur la page de confirmation."
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:121
+msgid "Banner text"
+msgstr "Texte de la bannière"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:125
+#: src/widget/views/admin.php:266
+msgid "Button label"
+msgstr "Libellé du bouton"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:126
+msgid "Subscribe now"
+msgstr "Je m'abonne"
+
+#: src/includes/SettingsPages/IntegrationsSettings.php:166
 msgid "Contact Form 7"
-msgstr "Activer l'intégration WooCommerce"
+msgstr "Contact Form 7"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:104
-msgid "Enable Contact Form 7 integration"
-msgstr "Activer l'intégration Contact Form 7"
-
-#: src/includes/SettingsPages/IntegrationsSettings.php:116
+#: src/includes/SettingsPages/IntegrationsSettings.php:178
 msgid "Mailjet list"
-msgstr "Liste Malijet"
+msgstr "Liste Mailjet"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:119
-#, fuzzy
+#: src/includes/SettingsPages/IntegrationsSettings.php:184
 msgid "Select a list"
-msgstr "Sélectionnez une propriété de contact"
+msgstr "Sélectionner une liste"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:132
+#: src/includes/SettingsPages/IntegrationsSettings.php:200
 msgid "Email field tag"
 msgstr "Libellé du champ email"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:133
+#: src/includes/SettingsPages/IntegrationsSettings.php:202
 msgid "e.g. [your-email]"
 msgstr "Par exemple [votre-email]"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:136
+#: src/includes/SettingsPages/IntegrationsSettings.php:207
 msgid "Name field tag (optional)"
 msgstr "Libellé du champ nom (facultatif)"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:138
+#: src/includes/SettingsPages/IntegrationsSettings.php:212
 msgid "e.g. [your-name]"
 msgstr "Par exemple [votre-nom]"
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:141
+#: src/includes/SettingsPages/IntegrationsSettings.php:216
 msgid ""
 "To enable the integration, include the following shortcode to your contact "
 "form:"
 msgstr ""
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:142
+#: src/includes/SettingsPages/IntegrationsSettings.php:218
 msgid ""
 "Include the following shortcode in your contact form in order to display the "
 "newsletter subscription checkbox and complete the integration."
@@ -772,22 +886,269 @@ msgstr ""
 "d'afficher la case à cocher d'abonnement à la newsletter et finaliser "
 "l'intégration."
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:200
-#, fuzzy
+#: src/includes/SettingsPages/IntegrationsSettings.php:281
 msgid ""
 "The settings could not be saved. Please select a contact list to subscribe "
 "WooCommerce users to."
 msgstr ""
-"Les paramètres peuvent être sauvegardés. Veuillez essayer de nouveau ou si "
-"le problème persiste, contactez le support de Mailjet."
 
-#: src/includes/SettingsPages/IntegrationsSettings.php:237
-msgid "Enable and cofigure Mailjet integrations with other Wordpress plugins"
+#: src/includes/SettingsPages/IntegrationsSettings.php:333
+msgid "Enable and configure Mailjet integrations with other WordPress plugins"
 msgstr ""
 "Activer et configurer les intégrations Mailjet avec d'autres plugins "
-"Wordpress."
+"WordPress"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:84
+#: src/includes/SettingsPages/IntegrationsSettings.php:368
+msgid ""
+"Your permissions don't match! Please refresh your session and if the problem "
+"persists, contact our support team."
+msgstr ""
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:74
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:183
+msgid "Stop all sendings"
+msgstr "Désactiver tous les envois"
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:88
+msgid ""
+"The transactional emails that you selected have been enabled for sending. "
+"You can change and stop the sending at any time."
+msgstr ""
+"Les emails transactionnels que vous avez sélectionnés ont été validés pour "
+"l’envoi. Vous pouvez modifier ou désactiver l’envoi à tout moment."
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:94
+msgid ""
+"Make sure that the same notifications are deactivated inside WooCommerce "
+"(Settings > Emails) to avoid the reception of multiple emails by your "
+"customers."
+msgstr ""
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:125
+msgid ""
+"Enable the sending of order notification emails to make sure that your "
+"customers are always notified when a new purchase occurs and when their "
+"order has been shipped."
+msgstr ""
+"Activez l’envoi de notifications de commande pour informer systématiquement "
+"vos clients sur leurs achats et l’expédition de leur commande."
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:129
+msgid "Templates"
+msgstr "Modèles"
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:140
+msgid "Order confirmation"
+msgstr "Confirmation de commande"
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:151
+msgid "Shipping confirmation"
+msgstr "Confirmation d’expédition"
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:162
+msgid "Refund confirmation"
+msgstr "Confirmation de remboursement"
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:182
+msgid "Edit sendings"
+msgstr "Modifier les envois"
+
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:186
+msgid "Save changes"
+msgstr "Enregistrer les modifications"
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:100
+msgid "Subscription Options"
+msgstr "Options d'inscription"
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:149
+msgid "Please select a contact list."
+msgstr "Merci de séléctionner une liste de contacts."
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:173
+msgid "No WordPress users to add to Mailjet contact list"
+msgstr ""
+"Tous les utilisateurs de WordPress ont été ajoutés avec succès à votre liste "
+"de contacts Mailjet"
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:186
+msgid ""
+"Something went wrong with adding existing WordPress users to your Mailjet "
+"contact list"
+msgstr ""
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:189
+msgid ""
+"All WordPress users were successfully added to your Mailjet contact list"
+msgstr ""
+"Tous les utilisateurs de WordPress ont été ajoutés avec succès à votre liste "
+"de contacts Mailjet"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:27
+msgid ""
+"Select which WordPress user roles (in addition to Administrator) will also "
+"have access to the Mailjet Plugin"
+msgstr ""
+"Sélectionner quels rôles les utilisateurs administrateurs WordPress (en plus "
+"de l'Administrateur) auront également accès au Plugin Mailjet"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:45
+#: src/includes/SettingsPages/UserAccessSettings.php:100
+msgid "User Access"
+msgstr "Accès utilisateurs"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:48
+msgid "Administrator"
+msgstr "Administrateur"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:52
+msgid "Editor"
+msgstr "Éditeur"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:56
+msgid "Author"
+msgstr "Auteur"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:60
+msgid "Contributor"
+msgstr "Contributeur"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:63
+msgid "Subscriber"
+msgstr "Abonné"
+
+#: src/includes/SettingsPages/UserAccessSettings.php:119
+msgid "User Access Settings Saved"
+msgstr "Vos modifications ont été enregistrées"
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:355
+msgid "An error occured during e-commerce data sync! Please try again later."
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:379
+msgid "An error occured during templates creation! Please try again later."
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:784
+msgid "Automation settings updated!"
+msgstr "Vos modifications ont été enregistrées"
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:904
+msgid "guest"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1055
+msgid "We have sent the newsletter subscription confirmation link to you "
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1056
+msgid "To confirm your subscription you have to click on the provided link."
+msgstr ""
+"Veuillez vérifier votre boite E-mail et cliquer sur le lien afin de "
+"confirmer votre abonnement."
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1167
+msgid "Customers who have created an account in the past 30 days"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1171
+msgid "Contacts that don't have any orders"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1175
+msgid "Customers who have made their first purchase in the past 30 days"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1179
+msgid "Customers who have purchased in the past 30 days"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1183
+msgid "Customers who have purchased more than once"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1187
+msgid "Customers who haven't purchased in the past 6 months"
+msgstr ""
+
+#: src/templates/admin/Iframe/longerIframePage.php:21
+msgid "Edit template"
+msgstr "Modifier le modèle"
+
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:17
+msgid "Edit"
+msgstr "Modifier"
+
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:21
+msgid "From:"
+msgstr "De :"
+
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:22
+msgid "Subject:"
+msgstr "Sujet :"
+
+#: src/templates/admin/bottomLinks.php:3 src/templates/admin/bottomLinks.php:4
+msgid "Need help?"
+msgstr "Besoin d'aide ?"
+
+#: src/templates/admin/bottomLinks.php:6
+msgid "Read our user guide"
+msgstr "Accéder au guide"
+
+#: src/templates/admin/bottomLinks.php:7
+msgid "Contact our support team"
+msgstr "Contacter notre équipe de support"
+
+#: src/templates/admin/bottomLinks.php:10
+#, php-format
+msgid ""
+"If you like Mailjet please support us with a %s rating on WordPress.org. "
+"Thank you"
+msgstr ""
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:10
+msgid "Resync"
+msgstr "Resynchroniser"
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:12
+msgid "Select List"
+msgstr "Sélectionner une liste"
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:12
+msgid "Change List"
+msgstr "Changer de liste"
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:16
+msgid "Automatically add WordPress users to a Mailjet list"
+msgstr "Ajoutez automatiquement les utilisateurs WordPress à une liste Mailjet"
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:19
+msgid ""
+"Automatically add WordPress users to a Mailjet list. Each user’s email "
+"address and role (subscriber, administrator, author, …) is synchronized to "
+"the list and available for use inside Mailjet."
+msgstr ""
+"Ajoutez automatiquement les utilisateurs WordPress à une liste Mailjet. Les "
+"adresses email et rôles des utilisateurs (abonné, administrateur, auteur, "
+"etc.) seront synchronisés à la liste et utilisables dans Mailjet."
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:29
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:58
+msgid "Mailjet contact lists"
+msgstr "Listes de contacts Mailjet"
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:45
+#, php-format
+msgid "Also, add existing %s WordPress users (initial synchronization)"
+msgstr ""
+"Egalement, ajouter les %s utilisateurs WordPress existants (synchronisation "
+"initiale)"
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:51
+msgid "Opt-in inside « Leave a reply » form"
+msgstr "Inscription via le formulaire \"Laisser un commentaire\""
+
+#: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php:54
 msgid ""
 "Display \"Subscribe to our mailjet list\" checkbox in the \"Leave a reply\" "
 "form to allow comment authors to join a specific contact list"
@@ -796,105 +1157,63 @@ msgstr ""
 "un commentaire\" pour permettre aux auteurs de commentaires de rejoindre une "
 "liste de contact spécifique"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:135
-msgid "Subscription Options"
-msgstr "Options d'inscription"
-
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:233
-msgid "Please select a contact list."
-msgstr "Merci de séléctionner une liste de contacts."
-
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:240
-msgid "No Wordpress users to add to Mailjet contact list"
-msgstr ""
-
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:245
-msgid ""
-"Something went wrong with adding existing Wordpress users to your Mailjet "
-"contact list"
-msgstr ""
-
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:248
-msgid ""
-"All Wordpress users were successfully added to your Mailjet contact list"
-msgstr ""
-"Tous les utilisateurs de Wordpress ont été ajoutés avec succès à votre liste "
-"de contacts Mailjet"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:28
-msgid ""
-"Select which Wordpress user roles (in addition to Administrator) will also "
-"have access to the Mailjet Plugin"
-msgstr ""
-"Sélectionner quels rôles les utilisateurs administrateurs Wordpress (en plus "
-"de l'Administrateur) auront également accès au Plugin Mailjet"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:46 
-#: src/includes/SettingsPages/UserAccessSettings.php:101
-msgid "User Access"
-msgstr "Accès utilisateurs"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:49
-msgid "Administrator"
-msgstr "Administrateur"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:53
-msgid "Editor"
-msgstr "Éditeur"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:57
-msgid "Author"
-msgstr "Auteur"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:61
-msgid "Contributor"
-msgstr "Contributeur"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:64
-msgid "Subscriber"
-msgstr "Abonné"
-
-#: src/includes/SettingsPages/UserAccessSettings.php:120
-msgid "User Access Settings Saved"
-msgstr "Vos modifications ont été enregistrées"
-
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:49
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:50
 msgid "Allows your visitors to subscribe to one of your lists"
 msgstr "Permet à vos visiteurs de s'abonner à l'une de vos listes"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:52
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:53
 msgid "Mailjet Subscription Widget"
 msgstr "Widget d'inscription Mailjet"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:527
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:213
+msgid "Subscription email is missing"
+msgstr ""
+
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:234
+msgid "Invalid token"
+msgstr "Token invalide"
+
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:249
+msgid "Contact list not provided"
+msgstr ""
+
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:299
+msgid "Contact list is not active"
+msgstr ""
+
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:305
+msgid "Contact subscription failed"
+msgstr ""
+
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:518
 msgid "English"
 msgstr "Anglais"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:528
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:519
 msgid "French"
 msgstr "Français"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:529
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:520
 msgid "German"
 msgstr "Allemand"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:530
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:521
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:531
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:522
 msgid "Italian"
 msgstr "Italien"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:532
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:523
 msgid "your@email.com"
 msgstr "votre@email.com"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:533
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:524
 msgid "Subscribe"
 msgstr "M'abonner"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:534
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:525
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "your subscription."
@@ -902,30 +1221,30 @@ msgstr ""
 "Email de confirmation d'inscription envoyé. Veuillez vérifier votre boîte "
 "mail et confirmez votre inscription."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:535
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:526
 msgid "Your subscription was successfully confirmed."
 msgstr "Votre inscription a été confirmée avec succès."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:536
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:527
 msgid "Please provide an email address"
 msgstr "Veuilez fournir une adresse email"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:538
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:529
 msgid "This email address has already been subscribed."
 msgstr "Cette adresse email a déjà été enregistrée."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:539
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:530
 msgid "The value you entered is not in the correct format."
 msgstr "La valeur entrée n'est pas au bon format."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:540
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:531
 msgid ""
 "A technical issue has prevented your subscription. Please try again later."
 msgstr ""
 "Un problème tehcnique a empêché votre inscription. Veuillez rééssayer plus "
 "tard."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:542
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:533
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message"
@@ -993,7 +1312,7 @@ msgstr "Page de \"Merci\""
 msgid "You can add up to 5 contact properties to collect additional data"
 msgstr ""
 "Vous pouvez ajouter jusqu'à 5 propriété de contacts pour collecter des "
-"données supplémentaires:"
+"données supplémentaires"
 
 #: src/widget/views/admin.php:155
 msgid "Property"
@@ -1026,7 +1345,7 @@ msgstr "Type de propriété"
 
 #: src/widget/views/admin.php:214
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: src/widget/views/admin.php:219
 msgid "Optional"
@@ -1052,10 +1371,6 @@ msgstr "Texte de l'espace réservé à l'adresse email"
 #: src/widget/views/admin.php:265
 msgid "Customize the submission button label:"
 msgstr "Personnaliser l'étiquette de bouton de soumission:"
-
-#: src/widget/views/admin.php:266
-msgid "Button label"
-msgstr "Etiquette de bouton"
 
 #: src/widget/views/admin.php:284
 msgid ""
@@ -1135,10 +1450,10 @@ msgstr "Contenu de l'email: texte après le bouton"
 
 #: src/widget/views/admin.php:478
 msgid ""
-"Select a page from your Wordpress site to show after successful subscription "
+"Select a page from your WordPress site to show after successful subscription "
 "confirmation or leave empty to use the default \"Thank you\" page"
 msgstr ""
-"Sélectionnez une page dans votre site Wordpress pour montrer une "
+"Sélectionnez une page dans votre site WordPress pour montrer une "
 "confirmation d'inscription avec succès ou laissez vide afin d'utiliser la "
 "page \"Merci\" par défaut"
 
@@ -1146,6 +1461,53 @@ msgstr ""
 msgid "Default page"
 msgstr ""
 
+#: src/widget/views/designforfailure.php:4
+msgid ""
+"Please make sure that you are using the correct API key and Secret key "
+"associated to your Mailjet account: <a href=\"https://app.mailjet.com/"
+"account/api_keys\" target=\"_blank\">https://app.mailjet.com/account/"
+"api_keys</a>"
+msgstr ""
+
 #: src/widget/views/designforfailure.php:6
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr ""
+
+#~ msgid ""
+#~ "If you wish, you can add your Wordpress website users (readers, authors, "
+#~ "administrators, …) to a contact list."
+#~ msgstr ""
+#~ "Si vous le souhaitez, vous pouvez ajouter vos utilisateurs de site "
+#~ "WordPress (lecteurs, auteurs, administrateur…) à une liste de contacts."
+
+#~ msgid ""
+#~ "Automatically add all my future Wordpress subscribers to a specific "
+#~ "contact list"
+#~ msgstr ""
+#~ "Ajoutez automatiquement tous mes futurs utilisateurs WordPress à la liste "
+#~ "suivante"
+
+#~ msgid "Send newsletter"
+#~ msgstr "Envoyer des newsletters"
+
+#~ msgid "My statistics"
+#~ msgstr "Mes statistiques"
+
+#~ msgid "Review and modify your plugin settings"
+#~ msgstr "Réviser et modifier vos paramètres de plugin"
+
+#~ msgid "Need help getting started?"
+#~ msgstr "Besoin d'aide pour vous lancer?"
+
+#~ msgid "Enable WooCommerce integration"
+#~ msgstr "Activer l'intégration WooCommerce"
+
+#~ msgid ""
+#~ "Display \"Subscribe to our newsletter\" checkbox in the checkout page and "
+#~ "add subscibers to this list"
+#~ msgstr ""
+#~ "Afficher la case à cocher \"S'inscrire à notre newsletter\" sur la page "
+#~ "de paiement et ajouter les abonnés à cette liste"
+
+#~ msgid "Enable Contact Form 7 integration"
+#~ msgstr "Activer l'intégration Contact Form 7"

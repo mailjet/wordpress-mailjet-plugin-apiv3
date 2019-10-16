@@ -37,7 +37,7 @@ class MailjetIframe
      *
      * @var array
      */
-    private $locales = array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES');
+    private $locales = array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES', 'it_IT');
 
     /**
      *
@@ -395,9 +395,9 @@ class MailjetIframe
      *
      * @return string
      */
-    public function getHtml()
+    public function getHtml($isPassportIframe = false)
     {
-        $iframeUrl = $this->getIframeUrl();
+        $iframeUrl = $this->getIframeUrl($isPassportIframe);
 
         $html = <<<HTML
 
@@ -495,11 +495,16 @@ HTML;
      *
      * @return string
      */
-    private function getIframeUrl()
+    private function getIframeUrl($isPassportIframe = false)
     {
         $url = $this->url . $this->initialPage . '?t=' . $this->getToken();
 
-        $url .= '&locale=' . $this->locale;
+        if ($isPassportIframe) {
+            $url .= '&lang=' . $this->locale;
+        }
+        else {
+            $url .= '&locale=' . $this->locale;
+        }
 
         if ($this->callback !== '') {
             $url .= '&cb=' . $this->callback;
