@@ -19,7 +19,7 @@ namespace MailjetPlugin;
  * Author URI:        http://mailjet.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       mailjet
+ * Text Domain:       mailjet-for-wordpress
  * Domain Path:       /languages
  */
 /**
