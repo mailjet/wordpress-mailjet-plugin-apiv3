@@ -147,7 +147,7 @@ msgid "Back to order notification emails"
 msgstr ""
 
 #: src/includes/MailjetMenu.php:295
-msgid "Back to abandoned cart"
+msgid "Back to abandoned cart email"
 msgstr ""
 
 #: src/includes/MailjetMenu.php:299

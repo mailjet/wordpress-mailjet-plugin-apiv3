@@ -292,7 +292,7 @@ class MailjetMenu
                 $backButtonLink = 'admin.php?page=mailjet_order_notifications_page';
                 break;
             case 'abandonedcart' :
-                $backButtonText = __('Back to abandoned cart', 'mailjet-for-wordpress');
+                $backButtonText = __('Back to abandoned cart email', 'mailjet-for-wordpress');
                 $backButtonLink = 'admin.php?page=mailjet_abandoned_cart_page';
                 break;
             default :

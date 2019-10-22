@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-10 11:05+0200\n"
-"PO-Revision-Date: 2019-10-10 15:34+0200\n"
+"PO-Revision-Date: 2019-10-22 14:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: German (Germany)\n"
 "Language: de_DE\n"
@@ -156,7 +156,7 @@ msgid "Back to order notification emails"
 msgstr "Zurück zum Bestellbenachrichtigungen per E-Mail"
 
 #: src/includes/MailjetMenu.php:295
-msgid "Back to abandoned cart"
+msgid "Back to abandoned cart email"
 msgstr "Zurück zum Abgebrochener Warenkorb"
 
 #: src/includes/MailjetMenu.php:299
