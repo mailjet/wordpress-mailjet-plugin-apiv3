@@ -372,6 +372,11 @@ class WooCommerceSettings
                 update_option($checkboxName, '');
             }
         }
+        foreach ($data as $dataName => $dataValue) {
+            if (!in_array($dataName, $checkboxesNames, true)) {
+                update_option($dataName, $dataValue);
+            }
+        }
 
         if ($activate) {
             if ($this->createTemplates() === false) {
