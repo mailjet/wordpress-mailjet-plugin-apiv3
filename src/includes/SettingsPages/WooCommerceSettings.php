@@ -735,15 +735,16 @@ class WooCommerceSettings
         if (!$order || empty($order) || !$templateId || empty($templateId)){
             return false;
         }
+        $tracking_number = $order->get_meta('_wcst_order_trackno');
 
         $vars = [
             'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
             'order_shipping_address' => $order->get_formatted_shipping_address(),
-            'tracking_number' => $order->get_shipping_state(),
+            'tracking_number' => !empty($tracking_number) ? $tracking_number : 'NA', // Arbitrary default value needed in the email template
             'order_total' => $order->get_total(),
             'order_link' => $order->get_view_order_url(),
-            'tracking_url' => $order->get_shipping_state(),
+            'tracking_url' => $order->get_meta('_wcst_order_track_http_url'),
             'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
