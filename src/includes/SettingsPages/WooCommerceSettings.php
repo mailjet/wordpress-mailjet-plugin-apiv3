@@ -536,12 +536,12 @@ class WooCommerceSettings
         $products = [];
         foreach ($items as $item){
             $itemData = $item->get_data();
+            $productImgUrl = wp_get_attachment_url(get_post_thumbnail_id($item['product_id']));
             $data['variant_title'] = $itemData['name'];
             $data['price'] = $itemData['total'];
             $data['title'] = $itemData['name'];
             $data['quantity'] = $itemData['quantity'];
-            $product = wc_get_product( $item['product_id'] );
-            $data['image'] =  $product->get_image();
+            $data['image'] =  $productImgUrl ?: '';
             $products[] = $data;
         }
 
