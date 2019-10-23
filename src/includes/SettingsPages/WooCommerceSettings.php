@@ -501,7 +501,7 @@ class WooCommerceSettings
         $vars = [
             'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
-            'order_total' => $order->get_total(),
+            'order_total' => wc_price($order->get_total()),
             'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
@@ -538,7 +538,7 @@ class WooCommerceSettings
             $itemData = $item->get_data();
             $productImgUrl = wp_get_attachment_url(get_post_thumbnail_id($item['product_id']));
             $data['variant_title'] = $itemData['name'];
-            $data['price'] = $itemData['total'];
+            $data['price'] = wc_price($itemData['total']);
             $data['title'] = $itemData['name'];
             $data['quantity'] = $itemData['quantity'];
             $data['image'] =  $productImgUrl ?: '';
@@ -548,10 +548,10 @@ class WooCommerceSettings
         $vars = [
             'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
-            'order_subtotal' => $order->get_subtotal(),
-            'order_discount_total' => $order->get_discount_total(),
-            'order_total_tax' => $order->get_tax_totals(),
-            'order_shipping_total' => $order->get_shipping_total(),
+            'order_subtotal' => wc_price($order->get_subtotal()),
+            'order_discount_total' => wc_price($order->get_discount_total()),
+            'order_total_tax' => wc_price($order->get_tax_totals()),
+            'order_shipping_total' => wc_price($order->get_shipping_total()),
             'order_shipping_address' => $order->get_formatted_shipping_address(),
             'order_billing_address' => $order->get_formatted_billing_address(),
             'order_total' => $order->get_formatted_order_total(),
@@ -742,7 +742,7 @@ class WooCommerceSettings
             'order_number' => $orderId,
             'order_shipping_address' => $order->get_formatted_shipping_address(),
             'tracking_number' => !empty($tracking_number) ? $tracking_number : 'NA', // Arbitrary default value needed in the email template
-            'order_total' => $order->get_total(),
+            'order_total' => wc_price($order->get_total()),
             'order_link' => $order->get_view_order_url(),
             'tracking_url' => $order->get_meta('_wcst_order_track_http_url'),
             'store_email' => get_option('mailjet_from_email'),
