@@ -793,20 +793,23 @@ class WooCommerceSettings
 
     private function prepareAutomationHooks($data)
     {
-        if (!isset($data['mailjet_wc_active_hooks'])){
-           return [];
+        if (!isset($data['mailjet_wc_active_hooks'])) {
+            return [];
         }
 
         $actions = [
             'mailjet_order_confirmation' => ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
+            'mailjet_resend_order_confirmation' => ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
             'mailjet_shipping_confirmation' =>  ['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed'],
             'mailjet_refund_confirmation' =>  ['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']
         ];
         $result = [];
-        foreach ($data['mailjet_wc_active_hooks'] as $key => $val){
-            if ($val === '1'){
-
+        foreach ($data['mailjet_wc_active_hooks'] as $key => $val) {
+            if ($val === '1') {
                 $result[] = $actions[$key];
+                if ($key === 'mailjet_order_confirmation') {
+                    $result[] = $actions['mailjet_resend_order_confirmation'];
+                }
             }
         }
 
