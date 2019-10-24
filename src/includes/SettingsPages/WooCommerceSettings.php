@@ -501,7 +501,7 @@ class WooCommerceSettings
         $vars = [
             'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
-            'order_total' => $order->get_total(),
+            'order_total' => wc_price($order->get_total()),
             'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
@@ -520,6 +520,13 @@ class WooCommerceSettings
         return true;
     }
 
+    public function send_order_processing_paid_by_cheque($status, $order) {
+        if ($status === 'on-hold' && $order && (int)$order->get_id() > 0) {
+            return $this->send_order_status_processing($order->get_id());
+        }
+        return false;
+    }
+
     public function send_order_status_processing($orderId)
     {
         $order = wc_get_order( $orderId );
@@ -536,24 +543,24 @@ class WooCommerceSettings
         $products = [];
         foreach ($items as $item){
             $itemData = $item->get_data();
+            $productImgUrl = wp_get_attachment_url(get_post_thumbnail_id($item['product_id']));
             $data['variant_title'] = $itemData['name'];
-            $data['price'] = $itemData['total'];
+            $data['price'] = wc_price($itemData['total']);
             $data['title'] = $itemData['name'];
             $data['quantity'] = $itemData['quantity'];
-            $product = wc_get_product( $item['product_id'] );
-            $data['image'] =  $product->get_image();
+            $data['image'] =  $productImgUrl ?: '';
             $products[] = $data;
         }
 
         $vars = [
             'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
-            'order_subtotal' => $order->get_subtotal(),
-            'order_discount_total' => $order->get_discount_total(),
-            'order_total_tax' => $order->get_tax_totals(),
-            'order_shipping_total' => $order->get_shipping_total(),
-            'order_shipping_address' => $order->get_shipping_address_1(),
-            'order_billing_address' => $order->get_billing_address_1(),
+            'order_subtotal' => wc_price($order->get_subtotal()),
+            'order_discount_total' => wc_price($order->get_discount_total()),
+            'order_total_tax' => wc_price($order->get_tax_totals()),
+            'order_shipping_total' => wc_price($order->get_shipping_total()),
+            'order_shipping_address' => $order->get_formatted_shipping_address(),
+            'order_billing_address' => $order->get_formatted_billing_address(),
             'order_total' => $order->get_formatted_order_total(),
             'order_link' => $order->get_view_order_url(),
             'store_email' => get_option('mailjet_from_email'),
@@ -574,7 +581,6 @@ class WooCommerceSettings
         }
 
         return true;
-
     }
 
     public function cart_change_timestamp() {
@@ -735,15 +741,16 @@ class WooCommerceSettings
         if (!$order || empty($order) || !$templateId || empty($templateId)){
             return false;
         }
+        $tracking_number = $order->get_meta('_wcst_order_trackno');
 
         $vars = [
             'first_name' => $order->get_billing_first_name(),
             'order_number' => $orderId,
-            'order_shipping_address' => $order->get_shipping_address_1(),
-            'tracking_number' => $order->get_shipping_state(),
-            'order_total' => $order->get_total(),
+            'order_shipping_address' => $order->get_formatted_shipping_address(),
+            'tracking_number' => !empty($tracking_number) ? $tracking_number : 'NA', // Arbitrary default value needed in the email template
+            'order_total' => wc_price($order->get_total()),
             'order_link' => $order->get_view_order_url(),
-            'tracking_url' => $order->get_shipping_state(),
+            'tracking_url' => $order->get_meta('_wcst_order_track_http_url'),
             'store_email' => get_option('mailjet_from_email'),
             'store_phone' => '',
             'store_name' => get_bloginfo(),
@@ -792,25 +799,30 @@ class WooCommerceSettings
 
     private function prepareAutomationHooks($data)
     {
-        if (!isset($data['mailjet_wc_active_hooks'])){
-           return [];
+        if (!isset($data['mailjet_wc_active_hooks'])) {
+            return [];
         }
 
         $actions = [
-            'mailjet_order_confirmation' => ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
-            'mailjet_shipping_confirmation' =>  ['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed'],
-            'mailjet_refund_confirmation' =>  ['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']
+            'mailjet_order_confirmation' => [
+                ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque']
+            ],
+            'mailjet_shipping_confirmation' =>  [['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed']],
+            'mailjet_refund_confirmation' =>  [['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']]
         ];
-        $result = [];
-        foreach ($data['mailjet_wc_active_hooks'] as $key => $val){
-            if ($val === '1'){
-
-                $result[] = $actions[$key];
+        $returnedHooks = [];
+        foreach ($data['mailjet_wc_active_hooks'] as $key => $val) {
+            if ($val === '1') {
+                $hooks = $actions[$key];
+                foreach ($hooks as $hookInfo) {
+                    $returnedHooks[] = $hookInfo;
+                }
             }
         }
 
-        return $result;
-
+        return $returnedHooks;
     }
 
     public function abandoned_cart_settings_post()

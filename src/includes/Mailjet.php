@@ -264,7 +264,7 @@ class Mailjet
         $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
         if ($activeActions && !empty($activeActions)){
             foreach ($activeActions as $action){
-                $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 1);
+                $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 2);
             }
         }
         if ($abandonedCartActiveActions && !empty($abandonedCartActiveActions)) {
