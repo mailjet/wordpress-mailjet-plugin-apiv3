@@ -165,15 +165,15 @@ return array (
                                                             0 =>
                                                                 array (
                                                                     'tagName' => 'mj-text',
-                                                                    'content' => '<p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">To follow&nbsp;the&nbsp;progress of your delivery, click <a target="_blank" href="{{var:tracking_url}}">here</a>&nbsp;and enter your tracking number: {{var:tracking_number}}.&nbsp;In addition you can find all order information&nbsp;at the following&nbsp;<a target="_blank" href="{{var:order_link}}">link</a>.</span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">Make sure you’re available to sign for your parcel so you can enjoy your purchase when it arrives!</span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="color:#555555"><span style="font-size:14px">If you have any questions you can email&nbsp;us at {{var:store_email}} or give us a call at {{var:store_phone}}.</span></span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"> </p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">Best regards,</span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">{{var:store_name}} staff</span></p>',
+                                                                    'content' => '<p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">To follow&nbsp;the&nbsp;progress of your delivery, click <a target="_blank" href="{{var:tracking_url}}">here</a>&nbsp;and enter your tracking number: {{var:tracking_number}}. </span></p>',
                                                                     'attributes' =>
                                                                         array (
                                                                             'line-height' => '22px',
                                                                             'font-family' => 'Arial, sans-serif',
                                                                             'color' => '#4e4e4e',
                                                                             'align' => 'left',
-                                                                            'padding-bottom' => '40px',
-                                                                            'padding' => '10px 25px',
+                                                                            'padding-bottom' => '0px',
+                                                                            'padding' => '0px 25px 0px 25px',
                                                                             'passport' =>
                                                                                 array (
                                                                                     'id' => 'kbOjkLqu2H',
@@ -181,10 +181,10 @@ return array (
                                                                             'padding-top' => '0px',
                                                                             'font-size' => '13px',
                                                                         ),
-                                                                    'id' => 'kVVtT_B6JnLEL',
+                                                                    'id' => 'sendMYV0FdyO',
                                                                 ),
                                                         ),
-                                                    'id' => 'mcChUhRxft9sE',
+                                                    'id' => '0fCheds6KJXD',
                                                 ),
                                         ),
                                     'attributes' =>
@@ -199,12 +199,80 @@ return array (
                                                 array (
                                                     'name' => 'head',
                                                     'id' => 'sfnVk4THm',
+                                                    'conditions' =>
+                                                        array(
+                                                            0 =>
+                                                                array(
+                                                                    'operator' => '!=',
+                                                                    'varName' => 'tracking_number',
+                                                                    'varValue' => 'NA'
+                                                                )
+                                                        )
                                                 ),
                                             'padding-top' => '0px',
                                         ),
                                     'id' => 'EIvCWgQV6YgPV',
                                 ),
                             3 =>
+                                array (
+                                    'tagName' => 'mj-section',
+                                    'children' =>
+                                        array (
+                                            0 =>
+                                                array(
+                                                    'tagName' => 'mj-column',
+                                                    'attributes' =>
+                                                        array(
+                                                            'passport' =>
+                                                                array(
+                                                                    'id' => 'qycrLbTvII'
+                                                                )
+                                                        ),
+                                                    'children' =>
+                                                        array(
+                                                            0 =>
+                                                                array(
+                                                                    'tagName' => 'mj-text',
+                                                                    'content' => '<p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">In addition you can find all order information at the following <a target="_blank" href="{{var:order_link}}">link</a>.</span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">Make sure you’re available to sign for your parcel so you can enjoy your purchase when it arrives!</span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="color:#555555"><span style="font-size:14px">If you have any questions you can email us at {{var:store_email:""}} or give us a call at {{var:store_phone:""}}.</span></span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"> </p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">Best regards,</span></p><p style="line-height: 21px; margin: 10px 0; text-align: left;"><span style="font-size:14px">{{var:store_name:""}} staff</span></p>',
+                                                                    'attributes' =>
+                                                                        array(
+                                                                            'line-height' => '22px',
+                                                                            'font-family' => 'Arial, sans-serif',
+                                                                            'color' => '#4e4e4e',
+                                                                            'align' => 'left',
+                                                                            'padding-bottom' => '40px',
+                                                                            'padding' => '10px 25px',
+                                                                            'passport' =>
+                                                                                array(
+                                                                                    'id' => 'ykr8ZNyar8'
+                                                                                ),
+                                                                            'padding-top' => '0px',
+                                                                            'font-size' => '13px'
+                                                                        ),
+                                                                    'id' => '3NUL-isAw6Hlc'
+                                                                )
+                                                        ),
+                                                    'id' => 'IskdyC2_8rfPN'
+                                                )
+                                        ),
+                                    'attributes' =>
+                                        array(
+                                            'background-repeat' => 'repeat',
+                                            'padding' => '20px 0',
+                                            'text-align' => 'center',
+                                            'vertical-align' => 'top',
+                                            'background-color' => '#ffffff',
+                                            'padding-bottom' => '0px',
+                                            'passport' =>
+                                                array(
+                                                    'name' => 'head',
+                                                    'id' => 'BYuVJcA25'
+                                                ),
+                                            'padding-top' => '0px'
+                                        ),
+                                    'id' => 'EPY2kiNjSjHr-'
+                                ),
+                            4 =>
                                 array (
                                     'tagName' => 'mj-section',
                                     'children' =>
