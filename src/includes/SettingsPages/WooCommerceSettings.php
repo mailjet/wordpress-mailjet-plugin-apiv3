@@ -520,6 +520,13 @@ class WooCommerceSettings
         return true;
     }
 
+    public function send_order_processing_paid_by_cheque($status, $order) {
+        if ($status === 'on-hold' && $order && (int)$order->get_id() > 0) {
+            return $this->send_order_status_processing($order->get_id());
+        }
+        return false;
+    }
+
     public function send_order_status_processing($orderId)
     {
         $order = wc_get_order( $orderId );
@@ -574,7 +581,6 @@ class WooCommerceSettings
         }
 
         return true;
-
     }
 
     public function cart_change_timestamp() {
@@ -798,23 +804,25 @@ class WooCommerceSettings
         }
 
         $actions = [
-            'mailjet_order_confirmation' => ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
-            'mailjet_resend_order_confirmation' => ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
-            'mailjet_shipping_confirmation' =>  ['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed'],
-            'mailjet_refund_confirmation' =>  ['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']
+            'mailjet_order_confirmation' => [
+                ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque']
+            ],
+            'mailjet_shipping_confirmation' =>  [['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed']],
+            'mailjet_refund_confirmation' =>  [['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']]
         ];
-        $result = [];
+        $returnedHooks = [];
         foreach ($data['mailjet_wc_active_hooks'] as $key => $val) {
             if ($val === '1') {
-                $result[] = $actions[$key];
-                if ($key === 'mailjet_order_confirmation') {
-                    $result[] = $actions['mailjet_resend_order_confirmation'];
+                $hooks = $actions[$key];
+                foreach ($hooks as $hookInfo) {
+                    $returnedHooks[] = $hookInfo;
                 }
             }
         }
 
-        return $result;
-
+        return $returnedHooks;
     }
 
     public function abandoned_cart_settings_post()
