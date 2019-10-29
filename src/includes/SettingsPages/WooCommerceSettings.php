@@ -275,12 +275,7 @@ class WooCommerceSettings
 
     public function toggleWooSettings($activeHooks)
     {
-
-        if (get_option('mailjet_enabled') !== '1'){
-            return false;
-        }
-
-        $avaliableActions = [
+        $availableActions = [
             'woocommerce_order_status_processing' => 'woocommerce_customer_processing_order_settings',
             'woocommerce_order_status_completed' => 'woocommerce_customer_completed_order_settings',
             'woocommerce_order_status_refunded' => 'woocommerce_customer_refunded_order_settings'
@@ -299,7 +294,7 @@ class WooCommerceSettings
             'email_type' => 'html',
         ];
 
-        foreach ($avaliableActions as $key => $hook) {
+        foreach ($availableActions as $key => $hook) {
             $wooSettings = get_option($hook);
             $setting = $defaultSettings;
             if ($wooSettings) {
@@ -459,7 +454,7 @@ class WooCommerceSettings
             "IsTextPartGenerationEnabled" => true,
             "Locale" => "en_US",
             "Name" => "",
-            "OwnerType" => "user",
+            "OwnerType" => "apikey",
             "Presets" => "string",
             "Purposes" => ['transactional']
         ];
@@ -572,8 +567,6 @@ class WooCommerceSettings
 
         $data = $this->getFormattedEmailData($this->getOrderRecipients($order, $vars), $templateId);
         $response = MailjetApi::sendEmail($data);
-
-
 
         if ($response === false){
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . json_encode($data));
@@ -942,9 +935,15 @@ class WooCommerceSettings
 
     private function getFormattedEmailData($recipients, $templateId)
     {
+        $template = MailjetApi::getTemplateDetails($templateId);
         $data = [];
-        $data['FromEmail'] = get_option('mailjet_from_email');
-        $data['FromName'] = get_option('mailjet_from_name');
+        if (isset($template['Headers'])) {
+            $data['FromEmail'] = $template['Headers']['SenderEmail'];
+            $data['FromName'] = $template['Headers']['SenderName'];
+            if (isset($data['FromName'])) {
+                $data['FromName'] = preg_replace('/{{var:store_name(:"(.)*")?}}/', get_bloginfo(), $data['FromName']);
+            }
+        }
         $data['Recipients'][] = $recipients;
         $data['Mj-TemplateID'] = $templateId;
         $data['Mj-TemplateLanguage'] = true;
@@ -958,12 +957,11 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCartArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCart.html');
-        $senderName = get_option('mailjet_from_name');
-        $senderEmail = get_option('mailjet_from_email');
+        $fromEmail = get_option('mailjet_from_email');
         $templateDetail['Headers']= [
             'Subject' => 'There\'s something in your cart',
-            'SenderName' => $senderName,
-            'From' => $senderName . ' <' . $senderEmail . '>'
+            'SenderName' => '{{var:store_name}}',
+            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
         ];
 
         return $templateDetail;
@@ -973,10 +971,11 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundConfirmation.html');
+        $fromEmail = get_option('mailjet_from_email');
         $templateDetail['Headers']= [
             'Subject' => 'Your refund from {{var:store_name}}',
             'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}} <{{var:store_email:""}}>'
+            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
         ];
 
         return $templateDetail;
@@ -986,10 +985,11 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] =  require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfArray.php');
         $templateDetail["Html-part"] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfirmation.html');
+        $fromEmail = get_option('mailjet_from_email');
         $templateDetail['Headers']= [
             'Subject' => 'Your order from {{var:store_name}} has been shipped',
             'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}} <{{var:store_email:""}}>'
+            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
         ];
 
         return $templateDetail;
@@ -999,10 +999,11 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfirmation.html');
+        $fromEmail = get_option('mailjet_from_email');
         $templateDetail['Headers']= [
             'Subject' => 'We just received your order from {{var:store_name}} - {{var:order_number}}',
             'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}} <{{var:store_email:""}}>'
+            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
         ];
 
         return $templateDetail;

@@ -14,7 +14,6 @@ class OrderNotificationsSettings
 
     public function mailjet_order_notifications_settings_page_html()
     {
-        $fromName = get_option('mailjet_from_name');
         $wooCommerceActivated = get_option('activate_mailjet_woo_integration') === '1' ? true : false;
 
         $notifications = get_option('mailjet_order_notifications');
@@ -141,7 +140,7 @@ class OrderNotificationsSettings
                         set_query_var('isNotificationActive', $isOrderConfirmationActive);
                         set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_order_confirmation]');
                         set_query_var('checkboxId', 'order_confirmation');
-                        set_query_var('templateFrom', sprintf('%s &lt%s&gt', $orderConfTemplate['Headers']['SenderName'], $orderConfTemplate['Headers']['SenderEmail']));
+                        set_query_var('templateFrom', htmlspecialchars($orderConfTemplate['Headers']['From']));
                         set_query_var('templateSubject', $orderConfTemplate['Headers']['Subject']);
                         set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $orderConfTemplate['Headers']['ID']);
                         load_template($templateRowTemplate, false);
@@ -152,7 +151,7 @@ class OrderNotificationsSettings
                         set_query_var('isNotificationActive', $isShippingConfirmationActive);
                         set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_shipping_confirmation]');
                         set_query_var('checkboxId', 'shipping_confirmation');
-                        set_query_var('templateFrom', sprintf('%s &lt%s&gt', $shippingTemplate['Headers']['SenderName'], $shippingTemplate['Headers']['SenderEmail']));
+                        set_query_var('templateFrom', htmlspecialchars($shippingTemplate['Headers']['From']));
                         set_query_var('templateSubject', $shippingTemplate['Headers']['Subject']);
                         set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $shippingTemplate['Headers']['ID']);
                         load_template($templateRowTemplate, false);
@@ -163,7 +162,7 @@ class OrderNotificationsSettings
                         set_query_var('isNotificationActive', $isRefundConfirmationActive);
                         set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_refund_confirmation]');
                         set_query_var('checkboxId', 'refund_confirmation');
-                        set_query_var('templateFrom', sprintf('%s &lt%s&gt', $refundTemplate['Headers']['SenderName'], $refundTemplate['Headers']['SenderEmail']));
+                        set_query_var('templateFrom', htmlspecialchars($refundTemplate['Headers']['From']));
                         set_query_var('templateSubject', $refundTemplate['Headers']['Subject']);
                         set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $refundTemplate['Headers']['ID']);
                         load_template($templateRowTemplate, false);
