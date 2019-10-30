@@ -543,7 +543,7 @@ class MailjetApi
             return false;
         }
         try {
-            $response = $mjApiClient->get(Resources::$Template, ['id' => 'user|' . $templateName]);
+            $response = $mjApiClient->get(Resources::$Template, ['id' => 'apikey|' . $templateName]);
         } catch (ConnectException $e) {
             return false;
         }

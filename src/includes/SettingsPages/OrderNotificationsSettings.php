@@ -14,7 +14,6 @@ class OrderNotificationsSettings
 
     public function mailjet_order_notifications_settings_page_html()
     {
-        $fromName = get_option('mailjet_from_name');
         $wooCommerceActivated = get_option('activate_mailjet_woo_integration') === '1' ? true : false;
 
         $notifications = get_option('mailjet_order_notifications');
