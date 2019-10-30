@@ -940,9 +940,6 @@ class WooCommerceSettings
         if (isset($template['Headers'])) {
             $data['FromEmail'] = $template['Headers']['SenderEmail'];
             $data['FromName'] = $template['Headers']['SenderName'];
-            if (isset($data['FromName'])) {
-                $data['FromName'] = preg_replace('/{{var:store_name(:"(.)*")?}}/', get_bloginfo(), $data['FromName']);
-            }
         }
         $data['Recipients'][] = $recipients;
         $data['Mj-TemplateID'] = $templateId;
@@ -953,16 +950,22 @@ class WooCommerceSettings
         return $data;
     }
 
+    private function defaultSenderInfo() {
+        $senderName = get_option('woocommerce_email_from_name');
+        $senderEmail = get_option('woocommerce_email_from_email');
+        return [
+            'SenderName' => $senderName,
+            'SenderEmail' => $senderEmail,
+            'From' => $senderName . ' <' . $senderEmail . '>'
+        ];
+    }
+
     private function abandonedCartTemplateContent()
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCartArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCart.html');
-        $fromEmail = get_option('mailjet_from_email');
-        $templateDetail['Headers']= [
-            'Subject' => 'There\'s something in your cart',
-            'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
-        ];
+        $templateDetail['Headers'] = $this->defaultSenderInfo();
+        $templateDetail['Headers']['Subject'] =  'There\'s something in your cart';
 
         return $templateDetail;
     }
@@ -971,12 +974,8 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundConfirmation.html');
-        $fromEmail = get_option('mailjet_from_email');
-        $templateDetail['Headers']= [
-            'Subject' => 'Your refund from {{var:store_name}}',
-            'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
-        ];
+        $templateDetail['Headers'] = $this->defaultSenderInfo();
+        $templateDetail['Headers']['Subject'] = 'Your refund from {{var:store_name}}';
 
         return $templateDetail;
     }
@@ -985,12 +984,8 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] =  require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfArray.php');
         $templateDetail["Html-part"] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfirmation.html');
-        $fromEmail = get_option('mailjet_from_email');
-        $templateDetail['Headers']= [
-            'Subject' => 'Your order from {{var:store_name}} has been shipped',
-            'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
-        ];
+        $templateDetail['Headers'] = $this->defaultSenderInfo();
+        $templateDetail['Headers']['Subject'] = 'Your order from {{var:store_name}} has been shipped';
 
         return $templateDetail;
     }
@@ -999,12 +994,8 @@ class WooCommerceSettings
     {
         $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfirmation.html');
-        $fromEmail = get_option('mailjet_from_email');
-        $templateDetail['Headers']= [
-            'Subject' => 'We just received your order from {{var:store_name}} - {{var:order_number}}',
-            'SenderName' => '{{var:store_name}}',
-            'From' => '{{var:store_name:""}}' . (empty($fromEmail) ? '' : ' <' . $fromEmail . '>')
-        ];
+        $templateDetail['Headers'] = $this->defaultSenderInfo();
+        $templateDetail['Headers']['Subject'] = 'We just received your order from {{var:store_name}} - {{var:order_number}}';
 
         return $templateDetail;
     }
