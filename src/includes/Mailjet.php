@@ -269,7 +269,7 @@ class Mailjet
         }
         if ($abandonedCartActiveActions && !empty($abandonedCartActiveActions)) {
             foreach ($abandonedCartActiveActions as $action) {
-                $this->loader->add_action($action['hook'], $woocommerceObject, $action['callable'], 10, 1);
+                $this->loader->add_action($action['hook'], $woocommerceObject, $action['callable'], 10, 2);
             }
         }
     }
