@@ -529,10 +529,6 @@ class WooCommerceSettings
         if (!$order || empty($order) || !$templateId || empty($templateId)){
             return false;
         }
-        if (!$order || empty($order)){
-            return false;
-        }
-
 
         $items = $order->get_items();
         $products = [];
@@ -702,8 +698,13 @@ class WooCommerceSettings
             array_push($products, $product);
         }
 
-        // generate a random 5 characters string as security
-        $securityKey = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
+        // generate a random string as security
+        try {
+            $securityKey = bin2hex(random_bytes(5));
+        }
+        catch(Exception $e) {
+            $securityKey = mt_rand(99999);
+        }
         $mailId = $this->register_sent_email($cart, $securityKey);
         $abandoned_cart_link = get_permalink(wc_get_page_id('cart')) . '?mj_action=track_cart&email_id=' . $mailId . '&key=' . $securityKey;
         $vars = [
@@ -864,6 +865,7 @@ class WooCommerceSettings
                 ['hook' => 'woocommerce_calculate_totals', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_cart_is_empty', 'callable' => 'cart_change_timestamp'],
                 ['hook' => 'woocommerce_order_status_changed', 'callable' => 'update_status_on_order'],
+                ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'update_status_paid_by_cheque'],
                 ['hook' => 'abandoned_cart_cron_hook', 'callable' => 'send_abandoned_cart_emails'],
                 ['hook' => 'wp_ajax_nopriv_save_guest_data', 'callable' => 'save_guest_data']
             ];
@@ -883,10 +885,16 @@ class WooCommerceSettings
         update_option('mailjet_wc_abandoned_cart_active_hooks', $activeHooks);
     }
 
+    public function update_status_paid_by_cheque($status, $order) {
+        if ($order && (int)$order->get_id() > 0) {
+            $this->update_status_on_order($order->get_id());
+        }
+    }
+
     public function update_status_on_order($order_id) {
-        global $wpdb, $woocommerce;
+        global $wpdb;
         $order = wc_get_order( $order_id );
-        if ($order->get_status() == 'processing' || $order->get_status() == 'completed') {
+        if ($order->get_status() == 'processing' || $order->get_status() == 'completed' || ($order->get_status() == 'pending' && $order->get_payment_method() === 'cheque')) {
             if (is_user_logged_in()) {
                 $userType = 'REGISTERED';
                 $user_id = get_current_user_id();
@@ -1135,11 +1143,11 @@ class WooCommerceSettings
                     $session->set('billing_email', $result[0]->billing_email);
                     $url = get_permalink(wc_get_page_id('cart'));
                 }
-            }
-            if (WC()->cart->get_cart_contents_count() == 0) {
-                $cartInfo = json_decode($result[0]->abandoned_cart_info, true);
-                foreach ($cartInfo as $productKey => $product) {
-                    WC()->cart->add_to_cart($product['product_id'], $product['quantity']);
+                if (WC()->cart->get_cart_contents_count() == 0) {
+                    $cartInfo = json_decode($result[0]->abandoned_cart_info, true);
+                    foreach ($cartInfo as $productKey => $product) {
+                        WC()->cart->add_to_cart($product['product_id'], $product['quantity']);
+                    }
                 }
             }
         }
