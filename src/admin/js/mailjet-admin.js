@@ -191,11 +191,12 @@ function mjSelect() {
             function selectValue() {
                 return select.querySelector("option:checked").textContent
             }
-            wrapper.setAttribute('data-value', selectValue());
-
-            select.addEventListener("change", function () {
+            if (select.querySelector("option:checked")) {
                 wrapper.setAttribute('data-value', selectValue());
-            });
+                select.addEventListener("change", function () {
+                    wrapper.setAttribute('data-value', selectValue());
+                });
+            }
             select.addEventListener("focus", function () {
                 wrapper.classList.add('mj-select-focus');
             });
