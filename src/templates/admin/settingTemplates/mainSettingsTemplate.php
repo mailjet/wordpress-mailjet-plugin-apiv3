@@ -42,7 +42,6 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 			</div>
 		</div>
 	</div>
-	<script src="jquery-3.4.0.min.js"></script>
 	<script>
         function sanitizeInput() {
             let autorsCheck = document.getElementById('activate_mailjet_comment_authors_sync');

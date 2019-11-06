@@ -24,7 +24,7 @@ class UserAccessSettings
     {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>">
-            <?php echo __('Select which Wordpress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet-for-wordpress'); ?>
+            <?php echo __('Select which WordPress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet-for-wordpress'); ?>
         </p>
         <?php
     }

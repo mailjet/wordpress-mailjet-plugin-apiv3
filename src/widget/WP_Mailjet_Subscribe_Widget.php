@@ -5,6 +5,7 @@ namespace MailjetPlugin\Widget;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
@@ -229,7 +230,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $params = http_build_query($params);
 
-        if ($_GET['mj_sub_token'] != sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
+        if ($_GET['mj_sub_token'] != sha1($params . MailjetSettings::getCryptoHash())) {
             // Invalid token
             _e('Invalid token', 'mailjet-for-wordpress');
             die;

@@ -160,6 +160,44 @@ class MailjetApi
 		return false;
 	}
 
+	public static function getSubscribersFromList($contactListId) {
+        if (!$contactListId || empty($contactListId)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $limit = 1000;
+        $dataArray = array();
+        $offset = 0;
+        do {
+            $filters = array(
+                'ContactsList' => $contactListId,
+                'Unsub' => false,
+                'Offset' => $offset,
+                'Limit' => $limit,
+                'Style' => 'Full'
+            );
+
+            try {
+                $response = $mjApiClient->get(Resources::$Listrecipient, array('filters' => $filters));
+            } catch (ConnectException $e) {
+                return false;
+            }
+            if ($response->success()) {
+                array_push($dataArray, $response->getData());
+            } else {
+                return false;
+            }
+            $offset += $limit;
+        } while ($response->getCount() >= $limit);
+        return array_merge(...$dataArray);
+    }
+
     public static function getContactProperties()
     {
 
@@ -234,6 +272,53 @@ class MailjetApi
         } else {
             return false;
 //            return $response->getStatus();
+        }
+    }
+
+    public static function getMailjetSegments() {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        try {
+            $response = $mjApiClient->get(Resources::$Contactfilter);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+        }
+    }
+
+    public static function createMailjetSegment($name, $expression, $description = '') {
+        if (empty($name) || empty($expression)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $body = [
+            'Description' => $description,
+            'Expression' => $expression,
+            'Name' => $name
+        ];
+        try {
+            $response = $mjApiClient->post(Resources::$Contactfilter, ['body' => $body]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
         }
     }
 
@@ -358,7 +443,7 @@ class MailjetApi
      * @param $listId
      * @return bool
      */
-    public static function checkContactSubscribedToList($email, $listId)
+    public static function checkContactSubscribedToList($email, $listId, $getContactId = false)
     {
         $exists = false;
         $existsAndSubscribed = false;
@@ -385,9 +470,48 @@ class MailjetApi
             if (isset($data[0]['IsUnsubscribed']) && false == $data[0]['IsUnsubscribed']) {
                 $existsAndSubscribed = true;
             }
+            if ($getContactId && $exists && $existsAndSubscribed){
+                return $data[0]['ContactID'];
+            }
         }
 
         return $exists && $existsAndSubscribed;
+    }
+
+    public static function getContactDataByEmail($contactEmail)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $response = $mjApiClient->get(['contactdata', $contactEmail], []);
+
+        if ($response->success() && $response->getCount() > 0) {
+
+            return $response->getData();
+        }
+
+        return false;
+    }
+
+    public static function updateContactData($contactEmail, $data)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        $body = [
+            'Data' => $data
+        ];
+        try {
+            $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        return $response;
     }
 
     public static function getProfileName()
@@ -412,31 +536,23 @@ class MailjetApi
         return $name;
     }
 
-    public static function getTemplates($filterByName = null)
-    {
+    public static function getTemplateByName($templateName) {
         try {
             $mjApiClient = self::getApiClient();
         } catch (\Exception $e) {
             return false;
         }
         try {
-            $response = $mjApiClient->get(Resources::$Template, ['filters' => ['OwnerType' => 'user']]);
+            $response = $mjApiClient->get(Resources::$Template, ['id' => 'apikey|' . $templateName]);
         } catch (ConnectException $e) {
             return false;
         }
-        $templateNames = [];
 
         if ($response->success() && $response->getCount() > 0) {
-            $data = $response->getData();
-            foreach ($data as $template){
-                if (!is_null($filterByName) && $template['Name'] === $filterByName){
-                    return $template;
-                }
-                $templateNames[] = ['Name' => $template['Name'], 'id' => $template['ID']] ;
-            }
-
+            return $response->getData()[0];
+        } else {
+            return false;
         }
-        return  $templateNames;
     }
 
     public static function getTemplateDetails($id)
@@ -459,7 +575,7 @@ class MailjetApi
         return  false;
     }
 
-    public static function createAutomationTemplate(array $arguments)
+    public static function createTemplate(array $arguments)
     {
         try {
             $mjApiClient = self::getApiClient();
@@ -477,7 +593,7 @@ class MailjetApi
             return $data[0];
         }else{
             if ($data['ErrorCode'] === 'ps-0015'){
-                return self::getTemplates($arguments['body']['Name']);
+                return self::getTemplateByName($arguments['body']['Name']);
             }
         }
 
@@ -485,7 +601,7 @@ class MailjetApi
     }
 
 
-    public static function createAutomationTemplateContent(array $content)
+    public static function createTemplateContent(array $content)
     {
         try {
             $mjApiClient = self::getApiClient();

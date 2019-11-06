@@ -164,9 +164,9 @@ class InitialSettings
             <div class="mainContainer">
 
                 <div>
-                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'); ?> </h1>
+                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for WordPress', 'mailjet-for-wordpress'); ?> </h1>
                     <p class="page_top_subtitle">
-        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet-for-wordpress'); ?>
+        <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from WordPress.', 'mailjet-for-wordpress'); ?>
                     </p>
                 </div>
                 <div class="initialSettings">
@@ -208,7 +208,7 @@ class InitialSettings
                             </div>
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php echo plugin_dir_url(dirname(dirname(__FILE__))) . '/admin/images/initial_screen_image3.png'; ?>" alt="Welcome to the Mailjet" /></div>
-                                <p class="initialSettingsTextCell"><b><?php _e('We will take care of delivering your newsletter', 'mailjet-for-wordpress'); ?></b><?php _e('Easily create and send newsletters to your subscribers from Wordpress. Mailjet will deliver them!', 'mailjet-for-wordpress'); ?></p>
+                                <p class="initialSettingsTextCell"><b><?php _e('We will take care of delivering your newsletter', 'mailjet-for-wordpress'); ?></b><?php _e('Easily create and send newsletters to your subscribers from WordPress. Mailjet will deliver them!', 'mailjet-for-wordpress'); ?></p>
                             </div>
                         </div>
                     </div>

@@ -26,6 +26,8 @@ $mailjetIframe
         'contacts',
         'stats',
         'email_automation',
+        'widget',
+        'transactional',
     ))
     ->turnDocumentationProperties(MailjetIframe::OFF)
     ->turnNewContactListCreation(MailjetIframe::OFF)
@@ -38,6 +40,6 @@ $mailjetIframe
 
 /**
  *
- * Show the iframe whereever you want
+ * Show the iframe wherever you want
  */
 echo $mailjetIframe->getHtml();

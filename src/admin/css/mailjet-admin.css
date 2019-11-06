@@ -172,7 +172,7 @@
 .mj-select-wrapper {
     position: relative;
     display: inline-block;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     margin-right: 16px;
 }
 
@@ -465,6 +465,10 @@
     box-shadow: none;
 }
 
+.mailjet_row input[type="checkbox"]:disabled {
+    background-color: #dddddd;
+}
+
 .mailjet_row input[type="checkbox"]:checked::before {
     margin: -1px 0 0 -2px;
     font-size: 16px;
@@ -618,10 +622,6 @@
 .mjSettings .right {
     max-width: 600px;
     padding: 16px 32px;
-}
-
-.mjSettings .mailjet_sync_options_div {
-    margin-bottom: 24px;
 }
 
 .mjSettings .settingsSubscrFldset {
@@ -1014,8 +1014,9 @@
     margin-bottom: 24px;
 }
 
-.mailjet_sync_options_div {
-    margin: 16px 0 0 0;
+.mj-wp-sync-label {
+    display:block !important;
+    font-weight: 500 !important;
 }
 
 .mailjet_sync_comment_authors_div {
@@ -1066,17 +1067,30 @@
     height: calc(100vh - 100px);
 }
 
-.iframePage .mainContainer {
+.longIframePage {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh + 50px);
+}
+
+.iframePage .mainContainer, .longIframePage .mainContainer {
     flex-grow: 1;
     position: relative;
 }
 
-.iframePage .mainContainer iframe {
+.iframePage .mainContainer iframe, .longIframePage .mainContainer iframe {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
+}
+
+.iframePage .iframeContainer, .longIframePage .iframeContainer {
+    height: calc(100% - 100px);
+    position: relative;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    margin-right: 32px;
 }
 
 #initialContactListsForm #initialContactListsSubmit {
@@ -1246,6 +1260,10 @@ input:checked + .mj-slider:before {
     height: 0;
 }
 
+.mj-switch input:disabled {
+    opacity: 0;
+}
+
 .mj-woocommerce-contacts {
     height: 40px;
     width: 600px;
@@ -1261,7 +1279,6 @@ input:checked + .mj-slider:before {
 
 .mj-contact-list {
     height: 24px;
-    width: 86px;
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
@@ -1270,6 +1287,10 @@ input:checked + .mj-slider:before {
 
 #woo_contact_list {
     margin-top: 20px;
+}
+
+.mailjet_sync_woo_div {
+    margin-left: 24px;
 }
 
 .mj-text-field {
@@ -1339,30 +1360,30 @@ input:checked + .mj-slider:before {
     left: 0;
     top: 0;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-#mj-logo_top_bar {
-    display: inline-flex;
-    position: absolute;
-    height: 30px;
-    width: 70px;
-    left: 92.5%;
-    top: 15px;
+#mj-settings_top_bar {
+    margin-right: 35px;
     color: #19BC9C;
-!important;
     cursor: pointer;
-    /*vertical-align: middle;*/
+    display: flex;
+    align-items: center;
+    margin-left: auto;
 }
 
-#mj-logo_top_bar span {
+#mj-settings_top_bar i {
+    display: flex;
+    width: auto;
+}
+
+#mj-settings_top_bar span {
     margin-top: 4px;
-    margin-left: 6px;
+    margin-left: 5px;
     font-family: Roboto;
     font-weight: 500;
     font-size: 14px;
-    display: inline-flex;
-    /*position: absolute;*/
-    vertical-align: middle;
 }
 
 #mj-title {
@@ -1381,12 +1402,13 @@ input:checked + .mj-slider:before {
     width: fit-content;
     border-radius: 3px;
     font-family: Roboto;
+    padding: 8px 16px;
     font-size: 14px;
     font-weight: 500;
     offset: none;
     color: #555;
     border: none;
-    background: #f7f7f7;
+    background: #f2f2f2;
     vertical-align: top;
     line-height: 20px;
     text-align: center;
@@ -1398,35 +1420,39 @@ input:checked + .mj-slider:before {
     background: #e2e4e7;
 }
 
-.mj-notifications {
-    vertical-align: center;
-    margin-bottom: 30px;
-    margin-top: 30px;
+.mj-btnSpaced {
+    margin-right: 16px;
 }
 
-.mj-order-notifications-labels {
+.mj-template-info {
+    margin-bottom: 22px;
+    margin-top: 12px;
+}
+
+.mj-template-info-header {
+    display: flex;
+    align-items: center;
+}
+
+.mj-template-labels {
     display: inline-flex;
     max-width: -moz-max-content;
     max-width: max-content;
     line-height: 24px;
     font-weight: 500;
     font-size: 2.3em;
-    margin-top: 3px !important;
 }
 
 .mj-inrow {
-    display: inline-block;
-    float: right;
-    margin-right: 5.75em;
-
+    margin-left: auto;
+    margin-right: 0.5em;
 }
 
-.order-notification-field {
-    /*margin-left: 20px;*/
+.mj-form-content {
+    margin-right: 32px;
 }
 
 .mj-checkbox-label {
-    height: 24px;
     width: fit-content;
     color: #555555;
     font-family: Roboto;
@@ -1436,25 +1462,9 @@ input:checked + .mj-slider:before {
     white-space: nowrap;
 }
 
-.mj-notifications-from {
+.mj-template-from {
     margin-left: 1.75em;
-    height: 20px;
-    color: #555555;
-    font-family: Roboto;
-    font-size: 14px;
-    line-height: 20px;
-}
-
-.mj-order-notificartion-popup {
-    height: 311px;
-    width: 600px;
-    border-radius: 3px;
-    background-color: #FFFFFF;
-    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
-    position: absolute;
-    z-index: 9999;
-    margin: 10% 0 0 30%;
-
+    display: flex;
 }
 
 .mj-popup {
@@ -1467,7 +1477,7 @@ input:checked + .mj-slider:before {
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
     position: absolute;
     z-index: 9999;
-    margin: 10% 0 0 30%;
+    margin: 10% 0 0 25%;
 
 }
 
@@ -1495,14 +1505,6 @@ input:checked + .mj-slider:before {
     margin-right: 24px;
 }
 
-.mj-popup-info {
-    height: 72px;
-    width: 552px;
-    border-radius: 3px;
-    background-color: #D6EBFB;
-
-}
-
 .mj-grid {
     margin-right: 15px;
     width: 50%;
@@ -1524,8 +1526,6 @@ input:checked + .mj-slider:before {
 }
 
 .mailjet-label {
-    height: 24px;
-    width: 361px;
     color: #555555;
     font-family: Roboto;
     font-size: 16px;
@@ -1544,13 +1544,28 @@ input:checked + .mj-slider:before {
 }
 
 .mj-popup-message {
-    height: 40px;
     color: #555555;
     font-family: Roboto;
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 1.5em;
     margin-top: 1.5em;
+}
+
+.mj-popup-message > p {
+    margin-bottom: 0px;
+}
+
+.mj-popup-info {
+    border-radius: 3px;
+    background-color: #D6EBFB;
+    padding: 15px;
+    display: flex;
+}
+
+.mj-popup-info > svg {
+    fill: #555555;
+    padding-right: 15px;
 }
 
 .mj-popup-body {
@@ -1561,10 +1576,10 @@ input:checked + .mj-slider:before {
 .mj-badge {
     display: inline-flex;
     height: 16px;
-    width: 96.1px;
     border-radius: 12px;
-    background-color: #4DBC5C;
-    padding-left: 7px;
+    background-color: #DBF2DE;
+    padding-left: 8px;
+    padding-right: 8px;
     margin-left: 8px;
 
 }
@@ -1572,14 +1587,9 @@ input:checked + .mj-slider:before {
 .mj-badge > p {
     display: inline-flex;
     height: 16px;
-    color: #FFFFFF;
-    font-family: Roboto;
+    color: #555555;
     font-size: 12px;
-    font-weight: 500;
     line-height: 16px;
-    margin-top: 0px;
-    margin-left: 5px;
-
 }
 
 .mj-linkBtn {
@@ -1713,4 +1723,13 @@ input:checked + .mj-slider:before {
 
 .mj-pluginPage select:focus {
     border-color: #19BC9C;
+}
+
+.mj-row-btn {
+    margin-top: 10px;
+}
+
+hr {
+    border-color: #F2F2F2;
+    border-top: 1px;
 }

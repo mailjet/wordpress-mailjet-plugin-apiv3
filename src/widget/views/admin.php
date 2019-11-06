@@ -476,7 +476,7 @@ if($numberActiveLanguages == 1) {
                         <!--TAB - 4 THANK YOU PAGE-->
                         <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab" style="height: 240px;">
                             <p class="tab-info propertiesInfo">
-                                <span><?php _e('Select a page from your Wordpress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet-for-wordpress') ?></span>
+                                <span><?php _e('Select a page from your WordPress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet-for-wordpress') ?></span>
                             </p>   
                             <?php
                             foreach ($activeLanguages as $language => $locale) {

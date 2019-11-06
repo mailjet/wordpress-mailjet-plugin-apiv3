@@ -29,6 +29,8 @@ class AbandonedCartSettings
                 update_option('mailjet_post_update_message', '');
             }
         }
+        $templateRowTemplate = MAILJET_ADMIN_TAMPLATE_DIR . '/WooCommerceSettingsTemplates/rowTemplate.php';
+        set_query_var('isEditModeAvailable', false);
     ?>
     <?php if ($wasActivated) { ?>
     <div class="mj-pluginPage mj-mask-popup" id="mj-popup-confirm-ac">
@@ -83,10 +85,12 @@ class AbandonedCartSettings
                 </a>
             </div>
             <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post" id="abandoned-cart-form">
-                <fieldset>
+                <fieldset class="mj-form-content">
                     <div>
-                        <h1 class="page_top_title mj-order-notifications-labels"><?php _e('Abandoned cart', 'mailjet-for-wordpress'); ?> </h1>
-                        <div class="mj-badge <?= !$isAbandonedCartActivated ? 'mj-hidden' : '' ?>"><p><?php _e('Sending active', 'mailjet-for-wordpress'); ?></p></div>
+                        <div id="mj-top_bar">
+                            <h1 class="page_top_title mj-template-labels"><?php _e('Abandoned cart', 'mailjet-for-wordpress'); ?> </h1>
+                            <div class="mj-badge <?= !$isAbandonedCartActivated ? 'mj-hidden' : '' ?>"><p><?php _e('Sending active', 'mailjet-for-wordpress'); ?></p></div>
+                        </div>
                         <p class="page_top_subtitle">
                             <?php _e('Recover visitors and turn them into customers by reminding them what they left in their carts.', 'mailjet-for-wordpress'); ?>
                         </p>
@@ -129,23 +133,16 @@ class AbandonedCartSettings
                         </h2>
                     </div>
                     <hr>
-                    <div class="mailjet_row mj-notifications">
-                        <label class="mj-order-notifications-labels">
-                            <section class="mj-checkbox-label">
-                                <?php _e('Abandoned Cart', 'mailjet-for-wordpress'); ?>
-                            </section>
-                        </label>
-                        <div class="mj-notifications-from">
-                            <span style="margin-right: 16px"><strong>From: &nbsp;</strong> <?php echo $abandonedCartTemplate['Headers']['SenderName'] . ' &#60' .$abandonedCartTemplate['Headers']['SenderEmail'] . '&#62'; ?></span>
-                            <span><strong>Subject: &nbsp;</strong>  <?= $abandonedCartTemplate['Headers']['Subject'] ?></span>
-                            <button class="mj-btnSecondary mj-inrow" onclick="window.open('https://app.mailjet.com/template/<?= $abandonedCartTemplate['Headers']['ID']?>/build')" type="button">
-                                <?php _e('Edit', 'mailjet-for-wordpress'); ?>
-                            </button>
-                        </div>
-                    </div>
+                    <?php
+                    set_query_var('title', __('Abandoned Cart', 'mailjet-for-wordpress'));
+                    set_query_var('templateFrom', sprintf('%s &lt%s&gt', $abandonedCartTemplate['Headers']['SenderName'], $abandonedCartTemplate['Headers']['SenderEmail']));
+                    set_query_var('templateSubject', $abandonedCartTemplate['Headers']['Subject']);
+                    set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=abandonedcart&id=' . $abandonedCartTemplate['Headers']['ID']);
+                    load_template($templateRowTemplate, false);
+                    ?>
                     <hr>
                 </fieldset>
-                <div class="mailjet_row">
+                <div class="mailjet_row mj-row-btn">
                     <?php if (!$isAbandonedCartActivated) { ?>
                         <button id="mj-activate-ac-submit" class="mj-btn btnPrimary" type="submit" name="activate_ac" value="1">
                             <?php _e('Activate sending', 'mailjet-for-wordpress'); ?>

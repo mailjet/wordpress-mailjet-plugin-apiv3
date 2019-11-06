@@ -26,7 +26,7 @@ class InitialContactListsSettings
         ?>
         <!--<h2 class="section_inner_title"><?php _e('Configure your lists.', 'mailjet-for-wordpress'); ?> </h2>-->
         <!--        <p class="top_descrption_helper" id="<?php echo esc_attr($args['id']); ?>">
-        <?php _e('Here are the contact lists we have detected on your Mailjet account. You can add your Wordpress subscribers to one of them, or use them to collect new email addresses.', 'mailjet-for-wordpress'); ?>
+        <?php _e('Here are the contact lists we have detected on your Mailjet account. You can add your WordPress subscribers to one of them, or use them to collect new email addresses.', 'mailjet-for-wordpress'); ?>
         </p>-->
         <?php
     }
@@ -75,16 +75,10 @@ class InitialContactListsSettings
         </div>
 
         <fieldset class="initialContactListsFieldset">
-            <h2 class="section_inner_title"><?php _e('Synchronize your Wordpress users', 'mailjet-for-wordpress'); ?></h2>
-            <!--<p><?php echo __('If you wish, you can add your Wordpress website users (readers, authors, administrators, …) to a contact list.', 'mailjet-for-wordpress'); ?></p>-->
-            <p><?php echo __("Please select a Mailjet contact list below to automatically add all future Wordpress users. Each new user's email address and role (subscriber, administrator, author, …) will be synchronized to the list and available for use inside Mailjet.", 'mailjet-for-wordpress'); ?></p>
-            <legend class="screen-reader-text"><span><?php echo __('Automatically add Wordpress subscribers to a specific list', 'mailjet-for-wordpress'); ?></span></legend>
+            <h2 class="section_inner_title"><?php _e('Synchronize your WordPress users', 'mailjet-for-wordpress'); ?></h2>
+            <p><?php echo __("Please select a Mailjet contact list below to automatically add all future WordPress users. Each new user's email address and role (subscriber, administrator, author, …) will be synchronized to the list and available for use inside Mailjet.", 'mailjet-for-wordpress'); ?></p>
+            <legend class="screen-reader-text"><span><?php echo __('Automatically add WordPress subscribers to a specific list', 'mailjet-for-wordpress'); ?></span></legend>
             <div class="activate_mailjet_sync_field">
-                <!--                <label class="checkboxLabel" for="activate_mailjet_sync">
-                                <input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?= ($mailjetSyncActivated == 1 ? ' checked="checked"' : '') ?>  autocomplete="off">
-                                    <span><?php echo __('Automatically add all my future Wordpress subscribers to a specific contact list', 'mailjet-for-wordpress'); ?></span>
-                                </label>-->
-
                 <div id="activate_mailjet_sync_form" class="mj-show">
                     <div class="mailjet_sync_options_div">
                         <h4><?php _e('Your Mailjet contact lists', 'mailjet-for-wordpress'); ?></h4>
@@ -117,7 +111,7 @@ class InitialContactListsSettings
                         </div>
                         <label class="checkboxLabel" for="activate_mailjet_initial_sync" style="margin-bottom: 157px!important;">
                             <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?= ($mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '') ?> >
-                            <span><?php echo sprintf(__('Also, add existing <b>%s Wordpress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?></span>
+                            <span><?php echo sprintf(__('Also, add existing <b>%s WordPress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount); ?></span>
                         </label>
                     </div>
                 </div>
@@ -248,9 +242,9 @@ class InitialContactListsSettings
             <div class="mainContainer">
 
                 <!--                <div>
-                                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for Wordpress', 'mailjet-for-wordpress'); ?> </h1>
+                                    <h1 class="page_top_title"><?php _e('Welcome to the Mailjet plugin for WordPress', 'mailjet-for-wordpress'); ?> </h1>
                                     <p class="page_top_subtitle">
-                <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from Wordpress.', 'mailjet-for-wordpress'); ?>
+                <?php _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from WordPress.', 'mailjet-for-wordpress'); ?>
                                     </p>
                                 </div>-->
 
