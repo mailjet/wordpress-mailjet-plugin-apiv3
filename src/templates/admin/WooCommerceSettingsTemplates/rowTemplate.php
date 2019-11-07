@@ -12,7 +12,9 @@ $isEditModeAvailable = (isset($isEditModeAvailable) ? $isEditModeAvailable : fal
         <section class="mj-checkbox-label">
             <?= $title ?>
         </section>
+        <?php if (isset($isNotificationActive)) { ?>
         <div class="mj-badge <?= $isNotificationActive ? '' : 'mj-hidden' ?>"><p><?php _e('Sending active', 'mailjet-for-wordpress'); ?></p></div>
+        <?php } ?>
         <button class="mj-btnSecondary mj-inrow" onclick="location.href='<?= $templateLink ?>'" type="button">
             <?php _e('Edit', 'mailjet-for-wordpress'); ?>
         </button>

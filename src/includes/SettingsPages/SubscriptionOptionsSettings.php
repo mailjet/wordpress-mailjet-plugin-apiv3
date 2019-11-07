@@ -27,7 +27,8 @@ class SubscriptionOptionsSettings
 
     public function __construct()
     {
-	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueScripts' ]);
+	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminScripts' ]);
+        add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontScripts' ]);
 	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
 	    add_action( 'wp_ajax_get_contact_lists_menu', [$this, 'getContactListsMenu']);
     }
@@ -407,11 +408,15 @@ class SubscriptionOptionsSettings
          }
     }
 
-    public function enqueueScripts()
+    public function enqueueFrontScripts()
     {
-        $path = plugins_url('/src/admin/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
+        $path = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
 	    wp_register_script('ajaxHandle',  $path,  array('jquery'), false,true);
 	    wp_enqueue_script( 'ajaxHandle' );
+    }
+
+    public function enqueueAdminScripts()
+    {
         wp_enqueue_script('mailjet-ajax', plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src'));
     }
 }
