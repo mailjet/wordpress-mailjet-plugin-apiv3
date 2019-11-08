@@ -135,7 +135,7 @@ class AbandonedCartSettings
                     <hr>
                     <?php
                     set_query_var('title', __('Abandoned Cart', 'mailjet-for-wordpress'));
-                    set_query_var('templateFrom', sprintf('%s &lt%s&gt', (isset($abandonedCartTemplate['Headers']['SenderName']) ?: ''), $abandonedCartTemplate['Headers']['SenderEmail']));
+                    set_query_var('templateFrom', sprintf('%s &lt%s&gt', ($abandonedCartTemplate['Headers']['SenderName'] ?: ''), $abandonedCartTemplate['Headers']['SenderEmail']));
                     set_query_var('templateSubject', $abandonedCartTemplate['Headers']['Subject']);
                     set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=abandonedcart&id=' . $abandonedCartTemplate['Headers']['ID']);
                     load_template($templateRowTemplate, false);

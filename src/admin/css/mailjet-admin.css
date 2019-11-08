@@ -454,7 +454,6 @@
     position: relative;
     top: 1px;
     display: inline-block;
-    font: 16px/1em sans-serif;
     margin: 0 8px 0 0;
     padding: 0;
     height: 16px;
@@ -471,7 +470,10 @@
 
 .mailjet_row input[type="checkbox"]:checked::before {
     margin: -1px 0 0 -2px;
-    font-size: 16px;
+    font: bold 16px/1em sans-serif;
+    content: "\2713";
+    color: #FFFFFF;
+    width: 1rem;
 }
 
 .mailjet_row input[type="checkbox"]:focus {
@@ -483,14 +485,8 @@
 .mailjet_row input[type="checkbox"]:checked {
     border: 1px solid #19BC9C;
     background: #33D6B6;
-    content: "\2714";
-    color: #FFF;
     text-align: center;
     font-weight: bold;
-}
-
-.mailjet_row input[type="checkbox"]:checked:before {
-    color: #FFF;
 }
 
 /*#wpbody-content {
