@@ -29,7 +29,7 @@ class WooCommerceSettings
 
     public function __construct()
     {
-        $this->enqueueScripts();
+        add_action('wp_enqueue_scripts', [$this, 'enqueueFrontScripts']);
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
         // cron settings for abandoned cart feature
         add_filter('cron_schedules', [$this, 'add_cron_schedule']);
@@ -1018,15 +1018,14 @@ class WooCommerceSettings
         return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
     }
 
-
-    public function enqueueScripts()
+    public function enqueueFrontScripts()
     {
         $cssPath = plugins_url('/src/front/css/mailjet-front.css', MAILJET_PLUGIN_DIR . 'src');
-        $scryptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
         wp_register_style('mailjet-front', $cssPath);
+        wp_enqueue_style('mailjet-front');
+        $scryptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
         wp_register_script('ajaxHandle', $scryptPath, array('jquery'), false, true);
         wp_localize_script('ajaxHandle', 'mailjet', ['url' => admin_url( 'admin-ajax.php' )]);
-        wp_enqueue_style('mailjet-front');
         wp_enqueue_script('ajaxHandle');
     }
 
