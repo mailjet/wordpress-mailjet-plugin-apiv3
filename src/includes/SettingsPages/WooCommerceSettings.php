@@ -498,7 +498,6 @@ class WooCommerceSettings
             'order_number' => $orderId,
             'order_total' => wc_price($order->get_total()),
             'store_email' => get_option('mailjet_from_email'),
-            'store_phone' => '',
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
             'order_link' => $order->get_view_order_url(),
@@ -555,7 +554,6 @@ class WooCommerceSettings
             'order_total' => $order->get_formatted_order_total(),
             'order_link' => $order->get_view_order_url(),
             'store_email' => get_option('mailjet_from_email'),
-            'store_phone' => '',
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
             'products' => $products,
@@ -746,7 +744,6 @@ class WooCommerceSettings
             'order_link' => $order->get_view_order_url(),
             'tracking_url' => $order->get_meta('_wcst_order_track_http_url'),
             'store_email' => get_option('mailjet_from_email'),
-            'store_phone' => '',
             'store_name' => get_bloginfo(),
             'store_address' => get_option('woocommerce_store_address'),
         ];
