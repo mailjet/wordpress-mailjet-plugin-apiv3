@@ -141,22 +141,20 @@ class MailjetSettings
             add_action('edit_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
             // - If you want to apply your hook to ALL profile pages (including the current user) then you also need to use this one.
             add_action('show_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            // Runs just before the end of the new user registration form.
+            if (get_option('activate_mailjet_woo_integration') === '1') {
+                add_action('woocommerce_edit_account_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            }
 
             // Runs just before the end of the new user registration form.
             add_action('register_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
             // Runs near the end of the "Add New" user screen.
             add_action('user_new_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
 
-            // Runs when a user updates personal options from the admin screen.
-            add_action('personal_options_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
-            // Runs at the end of the Personal Options section of the user profile editing screen.
-            add_action('profile_personal_options ', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
-            //
-            add_action('edit_user_profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs when a user's profile is updated. Action function argument: user ID.
             add_action('profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs immediately after the new user is added to the database.
-            add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
+            add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_register_user'));
         }
 
         /* Add custom field to comment form and process it on form submit */

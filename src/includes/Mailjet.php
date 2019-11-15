@@ -168,13 +168,10 @@ class Mailjet
     private function define_admin_hooks()
     {
         $plugin_admin = new MailjetAdmin($this->get_plugin_name(), $this->get_version());
-        $woocommerceSettings = new WooCommerceSettings();
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
-        $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $woocommerceSettings, 'orders_automation_settings_post');
-        $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $woocommerceSettings, 'abandoned_cart_settings_post');
 
         if (get_option('activate_mailjet_woo_integration') === '1'){
             $this->addWoocommerceActions();
@@ -282,11 +279,13 @@ class Mailjet
     private function addWoocommerceActions()
     {
         $woocommerceObject =  new WooCommerceSettings();
+
+        $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $woocommerceObject, 'orders_automation_settings_post');
+        $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $woocommerceObject, 'abandoned_cart_settings_post');
+
         if (get_option('mailjet_woo_edata_sync') === '1'){
             $this->loader->add_action('woocommerce_order_status_changed', $woocommerceObject, 'order_edata_sync', 10, 1);
         }
-        $this->loader->add_action('woocommerce_edit_account_form', $woocommerceObject, 'mailjet_show_extra_woo_profile_fields', 10, 1);
-        $this->loader->add_action('woocommerce_save_account_details', $woocommerceObject, 'save_mailjet_extra_woo_profile_fields', 10, 1);
 
         $activeActions = get_option('mailjet_wc_active_hooks');
         $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');

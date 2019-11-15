@@ -478,6 +478,35 @@ class MailjetApi
         return $exists && $existsAndSubscribed;
     }
 
+    public static function isContactInList($email, $listId, $getContactId = false)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $filters = [
+            'ContactEmail' => $email,
+            'ContactsList' => $listId,
+        ];
+        try {
+            $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+            if ($getContactId){
+                return $data[0]['ContactID'];
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     public static function getContactDataByEmail($contactEmail)
     {
         try {

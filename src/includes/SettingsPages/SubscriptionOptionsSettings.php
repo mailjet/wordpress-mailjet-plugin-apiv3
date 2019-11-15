@@ -247,9 +247,7 @@ class SubscriptionOptionsSettings
 
         $contact = [];
         $contact['Email'] = $email;
-        if (!empty($contactProperties)) {
-            $contact['Properties'] = $contactProperties;
-        }
+        $contact['Properties'] = $contactProperties;
 
         return MailjetApi::syncMailjetContact($contactListId, $contact, $action);
     }
@@ -263,6 +261,39 @@ class SubscriptionOptionsSettings
         }
     }
 
+    public function mailjet_register_user($userId) {
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
+        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $user = get_userdata($userId);
+        if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list) && !empty($user)) {
+            $email = $user->user_email;
+            $role = $user->roles[0];
+            $firstname = $user->first_name;
+            $lastname = $user->last_name;
+            $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list, true);
+            if ($contactId > 0) {
+                $data = array(
+                    array('Name' => 'wp_user_role', 'Value' => $role),
+                    array('Name' => 'firstname', 'Value' => $firstname),
+                    array('Name' => 'lastname', 'Value' => $lastname)
+                );
+                MailjetApi::updateContactData($email, $data);
+            }
+            else {
+                $properties = array(
+                    'wp_user_role' => $role,
+                    'firstname' => $firstname,
+                    'lastname' => $lastname
+                );
+                $contact = array(
+                    'Email' => $email,
+                    'Properties' => $properties
+                );
+                MailjetApi::syncMailjetContact($mailjet_sync_list, $contact, 'unsub');
+            }
+        }
+    }
+
     /**
      *  Adding checkboxes and extra fields for subscribing user and comment authors
      */
@@ -272,11 +303,11 @@ class SubscriptionOptionsSettings
         $activate_mailjet_sync = get_option('activate_mailjet_sync');
         $mailjet_sync_list = get_option('mailjet_sync_list');
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
-            // Update the extra fields
-            if (is_object($user) && (int)$user->ID > 0) {
-                $this->mailjet_subscribe_unsub_user_to_list(esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID)), $user->ID);
+            if (empty($user)) {
+                $user = wp_get_current_user();
             }
-            $checked = (is_object($user) && (int)$user->ID > 0 && esc_attr(get_the_author_meta('mailjet_subscribe_ok', $user->ID))) ? 'checked="checked" ' : '';
+            // Update the extra fields
+            $checked = (is_object($user) && (int)$user->ID > 0 && (int)get_user_meta($user->ID, 'mailjet_subscribe_ok', true) === 1) ? 'checked="checked" ' : '';
             set_query_var('checked', $checked);
             load_template(MAILJET_ADMIN_TAMPLATE_DIR . $this->profileFields);
         }
@@ -288,9 +319,11 @@ class SubscriptionOptionsSettings
      */
     public function mailjet_save_extra_profile_fields($user_id)
     {
-        $subscribe = filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
-        update_user_meta($user_id, 'mailjet_subscribe_ok', $subscribe);
-        $this->mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
+        if (isset($_POST ['mailjet_subscribe_extra_field'])) {
+            $subscribe = isset($_POST ['mailjet_subscribe_ok']) ? filter_var($_POST ['mailjet_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT) : 0;
+            update_user_meta($user_id, 'mailjet_subscribe_ok', $subscribe);
+            $this->mailjet_subscribe_unsub_user_to_list($subscribe, $user_id);
+        }
     }
 
 
@@ -303,8 +336,18 @@ class SubscriptionOptionsSettings
         if (!empty($mailjet_sync_list)) {
             $user = get_userdata($user_id);
             $action = (int)$subscribe === 1 ? 'addforce' : 'unsub';
+            $contactProperties = array();
+            if (!empty($user->first_name)) {
+                $contactProperties['firstname'] = $user->first_name;
+            }
+            if (!empty($user->last_name)) {
+                $contactProperties['lastname'] = $user->last_name;
+            }
+            if (!empty($user->roles[0])) {
+                $contactProperties['wp_user_role'] = $user->roles[0];
+            }
             // Add the user to a contact list
-            if (false === self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action)) {
+            if (false === self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action, $contactProperties)) {
                 return false;
             } else {
                 return true;
