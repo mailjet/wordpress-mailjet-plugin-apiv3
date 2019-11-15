@@ -28,8 +28,6 @@ class WooCommerceSettings
     CONST WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
     CONST WOO_PROP_ACCOUNT_CREATION_DATE = 'woo_account_creation_date';
 
-    const ERROR_REPORTING_MAIL_ADRESS = 'plugins@mailjet.com';
-
     public function __construct()
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueFrontScripts']);
@@ -922,7 +920,7 @@ class WooCommerceSettings
         $data['Recipients'][] = $recipients;
         $data['Mj-TemplateID'] = $templateId;
         $data['Mj-TemplateLanguage'] = true;
-        $data['Mj-TemplateErrorReporting'] = $this::ERROR_REPORTING_MAIL_ADRESS;
+        $data['Mj-TemplateErrorReporting'] = get_option('woocommerce_email_from_email');
         $data['Mj-TemplateErrorDeliver'] = true;
         $data['body'] = $data;
         return $data;
