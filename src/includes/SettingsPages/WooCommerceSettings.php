@@ -1266,7 +1266,7 @@ class WooCommerceSettings
         $order = wc_get_order($orderId);
         $mailjet_sync_list = get_option('mailjet_sync_list');
         if ($order === false || empty($mailjet_sync_list) || $mailjet_sync_list < 0) {
-            return false;
+            return;
         }
         $user = $order->get_user();
         if ($user === false) { // guest user
@@ -1277,25 +1277,36 @@ class WooCommerceSettings
             $email = $user->user_email;
             $properties = $this->get_customer_edata($user->ID);
         }
-        $isSubscribed = MailjetApi::checkContactSubscribedToList($email, $mailjet_sync_list);
-        if (is_array($properties) && !empty($properties)) {
-            $contact = array(array(
-                'Email' => $email,
-                'Properties' => $properties
-            ));
-            $action = $isSubscribed ? 'addnoforce' : 'unsub';
-            MailjetApi::syncMailjetContacts($mailjet_sync_list, $contact, $action);
-            // Previous API call does not handle empty date so we remove the date with another call if needed
+        try {
+            $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list);
+        }
+        catch (\Exception $e) {
+            MailjetLogger::log('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
+            return;
+        }
+        if ($contactId > 0) {
+            $data = array();
+            foreach ($properties as $propertyKey => $propertyValue) {
+                array_push($data, array('Name' => $propertyKey, 'Value' => $propertyValue));
+            }
             if (empty($properties[self::WOO_PROP_LAST_ORDER_DATE])) {
-                $data = array(array(
-                    'Name' => self::WOO_PROP_LAST_ORDER_DATE,
-                    'Value' => ''
-                ));
+                array_push($data, array('Name' => self::WOO_PROP_LAST_ORDER_DATE, 'Value' => ''));
+            }
+            try {
                 MailjetApi::updateContactData($email, $data);
             }
+            catch (\Exception $e) {
+                MailjetLogger::log('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
+                return;
+            }
         }
-
-        return true;
+        else {
+            $contact = array(
+                'Email' => $email,
+                'Properties' => $properties
+            );
+            MailjetApi::syncMailjetContact($mailjet_sync_list, $contact, 'unsub');
+        }
     }
 
     private function get_customer_edata($userId) {

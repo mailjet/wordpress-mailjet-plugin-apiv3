@@ -2,6 +2,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use http\Message;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
@@ -270,14 +271,26 @@ class SubscriptionOptionsSettings
             $role = $user->roles[0];
             $firstname = $user->first_name;
             $lastname = $user->last_name;
-            $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list, true);
+            try {
+                $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list, true);
+            }
+            catch (\Exception $e) {
+                MailjetLogger::log('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
+                return;
+            }
             if ($contactId > 0) {
                 $data = array(
                     array('Name' => 'wp_user_role', 'Value' => $role),
                     array('Name' => 'firstname', 'Value' => $firstname),
                     array('Name' => 'lastname', 'Value' => $lastname)
                 );
-                MailjetApi::updateContactData($email, $data);
+                try {
+                    MailjetApi::updateContactData($email, $data);
+                }
+                catch (\Exception $e) {
+                    MailjetLogger::log('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
+                    return;
+                }
             }
             else {
                 $properties = array(

@@ -478,33 +478,28 @@ class MailjetApi
         return $exists && $existsAndSubscribed;
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function isContactInList($email, $listId, $getContactId = false)
     {
-        try {
-            $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
-            return false;
-        }
+        $mjApiClient = self::getApiClient();
 
         $filters = [
             'ContactEmail' => $email,
             'ContactsList' => $listId,
         ];
-        try {
-            $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
-        } catch (ConnectException $e) {
+        $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
+
+        if (!$response->success() || $response->getCount() <= 0) {
             return false;
         }
 
-        if ($response->success() && $response->getCount() > 0) {
-            $data = $response->getData();
-            if ($getContactId){
-                return $data[0]['ContactID'];
-            }
-            return true;
+        $data = $response->getData();
+        if ($getContactId){
+            return $data[0]['ContactID'];
         }
-
-        return false;
+        return true;
     }
 
     public static function getContactDataByEmail($contactEmail)
@@ -525,21 +520,16 @@ class MailjetApi
         return false;
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function updateContactData($contactEmail, $data)
     {
-        try {
-            $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
-            return false;
-        }
+        $mjApiClient = self::getApiClient();
         $body = [
             'Data' => $data
         ];
-        try {
-            $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
-        } catch (ConnectException $e) {
-            return false;
-        }
+        $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
         return $response;
     }
 
