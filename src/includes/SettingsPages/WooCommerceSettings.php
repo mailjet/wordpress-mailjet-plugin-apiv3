@@ -201,12 +201,20 @@ class WooCommerceSettings
      */
     public function woo_change_order_received_text($str, $order)
     {
-        if (!empty($order)) {
-            $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true);
-            if ($subscribe == '1') {
-                $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
-            } elseif (get_option('mailjet_woo_banner_checkbox') === '1') {
-                $str = $this->addThankYouSubscription($order);
+        $user = wp_get_current_user();
+        $contactList = $this->getWooContactList();
+        if (!empty($order) && $contactList !== false) {
+            $contactAlreadySubscribedToList = false;
+            if ($user->exists()) {
+                $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, $contactList);
+            }
+            if (!$contactAlreadySubscribedToList) {
+                $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true);
+                if ((int)$subscribe === 1) {
+                    $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
+                } elseif (get_option('mailjet_woo_banner_checkbox') === '1') {
+                    $str .= $this->addThankYouSubscription($order);
+                }
             }
         }
         return $str;
