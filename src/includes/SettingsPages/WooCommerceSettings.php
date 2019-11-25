@@ -20,9 +20,6 @@ use MailjetPlugin\Includes\MailjetSettings;
  */
 class WooCommerceSettings
 {
-    CONST PROP_USER_FIRSTNAME = 'firstname';
-    CONST PROP_USER_LASTNAME = 'lastname';
-    CONST WP_PROP_USER_ROLE = 'wp_user_role';
     CONST WOO_PROP_TOTAL_ORDERS = 'woo_total_orders_count';
     CONST WOO_PROP_TOTAL_SPENT = 'woo_total_spent';
     CONST WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
@@ -81,7 +78,7 @@ class WooCommerceSettings
                 if (!function_exists('woocommerce_form_field')) {
                     return;
                 }
-                $boxMsg = get_option('mailjet_woo_checkout_box_text') ?: 'Subscribe to our newsletter';
+                $boxMsg = stripslashes(get_option('mailjet_woo_checkout_box_text')) ?: 'Subscribe to our newsletter';
 
                 woocommerce_form_field('mailjet_woo_subscribe_ok', array(
                     'type' => 'checkbox',
@@ -123,12 +120,12 @@ class WooCommerceSettings
         $action = (int)$subscribe === 1 ? 'addforce' : 'unsub';
         $contactproperties = [];
         if (!empty($first_name)) {
-            MailjetApi::createMailjetContactProperty('firstname');
-            $contactproperties['firstname'] = $first_name;
+            MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::PROP_USER_FIRSTNAME);
+            $contactproperties[SubscriptionOptionsSettings::PROP_USER_FIRSTNAME] = $first_name;
         }
         if (!empty($last_name)) {
-            MailjetApi::createMailjetContactProperty('lastname');
-            $contactproperties['lastname'] = $last_name;
+            MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::PROP_USER_LASTNAME);
+            $contactproperties[SubscriptionOptionsSettings::PROP_USER_LASTNAME] = $last_name;
         }
 
         // e-data sync if needed for WooCommerce guest subscription
@@ -494,10 +491,16 @@ class WooCommerceSettings
     }
 
     public function send_order_processing_paid_by_cheque($status, $order) {
-        if ($status === 'on-hold' && $order && (int)$order->get_id() > 0) {
-            return $this->send_order_status_processing($order->get_id());
+        if ($order && (int)$order->get_id() > 0) {
+            $this->send_order_status_processing_once($order->get_id());
         }
-        return false;
+    }
+
+    public function send_order_status_processing_once($orderId) {
+        $order = wc_get_order($orderId);
+        if (!empty($order) && $order->get_meta('processing_email_sent') !== 'true') {
+            $this->send_order_status_processing($orderId);
+        }
     }
 
     public function send_order_status_processing($orderId)
@@ -505,7 +508,7 @@ class WooCommerceSettings
         $order = wc_get_order( $orderId );
         $templateId = get_option('mailjet_woocommerce_order_confirmation');
         if (!$order || empty($order) || !$templateId || empty($templateId)){
-            return false;
+            return;
         }
 
         $items = $order->get_items();
@@ -543,10 +546,9 @@ class WooCommerceSettings
 
         if ($response === false){
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . json_encode($data));
-            return false;
+            return;
         }
-
-        return true;
+        update_post_meta($orderId, 'processing_email_sent', 'true');
     }
 
     public function cart_change_timestamp() {
@@ -775,7 +777,7 @@ class WooCommerceSettings
 
         $actions = [
             'mailjet_order_confirmation' => [
-                ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing_once'],
                 ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
                 ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque']
             ],
@@ -986,8 +988,8 @@ class WooCommerceSettings
 
     private function addThankYouSubscription($order)
     {
-        $text = get_option('mailjet_woo_banner_text');
-        $label = get_option('mailjet_woo_banner_label');
+        $text = stripslashes(get_option('mailjet_woo_banner_text'));
+        $label = stripslashes(get_option('mailjet_woo_banner_label'));
         set_query_var('orderId', $order->get_id());
         set_query_var('text', !empty($text) ? $text : 'Subscribe to our newsletter to get product updates.');
         set_query_var('btnLabel', !empty($label) ? $label : 'Subscribe now!');
@@ -1132,9 +1134,9 @@ class WooCommerceSettings
     public function init_edata() {
         // check properties creation
         $propertyTypes = [
-            self::PROP_USER_FIRSTNAME => 'string',
-            self::PROP_USER_LASTNAME => 'string',
-            self::WP_PROP_USER_ROLE => 'string',
+            SubscriptionOptionsSettings::PROP_USER_FIRSTNAME => 'string',
+            SubscriptionOptionsSettings::PROP_USER_LASTNAME => 'string',
+            SubscriptionOptionsSettings::WP_PROP_USER_ROLE => 'string',
             self::WOO_PROP_TOTAL_ORDERS => 'int',
             self::WOO_PROP_TOTAL_SPENT => 'float',
             self::WOO_PROP_LAST_ORDER_DATE => 'datetime',
@@ -1270,6 +1272,12 @@ class WooCommerceSettings
         return $success;
     }
 
+    public function paid_by_cheque_order_edata_sync($status, $order) {
+        if ($order && (int)$order->get_id() > 0) {
+            $this->order_edata_sync($order->get_id());
+        }
+    }
+
     public function order_edata_sync($orderId) {
         $order = wc_get_order($orderId);
         $mailjet_sync_list = get_option('mailjet_sync_list');
@@ -1292,6 +1300,7 @@ class WooCommerceSettings
             MailjetLogger::log('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
             return;
         }
+        $this->init_edata();
         if ($contactId > 0) {
             $data = array();
             foreach ($properties as $propertyKey => $propertyValue) {
@@ -1332,9 +1341,9 @@ class WooCommerceSettings
             );
             $orders = wc_get_orders($args);
             $customer = new \WC_Customer($userId);
-            $customerProperties[self::PROP_USER_FIRSTNAME] = $userData->first_name;
-            $customerProperties[self::PROP_USER_LASTNAME] = $userData->last_name;
-            $customerProperties[self::WP_PROP_USER_ROLE] = 'customer';
+            $customerProperties[SubscriptionOptionsSettings::PROP_USER_FIRSTNAME] = $userData->first_name;
+            $customerProperties[SubscriptionOptionsSettings::PROP_USER_LASTNAME] = $userData->last_name;
+            $customerProperties[SubscriptionOptionsSettings::WP_PROP_USER_ROLE] = 'customer';
             $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
             $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = 0;
             $customerProperties[self::WOO_PROP_TOTAL_SPENT] = 0;
@@ -1385,8 +1394,8 @@ class WooCommerceSettings
                     $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE] = $date;
                 }
             }
-            $guestProperties[$email][self::PROP_USER_FIRSTNAME] = $order->get_billing_first_name();
-            $guestProperties[$email][self::PROP_USER_LASTNAME] = $order->get_billing_last_name();
+            $guestProperties[$email][SubscriptionOptionsSettings::PROP_USER_FIRSTNAME] = $order->get_billing_first_name();
+            $guestProperties[$email][SubscriptionOptionsSettings::PROP_USER_LASTNAME] = $order->get_billing_last_name();
         }
         if (!empty($guestEmail)) {
             return $guestProperties[$guestEmail];

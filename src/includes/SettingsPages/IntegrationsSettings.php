@@ -51,15 +51,15 @@ class IntegrationsSettings
         if ($checkoutCheckbox !== '1'){
 	        delete_option( 'mailjet_woo_checkout_box_text' );
         }
-        $checkoutCheckboxText = get_option( 'mailjet_woo_checkout_box_text' );
+        $checkoutCheckboxText = stripslashes(get_option('mailjet_woo_checkout_box_text'));
 
         $bannerCheckbox = get_option( 'mailjet_woo_banner_checkbox' );
         if ($bannerCheckbox !== '1'){
             delete_option( 'mailjet_woo_banner_text' );
             delete_option( 'mailjet_woo_banner_label' );
         }
-        $bannerText = get_option( 'mailjet_woo_banner_text' );
-        $bannerLabel = get_option( 'mailjet_woo_banner_label' );
+        $bannerText = stripslashes(get_option('mailjet_woo_banner_text'));
+        $bannerLabel = stripslashes(get_option('mailjet_woo_banner_label'));
 
         $isSyncListSelected = !empty($mailjetSyncContactList);
 
@@ -159,8 +159,8 @@ class IntegrationsSettings
 
         $mailjetCF7IntegrationActivated = get_option( 'activate_mailjet_cf7_integration' );
         $mailjetCF7List                 = get_option( 'mailjet_cf7_list' );
-        $email                          = get_option( 'cf7_email' );
-        $from                           = get_option( 'cf7_fromname' );
+        $email                          = stripslashes(get_option( 'cf7_email' ));
+        $from                           = stripslashes(get_option( 'cf7_fromname' ));
         ?>
         <fieldset class="settingsSubscrFldset">
             <span class="mj-integrations-label"><?php _e( 'Contact Form 7', 'mailjet-for-wordpress' ); ?></span>
