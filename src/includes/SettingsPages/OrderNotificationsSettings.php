@@ -90,7 +90,7 @@ class OrderNotificationsSettings
                             <svg width="20" height="20" viewBox="0 0 12 12">
                                 <path d="M6 12a6 6 0 1 1 6-6 6 6 0 0 1-6 6zM6 1.2A4.8 4.8 0 1 0 10.8 6 4.81 4.81 0 0 0 6 1.2z"/><path d="M6.6 7.8V5.4a.6.6 0 0 0-.6-.6H4.8V6h.6v1.8H4.2V9h3.6V7.8z"/><circle cx="6" cy="3.6" r=".75"/>
                             </svg>
-                            <p><?php _e('Make sure that the same notifications are deactivated inside WooCommerce (Settings > Emails) to avoid the reception of multiple emails by your customers.', 'mailjet-for-wordpress'); ?></p>
+                            <p><?php _e('Make sure that the same notifications are deactivated inside WooCommerce (Settings > Emails) to avoid the reception of duplicate emails by your customers.', 'mailjet-for-wordpress'); ?></p>
                         </div>
                     </div>
                     <hr>

@@ -208,7 +208,7 @@ class WooCommerceSettings
             if (!$contactAlreadySubscribedToList) {
                 $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true);
                 if ((int)$subscribe === 1) {
-                    $str .= ' <br /><br /><i><b>We have sent the newsletter subscription confirmation link to you (<b>' . $order->get_billing_email() . '</b>). To confirm your subscription you have to click on the provided link.</i></b>';
+                    $str .= ' <br /><br /><i><b>' . __('We have sent the newsletter subscription confirmation link to you: ') . '<b>' . $order->get_billing_email() . '</b>. ' . __('To confirm your subscription you have to click on the provided link.') . '</i></b>';
                 } elseif (get_option('mailjet_woo_banner_checkbox') === '1') {
                     $str .= $this->addThankYouSubscription($order);
                 }
@@ -1046,7 +1046,7 @@ class WooCommerceSettings
        }
 
        if ($this->mailjet_subscribe_confirmation_from_woo_form(1, $email, $fName, $lName)){
-           $message = __('We have sent the newsletter subscription confirmation link to you ') . '(' . $email . '). '
+           $message = __('We have sent the newsletter subscription confirmation link to you: ') . $email . '. '
                . __('To confirm your subscription you have to click on the provided link.');
            return ['success' => true, 'message' => $message];
        }

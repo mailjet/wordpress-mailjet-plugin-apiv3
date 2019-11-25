@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 11:05+0200\n"
-"PO-Revision-Date: 2019-10-22 14:41+0200\n"
+"POT-Creation-Date: 2019-11-25 15:11+0100\n"
+"PO-Revision-Date: 2019-11-25 15:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: German (Germany)\n"
 "Language: de_DE\n"
@@ -29,6 +29,9 @@ msgid ""
 "Mailjet for WordPress requires PHP 5.5 or later. Your server currently runs "
 "on PHP %s. Please upgrade your PHP and activate the plugin again."
 msgstr ""
+"Mailjet für WordPress benötigt die PHP-Version 5.5 oder höher. Auf Ihrem "
+"Server wird derzeit PHP %s ausgeführt. Bitte führen Sie eine PHP-"
+"Aktualisierung durch und aktivieren Sie das Plugin erneut."
 
 #: src/includes/MailjetMail.php:118
 msgid ""
@@ -164,31 +167,33 @@ msgstr "Zurück zum Abgebrochener Warenkorb"
 #: src/includes/SettingsPages/ConnectAccountSettings.php:134
 #: src/includes/SettingsPages/EnableSendingSettings.php:225
 #: src/includes/SettingsPages/IntegrationsSettings.php:309
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:116
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:115
 #: src/includes/SettingsPages/UserAccessSettings.php:134
 #: src/templates/admin/settingTemplates/mainSettingsTemplate.php:12
 msgid "Back to dashboard"
 msgstr "Zurück zum Dashboard"
 
-#: src/includes/MailjetSettings.php:268
+#: src/includes/MailjetSettings.php:266
 msgid ""
 "Your Mailjet API credentials are invalid or not yet configured. Please check "
 "and configure them to proceed further."
 msgstr ""
+"Ihre Mailjet-API Zugangsdaten sind ungültig oder wurden noch nicht "
+"konfiguriert. Bitte überprüfen und konfigurieren Sie diese, um fortzufahren."
 
-#: src/includes/MailjetSettings.php:333
+#: src/includes/MailjetSettings.php:331
 msgid "Setup account"
-msgstr ""
+msgstr "Konto einrichten"
 
-#: src/includes/MailjetSettings.php:356
+#: src/includes/MailjetSettings.php:354
 msgid "Something went wrong with adding a contact to Mailjet contact list"
-msgstr ""
+msgstr "Abonnement fehlgeschlagen"
 
 #: src/includes/SettingsPages/AbandonedCartSettings.php:39
 #: src/includes/SettingsPages/AbandonedCartSettings.php:92
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:58
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:83
-#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:15
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:57
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:82
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:16
 msgid "Sending active"
 msgstr "Versand aktiv"
 
@@ -201,7 +206,7 @@ msgstr ""
 "Versand kann jederzeit geändert und angehalten werden."
 
 #: src/includes/SettingsPages/AbandonedCartSettings.php:49
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:99
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:98
 msgid "Close"
 msgstr "Schließen"
 
@@ -227,11 +232,11 @@ msgstr ""
 #: src/includes/SettingsPages/EnableSendingSettings.php:252
 #: src/includes/SettingsPages/InitialContactListsSettings.php:109
 #: src/includes/SettingsPages/IntegrationsSettings.php:347
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:75
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:187
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:74
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:186
 #: src/includes/SettingsPages/UserAccessSettings.php:161
 #: src/templates/admin/settingTemplates/mainSettingsTemplate.php:39
-#: src/widget/views/admin.php:207 src/widget/views/admin.php:500
+#: src/widget/views/admin.php:208 src/widget/views/admin.php:501
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -297,7 +302,7 @@ msgstr "Versandzeit bearbeiten"
 #: src/includes/SettingsPages/IntegrationsSettings.php:341
 #: src/includes/SettingsPages/UserAccessSettings.php:158
 #: src/templates/admin/settingTemplates/mainSettingsTemplate.php:36
-#: src/widget/views/admin.php:206 src/widget/views/admin.php:501
+#: src/widget/views/admin.php:207 src/widget/views/admin.php:502
 msgid "Save"
 msgstr "Speichern"
 
@@ -306,7 +311,7 @@ msgid "Abandoned Cart"
 msgstr "Abgebrochener Warenkorb"
 
 #: src/includes/SettingsPages/AbandonedCartSettings.php:148
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:177
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:176
 msgid "Activate sending"
 msgstr "Versand aktivieren"
 
@@ -375,26 +380,25 @@ msgstr ""
 #: src/includes/SettingsPages/IntegrationsSettings.php:111
 #: src/includes/SettingsPages/IntegrationsSettings.php:122
 #: src/includes/SettingsPages/IntegrationsSettings.php:220
-#: src/includes/SettingsPages/WooCommerceSettings.php:78
 #: src/templates/admin/settingTemplates/SubscriptionSettingsPartials/profileFields.php:7
 msgid "Subscribe to our newsletter"
 msgstr "Abonnieren Sie unseren Newsletter"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:57
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:97
-#: src/includes/SettingsPages/WooCommerceSettings.php:131
-#: src/includes/SettingsPages/WooCommerceSettings.php:196
+#: src/includes/SettingsPages/WooCommerceSettings.php:99
+#: src/includes/SettingsPages/WooCommerceSettings.php:164
 msgid "Invalid email"
 msgstr "Ungültige E-Mail Adresse"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:105
-#: src/includes/SettingsPages/WooCommerceSettings.php:205
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:528
+#: src/includes/SettingsPages/WooCommerceSettings.php:173
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:530
 msgid "Please confirm your subscription"
 msgstr "Bitte bestätigen Sie Ihre Anmeldung"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:106
-#: src/includes/SettingsPages/WooCommerceSettings.php:206
+#: src/includes/SettingsPages/WooCommerceSettings.php:174
 #, php-format
 msgid ""
 "To receive newsletters from %s please confirm your subscription by clicking "
@@ -404,13 +408,13 @@ msgstr ""
 "indem Sie auf den folgenden Button klicken:"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:109
-#: src/includes/SettingsPages/WooCommerceSettings.php:209
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:532
+#: src/includes/SettingsPages/WooCommerceSettings.php:177
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:534
 msgid "Yes, subscribe me to this list"
 msgstr "Ja, ich möchte diesen Newsletter abonnieren"
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:111
-#: src/includes/SettingsPages/WooCommerceSettings.php:211
+#: src/includes/SettingsPages/WooCommerceSettings.php:179
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message."
@@ -419,7 +423,7 @@ msgstr ""
 "anmelden möchten, ignorieren Sie diese E-Mail einfach."
 
 #: src/includes/SettingsPages/CommentAuthorsSettings.php:117
-#: src/includes/SettingsPages/WooCommerceSettings.php:217
+#: src/includes/SettingsPages/WooCommerceSettings.php:185
 msgid "Subscription Confirmation"
 msgstr "Anmeldebestätigung"
 
@@ -447,7 +451,7 @@ msgstr "Ihre Mailjet-API-Anmeldedaten"
 #: src/includes/SettingsPages/InitialContactListsSettings.php:217
 #: src/includes/SettingsPages/InitialSettings.php:140
 #: src/includes/SettingsPages/IntegrationsSettings.php:284
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:135
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:140
 msgid "Settings Saved"
 msgstr "Ihre Änderungen wurden gespeichert"
 
@@ -491,7 +495,7 @@ msgid "Manage contacts"
 msgstr "Verwalten von Kontakten"
 
 #: src/includes/SettingsPages/Dashboard.php:77
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:122
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:121
 msgid "Order notification emails"
 msgstr "Bestellbenachrichtigungen per E-Mail"
 
@@ -595,6 +599,9 @@ msgid ""
 "Can not connect to Mailjet with the selected settings. Check if a firewall "
 "is blocking connections to the Mailjet ports."
 msgstr ""
+"Sie können mit den ausgewählten Einstellungen keine Verbindung zu Mailjet "
+"herstellen. Überprüfen Sie, ob eine Firewall Verbindung zu den Mailjet-Ports "
+"blockiert wird."
 
 #: src/includes/SettingsPages/EnableSendingSettings.php:193
 msgid "Please provide a valid email address"
@@ -676,7 +683,7 @@ msgstr ""
 
 #: src/includes/SettingsPages/InitialContactListsSettings.php:179
 #: src/includes/SettingsPages/InitialContactListsSettings.php:202
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:125
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:130
 msgid ""
 "The settings could not be saved. Please try again or in case the problem "
 "persists contact Mailjet support."
@@ -834,7 +841,7 @@ msgid "Banner text"
 msgstr "Bannertext"
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:125
-#: src/widget/views/admin.php:266
+#: src/widget/views/admin.php:267
 msgid "Button label"
 msgstr "Button-Bezeichnung"
 
@@ -880,6 +887,8 @@ msgid ""
 "The settings could not be saved. Please select a contact list to subscribe "
 "WooCommerce users to."
 msgstr ""
+"Die Einstellungen konnten nicht gespeichert werden. Bitte wählen Sie eine "
+"Kontaktliste aus, für die Sie WooCommerce-Benutzer anmelden können."
 
 #: src/includes/SettingsPages/IntegrationsSettings.php:331
 msgid "Enable and configure Mailjet integrations with other WordPress plugins"
@@ -892,13 +901,16 @@ msgid ""
 "Your permissions don't match! Please refresh your session and if the problem "
 "persists, contact our support team."
 msgstr ""
+"Ihre Berechtigungen stimmen nicht überein. Bitte aktualisieren Sie Ihre "
+"Sitzung. Besteht das Problem weiterhin, kontaktieren Sie bitte unseren "
+"Kundensupport."
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:74
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:183
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:73
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:182
 msgid "Stop all sendings"
 msgstr "Alle Versendungen anhalten"
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:88
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:87
 msgid ""
 "The transactional emails that you selected have been enabled for sending. "
 "You can change and stop the sending at any time."
@@ -906,14 +918,17 @@ msgstr ""
 "Die von Ihnen ausgewählten Transaktions-E-Mails wurden für den Versand "
 "aktiviert. Der Versand kann jederzeit geändert und angehalten werden."
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:94
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:93
 msgid ""
 "Make sure that the same notifications are deactivated inside WooCommerce "
-"(Settings > Emails) to avoid the reception of multiple emails by your "
+"(Settings > Emails) to avoid the reception of duplicate emails by your "
 "customers."
 msgstr ""
+"In WooCommerce müssen dieselben Benachrichtigungen (Einstellungen> E-Mails) "
+"deaktiviert sein, um den Empfang doppelter E-Mails durch Ihre Kunden zu "
+"vermeiden."
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:125
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:124
 msgid ""
 "Enable the sending of order notification emails to make sure that your "
 "customers are always notified when a new purchase occurs and when their "
@@ -923,49 +938,51 @@ msgstr ""
 "sicherzustellen, dass Ihre Kunden stets benachrichtigt werden, sobald sie "
 "einen neuen Einkauf tätigen oder sobald ihre Bestellung versendet wird."
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:129
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:128
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:140
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:139
 msgid "Order confirmation"
 msgstr "Bestellbestätigung"
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:151
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:150
 msgid "Shipping confirmation"
 msgstr "Versandbestätigung"
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:162
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:161
 msgid "Refund confirmation"
 msgstr "Rückerstattungsbestätigung"
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:182
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:181
 msgid "Edit sendings"
 msgstr "Versand bearbeiten"
 
-#: src/includes/SettingsPages/OrderNotificationsSettings.php:186
+#: src/includes/SettingsPages/OrderNotificationsSettings.php:185
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:100
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:105
 msgid "Subscription Options"
 msgstr "Abonnement-Optionen"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:149
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:154
 msgid "Please select a contact list."
 msgstr "Wählen Sie bitte eine Kontaktliste."
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:173
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:178
 msgid "No WordPress users to add to Mailjet contact list"
 msgstr ""
+"Es sind keine Wordpress-Benutzer zum Hinzufügen zur Mailjet-Kontaktliste "
+"vorhanden"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:186
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:191
 msgid ""
 "Something went wrong with adding existing WordPress users to your Mailjet "
 "contact list"
-msgstr ""
+msgstr "Abonnement fehlgeschlagen"
 
-#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:189
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:194
 msgid ""
 "All WordPress users were successfully added to your Mailjet contact list"
 msgstr ""
@@ -1009,69 +1026,77 @@ msgstr "Abonnent"
 msgid "User Access Settings Saved"
 msgstr "Ihre Änderungen wurden gespeichert"
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:355
-msgid "An error occured during e-commerce data sync! Please try again later."
+#: src/includes/SettingsPages/WooCommerceSettings.php:211
+#: src/includes/SettingsPages/WooCommerceSettings.php:1049
+msgid "We have sent the newsletter subscription confirmation link to you: "
 msgstr ""
+"Wir haben Ihnen den Bestätigungslink für die Newsletter-Anmeldung "
+"zugesendet: "
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:379
-msgid "An error occured during templates creation! Please try again later."
-msgstr ""
-
-#: src/includes/SettingsPages/WooCommerceSettings.php:784
-msgid "Automation settings updated!"
-msgstr "Ihre Änderungen wurden gespeichert"
-
-#: src/includes/SettingsPages/WooCommerceSettings.php:904
-msgid "guest"
-msgstr ""
-
-#: src/includes/SettingsPages/WooCommerceSettings.php:1055
-msgid "We have sent the newsletter subscription confirmation link to you "
-msgstr ""
-
-#: src/includes/SettingsPages/WooCommerceSettings.php:1056
+#: src/includes/SettingsPages/WooCommerceSettings.php:211
+#: src/includes/SettingsPages/WooCommerceSettings.php:1050
 msgid "To confirm your subscription you have to click on the provided link."
 msgstr ""
 "Bitte überprüfen Sie Ihren E-Mail-Posteingang und klicken Sie auf den Link, "
 "um Ihre Anmeldung zu bestätigen."
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:1167
+#: src/includes/SettingsPages/WooCommerceSettings.php:326
+msgid "An error occured during e-commerce data sync! Please try again later."
+msgstr ""
+"Während der E-Commerce-Datensynchronisierung ist ein Fehler aufgetreten. "
+"Bitte versuchen Sie es erneut."
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:355
+msgid "An error occured during templates creation! Please try again later."
+msgstr ""
+"Während der Vorlagenerstellung ist ein Fehler aufgetreten! Bitte versuchen "
+"Sie es später noch einmal."
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:768
+msgid "Automation settings updated!"
+msgstr "Ihre Änderungen wurden gespeichert"
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:900
+msgid "guest"
+msgstr ""
+
+#: src/includes/SettingsPages/WooCommerceSettings.php:1164
 msgid "Customers who have created an account in the past 30 days"
-msgstr ""
+msgstr "Kunden, die in den letzten 30 Tagen ein Konto erstellt haben"
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:1171
+#: src/includes/SettingsPages/WooCommerceSettings.php:1168
 msgid "Contacts that don't have any orders"
-msgstr ""
+msgstr "Kontakte ohne Bestellungen"
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:1175
+#: src/includes/SettingsPages/WooCommerceSettings.php:1172
 msgid "Customers who have made their first purchase in the past 30 days"
-msgstr ""
+msgstr "Kunden, die in den letzten 30 Tagen ihren ersten Kauf getätigt haben"
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:1179
+#: src/includes/SettingsPages/WooCommerceSettings.php:1176
 msgid "Customers who have purchased in the past 30 days"
-msgstr ""
+msgstr "Kunden, die in den letzten 30 Tagen einen Kauf getätigt haben"
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:1183
+#: src/includes/SettingsPages/WooCommerceSettings.php:1180
 msgid "Customers who have purchased more than once"
-msgstr ""
+msgstr "Kunden, die mehr als einen Kauf getätigt haben"
 
-#: src/includes/SettingsPages/WooCommerceSettings.php:1187
+#: src/includes/SettingsPages/WooCommerceSettings.php:1184
 msgid "Customers who haven't purchased in the past 6 months"
-msgstr ""
+msgstr "Kunden, die in den letzten 6 Monaten keinen Kauf getätigt haben"
 
 #: src/templates/admin/Iframe/longerIframePage.php:21
 msgid "Edit template"
-msgstr ""
+msgstr "Vorlage bearbeiten"
 
-#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:17
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:19
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:21
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:23
 msgid "From:"
 msgstr "Von:"
 
-#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:22
+#: src/templates/admin/WooCommerceSettingsTemplates/rowTemplate.php:24
 msgid "Subject:"
 msgstr "Betreff:"
 
@@ -1155,57 +1180,55 @@ msgstr "Ermöglicht Ihren Besuchern die Anmeldung für eine Ihrer Listen"
 msgid "Mailjet Subscription Widget"
 msgstr "Mailjet Abonnement Widget"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:213
-#, fuzzy
-#| msgid "Subscription Confirmation"
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:214
 msgid "Subscription email is missing"
-msgstr "Anmeldebestätigung"
+msgstr ""
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:234
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:235
 msgid "Invalid token"
 msgstr "Ungültiges Token"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:249
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:250
 msgid "Contact list not provided"
-msgstr ""
+msgstr "Kontaktliste nicht bereitgestellt"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:299
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:300
 msgid "Contact list is not active"
-msgstr ""
+msgstr "Kontaktliste ist nicht aktiv"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:305
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:306
 msgid "Contact subscription failed"
-msgstr ""
+msgstr "Kontaktanmeldung fehlgeschlagen"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:518
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:520
 msgid "English"
 msgstr "Englisch"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:519
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:521
 msgid "French"
 msgstr "Französisch"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:520
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:522
 msgid "German"
 msgstr "Deutsch"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:521
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:523
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:522
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:524
 msgid "Italian"
 msgstr "Italienisch"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:523
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:525
 msgid "your@email.com"
 msgstr "ihre@email.com"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:524
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:526
 msgid "Subscribe"
 msgstr "Angemeldet"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:525
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:527
 msgid ""
 "Subscription confirmation email sent. Please check your inbox and confirm "
 "your subscription."
@@ -1213,30 +1236,30 @@ msgstr ""
 "E-Mail zur Bestätigung des Abonnements gesendet. Bitte überprüfen Sie Ihren "
 "Posteingang und bestätigen Sie Ihr Abonnement."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:526
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:528
 msgid "Your subscription was successfully confirmed."
 msgstr "Ihr Abonnement wurde erfolgreich bestätigt."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:527
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:529
 msgid "Please provide an email address"
 msgstr "Bitte geben Sie eine E-Mail-Adresse an"
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:529
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:531
 msgid "This email address has already been subscribed."
 msgstr "Diese E-Mail-Adresse ist bereits registriert."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:530
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:532
 msgid "The value you entered is not in the correct format."
 msgstr "Der eingegebene Wert ist nicht im richtigen Format."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:531
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:533
 msgid ""
 "A technical issue has prevented your subscription. Please try again later."
 msgstr ""
 "Ein technisches Problem hat Ihr Abonnement verhindert. Bitte versuchen Sie "
 "es später noch einmal."
 
-#: src/widget/WP_Mailjet_Subscribe_Widget.php:533
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:535
 msgid ""
 "If you received this email by mistake or don't wish to subscribe anymore, "
 "simply ignore this message"
@@ -1264,11 +1287,11 @@ msgstr "E-Mail-Adressen hinzufügen zu:"
 msgid "Choose a list"
 msgstr "Eine Liste wählen"
 
-#: src/widget/views/admin.php:95 src/widget/views/admin.php:102
+#: src/widget/views/admin.php:96 src/widget/views/admin.php:103
 msgid "Advanced form customization"
 msgstr "Erweiterte Formularanpassung"
 
-#: src/widget/views/admin.php:96
+#: src/widget/views/admin.php:97
 msgid ""
 "Add more fields to your form (ex: First name, Last name, Birthday...) and "
 "customize the labels, error messages and confirmation email wordings."
@@ -1277,94 +1300,94 @@ msgstr ""
 "Geburtstag...) und passen Sie die Beschriftungen, Fehlermeldungen und "
 "Bestätigungs-E-Mails an."
 
-#: src/widget/views/admin.php:101
+#: src/widget/views/admin.php:102
 msgid "Save changes first"
-msgstr ""
+msgstr "Änderungen zuerst speichern"
 
-#: src/widget/views/admin.php:110
+#: src/widget/views/admin.php:111
 msgid "Customize your subscription form"
 msgstr "Passen Sie Ihr Abonnement-Formular an"
 
-#: src/widget/views/admin.php:116
+#: src/widget/views/admin.php:117
 msgid "Form fields"
 msgstr "Formularfelder"
 
-#: src/widget/views/admin.php:117
+#: src/widget/views/admin.php:118
 msgid "Form validation messages"
 msgstr "Formular-Validierungsmeldungen"
 
-#: src/widget/views/admin.php:118
+#: src/widget/views/admin.php:119
 msgid "Confirmation email content"
 msgstr "Inhalt der Bestätigungs-E-Mail"
 
-#: src/widget/views/admin.php:119
+#: src/widget/views/admin.php:120
 msgid "Thank you page"
 msgstr "\"Danke\"-Seite"
 
-#: src/widget/views/admin.php:127
+#: src/widget/views/admin.php:128
 msgid "You can add up to 5 contact properties to collect additional data"
 msgstr ""
 "Sie können bis zu 5 Kontakteigenschaften hinzufügen, um zusätzliche Daten zu "
 "sammeln"
 
-#: src/widget/views/admin.php:155
+#: src/widget/views/admin.php:156
 msgid "Property"
 msgstr "Eigenschaft"
 
-#: src/widget/views/admin.php:159
+#: src/widget/views/admin.php:160
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: src/widget/views/admin.php:162
+#: src/widget/views/admin.php:163
 msgid "Select a property"
 msgstr "Wählen Sie eine Kontakteigenschaft"
 
-#: src/widget/views/admin.php:163
+#: src/widget/views/admin.php:164
 msgid "Create new"
 msgstr "Neue Liste erstellen"
 
-#: src/widget/views/admin.php:185
+#: src/widget/views/admin.php:186
 msgid "Name your property (no spaces)"
 msgstr "Benennen Sie Ihre Eigenschaft (ohne Leerzeichen)"
 
-#: src/widget/views/admin.php:187
+#: src/widget/views/admin.php:188
 msgid ""
 "Forbidden characters: space , * + - / &quot &#39; : [ ] ( ) &gt; &lt; = ; $ "
 msgstr "Inakzeptable Zeichen: leerzeichen , * + - / \" ' : [ ] ( ) > < = ; $ "
 
-#: src/widget/views/admin.php:191
+#: src/widget/views/admin.php:192
 msgid "Property type"
 msgstr "Eigenschaftstyp"
 
-#: src/widget/views/admin.php:214
+#: src/widget/views/admin.php:215
 msgid "Type"
 msgstr "Typ"
 
-#: src/widget/views/admin.php:219
+#: src/widget/views/admin.php:220
 msgid "Optional"
 msgstr "Optional"
 
-#: src/widget/views/admin.php:220
+#: src/widget/views/admin.php:221
 msgid "Mandatory"
 msgstr "Pflichtfeld"
 
-#: src/widget/views/admin.php:221
+#: src/widget/views/admin.php:222
 msgid "Hidden"
 msgstr "Versteckt"
 
-#: src/widget/views/admin.php:251
+#: src/widget/views/admin.php:252
 msgid "Customize the placeholder text for the email address field:"
 msgstr "Passen Sie den Platzhaltertext für das E-Mail-Adressfeld an:"
 
-#: src/widget/views/admin.php:253
+#: src/widget/views/admin.php:254
 msgid "Email address field placeholder text"
 msgstr "E-Mail-Adressfeld Platzhaltertext"
 
-#: src/widget/views/admin.php:265
+#: src/widget/views/admin.php:266
 msgid "Customize the submission button label:"
 msgstr "Passen Sie die Beschriftung der Übermittlungsschaltfläche an:"
 
-#: src/widget/views/admin.php:284
+#: src/widget/views/admin.php:285
 msgid ""
 "You can customize error and success messages displayed to your users as they "
 "interact with the subscription form. Leave empty fields to use the default "
@@ -1374,15 +1397,15 @@ msgstr ""
 "Interaktion mit dem Anmeldeformular angezeigt werden, anpassen. Lassen Sie "
 "Felder frei, um die Standardwerte zu verwenden."
 
-#: src/widget/views/admin.php:289 src/widget/views/admin.php:396
+#: src/widget/views/admin.php:290 src/widget/views/admin.php:397
 msgid "Description"
 msgstr "Beschreibung"
 
-#: src/widget/views/admin.php:290
+#: src/widget/views/admin.php:291
 msgid "Form successfully submitted"
 msgstr "Formular erfolgreich abgeschickt"
 
-#: src/widget/views/admin.php:310
+#: src/widget/views/admin.php:311
 msgid ""
 "Subscription confirmed (displayed after the user has clicked the "
 "confirmation email)"
@@ -1390,23 +1413,23 @@ msgstr ""
 "Abonnement bestätigt (wird angezeigt, nachdem der Benutzer auf die "
 "Bestätigungs-E-Mail geklickt hat)"
 
-#: src/widget/views/admin.php:326
+#: src/widget/views/admin.php:327
 msgid "Error: email field is empty"
 msgstr "Error: E-Mail-Feld ist leer"
 
-#: src/widget/views/admin.php:342
+#: src/widget/views/admin.php:343
 msgid "Error: the email address is already subscribed"
 msgstr "Error: Die E-Mail-Adresse ist registriert"
 
-#: src/widget/views/admin.php:358
+#: src/widget/views/admin.php:359
 msgid "Error: Invalid data format (this applies only for numbers and dates)"
 msgstr "Error: Ungültiges Datenformat (gilt nur für Zahlen und Daten)"
 
-#: src/widget/views/admin.php:374
+#: src/widget/views/admin.php:375
 msgid "Generic technical error message"
 msgstr "Generische technische Fehlermeldung"
 
-#: src/widget/views/admin.php:393
+#: src/widget/views/admin.php:394
 msgid ""
 "When a user fills in the form, they will receive an email containing a "
 "button they need to click on to confirm their subscription. You can "
@@ -1418,27 +1441,27 @@ msgstr ""
 "können den Text der Bestätigungs-E-Mail anpassen, wenn Sie möchten. Lassen "
 "Sie Felder frei, um die Standardwerte zu verwenden."
 
-#: src/widget/views/admin.php:397
+#: src/widget/views/admin.php:398
 msgid "Email subject"
 msgstr "E-Mail Betreff"
 
-#: src/widget/views/admin.php:414
+#: src/widget/views/admin.php:415
 msgid "Email content: title"
 msgstr "E-Mail-Inhalt: Titel"
 
-#: src/widget/views/admin.php:430
+#: src/widget/views/admin.php:431
 msgid "Email content: main text"
 msgstr "E-Mail-Inhalt: Haupttext"
 
-#: src/widget/views/admin.php:445
+#: src/widget/views/admin.php:446
 msgid "Email content: confirmation button label"
 msgstr "E-Mail-Inhalt: Beschriftung des Bestätigungsbuttons"
 
-#: src/widget/views/admin.php:460
+#: src/widget/views/admin.php:461
 msgid "Email content: text after the button"
 msgstr "E-Mail-Inhalt: Text nach dem Button"
 
-#: src/widget/views/admin.php:478
+#: src/widget/views/admin.php:479
 msgid ""
 "Select a page from your WordPress site to show after successful subscription "
 "confirmation or leave empty to use the default \"Thank you\" page"
@@ -1447,8 +1470,14 @@ msgstr ""
 "Anmeldebestätigung angezeigt werden soll, oder lassen Sie sie leer, um die "
 "Standardseite \"Danke\" zu verwenden"
 
-#: src/widget/views/admin.php:487
+#: src/widget/views/admin.php:488
 msgid "Default page"
+msgstr "Standardseite"
+
+#: src/widget/views/admin.php:510
+msgid ""
+"Add the following shortcode anywhere in your Posts or Pages to display the "
+"widget"
 msgstr ""
 
 #: src/widget/views/designforfailure.php:4
@@ -1460,11 +1489,12 @@ msgid ""
 msgstr ""
 "Bitte stellen Sie sicher, dass Sie den richtigen API-Key und Secret Key für "
 "Ihr Mailjet-Konto verwenden:  <a href=\"https://app.mailjet.com/account/"
-"api_keys\" target=\"_blank\"> https://app.mailjet.com/account/api_keys</a>"
+"api_keys\" target=\"_blank\">https://app.mailjet.com/account/api_keys</a>"
 
 #: src/widget/views/designforfailure.php:6
-msgid "Could not connect to mailjet api, please try again later!"
+msgid "Could not connect to Mailjet API, please try again later!"
 msgstr ""
+"Verbindung zur Mailjet-API nicht möglich, versuchen Sie es bitte erneut."
 
 #~ msgid "Send newsletter"
 #~ msgstr "Newsletter versenden"
