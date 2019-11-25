@@ -44,9 +44,9 @@ class InitialContactListsSettings
 
     private function createMailjetContactPropertiesThatWpSync()
     {
-        MailjetApi::createMailjetContactProperty('firstname');
-        MailjetApi::createMailjetContactProperty('lastname');
-        MailjetApi::createMailjetContactProperty('wp_user_role');
+        MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::PROP_USER_FIRSTNAME);
+        MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::PROP_USER_LASTNAME);
+        MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::WP_PROP_USER_ROLE);
     }
 
     public function mailjet_initial_contact_lists_cb($args)

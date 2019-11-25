@@ -285,6 +285,7 @@ class Mailjet
 
         if (get_option('mailjet_woo_edata_sync') === '1'){
             $this->loader->add_action('woocommerce_order_status_changed', $woocommerceObject, 'order_edata_sync', 10, 1);
+            $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $woocommerceObject, 'paid_by_cheque_order_edata_sync', 10, 2);
         }
 
         $activeActions = get_option('mailjet_wc_active_hooks');

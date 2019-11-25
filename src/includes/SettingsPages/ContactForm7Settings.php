@@ -46,13 +46,13 @@ class ContactForm7Settings
 
         $mailjetCheckbox = $formdata[self::MAILJET_CHECKBOX];
         if ($mailjetCheckbox[0] != '') {
-            $cf7Email = trim(get_option('cf7_email'), '[]');
+            $cf7Email = trim(stripslashes(get_option('cf7_email')), '[]');
             if (!isset($formdata[$cf7Email])) {
                 return false;
             }
             $email = $formdata[$cf7Email];
 
-            $cf7name = get_option('cf7_fromname', '');
+            $cf7name = stripslashes(get_option('cf7_fromname', ''));
             $matches = array();
             $data = array();
             preg_match_all('/\[(.*?)\]/', $cf7name, $matches);

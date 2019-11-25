@@ -22,6 +22,9 @@ use MailjetPlugin\Includes\MailjetSettings;
  */
 class SubscriptionOptionsSettings
 {
+    CONST PROP_USER_FIRSTNAME = 'firstname';
+    CONST PROP_USER_LASTNAME = 'lastname';
+    CONST WP_PROP_USER_ROLE = 'wp_user_role';
 
     private $subscrFieldset = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
     private $profileFields = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
@@ -218,15 +221,15 @@ class SubscriptionOptionsSettings
 
             $contactProperties = array();
             if (!empty($userMetadata['first_name'][0])) {
-                $contactProperties['firstname'] = $userMetadata['first_name'][0];
-                $userNames = $contactProperties['firstname'];
+                $contactProperties[self::PROP_USER_FIRSTNAME] = $userMetadata['first_name'][0];
+                $userNames = $contactProperties[self::PROP_USER_FIRSTNAME];
             }
             if (!empty($userMetadata['last_name'][0])) {
-                $contactProperties['lastname'] = $userMetadata['last_name'][0];
-                $userNames.= ' ' . $contactProperties['lastname'];
+                $contactProperties[self::PROP_USER_LASTNAME] = $userMetadata['last_name'][0];
+                $userNames.= ' ' . $contactProperties[self::PROP_USER_LASTNAME];
             }
             if (!empty($userRoles[0])) {
-                $contactProperties['wp_user_role'] = $userRoles[0];
+                $contactProperties[self::WP_PROP_USER_ROLE] = $userRoles[0];
             }
 
             $contacts[] = array(
@@ -271,6 +274,9 @@ class SubscriptionOptionsSettings
             $role = $user->roles[0];
             $firstname = $user->first_name;
             $lastname = $user->last_name;
+            if ((int)get_option('mailjet_woo_edata_sync') === 1) {
+                $registration_date = $user->user_registered;
+            }
             try {
                 $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list, true);
             }
@@ -280,10 +286,13 @@ class SubscriptionOptionsSettings
             }
             if ($contactId > 0) {
                 $data = array(
-                    array('Name' => 'wp_user_role', 'Value' => $role),
-                    array('Name' => 'firstname', 'Value' => $firstname),
-                    array('Name' => 'lastname', 'Value' => $lastname)
+                    array('Name' => self::WP_PROP_USER_ROLE, 'Value' => $role),
+                    array('Name' => self::PROP_USER_FIRSTNAME, 'Value' => $firstname),
+                    array('Name' => self::PROP_USER_LASTNAME, 'Value' => $lastname)
                 );
+                if (isset($registration_date)) {
+                    $data[] = array('Name' => WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE, 'Value' => $registration_date);
+                }
                 try {
                     MailjetApi::updateContactData($email, $data);
                 }
@@ -294,10 +303,13 @@ class SubscriptionOptionsSettings
             }
             else {
                 $properties = array(
-                    'wp_user_role' => $role,
-                    'firstname' => $firstname,
-                    'lastname' => $lastname
+                    self::WP_PROP_USER_ROLE => $role,
+                    self::PROP_USER_FIRSTNAME => $firstname,
+                    self::PROP_USER_LASTNAME => $lastname
                 );
+                if (isset($registration_date)) {
+                    $properties[WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE] = $registration_date;
+                }
                 $contact = array(
                     'Email' => $email,
                     'Properties' => $properties
@@ -351,13 +363,16 @@ class SubscriptionOptionsSettings
             $action = (int)$subscribe === 1 ? 'addforce' : 'unsub';
             $contactProperties = array();
             if (!empty($user->first_name)) {
-                $contactProperties['firstname'] = $user->first_name;
+                $contactProperties[self::PROP_USER_FIRSTNAME] = $user->first_name;
             }
             if (!empty($user->last_name)) {
-                $contactProperties['lastname'] = $user->last_name;
+                $contactProperties[self::PROP_USER_LASTNAME] = $user->last_name;
             }
             if (!empty($user->roles[0])) {
-                $contactProperties['wp_user_role'] = $user->roles[0];
+                $contactProperties[self::WP_PROP_USER_ROLE] = $user->roles[0];
+            }
+            if (!empty($user->user_registered) && (int)get_option('mailjet_woo_edata_sync') === 1) {
+                $contactProperties[WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE] = $user->user_registered;
             }
             // Add the user to a contact list
             if (false === self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action, $contactProperties)) {
