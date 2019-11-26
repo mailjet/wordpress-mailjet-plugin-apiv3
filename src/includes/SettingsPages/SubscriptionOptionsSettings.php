@@ -470,8 +470,9 @@ class SubscriptionOptionsSettings
     {
          if ($this->syncAllWpUsers()) {
             $response = [
-                    'message' => 'Contact list resync has started. You can check the progress inside',
-                    'url' => admin_url('admin.php') . '?page=mailjet_settings_contacts_menu'
+                    'message' => __('Contact list resync has started. You can check the progress inside the Mailjet %s', 'mailjet-for-wordpress'),
+                    'url' => admin_url('admin.php') . '?page=mailjet_settings_contacts_menu',
+                    'url_string' => __('contact list page', 'mailjet-for-wordpress')
             ];
 	        wp_send_json_success( $response );
          }else{

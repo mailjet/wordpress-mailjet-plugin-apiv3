@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailjet plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-25 15:11+0100\n"
-"PO-Revision-Date: 2019-11-25 15:37+0100\n"
+"POT-Creation-Date: 2019-11-26 17:05+0100\n"
+"PO-Revision-Date: 2019-11-26 17:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -989,6 +989,19 @@ msgid ""
 msgstr ""
 "Todos los usuarios de WordPress se han añadido correctamente a tu lista de "
 "contactos de Mailjet"
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:473
+#, php-format
+msgid ""
+"Contact list resync has started. You can check the progress inside the "
+"Mailjet %s"
+msgstr ""
+"Ha comenzado la resincronización de la lista de suscriptores. Puedes "
+"comprobar el progreso en %s de Mailjet."
+
+#: src/includes/SettingsPages/SubscriptionOptionsSettings.php:475
+msgid "contact list page"
+msgstr "la página de la lista de suscriptores"
 
 #: src/includes/SettingsPages/UserAccessSettings.php:27
 msgid ""

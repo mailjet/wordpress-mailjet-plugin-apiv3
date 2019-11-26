@@ -78,7 +78,7 @@ class WooCommerceSettings
                 if (!function_exists('woocommerce_form_field')) {
                     return;
                 }
-                $boxMsg = stripslashes(get_option('mailjet_woo_checkout_box_text')) ?: 'Subscribe to our newsletter';
+                $boxMsg = stripslashes(get_option('mailjet_woo_checkout_box_text')) ?: __('Subscribe to our newsletter', 'mailjet-for-wordpress');
 
                 woocommerce_form_field('mailjet_woo_subscribe_ok', array(
                     'type' => 'checkbox',
@@ -991,8 +991,8 @@ class WooCommerceSettings
         $text = stripslashes(get_option('mailjet_woo_banner_text'));
         $label = stripslashes(get_option('mailjet_woo_banner_label'));
         set_query_var('orderId', $order->get_id());
-        set_query_var('text', !empty($text) ? $text : 'Subscribe to our newsletter to get product updates.');
-        set_query_var('btnLabel', !empty($label) ? $label : 'Subscribe now!');
+        set_query_var('text', !empty($text) ? $text : __('Subscribe to our newsletter', 'mailjet-for-wordpress'));
+        set_query_var('btnLabel', !empty($label) ? $label : _('Subscribe now!', 'mailjet-for-wordpress'));
         return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
     }
 
