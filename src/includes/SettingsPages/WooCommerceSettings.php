@@ -1296,10 +1296,23 @@ class WooCommerceSettings
         if ($user === false) { // guest user
             $email = $order->get_billing_email();
             $properties = $this->get_guest_edata($email);
+            // merge properties if guest also made orders as registered user
+            $user = get_user_by('email', $email);
+            if ($user) {
+                $userProperties = $this->get_customer_edata($user->ID);
+                if (!empty($userProperties)) {
+                    $properties = $this->merge_customer_and_guest_edata($userProperties, $properties);
+                }
+            }
         }
         else {
             $email = $user->user_email;
             $properties = $this->get_customer_edata($user->ID);
+            // merge properties if registered user also made orders as guest
+            $guestProperties = $this->get_guest_edata($user->user_email);
+            if (!empty($guestProperties)) {
+                $properties = $this->merge_customer_and_guest_edata($properties, $guestProperties);
+            }
         }
         try {
             $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list);
