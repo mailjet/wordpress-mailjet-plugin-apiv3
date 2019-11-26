@@ -1134,9 +1134,9 @@ class WooCommerceSettings
     public function init_edata() {
         // check properties creation
         $propertyTypes = [
-            SubscriptionOptionsSettings::PROP_USER_FIRSTNAME => 'string',
-            SubscriptionOptionsSettings::PROP_USER_LASTNAME => 'string',
-            SubscriptionOptionsSettings::WP_PROP_USER_ROLE => 'string',
+            SubscriptionOptionsSettings::PROP_USER_FIRSTNAME => 'str',
+            SubscriptionOptionsSettings::PROP_USER_LASTNAME => 'str',
+            SubscriptionOptionsSettings::WP_PROP_USER_ROLE => 'str',
             self::WOO_PROP_TOTAL_ORDERS => 'int',
             self::WOO_PROP_TOTAL_SPENT => 'float',
             self::WOO_PROP_LAST_ORDER_DATE => 'datetime',
@@ -1221,6 +1221,10 @@ class WooCommerceSettings
             if (array_key_exists($email, $unsubUsers)) {
                 $user = $unsubUsers[$email];
                 $properties = $this->get_customer_edata($user->ID);
+                if (array_key_exists($email, $unsubGuestProperties)) {
+                    $properties = $this->merge_customer_and_guest_edata($properties, $unsubGuestProperties[$email]);
+                    unset($unsubGuestProperties[$email]);
+                }
                 unset($unsubUsers[$email]);
             }
             else if (array_key_exists($email, $unsubGuestProperties)) {
@@ -1240,6 +1244,10 @@ class WooCommerceSettings
             $userEmail = $user->user_email;
             if (!empty($userEmail)) {
                 $properties = $this->get_customer_edata($user->ID);
+                if (array_key_exists($userEmail, $unsubGuestProperties)) {
+                    $properties = $this->merge_customer_and_guest_edata($properties, $unsubGuestProperties[$userEmail]);
+                    unset($unsubGuestProperties[$userEmail]);
+                }
                 if (is_array($properties) && !empty($properties)) {
                     $unsubContacts[] = array(
                         'Email' => $user->user_email,
@@ -1324,6 +1332,24 @@ class WooCommerceSettings
             );
             MailjetApi::syncMailjetContact($mailjet_sync_list, $contact, 'unsub');
         }
+    }
+
+    private function merge_customer_and_guest_edata($userData, $guestData) {
+        if (!is_array($userData) || empty($userData) || !is_array($guestData)) {
+            return [];
+        }
+        $mergedData = $userData;
+        $mergedData[self::WOO_PROP_TOTAL_ORDERS] = ($userData[self::WOO_PROP_TOTAL_ORDERS] ?: 0) + ($guestData[self::WOO_PROP_TOTAL_ORDERS] ?: 0);
+        $mergedData[self::WOO_PROP_TOTAL_SPENT] = ($userData[self::WOO_PROP_TOTAL_SPENT] ?: 0) + ($guestData[self::WOO_PROP_TOTAL_SPENT] ?: 0);
+        if (isset($userData[self::WOO_PROP_LAST_ORDER_DATE], $guestData[self::WOO_PROP_LAST_ORDER_DATE]) &&
+            $guestData[self::WOO_PROP_LAST_ORDER_DATE] > $userData[self::WOO_PROP_LAST_ORDER_DATE]) {
+                $mergedData[self::WOO_PROP_LAST_ORDER_DATE] = $guestData[self::WOO_PROP_LAST_ORDER_DATE];
+        }
+        else if (!isset($userData[self::WOO_PROP_LAST_ORDER_DATE]) && isset($guestData[self::WOO_PROP_LAST_ORDER_DATE])) {
+            $mergedData[self::WOO_PROP_LAST_ORDER_DATE] = $guestData[self::WOO_PROP_LAST_ORDER_DATE];
+        }
+
+        return $mergedData;
     }
 
     private function get_customer_edata($userId) {
