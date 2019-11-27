@@ -78,7 +78,7 @@ class WooCommerceSettings
                 if (!function_exists('woocommerce_form_field')) {
                     return;
                 }
-                $boxMsg = stripslashes(get_option('mailjet_woo_checkout_box_text')) ?: 'Subscribe to our newsletter';
+                $boxMsg = stripslashes(get_option('mailjet_woo_checkout_box_text')) ?: __('Subscribe to our newsletter', 'mailjet-for-wordpress');
 
                 woocommerce_form_field('mailjet_woo_subscribe_ok', array(
                     'type' => 'checkbox',
@@ -991,8 +991,8 @@ class WooCommerceSettings
         $text = stripslashes(get_option('mailjet_woo_banner_text'));
         $label = stripslashes(get_option('mailjet_woo_banner_label'));
         set_query_var('orderId', $order->get_id());
-        set_query_var('text', !empty($text) ? $text : 'Subscribe to our newsletter to get product updates.');
-        set_query_var('btnLabel', !empty($label) ? $label : 'Subscribe now!');
+        set_query_var('text', !empty($text) ? $text : __('Subscribe to our newsletter', 'mailjet-for-wordpress'));
+        set_query_var('btnLabel', !empty($label) ? $label : __('Subscribe now!', 'mailjet-for-wordpress'));
         return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
     }
 
@@ -1134,9 +1134,9 @@ class WooCommerceSettings
     public function init_edata() {
         // check properties creation
         $propertyTypes = [
-            SubscriptionOptionsSettings::PROP_USER_FIRSTNAME => 'string',
-            SubscriptionOptionsSettings::PROP_USER_LASTNAME => 'string',
-            SubscriptionOptionsSettings::WP_PROP_USER_ROLE => 'string',
+            SubscriptionOptionsSettings::PROP_USER_FIRSTNAME => 'str',
+            SubscriptionOptionsSettings::PROP_USER_LASTNAME => 'str',
+            SubscriptionOptionsSettings::WP_PROP_USER_ROLE => 'str',
             self::WOO_PROP_TOTAL_ORDERS => 'int',
             self::WOO_PROP_TOTAL_SPENT => 'float',
             self::WOO_PROP_LAST_ORDER_DATE => 'datetime',
@@ -1221,6 +1221,10 @@ class WooCommerceSettings
             if (array_key_exists($email, $unsubUsers)) {
                 $user = $unsubUsers[$email];
                 $properties = $this->get_customer_edata($user->ID);
+                if (array_key_exists($email, $unsubGuestProperties)) {
+                    $properties = $this->merge_customer_and_guest_edata($properties, $unsubGuestProperties[$email]);
+                    unset($unsubGuestProperties[$email]);
+                }
                 unset($unsubUsers[$email]);
             }
             else if (array_key_exists($email, $unsubGuestProperties)) {
@@ -1240,6 +1244,10 @@ class WooCommerceSettings
             $userEmail = $user->user_email;
             if (!empty($userEmail)) {
                 $properties = $this->get_customer_edata($user->ID);
+                if (array_key_exists($userEmail, $unsubGuestProperties)) {
+                    $properties = $this->merge_customer_and_guest_edata($properties, $unsubGuestProperties[$userEmail]);
+                    unset($unsubGuestProperties[$userEmail]);
+                }
                 if (is_array($properties) && !empty($properties)) {
                     $unsubContacts[] = array(
                         'Email' => $user->user_email,
@@ -1288,10 +1296,23 @@ class WooCommerceSettings
         if ($user === false) { // guest user
             $email = $order->get_billing_email();
             $properties = $this->get_guest_edata($email);
+            // merge properties if guest also made orders as registered user
+            $user = get_user_by('email', $email);
+            if ($user) {
+                $userProperties = $this->get_customer_edata($user->ID);
+                if (!empty($userProperties)) {
+                    $properties = $this->merge_customer_and_guest_edata($userProperties, $properties);
+                }
+            }
         }
         else {
             $email = $user->user_email;
             $properties = $this->get_customer_edata($user->ID);
+            // merge properties if registered user also made orders as guest
+            $guestProperties = $this->get_guest_edata($user->user_email);
+            if (!empty($guestProperties)) {
+                $properties = $this->merge_customer_and_guest_edata($properties, $guestProperties);
+            }
         }
         try {
             $contactId = MailjetApi::isContactInList($email, $mailjet_sync_list);
@@ -1326,6 +1347,24 @@ class WooCommerceSettings
         }
     }
 
+    private function merge_customer_and_guest_edata($userData, $guestData) {
+        if (!is_array($userData) || empty($userData) || !is_array($guestData)) {
+            return [];
+        }
+        $mergedData = $userData;
+        $mergedData[self::WOO_PROP_TOTAL_ORDERS] = ($userData[self::WOO_PROP_TOTAL_ORDERS] ?: 0) + ($guestData[self::WOO_PROP_TOTAL_ORDERS] ?: 0);
+        $mergedData[self::WOO_PROP_TOTAL_SPENT] = ($userData[self::WOO_PROP_TOTAL_SPENT] ?: 0) + ($guestData[self::WOO_PROP_TOTAL_SPENT] ?: 0);
+        if (isset($userData[self::WOO_PROP_LAST_ORDER_DATE], $guestData[self::WOO_PROP_LAST_ORDER_DATE]) &&
+            $guestData[self::WOO_PROP_LAST_ORDER_DATE] > $userData[self::WOO_PROP_LAST_ORDER_DATE]) {
+                $mergedData[self::WOO_PROP_LAST_ORDER_DATE] = $guestData[self::WOO_PROP_LAST_ORDER_DATE];
+        }
+        else if (!isset($userData[self::WOO_PROP_LAST_ORDER_DATE]) && isset($guestData[self::WOO_PROP_LAST_ORDER_DATE])) {
+            $mergedData[self::WOO_PROP_LAST_ORDER_DATE] = $guestData[self::WOO_PROP_LAST_ORDER_DATE];
+        }
+
+        return $mergedData;
+    }
+
     private function get_customer_edata($userId) {
         $userData = get_userdata($userId);
 
@@ -1344,12 +1383,12 @@ class WooCommerceSettings
             $customerProperties[SubscriptionOptionsSettings::PROP_USER_FIRSTNAME] = $userData->first_name;
             $customerProperties[SubscriptionOptionsSettings::PROP_USER_LASTNAME] = $userData->last_name;
             $customerProperties[SubscriptionOptionsSettings::WP_PROP_USER_ROLE] = 'customer';
-            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
+            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = get_gmt_from_date($customer->get_date_created(), 'Y-m-d\TH:i:s\Z');
             $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = 0;
             $customerProperties[self::WOO_PROP_TOTAL_SPENT] = 0;
             foreach ($orders as $order) {
                 if ($order->get_status() === 'completed') {
-                    $date = $order->get_date_completed()->date('Y-m-d\TH:i:s\Z');
+                    $date = get_gmt_from_date($order->get_date_completed(), 'Y-m-d\TH:i:s\Z');
                     $customerProperties[self::WOO_PROP_TOTAL_ORDERS]++;
                     $customerProperties[self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
                     if (!isset($customerProperties[self::WOO_PROP_LAST_ORDER_DATE]) || $date > $customerProperties[self::WOO_PROP_LAST_ORDER_DATE]) {
@@ -1387,7 +1426,7 @@ class WooCommerceSettings
                 $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] = 0;
             }
             if ($order->get_status() === 'completed') {
-                $date = $order->get_date_completed()->date('Y-m-d\TH:i:s\Z');
+                $date = get_gmt_from_date($order->get_date_completed(), 'Y-m-d\TH:i:s\Z');
                 $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS]++;
                 $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
                 if (!isset($guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) || $date > $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) {
