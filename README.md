@@ -12,14 +12,9 @@
 Now with integrated WooCommerce support. Design, send and track engaging marketing and transactional emails directly from your WordPress admin.
 
 ## What's new
-* Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notifications* and *Abandoned cart reminders* to your customers. Add newsletter subscribers from the "Check out" page and the "Thank you" page. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
-* **Shortcode support** - add the subscrrtiption widget in any page or post using shortcode.
+* Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
+* **Shortcode support** - add the subscription widget in any page or post using shortcode.
 * Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
-
-* Redesigned subscription widget for easier setup and more options - mandatory, optional or hidden form fields, custom subscription confirmation page, and more.
-* Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
-* Integration with **WooCommerce** - customers can subscribe to your newsletter during checkout. More integrations are coming soon.
-* More flexibility - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form.
 
 ## Description
 
@@ -40,6 +35,8 @@ Mailjet's official plugin on WordPress gives you access to:
    * Use the built in *Contact Form 7* integration and allow form submitters to subscribe to your newsletter.
 
 * **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
+
+* **Flexibility** - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form. See the FAQ for more details.
 
 * **World Class Deliverability:** Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
 
