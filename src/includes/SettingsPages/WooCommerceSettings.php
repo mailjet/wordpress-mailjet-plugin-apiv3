@@ -992,7 +992,7 @@ class WooCommerceSettings
         $label = stripslashes(get_option('mailjet_woo_banner_label'));
         set_query_var('orderId', $order->get_id());
         set_query_var('text', !empty($text) ? $text : __('Subscribe to our newsletter', 'mailjet-for-wordpress'));
-        set_query_var('btnLabel', !empty($label) ? $label : _('Subscribe now!', 'mailjet-for-wordpress'));
+        set_query_var('btnLabel', !empty($label) ? $label : __('Subscribe now!', 'mailjet-for-wordpress'));
         return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
     }
 
@@ -1383,12 +1383,12 @@ class WooCommerceSettings
             $customerProperties[SubscriptionOptionsSettings::PROP_USER_FIRSTNAME] = $userData->first_name;
             $customerProperties[SubscriptionOptionsSettings::PROP_USER_LASTNAME] = $userData->last_name;
             $customerProperties[SubscriptionOptionsSettings::WP_PROP_USER_ROLE] = 'customer';
-            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = $customer->get_date_created()->date('Y-m-d\TH:i:s\Z');
+            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = get_gmt_from_date($customer->get_date_created(), 'Y-m-d\TH:i:s\Z');
             $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = 0;
             $customerProperties[self::WOO_PROP_TOTAL_SPENT] = 0;
             foreach ($orders as $order) {
                 if ($order->get_status() === 'completed') {
-                    $date = $order->get_date_completed()->date('Y-m-d\TH:i:s\Z');
+                    $date = get_gmt_from_date($order->get_date_completed(), 'Y-m-d\TH:i:s\Z');
                     $customerProperties[self::WOO_PROP_TOTAL_ORDERS]++;
                     $customerProperties[self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
                     if (!isset($customerProperties[self::WOO_PROP_LAST_ORDER_DATE]) || $date > $customerProperties[self::WOO_PROP_LAST_ORDER_DATE]) {
@@ -1426,7 +1426,7 @@ class WooCommerceSettings
                 $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] = 0;
             }
             if ($order->get_status() === 'completed') {
-                $date = $order->get_date_completed()->date('Y-m-d\TH:i:s\Z');
+                $date = get_gmt_from_date($order->get_date_completed(), 'Y-m-d\TH:i:s\Z');
                 $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS]++;
                 $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
                 if (!isset($guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) || $date > $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) {
