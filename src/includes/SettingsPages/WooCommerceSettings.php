@@ -992,7 +992,7 @@ class WooCommerceSettings
         $label = stripslashes(get_option('mailjet_woo_banner_label'));
         set_query_var('orderId', $order->get_id());
         set_query_var('text', !empty($text) ? $text : __('Subscribe to our newsletter', 'mailjet-for-wordpress'));
-        set_query_var('btnLabel', !empty($label) ? $label : __('Subscribe now!', 'mailjet-for-wordpress'));
+        set_query_var('btnLabel', !empty($label) ? $label : __('Subscribe now', 'mailjet-for-wordpress'));
         return load_template(MAILJET_FRONT_TEMPLATE_DIR . '/Subscription/subscriptionForm.php');
     }
 
