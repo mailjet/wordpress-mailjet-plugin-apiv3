@@ -200,6 +200,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 2. Access all features from the plugin dashboard
 3. Create and send beautiful email campaigns
 4. Configure a subscription widget to collect subscribers from your site
+5. Activate and configure WooCommerce and ContactForm7 integrations
+6. Enable order notifications for WooCommerce
+7. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
 
