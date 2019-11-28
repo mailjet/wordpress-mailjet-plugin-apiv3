@@ -1,4 +1,4 @@
-=== Mailjet Email Newsletter Marketing ===
+=== Mailjet Email Marketing ===
 
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
