@@ -97,7 +97,7 @@ class AbandonedCartSettings
                         <button type="button" id="mj-ac-tip-btn" class="mj-toggleTextBtn mj-toggleBtn" data-target="mj-ac-tip-text"><?php _e('Who\'s going to receive this email?', 'mailjet-for-wordpress'); ?></button>
                         <div id="mj-ac-tip-text" class="mj-hide mj-ac-tip-text">
                             <p><?php _e('This email will be automatically sent to those customers that have added at least one item to the cart and then have left you store without completing the purchase.', 'mailjet-for-wordpress'); ?></p>
-                            <p><?php _e('We will send abandoned cart emails only to those customers that have accepted marketing communication and that are active.', 'mailjet-for-wordpress'); ?></p>
+                            <!--<p><?php _e('We will send abandoned cart emails only to those customers that have accepted marketing communication and that are active.', 'mailjet-for-wordpress'); ?></p>-->
                         </div>
                     </div>
                     <div class="mailjet_row">
