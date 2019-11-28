@@ -1,7 +1,7 @@
 === Mailjet Email Newsletter Marketing ===
 
 Contributors: Mailjet
-Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
+Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 3.9
 Tested up to: 5.2.1
 Stable tag: 5.2
@@ -9,7 +9,7 @@ Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Now with dedicated WooCommerce features. Design, send and track engaging marketing and transactional emails directly from your WordPress admin.
+WooCommerce integration is included. Design, send and track engaging marketing and transactional emails directly from your WordPress admin.
 
 == What's new ==
 * Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
