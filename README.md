@@ -9,7 +9,7 @@
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Now with integrated WooCommerce support. Design, send and track engaging marketing and transactional emails directly from your WordPress admin.
+Now with dedicated WooCommerce features. Design, send and track engaging marketing and transactional emails directly from your WordPress admin.
 
 ## What's new
 * Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
@@ -200,7 +200,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 2. Access all features from the plugin dashboard
 3. Create and send beautiful email campaigns
 4. Configure a subscription widget to collect subscribers from your site
-5. Activate and configure WooCommerce and ContactForm7 integrations
+5. Activate and configure WooCommerce and Contact Form 7 integrations
 6. Enable order notifications for WooCommerce
 7. Configure abandoned cart notifications for WooCommerce
 
@@ -211,11 +211,11 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Added widget shortcode support
 
 ##### 5.1.3
-* Allow use of filter to replace the subscription confirmation email for ContactForm7, WooCommerce and comment authors subscriptions
+* Allow use of filter to replace the subscription confirmation email for Contact Form 7, WooCommerce and comment authors subscriptions
 
 ##### 5.1.2
 * Allow use of TLS for ports 587 / 588
-* Show the default thank you page when subscribing via CF7
+* Show the default thank you page when subscribing via Contact Form 7
 * Translations fixes
 
 ##### 5.1.1
@@ -243,7 +243,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 ##### 5.0.9
 * Remove css and js public files to reduce public page speed loading
-* Wordpress widget is now working on wordpress version < 4.4
+* WordPress widget is now working on wordpress version < 4.4
 * Prevent fatal error on api timeout
 * Add missing translations
 
@@ -258,7 +258,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Improve compatibility with WP versions < 5.7
 
 ##### 5.0.7
-* Fix 'thank you' page url when moving the blog across domains
+* Fixed 'Thank you' page url when moving the blog across domains
 
 ##### 5.0.6
 * Allow logged in WooCommerce customers to subscribe to the newsletter during checkout.
@@ -270,13 +270,13 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Fix fatal error for WooCommerce integration
 
 ##### 5.0.4
-* Fix widget contact properties to be compatible with polylang
+* Fix widget contact properties to be compatible with Polylang
 
 ##### 5.0.3
 * Fix fatal error for php 5.5
 
 ##### 5.0.2
-* Fix small bugfixes
+* Small bugfixes
 
 ##### 5.0.1
 * Plugin redesign and major improvements
