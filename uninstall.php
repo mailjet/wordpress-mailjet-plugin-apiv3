@@ -69,10 +69,15 @@ delete_option('mailjet_access_author');
 delete_option('mailjet_access_contributor');
 delete_option('mailjet_access_subscriber');
 
+delete_option('activate_mailjet_cf7_integration');
+delete_option('mailjet_cf7_list');
+delete_option('cf7_email');
+delete_option('cf7_fromname');
+
 delete_option('activate_mailjet_woo_integration');
 delete_option('activate_mailjet_woo_sync');
 
-delete_option('widget_wp_mailjet_subscribe_widget');
+delete_option('widget_mailjet');
 delete_option('widget_wp_mailjet_subscribe_widget');
 
 delete_option('mailjet_thank_you_page_Italian');
@@ -97,6 +102,11 @@ delete_option('mailjet_woo_banner_label');
 delete_option('mailjet_wc_abandoned_cart_active_hooks');
 delete_option('mailjet_wc_active_hooks');
 delete_option('mailjet_order_notifications');
+
+delete_option('mailjet_woocommerce_abandoned_cart');
+delete_option('mailjet_woocommerce_order_confirmation');
+delete_option('mailjet_woocommerce_shipping_confirmation');
+delete_option('mailjet_woocommerce_refund_confirmation');
 
 // Delete all DB tables for Mailjet plugin
 global $wpdb;
