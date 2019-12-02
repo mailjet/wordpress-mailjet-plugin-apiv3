@@ -1,36 +1,33 @@
-=== Mailjet Email Newsletter Marketing ===
+=== Mailjet Email Marketing ===
 
 Contributors: Mailjet
-Tags: email, marketing, signup, newsletter, widget, smtp, mailjet
-Requires at least: 3.9
-Tested up to: 5.2.1
-Stable tag: 5.1.3
+Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
+Requires at least: 4.4
+Tested up to: 5.3
+Stable tag: 5.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use Mailjet to create, send and track beautiful and engaging marketing and transactional emails directly from within your WordPress admin.
+Includes WooCommerce automated and order emails. Design, send and track engaging marketing and transactional emails from your WordPress admin.
 
 == What's new ==
-* The all new V5 Mailjet plugin for Wordpress has been completely redesigned and includes many new features.
-* Improved plugin settings for simplified configuration
-* Redesigned subscription widget for easier setup and more options - mandatory, optional or hidden form fields, custom subscription confirmation page, and more.
-* Integration with *Contact Form 7* - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
-* Integration with *WooCommerce* - customers can subscribe to your newsletter during checkout. More integrations are coming soon.
-* More flexibility - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form.
+* Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
+* **Shortcode support** - add the subscription widget in any page or post using shortcode.
+* Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
 
 == Description ==
 
 Mailjet's official plugin on WordPress gives you access to:
-
 * **Easy Email Management:** Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
-* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters.
+* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscription widget in any page or post using shortcode.
 * **Automated Contact Synchronization** - 4 ways to build your contact lists:
-  * Synchronize your WordPress contacts. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
-  * Comment authors can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
-  * Subscribe WooCommerce customers to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
-  * Use the built in Contact Form 7 integration and allow form submitters to subscribe to your newsletter.
+   * Synchronize your *WordPress users*. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+   * *Comment authors* can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
+   * Subscribe *WooCommerce customers* to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+   * Use the built in *Contact Form 7* integration and allow form submitters to subscribe to your newsletter.
 * **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
+* **Flexibility** - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form. See the FAQ for more details.
 * **World Class Deliverability:** Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
 * **Insight and analytics:** Access real-time statistics on your campaigns showing opens, clicks, geographies, average time to click and more to optimize your email performance.
 * **Data Compliance:** Mailjet is GDPR compliant and ISO 27001 certified, meaning that it guarantees an optimal level of email data privacy and security.
@@ -64,8 +61,7 @@ Because you want to make sure your emails get delivered to the inbox!
 Yes. You can [create one for free](https://app.mailjet.com/signup?aff=wordpressmj): it's easy and it only takes a few minutes.
 
 = How to get started with this plugin? =
-Once you have a Mailjet account, an installation Wizard will guide you through.
-In case you want to use Mailjet as an SMTP relay you will need to change these parameters in your WordPress email configuration: username and password. These credentials are provided in your Mailjet Account > [API Keys section](https://app.mailjet.com/account/api_keys).
+Once you have a Mailjet account, grab your [Mailjet API credentials](https://app.mailjet.com/account/api_keys) and activate the plugin. An installation wizard will guide you through. 
 For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj).
 
 = How do I create a signup form or use the contact widget? =
@@ -195,15 +191,24 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 2. Access all features from the plugin dashboard
 3. Create and send beautiful email campaigns
 4. Configure a subscription widget to collect subscribers from your site
+5. Activate and configure WooCommerce and Contact Form 7 integrations
+6. Enable order notifications for WooCommerce
+7. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
 
+= 5.2 =
+* Added full WooCommerce integration
+* Added widget shortcode support
+* Fixed compatibility bug with Astra theme
+* Fixed W3C validation issue with the widget code
+
 = 5.1.3 =
-* Allow use of filter to replace the subscription confirmation email for ContactForm7, WooCommerce and comment authors subscriptions
+* Allow use of filter to replace the subscription confirmation email for Contact Form 7, WooCommerce and comment authors subscriptions
 
 = 5.1.2 =
 * Allow use of TLS for ports 587 / 588
-* Show the default thank you page when subscribing via CF7
+* Show the default thank you page when subscribing via Contact Form 7
 * Translations fixes
 
 = 5.1.1 =
@@ -231,7 +236,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 = 5.0.9 =
 * Remove css and js public files to reduce public page speed loading
-* Wordpress widget is now working on wordpress version < 4.4
+* WordPress widget is now working on wordpress version < 4.4
 * Prevent fatal error on api timeout
 * Add missing translations
 
@@ -246,7 +251,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Improve compatibility with WP versions < 5.7
 
 = 5.0.7 =
-* Fix 'thank you' page url when moving the blog across domains
+* Fixed 'Thank you' page url when moving the blog across domains
 
 = 5.0.6 =
 * Allow logged in WooCommerce customers to subscribe to the newsletter during checkout.
@@ -258,13 +263,13 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Fix fatal error for WooCommerce integration
 
 = 5.0.4 =
-* Fix widget contact properties to be compatible with polylang
+* Fix widget contact properties to be compatible with Polylang
 
 = 5.0.3 =
 * Fix fatal error for php 5.5
 
 = 5.0.2 =
-* Fix small bugfixes
+* Small bugfixes
 
 = 5.0.1 =
 * Plugin redesign and major improvements
