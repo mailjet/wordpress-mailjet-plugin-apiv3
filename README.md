@@ -209,6 +209,8 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 ##### 5.2
 * Added full WooCommerce integration
 * Added widget shortcode support
+* Fixed compatibility bug with Astra theme
+* Fixed W3C validation issue with the widget code
 
 ##### 5.1.3
 * Allow use of filter to replace the subscription confirmation email for Contact Form 7, WooCommerce and comment authors subscriptions
