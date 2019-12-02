@@ -21,6 +21,13 @@ class AbandonedCartSettings
         $sendingTimeScaleInMinutes = $sendingTime <= 3600; // scale in minutes if time <= 1h (60 * 60)
         $sendingTimeScaled = $sendingTimeScaleInMinutes ? $sendingTime / 60 : $sendingTime / 3600;
         $abandonedCartTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_abandoned_cart');
+        if (!$abandonedCartTemplate) {
+            $wooCommerceSettings = WooCommerceSettings::getInstance();
+            $templates = $wooCommerceSettings->createTemplates(true, false);
+            if ($templates) {
+                $abandonedCartTemplate = $templates['mailjet_woocommerce_abandoned_cart'];
+            }
+        }
         $postUpdateMsg = get_option('mailjet_post_update_message');
         $wasActivated = false;
         if (is_array($postUpdateMsg) && !is_null($postUpdateMsg['mjACWasActivated'])) {

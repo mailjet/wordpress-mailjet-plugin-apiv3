@@ -25,13 +25,21 @@ class WooCommerceSettings
     CONST WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
     CONST WOO_PROP_ACCOUNT_CREATION_DATE = 'woo_account_creation_date';
 
-    public function __construct()
-    {
+    private static $instance;
+
+    private function __construct() {
         add_action('wp_enqueue_scripts', [$this, 'enqueueFrontScripts']);
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
         // cron settings for abandoned cart feature
         add_filter('cron_schedules', [$this, 'add_cron_schedule']);
         add_filter( 'template_include', [$this, 'manage_action']);
+    }
+
+    public static function getInstance() {
+        if (is_null(self::$instance))  {
+            self::$instance = new WooCommerceSettings();
+        }
+        return self::$instance;
     }
 
     public function add_cron_schedule($schedules) {
@@ -131,8 +139,8 @@ class WooCommerceSettings
         // e-data sync if needed for WooCommerce guest subscription
         if ($action === 'addforce' && get_user_by('email', $user_email) === false) { // check for guest subscription
             $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
-            $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
-            if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_woo_sync === 1) {
+            $mailjet_woo_edata_sync = get_option('mailjet_woo_edata_sync');
+            if ((int)$activate_mailjet_woo_integration === 1 && (int)$mailjet_woo_edata_sync === 1) {
                 $mailjet_sync_list = get_option('mailjet_sync_list');
                 if (!empty($mailjet_sync_list) && $mailjet_sync_list > 0) {
                     $edataGuestProperties = $this->get_guest_edata($user_email);
@@ -410,7 +418,8 @@ class WooCommerceSettings
         dbDelta( $sql );
     }
 
-    private function createTemplates($forAbandonedCart = true, $forOrderNotif = true) {
+    public function createTemplates($forAbandonedCart = true, $forOrderNotif = true) {
+        $templatesDetails = [];
         if ($forAbandonedCart) {
             $templates['woocommerce_abandoned_cart'] = ['id' => get_option('mailjet_woocommerce_abandoned_cart'), 'callable' => 'abandonedCartTemplateContent'];
         }
@@ -441,24 +450,26 @@ class WooCommerceSettings
             // Create template or retrieve it if exists
             $template = MailjetApi::createTemplate(['body' => $templateArgs, 'filters' => []]);
             if ($template && !empty($template)) {
-                $templateContent = MailjetApi::getTemplateDetails($template['ID']);
-                if (!$templateContent || empty($templateContent)) {
+                $templateDetails = MailjetApi::getTemplateDetails($template['ID']);
+                if (!$templateDetails || empty($templateDetails)) {
                     $templateContent = [];
                     $templateContent['id'] = $template['ID'];
                     $templateContent['body'] = $this->getTemplateContent($value['callable']);
                     $templateContent['filters'] = [];
-                    $contentCreation = MailjetApi::createTemplateContent($templateContent);
-                    if (!$contentCreation || empty($contentCreation)) {
+                    $result = MailjetApi::createTemplateContent($templateContent);
+                    if (!$result || empty($result)) {
                         return false;
                     }
+                    $templateDetails = $result[0];
                 }
+                $templatesDetails['mailjet_' . $name] = $templateDetails;
                 update_option('mailjet_' . $name, $template['ID']);
             }
             else {
                 return false;
             }
         }
-        return true;
+        return $templatesDetails;
     }
 
     public function send_order_status_refunded($orderId)
@@ -948,7 +959,7 @@ class WooCommerceSettings
 
     private function abandonedCartTemplateContent()
     {
-        $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCartArray.php');
+        $templateDetail['MJMLContent'] = require(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCartArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceAbandonedCart.html');
         $templateDetail['Headers'] = $this->defaultSenderInfo();
         $templateDetail['Headers']['Subject'] =  'There\'s something in your cart';
@@ -958,7 +969,7 @@ class WooCommerceSettings
 
     private function orderRefundTemplateContent()
     {
-        $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundArray.php');
+        $templateDetail['MJMLContent'] = require(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceRefundConfirmation.html');
         $templateDetail['Headers'] = $this->defaultSenderInfo();
         $templateDetail['Headers']['Subject'] = 'Your refund from {{var:store_name}}';
@@ -968,7 +979,7 @@ class WooCommerceSettings
 
     private function shippingConfirmationTemplateContent()
     {
-        $templateDetail['MJMLContent'] =  require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfArray.php');
+        $templateDetail['MJMLContent'] =  require(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfArray.php');
         $templateDetail["Html-part"] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceShippingConfirmation.html');
         $templateDetail['Headers'] = $this->defaultSenderInfo();
         $templateDetail['Headers']['Subject'] = 'Your order from {{var:store_name}} has been shipped';
@@ -978,7 +989,7 @@ class WooCommerceSettings
 
     private function orderCreatedTemplateContent()
     {
-        $templateDetail['MJMLContent'] = require_once(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfArray.php');
+        $templateDetail['MJMLContent'] = require(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfArray.php');
         $templateDetail['Html-part'] = file_get_contents(MAILJET_ADMIN_TAMPLATE_DIR . '/IntegrationAutomationTemplates/WooCommerceOrderConfirmation.html');
         $templateDetail['Headers'] = $this->defaultSenderInfo();
         $templateDetail['Headers']['Subject'] = 'We just received your order from {{var:store_name}} - {{var:order_number}}';

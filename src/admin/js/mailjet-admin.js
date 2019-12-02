@@ -305,25 +305,6 @@ function mjWooSubscription() {
             mjHide(wooActicateIntegrationBanner);
         }
     });
-    /**
-     * Show / Hide WooCommerce Sync div
-     */
-    const wooContactListBox = document.querySelector('#activate_mailjet_woo_sync');
-    const wooContactList = document.querySelector('#woo_contact_list');
-
-    if (wooContactListBox === null || wooContactListBox === undefined) {
-        return false;
-    }
-    wooContactListBox.addEventListener("click", function () {
-        if (wooContactListBox.classList.contains('mj-hide')){
-            mjShow(wooContactList);
-        } else {
-            mjHide(wooContactList);
-        }
-    });
-    wooContactListBox.addEventListener("change", function () {
-        this.checked === true ? mjShow(wooContactList) : mjHide(wooContactList);
-    });
 }
 
 function mjSendingSettings() {
