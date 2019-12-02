@@ -22,7 +22,7 @@ Mailjet's official plugin on WordPress gives you access to:
 
 * **Easy Email Management:** Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
 
-* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscrrtiption widget in any page or post using shortcode.
+* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscription widget in any page or post using shortcode.
 
 * **Automated Contact Synchronization** - 4 ways to build your contact lists:
 
