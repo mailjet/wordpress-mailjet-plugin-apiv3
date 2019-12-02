@@ -20,7 +20,7 @@ Includes WooCommerce automated and order emails. Design, send and track engaging
 
 Mailjet's official plugin on WordPress gives you access to:
 * **Easy Email Management:** Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
-* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscrrtiption widget in any page or post using shortcode.
+* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscription widget in any page or post using shortcode.
 * **Automated Contact Synchronization** - 4 ways to build your contact lists:
    * Synchronize your *WordPress users*. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
    * *Comment authors* can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
