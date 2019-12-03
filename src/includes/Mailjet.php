@@ -278,26 +278,26 @@ class Mailjet
 
     private function addWoocommerceActions()
     {
-        $woocommerceObject =  new WooCommerceSettings();
+        $wooCommerceSettings = WooCommerceSettings::getInstance();
 
-        $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $woocommerceObject, 'orders_automation_settings_post');
-        $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $woocommerceObject, 'abandoned_cart_settings_post');
+        $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $wooCommerceSettings, 'orders_automation_settings_post');
+        $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
 
         if (get_option('mailjet_woo_edata_sync') === '1'){
-            $this->loader->add_action('woocommerce_order_status_changed', $woocommerceObject, 'order_edata_sync', 10, 1);
-            $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $woocommerceObject, 'paid_by_cheque_order_edata_sync', 10, 2);
+            $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);
+            $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $wooCommerceSettings, 'paid_by_cheque_order_edata_sync', 10, 2);
         }
 
         $activeActions = get_option('mailjet_wc_active_hooks');
         $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
         if ($activeActions && !empty($activeActions)){
             foreach ($activeActions as $action){
-                $this->loader->add_action($action['hook'],$woocommerceObject, $action['callable'], 10, 2);
+                $this->loader->add_action($action['hook'],$wooCommerceSettings, $action['callable'], 10, 2);
             }
         }
         if ($abandonedCartActiveActions && !empty($abandonedCartActiveActions)) {
             foreach ($abandonedCartActiveActions as $action) {
-                $this->loader->add_action($action['hook'], $woocommerceObject, $action['callable'], 10, 2);
+                $this->loader->add_action($action['hook'], $wooCommerceSettings, $action['callable'], 10, 2);
             }
         }
     }

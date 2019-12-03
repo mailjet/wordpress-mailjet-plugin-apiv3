@@ -75,7 +75,6 @@ delete_option('cf7_email');
 delete_option('cf7_fromname');
 
 delete_option('activate_mailjet_woo_integration');
-delete_option('activate_mailjet_woo_sync');
 
 delete_option('widget_mailjet');
 delete_option('widget_wp_mailjet_subscribe_widget');

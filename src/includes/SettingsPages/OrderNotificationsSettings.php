@@ -19,7 +19,7 @@ class OrderNotificationsSettings
         $notifications = get_option('mailjet_order_notifications');
 
         $isOrderConfirmationActive = isset($notifications['mailjet_order_confirmation']); // Processing Order
-        $isShippingConfirmationActive = isset($notifications['mailjet_shipping_confirmation']); //Order complected WC
+        $isShippingConfirmationActive = isset($notifications['mailjet_shipping_confirmation']); //Order completed WC
         $isRefundConfirmationActive = isset($notifications['mailjet_refund_confirmation']); // Refunded order
 
         $isEditActive = $isOrderConfirmationActive || $isShippingConfirmationActive || $isRefundConfirmationActive;
@@ -27,6 +27,16 @@ class OrderNotificationsSettings
         $orderConfTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_order_confirmation');
         $refundTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_refund_confirmation');
         $shippingTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_shipping_confirmation');
+        if (!$orderConfTemplate || !$refundTemplate || !$shippingTemplate) {
+            $wooCommerceSettings = WooCommerceSettings::getInstance();
+            $templates = $wooCommerceSettings->createTemplates(false, true);
+            if ($templates) {
+                $orderConfTemplate = $templates['mailjet_woocommerce_order_confirmation'];
+                $refundTemplate = $templates['mailjet_woocommerce_refund_confirmation'];
+                $shippingTemplate = $templates['mailjet_woocommerce_shipping_confirmation'];
+            }
+        }
+
         $nonce = wp_create_nonce('mailjet_order_notifications_settings_page_html');
 
         if (!MailjetApi::isValidAPICredentials() || !$wooCommerceActivated) {

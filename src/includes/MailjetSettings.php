@@ -178,7 +178,7 @@ class MailjetSettings
         $activate_mailjet_sync = get_option('activate_mailjet_sync');
 
         if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_sync === 1) {
-            $wooCommerceSettings = new WooCommerceSettings();
+            $wooCommerceSettings = WooCommerceSettings::getInstance();
             // Add the checkbox
             add_action('woocommerce_after_checkout_billing_form', array($wooCommerceSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
             // Process the checkbox on submit
@@ -301,7 +301,7 @@ class MailjetSettings
             $mj_sub_woo_token = $_GET['mj_sub_woo_token'];
             $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'] . self::getCryptoHash());
             if ($mj_sub_woo_token === $tokenCheck) {
-                $wooCommerceSettings = new WooCommerceSettings();
+                $wooCommerceSettings = WooCommerceSettings::getInstance();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
                 $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']), $_GET['first_name'], $_GET['last_name']);
                 if (false === $syncSingleContactEmailToMailjetList) {

@@ -66,6 +66,7 @@ define('MAILJET_FRONT_TEMPLATE_DIR', plugin_dir_path( __FILE__ ). 'src/templates
 
 // Call the update to V5 logic
 MailjetUpdate::updateToV5();
+MailjetUpdate::updateToV5_2();
 
 /**
  * Begins execution of the plugin.

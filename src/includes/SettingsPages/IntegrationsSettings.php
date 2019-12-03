@@ -32,7 +32,6 @@ class IntegrationsSettings
 	    // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
 	    if ( ! class_exists( 'WooCommerce' ) ) {
 		    delete_option( 'activate_mailjet_woo_integration' );
-		    delete_option( 'activate_mailjet_woo_sync' );
             delete_option( 'mailjet_woo_edata_sync' );
 		    delete_option( 'mailjet_woo_checkout_checkbox' );
 		    delete_option( 'mailjet_woo_checkout_box_text' );
@@ -264,27 +263,6 @@ class IntegrationsSettings
             ]
         );
 
-        // add error/update messages
-
-        // check if the user have submitted the settings
-        // wordpress will add the "settings-updated" $_GET parameter to the url
-        if ( isset( $_GET['settings-updated'] ) ) {
-            $executionError = false;
-
-            // Check if selected Contact list - only if the Sync checkbox is checked
-            $activate_mailjet_woo_sync = get_option( 'activate_mailjet_woo_sync' );
-            $mailjet_woo_list          = get_option( 'mailjet_sync_list' );
-            if ($activate_mailjet_woo_sync === '1' && (int)$mailjet_woo_list <= 0 ) {
-                $executionError = true;
-                add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'The settings could not be saved. Please select a contact list to subscribe WooCommerce users to.', 'mailjet-for-wordpress' ), 'error' );
-            }
-
-            if ( false === $executionError ) {
-                // add settings saved message with the class of "updated"
-                add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'Settings Saved', 'mailjet-for-wordpress' ), 'updated' );
-            }
-        }
-
         // show error/update messages
         settings_errors( 'mailjet_messages' );
         $nonce = wp_create_nonce('mailjet_integrations_page_html');
@@ -370,7 +348,7 @@ class IntegrationsSettings
 
         $this->toggleCF7Feature((object)$postData->cf7);
 
-        $wooSettings = new WooCommerceSettings();
+        $wooSettings = WooCommerceSettings::getInstance();
         $response = $wooSettings->activateWoocommerce($postData->woocommerce);
 
         update_option('mailjet_post_update_message', $response);
