@@ -462,6 +462,7 @@ class WooCommerceSettings
                     }
                     $templateDetails = $result[0];
                 }
+                $templateDetails['Headers']['ID'] = $template['ID'];
                 $templatesDetails['mailjet_' . $name] = $templateDetails;
                 update_option('mailjet_' . $name, $template['ID']);
             }
