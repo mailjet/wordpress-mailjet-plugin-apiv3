@@ -46,6 +46,8 @@ delete_option('mailjet_sync_list');
 delete_option('activate_mailjet_initial_sync');
 delete_option('create_contact_list_btn');
 delete_option('create_list_name');
+delete_option('skip_mailjet_list');
+delete_option('mailjet_post_update_message');
 
 delete_option('mailjet_enabled');
 delete_option('mailjet_from_name');
@@ -67,9 +69,51 @@ delete_option('mailjet_access_author');
 delete_option('mailjet_access_contributor');
 delete_option('mailjet_access_subscriber');
 
+delete_option('activate_mailjet_cf7_integration');
+delete_option('mailjet_cf7_list');
+delete_option('cf7_email');
+delete_option('cf7_fromname');
 
 delete_option('activate_mailjet_woo_integration');
-delete_option('activate_mailjet_woo_sync');
-delete_option('mailjet_woo_list');
 
+delete_option('widget_mailjet');
 delete_option('widget_wp_mailjet_subscribe_widget');
+
+delete_option('mailjet_thank_you_page_Italian');
+delete_option('mailjet_thank_you_page_Spanish');
+delete_option('mailjet_thank_you_page_German');
+delete_option('mailjet_thank_you_page_English');
+delete_option('mailjet_thank_you_page_French');
+delete_option('mailjet_locale_subscription_list_it_IT');
+delete_option('mailjet_locale_subscription_list_es_ES');
+delete_option('mailjet_locale_subscription_list_en_US');
+delete_option('mailjet_locale_subscription_list_fr_FR');
+delete_option('mailjet_locale_subscription_list_de_DE');
+
+delete_option('mailjet_woo_abandoned_cart_activate');
+delete_option('mailjet_woo_abandoned_cart_sending_time');
+delete_option('mailjet_woo_edata_sync');
+delete_option('mailjet_woo_checkout_checkbox');
+delete_option('mailjet_woo_checkout_box_text');
+delete_option('mailjet_woo_banner_checkbox');
+delete_option('mailjet_woo_banner_text');
+delete_option('mailjet_woo_banner_label');
+delete_option('mailjet_wc_abandoned_cart_active_hooks');
+delete_option('mailjet_wc_active_hooks');
+delete_option('mailjet_order_notifications');
+
+delete_option('mailjet_woocommerce_abandoned_cart');
+delete_option('mailjet_woocommerce_order_confirmation');
+delete_option('mailjet_woocommerce_shipping_confirmation');
+delete_option('mailjet_woocommerce_refund_confirmation');
+
+// Delete all DB tables for Mailjet plugin
+global $wpdb;
+$sql_delete = "DROP TABLE IF EXISTS {$wpdb->prefix}mailjet_wc_abandoned_carts";
+$wpdb->query($sql_delete);
+
+$sql_delete = "DROP TABLE IF EXISTS {$wpdb->prefix}mailjet_wc_abandoned_cart_emails";
+$wpdb->query($sql_delete);
+
+$sql_delete = "DROP TABLE IF EXISTS {$wpdb->prefix}mailjet_wc_guests";
+$wpdb->query($sql_delete);

@@ -9,6 +9,7 @@
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\Mailjeti18n;
+use MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Description of ContactForm7Settings
@@ -45,13 +46,13 @@ class ContactForm7Settings
 
         $mailjetCheckbox = $formdata[self::MAILJET_CHECKBOX];
         if ($mailjetCheckbox[0] != '') {
-            $cf7Email = trim(get_option('cf7_email'), '[]');
+            $cf7Email = trim(stripslashes(get_option('cf7_email')), '[]');
             if (!isset($formdata[$cf7Email])) {
                 return false;
             }
             $email = $formdata[$cf7Email];
 
-            $cf7name = get_option('cf7_fromname', '');
+            $cf7name = stripslashes(get_option('cf7_fromname', ''));
             $matches = array();
             $data = array();
             preg_match_all('/\[(.*?)\]/', $cf7name, $matches);
@@ -80,7 +81,7 @@ class ContactForm7Settings
                 '__EMAIL_TITLE__' =>  Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription'),
                 '__EMAIL_HEADER__' => sprintf(__( Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), 'mailjet-for-wordpress'), $wpUrl),
                 '__WP_URL__' => $wpUrl,
-                '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&token=' . sha1($params),
+                '__CONFIRM_URL__' => get_home_url() . '?' . $params . '&token=' . sha1($params . MailjetSettings::getCryptoHash()),
                 '__CLICK_HERE__' => Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list'),
                 '__FROM_NAME__' => get_option('blogname'),
                 '__IGNORE__' => Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.'),

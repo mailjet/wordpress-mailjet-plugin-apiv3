@@ -1,0 +1,24 @@
+.mj-front-container {
+    width: 100%;
+    background-color: #F8F8F8;
+    padding: 8px 21px;
+    margin-bottom: 15px;
+}
+
+.mj-front-container > span {
+    width: 274px;
+    color: #555555;
+    vertical-align: text-top;
+    line-height: 20px;
+}
+
+.mj-subscribe-btn {
+    height: 30px;
+    width: fit-content;
+    display: inline-flex;
+    float: right;
+    font-weight: 500;
+    line-height: 20px;
+    vertical-align: center;
+    padding-top: 5px;
+}

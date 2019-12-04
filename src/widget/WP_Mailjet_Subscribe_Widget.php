@@ -5,6 +5,7 @@ namespace MailjetPlugin\Widget;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
+use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
@@ -46,17 +47,18 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Build widget
         $widget_options = array(
             'classname' => 'WP_Mailjet_Subscribe_Widget',
-            'description' => __('Allows your visitors to subscribe to one of your lists', $this->get_widget_slug())
+            'description' => __('Allows your visitors to subscribe to one of your lists', 'mailjet-for-wordpress')
         );
         parent::__construct(
-            $this->get_widget_slug(), __('Mailjet Subscription Widget', $this->get_widget_slug()), $widget_options
+            $this->get_widget_slug(), __('Mailjet Subscription Widget', 'mailjet-for-wordpress'), $widget_options
         );
 
         // Register site styles and scripts
         add_action('admin_print_styles', array($this, 'register_widget_styles'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_styles'));
-        add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
+
+        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
 
         // Refreshing the widget's cached output with each new post
         add_action('save_post', array($this, 'flush_widget_cache'));
@@ -228,7 +230,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $params = http_build_query($params);
 
-        if ($_GET['mj_sub_token'] != sha1($params . $subscriptionOptionsSettings::WIDGET_HASH)) {
+        if ($_GET['mj_sub_token'] != sha1($params . MailjetSettings::getCryptoHash())) {
             // Invalid token
             _e('Invalid token', 'mailjet-for-wordpress');
             die;
@@ -335,6 +337,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function widget($args, $instance)
     {
         wp_enqueue_script($this->get_widget_slug() . '-front-script', plugins_url('js/front-widget.js', __FILE__));
+        wp_enqueue_style($this->get_widget_slug() . '-widget-front-styles', plugins_url('css/front-widget.css', __FILE__));
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if ($validApiCredentials === false) {
             return false;
@@ -961,7 +964,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
     public function register_widget_front_styles()
     {
-        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/front-widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
+        wp_register_style($this->get_widget_slug() . '-widget-front-styles', plugins_url('css/front-widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
     }
 
 // end register_widget_styles

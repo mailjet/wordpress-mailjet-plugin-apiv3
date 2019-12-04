@@ -72,4 +72,13 @@ class MailjetUpdate
             delete_option($option);
         }
     }
+
+    public static function updateToV5_2() {
+        $activateMailjetWooSync = get_option('activate_mailjet_woo_sync');
+        if (empty($activateMailjetWooSync)) {
+            return;
+        }
+        add_option('mailjet_woo_checkout_checkbox', $activateMailjetWooSync);
+        delete_option('activate_mailjet_woo_sync');
+    }
 }

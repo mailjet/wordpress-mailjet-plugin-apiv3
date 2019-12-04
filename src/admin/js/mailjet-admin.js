@@ -38,6 +38,17 @@
             document.execCommand("copy");
         });
 
+        // Copy Subscription widget shortcode
+        $('.copy_mailjet_shortcode').on("click", function () {
+            // Hide new property inputs
+            const text_shortcode = document.querySelector('#' + $(this).attr('data-input_id'));
+            text_shortcode.disabled = false;
+            text_shortcode.select();
+            text_shortcode.disabled = true;
+            document.execCommand("copy");
+        });
+
+
         $('.mailjet_row [scope=row]').closest('th').hide();
 
         /**
@@ -59,7 +70,6 @@
                 $('#mailjet_from_email_extra').remove();
             }
         }
-        ;
         $('select[name="mailjet_from_email"]').change(function (e) {
             showExtraFromEmailInput($(this));
         });
@@ -181,11 +191,12 @@ function mjSelect() {
             function selectValue() {
                 return select.querySelector("option:checked").textContent
             }
-            wrapper.setAttribute('data-value', selectValue());
-
-            select.addEventListener("change", function () {
+            if (select.querySelector("option:checked")) {
                 wrapper.setAttribute('data-value', selectValue());
-            });
+                select.addEventListener("change", function () {
+                    wrapper.setAttribute('data-value', selectValue());
+                });
+            }
             select.addEventListener("focus", function () {
                 wrapper.classList.add('mj-select-focus');
             });
@@ -264,26 +275,35 @@ function mjWooSubscription() {
      */
     const activateWooIntegrationBox = document.querySelector('#activate_mailjet_woo_integration');
     const wooActicateIntegrationForm = document.querySelector('#activate_mailjet_woo_form');
+    const wooActicateIntegrationCheckbox = document.querySelector('#activate_mailjet_woo_checkbox');
+    const wooActicateIntegrationSubbox= document.querySelector('#mailjet_woo_sub_letter');
+    const wooActicateIntegrationBannerbox = document.querySelector('#activate_mailjet_woo_bannerbox');
+    const wooActicateIntegrationBanner= document.querySelector('#mailjet_woo_sub_banner');
+
 
     if (activateWooIntegrationBox === null || activateWooIntegrationBox === undefined) {
         return false;
     }
     activateWooIntegrationBox.addEventListener("change", function () {
-        this.checked === true ? mjShow(wooActicateIntegrationForm) : mjHide(wooActicateIntegrationForm);
+        if (wooActicateIntegrationForm.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationForm);
+        } else {
+            mjHide(wooActicateIntegrationForm);
+        }
     });
-
-
-    /**
-     * Show / Hide WooCommerce Sync div
-     */
-    const wooContactListBox = document.querySelector('#activate_mailjet_woo_sync');
-    const wooContactList = document.querySelector('#woo_contact_list');
-
-    if (wooContactListBox === null || wooContactListBox === undefined) {
-        return false;
-    }
-    wooContactListBox.addEventListener("change", function () {
-        this.checked === true ? mjShow(wooContactList) : mjHide(wooContactList);
+    wooActicateIntegrationCheckbox.addEventListener("change", function () {
+        if (wooActicateIntegrationSubbox.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationSubbox);
+        } else {
+            mjHide(wooActicateIntegrationSubbox);
+        }
+    });
+    wooActicateIntegrationBannerbox.addEventListener("change", function () {
+        if (wooActicateIntegrationBanner.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationBanner);
+        } else {
+            mjHide(wooActicateIntegrationBanner);
+        }
     });
 }
 
@@ -361,8 +381,8 @@ function mjAdmin() {
     mjInitShowHide();
     mjSelect();
     if (document.querySelector('body.admin_page_mailjet_initial_contact_lists_page')
-            || document.querySelector('body.admin_page_mailjet_subscription_options_page')
-            || document.querySelector('body.admin_page_mailjet_integrations_page')) {
+        || document.querySelector('body.admin_page_mailjet_subscription_options_page')
+        || document.querySelector('body.admin_page_mailjet_integrations_page')) {
         mjSubscription();
     }
     if (document.querySelector('body.admin_page_mailjet_integrations_page')) {

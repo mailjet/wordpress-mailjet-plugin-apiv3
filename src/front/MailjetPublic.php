@@ -87,5 +87,28 @@ class MailjetPublic
 		 */
 
 //		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mailjet-public.js', array( 'jquery' ), $this->version, false );
+        if (get_option('activate_mailjet_woo_integration') === '1' &&
+            get_option('mailjet_woo_abandoned_cart_activate') === '1') {
+            global $wp;
+            $currentUrl = trim(home_url(add_query_arg(array(), $wp->request)), '/ ');
+            // check current page is wc checkout page
+            if ($currentUrl === trim(get_permalink(wc_get_page_id('checkout')), '/ ')) {
+                wp_enqueue_script(
+                    'woocommerce_capture_guest',
+                    plugins_url('../front/js/woocommerce_capture_guest.js', __FILE__),
+                    '',
+                    '',
+                    true
+                );
+
+                wp_localize_script(
+                    'woocommerce_capture_guest',
+                    'woocommerce_capture_guest_params',
+                    array(
+                        'ajax_url' => admin_url('admin-ajax.php')
+                    )
+                );
+            }
+        }
 	}
 }

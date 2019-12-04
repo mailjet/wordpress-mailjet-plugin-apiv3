@@ -14,12 +14,12 @@ namespace MailjetPlugin;
  * Plugin Name:       Mailjet for WordPress
  * Plugin URI:        https://www.mailjet.com/partners/wordpress/
  * Description:       The Best WordPress Plugin For Email Newsletters.
- * Version:           5.1.3
+ * Version:           5.2
  * Author:            Mailjet SAS
  * Author URI:        http://mailjet.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       mailjet
+ * Text Domain:       mailjet-for-wordpress
  * Domain Path:       /languages
  */
 /**
@@ -60,10 +60,13 @@ define('MAILJET_VERSION', '5.1.3');
  * Mailjet Plugid dir.
  */
 define('MAILJET_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
+define('MAILJET_ADMIN_TAMPLATE_DIR', plugin_dir_path( __FILE__ ) . 'src/templates/admin');
+define('MAILJET_FRONT_TEMPLATE_DIR', plugin_dir_path( __FILE__ ). 'src/templates/front');
 
 
 // Call the update to V5 logic
 MailjetUpdate::updateToV5();
+MailjetUpdate::updateToV5_2();
 
 /**
  * Begins execution of the plugin.

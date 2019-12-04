@@ -9,6 +9,10 @@ use MailjetPlugin\Includes\MailjetLoader;
 use MailjetPlugin\Includes\MailjetMail;
 use MailjetPlugin\Includes\MailjetMenu;
 use MailjetPlugin\Includes\MailjetSettings;
+use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
+use MailjetPlugin\Includes\SettingsPages\OrderNotificationsSettings;
+use MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
+
 //use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 // use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
@@ -87,6 +91,34 @@ class Mailjet
         $this->addMailjetSettings();
         $this->addMailjetPHPMailer();
         $this->registerMailjetWidget();
+
+        add_shortcode('mailjet_subscribe', array($this, 'display_mailjet_widget'));
+    }
+
+
+    public static function display_mailjet_widget($atts = [], $content = null, $tag = '')
+    {
+        extract(shortcode_atts(array(
+            'widget_id' => null
+        ), $atts, $tag));
+
+        // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
+        $instance = get_option('widget_wp_mailjet_subscribe_widget');
+
+        // In case we don't have 'widget_id' attribute in the shrotcode defined by user - we use the first widget id from the collection
+        if (empty($widget_id)) {
+            $widgetIds = [];
+            foreach (array_keys($instance) as $key) {
+                if (is_integer($key)) {
+                    $widgetIds[] = $key;
+                }
+            }
+            $widget_id = min($widgetIds);
+        }
+
+        ob_start();
+        the_widget('MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget', $instance[intval($widget_id)]);
+        return ob_get_clean();
     }
 
     /**
@@ -139,6 +171,12 @@ class Mailjet
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
+
+        if (get_option('activate_mailjet_woo_integration') === '1'){
+            $this->addWoocommerceActions();
+        }
+
     }
 
     /**
@@ -238,4 +276,29 @@ class Mailjet
         return $this->version;
     }
 
+    private function addWoocommerceActions()
+    {
+        $wooCommerceSettings = WooCommerceSettings::getInstance();
+
+        $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $wooCommerceSettings, 'orders_automation_settings_post');
+        $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
+
+        if (get_option('mailjet_woo_edata_sync') === '1'){
+            $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);
+            $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $wooCommerceSettings, 'paid_by_cheque_order_edata_sync', 10, 2);
+        }
+
+        $activeActions = get_option('mailjet_wc_active_hooks');
+        $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
+        if ($activeActions && !empty($activeActions)){
+            foreach ($activeActions as $action){
+                $this->loader->add_action($action['hook'],$wooCommerceSettings, $action['callable'], 10, 2);
+            }
+        }
+        if ($abandonedCartActiveActions && !empty($abandonedCartActiveActions)) {
+            foreach ($abandonedCartActiveActions as $action) {
+                $this->loader->add_action($action['hook'], $wooCommerceSettings, $action['callable'], 10, 2);
+            }
+        }
+    }
 }

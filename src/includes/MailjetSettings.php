@@ -78,8 +78,13 @@ class MailjetSettings
 
         // Woo integration
         register_setting('mailjet_integrations_page', 'activate_mailjet_woo_integration');
-        register_setting('mailjet_integrations_page', 'activate_mailjet_woo_sync');
-        register_setting('mailjet_integrations_page', 'mailjet_woo_list');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_edata_sync');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_checkout_checkbox');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_checkout_box_text');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_banner_checkbox');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_banner_text');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_banner_label');
+
         // Contact Form 7 integration
         register_setting('mailjet_integrations_page', 'activate_mailjet_cf7_integration');
         register_setting('mailjet_integrations_page', 'activate_mailjet_cf7_sync');
@@ -129,35 +134,40 @@ class MailjetSettings
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
 
+            // Check after login if the user is subscribed to the contact list
+            add_action('wp_login', array($subscriptionOptionsSettings, 'checkUserSubscription'), 10, 2);
+
             // When user is viewing another users profile page (not their own).
             add_action('edit_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
             // - If you want to apply your hook to ALL profile pages (including the current user) then you also need to use this one.
             add_action('show_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            // Runs just before the end of the new user registration form.
+            if (get_option('activate_mailjet_woo_integration') === '1') {
+                add_action('woocommerce_edit_account_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            }
 
             // Runs just before the end of the new user registration form.
             add_action('register_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
             // Runs near the end of the "Add New" user screen.
             add_action('user_new_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
 
-            // Runs when a user updates personal options from the admin screen.
-            add_action('personal_options_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
-            // Runs at the end of the Personal Options section of the user profile editing screen.
-            add_action('profile_personal_options ', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
-            //
-            add_action('edit_user_profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs when a user's profile is updated. Action function argument: user ID.
             add_action('profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
             // Runs immediately after the new user is added to the database.
-            add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
+            add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_register_user'));
         }
 
         /* Add custom field to comment form and process it on form submit */
-        $activate_mailjet_comment_authors_sync = get_option('activate_mailjet_comment_authors_sync');
-        $mailjet_comment_authors_list = get_option('mailjet_comment_authors_list');
-        if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list)) {
+        $activate_mailjet_comment_authors_sync = (int)get_option('activate_mailjet_comment_authors_sync');
+        $mailjet_comment_authors_list = (int)get_option('mailjet_comment_authors_list');
+        if ($activate_mailjet_comment_authors_sync === 1 && $mailjet_comment_authors_list > 1) {
             $commentAuthorsSettings = new CommentAuthorsSettings();
-
-            add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            if (wp_get_current_user()->exists()) {
+                add_action('comment_form', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            }
+            else {
+                add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
+            }
             add_action('wp_insert_comment', array($commentAuthorsSettings, 'mailjet_subscribe_comment_author'));
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
         }
@@ -165,20 +175,22 @@ class MailjetSettings
 
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
-        $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
-        $mailjet_woo_list = get_option('mailjet_woo_list');
-        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync) && !empty($mailjet_woo_list)) {
-            $wooCommerceSettings = new WooCommerceSettings();
+        $activate_mailjet_sync = get_option('activate_mailjet_sync');
 
+        if ((int)$activate_mailjet_woo_integration === 1 && (int)$activate_mailjet_sync === 1) {
+            $wooCommerceSettings = WooCommerceSettings::getInstance();
             // Add the checkbox
             add_action('woocommerce_after_checkout_billing_form', array($wooCommerceSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
             // Process the checkbox on submit
             add_action('woocommerce_checkout_create_order', array($wooCommerceSettings, 'mailjet_subscribe_woo'), 10, 2);
+            add_action('wp_ajax_nopriv_mj_ajax_subscribe', array($wooCommerceSettings, 'subscribeViaAjax'));
+            add_action('wp_ajax_mj_ajax_subscribe', array($wooCommerceSettings, 'subscribeViaAjax'));
 
             // Add filter for changing "Thank you" text on order processed page
             add_filter('woocommerce_thankyou_order_received_text', array($wooCommerceSettings, 'woo_change_order_received_text'), 10, 2);
 
             MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Comment Authors Sync active - added custom actions to sync them ]');
+
         }
 
         $isContactFormActivated = get_option('activate_mailjet_cf7_integration');
@@ -224,7 +236,7 @@ class MailjetSettings
                 'prop' => $name
             ));
 
-            if (sha1($params) !== $_GET['token']) {
+            if (sha1($params . MailjetSettings::getCryptoHash()) !== $_GET['token']) {
                 return false;
             }
 
@@ -264,11 +276,11 @@ class MailjetSettings
         /* Add custom field to comment form and process it on form submit */
         $activate_mailjet_comment_authors_sync = get_option('activate_mailjet_comment_authors_sync');
         $mailjet_comment_authors_list = get_option('mailjet_comment_authors_list');
-        if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list)) {
+        if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list) && !empty($_GET['mj_sub_comment_author_token'])) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            $mj_sub_comment_author_token = isset($_GET['mj_sub_comment_author_token']) ? $_GET['mj_sub_comment_author_token'] : null;
-            if (!empty($mj_sub_comment_author_token) &&
-                    $_GET['mj_sub_comment_author_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']))) {
+            $mj_sub_comment_author_token = $_GET['mj_sub_comment_author_token'];
+            $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . self::getCryptoHash());
+            if ($mj_sub_comment_author_token === $tokenCheck) {
                 $commentAuthorsSettings = new CommentAuthorsSettings();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
                 $syncSingleContactEmailToMailjetList = $commentAuthorsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
@@ -284,14 +296,12 @@ class MailjetSettings
 
         /* Add custom field to WooCommerce checkout form and process it on form submit */
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
-        $activate_mailjet_woo_sync = get_option('activate_mailjet_woo_sync');
-        $mailjet_woo_list = get_option('mailjet_woo_list');
-        if (!empty($activate_mailjet_woo_integration) && !empty($activate_mailjet_woo_sync) && !empty($mailjet_woo_list)) {
+        if (!empty($activate_mailjet_woo_integration) && !empty($_GET['mj_sub_woo_token'])) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            $mj_sub_woo_token = isset($_GET['mj_sub_woo_token']) ? $_GET['mj_sub_woo_token'] : false;
-            if (!empty($mj_sub_woo_token) &&
-                    $_GET['mj_sub_woo_token'] == sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'])) {
-                $wooCommerceSettings = new WooCommerceSettings();
+            $mj_sub_woo_token = $_GET['mj_sub_woo_token'];
+            $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'] . self::getCryptoHash());
+            if ($mj_sub_woo_token === $tokenCheck) {
+                $wooCommerceSettings = WooCommerceSettings::getInstance();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
                 $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']), $_GET['first_name'], $_GET['last_name']);
                 if (false === $syncSingleContactEmailToMailjetList) {
@@ -334,7 +344,7 @@ class MailjetSettings
             include($tankyouPageTemplate);
 //            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully subscribed to a Mailjet contact list', 'mailjet-for-wordpress') . '</div>';
         } else {
-            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('You have been successfully unsubscribed from a Mailjet contact list', 'mailjet-for-wordpress') . '</div>';
+            echo '<div class="notice notice-info is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #46b450; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . 'You have been successfully unsubscribed from a Mailjet contact list' . '</div>';
         }
         die; //We die here to not continue loading rest of the WP home page
     }
@@ -364,4 +374,17 @@ class MailjetSettings
         exit;
     }
 
+    public static function getCryptoHash() {
+        $hash = get_option('crypto_hash');
+        if (empty($hash)) {
+            try {
+                $hash = bin2hex(random_bytes(10));
+            }
+            catch (Exception $e) {
+                $hash = (string)mt_rand();
+            }
+            update_option('crypto_hash', $hash);
+        }
+        return get_option('crypto_hash');
+    }
 }

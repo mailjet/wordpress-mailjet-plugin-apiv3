@@ -5,6 +5,7 @@ namespace MailjetPlugin\Includes;
 //use Exception;
 use Mailjet\Client;
 use Mailjet\Resources;
+use GuzzleHttp\Exception\ConnectException;
 
 /**
  * Define the internationalization functionality.
@@ -69,7 +70,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -97,7 +98,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$Contactslist, ['body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         return $response;
@@ -120,7 +121,7 @@ class MailjetApi
         );
         try{
             $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -131,6 +132,70 @@ class MailjetApi
             }
         }
         return false;
+    }
+
+	public static function getContactListByID($contactListId)
+	{
+		if (!$contactListId || empty($contactListId)) {
+			return false;
+		}
+
+		try {
+			$mjApiClient = self::getApiClient();
+		} catch (\Exception $e) {
+			return false;
+		}
+
+		$filters = array(
+			'ID' => $contactListId
+		);
+		try{
+			$response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
+		} catch (ConnectException $e) {
+			return false;
+		}
+		if ($response->success()) {
+			return $response->getData();
+		}
+		return false;
+	}
+
+	public static function getSubscribersFromList($contactListId) {
+        if (!$contactListId || empty($contactListId)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $limit = 1000;
+        $dataArray = array();
+        $offset = 0;
+        do {
+            $filters = array(
+                'ContactsList' => $contactListId,
+                'Unsub' => false,
+                'Offset' => $offset,
+                'Limit' => $limit,
+                'Style' => 'Full'
+            );
+
+            try {
+                $response = $mjApiClient->get(Resources::$Listrecipient, array('filters' => $filters));
+            } catch (ConnectException $e) {
+                return false;
+            }
+            if ($response->success()) {
+                array_push($dataArray, $response->getData());
+            } else {
+                return false;
+            }
+            $offset += $limit;
+        } while ($response->getCount() >= $limit);
+        return array_merge(...$dataArray);
     }
 
     public static function getContactProperties()
@@ -148,7 +213,7 @@ class MailjetApi
 
         try {
             $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
@@ -199,7 +264,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$Contactmetadata, ['body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -207,6 +272,53 @@ class MailjetApi
         } else {
             return false;
 //            return $response->getStatus();
+        }
+    }
+
+    public static function getMailjetSegments() {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        try {
+            $response = $mjApiClient->get(Resources::$Contactfilter);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
+        }
+    }
+
+    public static function createMailjetSegment($name, $expression, $description = '') {
+        if (empty($name) || empty($expression)) {
+            return false;
+        }
+
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $body = [
+            'Description' => $description,
+            'Expression' => $expression,
+            'Name' => $name
+        ];
+        try {
+            $response = $mjApiClient->post(Resources::$Contactfilter, ['body' => $body]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        if ($response->success()) {
+            return $response->getData();
+        } else {
+            return false;
         }
     }
 
@@ -224,7 +336,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Sender, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -250,7 +362,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Contactmetadata, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -284,7 +396,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagemanycontacts, ['id' => $contactListId, 'body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -314,7 +426,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagecontact, ['id' => $contactListId, 'body' => $body]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         if ($response->success()) {
@@ -331,7 +443,7 @@ class MailjetApi
      * @param $listId
      * @return bool
      */
-    public static function checkContactSubscribedToList($email, $listId)
+    public static function checkContactSubscribedToList($email, $listId, $getContactId = false)
     {
         $exists = false;
         $existsAndSubscribed = false;
@@ -348,7 +460,7 @@ class MailjetApi
         ];
         try {
             $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
 
@@ -358,9 +470,67 @@ class MailjetApi
             if (isset($data[0]['IsUnsubscribed']) && false == $data[0]['IsUnsubscribed']) {
                 $existsAndSubscribed = true;
             }
+            if ($getContactId && $exists && $existsAndSubscribed){
+                return $data[0]['ContactID'];
+            }
         }
 
         return $exists && $existsAndSubscribed;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public static function isContactInList($email, $listId, $getContactId = false)
+    {
+        $mjApiClient = self::getApiClient();
+
+        $filters = [
+            'ContactEmail' => $email,
+            'ContactsList' => $listId,
+        ];
+        $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
+
+        if (!$response->success() || $response->getCount() <= 0) {
+            return false;
+        }
+
+        $data = $response->getData();
+        if ($getContactId){
+            return $data[0]['ContactID'];
+        }
+        return true;
+    }
+
+    public static function getContactDataByEmail($contactEmail)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $response = $mjApiClient->get(['contactdata', $contactEmail], []);
+
+        if ($response->success() && $response->getCount() > 0) {
+
+            return $response->getData();
+        }
+
+        return false;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public static function updateContactData($contactEmail, $data)
+    {
+        $mjApiClient = self::getApiClient();
+        $body = [
+            'Data' => $data
+        ];
+        $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
+        return $response;
     }
 
     public static function getProfileName()
@@ -372,7 +542,7 @@ class MailjetApi
         }
         try {
             $response = $mjApiClient->get(Resources::$Myprofile, []);
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             return false;
         }
         $name = "";
@@ -385,4 +555,108 @@ class MailjetApi
         return $name;
     }
 
+    public static function getTemplateByName($templateName) {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->get(Resources::$Template, ['id' => 'apikey|' . $templateName]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            return $response->getData()[0];
+        } else {
+            return false;
+        }
+    }
+
+    public static function getTemplateDetails($id)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->get(Resources::$TemplateDetailcontent, ['id' => $id]);
+        } catch (ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            $data = $response->getData();
+            return $data[0];
+        }
+        return  false;
+    }
+
+    public static function createTemplate(array $arguments)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        try {
+            $response = $mjApiClient->post(Resources::$Template, $arguments);
+        } catch (ConnectException $e) {
+            return false;
+        }
+        $data = $response->getData();
+        if ($response->success() && $response->getCount() > 0) {
+            return $data[0];
+        }else{
+            if ($data['ErrorCode'] === 'ps-0015'){
+                return self::getTemplateByName($arguments['body']['Name']);
+            }
+        }
+
+        return  false;
+    }
+
+
+    public static function createTemplateContent(array $content)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->post(Resources::$TemplateDetailcontent, $content);
+        } catch (ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success() && $response->getCount() > 0) {
+            return $response->getData();
+        }
+
+        return  false;
+    }
+
+    public static function sendEmail($content)
+    {
+        try {
+            $mjApiClient = self::getApiClient();
+        } catch (\Exception $e) {
+            return false;
+        }
+        try {
+            $response = $mjApiClient->post(Resources::$Email, $content);
+        } catch (ConnectException $e) {
+            return false;
+        }
+
+        if ($response->success()) {
+            return $response->getData();
+        }
+
+        return  false;
+    }
 }
