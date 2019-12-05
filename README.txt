@@ -12,34 +12,34 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Includes WooCommerce automated and order emails. Design, send and track engaging marketing and transactional emails from your WordPress admin.
 
 == What's new ==
-* Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
-* **Shortcode support** - add the subscription widget in any page or post using shortcode.
-* Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
+
+- Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
+- **Shortcode support** - add the subscription widget in any page or post using shortcode.
+- Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
 
 == Description ==
-
 Mailjet's official plugin on WordPress gives you access to:
-* **Easy Email Management:** Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
-* **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscription widget in any page or post using shortcode.
-* **Automated Contact Synchronization** - 4 ways to build your contact lists:
-   * Synchronize your *WordPress users*. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
-   * *Comment authors* can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
-   * Subscribe *WooCommerce customers* to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
-   * Use the built in *Contact Form 7* integration and allow form submitters to subscribe to your newsletter.
-* **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
-* **Flexibility** - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form. See the FAQ for more details.
-* **World Class Deliverability:** Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
-* **Insight and analytics:** Access real-time statistics on your campaigns showing opens, clicks, geographies, average time to click and more to optimize your email performance.
-* **Data Compliance:** Mailjet is GDPR compliant and ISO 27001 certified, meaning that it guarantees an optimal level of email data privacy and security.
-* **International UI and Support:** Mailjet offers user interfaces, documentation and 24/7 customer support in 5 languages (English, French, German, Spanish and Italian).
+- **Easy Email Management:** Create and manage all of your marketing and transactional email campaigns directly from your WordPress admin.
+- **Sign Up Form & Contact Lists Management:** Create and customize contact form widgets to allow your website visitors to subscribe to your newsletters. Add the subscription widget in any page or post using shortcode.
+- **Automated Contact Synchronization** - 4 ways to build your contact lists:
+  - Synchronize your *WordPress users*. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
+  - *Comment authors* can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
+  - Subscribe *WooCommerce customers* to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
+   - Use the built in *Contact Form 7* integration and allow form submitters to subscribe to your newsletter.
+- **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
+- **Flexibility** - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form. See the FAQ for more details.
+- **World Class Deliverability:** Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
+- **Insight and analytics:** Access real-time statistics on your campaigns showing opens, clicks, geographies, average time to click and more to optimize your email performance.
+- **Data Compliance:** Mailjet is GDPR compliant and ISO 27001 certified, meaning that it guarantees an optimal level of email data privacy and security.
+- **International UI and Support:** Mailjet offers user interfaces, documentation and 24/7 customer support in 5 languages (English, French, German, Spanish and Italian).
 
 == Installation ==
 
 1. Log in as administrator in Wordpress.
 2. Go to Plugins > Add New
 3. Find "Mailjet Email Marketing" in the plugins directory and install it
-- or -
-Click "Upload plugin" and upload the `mailjet-for-wordpress.zip` file from GitHub
+   - or -  
+   Click "Upload plugin" and upload the `mailjet-for-wordpress.zip` file from GitHub  
 4. Activate the Mailjet extension through the "Plugins" menu in WordPress.
 
 You must have cURL extension enabled. PHP 5.6 or later version is required.
