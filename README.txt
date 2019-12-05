@@ -25,7 +25,7 @@ Mailjet's official plugin on WordPress gives you access to:
   - Synchronize your *WordPress users*. The user role is added to Mailjet as a contact property, so you can filter and target marketing emails to the proper group. With ongoing synchronization, you never have to think about contact management again.
   - *Comment authors* can be added to a separate Mailjet contact list as they choose to subscribe while posting a comment on the blog.
   - Subscribe *WooCommerce customers* to your newsletter during checkout. Just enable the WooCommerce integration inside the plugin and you are ready to go.
-   - Use the built in *Contact Form 7* integration and allow form submitters to subscribe to your newsletter.
+  - Use the built in *Contact Form 7* integration and allow form submitters to subscribe to your newsletter.
 - **Campaign Builder Tool:** Use our drag and drop email editor or HTML builder to create beautiful and engaging emails - directly from your WordPress admin.
 - **Flexibility** - use filters to set your own subscription confirmation email template or texts inside the email, set your own thank you page, or widget form. See the FAQ for more details.
 - **World Class Deliverability:** Hit your subscribers' inboxes every time with our global deliverability and routing infrastructure
@@ -35,12 +35,12 @@ Mailjet's official plugin on WordPress gives you access to:
 
 == Installation ==
 
-1. Log in as administrator in Wordpress.
+1. Log in as administrator in WordPress
 2. Go to Plugins > Add New
 3. Find "Mailjet Email Marketing" in the plugins directory and install it
    - or -  
-   Click "Upload plugin" and upload the `mailjet-for-wordpress.zip` file from GitHub  
-4. Activate the Mailjet extension through the "Plugins" menu in WordPress.
+   Click "Upload plugin" and upload the `mailjet-for-wordpress.zip` file from GitHub
+4. Activate the Mailjet extension through the "Plugins" menu in WordPress
 
 You must have cURL extension enabled. PHP 5.6 or later version is required.
 
@@ -195,6 +195,14 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Enable order notifications for WooCommerce
 7. Configure abandoned cart notifications for WooCommerce
 
+== Upgrade notice ==
+
+= v5.2 =
+* Added full WooCommerce integration
+* Added widget shortcode support
+* Fixed compatibility bug with Astra theme
+* Fixed W3C validation issue with the widget code
+
 == Changelog ==
 
 = 5.2 =
@@ -236,7 +244,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 = 5.0.9 =
 * Remove css and js public files to reduce public page speed loading
-* WordPress widget is now working on wordpress version < 4.4
+* WordPress widget is now working on WordPress version < 4.4
 * Prevent fatal error on api timeout
 * Add missing translations
 
