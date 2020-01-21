@@ -78,11 +78,6 @@ class Mailjet
         }
         $this->plugin_name = 'mailjet';
 
-        /*
-        / Activate logger only in debug mode
-        */
-        update_option('mailjet_activate_logger', 0);
-
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
