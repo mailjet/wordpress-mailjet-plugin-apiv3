@@ -321,8 +321,7 @@ class IntegrationsSettings
                                 <input type="hidden" name="action" value="integrationsSettings_custom_hook">
                                 <input type="hidden" name="custom_nonce" value="<?= $nonce?>">
                                 <button type="submit" id="integrationsSubmit" class="mj-btn btnPrimary MailjetSubmit"
-                                        name="submit"><?= $saveButton; ?></button>
-                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?= __( 'Cancel', 'mailjet-for-wordpress' ) ?>"> -->
+                                        name="submit"><?= $saveButton ?></button>
                             </form>
                         </div>
                     </div>

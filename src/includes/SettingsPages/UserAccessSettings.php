@@ -19,6 +19,8 @@ use MailjetPlugin\Includes\MailjetLogger;
  */
 class UserAccessSettings
 {
+    const PREFIX_ACCESS_INPUT_NAME = 'mailjet_access_';
+    const ACCESS_CAP_NAME = 'mailjet_plugin_access';
 
     public function mailjet_section_user_access_cb($args)
     {
@@ -29,39 +31,26 @@ class UserAccessSettings
         <?php
     }
 
+    private function getRoles() {
+        return get_editable_roles();
+    }
 
     public function mailjet_user_access_cb($args)
     {
-        // get the value of the setting we've registered with register_setting()
-        $mailjetAccessAdministrator = get_option('mailjet_access_administrator');
-        $mailjetAccessEditor = get_option('mailjet_access_editor');
-        $mailjetAccessAuthor = get_option('mailjet_access_author');
-        $mailjetAccessContributor = get_option('mailjet_access_contributor');
-        $mailjetAccessSubscriber = get_option('mailjet_access_subscriber');
+        $roles = $this->getRoles();
 
         ?>
 
         <fieldset class="settingsAccessFldset">
             <legend class="screen-reader-text"><span><?php  _e('User Access', 'mailjet-for-wordpress'); ?></span></legend>
-            <label class="checkboxLabel" for="mailjet_access_administrator">
-                <input name="mailjet_access_administrator" type="checkbox" id="mailjet_access_administrator" value="1" <?=( TRUE || $mailjetAccessAdministrator == 1 ? ' checked="checked" disabled' : '') ?> >
-                <span><?php _e('Administrator', 'mailjet-for-wordpress'); ?></span>
-            </label>
-            <label class="checkboxLabel" class="mj-label" for="mailjet_access_editor">
-                <input name="mailjet_access_editor" type="checkbox" id="mailjet_access_editor" value="1" <?=($mailjetAccessEditor == 1 ? ' checked="checked"' : '') ?> >
-                <span><?php _e('Editor', 'mailjet-for-wordpress'); ?></span>
-            </label>
-            <label class="checkboxLabel" class="mj-label" for="mailjet_access_author">
-                <input name="mailjet_access_author" type="checkbox" id="mailjet_access_author" value="1" <?=($mailjetAccessAuthor == 1 ? ' checked="checked"' : '') ?> >
-                <span><?php _e('Author', 'mailjet-for-wordpress'); ?></span>
-            </label>
-            <label class="checkboxLabel" class="mj-label" for="mailjet_access_contributor">
-                <input name="mailjet_access_contributor" type="checkbox" id="mailjet_access_contributor" value="1" <?=($mailjetAccessContributor == 1 ? ' checked="checked"' : '') ?> >
-                <span><?php _e('Contributor', 'mailjet-for-wordpress'); ?></label>
-            <label class="checkboxLabel" class="mj-label" for="mailjet_access_subscriber">
-                <input name="mailjet_access_subscriber" type="checkbox" id="mailjet_access_subscriber" value="1" <?=($mailjetAccessSubscriber == 1 ? ' checked="checked"' : '') ?> >
-                <?php _e('Subscriber', 'mailjet-for-wordpress'); ?></span>
-            </label>
+            <?php foreach ($roles as $roleKey => $role) {
+                $hasAccess = isset($role['capabilities'][self::ACCESS_CAP_NAME]) && $role['capabilities'][self::ACCESS_CAP_NAME];
+            ?>
+                <label class="checkboxLabel" for="<?php echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey ?>">
+                    <input name="<?php echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey ?>" type="checkbox" id="<?php echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey ?>" value="1" <?php echo ($hasAccess ? ' checked="checked"' : ''); echo ($roleKey === 'administrator' ? 'disabled' : '') ?> >
+                    <span><?php _e($role['name'], 'mailjet-for-wordpress'); ?></span>
+                </label>
+            <?php } ?>
         </fieldset>
 
         <input name="settings_step" type="hidden" id="settings_step" value="user_access_step">
@@ -69,9 +58,37 @@ class UserAccessSettings
         <?php
     }
 
+    public function user_access_post_handler() {
+        $postData = $_POST;
 
+        if (!isset($postData['custom_nonce']) || !wp_verify_nonce($postData['custom_nonce'], 'mailjet_user_access_page_html')){
+            add_settings_error( 'mailjet_messages', 'mailjet_message', __( 'Your permissions don\'t match! Please refresh your session and if the problem persists, contact our support team.', 'mailjet-for-wordpress' ), 'error' );
+            settings_errors( 'mailjet_messages' );
+            exit;
+        }
 
+        foreach ($this->getRoles() as $roleKey => $role) {
+            if ($roleKey === 'administrator') {
+                continue;
+            }
+            $hasAccess = isset($role['capabilities'][self::ACCESS_CAP_NAME]) && $role['capabilities'][self::ACCESS_CAP_NAME];
+            $inputName = self::PREFIX_ACCESS_INPUT_NAME . $roleKey;
+            if ($hasAccess) {
+                if (!isset($postData[$inputName])) {
+                    $role = get_role($roleKey);
+                    $role->remove_cap(self::ACCESS_CAP_NAME);
+                }
+            }
+            else {
+                if (isset($postData[$inputName])) {
+                    $role = get_role($roleKey);
+                    $role->add_cap(self::ACCESS_CAP_NAME, true);
+                }
+            }
+        }
 
+        wp_redirect(add_query_arg(array('page' => 'mailjet_user_access_page'), admin_url('admin.php')));
+    }
 
     /**
      * top level menu:
@@ -108,6 +125,7 @@ class UserAccessSettings
             ]
         );
 
+        $nonce = wp_create_nonce('mailjet_user_access_page_html');
 
         // add error/update messages
 
@@ -143,11 +161,10 @@ class UserAccessSettings
                         ?>
                     </div>
 
-                <div class="right">
+                    <div class="right">
                         <div class="centered">
-        <!--                    <h1>--><?php //echo esc_html(get_admin_page_title()); ?><!--</h1>-->
                             <h2 class="section_inner_title"><?php _e('User access', 'mailjet-for-wordpress'); ?></h2>
-                            <form action="options.php" method="post">
+                            <form action="<?php echo esc_url(admin_url('admin-post.php')) ?>" method="POST">
                                 <?php
                                 // output security fields for the registered setting "mailjet"
                                 settings_fields('mailjet_user_access_page');
@@ -158,7 +175,8 @@ class UserAccessSettings
                                 $saveButton = __('Save', 'mailjet-for-wordpress');
                                 ?>
                                 <button type="submit" id="userAccessSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?= $saveButton; ?></button>
-                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?=__('Cancel', 'mailjet-for-wordpress')?>"> -->
+                                <input type="hidden" name="action" value="user_access_settings_custom_hook">
+                                <input type="hidden" name="custom_nonce" value="<?= $nonce?>">
                             </form>
                         </div>
                     </div>

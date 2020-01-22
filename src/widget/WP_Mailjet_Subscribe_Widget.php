@@ -378,13 +378,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // go on with your widget logic, put everything into a string and …
         extract($args, EXTR_SKIP);
 
-        $widget_string = $before_widget;
-
         ob_start();
         $front_widget_file = apply_filters('mailjet_widget_form_filename', plugin_dir_path(__FILE__) . 'views/widget.php');
         include($front_widget_file);
-        $widget_string .= ob_get_clean();
-        $widget_string .= $after_widget;
+        $widget_string = ob_get_clean();
 
         $cache[$args['widget_id']] = $widget_string;
 
@@ -926,9 +923,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $isMailjetDown = 'No connection with Mailjet.Please try a bit later.';
         }
 
-        $mailjetContactProperties = null;
         $mailjetContactProperties = $propertiesOptions;
-//        $admin_locale = get_locale();
         $admin_locale = Mailjeti18n::getLocale();
         // Display the admin form
         $languages = Mailjeti18n::getSupportedLocales();
@@ -999,7 +994,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     private function getSubscriptionOptionsSettings()
     {
         if ($this->subscriptionOptionsSettings == null) {
-            return new SubscriptionOptionsSettings;
+            return SubscriptionOptionsSettings::getInstance();
         }
         return $this->subscriptionOptionsSettings;
     }

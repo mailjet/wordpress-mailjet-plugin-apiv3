@@ -4,17 +4,10 @@ namespace MailjetPlugin\Includes;
 
 use MailjetPlugin\Admin\MailjetAdmin;
 use MailjetPlugin\Front\MailjetPublic;
-use MailjetPlugin\Includes\Mailjeti18n;
-use MailjetPlugin\Includes\MailjetLoader;
-use MailjetPlugin\Includes\MailjetMail;
-use MailjetPlugin\Includes\MailjetMenu;
-use MailjetPlugin\Includes\MailjetSettings;
 use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
-use MailjetPlugin\Includes\SettingsPages\OrderNotificationsSettings;
+use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
 use MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
 
-//use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
-// use MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget;
 
 /**
  * The core plugin class.
@@ -166,6 +159,7 @@ class Mailjet
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action('admin_post_user_access_settings_custom_hook', new UserAccessSettings(), 'user_access_post_handler');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
 
         if (get_option('activate_mailjet_woo_integration') === '1'){
