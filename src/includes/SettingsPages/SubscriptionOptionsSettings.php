@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use http\Message;
-use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
@@ -26,15 +24,24 @@ class SubscriptionOptionsSettings
     CONST PROP_USER_LASTNAME = 'lastname';
     CONST WP_PROP_USER_ROLE = 'wp_user_role';
 
+    private static $instance;
+
     private $subscrFieldset = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
     private $profileFields = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
 
-    public function __construct()
+    private function __construct()
     {
 	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminScripts' ]);
         add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontScripts' ]);
 	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
 	    add_action( 'wp_ajax_get_contact_lists_menu', [$this, 'getContactListsMenu']);
+    }
+
+    public static function getInstance() {
+        if (is_null(self::$instance))  {
+            self::$instance = new SubscriptionOptionsSettings();
+        }
+        return self::$instance;
     }
 
 	public function mailjet_section_subscription_options_cb($args)

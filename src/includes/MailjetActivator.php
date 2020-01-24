@@ -2,6 +2,8 @@
 
 namespace MailjetPlugin\Includes;
 
+use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
+
 /**
  * Triggered on mailjet plugin activation
  * Check if server php version is higher enough
@@ -17,6 +19,12 @@ class MailjetActivator
         if (!self::compatible_version()) {
             return;
         }
+    }
+
+    // Set initial settings on plugin activation
+    function activation_settings() {
+         $adminRole = get_role('administrator');
+         $adminRole->add_cap(UserAccessSettings::ACCESS_CAP_NAME, true);
     }
 
     // The primary sanity check, automatically disable the plugin on activation if it doesn't

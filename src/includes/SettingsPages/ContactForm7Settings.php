@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Includes\Mailjeti18n;
@@ -91,7 +85,7 @@ class ContactForm7Settings
             }
 
             $email_subject =  Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
-            add_filter('wp_mail_content_type', array(new SubscriptionOptionsSettings(), 'set_html_content_type'));
+            add_filter('wp_mail_content_type', array(SubscriptionOptionsSettings::getInstance(), 'set_html_content_type'));
             wp_mail($email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
         }
 

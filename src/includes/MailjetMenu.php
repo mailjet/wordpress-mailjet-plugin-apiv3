@@ -37,17 +37,7 @@ class MailjetMenu
 	 */
     public function display_menu()
     {
-        if (
-            current_user_can('administrator')
-            ||
-            (current_user_can('editor') && get_option('mailjet_access_editor') == 1)
-            ||
-            (current_user_can('author') && get_option('mailjet_access_author') == 1)
-            ||
-            (current_user_can('contributor') && get_option('mailjet_access_contributor') == 1)
-            ||
-            (current_user_can('subscriber') && get_option('mailjet_access_subscriber') == 1)
-        ) {
+        if (current_user_can(UserAccessSettings::ACCESS_CAP_NAME)) {
             add_menu_page(
                 __('Connect your Mailjet account to get started', 'mailjet-for-wordpress'),
                 'Mailjet',
@@ -114,7 +104,7 @@ class MailjetMenu
                     array(new EnableSendingSettings(), 'mailjet_sending_settings_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Sending settings\' sub-menu added ]');
                 add_submenu_page(null, __('Subscription options', 'mailjet-for-wordpress'), null, 'read', 'mailjet_subscription_options_page',
-                    array(new SubscriptionOptionsSettings(), 'mailjet_subscription_options_page_html'));
+                    array(SubscriptionOptionsSettings::getInstance(), 'mailjet_subscription_options_page_html'));
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ \'Subscription options\' sub-menu added ]');
                 add_submenu_page(null, __('User access', 'mailjet-for-wordpress'), null, 'read', 'mailjet_user_access_page',
                     array(new UserAccessSettings(), 'mailjet_user_access_page_html'));

@@ -63,12 +63,6 @@ delete_option('send_test_email_btn');
 delete_option('activate_mailjet_comment_authors_sync');
 delete_option('mailjet_comment_authors_list');
 
-delete_option('mailjet_access_administrator');
-delete_option('mailjet_access_editor');
-delete_option('mailjet_access_author');
-delete_option('mailjet_access_contributor');
-delete_option('mailjet_access_subscriber');
-
 delete_option('activate_mailjet_cf7_integration');
 delete_option('mailjet_cf7_list');
 delete_option('cf7_email');

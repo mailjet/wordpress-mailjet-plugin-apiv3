@@ -2,16 +2,10 @@
 
 namespace MailjetPlugin\Includes;
 
-//use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
 use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
-use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
 use MailjetPlugin\Includes\SettingsPages\ContactForm7Settings;
 use MailjetPlugin\Includes\SettingsPages\CommentAuthorsSettings;
-use MailjetPlugin\Includes\Mailjeti18n;
-
-//use MailjetPlugin\Includes\Mailjeti18n;
 
 /**
  * Register all actions and filters for the plugin.
@@ -69,11 +63,6 @@ class MailjetSettings
         register_setting('mailjet_subscription_options_page', 'mailjet_comment_authors_list');
         register_setting('mailjet_subscription_options_page', 'settings_step');
 
-        register_setting('mailjet_user_access_page', 'mailjet_access_administrator');
-        register_setting('mailjet_user_access_page', 'mailjet_access_editor');
-        register_setting('mailjet_user_access_page', 'mailjet_access_author');
-        register_setting('mailjet_user_access_page', 'mailjet_access_contributor');
-        register_setting('mailjet_user_access_page', 'mailjet_access_subscriber');
         register_setting('mailjet_user_access_page', 'settings_step');
 
         // Woo integration
@@ -132,7 +121,7 @@ class MailjetSettings
         $mailjet_sync_list = get_option('mailjet_sync_list');
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - Start ]');
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
-            $subscriptionOptionsSettings = new SubscriptionOptionsSettings();
+            $subscriptionOptionsSettings = SubscriptionOptionsSettings::getInstance();
 
             // Check after login if the user is subscribed to the contact list
             add_action('wp_login', array($subscriptionOptionsSettings, 'checkUserSubscription'), 10, 2);
