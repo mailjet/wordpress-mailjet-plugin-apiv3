@@ -190,4 +190,15 @@ class UserAccessSettings
         <?php
     }
 
+    /**
+     * Never call !
+     * Useful to register the dynamic translations to the po files
+     */
+    private function registerRoleTranslations() {
+        __('Administrator', 'mailjet-for-wordpress');
+        __('Editor', 'mailjet-for-wordpress');
+        __('Author', 'mailjet-for-wordpress');
+        __('Contributor', 'mailjet-for-wordpress');
+        __('Subscriber', 'mailjet-for-wordpress');
+    }
 }

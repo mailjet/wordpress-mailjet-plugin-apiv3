@@ -3,12 +3,11 @@
     $(function () {
 
         $(document).on('widget-updated', function (event, widget) {
-            var widget_id = $(widget).attr('id');
             showCheckedLanguages();
         });
 
         $(document).on('widget-added', function (event, widget) {
-            var widget_id = $(widget).attr('id');
+            showCheckedLanguages();
         });
 
         // Toggle(show/hide) hidden language elements(title, contactList)

@@ -499,7 +499,7 @@ if($numberActiveLanguages == 1) {
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false"><?php _e('Cancel', 'mailjet-for-wordpress') ?></button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-backdrop="false" id="saveAdvancedForm"><?php _e('Save', 'mailjet-for-wordpress') ?></button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-backdrop="false" id="saveMailjetAdvancedForm"><?php _e('Save', 'mailjet-for-wordpress') ?></button>
                 </div>
             </div>
         </div>
