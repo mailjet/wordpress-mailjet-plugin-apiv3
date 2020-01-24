@@ -658,8 +658,9 @@
     margin-right: 16px;
 }
 
-.mjSettings .testEmailFldset {
-    margin-bottom: 24px;
+.mjSettings #testEmail {
+    margin-top: 24px;
+    margin-bottom: 14px;
 }
 
 .mjSettings .sendTestEmailBtn {
