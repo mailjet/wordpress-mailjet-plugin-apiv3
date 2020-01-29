@@ -85,5 +85,16 @@ class MailjetUpdate
         delete_option('mailjet_access_editor');
         delete_option('mailjet_access_contributor');
         delete_option('mailjet_access_subscriber');
+
+        delete_option('mailjet_thank_you_page_Italian');
+        delete_option('mailjet_thank_you_page_Spanish');
+        delete_option('mailjet_thank_you_page_German');
+        delete_option('mailjet_thank_you_page_English');
+        delete_option('mailjet_thank_you_page_French');
+        delete_option('mailjet_locale_subscription_list_it_IT');
+        delete_option('mailjet_locale_subscription_list_es_ES');
+        delete_option('mailjet_locale_subscription_list_en_US');
+        delete_option('mailjet_locale_subscription_list_fr_FR');
+        delete_option('mailjet_locale_subscription_list_de_DE');
     }
 }

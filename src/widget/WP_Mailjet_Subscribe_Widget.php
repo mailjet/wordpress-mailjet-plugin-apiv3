@@ -209,6 +209,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $subscription_email = isset($_GET['subscription_email']) ? $_GET['subscription_email'] : '';
         $list_id = isset($_GET['list_id']) ? $_GET['list_id'] : '';
         $widget_id = isset($_GET['widget_id']) ? $_GET['widget_id'] : false;
+        $thanks_id = isset($_GET['thanks_id']) ? $_GET['thanks_id'] : '';
 
         if (!$subscription_email) {
             _e('Subscription email is missing', 'wordpress-for-mailjet');
@@ -221,6 +222,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             'subscription_email' => $subscription_email,
             'subscription_locale' => $locale,
             'list_id' => $list_id,
+            'thanks_id' => $thanks_id,
             'properties' => $properties,
         );
 
@@ -238,19 +240,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // The token is valid we can subscribe the user
         $contactListId = $list_id;
-
         if (empty($list_id)) {
-            $contactListId = get_option('mailjet_locale_subscription_list_' . $locale);
-        }
-        // List id is not provided
-        if (!$contactListId) {
-            // Use en_US list id as default
-            $listIdEn = get_option('mailjet_locale_subscription_list_en_US');
-            if (!$listIdEn) {
-                _e('Contact list not provided', 'mailjet-for-wordpress');
-                die;
-            }
-            $contactListId = $listIdEn;
+            _e('Contact list not provided', 'mailjet-for-wordpress');
+            die;
         }
 
         $dataProperties = array();
@@ -307,19 +299,13 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             die;
         }
 
-        // Subscribed
-        $language = Mailjeti18n::getCurrentUserLanguage();
-        $thankYouPageId = get_option('mailjet_thank_you_page_' . $language);
-
-        // If no selected page, select default template
-        if (!$thankYouPageId) {
-//                $locale = Mailjeti18n::getLocaleByPll();
+        // If no selected page in widget settings, display default template
+        if (empty($thanks_id)) {
             $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
             $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
-            $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
-            // Default page is selected
-            include($tankyouPageTemplate);
+            $thankYouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
+            include($thankYouPageTemplate);
             die;
         }
     }
@@ -444,7 +430,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $instance[$locale]['language_checkbox'] = isset($new_instance[$locale.'[language_checkbox']) ? 1 : false;
                 $instance[$locale]['title'] = isset($new_instance[$locale.'[title']) ? wp_strip_all_tags($new_instance[$locale.'[title']) : '';
                 $instance[$locale]['list'] = isset($new_instance[$locale.'[list']) ? wp_strip_all_tags($new_instance[$locale.'[list']) : '';
-                update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
 
                 $customLanguages = Mailjeti18n::getSupportedLocales();
                 $getInstanceKeys = $this->getUpdateArrayKeysPairs();
@@ -463,7 +448,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 }
 
                 $instance[$language]['thank_you'] = isset($new_instance[$language.'[thank_you']) ? wp_strip_all_tags($new_instance[$language.'[thank_you']) : 0;
-                update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
 
                 // Translations update
                 Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);
@@ -480,7 +464,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 $instance[$locale]['language_checkbox'] = isset($new_instance[$locale]['language_checkbox']) ? 1 : false;
                 $instance[$locale]['title'] = isset($new_instance[$locale]['title']) ? wp_strip_all_tags($new_instance[$locale]['title']) : '';
                 $instance[$locale]['list'] = isset($new_instance[$locale]['list']) ? wp_strip_all_tags($new_instance[$locale]['list']) : '';
-                update_option('mailjet_locale_subscription_list_' . $locale, $instance[$locale]['list']);
 
                 $customLanguages = Mailjeti18n::getSupportedLocales();
                 $getInstanceKeys = $this->getUpdateArrayKeysPairs();
@@ -499,7 +482,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 }
 
                 $instance[$language]['thank_you'] = isset($new_instance[$language]['thank_you']) ? wp_strip_all_tags($new_instance[$language]['thank_you']) : 0;
-                update_option('mailjet_thank_you_page_' . $language, $instance[$language]['thank_you']);
 
                 // Translations update
                 Mailjeti18n::updateTranslationsInFile($locale, $instance[$locale]);

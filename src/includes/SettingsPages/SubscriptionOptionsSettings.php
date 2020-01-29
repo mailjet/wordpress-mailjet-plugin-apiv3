@@ -414,8 +414,8 @@ class SubscriptionOptionsSettings
             'subscription_email' => $subscription_email,
             'subscription_locale' => $subscription_locale,
             'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '',
-            'properties' => $properties,
-//            'thank_id' => $thankYouURI
+            'thanks_id' => isset($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : '',
+            'properties' => $properties
         );
 
         if ($widgetId){
