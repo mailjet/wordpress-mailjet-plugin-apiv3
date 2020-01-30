@@ -1,5 +1,5 @@
 .mailjet_widget_front_container {
-
+    margin-bottom: 20px;
 }
 
 #mailjet-widget-title-wrap {
@@ -15,17 +15,25 @@
     margin-bottom: 10px;
 }
 
+.mailjet-widget-form-date {
+    display: flex;
+    flex-direction: column;
+}
+
 .mailjet-widget-label {
-    margin-bottom: 20px;
     font-weight: 500;
     display: inline;
     cursor: pointer;
 }
 
-#mjForm{
+#mailjetSubscriptionForm{
     
 }
 
 #mailjet_widget_email{
     
+}
+
+.mailjet_widget_front_container input[type=date] {
+    width: fit-content;
 }

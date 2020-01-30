@@ -2,11 +2,22 @@
     "use strict";
     $(function () {
 
-        const widget = $('.mailjet_widget_form_message');
-        if (1 === widget.length && widget[0] !== undefined) {
-            const messageOffsetTop = widget[0].offsetTop + 100;
-            $('html, body').animate({scrollTop: messageOffsetTop}, "fast");
-        }
+        $(document).on('submit', 'form#mailjetSubscriptionForm', function (event) {
+            event.preventDefault();
 
+            const form = $(this);
+            const message = $('.mailjet_widget_form_message');
+            jQuery.ajax({
+                url : mjWidget.ajax_url,
+                type : 'post',
+                data : form.serializeArray(),
+                success : function( response ) {
+                    message.text(response);
+                },
+                error : function( err ) {
+                    message.text('An error occurred.');
+                }
+            });
+        });
     });
 }(jQuery));
