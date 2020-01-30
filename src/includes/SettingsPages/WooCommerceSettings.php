@@ -1000,6 +1000,10 @@ class WooCommerceSettings
 
     private function addThankYouSubscription($order)
     {
+        $scriptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
+        wp_register_script('mailjet-woo-ajax-subscribe', $scriptPath, array('jquery'), false, true);
+        wp_localize_script('mailjet-woo-ajax-subscribe', 'mailjet', ['url' => admin_url( 'admin-ajax.php' )]);
+        wp_enqueue_script('mailjet-woo-ajax-subscribe');
         $text = stripslashes(get_option('mailjet_woo_banner_text'));
         $label = stripslashes(get_option('mailjet_woo_banner_label'));
         set_query_var('orderId', $order->get_id());
@@ -1013,10 +1017,6 @@ class WooCommerceSettings
         $cssPath = plugins_url('/src/front/css/mailjet-front.css', MAILJET_PLUGIN_DIR . 'src');
         wp_register_style('mailjet-front', $cssPath);
         wp_enqueue_style('mailjet-front');
-        $scryptPath = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
-        wp_register_script('ajaxHandle', $scryptPath, array('jquery'), false, true);
-        wp_localize_script('ajaxHandle', 'mailjet', ['url' => admin_url( 'admin-ajax.php' )]);
-        wp_enqueue_script('ajaxHandle');
     }
 
     public function subscribeViaAjax()
