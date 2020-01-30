@@ -11,10 +11,10 @@
                 url : mjWidget.ajax_url,
                 type : 'post',
                 data : form.serializeArray(),
-                success : function( response ) {
+                success : function(response) {
                     message.text(response);
                 },
-                error : function( err ) {
+                error : function(err) {
                     message.text('An error occurred.');
                 }
             });

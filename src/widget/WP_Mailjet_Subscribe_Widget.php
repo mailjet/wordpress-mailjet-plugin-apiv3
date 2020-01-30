@@ -131,7 +131,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                     continue;
                 }
                 foreach($mailjetContactProperties as $mailjetContactProperty) {
-                    if($propertyId == $mailjetContactProperty['ID']) {
+                    if($propertyId === $mailjetContactProperty['ID']) {
                         $dataType = $mailjetContactProperty['Datatype'];
                         switch($dataType) {
                             case 'str':
@@ -244,7 +244,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             foreach ($mailjetContactProperties as $property) {
                 $propertyName = $property['Name'];
                 $propertyValue = $properties[$property['ID']];
-                if (isset($propertyValue) && $propertyValue !== '') {
+                if (!empty($propertyValue)) {
                     $dataType = $property['Datatype'];
                     switch ($dataType) {
                         case 'datetime':
