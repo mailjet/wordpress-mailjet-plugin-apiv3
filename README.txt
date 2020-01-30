@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 5.2
+Stable tag: 5.2.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -197,13 +197,17 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 == Upgrade notice ==
 
-= v5.2 =
-* Added full WooCommerce integration
-* Added widget shortcode support
-* Fixed compatibility bug with Astra theme
-* Fixed W3C validation issue with the widget code
+= 5.2.1 =
+* Fixed compatibility with the Theme Customizer
+* Added compatibility with custom roles
+* Tweaks and optimizations
 
 == Changelog ==
+
+= 5.2.1 =
+* Fixed compatibility with the Theme Customizer
+* Added compatibility with custom roles
+* Tweaks and optimizations
 
 = 5.2 =
 * Added full WooCommerce integration

@@ -74,12 +74,12 @@ class MailjetUpdate
         delete_option('activate_mailjet_woo_sync');
     }
 
-    public static function updateToV5_3() {
+    public static function updateToV5_2_1() {
         $pluginVersion = get_option('mailjet_plugin_version');
         if (!empty($pluginVersion)) {
             return;
         }
-        add_option('mailjet_plugin_version', '5.3');
+        add_option('mailjet_plugin_version', '5.2.1');
         delete_option('mailjet_access_administrator');
         delete_option('mailjet_access_author');
         delete_option('mailjet_access_editor');
