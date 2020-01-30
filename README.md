@@ -206,6 +206,11 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 ## Changelog
 
+##### 5.2.1
+* Fixed compatibility with the Theme Customizer
+* Added compatibility with custom roles
+* Tweaks and optimizations
+
 ##### 5.2
 * Added full WooCommerce integration
 * Added widget shortcode support
