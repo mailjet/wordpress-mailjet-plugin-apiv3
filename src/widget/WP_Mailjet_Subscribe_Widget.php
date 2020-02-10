@@ -969,6 +969,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
     public function register_widget_front_scripts()
     {
+        wp_enqueue_script( 'jquery' );
         wp_register_script($this->get_widget_slug() . '-front-script', plugins_url('js/front-widget.js', __FILE__));
         wp_localize_script($this->get_widget_slug() . '-front-script', 'mjWidget', array('ajax_url' => admin_url('admin-ajax.php')));
         wp_enqueue_script($this->get_widget_slug() . '-front-script');
