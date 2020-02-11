@@ -11,23 +11,10 @@ use MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
 
-    /**
-     *
-     * Unique identifier for your widget.
-     *
-     *
-     * The variable name is used as the text domain when internationalizing strings
-     * of text. Its value should match the Text Domain file header in the main
-     * widget file.
-     *
-     * @since    5.0.0
-     *
-     * @var      string
-     */
+    const WIDGET_OPTIONS_NAME = 'mailjet_widget_options';
+
     private $subscriptionOptionsSettings = null;
-    // protected $widget_slug = 'mailjet';
     protected $widget_slug = 'wp_mailjet_subscribe_widget';
-    private $instance;
     private $propertyData = array();
     private $mailjetContactProperties = null;
 
@@ -96,7 +83,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function sendSubscriptionEmail()
     {
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
-        $instance = $this->instance;
+        $instance = get_option(self::WIDGET_OPTIONS_NAME);
         $locale = Mailjeti18n::getLocale();
         // Check if subscription form is submitted
         if (!isset($_POST['subscription_email'], $_POST['widget_id'])) {
@@ -243,8 +230,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         if (!empty($mailjetContactProperties)) {
             foreach ($mailjetContactProperties as $property) {
                 $propertyName = $property['Name'];
-                $propertyValue = $properties[$property['ID']];
-                if (!empty($propertyValue)) {
+                if (!empty($properties[$property['ID']])) {
+                    $propertyValue = $properties[$property['ID']];
                     $dataType = $property['Datatype'];
                     switch ($dataType) {
                         case 'datetime':
@@ -322,8 +309,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             return false;
         }
 
-        if (!isset($this->instance)) {
-            $this->instance = $instance;
+        if (get_option(self::WIDGET_OPTIONS_NAME) === false) {
+            add_option(self::WIDGET_OPTIONS_NAME, $instance);
         }
         $mailjetContactProperties = $this->getMailjetContactProperties();
         if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
@@ -495,7 +482,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
         }
 
-        $this->instance = $instance;
+        update_option(self::WIDGET_OPTIONS_NAME, $instance);
         return $instance;
     }
 
