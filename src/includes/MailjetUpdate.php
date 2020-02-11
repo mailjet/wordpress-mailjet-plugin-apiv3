@@ -4,13 +4,6 @@ namespace MailjetPlugin\Includes;
 
 class MailjetUpdate
 {
-    /**
-     * Short Description. (use period)
-     *
-     * Long Description.
-     *
-     * @since    5.0.0
-     */
     public static function updateToV5()
     {
         $apikey = get_option('mailjet_apikey');
@@ -59,7 +52,6 @@ class MailjetUpdate
         $deleteOptions = array(
             'mailjet_username',
             'mailjet_password',
-            // 'widget_wp_mailjet_subscribe_widget',
             'mailjet_initial_sync_list_id',
             'mailjet_comment_authors_list_id',
             'mailjet_initial_sync_last_date',
@@ -80,5 +72,29 @@ class MailjetUpdate
         }
         add_option('mailjet_woo_checkout_checkbox', $activateMailjetWooSync);
         delete_option('activate_mailjet_woo_sync');
+    }
+
+    public static function updateToV5_2_1() {
+        $pluginVersion = get_option('mailjet_plugin_version');
+        if (!empty($pluginVersion)) {
+            return;
+        }
+        add_option('mailjet_plugin_version', '5.2.1');
+        delete_option('mailjet_access_administrator');
+        delete_option('mailjet_access_author');
+        delete_option('mailjet_access_editor');
+        delete_option('mailjet_access_contributor');
+        delete_option('mailjet_access_subscriber');
+
+        delete_option('mailjet_thank_you_page_Italian');
+        delete_option('mailjet_thank_you_page_Spanish');
+        delete_option('mailjet_thank_you_page_German');
+        delete_option('mailjet_thank_you_page_English');
+        delete_option('mailjet_thank_you_page_French');
+        delete_option('mailjet_locale_subscription_list_it_IT');
+        delete_option('mailjet_locale_subscription_list_es_ES');
+        delete_option('mailjet_locale_subscription_list_en_US');
+        delete_option('mailjet_locale_subscription_list_fr_FR');
+        delete_option('mailjet_locale_subscription_list_de_DE');
     }
 }

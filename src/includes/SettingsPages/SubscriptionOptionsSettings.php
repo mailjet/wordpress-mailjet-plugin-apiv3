@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
-use http\Message;
-use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
@@ -26,15 +24,23 @@ class SubscriptionOptionsSettings
     CONST PROP_USER_LASTNAME = 'lastname';
     CONST WP_PROP_USER_ROLE = 'wp_user_role';
 
+    private static $instance;
+
     private $subscrFieldset = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
     private $profileFields = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
 
-    public function __construct()
+    private function __construct()
     {
 	    add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminScripts' ]);
-        add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontScripts' ]);
 	    add_action( 'wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
 	    add_action( 'wp_ajax_get_contact_lists_menu', [$this, 'getContactListsMenu']);
+    }
+
+    public static function getInstance() {
+        if (is_null(self::$instance))  {
+            self::$instance = new SubscriptionOptionsSettings();
+        }
+        return self::$instance;
     }
 
 	public function mailjet_section_subscription_options_cb($args)
@@ -407,8 +413,8 @@ class SubscriptionOptionsSettings
             'subscription_email' => $subscription_email,
             'subscription_locale' => $subscription_locale,
             'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '',
-            'properties' => $properties,
-//            'thank_id' => $thankYouURI
+            'thanks_id' => isset($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : '',
+            'properties' => $properties
         );
 
         if ($widgetId){
@@ -478,13 +484,6 @@ class SubscriptionOptionsSettings
          }else{
 	        wp_send_json_error();
          }
-    }
-
-    public function enqueueFrontScripts()
-    {
-        $path = plugins_url('/src/front/js/mailjet-front.js', MAILJET_PLUGIN_DIR . 'src');
-	    wp_register_script('ajaxHandle',  $path,  array('jquery'), false,true);
-	    wp_enqueue_script( 'ajaxHandle' );
     }
 
     public function enqueueAdminScripts()

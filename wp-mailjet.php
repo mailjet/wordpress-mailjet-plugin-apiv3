@@ -14,7 +14,7 @@ namespace MailjetPlugin;
  * Plugin Name:       Mailjet for WordPress
  * Plugin URI:        https://www.mailjet.com/partners/wordpress/
  * Description:       The Best WordPress Plugin For Email Newsletters.
- * Version:           5.2
+ * Version:           5.2.1
  * Author:            Mailjet SAS
  * Author URI:        http://mailjet.com
  * License:           GPL-2.0+
@@ -54,7 +54,7 @@ use MailjetPlugin\Includes\MailjetActivator;
 /**
  * Mailjet plugin version.
  */
-define('MAILJET_VERSION', '5.1.3');
+define('MAILJET_VERSION', '5.3');
 
 /**
  * Mailjet Plugid dir.
@@ -64,9 +64,10 @@ define('MAILJET_ADMIN_TAMPLATE_DIR', plugin_dir_path( __FILE__ ) . 'src/template
 define('MAILJET_FRONT_TEMPLATE_DIR', plugin_dir_path( __FILE__ ). 'src/templates/front');
 
 
-// Call the update to V5 logic
+// Call the update logic
 MailjetUpdate::updateToV5();
 MailjetUpdate::updateToV5_2();
+MailjetUpdate::updateToV5_2_1();
 
 /**
  * Begins execution of the plugin.
@@ -85,7 +86,8 @@ function run_mailjet()
 
 
 $activator = new MailjetActivator();
-register_activation_hook( __FILE__, array( $activator, 'activation_check' ) );
+register_activation_hook( __FILE__, array($activator, 'activation_check'));
+register_activation_hook( __FILE__, array($activator, 'activation_settings'));
 
 
 register_deactivation_hook( __FILE__, array( 'MailjetPlugin\Includes\MailjetDeactivator', 'deactivate' ) );

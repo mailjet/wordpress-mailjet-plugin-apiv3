@@ -95,21 +95,20 @@ class EnableSendingSettings
                         <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?=($mailjetSsl == 'ssl' || $mailjetSsl == 'tls' ? ' checked="checked"' : '') ?> autocomplete="off">
                         <span><?php echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet-for-wordpress'); ?></span>
                     </label>
-                </div>                
+                </div>
+                <div id="testEmail">
+                    <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet-for-wordpress')?></button>
+                    <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
+                        <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet-for-wordpress'); ?></b></label>
+                        <div class="test_email_fields_group">
+                            <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
+                            <input type="submit" value="<?php _e('Send', 'mailjet-for-wordpress')?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <input name="settings_step" type="hidden" id="settings_step" value="enable_sending_step">
-        </fieldset>
-
-        <fieldset class="testEmailFldset">
-            <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php _e('Send a test', 'mailjet-for-wordpress')?></button>
-            <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
-                <label class="mj-label" for="mailjet_test_address"><b><?php _e('Recipient of the test email', 'mailjet-for-wordpress'); ?></b></label>
-                <div class="test_email_fields_group">
-                    <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                    <input type="submit" value="<?php _e('Send', 'mailjet-for-wordpress')?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
-                </div>
-            </div>
         </fieldset>
         <?php
     }

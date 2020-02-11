@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 5.3
-- Stable tag: 5.2
+- Stable tag: 5.2.1
 - Requires PHP: 5.6
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -189,7 +189,7 @@ function my_wp_mail($args) {
 </code></pre>
 
 ## For developers
-Before pushing any new changes, make sure you run the following command. It will remove unneeded .git direcotries from vendors
+Before pushing any new changes, make sure you run the following command. It will remove unneeded .git directories from vendors
 <pre><code>
 find vendor/ -type d -name ".git" -exec rm -rf {} \;
 </code></pre>
@@ -205,6 +205,12 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
+
+##### 5.2.1
+* Fixed compatibility with the Theme Customizer
+* Added compatibility with custom roles
+* Send subscription widget through Ajax
+* Tweaks and optimizations
 
 ##### 5.2
 * Added full WooCommerce integration
