@@ -62,9 +62,10 @@ use MailjetPlugin\Includes\Mailjeti18n;
             $inputProperties = $this->getInputProperties($propertyDataType, $labelValue, $isHidden, $isMandatory);
 
             if ('bool' === $inputProperties['type']) {
+                $required = isset($inputProperties['required']) ? $inputProperties['required'] : '';
                 ?>
                 <div class="mailjet-widget-form-group">
-                    <input type="checkbox" <?php echo $inputProperties['required'] ?: '' ?> name="properties[<?php echo $contactPropertyId ?>]" id="mailjet_property_<?php echo $i ?>" />
+                    <input type="checkbox" <?php echo $required ?> name="properties[<?php echo $contactPropertyId ?>]" id="mailjet_property_<?php echo $i ?>" />
                     <label for="mailjet_property_<?php echo $i ?>" class="mailjet-widget-label">
                         <?php echo $inputProperties['placeholder'] ?>
                     </label>
