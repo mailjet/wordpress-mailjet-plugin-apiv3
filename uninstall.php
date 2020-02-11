@@ -101,6 +101,8 @@ delete_option('mailjet_woocommerce_order_confirmation');
 delete_option('mailjet_woocommerce_shipping_confirmation');
 delete_option('mailjet_woocommerce_refund_confirmation');
 
+delete_option('mailjet_widget_options');
+
 // Delete all DB tables for Mailjet plugin
 global $wpdb;
 $sql_delete = "DROP TABLE IF EXISTS {$wpdb->prefix}mailjet_wc_abandoned_carts";

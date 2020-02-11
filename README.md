@@ -189,7 +189,7 @@ function my_wp_mail($args) {
 </code></pre>
 
 ## For developers
-Before pushing any new changes, make sure you run the following command. It will remove unneeded .git direcotries from vendors
+Before pushing any new changes, make sure you run the following command. It will remove unneeded .git directories from vendors
 <pre><code>
 find vendor/ -type d -name ".git" -exec rm -rf {} \;
 </code></pre>
@@ -209,6 +209,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 ##### 5.2.1
 * Fixed compatibility with the Theme Customizer
 * Added compatibility with custom roles
+* Send subscription widget through Ajax
 * Tweaks and optimizations
 
 ##### 5.2
