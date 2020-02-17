@@ -45,8 +45,11 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_styles'));
 
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
+        $has_widget = get_option('widget_wp_mailjet_subscribe_widget');
+        if(count($has_widget) > 1) {
+            add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
+            add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
+        }
 
         // Refreshing the widget's cached output with each new post
         add_action('save_post', array($this, 'flush_widget_cache'));
@@ -937,6 +940,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function register_widget_front_styles()
     {
         wp_register_style($this->get_widget_slug() . '-widget-front-styles', plugins_url('css/front-widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
+        wp_enqueue_style($this->get_widget_slug() . '-widget-front-styles');
     }
 
 // end register_widget_styles
@@ -960,7 +964,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         wp_register_script($this->get_widget_slug() . '-front-script', plugins_url('js/front-widget.js', __FILE__));
         wp_localize_script($this->get_widget_slug() . '-front-script', 'mjWidget', array('ajax_url' => admin_url('admin-ajax.php')));
         wp_enqueue_script($this->get_widget_slug() . '-front-script');
-        wp_enqueue_style($this->get_widget_slug() . '-widget-front-styles', plugins_url('css/front-widget.css', __FILE__));
     }
 
 // end register_widget_scripts
