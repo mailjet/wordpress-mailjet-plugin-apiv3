@@ -46,7 +46,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         add_action('admin_enqueue_scripts', array($this, 'register_widget_styles'));
 
         $has_widget = get_option('widget_wp_mailjet_subscribe_widget');
-        if(count($has_widget) > 1) {
+        if(is_array($has_widget) && count($has_widget) > 1) {
             add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
             add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
         }
