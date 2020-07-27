@@ -6,6 +6,7 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\MailjetMail;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Register all actions and filters for the plugin.
@@ -104,9 +105,9 @@ class ConnectAccountSettings
                 // Initialize PhpMailer
                 //
                 if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
-                    require_once ABSPATH . WPINC . '/class-phpmailer.php';
-                    require_once ABSPATH . WPINC . '/class-smtp.php';
-                    $phpmailer = new \PHPMailer();
+                    require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+                    require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+                    $phpmailer = new PHPMailer();
 //                MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
                 }
 

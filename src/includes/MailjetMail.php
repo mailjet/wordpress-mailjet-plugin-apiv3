@@ -2,8 +2,8 @@
 
 namespace MailjetPlugin\Includes;
 
-use Analog\Analog;
-use MailjetPlugin\Includes\MailjetLogger;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Register all actions and filters for the plugin.
@@ -23,9 +23,8 @@ class MailjetMail
 
     public function __construct()
     {
-        require_once ABSPATH . WPINC . '/class-phpmailer.php';
-        require_once ABSPATH . WPINC . '/class-smtp.php';
-        return new \PHPMailer(true);
+        require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+        require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
     }
 
     public function sendMail($mailTransport)
@@ -39,7 +38,7 @@ class MailjetMail
             $mailTransport->Username = 'user@example.com';                 // SMTP username
             $mailTransport->Password = 'secret';                           // SMTP password
             $mailTransport->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
+            $mailTransport->Port = 587;                                    // TCP port to connect to
 
             //Recipients
             $mailTransport->setFrom('from@example.com', 'Mailer');
@@ -61,12 +60,12 @@ class MailjetMail
 
             $mailTransport->send();
             echo 'Message has been sent';
-        } catch (\PHPMailer\PHPMailer\Exception $e) {
+        } catch (PHPMailerException $e) {
             echo 'Message could not be sent. Mailer Error: ', $mailTransport->ErrorInfo;
         }
     }
 
-    public function phpmailer_init_smtp(\PHPMailer $phpmailer)
+    public function phpmailer_init_smtp(PHPMailer $phpmailer)
     {
        // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - Start ]');
 
