@@ -4,9 +4,9 @@ namespace MailjetPlugin\Includes\SettingsPages;
 
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
-use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\MailjetMail;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Register all actions and filters for the plugin.
@@ -164,9 +164,9 @@ class EnableSendingSettings
             // Initialize PhpMailer
             //
             if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
-                require_once ABSPATH . WPINC . '/class-phpmailer.php';
-                require_once ABSPATH . WPINC . '/class-smtp.php';
-                $phpmailer = new \PHPMailer();
+                require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+                require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+                $phpmailer = new PHPMailer();
             }
 
             // If whitelisted domain is selected then we add the extra email name to that domain
