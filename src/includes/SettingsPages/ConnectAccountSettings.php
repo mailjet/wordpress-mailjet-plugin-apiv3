@@ -6,7 +6,6 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\MailjetMail;
-use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Register all actions and filters for the plugin.
@@ -64,8 +63,6 @@ class ConnectAccountSettings
      */
     public function mailjet_connect_account_page_html()
     {
-        global $phpmailer;
-
         // check user capabilities
         if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \`manage_options\` permission ]');
@@ -102,14 +99,6 @@ class ConnectAccountSettings
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             } else {
 //            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
-                // Initialize PhpMailer
-                //
-                if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
-                    require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
-                    require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
-                    $phpmailer = new PHPMailer();
-//                MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ PHPMailer initialized by the Mailjet plugin ]');
-                }
 
                 // Update From Email and Name
                 add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));

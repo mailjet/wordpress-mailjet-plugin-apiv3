@@ -2,8 +2,6 @@
 
 namespace MailjetPlugin\Includes;
 
-use PHPMailer\PHPMailer\Exception as PHPMailerException;
-use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Register all actions and filters for the plugin.
@@ -23,54 +21,18 @@ class MailjetMail
 
     public function __construct()
     {
-        require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
-        require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
-    }
-
-    public function sendMail($mailTransport)
-    {
-        try {
-            //Server settings
-            $mailTransport->SMTPDebug = 2;                                 // Enable verbose debug output
-            $mailTransport->isSMTP();                                      // Set mailer to use SMTP
-            $mailTransport->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
-            $mailTransport->SMTPAuth = true;                               // Enable SMTP authentication
-            $mailTransport->Username = 'user@example.com';                 // SMTP username
-            $mailTransport->Password = 'secret';                           // SMTP password
-            $mailTransport->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-            $mailTransport->Port = 587;                                    // TCP port to connect to
-
-            //Recipients
-            $mailTransport->setFrom('from@example.com', 'Mailer');
-            $mailTransport->addAddress('joe@example.net', 'Joe User');     // Add a recipient
-            $mailTransport->addAddress('ellen@example.com');               // Name is optional
-            $mailTransport->addReplyTo('info@example.com', 'Information');
-            $mailTransport->addCC('cc@example.com');
-            $mailTransport->addBCC('bcc@example.com');
-
-            //Attachments
-            $mailTransport->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-            $mailTransport->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
-            //Content
-            $mailTransport->isHTML(true);                                  // Set email format to HTML
-            $mailTransport->Subject = 'Here is the subject';
-            $mailTransport->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mailTransport->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-            $mailTransport->send();
-            echo 'Message has been sent';
-        } catch (PHPMailerException $e) {
-            echo 'Message could not be sent. Mailer Error: ', $mailTransport->ErrorInfo;
+        if ( version_compare( get_bloginfo( 'version' ), '5.5-alpha', '<' ) ) {
+            require_once ABSPATH . WPINC . '/class-phpmailer.php';
+            require_once ABSPATH . WPINC . '/class-smtp.php';
+        } else {
+            require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+            require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
         }
     }
 
-    public function phpmailer_init_smtp(PHPMailer $phpmailer)
+    public function phpmailer_init_smtp($phpmailer)
     {
-       // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - Start ]');
-
         if (!get_option('mailjet_enabled') || 0 == get_option('mailjet_enabled')) {
-          //  MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Mailjet not enabled ]');
             return;
         }
 
@@ -91,10 +53,7 @@ class MailjetMail
         $phpmailer->FromName = get_option('mailjet_from_name') ? get_option('mailjet_from_name') : get_bloginfo('name');
 
         $phpmailer->AddCustomHeader(self::MJ_MAILER);
-
-        //MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Configuring SMTP with Mailjet settings - End ]');
     }
-
 
     public function wp_mail_failed_cb($wpError)
     {
