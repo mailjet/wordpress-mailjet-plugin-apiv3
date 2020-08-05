@@ -260,7 +260,7 @@ class MailjetMenu
     {
         try {
             $mailjetIframe = $this->getMailjetIframe();
-            $templateId = $_GET['id'];
+            $templateId = sanitize_text_field($_GET['id']);
             if (isset($templateId)) {
                 $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_EDIT_TEMPLATE, $templateId);
             }
