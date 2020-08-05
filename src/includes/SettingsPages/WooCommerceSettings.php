@@ -566,6 +566,10 @@ class WooCommerceSettings
     public function cart_change_timestamp() {
         global $wpdb, $woocommerce;
 
+        if ($woocommerce->cart === null) {
+            return;
+        }
+
         $currentTime = current_time('timestamp');
         $sendingDelay = get_option( 'mailjet_woo_abandoned_cart_sending_time' );
         $ignoreCart = false;
