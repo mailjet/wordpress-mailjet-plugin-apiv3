@@ -6,7 +6,6 @@ use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\MailjetLogger;
 use MailjetPlugin\Includes\MailjetMail;
-use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Register all actions and filters for the plugin.
@@ -120,8 +119,6 @@ class EnableSendingSettings
      */
     public function mailjet_sending_settings_page_html()
     {
-        global $phpmailer;
-
         // register a new section in the "mailjet" page
         add_settings_section(
             'mailjet_enable_sending_settings',
@@ -160,14 +157,6 @@ class EnableSendingSettings
 
             $executionError = false;
             $testSent = false;
-
-            // Initialize PhpMailer
-            //
-            if (!is_object($phpmailer) || !is_a($phpmailer, 'PHPMailer')) {
-                require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
-                require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
-                $phpmailer = new PHPMailer();
-            }
 
             // If whitelisted domain is selected then we add the extra email name to that domain
             $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
