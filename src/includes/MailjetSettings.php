@@ -216,8 +216,8 @@ class MailjetSettings
                 die;
             }
 
-            $email = $_GET['email'];
-            $name = $_GET['prop'];
+            $email = sanitize_email($_GET['email']);
+            $name = sanitize_text_field($_GET['prop']);
 
             $params = http_build_query(array(
                 'cf7list' => $contactListId,
@@ -262,17 +262,19 @@ class MailjetSettings
     {
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Handling subscription confirmations - Start ]');
 
+        $subscribeParam = isset($_GET['subscribe']) ? sanitize_text_field($_GET['subscribe']) : '';
+        $subscriptionEmail = isset($_GET['user_email']) ? sanitize_email($_GET['user_email']) : '';
         /* Add custom field to comment form and process it on form submit */
         $activate_mailjet_comment_authors_sync = get_option('activate_mailjet_comment_authors_sync');
         $mailjet_comment_authors_list = get_option('mailjet_comment_authors_list');
         if (!empty($activate_mailjet_comment_authors_sync) && !empty($mailjet_comment_authors_list) && !empty($_GET['mj_sub_comment_author_token'])) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            $mj_sub_comment_author_token = $_GET['mj_sub_comment_author_token'];
-            $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . self::getCryptoHash());
+            $mj_sub_comment_author_token = sanitize_text_field($_GET['mj_sub_comment_author_token']);
+            $tokenCheck  = sha1($subscribeParam . str_ireplace(' ', '+', $subscriptionEmail) . self::getCryptoHash());
             if ($mj_sub_comment_author_token === $tokenCheck) {
                 $commentAuthorsSettings = new CommentAuthorsSettings();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
-                $syncSingleContactEmailToMailjetList = $commentAuthorsSettings->mailjet_subscribe_unsub_comment_author_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']));
+                $syncSingleContactEmailToMailjetList = $commentAuthorsSettings->mailjet_subscribe_unsub_comment_author_to_list($subscribeParam, str_ireplace(' ', '+', $subscriptionEmail));
                 if (false === $syncSingleContactEmailToMailjetList) {
                     $this->subsctiptionConfirmationAdminNoticeFailed();
                 } else {
@@ -288,11 +290,13 @@ class MailjetSettings
         if (!empty($activate_mailjet_woo_integration) && !empty($_GET['mj_sub_woo_token'])) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             $mj_sub_woo_token = $_GET['mj_sub_woo_token'];
-            $tokenCheck  = sha1($_GET['subscribe'] . str_ireplace(' ', '+', $_GET['user_email']) . $_GET['first_name'] . $_GET['last_name'] . self::getCryptoHash());
+            $firstName = sanitize_text_field($_GET['first_name']);
+            $lastName = sanitize_text_field($_GET['last_name']);
+            $tokenCheck  = sha1($subscribeParam . str_ireplace(' ', '+', $subscriptionEmail) . $firstName . $lastName . self::getCryptoHash());
             if ($mj_sub_woo_token === $tokenCheck) {
                 $wooCommerceSettings = WooCommerceSettings::getInstance();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
-                $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $_GET['user_email']), $_GET['first_name'], $_GET['last_name']);
+                $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], str_ireplace(' ', '+', $subscriptionEmail), $firstName, $lastName);
                 if (false === $syncSingleContactEmailToMailjetList) {
                     $this->subsctiptionConfirmationAdminNoticeFailed();
                 } else {
@@ -324,7 +328,7 @@ class MailjetSettings
 
     public function subsctiptionConfirmationAdminNoticeSuccess()
     {
-        if (intval($_GET['subscribe']) > 0) {
+        if ((int)sanitize_text_field($_GET['subscribe']) > 0) {
             $locale = Mailjeti18n::getLocaleByPll();
             $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
             $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');

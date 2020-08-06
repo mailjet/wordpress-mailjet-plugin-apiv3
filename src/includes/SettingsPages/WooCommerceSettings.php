@@ -54,11 +54,11 @@ class WooCommerceSettings
         $action_name = '';
 
         if (isset( $_GET['mj_action'])) {
-            $action_name = $_GET['mj_action'];
+            $action_name = sanitize_text_field($_GET['mj_action']);
         }
         if ($action_name == 'track_cart') {
-            $emailId = $_GET['email_id'];
-            $key = $_GET['key'];
+            $emailId = sanitize_text_field($_GET['email_id']);
+            $key = sanitize_text_field($_GET['key']);
             $this->retrieve_cart($emailId, $key);
         }
         else if ($action_name == 'to_cart') {
@@ -566,6 +566,10 @@ class WooCommerceSettings
     public function cart_change_timestamp() {
         global $wpdb, $woocommerce;
 
+        if ($woocommerce->cart === null) {
+            return;
+        }
+
         $currentTime = current_time('timestamp');
         $sendingDelay = get_option( 'mailjet_woo_abandoned_cart_sending_time' );
         $ignoreCart = false;
@@ -1024,7 +1028,8 @@ class WooCommerceSettings
         $post = $_POST;
 
         if (isset($post['orderId'])) {
-            $order = wc_get_order($post['orderId']);
+            $orderId = sanitize_text_field($post['orderId']);
+            $order = wc_get_order($orderId);
             $message = 'You\'v subscribed successfully to our mail list.';
             $success = true;
 
