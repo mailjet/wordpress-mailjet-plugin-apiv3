@@ -234,8 +234,15 @@ class MailjetSettings
 
             $contact = array();
             $contact['Email'] = $email;
-            $contact['Properties']['name'] = $name;
-            MailjetApi::createMailjetContactProperty('name');
+
+            // Get the name of the input field that we expect to find in the CF7 form
+            $cf7name = stripslashes(get_option('cf7_fromname', ''));
+            // Remove any character that isn't A-Z, a-z or 0-9 or _ (so it's compatible with Mailjet's properties requirements)
+            $cf7name_clean = preg_replace("/[^A-Za-z0-9_]/", '', $cf7name);
+
+            // And use this input field name to create a property that will contain the subscriber's name
+            $contact['Properties'][$cf7name_clean] = $name;
+            MailjetApi::createMailjetContactProperty($cf7name_clean);
             $syncSingleContactEmailToMailjetList = MailjetApi::syncMailjetContact($contactListId, $contact);
             if (false === $syncSingleContactEmailToMailjetList) {
                 echo $technicalIssue;
