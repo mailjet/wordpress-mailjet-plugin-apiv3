@@ -1551,3 +1551,13 @@ msgstr ""
 
 #~ msgid "Enable Contact Form 7 integration"
 #~ msgstr "Activer l'intégration Contact Form 7"
+
+#: src/includes/MailjetSettings.php:333
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:287
+msgid "Newsletter Registration"
+msgstr "Inscription à la Newsletter"
+
+#: src/includes/MailjetSettings.php:334
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:288
+msgid "Congratulations, you have successfully subscribed!"
+msgstr "Félicitations, vous êtes maintenant abonnés à la newsletter!"
