@@ -1357,3 +1357,13 @@ msgstr ""
 #: src/widget/views/designforfailure.php:6
 msgid "Could not connect to Mailjet API, please try again later!"
 msgstr ""
+
+#: src/includes/MailjetSettings.php:333
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:287
+msgid "Newsletter Registration"
+msgstr ""
+
+#: src/includes/MailjetSettings.php:334
+#: src/widget/WP_Mailjet_Subscribe_Widget.php:288
+msgid "Congratulations, you have successfully subscribed!"
+msgstr ""
