@@ -40,7 +40,7 @@ if($numberActiveLanguages == 1) {
             <input id="<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[language_checkbox]')); ?>" type="checkbox" class="language_checkbox" <?php checked('1', $language_checkbox); ?> />
             <label class="language-label" for="<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>"><?php _e($language, 'mailjet-for-wordpress'); ?></label>
 
-            <div class="hidden_default" id="hidden_<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>">
+            <div class="mj-modal-language-config mj-hide" id="hidden_<?php echo esc_attr($this->get_field_id($locale . '[language_checkbox]')); ?>">
                 <hr>
                 <p>
                     <label class="language-title-label" for="<?php echo esc_attr($this->get_field_id($locale . '[title]')); ?>"><?php _e('Title of the form:', 'mailjet-for-wordpress'); ?></label>
@@ -88,57 +88,55 @@ if($numberActiveLanguages == 1) {
     $defaultPlaceholder = 'Field label in ';
     $hiddenPlaceholder = 'Value for ';
 
-    $hideAdvancedLinkClass = $numberActiveLanguages === 0 ? 'hidden_default': '';
+    $hideAdvancedLinkClass = $numberActiveLanguages === 0 ? 'hidden_default' : '';
     $hideShortCodeSectionClass = $numberActiveLanguages === 0 ? 'hidden_default': '';
     ?>
-    <div class="some-space advanced-form-link-wrap <?php echo $hideAdvancedLinkClass ?>">
-        <p>
-            <span id="advanced-form-link" data-toggle="modal" data-target=".<?php echo $this->id ?>"><?php _e('Advanced form customization', 'mailjet-for-wordpress') ?></span>
-            <span id="advanced-form-link-info" data-toggle="tooltip" data-placement="bottom" title="<?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet-for-wordpress'); ?>">
-            <svg viewBox="0 0 16 16" style="height: 12px;"><path d="M8 0C3.589 0 0 3.59 0 8c0 4.412 3.589 8 8 8s8-3.588 8-8c0-4.41-3.589-8-8-8zm0 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm.75-3.875V10h-1.5V7.667H8c.828 0 1.5-.698 1.5-1.556 0-.859-.672-1.555-1.5-1.555s-1.5.696-1.5 1.555H5C5 4.396 6.346 3 8 3s3 1.396 3 3.111c0 1.448-.958 2.667-2.25 3.014z"/></svg>
-            </span>
-        </p>
+    <p class="advanced-form-link-info">
+        <?php _e('Add more fields to your form (ex: First name, Last name, Birthday...) and customize the labels, error messages and confirmation email wordings.', 'mailjet-for-wordpress'); ?>
+    </p>
+    <div class="advanced-form-link-wrap <?php echo $hideAdvancedLinkClass ?>">
+        <span class="advanced-form-link" data-target="<?php echo $this->id ?>"><?php _e('Advanced form customization', 'mailjet-for-wordpress') ?></span>
     </div>
-    <div class="some-space disabled-advanced-link hidden_default" title="<?php _e('Save changes first', 'mailjet-for-wordpress'); ?>">
+    <div class="disabled-advanced-link hidden_default" title="<?php _e('Save changes first', 'mailjet-for-wordpress'); ?>">
         <span><?php _e('Advanced form customization', 'mailjet-for-wordpress') ?></span>
     </div>
 
-    <div class="modal fade <?php echo $this->id ?>" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="margin: 35px 0 0 165px!important;">
-        <div class="modal-dialog modal-lg modal-mailjet-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+    <div id="modal-<?php echo $this->id ?>" class="mj-modal">
+        <div class="mj-modal-dialog" role="document">
+            <div class="mj-pluginPage mj-modal-content">
+                <div class="mj-modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel"><?php _e('Customize your subscription form', 'mailjet-for-wordpress') ?></h4>
+                    <h4 class="mj-modal-title"><?php _e('Customize your subscription form', 'mailjet-for-wordpress') ?></h4>
                 </div>
 
-                <div>
+                <div class="mj-modal-body">
                     <!-- Nav tabs -->
-                    <ul id="advanced-form-navs" class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href=".advanced-form-fields" aria-controls="advanced-form-fields" role="tab" data-toggle="tab"><?php _e('Form fields', 'mailjet-for-wordpress') ?></a></li>
-                        <li role="presentation"><a href=".advanced-form-validation-messages" aria-controls="advanced-form-validation-messages" role="tab" data-toggle="tab"><?php _e('Form validation messages', 'mailjet-for-wordpress') ?></a></li>
-                        <li role="presentation"><a href=".advanced-form-confirmation-email-content" aria-controls="advanced-form-confirmation-email-content" role="tab" data-toggle="tab"><?php _e('Confirmation email content', 'mailjet-for-wordpress') ?></a></li>
-                        <li role="presentation"><a href=".advanced-form-thank-you-page-tab" aria-controls="advanced-form-thank-you-page-tab" role="tab" data-toggle="tab"><?php _e('Thank you page', 'mailjet-for-wordpress') ?></a></li>
+                    <ul class="mj-nav-tabs advanced-form-navs" role="tablist" data-target="<?php echo $this->id ?>">
+                        <li data-tab="advanced-form-fields" aria-controls="advanced-form-fields" role="tab" class="mj-tab active"><span><?php _e('Form fields', 'mailjet-for-wordpress') ?></span></li>
+                        <li data-tab="advanced-form-validation-messages" aria-controls="advanced-form-validation-messages" role="tab" class="mj-tab"><span><?php _e('Form validation messages', 'mailjet-for-wordpress') ?></span></li>
+                        <li data-tab="advanced-form-confirmation-email-content" aria-controls="advanced-form-confirmation-email-content" role="tab" class="mj-tab"><span><?php _e('Confirmation email content', 'mailjet-for-wordpress') ?></span></li>
+                        <li data-tab="advanced-form-thank-you-page-tab" aria-controls="advanced-form-thank-you-page-tab" role="tab" class="mj-tab"><span><?php _e('Thank you page', 'mailjet-for-wordpress') ?></span></li>
                     </ul>
 
                     <!--Tab panes--> 
-                    <div id="advanced-form-tabs" class="tab-content">
+                    <div id="advanced-form-tabs" class="mj-tab-content">
 
                         <!-- TAB 1 - Form fields -->
-                        <div role="tabpanel" class="tab-pane advanced-form-fields active container-fluid" >
-                            <p id="properties-info" class="propertiesInfo"><span><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet-for-wordpress') ?></span></p>
+                        <div role="tabpanel" id="advanced-form-fields" class="mj-tab-panel active" >
+                            <p id="properties-info" class="propertiesInfo"><?php _e('You can add up to 5 contact properties to collect additional data', 'mailjet-for-wordpress') ?></p>
                             <?php
                             $opened = 0;
-                            $display = 'block';
+                            $additionalPropertyClass = ' mj-show';
                             for ($row = 0; $row <= 4; $row++) {
                                 $nextRow = $row + 1;
-                                $displayDelete = !empty(${'contactProperties' . $nextRow}) ? 'none' : 'block';
+                                $displayDelete = !empty(${'contactProperties' . $nextRow}) ? 'mj-hide' : 'mj-show';
                                 $contactPropertiesN = ${'contactProperties' . $row};
                                 $propertyDataTypeN = ${'propertyDataType' . $row};
 
                                 // The selected properties and one more default select is shown
                                 // We do not need more default selects
                                 if (!$contactPropertiesN && $opened) {
-                                    $display = 'none';
+                                    $additionalPropertyClass = ' mj-hide';
                                 }
 
                                 // There is no default select shown
@@ -146,20 +144,20 @@ if($numberActiveLanguages == 1) {
                                     $opened++;
                                 }
                                 ?>
-                                <div class="property" style="display: <?php echo $display ?>">
+                                <div class="property<?php echo $additionalPropertyClass ?>">
                                         <?php 
                                             $setLabelStyle = '';
                                             if($row===0) {
-                                                $setLabelStyle = 'padding-top: 22px;';
+                                                $setLabelStyle = 'padding-top: 27px;';
                                             } 
                                             ?>
                                         <span class="floatLeft propertyLabel" style="<?php echo $setLabelStyle ?>"><?php _e('Property', 'mailjet-for-wordpress') ?> #<?php echo $row + 1 ?></span>
                                     <!--Select property-->
                                     <div class="propertySelect floatLeft form-group">
                                         <?php if($row==0) { ?>
-                                        <label for="<?php echo esc_attr($this->get_field_id($admin_locale . '[contactProperties' . $row . ']')); ?>"><?php _e('Properties', 'mailjet-for-wordpress') ?></label>
+                                        <label class="mj-label" for="<?php echo esc_attr($this->get_field_id($admin_locale . '[contactProperties' . $row . ']')); ?>"><?php _e('Properties', 'mailjet-for-wordpress') ?></label>
                                         <?php } ?>
-                                        <select class="selectProperty mjProperties form-control" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties' . $row . ']'); ?>">
+                                        <select class="selectProperty" name="<?php echo $this->get_field_name($admin_locale . '[contactProperties' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[contactProperties' . $row . ']'); ?>">
                                             <option disabled selected value="0"><?php _e('Select a property', 'mailjet-for-wordpress') ?></option>
                                             <option value="newProperty">+ <?php _e('Create new', 'mailjet-for-wordpress') ?></option>
                                             <option disabled value="0"><?php echo str_repeat('-', 16) ?></option>
@@ -180,18 +178,18 @@ if($numberActiveLanguages == 1) {
                                         </select>
                                     </div>
 
-                                    <div class="createNewProperties">
+                                    <div class="createNewProperties mj-hide">
                                         <div class="newPropertyName floatLeft form-group">
                                             <?php if($row === 0) { ?>
-                                                <label for="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>"><?php _e('Name your property (no spaces)', 'mailjet-for-wordpress') ?></label>
+                                                <label class="mj-label" for="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>"><?php _e('Name your property (no spaces)', 'mailjet-for-wordpress') ?></label>
                                             <?php } ?>
-                                                <input type="text" class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>" placeholder="<?php _e('Forbidden characters: space , * + - / &quot &#39; : [ ] ( ) &gt; &lt; = ; $ ', 'mailjet-for-wordpress') ?>"/>
+                                                <input type="text" id="<?php echo esc_attr($this->get_field_id('[newPropertyName' . $row . ']')); ?>" placeholder="<?php _e('Forbidden characters: space , * + - / &quot &#39; : [ ] ( ) &gt; &lt; = ; $ ', 'mailjet-for-wordpress') ?>"/>
                                         </div>
                                         <div class="newPropertyType floatLeft form-group col-md-2">
                                             <?php if($row === 0) { ?>
-                                                <label for="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>"><?php _e('Property type', 'mailjet-for-wordpress') ?></label>
+                                                <label class="mj-label" for="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>"><?php _e('Property type', 'mailjet-for-wordpress') ?></label>
                                             <?php } ?>
-                                            <select class="form-conrol" id="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>">
+                                            <select id="<?php echo esc_attr($this->get_field_id('[newPropertyType' . $row . ']')); ?>">
                                                 <option value="str">String</option>
                                                 <option value="int">Integer</option>
                                                 <option value="float">Decimal</option>
@@ -202,19 +200,19 @@ if($numberActiveLanguages == 1) {
                                         <?php 
                                             $styleSaveCancel = '';
                                         if($row == 0 ) {
-                                            $styleSaveCancel = 'margin-top: 20px;';
+                                            $styleSaveCancel = 'margin-top: 27px;';
                                         } ?>
-                                        <span class="btn btn-default floatLeft saveNewPropertyButton" style="<?php echo $styleSaveCancel ?>" ><?php _e('Save', 'mailjet-for-wordpress') ?></span>
-                                        <span class="btn floatLeft cancelNewPropertyButton" style="<?php echo $styleSaveCancel ?>"><?php _e('Cancel', 'mailjet-for-wordpress') ?></span>
+                                        <button class="mj-btnSecondary floatLeft cancelNewPropertyButton" style="<?php echo $styleSaveCancel ?>"><?php _e('Cancel', 'mailjet-for-wordpress') ?></button>
+                                        <button class="mj-btn btnPrimary floatLeft saveNewPropertyButton" style="<?php echo $styleSaveCancel ?>" ><?php _e('Save', 'mailjet-for-wordpress') ?></button>
                                     </div>
                                     <!--Display only if there is a selected option-->
-                                    <div class="hiddenProperties" style="display: <?php echo $contactPropertiesN ? 'block' : 'none' ?>">
+                                    <div class="hiddenProperties <?php echo $contactPropertiesN ? 'mj-show' : 'mj-hide' ?>">
                                         <!--Select property DataType-->
                                         <div class="typeSelect floatLeft form-group">
                                              <?php if($row==0) { ?>
-                                            <label for="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>"><?php _e('Type', 'mailjet-for-wordpress') ?></label>
+                                            <label class="mj-label" for="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>"><?php _e('Type', 'mailjet-for-wordpress') ?></label>
                                              <?php } ?>
-                                            <select class="propertyDataType form-control" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">
+                                            <select class="propertyDataType" name="<?php echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'); ?>">
                                                 <?php
                                                 $dataTypeOptions = array(
                                                     __('Optional', 'mailjet-for-wordpress'),
@@ -233,23 +231,23 @@ if($numberActiveLanguages == 1) {
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php echo $percent . '%' ?>">
                                                 <?php if($row==0) { ?>
-                                                    <label for="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
+                                                    <label class="mj-label" for="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
                                                 <?php } ?>
                                                 <input type="text" value="<?php echo ${$language . 'LabelN'} ?>"  name="<?php echo $this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" id="<?php echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'); ?>" placeholder="<?php echo $propertyDataTypeN != 2 ? $defaultPlaceholder . $language : $hiddenPlaceholder . $language ?>" />
                                             </div>
                                         <?php }
                                             $setDeleteLabelStyle = '';
                                             if ($row === 0) {
-                                                $setDeleteLabelStyle = 'padding-top:25px;';
+                                                $setDeleteLabelStyle = 'padding-top:27px;';
                                             }
                                             ?>
-                                        <div class="deleteProperty floatLeft" style="display: <?php echo $displayDelete.';'. $setDeleteLabelStyle ?>">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true" id=""></span>
+                                        <div class="deleteProperty floatLeft <?php echo $displayDelete ?>">
+                                            <i class="fa fa-trash-o" style="<?php echo $setDeleteLabelStyle ?>"></i>
                                         </div>
                                     </div>
                                 </div>
                             <?php } ?>
-                            <p class="customize-mandatory-email propertiesInfo"><span><?php _e('Customize the placeholder text for the email address field:', 'mailjet-for-wordpress') ?></span></p>
+                            <p class="customize-mandatory-email propertiesInfo"><?php _e('Customize the placeholder text for the email address field:', 'mailjet-for-wordpress') ?></p>
                             <div id="mandatory-wrap">
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Email address field placeholder text', 'mailjet-for-wordpress'); ?></span>
                                 <?php
@@ -259,11 +257,11 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryEmailLanguageInput floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
-                                        <input class="form-control" type="text" value="<?php echo $language_mandatory_email ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="<?php echo $yourEmailTranslation ?>" />
+                                        <label class="mj-label" for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
+                                        <input type="text" value="<?php echo $language_mandatory_email ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]')); ?>" placeholder="<?php echo $yourEmailTranslation ?>" />
                                     </div>
                                 <?php } ?>
-                                <p class="customize-mandatory-button propertiesInfo"><span><?php _e('Customize the submission button label:', 'mailjet-for-wordpress') ?></span></p>        
+                                <p class="customize-mandatory-button propertiesInfo"><?php _e('Customize the submission button label:', 'mailjet-for-wordpress') ?></p>
                                 <span class="floatLeft mandatoryEmailLabel"><?php _e('Button label', 'mailjet-for-wordpress'); ?></span>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
@@ -272,8 +270,8 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryButtonLanguage floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
-                                        <input class="form-control" type="text" title=""  value="<?php echo $language_mandatory_button ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>" placeholder="<?php echo $subscribeTranslation ?>" />
+                                        <label class="mj-label" for="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
+                                        <input type="text" title=""  value="<?php echo $language_mandatory_button ?>"  name="<?php echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]')); ?>" placeholder="<?php echo $subscribeTranslation ?>" />
                                     </div>
                                 <?php }
                                 ?>
@@ -281,14 +279,14 @@ if($numberActiveLanguages == 1) {
                         </div>
 
                         <!--Tab 2 - Form validation messages-->
-                        <div role="tabpanel" class="tab-pane advanced-form-validation-messages" style="overflow-y: scroll;height: 502px;">
-                            <p class="tab-info propertiesInfo"><span><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet-for-wordpress') ?></span></p>
+                        <div role="tabpanel" id="advanced-form-validation-messages" class="mj-tab-panel">
+                            <p class="tab-info"><?php _e('You can customize error and success messages displayed to your users as they interact with the subscription form. Leave empty fields to use the default values.', 'mailjet-for-wordpress') ?></p>
 
                             <div class="validation_messages_wrap">
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
-                                        <label for="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>"><?php _e('Description', 'mailjet-for-wordpress') ?></label>
-                                        <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>"><?php _e('Form successfully submitted', 'mailjet-for-wordpress') ?></div>
+                                        <label class="mj-label" for="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>"><?php _e('Description', 'mailjet-for-wordpress') ?></label>
+                                        <div class="validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('form_success_label')); ?>"><?php _e('Form successfully submitted', 'mailjet-for-wordpress') ?></div>
                                     </div>
                                     <?php
                                     $n = 0;
@@ -300,63 +298,14 @@ if($numberActiveLanguages == 1) {
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <label for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
-                                            <textarea class="form-control form-validation-successfully-submited" name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>"><?php echo esc_attr($confirmation_email_message_input); ?></textarea>
+                                            <label class="mj-label" for="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
+                                            <textarea class="form-validation-successfully-submited" name="<?php echo esc_attr($this->get_field_name($locale . '[confirmation_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmationEmailSent ?>"><?php echo esc_attr($confirmation_email_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
-
-<!--                                <div class="validation_message_row">
-                                    <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels"><?php _e('Subscription confirmed (displayed after the user has clicked the confirmation email)', 'mailjet-for-wordpress'); ?></div>
-                                    </div>
-                                    <?php
-                                    foreach ($activeLanguages as $language => $locale) {
-                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $subscriptionConfirmed = Mailjeti18n::getTranslationsFromFile($locale, 'Your subscription was successfully confirmed.');
-                                        ?>
-                                        Languages label
-                                        <div class="floatLeft form-group"  style="width: <?php echo $percent . '%' ?>">
-                                            <textarea class="form-control form-validation-confirmed" name="<?php echo esc_attr($this->get_field_name($locale . '[subscription_confirmed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[subscription_confirmed_message_input]')); ?>" placeholder="<?php echo $subscriptionConfirmed ?>"><?php echo esc_attr($subscription_confirmed_message_input); ?></textarea>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels"><?php _e('Error: email field is empty', 'mailjet-for-wordpress') ?></div>
-                                    </div>
-                                    <?php
-                                    foreach ($activeLanguages as $language => $locale) {
-                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $provideEmail = Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
-                                        ?>
-                                        Languages label
-                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <textarea class="form-control form-validation-email-empty"  name="<?php echo esc_attr($this->get_field_name($locale . '[empty_email_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[empty_email_message_input]')); ?>" placeholder="<?php echo $provideEmail ?>"><?php echo esc_attr($empty_email_message_input); ?></textarea>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-
-                                <div class="validation_message_row">
-                                    <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels"><?php _e('Error: the email address is already subscribed', 'mailjet-for-wordpress') ?></div>
-                                    </div>
-                                    <?php
-                                    foreach ($activeLanguages as $language => $locale) {
-                                        extract(wp_parse_args((array) $instance[$locale], $advancedFormDefaults));
-                                        $emailAlreadySubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'This email address has already been subscribed.');
-                                        ?>
-                                        Languages label
-                                        <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <textarea class="form-control form-validation-email-already-subscribed" name="<?php echo esc_attr($this->get_field_name($locale . '[already_subscribed_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[already_subscribed_message_input]')); ?>" placeholder="<?php echo $emailAlreadySubscribed ?>"><?php echo esc_attr($already_subscribed_message_input); ?></textarea>
-                                        </div>
-                                    <?php } ?>
-                                </div>-->
-
-                                <div class="validation_message_row">
-                                    <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels"><?php _e('Error: Invalid data format (this applies only for numbers and dates)', 'mailjet-for-wordpress') ?></div>
+                                        <div class="validation_messages_labels"><?php _e('Error: Invalid data format (this applies only for numbers and dates)', 'mailjet-for-wordpress') ?></div>
                                     </div>
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
@@ -365,14 +314,14 @@ if($numberActiveLanguages == 1) {
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <textarea class="form-control form-validation-invalid-data" name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>"><?php echo esc_attr($invalid_data_format_message_input); ?></textarea>
+                                            <textarea class="form-validation-invalid-data" name="<?php echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]')); ?>" placeholder="<?php echo $incorectValue ?>"><?php echo esc_attr($invalid_data_format_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
 
                                 <div class="validation_message_row">
                                     <div class="floatLeft">
-                                        <div class="form-control validation_messages_labels"><?php _e('Generic technical error message', 'mailjet-for-wordpress') ?></div>
+                                        <div class="validation_messages_labels"><?php _e('Generic technical error message', 'mailjet-for-wordpress') ?></div>
                                     </div>
                                     <?php
                                     foreach ($activeLanguages as $language => $locale) {
@@ -381,7 +330,7 @@ if($numberActiveLanguages == 1) {
                                         ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                            <textarea class="form-control form-validation-generic-error" name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>"><?php echo esc_attr($generic_technical_error_message_input); ?></textarea>
+                                            <textarea class="form-validation-generic-error" name="<?php echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]')); ?>" placeholder="<?php echo $technicalIssue ?>"><?php echo esc_attr($generic_technical_error_message_input); ?></textarea>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -390,12 +339,12 @@ if($numberActiveLanguages == 1) {
                         </div>
 
                         <!--TAB 3 - Confirmation email content-->
-                        <div role="tabpanel" class="tab-pane advanced-form-confirmation-email-content" style="height: 502px;">
-                            <p class="tab-info propertiesInfo"><span><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet-for-wordpress') ?></span></p>
+                        <div role="tabpanel" id="advanced-form-confirmation-email-content" class="mj-tab-panel">
+                            <p class="tab-info"><?php _e('When a user fills in the form, they will receive an email containing a button they need to click on to confirm their subscription. You can customize the text of the confirmation email if you wish. Leave empty fields to use the default values.', 'mailjet-for-wordpress') ?></p>
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
-                                    <label for="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Description', 'mailjet-for-wordpress') ?></label>
-                                    <div class="form-control validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Email subject', 'mailjet-for-wordpress') ?></div>
+                                    <label class="mj-label" for="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Description', 'mailjet-for-wordpress') ?></label>
+                                    <div class="validation_messages_labels" id="<?php echo esc_attr($this->get_field_id('email_subject_description')); ?>"><?php _e('Email subject', 'mailjet-for-wordpress') ?></div>
                                 </div>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
@@ -404,15 +353,15 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <label for="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
-                                        <textarea class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="<?php echo $subscriptionConfirmation ?>"><?php echo esc_attr($email_subject); ?></textarea>
+                                        <label class="mj-label" for="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
+                                        <textarea name="<?php echo esc_attr($this->get_field_name($locale . '[email_subject]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_subject]')); ?>" placeholder="<?php echo $subscriptionConfirmation ?>"><?php echo esc_attr($email_subject); ?></textarea>
                                     </div>
                                 <?php } ?>
                             </div>
 
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
-                                    <div class="form-control validation_messages_labels"><?php _e('Email content: title', 'mailjet-for-wordpress') ?></div>
+                                    <div class="validation_messages_labels"><?php _e('Email content: title', 'mailjet-for-wordpress') ?></div>
                                 </div>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
@@ -421,14 +370,14 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <textarea placeholder="<?php echo $confirmYourSubscription ?>" class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_title]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_title]')); ?>"><?php echo esc_attr($email_content_title); ?></textarea>
+                                        <textarea placeholder="<?php echo $confirmYourSubscription ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_title]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_title]')); ?>"><?php echo esc_attr($email_content_title); ?></textarea>
                                     </div>
                                 <?php } ?>
                             </div>
 
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
-                                    <div class="form-control validation_messages_labels"><?php _e('Email content: main text', 'mailjet-for-wordpress') ?></div>
+                                    <div class="validation_messages_labels"><?php _e('Email content: main text', 'mailjet-for-wordpress') ?></div>
                                 </div>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
@@ -437,13 +386,13 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <textarea placeholder="<?php echo $toReceiveNewslettersFrom ?>" class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_main_text]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_main_text]')); ?>"><?php echo esc_attr($email_content_main_text); ?></textarea>
+                                        <textarea placeholder="<?php echo $toReceiveNewslettersFrom ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_main_text]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_main_text]')); ?>"><?php echo esc_attr($email_content_main_text); ?></textarea>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
-                                    <div class="form-control validation_messages_labels"><?php _e('Email content: confirmation button label', 'mailjet-for-wordpress') ?></div>
+                                    <div class="validation_messages_labels"><?php _e('Email content: confirmation button label', 'mailjet-for-wordpress') ?></div>
                                 </div>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
@@ -452,13 +401,13 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <textarea placeholder="<?php echo $yesSubscribeMe ?>" class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_confirm_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_confirm_button]')); ?>"><?php echo esc_attr($email_content_confirm_button); ?></textarea>
+                                        <textarea placeholder="<?php echo $yesSubscribeMe ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_confirm_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_confirm_button]')); ?>"><?php echo esc_attr($email_content_confirm_button); ?></textarea>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="confirmation_email_row">
                                 <div class="floatLeft">
-                                    <div class="form-control validation_messages_labels"><?php _e('Email content: text after the button', 'mailjet-for-wordpress') ?></div>
+                                    <div class="validation_messages_labels"><?php _e('Email content: text after the button', 'mailjet-for-wordpress') ?></div>
                                 </div>
                                 <?php
                                 foreach ($activeLanguages as $language => $locale) {
@@ -467,24 +416,22 @@ if($numberActiveLanguages == 1) {
                                     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                        <textarea placeholder="<?php echo $ignoreMessage ?>" class="form-control" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_after_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_after_button]')); ?>"><?php echo esc_attr($email_content_after_button); ?></textarea>
+                                        <textarea placeholder="<?php echo $ignoreMessage ?>" name="<?php echo esc_attr($this->get_field_name($locale . '[email_content_after_button]')); ?>" id="<?php echo esc_attr($this->get_field_id($locale . '[email_content_after_button]')); ?>"><?php echo esc_attr($email_content_after_button); ?></textarea>
                                     </div>
                                 <?php } ?>
                             </div>
                         </div>
                         
                         <!--TAB - 4 THANK YOU PAGE-->
-                        <div role="tabpanel" class="tab-pane advanced-form-thank-you-page-tab" style="height: 240px;">
-                            <p class="tab-info propertiesInfo">
-                                <span><?php _e('Select a page from your WordPress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet-for-wordpress') ?></span>
-                            </p>   
+                        <div role="tabpanel" id="advanced-form-thank-you-page-tab" class="mj-tab-panel">
+                            <p class="tab-info"><?php _e('Select a page from your WordPress site to show after successful subscription confirmation or leave empty to use the default "Thank you" page', 'mailjet-for-wordpress') ?></p>
                             <?php
                             foreach ($activeLanguages as $language => $locale) {
                                 extract(wp_parse_args((array) $instance[$language], $advancedFormDefaults));
                                 ?>
-                                <div class="floatLeft form-group" style="width: <?php echo $percent . '%' ?>">
-                                    <label for="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
-                                    <select class="thankYou_select form-control" id="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>" name="<?php echo $this->get_field_name($language . '[thank_you]'); ?>">
+                                <div class="floatLeft form-group">
+                                    <label class="mj-label" for="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>"><?php _e($language, 'mailjet-for-wordpress') ?></label>
+                                    <select class="thankYou_select" id="<?php echo esc_attr($this->get_field_id($language . '[thank_you]')); ?>" name="<?php echo $this->get_field_name($language . '[thank_you]'); ?>">
                                         <option value="0"><?php _e('Default page', 'mailjet-for-wordpress') ?></option>
                                         <?php
                                         foreach ($pages as $page) { ?>
@@ -497,9 +444,9 @@ if($numberActiveLanguages == 1) {
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-backdrop="false"><?php _e('Cancel', 'mailjet-for-wordpress') ?></button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-backdrop="false" id="saveMailjetAdvancedForm"><?php _e('Save', 'mailjet-for-wordpress') ?></button>
+                <div class="mj-modal-footer">
+                    <button type="button" class="mj-btnSecondary cancelMailjetAdvancedForm"><?php _e('Cancel', 'mailjet-for-wordpress') ?></button>
+                    <button type="button" class="mj-btn btnPrimary saveMailjetAdvancedForm"><?php _e('Save', 'mailjet-for-wordpress') ?></button>
                 </div>
             </div>
         </div>
