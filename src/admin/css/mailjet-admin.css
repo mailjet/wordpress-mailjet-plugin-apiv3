@@ -5,9 +5,6 @@
     margin-top: 64px !important;
 }
 
-/**
- * Global styles and WP/bootsrap override
- */
 .mj-pluginPage {
     font-family: Roboto;
     font-size: 14px;
@@ -336,9 +333,6 @@
     font-weight: 500;
 }
 
-/**
-* Override bootstrap modal styles
-*/
 .mj-pluginPage .modal-backdrop {
     background-color: #2D2F37;
 }
@@ -1728,4 +1722,40 @@ input:checked + .mj-slider:before {
 hr {
     border-color: #F2F2F2;
     border-top: 1px;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -10px;
+    font-family: Roboto;
+    font-size: 12px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 5%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
 }

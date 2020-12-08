@@ -3,8 +3,8 @@
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
-Tested up to: 5.5
-Stable tag: 5.2.4
+Tested up to: 5.6
+Stable tag: 5.2.5
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -197,12 +197,15 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 == Upgrade notice ==
 
-= 5.2.4 =
-* Ensured compatibility with WP version 5.5 and previous versions
-* Fixed issue with WooCommerce order status
-* Security improvements
+= 5.2.5 =
+* Ensured compatibility with WP version 5.6
+* Removed Bootstrap dependency
 
 == Changelog ==
+
+= 5.2.5 =
+* Ensured compatibility with WP version 5.6
+* Removed Bootstrap dependency
 
 = 5.2.4 =
 * Ensured compatibility with WP version 5.5 and previous versions

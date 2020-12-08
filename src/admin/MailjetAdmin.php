@@ -88,6 +88,5 @@ class MailjetAdmin
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mailjet-admin.js', array( 'jquery' ), $this->version, false );
-//                wp_enqueue_script('admin_js_bootstrap_hack', plugins_url('js/bootstrap-hack.js', __FILE__), false, '1.0.0', false);
 	}
 }

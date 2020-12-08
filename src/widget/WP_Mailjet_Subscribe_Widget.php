@@ -41,9 +41,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         );
 
         // Register site styles and scripts
-        add_action('admin_print_styles', array($this, 'register_widget_styles'));
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
-        add_action('admin_enqueue_scripts', array($this, 'register_widget_styles'));
 
         add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
         add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
@@ -860,10 +858,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function form($instance)
     {
-        wp_enqueue_style('mailjet_bootstrap');
         wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
         wp_enqueue_script($this->get_widget_slug() . '-script');
-        wp_enqueue_script('mailjetjs_bootstrap');
 
         $validApiCredentials = MailjetApi::isValidAPICredentials();
         if ($validApiCredentials === false) {
@@ -924,23 +920,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
 // end widget_textdomain
 
-    /**
-     * Registers and enqueues widget-specific styles.
-     */
-    public function register_widget_styles()
-    {
-//        wp_enqueue_style($this->get_widget_slug() . '-widget-styles', plugins_url('css/widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
-        wp_register_style('mailjet_bootstrap', plugins_url('css/bootstrap.css', __FILE__), array(), MAILJET_VERSION, 'all');
-//        wp_register_style('prefix_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
-//        wp_enqueue_style('mailjet_bootstrap');
-    }
-
     public function register_widget_front_styles()
     {
         wp_register_style($this->get_widget_slug() . '-widget-front-styles', plugins_url('css/front-widget.css', __FILE__), array(), MAILJET_VERSION, 'all');
     }
-
-// end register_widget_styles
 
     /**
      * Registers and enqueues widget-specific scripts.
@@ -949,10 +932,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     {
         wp_register_script($this->get_widget_slug() . '-script', plugins_url('js/widget.js', __FILE__), array('jquery'));
         wp_localize_script($this->get_widget_slug() . '-script', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
-        
-
-        wp_register_script('mailjetjs_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
-//        wp_enqueue_script('mailjetjs_bootstrap');
     }
 
     public function register_widget_front_scripts()
