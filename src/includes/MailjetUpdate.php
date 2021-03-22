@@ -79,7 +79,7 @@ class MailjetUpdate
         if (!empty($pluginVersion)) {
             return;
         }
-        add_option('mailjet_plugin_version', '5.2.5');
+        add_option('mailjet_plugin_version', '5.2.6');
         delete_option('mailjet_access_administrator');
         delete_option('mailjet_access_author');
         delete_option('mailjet_access_editor');
