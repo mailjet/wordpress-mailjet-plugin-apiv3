@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="">
-    <head> 
+    <head>
         <title>Subscription</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta charset="UTF-8">
         <meta name="robots" content="noindex,noarchive,nofollow" />
-        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+
         <style type="text/css">
             body {
                 font-family: 'Ubuntu';
@@ -21,6 +21,8 @@
                 color: #E2A7A7;
             }
         </style>
+
+        <?php wp_print_styles(); ?>
     </head>
     <body>
 
@@ -45,7 +47,7 @@
         </div>
     </div>
 </div></p>
-        
-        
+
+
     </body>
 </html>
