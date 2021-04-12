@@ -12,6 +12,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
 
     const WIDGET_OPTIONS_NAME = 'mailjet_widget_options';
+    const WIDGETS_OPTIONS_NAME = 'widget_wp_mailjet_subscribe_widget';
 
     private $subscriptionOptionsSettings = null;
     protected $widget_slug = 'wp_mailjet_subscribe_widget';
@@ -81,7 +82,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function sendSubscriptionEmail()
     {
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
-        $instance = get_option(self::WIDGET_OPTIONS_NAME);
+        $instances = get_option(self::WIDGETS_OPTIONS_NAME);
+
         $locale = Mailjeti18n::getLocale();
         // Check if subscription form is submitted
         if (!isset($_POST['subscription_email'], $_POST['widget_id'])) {
@@ -89,6 +91,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         $widgetId = sanitize_text_field($_POST['widget_id']);
+
+        $widgetNumId = sscanf($widgetId, 'wp_mailjet_subscribe_widget-%d')[0] ?? [];
+        $instance = $instances[$widgetNumId] ?? get_option(self::WIDGET_OPTIONS_NAME);
+
         $subscription_locale = $locale;
         if (isset($_POST['subscription_locale'])) {
             $subscription_locale = sanitize_text_field($_POST['subscription_locale']);
