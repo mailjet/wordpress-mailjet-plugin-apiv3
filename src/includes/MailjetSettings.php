@@ -333,10 +333,10 @@ class MailjetSettings
             $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
             $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
 
-            wp_enqueue_style(
+            /* wp_enqueue_style(
                 'ubuntu-google-font',
                 'http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700',
-            );
+            ); */
 
             $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . '..' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
             // Default page is selected
