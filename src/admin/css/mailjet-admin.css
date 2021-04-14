@@ -1,7 +1,19 @@
 /*
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 */
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url(Roboto-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: url(Roboto-Medium.ttf) format('truetype');
+}
 
 .mj-connect-link {
     margin-top: 64px !important;
