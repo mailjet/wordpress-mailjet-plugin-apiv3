@@ -67,7 +67,7 @@ class Mailjet
         if (defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '5.2.8';
+            $this->version = '5.2.9';
         }
         $this->plugin_name = 'mailjet';
 
