@@ -1230,7 +1230,6 @@ return array (
                                                     'name' => 'head',
                                                     'version' => '4.3.0',
                                                     'id' => 'kLi3ArLf1',
-                                                    'savedSectionID' => 697324,
                                                 ),
                                             'padding-top' => '0px',
                                             'background-repeat' => 'repeat',
