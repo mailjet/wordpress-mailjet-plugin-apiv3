@@ -12,6 +12,18 @@ use MailjetPlugin\Includes\Mailjeti18n;
     $locale = Mailjeti18n::getLocale();
     $language = Mailjeti18n::getCurrentUserLanguage();
 
+    // Check if selected locale checkbox is not set
+    if (!(isset($instance[$locale], $instance[$locale]['language_checkbox']) && $instance[$locale]['language_checkbox'])) {
+        // Find other selected language locale
+        $selectedLocales = array_filter($instance, function($localeInstance) {
+            return isset($localeInstance['language_checkbox']) && 1 === $localeInstance['language_checkbox'];
+        });
+
+        if ($selectedLocales) {
+            $locale = array_keys($selectedLocales)[0];
+        }
+    }
+
     // Check the widget options
     $title = isset($instance[$locale]['title']) ? apply_filters('widget_title', $instance[$locale]['title']) : '';
     $emailLabel = !empty($instance[$locale]['language_mandatory_email']) ? apply_filters('widget_language_mandatory_email', $instance[$locale]['language_mandatory_email']) : Mailjeti18n::getTranslationsFromFile($locale, 'your@email.com');

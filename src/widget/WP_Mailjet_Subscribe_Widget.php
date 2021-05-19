@@ -95,6 +95,18 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         $widgetNumId = sscanf($widgetId, 'wp_mailjet_subscribe_widget-%d')[0] ?? [];
         $instance = $instances[$widgetNumId] ?? get_option(self::WIDGET_OPTIONS_NAME);
 
+        // Check if selected locale checkbox is not set
+        if (!(isset($instance[$locale], $instance[$locale]['language_checkbox']) && $instance[$locale]['language_checkbox'])) {
+            // Find other selected language locale
+            $selectedLocales = array_filter($instance, function($localeInstance) {
+                return isset($localeInstance['language_checkbox']) && 1 === $localeInstance['language_checkbox'];
+            });
+
+            if ($selectedLocales) {
+                $locale = array_keys($selectedLocales)[0];
+            }
+        }
+
         $subscription_locale = $locale;
         if (isset($_POST['subscription_locale'])) {
             $subscription_locale = sanitize_text_field($_POST['subscription_locale']);
@@ -102,14 +114,16 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         // Submitted but empty
         if (empty($_POST['subscription_email'])) {
-            echo !empty($instance[$locale]['empty_email_message_input']) ? $instance[$locale]['empty_email_message_input'] : __('Please provide an email address', 'mailjet-for-wordpress');
+            echo !empty($instance[$locale]['empty_email_message_input'])
+                ? $instance[$locale]['empty_email_message_input']
+                : Mailjeti18n::getTranslationsFromFile($locale, 'Please provide an email address');
             wp_die();
         }
 
         // Send subscription email
         $subscription_email = sanitize_email($_POST['subscription_email']);
         if (!is_email($subscription_email)) {
-            echo __('Invalid email', 'mailjet-for-wordpress');
+            echo Mailjeti18n::getTranslationsFromFile($locale, 'Invalid email');
             wp_die();
         }
 
@@ -157,7 +171,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
                 }
             }
             if ($isValueTypeIncorrect) {
-                $incorrectTypeValueMessage = !empty($instance[$locale]['invalid_data_format_message_input']) ? $instance[$locale]['invalid_data_format_message_input'] : __('The value you entered is not in the correct format.', 'mailjet-for-wordpress');
+                $incorrectTypeValueMessage = !empty($instance[$locale]['invalid_data_format_message_input'])
+                    ? $instance[$locale]['invalid_data_format_message_input']
+                    : Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
                 echo $incorrectTypeValueMessage;
                 wp_die();
             }
@@ -165,10 +181,13 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 
         $sendingResult = $subscriptionOptionsSettings->mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale, $widgetId);
         if ($sendingResult) {
-            echo !empty($instance[$locale]['confirmation_email_message_input']) ? $instance[$locale]['confirmation_email_message_input'] : __('Subscription confirmation email sent. Please check your inbox and confirm your subscription.', 'mailjet-for-wordpress');
-        }
-        else {
-            echo !empty($instance[$locale]['technical_error_message_input']) ? $instance[$locale]['technical_error_message_input'] : __('A technical issue has prevented your subscription. Please try again later.', 'mailjet-for-wordpress');
+            echo !empty($instance[$locale]['confirmation_email_message_input'])
+                ? $instance[$locale]['confirmation_email_message_input']
+                : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription confirmation email sent. Please check your inbox and confirm your subscription.');
+        } else {
+            echo !empty($instance[$locale]['technical_error_message_input'])
+                ? $instance[$locale]['technical_error_message_input']
+                : Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
         }
         wp_die();
     }
