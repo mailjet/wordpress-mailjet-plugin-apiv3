@@ -127,8 +127,50 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             wp_die();
         }
 
-        $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
+        // Additional properties
         $mailjetContactProperties = $this->getMailjetContactProperties();
+        if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
+            foreach ($mailjetContactProperties as $mjContactProperty) {
+                $this->propertyData[$mjContactProperty['ID']] = array(
+                    'Name' => $mjContactProperty['Name'],
+                    'Datatype' => $mjContactProperty['Datatype']
+                );
+            }
+        }
+
+        $errors = [];
+
+        // Check for the additional properties from the admin advanced settings
+        for ($i = 0; $i < 5; $i++) {
+            if (!isset($instance[$locale])) {
+                continue;
+            }
+
+            // Property id - '0' there is no selected property
+            $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
+
+            // Skip if this property is not added in admin part
+            if (empty($contactPropertyId) || empty($this->propertyData[$contactPropertyId])) {
+                continue;
+            }
+
+            $propertyType = (int) $instance[$locale]['propertyDataType' . $i]; // '0' - optional, '1' - mandatory, '2' - hidden
+            $isMandatory = $propertyType === 1;
+
+            if ($isMandatory && !$_POST['properties'][$contactPropertyId]) {
+                $errors[] = $contactPropertyId;
+            }
+        }
+
+        if ($errors) {
+            echo wp_json_encode([
+                'prop_errors' => $errors,
+            ]);
+            wp_die();
+        }
+
+        $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
+
         $isValueTypeIncorrect = false;
         if(!empty($properties) && is_array($mailjetContactProperties) && !empty($mailjetContactProperties)) {
             foreach($properties as $propertyId => $propertyValue) {

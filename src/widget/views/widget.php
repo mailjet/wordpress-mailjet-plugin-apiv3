@@ -10,7 +10,6 @@ use MailjetPlugin\Includes\Mailjeti18n;
     extract($args);
 
     $locale = Mailjeti18n::getLocale();
-    $language = Mailjeti18n::getCurrentUserLanguage();
 
     // Check if selected locale checkbox is not set
     if (!(isset($instance[$locale], $instance[$locale]['language_checkbox']) && $instance[$locale]['language_checkbox'])) {
@@ -23,6 +22,8 @@ use MailjetPlugin\Includes\Mailjeti18n;
             $locale = array_keys($selectedLocales)[0];
         }
     }
+
+    $language = Mailjeti18n::getCurrentUserLanguage($locale);
 
     // Check the widget options
     $title = isset($instance[$locale]['title']) ? apply_filters('widget_title', $instance[$locale]['title']) : '';
@@ -77,7 +78,7 @@ use MailjetPlugin\Includes\Mailjeti18n;
                 $required = isset($inputProperties['required']) ? $inputProperties['required'] : '';
                 ?>
                 <div class="mailjet-widget-form-group">
-                    <input type="checkbox" <?php echo $required ?> name="properties[<?php echo $contactPropertyId ?>]" id="mailjet_property_<?php echo $i ?>" />
+                    <input class="mj_form_property" type="checkbox" <?php echo $required ?> name="properties[<?php echo $contactPropertyId ?>]" id="mailjet_property_<?php echo $i ?>" />
                     <label for="mailjet_property_<?php echo $i ?>" class="mailjet-widget-label">
                         <?php echo $inputProperties['placeholder'] ?>
                     </label>
