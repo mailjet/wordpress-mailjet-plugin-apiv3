@@ -144,9 +144,9 @@ class Mailjeti18n
      * Get user language via locale, if the language is not supported returns the default en_US
      * @return string
      */
-    public static function getCurrentUserLanguage()
+    public static function getCurrentUserLanguage($forceLocale = null)
     {
-        $locale = self::getLocale();
+        $locale = $forceLocale ?: self::getLocale();
         $languages = array_flip(self::getSupportedLocales());
         if (!isset($languages[$locale])) {
             // return English if the language is not supported
