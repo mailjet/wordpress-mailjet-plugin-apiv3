@@ -44,8 +44,10 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         // Register site styles and scripts
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
 
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
+        if (is_active_widget(false, false, $this->id_base)) {
+            add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
+            add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
+        }
 
         // Refreshing the widget's cached output with each new post
         add_action('save_post', array($this, 'flush_widget_cache'));
