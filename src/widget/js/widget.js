@@ -4,6 +4,8 @@
 
         $(document).on('widget-updated', function (event, widget) {
             showCheckedLanguages();
+            eventOpenAdvancedFormModal();
+            eventCloseAdvancedFormModal();
         });
 
         $(document).on('widget-added', function (event, widget) {
