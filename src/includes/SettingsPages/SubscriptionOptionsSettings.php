@@ -245,6 +245,9 @@ class SubscriptionOptionsSettings
             );
         }
 
+        // Add apply_filters to allow hooks to edit the contacts value if needed
+        $contacts = apply_filters('mailjet_syncContactsToMailjetList_contacts', $contacts);
+
         return MailjetApi::syncMailjetContacts($contactListId, $contacts, $action);
     }
 
@@ -258,6 +261,9 @@ class SubscriptionOptionsSettings
         $contact = [];
         $contact['Email'] = $email;
         $contact['Properties'] = $contactProperties;
+
+        // Add apply_filters to allow hooks to edit the contact value if needed
+        $contact = apply_filters('mailjet_syncSingleContactEmailToMailjetList_contact', $contact);
 
         return MailjetApi::syncMailjetContact($contactListId, $contact, $action);
     }
