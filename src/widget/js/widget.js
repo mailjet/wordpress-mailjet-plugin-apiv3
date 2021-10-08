@@ -4,6 +4,8 @@
 
         $(document).on('widget-updated', function (event, widget) {
             showCheckedLanguages();
+            eventOpenAdvancedFormModal();
+            eventCloseAdvancedFormModal();
         });
 
         $(document).on('widget-added', function (event, widget) {
@@ -12,11 +14,12 @@
 
         // Toggle(show/hide) hidden language elements(title, contactList)
         $(document).on('change', '.language_checkbox', function () {
-			$(this).parent().find('div.hidden_default').toggle('slow');
-
-            // Uncheck the language checkbox
             var removeLanguage = !$(this).prop('checked');
-            if (!removeLanguage) {
+            // Uncheck the language checkbox
+            if (removeLanguage) {
+                mjHide($(this).parent().find('div.mj-modal-language-config')[0]);
+            } else {
+                mjShow($(this).parent().find('div.mj-modal-language-config')[0]);
                 // Add specific language
                 var languageListId = $(this).parent().find('.language-select-list').val();
                 if (languageListId === "0") {
@@ -37,8 +40,8 @@
             }
         });
 
-        $(document).on('click', '.saveNewPropertyButton', function () {
-
+        $(document).on('click', '.saveNewPropertyButton', function (event) {
+            event.preventDefault();
             var element = $(this);
 
             // Get new property name value
@@ -62,16 +65,16 @@
                         resetAddingNewPropertyInputs(element, 'Text');
 
                         // Hide new property inputs
-                        element.parent().parent().find('.createNewProperties').hide();
+                        mjHide(element.parent().parent().find('.createNewProperties')[0]);
 
                         // Show datatype and languages inputs/values and delete
-                        element.parent().parent().find('.hiddenProperties').show();
+                        mjShow(element.parent().parent().find('.hiddenProperties')[0]);
 
                         // Show next default property select
-                        element.parent().parent().next('.property').show();
+                        mjShow(element.parent().parent().next('.property')[0]);
 
                         // Remove the delete icon for the previous row
-                        element.parent().parent().prev().find('.deleteProperty').hide();
+                        mjHide(element.parent().parent().prev().find('.deleteProperty')[0]);
 
                         // Remove class as the input value is ok
                         element.parent().parent().find('.newPropertyName input').removeClass('redInput');
@@ -94,26 +97,29 @@
             // Create new property
             if (optionValue === 'newProperty') {
                 // Hide select property inputs
-                $(this).parent().parent().find('.hiddenProperties').hide();
+                mjHide($(this).parent().parent().find('.hiddenProperties')[0]);
 
                 // Show new property inputs
-                $(this).parent().parent().find('.createNewProperties').show();
+                mjShow($(this).parent().parent().find('.createNewProperties')[0]);
 
             } else {
                 // Show datatype and languages inputs/values and delete
-                $(this).parent().parent().find('.hiddenProperties').show();
+                mjShow($(this).parent().parent().find('.hiddenProperties')[0]);
 
                 // Hide inputs of adding new property
-                $(this).parent().parent().find('.createNewProperties').hide();
+                mjHide($(this).parent().parent().find('.createNewProperties')[0]);
 
                 // Reset inputs for adding new property
                 resetAddingNewPropertyInputs($(this));
 
                 // Show next default property select
-                $(this).parent().parent().next('.property').show();
+                const nextProperty = $(this).parent().parent().next('.property')[0];
+                if (nextProperty) {
+                    mjShow(nextProperty);
+                }
 
                 // Remove the delete icon for the previous row
-                $(this).parent().parent().prev().find('.deleteProperty').hide();
+                mjHide($(this).parent().parent().prev().find('.deleteProperty')[0]);
             }
         });
 
@@ -121,13 +127,16 @@
         $(document).on('click', '.deleteProperty', function (event) {
 
             // Hide row properties and only property select left
-            $(this).parent().parent().find('.hiddenProperties').hide();
+            mjHide($(this).parent().parent().find('.hiddenProperties')[0]);
 
             // Hide next row as the deleted stays the current
-            $(this).parent().parent().next('.property').hide();
+            mjHide($(this).parent().parent().next()[0]);
 
             // Show delete icon for the last row
-            $(this).parent().parent().prev().find('.deleteProperty').show();
+            const previousDeleteProperty = $(this).parent().parent().prev().find('.deleteProperty')[0];
+            if (previousDeleteProperty) {
+                mjShow(previousDeleteProperty);
+            }
 
             resetHiddenPropertiesInputs($(this));
         });
@@ -152,7 +161,7 @@
             element.parent().parent().find('.newPropertyType input').val(resetElementValue);
         }
 
-        $(document).on('click', '#saveAdvancedForm', function () {
+        $(document).on('click', '.saveMailjetAdvancedForm', function () {
             $(this).parents('.widget').find("[name='savewidget']").click();
             $(this).text("Saving...").prop('disabled', true);
         });
@@ -161,11 +170,11 @@
         $(document).on('change', $("input[name='savewidget']"), function () {
             var isSaveButtonDisabled = $(this).is(":disabled");
             if (isSaveButtonDisabled) {
-                $("#disabled-advanced-link").hide();
                 $(".disabled-advanced-link").addClass('hidden_default');
+                $(".advanced-form-link-wrap").removeClass('hidden_default');
             } else {
-                $("div.advanced-form-link-wrap").hide();
                 $(".disabled-advanced-link").removeClass('hidden_default');
+                $(".advanced-form-link-wrap").addClass('hidden_default');
             }
         });
 
@@ -182,9 +191,10 @@
             }
         });
 
-        $(document).on('click', '.cancelNewPropertyButton', function () {
+        $(document).on('click', '.cancelNewPropertyButton', function (event) {
+            event.preventDefault();
             // Hide new property inputs
-            $(this).parent().parent().find('.createNewProperties').hide();
+            mjHide($(this).parent().parent().find('.createNewProperties')[0]);
 
             // Reset inputs
             resetHiddenPropertiesInputs($(this));
@@ -211,7 +221,9 @@
          */
         function init() {
             showCheckedLanguages();
-            $('[data-toggle="tooltip"]').tooltip();
+            eventOpenAdvancedFormModal();
+            eventCloseAdvancedFormModal();
+            eventChangeAdvancedFormTab();
         }
 
         /**
@@ -221,10 +233,58 @@
         function showCheckedLanguages() {
             $('.language_checkbox').each(function (index, value) {
                 if (value.checked === true) {
-					$(this).parent().find('div.hidden_default').show();
+					mjShow($(this).parent().find('div.mj-modal-language-config')[0]);
                 }
             });
         }
 
+        function eventOpenAdvancedFormModal() {
+            const modalTriggers = document.querySelectorAll('.advanced-form-link');
+            modalTriggers.forEach(function(trigger) {
+                trigger.addEventListener('click', function () {
+                    const widgetId = this.getAttribute('data-target');
+                    const modalWindow = document.getElementById('modal-' + widgetId);
+                    modalWindow.classList.add('open');
+                });
+            });
+        }
+
+        function eventCloseAdvancedFormModal() {
+            const modals = document.querySelectorAll('.mj-modal');
+            modals.forEach(function(modal) {
+                const closeModalTriggers = modal.querySelectorAll('.mj-modal-header .close, .cancelMailjetAdvancedForm');
+                closeModalTriggers.forEach(function(trigger) {
+                    trigger.addEventListener('click', function () {
+                        modal.classList.remove('open');
+                    });
+                });
+            });
+        }
+
+        function eventChangeAdvancedFormTab() {
+            const tabsTriggersContainers = document.querySelectorAll('.mj-nav-tabs');
+            tabsTriggersContainers.forEach(function(tabsTriggersContainer) {
+                const modalId = '#modal-' + tabsTriggersContainer.getAttribute('data-target');
+                const tabsTriggers = tabsTriggersContainer.querySelectorAll('.mj-tab');
+                tabsTriggers.forEach(function(trigger) {
+                    trigger.addEventListener('click', function (event) {
+                        const currentActiveTrigger = document.querySelector(modalId + ' .mj-tab.active');
+                        if (currentActiveTrigger !== null) {
+                            currentActiveTrigger.classList.remove('active');
+                        }
+                        this.classList.add('active');
+                        const targetTabId = this.getAttribute('data-tab');
+                        const currentActiveTab = document.querySelector(modalId + ' .mj-tab-panel.active');
+                        if (currentActiveTab !== null) {
+                            currentActiveTab.classList.remove('active');
+                        }
+                        const newActiveTab = document.querySelector(modalId + ' #' + targetTabId);
+                        if (newActiveTab !== null) {
+                            newActiveTab.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
     });
 }(jQuery));

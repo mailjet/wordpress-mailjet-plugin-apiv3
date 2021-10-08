@@ -2,14 +2,6 @@
     border-radius: 0px!important;
     background-color: #FFF !important;
     border: 1px solid #888 !important;
-
-}
-
-.selectProperty{
-    height: 32px!important;
-}
-.propertyDataType{
-    height: 32px!important;
 }
 
 .language_checkbox{
@@ -21,7 +13,9 @@
 }
 
 .propertiesInfo{
-    font-size: 14px;
+    clear: left!important;
+    font-weight: bold!important;
+    margin: 5px 0 10px 0!important;
 }
 
 .mailjet_widget_admin_container {
@@ -40,7 +34,7 @@
 }
 
 .hidden_default {
-    display: none;
+    display: none!important;
 }
 
 .some-space{
@@ -93,32 +87,32 @@
     border-top: 1px solid #eee;
 }
 
-#advanced-form-link{
+.advanced-form-link-info{
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.advanced-form-link{
     text-decoration: underline;
     cursor: pointer;
     height: 14px;
-    width: 158px;
     color: #018EC2;
     font-family: Helvetica;
-    font-size: 12px!important;
-    line-height: 14px;
-
+    font-size: 14px!important;
+    line-height: 15px;
 }
 
-#advanced-form-link:hover{
+.advanced-form-link:hover{
     color: #00a0d2;
 }
 
-#advanced-form-link-info{
-    font-weight: bold;
-    cursor: pointer;
-}
 .disabled-advanced-link span{
     text-decoration: underline;
     cursor: pointer;
     height: 14px;
     font-family: Helvetica;
-    font-size: 12px!important;
+    font-size: 14px!important;
     color: #A7A7A7!important;
     cursor: default!important;
 }
@@ -130,9 +124,11 @@
 
 .property{
     clear: left;
-    padding: 1%;
     margin-left: 5px;
-    margin-top: 39px;
+}
+
+.property.mj-show{
+    margin-bottom: 15px;
 }
 
 .newPropertyFields{
@@ -145,8 +141,7 @@
 }
 .floatLeft{
     float: left;
-    /*margin-left: 1%;*/
-    margin-left: 16px;
+    margin-left: 12px;
 }
 
 .propertyLabel{
@@ -172,74 +167,38 @@
     height: 32px;
     background-color: #FFF !important;
     border: 1px solid #888 !important;
+    margin-bottom: 0!important;
 }
 
 .deleteProperty{
     width: 15px;
     margin: 8px;
-    /*display: none;*/
-}
-
-.hiddenProperties{
-    /*display: none;*/
-}
-
-.hiddenSelectProperties{
-    /*display: none;*/
-}
-
-.createNewProperties{
-    display: none;
-}
-
-.newPropertyName{
-    width: 30%;
+    font-size: 18px;
 }
 
 .newPropertyName input{
     width: 100%;
     height: 32px;
+    margin-bottom: 0!important;
+    min-width: 250px;
 }
 
-.newPropertyType select{
-    width: 100%;
-    height: 32px;
-    /*margin-left: 10px;*/
+.newPropertyName input::placeholder{
+    font-size: 11px;
 }
 
 .saveNewPropertyButton{
-    /*margin-left: -25px!important;*/
+    min-width: 50px!important;
     font-size: 12px!important;
-/*    height: 20px!important;
-    width: 70px!important;*/
-    border: 1px solid #B8B8B8 !important;
-    border-radius: 3px !important;
-    background-color: #FFFFFF !important;
+    padding: 0!important;
+    float: right;
 }
 
 .cancelNewPropertyButton{
+    min-width: 50px!important;
     font-size: 12px!important;
-    margin-left: -2px!important;
-    height: 14px!important;
-    width: 40px!important;
-    color: #9B9B9B !important;
-    font-family: Helvetica;
-    font-size: 12px!important;
-    font-weight: bold!important;
-    line-height: 14px!important;
-}
-
-.cancelNewPropertyButton {
-    color: silver;
-}
-
-
-@media (min-width: 992px) {
-    .modal-mailjet-lg {
-        width: 1200px!important;
-        height: 900px; /* control height here */
-        /*margin: 40px 0 0 145px!important;*/
-    }
+    padding: 0!important;
+    float: right;
 }
 
 .customize-mandatory-email{
@@ -256,22 +215,14 @@
     clear: left;
 }
 
-#mandatory-wrap{
-    clear: left;
-    padding: 1%;
-}
-
 .mandatoryEmailLabel{
-    width: 250px;
-    margin-top: 27px;
-    margin-right: 60px;
+    width: 25%;
+    margin-top: 33px;
     margin-left: 6px;
 }
 
 .mandatoryEmailLanguageInput input {
     width: 100%!important;
-    height: 32px;
-    /*width: 136px;*/
 }
 
 .mandatoryButtonLanguage{
@@ -279,21 +230,33 @@
 }
 
 .mandatoryButtonLanguage input{
-    height: 32px;
-}
-
-.validation_message_row{
-    clear: left;
+    width: 100%!important;
 }
 
 .confirmation_email_row{
     clear: left;
 }
 
-.validation_messages_labels{
+.confirmation_email_row textarea {
+    height: 110px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.validation_message_row {
+    clear: left;
+}
+
+.validation_message_row textarea {
+    height: 100px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.validation_messages_labels {
     height: auto!important;
-    width: 240px!important;
-    border: 0px solid transparent!important;
+    width: 220px!important;
+    border-top: 1px solid #e5e5e5!important;
     margin-left: -12px;
 }
 
@@ -305,21 +268,154 @@
     color: red;
 }
 
-.tab-info{
-    margin: 25px 16px 30px;
-}
-
 .advanced-form-validation-messages select{
     height: 110px!important;
 }
 
-.modal-title{
-    font-weight: bold;
+.mj-modal {
+    position: fixed;
+    z-index: 50;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow-y: auto;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    margin-left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s, lineaer 0.1s, opacity 0.3s ease;
 }
 
-.modal-header{
-    border-bottom: none!important;
-    background-color: #f3f3f3;
+.mj-modal.open {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.mj-modal-dialog {
+    position: relative;
+    width: 90%;
+    margin: auto;
+}
+
+@media (min-width: 782px) {
+    .mj-modal {
+        margin-left: 36px;
+        width: calc(100% - 36px);
+    }
+
+    .mj-modal-dialog {
+        width: 600px;
+    }
+}
+
+@media (min-width: 960px) {
+    .mj-modal {
+        margin-left: 160px;
+        width: calc(100% - 160px);
+    }
+
+    .mj-modal-dialog {
+        width: 800px;
+    }
+}
+
+.mj-modal-content{
+    background-color: #ffffff;
+    margin: 0;
+}
+
+.mj-modal-header{
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #fcfcfc;
+    padding: 15px;
+}
+
+.mj-modal-header h4{
+    margin: 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.mj-modal-header .close{
+    float: right;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: #555555;
+    margin-top: -2px;
+}
+
+.mj-modal-header .close:hover{
+    color: #000000;
+}
+
+.mj-modal-header .close span{
+    font-size: 22px;
+}
+
+.mj-modal-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.mj-modal-footer {
+    margin-top: 20px;
+    border-top: 1px solid #e5e5e5;
+    background-color: #fcfcfc;
+    padding: 15px;
+    text-align: right;
+}
+
+.mj-modal-footer button {
+    margin-left: 10px;
+}
+
+.mj-nav-tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.mj-tab {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.mj-tab:hover {
+    background-color: #f2f2f2;
+}
+
+.mj-tab.active {
+    cursor: default;
+    color: #19BC9C;
+    border-bottom: 2px solid #19BC9C;
+}
+
+.mj-tab.active:hover {
+    background-color: inherit;
+}
+
+.mj-tab-content {
+    margin: 10px;
+}
+
+.mj-tab-panel {
+    display: none;
+}
+
+.mj-tab-panel.active {
+    display: block;
+}
+
+.mj-modal .mj-label {
+    font-weight: bold;
 }
 
 .redInput{
@@ -373,25 +469,6 @@
 /* Handle on hover */
 .tab-pane textarea::-webkit-scrollbar-thumb:hover {
     background: #D3D3D3;
-}
-
-/*.advanced-form-validation-messages textarea{
-    width: 140px!important;
-}*/
-
-#advanced-form-navs a{
-    text-decoration: none!important;
-}
-#advanced-form-navs {
-    margin-top: 0;
-    background-color: #f3f3f3;
-}
-
-#exampleModalLabel{
-    margin: 0;
-    line-height: 1.42857143;
-    font-weight: bold;
-    font-size: 18px;
 }
 
 .modal-content label {

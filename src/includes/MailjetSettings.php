@@ -207,7 +207,7 @@ class MailjetSettings
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
 
         $contactForm7Settings = new ContactForm7Settings();
-        add_action('wpcf7_submit', array($contactForm7Settings, 'sendConfirmationEmail'), 10, 2);
+        add_action('wpcf7_mail_sent', array($contactForm7Settings, 'sendConfirmationEmail'), 10, 2);
         if (!empty($_GET['cf7list']) && $_GET['cf7list'] === $contactListId) {
 
             if (empty($_GET['email'])) {
@@ -332,6 +332,12 @@ class MailjetSettings
             $locale = Mailjeti18n::getLocaleByPll();
             $newsletterRegistration = Mailjeti18n::getTranslationsFromFile($locale, 'Newsletter Registration');
             $congratsSubscribed = Mailjeti18n::getTranslationsFromFile($locale, 'Congratulations, you have successfully subscribed!');
+
+            wp_enqueue_style(
+                'ubuntu-google-font',
+                'http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700'
+            );
+
             $tankyouPageTemplate = apply_filters('mailjet_thank_you_page_template', plugin_dir_path(__FILE__) . '..' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'thankyou.php');
             // Default page is selected
             include($tankyouPageTemplate);

@@ -8,7 +8,12 @@
 }
 
 .mj_form_property{
-    
+
+}
+
+.mj_form_property.has-error{
+    border: 1px solid #E74C3C;
+    box-shadow: 0 0 3px #e74c3c;
 }
 
 .mailjet-widget-form-group {

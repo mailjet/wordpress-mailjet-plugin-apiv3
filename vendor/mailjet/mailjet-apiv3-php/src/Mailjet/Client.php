@@ -32,6 +32,13 @@ class Client
      */
     const TIMEOUT = 'timeout';
 
+
+    /**
+     * proxy: (array, default=none) Array describing the proxy options used by guzzle client
+     * See guzzle-http for specification
+     */
+    const PROXY = 'proxy';
+
     private $apikey;
     private $apisecret;
     private $apitoken;
@@ -98,7 +105,6 @@ class Client
      */
     private function _call($method, $resource, $action, $args)
     {
-
         $args = array_merge(
                 [
             'id' => '',
@@ -114,10 +120,10 @@ class Client
 
         $isBasicAuth = $this->isBasicAuthentication($this->apikey, $this->apisecret);
         $auth = $isBasicAuth ? [$this->apikey, $this->apisecret] : [$this->apitoken];
+
         $request = new Request(
                 $auth, $method, $url, $args['filters'], $args['body'], $contentType, $this->requestOptions
         );
-
         return $request->call($this->call);
     }
 
@@ -160,7 +166,6 @@ class Client
         if (!empty($options)) {
             $this->setOptions($options, $resource);
         }
-
         $result = $this->_call('POST', $resource[0], $resource[1], $args);
 
         if (!empty($this->changed)) {
@@ -180,9 +185,7 @@ class Client
         if (!empty($options)) {
             $this->setOptions($options, $resource);
         }
-
         $result = $this->_call('GET', $resource[0], $resource[1], $args);
-
         if (!empty($this->changed)) {
             $this->setSettings();
         }
@@ -240,10 +243,11 @@ class Client
             $path = '';
         } elseif (in_array($action, $this->dataAction)) {
             $path = 'DATA';
+        } elseif($this->version == 'v4') {
+            $path = '';
         }
 
         $arrayFilter = [$path, $resource, $id, $action, $actionid];
-
         return $this->getApiUrl() . join('/', array_filter($arrayFilter));
     }
 
@@ -350,6 +354,17 @@ class Client
     {
         $this->requestOptions[self::TIMEOUT] = $timeout;
     }
+
+    /**
+     * Set HTTP proxy options
+     * See: http://docs.guzzlephp.org/en/stable/request-options.html#proxy
+     * @param   $proxyArray
+     */
+    public function setHttpProxy($proxyArray)
+    {
+        $this->requestOptions[self::PROXY] = $proxyArray;
+    }
+
 
     /**
      * Set HTTP connection Timeout
