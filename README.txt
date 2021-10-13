@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
 Tested up to: 5.7.2
-Stable tag: 5.2.12
+Stable tag: 5.2.15
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,15 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 == Upgrade notice ==
 
+= 5.2.15 =
+* Removed not needed requests when initiating widget
+
+= 5.2.14 =
+* Fixed showing modal after saving widget
+
+= 5.2.13 =
+* Dont add scripts if widget not added
+
 = 5.2.12 =
 * Validation improved
 
@@ -208,6 +217,15 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Removed Bootstrap dependency
 
 == Changelog ==
+
+= 5.2.15 =
+* Removed not needed requests when initiating widget
+
+= 5.2.14 =
+* Fixed showing modal after saving widget
+
+= 5.2.13 =
+* Dont add scripts if widget not added
 
 = 5.2.12 =
 * Validation improved
