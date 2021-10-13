@@ -130,13 +130,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
 
         // Additional properties
-        $mailjetContactProperties = $this->getMailjetContactProperties();
-        if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
-            foreach ($mailjetContactProperties as $mjContactProperty) {
-                $this->propertyData[$mjContactProperty['ID']] = array(
-                    'Name' => $mjContactProperty['Name'],
-                    'Datatype' => $mjContactProperty['Datatype']
-                );
+        $this->propertyData = get_site_transient('propertyData');
+        if (!$this->propertyData) {
+            $mailjetContactProperties = $this->getMailjetContactProperties();
+            if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
+                foreach ($mailjetContactProperties as $mjContactProperty) {
+                    $this->propertyData[$mjContactProperty['ID']] = array(
+                        'Name' => $mjContactProperty['Name'],
+                        'Datatype' => $mjContactProperty['Datatype']
+                    );
+                }
+                set_site_transient('propertyData', $this->propertyData, 43200);
             }
         }
 
