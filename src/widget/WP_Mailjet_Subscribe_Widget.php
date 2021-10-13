@@ -377,22 +377,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-        $validApiCredentials = MailjetApi::isValidAPICredentials();
-        if ($validApiCredentials === false) {
-            return false;
-        }
-
         if (get_option(self::WIDGET_OPTIONS_NAME) === false) {
             add_option(self::WIDGET_OPTIONS_NAME, $instance);
-        }
-        $mailjetContactProperties = $this->getMailjetContactProperties();
-        if (!empty($mailjetContactProperties) && is_array($mailjetContactProperties)) {
-            foreach ($mailjetContactProperties as $mjContactProperty) {
-                $this->propertyData[$mjContactProperty['ID']] = array(
-                    'Name' => $mjContactProperty['Name'],
-                    'Datatype' => $mjContactProperty['Datatype']
-                );
-            }
         }
 
         // Check if there is a cached output
