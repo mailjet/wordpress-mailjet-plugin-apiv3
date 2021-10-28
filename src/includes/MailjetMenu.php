@@ -142,6 +142,7 @@ class MailjetMenu
                 'campaigns',
                 'contacts',
                 'stats',
+                'transactional'
             ))
             ->turnDocumentationProperties(MailjetIframe::OFF)
             ->turnNewContactListCreation(MailjetIframe::ON)
