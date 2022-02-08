@@ -35,6 +35,8 @@ class IntegrationsSettings
             delete_option( 'mailjet_woo_edata_sync' );
 		    delete_option( 'mailjet_woo_checkout_checkbox' );
 		    delete_option( 'mailjet_woo_checkout_box_text' );
+            delete_option( 'mailjet_woo_register_checkbox' );
+		    delete_option( 'mailjet_woo_register_box_text' );
 		    delete_option( 'mailjet_woo_banner_checkbox' );
 		    delete_option( 'mailjet_woo_banner_text' );
 		    delete_option( 'mailjet_woo_banner_label' );
@@ -51,6 +53,12 @@ class IntegrationsSettings
 	        delete_option( 'mailjet_woo_checkout_box_text' );
         }
         $checkoutCheckboxText = stripslashes(get_option('mailjet_woo_checkout_box_text'));
+
+        $registerCheckbox = get_option( 'mailjet_woo_register_checkbox' );
+        if ($registerCheckbox !== '1'){
+	        delete_option( 'mailjet_woo_register_box_text' );
+        }
+        $registerCheckboxText = stripslashes(get_option('mailjet_woo_register_box_text'));
 
         $bannerCheckbox = get_option( 'mailjet_woo_banner_checkbox' );
         if ($bannerCheckbox !== '1'){
@@ -117,6 +125,19 @@ class IntegrationsSettings
                     <div id="mailjet_woo_sub_letter" class="<?= ( $checkoutCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?> mj-text-div">
                         <label  class="mailjet-label" for="sub_letter"><?= __('Checkbox text', 'mailjet-for-wordpress') ?></label>
                         <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?= $checkoutCheckboxText ?>" class="mj-text-field" placeholder="<?= __('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>">
+                    </div>
+                    <label class="checkboxLabel">
+                        <span <?= $isSyncListSelected ? '' : 'class="tooltip"' ?>>
+                            <input name="woocommerce[mailjet_woo_register_checkbox]" id="activate_mailjet_woo_register_checkbox" type="checkbox"
+                               value="1" <?php echo( $registerCheckbox === '1' ? ' checked="checked"' : '' ) ?> <?php echo( $wooCommerceNotInstalled == true ? ' disabled' : '' ) ?>
+                               autocomplete="off" <?= $isSyncListSelected ? '' : 'disabled' ?>>
+                            <?php if (!$isSyncListSelected) { ?><span class="tooltiptext"><?= $syncNotActivatedTooltipMessage ?></span><?php } ?>
+                        </span>
+                        <span><?php _e( 'Activate opt-in checkbox inside register form.', 'mailjet-for-wordpress' ); ?></span>
+                    </label>
+                    <div id="mailjet_woo_sub_letter_register" class="<?= ( $registerCheckbox === '1' ? ' mj-show' : 'mj-hide' ) ?> mj-text-div">
+                        <label  class="mailjet-label" for="sub_letter_register"><?= __('Checkbox text', 'mailjet-for-wordpress') ?></label>
+                        <input name="woocommerce[mailjet_woo_register_box_text]" id="sub_letter_register" type="text" value="<?= $registerCheckboxText ?>" class="mj-text-field" placeholder="<?= __('Subscribe to our newsletter', 'mailjet-for-wordpress') ?>">
                     </div>
                     <label class="checkboxLabel">
                         <span <?= $isSyncListSelected ? '' : 'class="tooltip"' ?>>

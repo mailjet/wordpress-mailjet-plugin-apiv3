@@ -71,6 +71,7 @@ class MailjetUpdate
             return;
         }
         add_option('mailjet_woo_checkout_checkbox', $activateMailjetWooSync);
+        add_option('mailjet_woo_register_checkbox', $activateMailjetWooSync);
         delete_option('activate_mailjet_woo_sync');
     }
 

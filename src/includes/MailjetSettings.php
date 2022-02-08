@@ -70,6 +70,8 @@ class MailjetSettings
         register_setting('mailjet_integrations_page', 'mailjet_woo_edata_sync');
         register_setting('mailjet_integrations_page', 'mailjet_woo_checkout_checkbox');
         register_setting('mailjet_integrations_page', 'mailjet_woo_checkout_box_text');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_register_checkbox');
+        register_setting('mailjet_integrations_page', 'mailjet_woo_register_box_text');
         register_setting('mailjet_integrations_page', 'mailjet_woo_banner_checkbox');
         register_setting('mailjet_integrations_page', 'mailjet_woo_banner_text');
         register_setting('mailjet_integrations_page', 'mailjet_woo_banner_label');
@@ -170,7 +172,9 @@ class MailjetSettings
             $wooCommerceSettings = WooCommerceSettings::getInstance();
             // Add the checkbox
             add_action('woocommerce_after_checkout_billing_form', array($wooCommerceSettings, 'mailjet_show_extra_woo_fields'), 10, 2);
+            add_action('woocommerce_register_form', array($wooCommerceSettings, 'add_account_newsletter_checkbox_field' ), 10, 2);
             // Process the checkbox on submit
+            add_action('woocommerce_register_post', array($wooCommerceSettings, 'mailjet_subscribe_woo_register'), 10, 2);
             add_action('woocommerce_checkout_create_order', array($wooCommerceSettings, 'mailjet_subscribe_woo'), 10, 2);
             add_action('wp_ajax_nopriv_mj_ajax_subscribe', array($wooCommerceSettings, 'subscribeViaAjax'));
             add_action('wp_ajax_mj_ajax_subscribe', array($wooCommerceSettings, 'subscribeViaAjax'));

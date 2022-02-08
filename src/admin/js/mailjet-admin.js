@@ -276,7 +276,9 @@ function mjWooSubscription() {
     const activateWooIntegrationBox = document.querySelector('#activate_mailjet_woo_integration');
     const wooActicateIntegrationForm = document.querySelector('#activate_mailjet_woo_form');
     const wooActicateIntegrationCheckbox = document.querySelector('#activate_mailjet_woo_checkbox');
+    const wooActicateIntegrationRegisterCheckbox = document.querySelector('#activate_mailjet_woo_register_checkbox');
     const wooActicateIntegrationSubbox= document.querySelector('#mailjet_woo_sub_letter');
+    const wooActicateIntegrationRegisterSubbox= document.querySelector('#mailjet_woo_sub_letter_register');
     const wooActicateIntegrationBannerbox = document.querySelector('#activate_mailjet_woo_bannerbox');
     const wooActicateIntegrationBanner= document.querySelector('#mailjet_woo_sub_banner');
 
@@ -296,6 +298,13 @@ function mjWooSubscription() {
             mjShow(wooActicateIntegrationSubbox);
         } else {
             mjHide(wooActicateIntegrationSubbox);
+        }
+    });
+    wooActicateIntegrationRegisterCheckbox.addEventListener("change", function () {
+        if (wooActicateIntegrationRegisterSubbox.classList.contains('mj-hide')){
+            mjShow(wooActicateIntegrationRegisterSubbox);
+        } else {
+            mjHide(wooActicateIntegrationRegisterSubbox);
         }
     });
     wooActicateIntegrationBannerbox.addEventListener("change", function () {
