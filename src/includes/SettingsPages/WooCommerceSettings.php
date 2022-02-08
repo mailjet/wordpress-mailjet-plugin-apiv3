@@ -97,6 +97,33 @@ class WooCommerceSettings
         }
     }
 
+    function add_account_newsletter_checkbox_field()
+    {
+        if (get_option('mailjet_woo_register_checkbox')) {
+            $boxMsg = stripslashes(get_option('mailjet_woo_register_box_text')) ?: __('Subscribe to our newsletter', 'mailjet-for-wordpress');
+            woocommerce_form_field( 'mailjet_woo_subscribe_ok', array(
+                'type'  => 'checkbox',
+                'class' => array('form-row-wide'),
+                'label' => $boxMsg,
+                'clear' => true,
+            ), get_user_meta(get_current_user_id(), 'mailjet_woo_subscribe_ok', true ) );
+        }
+    }
+
+    public function mailjet_subscribe_woo_register($username, $email)
+    {
+        $contactList = $this->getWooContactList();
+        $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($email, $contactList);
+        if (!$contactAlreadySubscribedToList) {
+            $subscribe = (int)filter_var($_POST['mailjet_woo_subscribe_ok'], FILTER_SANITIZE_NUMBER_INT);
+            if ($subscribe === 1) {
+                if (!$this->mailjet_subscribe_confirmation_from_woo_form($subscribe, $email, $username, '')) {
+                    die;
+                }
+            }
+        }
+    }
+
     public function mailjet_subscribe_woo($order, $data)
     {
         $wooUserEmail = filter_var($order->get_billing_email(), FILTER_SANITIZE_EMAIL);
@@ -341,6 +368,7 @@ class WooCommerceSettings
             'activate_mailjet_woo_integration',
             'mailjet_woo_edata_sync',
             'mailjet_woo_checkout_checkbox',
+            'mailjet_woo_register_checkbox',
             'mailjet_woo_banner_checkbox'
         );
         foreach ($checkboxesNames as $checkboxName) {

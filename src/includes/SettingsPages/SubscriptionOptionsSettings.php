@@ -139,6 +139,7 @@ class SubscriptionOptionsSettings
             if ((int)$mailjet_sync_list <= 0) {
                 update_option('mailjet_woo_edata_sync', '');
                 update_option('mailjet_woo_checkout_checkbox', '');
+                update_option('mailjet_woo_register_checkbox', '');
                 update_option('mailjet_woo_banner_checkbox', '');
             }
             if (false === $executionError) {
