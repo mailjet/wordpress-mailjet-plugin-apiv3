@@ -2,6 +2,7 @@
 
 namespace MailjetPlugin\Includes\SettingsPages;
 
+use MailjetPlugin\Includes\MailjetApi;
 use MailjetPlugin\Includes\Mailjeti18n;
 use MailjetPlugin\Includes\MailjetSettings;
 
@@ -83,6 +84,14 @@ class ContactForm7Settings
             foreach ($emailParams as $key => $value) {
                 $message = str_replace($key, $value, $message);
             }
+
+            $contact = array();
+            $contact['Email'] = $email;
+            if ($cf7name && isset($formdata[$cf7name])) {
+                $contact['Properties']['name'] = $formdata[$cf7name];
+                MailjetApi::createMailjetContactProperty('name');
+            }
+            MailjetApi::syncMailjetContact($mailjetCF7List, $contact);
 
             $email_subject =  Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
             add_filter('wp_mail_content_type', array(SubscriptionOptionsSettings::getInstance(), 'set_html_content_type'));

@@ -206,6 +206,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 ## Changelog
 
+##### 5.2.16
+* Fixed issue with sending subscribed contact to selected mail list
+
 ##### 5.2.15
 * Removed not needed requests when initiating widget
 
