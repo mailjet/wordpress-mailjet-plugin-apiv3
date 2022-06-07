@@ -243,7 +243,7 @@ class WooCommerceSettings
             if (!$contactAlreadySubscribedToList) {
                 $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', true);
                 if ((int)$subscribe === 1) {
-                    $str .= ' <br /><br /><i><b>' . __('We have sent the newsletter subscription confirmation link to you: ') . '<b>' . $order->get_billing_email() . '</b>. ' . __('To confirm your subscription you have to click on the provided link.') . '</i></b>';
+                    $str .= ' <br /><br /><i><b>' . __('We have sent the newsletter subscription confirmation link to you: ', 'mailjet-for-wordpress') . '<b>' . $order->get_billing_email() . '</b>. ' . __('To confirm your subscription you have to click on the provided link.', 'mailjet-for-wordpress') . '</i></b>';
                 } elseif (get_option('mailjet_woo_banner_checkbox') === '1') {
                     $str .= $this->addThankYouSubscription($order);
                 }
@@ -358,7 +358,7 @@ class WooCommerceSettings
             if (get_option('mailjet_woo_edata_sync') !== '1') {
                 if ($this->all_customers_edata_sync() === false) {
                     $result['success'] = false;
-                    $result['message'] = __('An error occured during e-commerce data sync! Please try again later.');
+                    $result['message'] = __('An error occured during e-commerce data sync! Please try again later.', 'mailjet-for-wordpress');
                     return $result;
                 }
             }
@@ -388,7 +388,7 @@ class WooCommerceSettings
         if ($activate) {
             if ($this->createTemplates() === false) {
                 $result['success'] = false;
-                $result['message'] = __('An error occured during templates creation! Please try again later.');
+                $result['message'] = __('An error occured during templates creation! Please try again later.', 'mailjet-for-wordpress');
                 return $result;
             }
 
@@ -1091,8 +1091,8 @@ class WooCommerceSettings
        }
 
        if ($this->mailjet_subscribe_confirmation_from_woo_form(1, $email, $fName, $lName)){
-           $message = __('We have sent the newsletter subscription confirmation link to you: ') . $email . '. '
-               . __('To confirm your subscription you have to click on the provided link.');
+           $message = __('We have sent the newsletter subscription confirmation link to you: ', 'mailjet-for-wordpress') . $email . '. '
+               . __('To confirm your subscription you have to click on the provided link.', 'mailjet-for-wordpress');
            return ['success' => true, 'message' => $message];
        }
 
@@ -1206,27 +1206,27 @@ class WooCommerceSettings
         $newSegments = array(
             'Newcomers' => array(
                 'expr' => '(IsInPreviousDays(' . self::WOO_PROP_ACCOUNT_CREATION_DATE . ',30))',
-                'description' => __('Customers who have created an account in the past 30 days')
+                'description' => __('Customers who have created an account in the past 30 days', 'mailjet-for-wordpress')
             ),
             'Potential customers' => array(
                 'expr' => '(' . self::WOO_PROP_TOTAL_ORDERS . '<1)',
-                'description' => __('Contacts that don\'t have any orders')
+                'description' => __('Contacts that don\'t have any orders', 'mailjet-for-wordpress')
             ),
             'First time customers' => array(
                 'expr' => '(' . self::WOO_PROP_TOTAL_ORDERS . '=1) and (IsInPreviousDays(' . self::WOO_PROP_LAST_ORDER_DATE . ',30))',
-                'description' => __('Customers who have made their first purchase in the past 30 days')
+                'description' => __('Customers who have made their first purchase in the past 30 days', 'mailjet-for-wordpress')
             ),
             'Recent customers' => array(
                 'expr' => '(IsInPreviousDays(' . self::WOO_PROP_LAST_ORDER_DATE . ',30))',
-                'description' => __('Customers who have purchased in the past 30 days')
+                'description' => __('Customers who have purchased in the past 30 days', 'mailjet-for-wordpress')
             ),
             'Repeat customers' => array(
                 'expr' => '(' . self::WOO_PROP_TOTAL_ORDERS . '>1)',
-                'description' => __('Customers who have purchased more than once')
+                'description' => __('Customers who have purchased more than once', 'mailjet-for-wordpress')
             ),
             'Lapsed customers' => array(
                 'expr' => '(not IsInPreviousDays(' . self::WOO_PROP_LAST_ORDER_DATE . ',180))',
-                'description' => __('Customers who haven\'t purchased in the past 6 months')
+                'description' => __('Customers who haven\'t purchased in the past 6 months', 'mailjet-for-wordpress')
             )
         );
         foreach ($segments as $seg) {
