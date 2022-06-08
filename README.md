@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.0
-- Stable tag: 5.2.18
+- Stable tag: 5.2.19
 - Requires PHP: 5.6
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -206,7 +206,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 ## Changelog
 
-##### 5.2.18
+##### 5.2.19
 * Fixed issue with not translated string. Some code did not respect the domain of translations
 
 ##### 5.2.16
