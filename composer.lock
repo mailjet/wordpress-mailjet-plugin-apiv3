@@ -372,56 +372,6 @@
             "time": "2019-08-13T16:05:52+00:00"
         },
         {
-            "name": "mailjet/Mailjet-iframe-v3",
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:mailjet/Mailjet-iframe-v3.git",
-                "reference": "d054bf7059fec37272291f8e2a76a113368c342c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mailjet/Mailjet-iframe-v3/zipball/d054bf7059fec37272291f8e2a76a113368c342c",
-                "reference": "d054bf7059fec37272291f8e2a76a113368c342c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MailjetIframe\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mailjet",
-                    "email": "dev@mailjet.com",
-                    "homepage": "https://dev.mailjet.com"
-                }
-            ],
-            "description": "Mailjet iFrame wrapper",
-            "homepage": "https://github.com/mailjet/Mailjet-iframe-v3/",
-            "keywords": [
-                "api",
-                "campaign",
-                "email",
-                "iframe",
-                "mailjet",
-                "marketing",
-                "php"
-            ],
-            "support": {
-                "source": "https://github.com/mailjet/Mailjet-iframe-v3/tree/v1.4.0",
-                "issues": "https://github.com/mailjet/Mailjet-iframe-v3/issues"
-            },
-            "time": "2019-09-24T08:15:43+00:00"
-        },
-        {
             "name": "mailjet/mailjet-apiv3-php",
             "version": "v1.5.1",
             "source": {

@@ -2,9 +2,6 @@
 
 namespace MailjetIframe;
 
-use MailjetIframe\MailjetApi;
-use MailjetIframe\MailjetException;
-
 
 /**
  *
@@ -12,20 +9,19 @@ use MailjetIframe\MailjetException;
  */
 class MailjetIframe
 {
+    public const ON = 'on';
+    public const OFF = 'off';
 
-    const ON = 'on';
-    const OFF = 'off';
+    public const PAGE_STATS = 'stats';
+    public const PAGE_CAMPAIGNS = 'campaigns';
+    public const PAGE_CONTACTS = 'contacts';
+    public const PAGE_AUTOMATION = 'workflow';
+    public const PAGE_WIDGET = 'widget';
+    public const PAGE_TEMPLATES = 'templates';
+    public const PAGE_EDIT_TEMPLATE = 'template/{param}/build';
 
-    const PAGE_STATS = 'stats';
-    const PAGE_CAMPAIGNS = 'campaigns';
-    const PAGE_CONTACTS = 'contacts';
-    const PAGE_AUTOMATION = 'workflow';
-    const PAGE_WIDGET = 'widget';
-    const PAGE_TEMPLATES = 'templates';
-    const PAGE_EDIT_TEMPLATE = 'template/{param}/build';
-
-    const SESSION_NAME = 'MailjetIframeToken';
-    const SESSION_SET = 'MailjetIframeTokenSet';
+    public const SESSION_NAME = 'MailjetIframeToken';
+    public const SESSION_SET = 'MailjetIframeTokenSet';
 
     /**
      *
@@ -154,16 +150,16 @@ class MailjetIframe
 
     /**
      *
-     * @param string $apitKey
+     * @param string $apiKey
      * @param string $secretKey
-     * @param string $secretKey
+     * @param bool   $startSession
      */
-    public function __construct($apitKey, $secretKey, $startSession = true)
+    public function __construct(string $apiKey, string $secretKey, bool $startSession = true)
     {
         if (true === $startSession) {
             $this->startSession();
         }
-        $this->mailjetApi = new MailjetApi($apitKey, $secretKey);
+        $this->mailjetApi = new MailjetApi($apiKey, $secretKey);
     }
 
     /**
@@ -179,10 +175,11 @@ class MailjetIframe
 
     /**
      *
-     * @param integer $seconds
-     * @return \MailjetIframe
+     * @param int $seconds
+     * @return MailjetIframe
+     * @throws \MailjetIframe\MailjetException
      */
-    public function setTokenExpiration($seconds = 600)
+    public function setTokenExpiration(int $seconds = 600): MailjetIframe
     {
         if (!is_numeric($seconds)) {
             throw new MailjetException(
@@ -202,11 +199,11 @@ class MailjetIframe
 
     /**
      *
-     * @param string $callback
+     * @param string  $callback
      * @param boolean $isEncoded
-     * @return \MailjetIframe
+     * @return MailjetIframe
      */
-    public function setCallback($callback = '', $isEncoded = false)
+    public function setCallback($callback = '', $isEncoded = false): MailjetIframe
     {
         if ($isEncoded) {
             $this->callback = $callback;
@@ -220,10 +217,10 @@ class MailjetIframe
     /**
      *
      * @param string $locale
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function setLocale($locale = 'fr_FR')
+    public function setLocale($locale = 'fr_FR'): MailjetIframe
     {
         if (!in_array($locale, $this->locales)) {
             throw new MailjetException(
@@ -238,9 +235,9 @@ class MailjetIframe
     /**
      *
      * @param array $access
-     * @return \MailjetIframe
+     * @return MailjetIframe
      */
-    public function setTokenAccess(array $access = array())
+    public function setTokenAccess(array $access = array()): MailjetIframe
     {
         foreach ($access as $value) {
             if (!in_array($value, $this->tokenAccessAvailable)) {
@@ -257,10 +254,10 @@ class MailjetIframe
     /**
      *
      * @param string $flag
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnDocumentationProperties($flag = self::ON)
+    public function turnDocumentationProperties($flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException(
@@ -275,10 +272,10 @@ class MailjetIframe
     /**
      *
      * @param string $flag
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnNewContactListCreation($flag = self::ON)
+    public function turnNewContactListCreation($flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException(
@@ -293,10 +290,10 @@ class MailjetIframe
     /**
      *
      * @param string $flag
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnMenu($flag = self::ON)
+    public function turnMenu($flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException(
@@ -311,10 +308,10 @@ class MailjetIframe
     /**
      *
      * @param string $flag
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnBar($flag = self::ON)
+    public function turnBar($flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException(
@@ -330,10 +327,10 @@ class MailjetIframe
     /**
      *
      * @param string $flag
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnCreateCampaignButton($flag = self::ON)
+    public function turnCreateCampaignButton($flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException(
@@ -349,10 +346,10 @@ class MailjetIframe
     /**
      *
      * @param string $flag
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnSendingPolicy($flag = self::ON)
+    public function turnSendingPolicy($flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException(
@@ -369,10 +366,10 @@ class MailjetIframe
      *
      * @param string $page
      * @param string $param
-     * @return \MailjetIframe
+     * @return MailjetIframe
      * @throws MailjetException
      */
-    public function setInitialPage($page = self::PAGE_STATS, $param = null)
+    public function setInitialPage($page = self::PAGE_STATS, $param = null): MailjetIframe
     {
         if (!in_array($page, $this->allowedPages)) {
             throw new MailjetException(
@@ -395,7 +392,7 @@ class MailjetIframe
      *
      * @return string
      */
-    public function getHtml($isPassportIframe = false)
+    public function getHtml($isPassportIframe = false): string
     {
         $iframeUrl = $this->getIframeUrl($isPassportIframe);
 
@@ -416,9 +413,9 @@ HTML;
     /**
      *
      * @param mixed $parameter
-     * @return boolean
+     * @return bool
      */
-    private function isAllowedOnOffParameter($parameter)
+    private function isAllowedOnOffParameter($parameter): bool
     {
         if ($parameter !== self::ON && $parameter !== self::OFF) {
             return false;
@@ -495,14 +492,13 @@ HTML;
      *
      * @return string
      */
-    private function getIframeUrl($isPassportIframe = false)
+    private function getIframeUrl($isPassportIframe = false): string
     {
         $url = $this->url . $this->initialPage . '?t=' . $this->getToken();
 
         if ($isPassportIframe) {
             $url .= '&lang=' . $this->locale;
-        }
-        else {
+        } else {
             $url .= '&locale=' . $this->locale;
         }
 
@@ -539,21 +535,24 @@ HTML;
         return $url;
     }
 
+
     /**
-     *
-     * @return null
+     * @return void
      */
-    private function startSession()
+    private function startSession(): void
     {
         if (false === $this->isSessionStarted()) {
             session_start();
         }
     }
 
-    private function isSessionStarted()
+    /**
+     * @return bool
+     */
+    private function isSessionStarted(): bool
     {
-        if ( php_sapi_name() !== 'cli' ) {
-            if ( version_compare(phpversion(), '5.4.0', '>=') ) {
+        if (php_sapi_name() !== 'cli') {
+            if (version_compare(phpversion(), '5.4.0', '>=')) {
                 return session_status() === PHP_SESSION_ACTIVE ? true : false;
             } else {
                 return session_id() === '' ? false : true;

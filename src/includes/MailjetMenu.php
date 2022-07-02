@@ -2,6 +2,7 @@
 
 namespace MailjetPlugin\Includes;
 
+use MailjetIframe\MailjetException;
 use MailjetIframe\MailjetIframe;
 use MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetPlugin\Includes\SettingsPages\AbandonedCartSettings;
@@ -128,7 +129,11 @@ class MailjetMenu
         MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
     }
 
-    private function getMailjetIframe()
+    /**
+     * @return MailjetIframe
+     * @throws MailjetException
+     */
+    private function getMailjetIframe(): MailjetIframe
     {
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
@@ -152,8 +157,6 @@ class MailjetMenu
             ->turnCreateCampaignButton(MailjetIframe::ON)
             ->turnSendingPolicy(MailjetIframe::ON);
 
-       // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe prepared ]');
-
         return $mailjetIframe;
     }
 
@@ -175,20 +178,18 @@ class MailjetMenu
 
     public function show_campaigns_page()
     {
-       // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page requested ]');
-
         echo '<div class="mj-pluginPage iframePage">';
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
-            $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_CAMPAIGNS);
+            $mailjetIframe->setInitialPage(MailjetIframe::PAGE_CAMPAIGNS);
             echo '<div id="initialSettingsHead">
                     <img src="' . plugin_dir_url(dirname(dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
-        } catch (\MailjetIframe\MailjetException $e) {
+        } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
@@ -210,14 +211,14 @@ class MailjetMenu
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
-            $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_STATS);
+            $mailjetIframe->setInitialPage(MailjetIframe::PAGE_STATS);
             echo '<div id="initialSettingsHead">
                     <img src="' . plugin_dir_url(dirname(dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
-        } catch (\MailjetIframe\MailjetException $e) {
+        } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
@@ -238,14 +239,14 @@ class MailjetMenu
 
         try {
             $mailjetIframe = $this->getMailjetIframe();
-            $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_CONTACTS);
+            $mailjetIframe->setInitialPage(MailjetIframe::PAGE_CONTACTS);
             echo '<div id="initialSettingsHead">
                     <img src="' . plugin_dir_url(dirname(dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
             echo '</div>';
-        } catch (\MailjetIframe\MailjetException $e) {
+        } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
@@ -263,13 +264,13 @@ class MailjetMenu
             $mailjetIframe = $this->getMailjetIframe();
             $templateId = sanitize_text_field($_GET['id']);
             if (isset($templateId)) {
-                $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_EDIT_TEMPLATE, $templateId);
+                $mailjetIframe->setInitialPage(MailjetIframe::PAGE_EDIT_TEMPLATE, $templateId);
             }
             else {
-                $mailjetIframe->setInitialPage(\MailjetIframe\MailjetIframe::PAGE_TEMPLATES);
+                $mailjetIframe->setInitialPage(MailjetIframe::PAGE_TEMPLATES);
             }
             $iframeHtml = $mailjetIframe->getHtml(true);
-        } catch (\MailjetIframe\MailjetException $e) {
+        } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' .  $e->getMessage() . ' ]');
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
