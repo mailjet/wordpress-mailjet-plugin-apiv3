@@ -233,10 +233,7 @@ class MailjetMenu
 
     public function show_contacts_page()
     {
-     //   MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page requested ]');
-
         echo '<div class="mj-pluginPage iframePage">';
-
         try {
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(MailjetIframe::PAGE_CONTACTS);
@@ -255,7 +252,6 @@ class MailjetMenu
         }
         MailjetAdminDisplay::renderBottomLinks();
         echo '</div>';
-      //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Contacts page displayed ]');
     }
 
     public function show_template_page()

@@ -5,7 +5,6 @@
     "description": "A multi-framework Composer library installer",
     "keywords": [
         "installer",
-        "Aimeos",
         "AGL",
         "AnnotateCms",
         "Attogram",
@@ -15,7 +14,6 @@
         "Cockpit",
         "CodeIgniter",
         "concrete5",
-        "Craft",
         "Croogo",
         "DokuWiki",
         "Dolibarr",
@@ -29,9 +27,8 @@
         "Hurad",
         "ImageCMS",
         "iTop",
-        "Joomla",
         "Kanboard",
-	"Known",
+        "Known",
         "Kohana",
         "Lan Management System",
         "Laravel",
@@ -40,15 +37,18 @@
         "Magento",
         "majima",
         "Mako",
+        "MantisBT",
         "Mautic",
         "Maya",
         "MODX",
         "MODX Evo",
         "MediaWiki",
+        "Miaoxing",
         "OXID",
         "osclass",
         "MODULEWork",
         "Moodle",
+        "Pantheon",
         "Piwik",
         "pxcms",
         "phpBB",
@@ -56,16 +56,18 @@
         "PPI",
         "Puppet",
         "Porto",
+        "ProcessWire",
         "RadPHP",
         "ReIndex",
         "Roundcube",
         "shopware",
         "SilverStripe",
         "SMF",
+        "Starbug",
         "SyDES",
-        "symfony",
+        "Sylius",
+        "TastyIgniter",
         "Thelia",
-        "TYPO3",
         "WHMCS",
         "WolfCMS",
         "WordPress",
@@ -84,24 +86,30 @@
     "autoload": {
         "psr-4": { "Composer\\Installers\\": "src/Composer/Installers" }
     },
+    "autoload-dev": {
+        "psr-4": { "Composer\\Installers\\Test\\": "tests/Composer/Installers/Test" }
+    },
     "extra": {
         "class": "Composer\\Installers\\Plugin",
         "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
-    },
-    "replace": {
-        "shama/baton": "*",
-        "roundcube/plugin-installer": "*"
+            "dev-main": "2.x-dev"
+        },
+        "plugin-modifies-install-path": true
     },
     "require": {
-        "composer-plugin-api": "^1.0"
+        "php": "^7.2 || ^8.0",
+        "composer-plugin-api": "^1.0 || ^2.0"
     },
     "require-dev": {
-        "composer/composer": "1.0.*@dev",
-        "phpunit/phpunit": "^4.8.36"
+        "composer/composer": "1.6.* || ^2.0",
+        "composer/semver": "^1 || ^3",
+        "symfony/phpunit-bridge": "^5.3",
+        "phpstan/phpstan": "^0.12.55",
+        "symfony/process": "^5",
+        "phpstan/phpstan-phpunit": "^0.12.16"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "vendor/bin/simple-phpunit",
+        "phpstan": "vendor/bin/phpstan analyse"
     }
 }
