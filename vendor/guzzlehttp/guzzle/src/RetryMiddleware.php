@@ -1,12 +1,11 @@
 <?php
 
-namespace GuzzleHttp;
+namespace MailjetWp\GuzzleHttp;
 
-use GuzzleHttp\Promise as P;
-use GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-
+use MailjetWp\GuzzleHttp\Promise as P;
+use MailjetWp\GuzzleHttp\Promise\PromiseInterface;
+use MailjetWp\Psr\Http\Message\RequestInterface;
+use MailjetWp\Psr\Http\Message\ResponseInterface;
 /**
  * Middleware that retries requests based on the boolean result of
  * invoking the provided "decider" function.
@@ -19,17 +18,14 @@ class RetryMiddleware
      * @var callable(RequestInterface, array): PromiseInterface
      */
     private $nextHandler;
-
     /**
      * @var callable
      */
     private $decider;
-
     /**
      * @var callable(int)
      */
     private $delay;
-
     /**
      * @param callable                                            $decider     Function that accepts the number of retries,
      *                                                                         a request, [response], and [exception] and
@@ -46,71 +42,50 @@ class RetryMiddleware
         $this->nextHandler = $nextHandler;
         $this->delay = $delay ?: __CLASS__ . '::exponentialDelay';
     }
-
     /**
      * Default exponential backoff delay function.
      *
      * @return int milliseconds.
      */
-    public static function exponentialDelay(int $retries): int
+    public static function exponentialDelay(int $retries) : int
     {
         return (int) \pow(2, $retries - 1) * 1000;
     }
-
-    public function __invoke(RequestInterface $request, array $options): PromiseInterface
+    public function __invoke(RequestInterface $request, array $options) : PromiseInterface
     {
         if (!isset($options['retries'])) {
             $options['retries'] = 0;
         }
-
         $fn = $this->nextHandler;
-        return $fn($request, $options)
-            ->then(
-                $this->onFulfilled($request, $options),
-                $this->onRejected($request, $options)
-            );
+        return $fn($request, $options)->then($this->onFulfilled($request, $options), $this->onRejected($request, $options));
     }
-
     /**
      * Execute fulfilled closure
      */
-    private function onFulfilled(RequestInterface $request, array $options): callable
+    private function onFulfilled(RequestInterface $request, array $options) : callable
     {
-        return function ($value) use ($request, $options) {
-            if (!($this->decider)(
-                $options['retries'],
-                $request,
-                $value,
-                null
-            )) {
+        return function ($value) use($request, $options) {
+            if (!($this->decider)($options['retries'], $request, $value, null)) {
                 return $value;
             }
             return $this->doRetry($request, $options, $value);
         };
     }
-
     /**
      * Execute rejected closure
      */
-    private function onRejected(RequestInterface $req, array $options): callable
+    private function onRejected(RequestInterface $req, array $options) : callable
     {
-        return function ($reason) use ($req, $options) {
-            if (!($this->decider)(
-                $options['retries'],
-                $req,
-                null,
-                $reason
-            )) {
+        return function ($reason) use($req, $options) {
+            if (!($this->decider)($options['retries'], $req, null, $reason)) {
                 return P\Create::rejectionFor($reason);
             }
             return $this->doRetry($req, $options);
         };
     }
-
-    private function doRetry(RequestInterface $request, array $options, ResponseInterface $response = null): PromiseInterface
+    private function doRetry(RequestInterface $request, array $options, ResponseInterface $response = null) : PromiseInterface
     {
         $options['delay'] = ($this->delay)(++$options['retries'], $response);
-
         return $this($request, $options);
     }
 }

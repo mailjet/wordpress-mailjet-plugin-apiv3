@@ -1,14 +1,12 @@
 <?php
 
-namespace MailjetPlugin\Includes;
+namespace MailjetWp\MailjetPlugin\Includes;
 
-use MailjetPlugin\Admin\MailjetAdmin;
-use MailjetPlugin\Front\MailjetPublic;
-use MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
-use MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
-use MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
-
-
+use MailjetWp\MailjetPlugin\Admin\MailjetAdmin;
+use MailjetWp\MailjetPlugin\Front\MailjetPublic;
+use MailjetWp\MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
+use MailjetWp\MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
+use MailjetWp\MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
 /**
  * The core plugin class.
  *
@@ -34,7 +32,6 @@ class Mailjet
      * @var      Mailjet_Loader    $loader    Maintains and registers all hooks for the plugin.
      */
     protected $loader;
-
     /**
      * The unique identifier of this plugin.
      *
@@ -43,7 +40,6 @@ class Mailjet
      * @var      string    $plugin_name    The string used to uniquely identify this plugin.
      */
     protected $plugin_name;
-
     /**
      * The current version of the plugin.
      *
@@ -52,7 +48,6 @@ class Mailjet
      * @var      string    $version    The current version of the plugin.
      */
     protected $version;
-
     /**
      * Define the core functionality of the plugin.
      *
@@ -64,13 +59,12 @@ class Mailjet
      */
     public function __construct()
     {
-        if (defined('MAILJET_VERSION')) {
+        if (\defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
             $this->version = '5.2.20';
         }
         $this->plugin_name = 'mailjet';
-
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
@@ -79,36 +73,27 @@ class Mailjet
         $this->addMailjetSettings();
         $this->addMailjetPHPMailer();
         $this->registerMailjetWidget();
-
         add_shortcode('mailjet_subscribe', array($this, 'display_mailjet_widget'));
     }
-
-
     public static function display_mailjet_widget($atts = [], $content = null, $tag = '')
     {
-        extract(shortcode_atts(array(
-            'widget_id' => null
-        ), $atts, $tag));
-
+        \extract(shortcode_atts(array('widget_id' => null), $atts, $tag));
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
         $instance = get_option('widget_wp_mailjet_subscribe_widget');
-
         // In case we don't have 'widget_id' attribute in the shrotcode defined by user - we use the first widget id from the collection
         if (empty($widget_id)) {
             $widgetIds = [];
-            foreach (array_keys($instance) as $key) {
-                if (is_integer($key)) {
+            foreach (\array_keys($instance) as $key) {
+                if (\is_integer($key)) {
                     $widgetIds[] = $key;
                 }
             }
-            $widget_id = min($widgetIds);
+            $widget_id = \min($widgetIds);
         }
-
         ob_start();
-        the_widget('MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget', $instance[intval($widget_id)]);
-        return ob_get_clean();
+        the_widget('MailjetWp\\MailjetPlugin\\Widget\\WP_Mailjet_Subscribe_Widget', $instance[\intval($widget_id)]);
+        return \ob_get_clean();
     }
-
     /**
      * Load the required dependencies for this plugin.
      *
@@ -129,7 +114,6 @@ class Mailjet
     {
         $this->loader = new MailjetLoader();
     }
-
     /**
      * Define the locale for this plugin for internationalization.
      *
@@ -142,10 +126,8 @@ class Mailjet
     private function set_locale()
     {
         $plugin_i18n = new Mailjeti18n();
-
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
-
     /**
      * Register all of the hooks related to the admin area functionality
      * of the plugin.
@@ -156,18 +138,14 @@ class Mailjet
     private function define_admin_hooks()
     {
         $plugin_admin = new MailjetAdmin($this->get_plugin_name(), $this->get_version());
-
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_post_user_access_settings_custom_hook', new UserAccessSettings(), 'user_access_post_handler');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
-
-        if (get_option('activate_mailjet_woo_integration') === '1'){
+        if (get_option('activate_mailjet_woo_integration') === '1') {
             $this->addWoocommerceActions();
         }
-
     }
-
     /**
      * Register all of the hooks related to the public-facing functionality
      * of the plugin.
@@ -178,49 +156,38 @@ class Mailjet
     private function define_public_hooks()
     {
         $plugin_public = new MailjetPublic($this->get_plugin_name(), $this->get_version());
-
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
     }
-
     private function addMailjetMenu()
     {
         $plugin_menu = new MailjetMenu();
-
         $this->loader->add_action('admin_menu', $plugin_menu, 'display_menu');
     }
-
     private function addMailjetSettings()
     {
         $plugin_settings = new MailjetSettings();
-
         $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_admin_init');
         $this->loader->add_action('init', $plugin_settings, 'mailjet_settings_init');
     }
-
     private function addMailjetPHPMailer()
     {
         $plugin_mails = new MailjetMail();
-
         $this->loader->add_action('phpmailer_init', $plugin_mails, 'phpmailer_init_smtp');
         $this->loader->add_action('wp_mail_failed', $plugin_mails, 'wp_mail_failed_cb');
     }
-
     private function registerMailjetWidget()
     {
         $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
     }
-
     function wp_mailjet_register_widgets()
     {
         // It works only for wp >= 4.6.0
         // $widget = new WP_Mailjet_Subscribe_Widget()
-
         // This works for wp function < 4.6
-        $widget = 'MailjetPlugin\Widget\WP_Mailjet_Subscribe_Widget';
+        $widget = 'MailjetWp\\MailjetPlugin\\Widget\\WP_Mailjet_Subscribe_Widget';
         register_widget($widget);
     }
-
     /**
      * Run the loader to execute all of the hooks with WordPress.
      *
@@ -230,7 +197,6 @@ class Mailjet
     {
         $this->loader->run();
     }
-
     /**
      * The name of the plugin used to uniquely identify it within the context of
      * WordPress and to define internationalization functionality.
@@ -242,7 +208,6 @@ class Mailjet
     {
         return $this->plugin_name;
     }
-
     /**
      * The reference to the class that orchestrates the hooks with the plugin.
      *
@@ -253,7 +218,6 @@ class Mailjet
     {
         return $this->loader;
     }
-
     /**
      * Retrieve the version number of the plugin.
      *
@@ -264,24 +228,20 @@ class Mailjet
     {
         return $this->version;
     }
-
     private function addWoocommerceActions()
     {
         $wooCommerceSettings = WooCommerceSettings::getInstance();
-
         $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $wooCommerceSettings, 'orders_automation_settings_post');
         $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
-
-        if (get_option('mailjet_woo_edata_sync') === '1'){
+        if (get_option('mailjet_woo_edata_sync') === '1') {
             $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);
             $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $wooCommerceSettings, 'paid_by_cheque_order_edata_sync', 10, 2);
         }
-
         $activeActions = get_option('mailjet_wc_active_hooks');
         $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
-        if ($activeActions && !empty($activeActions)){
-            foreach ($activeActions as $action){
-                $this->loader->add_action($action['hook'],$wooCommerceSettings, $action['callable'], 10, 2);
+        if ($activeActions && !empty($activeActions)) {
+            foreach ($activeActions as $action) {
+                $this->loader->add_action($action['hook'], $wooCommerceSettings, $action['callable'], 10, 2);
             }
         }
         if ($abandonedCartActiveActions && !empty($abandonedCartActiveActions)) {

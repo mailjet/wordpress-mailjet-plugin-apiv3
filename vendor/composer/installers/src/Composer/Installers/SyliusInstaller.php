@@ -1,11 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class SyliusInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'theme' => 'themes/{$name}/',
-    );
+    protected $locations = array('theme' => 'themes/{$name}/');
 }

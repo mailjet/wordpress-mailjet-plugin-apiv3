@@ -1,0 +1,61 @@
+{
+    "$schema": "./vendor/infection/infection/resources/schema.json",
+
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "infection.log"
+    },
+    "tmpDir": "dist/infection",
+    "mutators": {
+        "@default": true,
+        "MBString": false,
+        "global-ignoreSourceCodeByRegex": [
+            "Assert::.*",
+            "ConsoleAssert::.*",
+            "break;"
+        ],
+        "CastString": {
+            "ignore": [
+                "Fidry\\Console\\IO::getStringArgument"
+            ]
+        },
+        "CastInt": {
+            "ignore": [
+                "Fidry\\Console\\InputAssert::castThrowException"
+            ]
+        },
+        "LessThan": {
+            "ignoreSourceCodeByRegex": [
+                ".*\\$min < \\$max.*"
+            ]
+        },
+        "LogicalOr": {
+            "ignore": [
+                "Fidry\\Console\\Internal\\Generator\\GetterGenerator::isPsalmTypeRedundant"
+            ]
+        },
+        "MethodCallRemoval": {
+            "ignore": [
+                "Fidry\\Console\\Command\\SymfonyCommand::setApplication",
+                "Fidry\\Console\\Input\\IO::__construct",
+                "Fidry\\Console\\Internal\\Type\\NaturalType::coerceValue",
+                "Fidry\\Console\\Internal\\Type\\PositiveIntegerType::coerceValue"
+            ]
+        },
+        "PublicVisibility": false,
+        "UnwrapStrReplace": {
+            "ignore": [
+                "Fidry\\Console\\DisplayNormalizer::removeTrailingSpaces"
+            ]
+        },
+        "UnwrapArrayValues": {
+            "ignore": [
+                "Fidry\\Console\\Application\\SymfonyApplication::getSymfonyCommands"
+            ]
+        }
+    }
+}

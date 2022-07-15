@@ -1,15 +1,13 @@
 <?php
 
-namespace Sepia\PoParser\Catalog;
+namespace MailjetWp\Sepia\PoParser\Catalog;
 
 class CatalogArray implements Catalog
 {
     /** @var Header */
     protected $headers;
-
     /** @var array */
     protected $entries;
-
     /**
      * @param Entry[] $entries
      */
@@ -21,19 +19,14 @@ class CatalogArray implements Catalog
             $this->addEntry($entry);
         }
     }
-
     /**
      * {@inheritdoc}
      */
     public function addEntry(Entry $entry)
     {
-        $key = $this->getEntryHash(
-            $entry->getMsgId(),
-            $entry->getMsgCtxt()
-        );
+        $key = $this->getEntryHash($entry->getMsgId(), $entry->getMsgCtxt());
         $this->entries[$key] = $entry;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -41,7 +34,6 @@ class CatalogArray implements Catalog
     {
         $this->headers = $headers;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -52,7 +44,6 @@ class CatalogArray implements Catalog
             unset($this->entries[$key]);
         }
     }
-
     /**
      * {@inheritdoc}
      */
@@ -60,7 +51,6 @@ class CatalogArray implements Catalog
     {
         return $this->headers->asArray();
     }
-
     /**
      * {@inheritdoc}
      */
@@ -68,7 +58,6 @@ class CatalogArray implements Catalog
     {
         return $this->headers;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -76,7 +65,6 @@ class CatalogArray implements Catalog
     {
         return $this->entries;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -86,10 +74,8 @@ class CatalogArray implements Catalog
         if (!isset($this->entries[$key])) {
             return null;
         }
-
         return $this->entries[$key];
     }
-
     /**
      * @param string      $msgId
      * @param string|null $context
@@ -98,6 +84,6 @@ class CatalogArray implements Catalog
      */
     private function getEntryHash($msgId, $context = null)
     {
-        return md5($msgId.$context);
+        return \md5($msgId . $context);
     }
 }

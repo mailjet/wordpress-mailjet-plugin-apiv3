@@ -1,13 +1,12 @@
 <?php
 
-namespace GuzzleHttp;
+namespace MailjetWp\GuzzleHttp;
 
-use Psr\Http\Message\MessageInterface;
-
+use MailjetWp\Psr\Http\Message\MessageInterface;
 interface BodySummarizerInterface
 {
     /**
      * Returns a summarized message body.
      */
-    public function summarize(MessageInterface $message): ?string;
+    public function summarize(MessageInterface $message) : ?string;
 }

@@ -1,11 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class ItopInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'extension'    => 'extensions/{$name}/',
-    );
+    protected $locations = array('extension' => 'extensions/{$name}/');
 }

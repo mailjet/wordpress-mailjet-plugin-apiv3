@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace MailjetWp\GuzzleHttp\Psr7;
 
-namespace GuzzleHttp\Psr7;
-
-use Psr\Http\Message\StreamInterface;
-
+use MailjetWp\Psr\Http\Message\StreamInterface;
 /**
  * Provides a read only stream that pumps data from a PHP callable.
  *
@@ -20,19 +18,14 @@ final class PumpStream implements StreamInterface
 {
     /** @var callable|null */
     private $source;
-
     /** @var int|null */
     private $size;
-
     /** @var int */
     private $tellPos = 0;
-
     /** @var array */
     private $metadata;
-
     /** @var BufferStream */
     private $buffer;
-
     /**
      * @param callable(int): (string|null|false)  $source  Source of the stream data. The callable MAY
      *                                                     accept an integer argument used to control the
@@ -50,8 +43,7 @@ final class PumpStream implements StreamInterface
         $this->metadata = $options['metadata'] ?? [];
         $this->buffer = new BufferStream();
     }
-
-    public function __toString(): string
+    public function __toString() : string
     {
         try {
             return Utils::copyToString($this);
@@ -59,95 +51,77 @@ final class PumpStream implements StreamInterface
             if (\PHP_VERSION_ID >= 70400) {
                 throw $e;
             }
-            trigger_error(sprintf('%s::__toString exception: %s', self::class, (string) $e), E_USER_ERROR);
+            \trigger_error(\sprintf('%s::__toString exception: %s', self::class, (string) $e), \E_USER_ERROR);
             return '';
         }
     }
-
-    public function close(): void
+    public function close() : void
     {
         $this->detach();
     }
-
     public function detach()
     {
         $this->tellPos = 0;
         $this->source = null;
-
         return null;
     }
-
-    public function getSize(): ?int
+    public function getSize() : ?int
     {
         return $this->size;
     }
-
-    public function tell(): int
+    public function tell() : int
     {
         return $this->tellPos;
     }
-
-    public function eof(): bool
+    public function eof() : bool
     {
         return $this->source === null;
     }
-
-    public function isSeekable(): bool
+    public function isSeekable() : bool
     {
-        return false;
+        return \false;
     }
-
-    public function rewind(): void
+    public function rewind() : void
     {
         $this->seek(0);
     }
-
-    public function seek($offset, $whence = SEEK_SET): void
+    public function seek($offset, $whence = \SEEK_SET) : void
     {
         throw new \RuntimeException('Cannot seek a PumpStream');
     }
-
-    public function isWritable(): bool
+    public function isWritable() : bool
     {
-        return false;
+        return \false;
     }
-
-    public function write($string): int
+    public function write($string) : int
     {
         throw new \RuntimeException('Cannot write to a PumpStream');
     }
-
-    public function isReadable(): bool
+    public function isReadable() : bool
     {
-        return true;
+        return \true;
     }
-
-    public function read($length): string
+    public function read($length) : string
     {
         $data = $this->buffer->read($length);
-        $readLen = strlen($data);
+        $readLen = \strlen($data);
         $this->tellPos += $readLen;
         $remaining = $length - $readLen;
-
         if ($remaining) {
             $this->pump($remaining);
             $data .= $this->buffer->read($remaining);
-            $this->tellPos += strlen($data) - $readLen;
+            $this->tellPos += \strlen($data) - $readLen;
         }
-
         return $data;
     }
-
-    public function getContents(): string
+    public function getContents() : string
     {
         $result = '';
         while (!$this->eof()) {
             $result .= $this->read(1000000);
         }
-
         return $result;
     }
-
     /**
      * {@inheritdoc}
      *
@@ -158,21 +132,19 @@ final class PumpStream implements StreamInterface
         if (!$key) {
             return $this->metadata;
         }
-
         return $this->metadata[$key] ?? null;
     }
-
-    private function pump(int $length): void
+    private function pump(int $length) : void
     {
         if ($this->source) {
             do {
-                $data = call_user_func($this->source, $length);
-                if ($data === false || $data === null) {
+                $data = \call_user_func($this->source, $length);
+                if ($data === \false || $data === null) {
                     $this->source = null;
                     return;
                 }
                 $this->buffer->write($data);
-                $length -= strlen($data);
+                $length -= \strlen($data);
             } while ($length > 0);
         }
     }

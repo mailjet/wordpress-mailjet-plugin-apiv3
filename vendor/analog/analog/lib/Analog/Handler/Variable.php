@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Append the log info to a variable passed in as a reference.
@@ -15,12 +15,12 @@ namespace Analog\Handler;
  *
  * Note: Uses Analog::$format for the appending format.
  */
-class Variable {
-	public static function init (&$log) {
-		return function ($info, $buffered = false) use (&$log) {
-			$log .= ($buffered)
-				? $info
-				: vsprintf (\Analog\Analog::$format, $info);
-		};
-	}
+class Variable
+{
+    public static function init(&$log)
+    {
+        return function ($info, $buffered = \false) use(&$log) {
+            $log .= $buffered ? $info : \vsprintf(\MailjetWp\Analog\Analog::$format, $info);
+        };
+    }
 }

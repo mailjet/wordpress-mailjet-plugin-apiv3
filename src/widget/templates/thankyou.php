@@ -22,7 +22,11 @@
             }
         </style>
 
-        <?php wp_print_styles(); ?>
+        <?php 
+namespace MailjetWp;
+
+wp_print_styles();
+?>
     </head>
     <body>
 
@@ -31,7 +35,9 @@
         <div style="display: table; height: 90px; width: 100%;">
             <div style="display: table-cell; vertical-align: middle;">
                 <div class="mj-confirmation-page-title paint-area paint-area--text" style="font-family:Ubuntu, Helvetica; display: inline-block; text-align: center; font-size: 20px; color: #333333;">
-                    <?php echo $newsletterRegistration ?>
+                    <?php 
+echo $newsletterRegistration;
+?>
                 </div>
             </div>
         </div>
@@ -41,7 +47,9 @@
         <div style="display: table; height: 70px; width: 100%;">
             <div style="display: table-cell; vertical-align: middle;">
                 <div class="mj-confirmation-page-text paint-area paint-area--text" style="color: #aab6bd; font-family: Ubuntu, Helvetica; font-size: 22px; display: inline-block;">
-                    <b class="medium-b"><?php echo $congratsSubscribed ?></b>
+                    <b class="medium-b"><?php 
+echo $congratsSubscribed;
+?></b>
                 </div>
             </div>
         </div>
@@ -50,4 +58,4 @@
 
 
     </body>
-</html>
+</html><?php 

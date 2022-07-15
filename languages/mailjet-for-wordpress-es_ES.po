@@ -1537,7 +1537,7 @@ msgid "title"
 msgstr ""
 
 msgid "list"
-msgstr "10209736"
+msgstr "0"
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1579,16 +1579,16 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "394165"
+msgstr "46828"
 
 msgid "propertyDataType0"
 msgstr "0"
 
 msgid "EnglishLabel0"
-msgstr "birthday"
+msgstr ""
 
 msgid "FrenchLabel0"
-msgstr "birthday fr"
+msgstr ""
 
 msgid "GermanLabel0"
 msgstr ""
@@ -1600,16 +1600,16 @@ msgid "ItalianLabel0"
 msgstr ""
 
 msgid "contactProperties1"
-msgstr "394108"
+msgstr ""
 
 msgid "propertyDataType1"
-msgstr "1"
+msgstr "0"
 
 msgid "EnglishLabel1"
-msgstr "firstname"
+msgstr ""
 
 msgid "FrenchLabel1"
-msgstr "firstname fr"
+msgstr ""
 
 msgid "GermanLabel1"
 msgstr ""
@@ -1621,16 +1621,16 @@ msgid "ItalianLabel1"
 msgstr ""
 
 msgid "contactProperties2"
-msgstr "6349"
+msgstr ""
 
 msgid "propertyDataType2"
-msgstr "2"
+msgstr "0"
 
 msgid "EnglishLabel2"
-msgstr "test"
+msgstr ""
 
 msgid "FrenchLabel2"
-msgstr "test fr"
+msgstr ""
 
 msgid "GermanLabel2"
 msgstr ""

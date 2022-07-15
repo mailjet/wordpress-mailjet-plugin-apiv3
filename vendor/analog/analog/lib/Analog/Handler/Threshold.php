@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Only writes log messages above a certain threshold
@@ -21,25 +21,24 @@ namespace Analog\Handler;
  * Note: Uses Analog::$format to format the messages as they're appended
  * to the buffer.
  */
-class Threshold {
-	/**
-	 * This contains the handler to send to on close.
-	 */
-	public static $handler;
-
-	/**
-	 * Accepts another handler function to be used on close().
-	 * $until_level defaults to ERROR.
-	 */
-	public static function init ($handler, $until_level = 3) {
-		self::$handler = $handler;
-
-		return function ($info) use ($until_level) {
-			if ($info['level'] <= $until_level) {
-				$handler = Threshold::$handler;
-				$handler ($info);
-			}
-		};
-	}
-
+class Threshold
+{
+    /**
+     * This contains the handler to send to on close.
+     */
+    public static $handler;
+    /**
+     * Accepts another handler function to be used on close().
+     * $until_level defaults to ERROR.
+     */
+    public static function init($handler, $until_level = 3)
+    {
+        self::$handler = $handler;
+        return function ($info) use($until_level) {
+            if ($info['level'] <= $until_level) {
+                $handler = Threshold::$handler;
+                $handler($info);
+            }
+        };
+    }
 }

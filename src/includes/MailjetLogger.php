@@ -1,11 +1,10 @@
 <?php
-namespace MailjetPlugin\Includes;
 
-use Analog\Analog;
+namespace MailjetWp\MailjetPlugin\Includes;
 
+use MailjetWp\Analog\Analog;
 class MailjetLogger
 {
-
     public static function log($message, $level = null)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -14,7 +13,6 @@ class MailjetLogger
         }
         return Analog::log($message, $level);
     }
-
     public static function urgent($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -23,7 +21,6 @@ class MailjetLogger
         }
         return Analog::urgent($message);
     }
-
     public static function alert($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -32,7 +29,6 @@ class MailjetLogger
         }
         return Analog::alert($message);
     }
-
     public static function error($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -41,7 +37,6 @@ class MailjetLogger
         }
         return Analog::error($message);
     }
-
     public static function warning($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -50,7 +45,6 @@ class MailjetLogger
         }
         return Analog::warning($message);
     }
-
     public static function notice($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -59,7 +53,6 @@ class MailjetLogger
         }
         return Analog::notice($message);
     }
-
     public static function info($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
@@ -68,7 +61,6 @@ class MailjetLogger
         }
         return Analog::info($message);
     }
-
     public static function debug($message)
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');

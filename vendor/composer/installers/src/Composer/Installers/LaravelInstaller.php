@@ -1,11 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class LaravelInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'library' => 'libraries/{$name}/',
-    );
+    protected $locations = array('library' => 'libraries/{$name}/');
 }

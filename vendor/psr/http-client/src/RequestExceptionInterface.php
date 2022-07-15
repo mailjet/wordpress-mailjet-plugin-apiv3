@@ -1,9 +1,8 @@
 <?php
 
-namespace Psr\Http\Client;
+namespace MailjetWp\Psr\Http\Client;
 
-use Psr\Http\Message\RequestInterface;
-
+use MailjetWp\Psr\Http\Message\RequestInterface;
 /**
  * Exception for when a request failed.
  *
@@ -20,5 +19,5 @@ interface RequestExceptionInterface extends ClientExceptionInterface
      *
      * @return RequestInterface
      */
-    public function getRequest(): RequestInterface;
+    public function getRequest() : RequestInterface;
 }

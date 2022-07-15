@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Send the log message to the specified collection in a
@@ -25,33 +25,35 @@ namespace Analog\Handler;
  *         'log'   // collection name
  *     ));
  */
-class Mongo {
-	public static function init ($server, $database, $collection) {
-		if ($server instanceof \MongoDB\Driver\Manager) {
-			$driver = 'mongodb';
-			$manager = $server;
-		} elseif ($server instanceof \MongoClient) {
-			$db = $server->{$database};
-		} else {
-			if (class_exists('\MongoDB\Driver\Manager')) {
-				$driver = 'mongodb';
-				$manager = new \MongoDB\Driver\Manager("mongodb://$server");
-			} else {
-				$conn = new \MongoClient ("mongodb://$server");
-				$db = $conn->{$database};
-			}
-		}
-		if ($driver == 'mongodb') {
-			return function ($info) use ($manager, $database, $collection) {
-				$bulk = new \MongoDB\Driver\BulkWrite;
-				$bulk->insert($info);
-				$dbAndColl = $database.'.'.$collection;
-				$manager->executeBulkWrite($dbAndColl, $bulk);
-			};
-		} else {
-			return function ($info) use ($db, $collection) {
-				$db->{$collection}->insert ($info);
-			};
-		}
-	}
+class Mongo
+{
+    public static function init($server, $database, $collection)
+    {
+        if ($server instanceof \MongoDB\Driver\Manager) {
+            $driver = 'mongodb';
+            $manager = $server;
+        } elseif ($server instanceof \MongoClient) {
+            $db = $server->{$database};
+        } else {
+            if (\class_exists('\\MongoDB\\Driver\\Manager')) {
+                $driver = 'mongodb';
+                $manager = new \MongoDB\Driver\Manager("mongodb://{$server}");
+            } else {
+                $conn = new \MongoClient("mongodb://{$server}");
+                $db = $conn->{$database};
+            }
+        }
+        if ($driver == 'mongodb') {
+            return function ($info) use($manager, $database, $collection) {
+                $bulk = new \MongoDB\Driver\BulkWrite();
+                $bulk->insert($info);
+                $dbAndColl = $database . '.' . $collection;
+                $manager->executeBulkWrite($dbAndColl, $bulk);
+            };
+        } else {
+            return function ($info) use($db, $collection) {
+                $db->{$collection}->insert($info);
+            };
+        }
+    }
 }

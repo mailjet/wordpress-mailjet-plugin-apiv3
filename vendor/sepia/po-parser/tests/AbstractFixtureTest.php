@@ -1,21 +1,18 @@
 <?php
 
-namespace Sepia\Test;
+namespace MailjetWp\Sepia\Test;
 
-use PHPUnit\Framework\TestCase;
-use Sepia\PoParser\Catalog\Catalog;
-use Sepia\PoParser\Parser;
-
+use MailjetWp\PHPUnit\Framework\TestCase;
+use MailjetWp\Sepia\PoParser\Catalog\Catalog;
+use MailjetWp\Sepia\PoParser\Parser;
 abstract class AbstractFixtureTest extends TestCase
 {
     /** @var string */
     protected $resourcesPath;
-
     public function setUp()
     {
-        $this->resourcesPath = dirname(__DIR__).'/fixtures/';
+        $this->resourcesPath = \dirname(__DIR__) . '/fixtures/';
     }
-
     /**
      * @param string $file
      *
@@ -24,7 +21,7 @@ abstract class AbstractFixtureTest extends TestCase
     protected function parseFile($file)
     {
         //try {
-            return Parser::parseFile($this->resourcesPath.$file);
+        return Parser::parseFile($this->resourcesPath . $file);
         //} catch (\Exception $e) {
         //    $this->fail($e->getMessage());
         //}

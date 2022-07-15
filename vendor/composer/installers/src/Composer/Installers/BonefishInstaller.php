@@ -1,11 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class BonefishInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'package'    => 'Packages/{$vendor}/{$name}/'
-    );
+    protected $locations = array('package' => 'Packages/{$vendor}/{$name}/');
 }

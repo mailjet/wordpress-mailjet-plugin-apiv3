@@ -1,6 +1,6 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 /**
  * Class DolibarrInstaller
@@ -12,7 +12,5 @@ class DolibarrInstaller extends BaseInstaller
 {
     //TODO: Add support for scripts and themes
     /** @var array<string, string> */
-    protected $locations = array(
-        'module' => 'htdocs/custom/{$name}/',
-    );
+    protected $locations = array('module' => 'htdocs/custom/{$name}/');
 }

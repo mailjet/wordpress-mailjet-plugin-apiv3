@@ -1,5 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace MailjetWp;
 
-class PHPUnit_Framework_TestCase extends TestCase {}
+use MailjetWp\PHPUnit\Framework\TestCase;
+class PHPUnit_Framework_TestCase extends TestCase
+{
+}
+\class_alias('MailjetWp\\PHPUnit_Framework_TestCase', 'PHPUnit_Framework_TestCase', \false);

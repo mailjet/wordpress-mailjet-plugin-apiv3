@@ -45,11 +45,11 @@ if (!defined('WPINC')) {
 
 // Autoloading via composer
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/scoper-autoload.php';
 
-//use Analog\Analog;
-use MailjetPlugin\Includes\Mailjet;
-use MailjetPlugin\Includes\MailjetUpdate;
-use MailjetPlugin\Includes\MailjetActivator;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
+use MailjetWp\MailjetPlugin\Includes\MailjetUpdate;
+use MailjetWp\MailjetPlugin\Includes\MailjetActivator;
 
 /**
  * Mailjet plugin version.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Ignores anything sent to it so you can disable logging.
@@ -11,10 +11,12 @@ namespace Analog\Handler;
  *     
  *     Analog::log ('Log me');
  */
-class Ignore {
-	public static function init () {
-		return function ($info) {
-			// do nothing
-		};
-	}
+class Ignore
+{
+    public static function init()
+    {
+        return function ($info) {
+            // do nothing
+        };
+    }
 }

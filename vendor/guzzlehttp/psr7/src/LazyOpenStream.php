@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace MailjetWp\GuzzleHttp\Psr7;
 
-namespace GuzzleHttp\Psr7;
-
-use Psr\Http\Message\StreamInterface;
-
+use MailjetWp\Psr\Http\Message\StreamInterface;
 /**
  * Lazily reads or writes to a file that is opened only after an IO operation
  * take place on the stream.
@@ -14,13 +12,10 @@ use Psr\Http\Message\StreamInterface;
 final class LazyOpenStream implements StreamInterface
 {
     use StreamDecoratorTrait;
-
     /** @var string */
     private $filename;
-
     /** @var string */
     private $mode;
-
     /**
      * @param string $filename File to lazily open
      * @param string $mode     fopen mode to use when opening the stream
@@ -30,11 +25,10 @@ final class LazyOpenStream implements StreamInterface
         $this->filename = $filename;
         $this->mode = $mode;
     }
-
     /**
      * Creates the underlying stream lazily when required.
      */
-    protected function createStream(): StreamInterface
+    protected function createStream() : StreamInterface
     {
         return Utils::streamFor(Utils::tryFopen($this->filename, $this->mode));
     }

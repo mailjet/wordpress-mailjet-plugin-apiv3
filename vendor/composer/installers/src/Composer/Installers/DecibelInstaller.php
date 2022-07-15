@@ -1,12 +1,10 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class DecibelInstaller extends BaseInstaller
 {
     /** @var array */
     /** @var array<string, string> */
-    protected $locations = array(
-        'app'    => 'app/{$name}/',
-    );
+    protected $locations = array('app' => 'app/{$name}/');
 }

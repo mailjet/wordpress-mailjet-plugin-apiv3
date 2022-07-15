@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Promise;
+namespace MailjetWp\GuzzleHttp\Promise;
 
 /**
  * Get the global task queue used for promise resolution.
@@ -25,7 +25,6 @@ function queue(TaskQueueInterface $assign = null)
 {
     return Utils::queue($assign);
 }
-
 /**
  * Adds a function to run in the task queue when it is next `run()` and returns
  * a promise that is fulfilled or rejected with the result.
@@ -40,7 +39,6 @@ function task(callable $task)
 {
     return Utils::task($task);
 }
-
 /**
  * Creates a promise for a value if the value is not a promise.
  *
@@ -54,7 +52,6 @@ function promise_for($value)
 {
     return Create::promiseFor($value);
 }
-
 /**
  * Creates a rejected promise for a reason if the reason is not a promise. If
  * the provided reason is a promise, then it is returned as-is.
@@ -69,7 +66,6 @@ function rejection_for($reason)
 {
     return Create::rejectionFor($reason);
 }
-
 /**
  * Create an exception for a rejected promise value.
  *
@@ -83,7 +79,6 @@ function exception_for($reason)
 {
     return Create::exceptionFor($reason);
 }
-
 /**
  * Returns an iterator for the given value.
  *
@@ -97,7 +92,6 @@ function iter_for($value)
 {
     return Create::iterFor($value);
 }
-
 /**
  * Synchronously waits on a promise to resolve and returns an inspection state
  * array.
@@ -118,7 +112,6 @@ function inspect(PromiseInterface $promise)
 {
     return Utils::inspect($promise);
 }
-
 /**
  * Waits on all of the provided promises, but does not unwrap rejected promises
  * as thrown exception.
@@ -137,7 +130,6 @@ function inspect_all($promises)
 {
     return Utils::inspectAll($promises);
 }
-
 /**
  * Waits on all of the provided promises and returns the fulfilled values.
  *
@@ -158,7 +150,6 @@ function unwrap($promises)
 {
     return Utils::unwrap($promises);
 }
-
 /**
  * Given an array of promises, return a promise that is fulfilled when all the
  * items in the array are fulfilled.
@@ -174,11 +165,10 @@ function unwrap($promises)
  *
  * @deprecated all will be removed in guzzlehttp/promises:2.0. Use Utils::all instead.
  */
-function all($promises, $recursive = false)
+function all($promises, $recursive = \false)
 {
     return Utils::all($promises, $recursive);
 }
-
 /**
  * Initiate a competitive race between multiple promises or values (values will
  * become immediately fulfilled promises).
@@ -201,7 +191,6 @@ function some($count, $promises)
 {
     return Utils::some($count, $promises);
 }
-
 /**
  * Like some(), with 1 as count. However, if the promise fulfills, the
  * fulfillment value is not an array of 1 but the value directly.
@@ -216,7 +205,6 @@ function any($promises)
 {
     return Utils::any($promises);
 }
-
 /**
  * Returns a promise that is fulfilled when all of the provided promises have
  * been fulfilled or rejected.
@@ -235,7 +223,6 @@ function settle($promises)
 {
     return Utils::settle($promises);
 }
-
 /**
  * Given an iterator that yields promises or values, returns a promise that is
  * fulfilled with a null value when the iterator has been consumed or the
@@ -257,14 +244,10 @@ function settle($promises)
  *
  * @deprecated each will be removed in guzzlehttp/promises:2.0. Use Each::of instead.
  */
-function each(
-    $iterable,
-    callable $onFulfilled = null,
-    callable $onRejected = null
-) {
+function each($iterable, callable $onFulfilled = null, callable $onRejected = null)
+{
     return Each::of($iterable, $onFulfilled, $onRejected);
 }
-
 /**
  * Like each, but only allows a certain number of outstanding promises at any
  * given time.
@@ -282,15 +265,10 @@ function each(
  *
  * @deprecated each_limit will be removed in guzzlehttp/promises:2.0. Use Each::ofLimit instead.
  */
-function each_limit(
-    $iterable,
-    $concurrency,
-    callable $onFulfilled = null,
-    callable $onRejected = null
-) {
+function each_limit($iterable, $concurrency, callable $onFulfilled = null, callable $onRejected = null)
+{
     return Each::ofLimit($iterable, $concurrency, $onFulfilled, $onRejected);
 }
-
 /**
  * Like each_limit, but ensures that no promise in the given $iterable argument
  * is rejected. If any promise is rejected, then the aggregate promise is
@@ -304,14 +282,10 @@ function each_limit(
  *
  * @deprecated each_limit_all will be removed in guzzlehttp/promises:2.0. Use Each::ofLimitAll instead.
  */
-function each_limit_all(
-    $iterable,
-    $concurrency,
-    callable $onFulfilled = null
-) {
+function each_limit_all($iterable, $concurrency, callable $onFulfilled = null)
+{
     return Each::ofLimitAll($iterable, $concurrency, $onFulfilled);
 }
-
 /**
  * Returns true if a promise is fulfilled.
  *
@@ -323,7 +297,6 @@ function is_fulfilled(PromiseInterface $promise)
 {
     return Is::fulfilled($promise);
 }
-
 /**
  * Returns true if a promise is rejected.
  *
@@ -335,7 +308,6 @@ function is_rejected(PromiseInterface $promise)
 {
     return Is::rejected($promise);
 }
-
 /**
  * Returns true if a promise is fulfilled or rejected.
  *
@@ -347,7 +319,6 @@ function is_settled(PromiseInterface $promise)
 {
     return Is::settled($promise);
 }
-
 /**
  * Create a new coroutine.
  *

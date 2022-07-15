@@ -1,42 +1,31 @@
 <?php
 
-namespace Sepia\PoParser\Catalog;
+namespace MailjetWp\Sepia\PoParser\Catalog;
 
 class Entry
 {
     /** @var string */
     protected $msgId;
-
     /** @var string */
     protected $msgStr;
-
     /** @var string */
     protected $msgIdPlural;
-
     /** @var string[] */
     protected $msgStrPlurals;
-
     /** @var string|null */
     protected $msgCtxt;
-
     /** @var Entry|null */
     protected $previousEntry;
-
     /** @var bool */
     protected $obsolete;
-
     /** @var array */
     protected $flags;
-
     /** @var array */
     protected $translatorComments;
-
     /** @var array */
     protected $developerComments;
-
     /** @var array */
     protected $reference;
-
     /**
      * @param string $msgId
      * @param string $msgStr
@@ -51,7 +40,6 @@ class Entry
         $this->developerComments = array();
         $this->reference = array();
     }
-
     /**
      * @param string $msgId
      *
@@ -60,10 +48,8 @@ class Entry
     public function setMsgId($msgId)
     {
         $this->msgId = $msgId;
-
         return $this;
     }
-
     /**
      * @param string $msgStr
      *
@@ -72,10 +58,8 @@ class Entry
     public function setMsgStr($msgStr)
     {
         $this->msgStr = $msgStr;
-
         return $this;
     }
-
     /**
      * @param string $msgIdPlural
      *
@@ -84,10 +68,8 @@ class Entry
     public function setMsgIdPlural($msgIdPlural)
     {
         $this->msgIdPlural = $msgIdPlural;
-
         return $this;
     }
-
     /**
      * @param string $msgCtxt
      *
@@ -96,10 +78,8 @@ class Entry
     public function setMsgCtxt($msgCtxt)
     {
         $this->msgCtxt = $msgCtxt;
-
         return $this;
     }
-
     /**
      * @param null|Entry $previousEntry
      *
@@ -108,10 +88,8 @@ class Entry
     public function setPreviousEntry($previousEntry)
     {
         $this->previousEntry = $previousEntry;
-
         return $this;
     }
-
     /**
      * @param bool $obsolete
      *
@@ -120,10 +98,8 @@ class Entry
     public function setObsolete($obsolete)
     {
         $this->obsolete = $obsolete;
-
         return $this;
     }
-
     /**
      * @param array $flags
      *
@@ -132,10 +108,8 @@ class Entry
     public function setFlags($flags)
     {
         $this->flags = $flags;
-
         return $this;
     }
-
     /**
      * @param array $translatorComments
      *
@@ -144,10 +118,8 @@ class Entry
     public function setTranslatorComments($translatorComments)
     {
         $this->translatorComments = $translatorComments;
-
         return $this;
     }
-
     /**
      * @param array $developerComments
      *
@@ -156,10 +128,8 @@ class Entry
     public function setDeveloperComments($developerComments)
     {
         $this->developerComments = $developerComments;
-
         return $this;
     }
-
     /**
      * @param array $reference
      *
@@ -168,10 +138,8 @@ class Entry
     public function setReference($reference)
     {
         $this->reference = $reference;
-
         return $this;
     }
-
     /**
      * @param string[] $msgStrPlurals
      *
@@ -180,10 +148,8 @@ class Entry
     public function setMsgStrPlurals($msgStrPlurals)
     {
         $this->msgStrPlurals = $msgStrPlurals;
-
         return $this;
     }
-
     /**
      * @return string
      */
@@ -191,7 +157,6 @@ class Entry
     {
         return $this->msgId;
     }
-
     /**
      * @return string
      */
@@ -199,7 +164,6 @@ class Entry
     {
         return $this->msgStr;
     }
-
     /**
      * @return string
      */
@@ -207,7 +171,6 @@ class Entry
     {
         return $this->msgIdPlural;
     }
-
     /**
      * @return string|null
      */
@@ -215,7 +178,6 @@ class Entry
     {
         return $this->msgCtxt;
     }
-
     /**
      * @return null|Entry
      */
@@ -223,31 +185,27 @@ class Entry
     {
         return $this->previousEntry;
     }
-
     /**
      * @return bool
      */
     public function isObsolete()
     {
-        return $this->obsolete === true;
+        return $this->obsolete === \true;
     }
-
     /**
      * @return bool
      */
     public function isFuzzy()
     {
-        return in_array('fuzzy', $this->getFlags(), true);
+        return \in_array('fuzzy', $this->getFlags(), \true);
     }
-
     /**
      * @return bool
      */
     public function isPlural()
     {
-        return $this->getMsgIdPlural() !== null || count($this->getMsgStrPlurals()) > 0;
+        return $this->getMsgIdPlural() !== null || \count($this->getMsgStrPlurals()) > 0;
     }
-
     /**
      * @return array
      */
@@ -255,7 +213,6 @@ class Entry
     {
         return $this->flags;
     }
-
     /**
      * @return array
      */
@@ -263,7 +220,6 @@ class Entry
     {
         return $this->translatorComments;
     }
-
     /**
      * @return array
      */
@@ -271,7 +227,6 @@ class Entry
     {
         return $this->developerComments;
     }
-
     /**
      * @return array
      */
@@ -279,7 +234,6 @@ class Entry
     {
         return $this->reference;
     }
-
     /**
      * @return string[]
      */

@@ -1,0 +1,6 @@
+# Not archived
+.github export-ignore
+.makefile export-ignore
+doc export-ignore
+tests export-ignore
+vendor-bin export-ignore
