@@ -1,9 +1,7 @@
 <?php
 
+namespace MailjetWp;
+
 require '../lib/Analog.php';
-
-Analog::handler (Analog\Handler\Stderr::init ());
-
-Analog::log ('Output to php://stderr');
-
-?>
+Analog::handler(Analog\Handler\Stderr::init());
+Analog::log('Output to php://stderr');

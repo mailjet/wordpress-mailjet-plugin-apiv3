@@ -1,6 +1,6 @@
 <?php
 
-namespace Sepia\PoParser\Exception;
+namespace MailjetWp\Sepia\PoParser\Exception;
 
 class ParseException extends \Exception
 {

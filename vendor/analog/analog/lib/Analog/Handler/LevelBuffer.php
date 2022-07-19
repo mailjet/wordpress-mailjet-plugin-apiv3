@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Buffers messages to be sent as a batch to another handler only when a
@@ -25,39 +25,38 @@ namespace Analog\Handler;
  * Note: Uses Analog::$format to format the messages as they're appended
  * to the buffer.
  */
-class LevelBuffer {
-	/**
-	 * This builds a log string of all messages logged.
-	 */
-	public static $buffer = '';
-
-	/**
-	 * This contains the handler to send to on close.
-	 */
-	private static $handler;
-
-	/**
-	 * Accepts another handler function to be used on close().
-	 * $until_level defaults to CRITICAL.
-	 */
-	public static function init ($handler, $until_level = 2) {
-		self::$handler = $handler;
-
-		return function ($info) use ($until_level) {
-			LevelBuffer::$buffer .= vsprintf (\Analog\Analog::$format, $info);
-			if ($info['level'] <= $until_level) {
-				// flush and reset the buffer
-				LevelBuffer::flush ();
-				LevelBuffer::$buffer = '';
-			}
-		};
-	}
-
-	/**
-	 * Passes the buffered log to the final $handler.
-	 */
-	public static function flush () {
-		$handler = self::$handler;
-		return $handler (self::$buffer, true);
-	}
+class LevelBuffer
+{
+    /**
+     * This builds a log string of all messages logged.
+     */
+    public static $buffer = '';
+    /**
+     * This contains the handler to send to on close.
+     */
+    private static $handler;
+    /**
+     * Accepts another handler function to be used on close().
+     * $until_level defaults to CRITICAL.
+     */
+    public static function init($handler, $until_level = 2)
+    {
+        self::$handler = $handler;
+        return function ($info) use($until_level) {
+            LevelBuffer::$buffer .= \vsprintf(\MailjetWp\Analog\Analog::$format, $info);
+            if ($info['level'] <= $until_level) {
+                // flush and reset the buffer
+                LevelBuffer::flush();
+                LevelBuffer::$buffer = '';
+            }
+        };
+    }
+    /**
+     * Passes the buffered log to the final $handler.
+     */
+    public static function flush()
+    {
+        $handler = self::$handler;
+        return $handler(self::$buffer, \true);
+    }
 }

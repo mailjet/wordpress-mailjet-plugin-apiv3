@@ -1,14 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class EliasisInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'component' => 'components/{$name}/',
-        'module'    => 'modules/{$name}/',
-        'plugin'    => 'plugins/{$name}/',
-        'template'  => 'templates/{$name}/',
-    );
+    protected $locations = array('component' => 'components/{$name}/', 'module' => 'modules/{$name}/', 'plugin' => 'plugins/{$name}/', 'template' => 'templates/{$name}/');
 }

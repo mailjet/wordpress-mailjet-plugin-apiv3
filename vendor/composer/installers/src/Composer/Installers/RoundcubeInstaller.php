@@ -1,21 +1,17 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class RoundcubeInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'plugin' => 'plugins/{$name}/',
-    );
-
+    protected $locations = array('plugin' => 'plugins/{$name}/');
     /**
      * Lowercase name and changes the name to a underscores
      */
-    public function inflectPackageVars(array $vars): array
+    public function inflectPackageVars(array $vars) : array
     {
-        $vars['name'] = strtolower(str_replace('-', '_', $vars['name']));
-
+        $vars['name'] = \strtolower(\str_replace('-', '_', $vars['name']));
         return $vars;
     }
 }

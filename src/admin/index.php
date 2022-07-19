@@ -1,1 +1,5 @@
-<?php // Silence is golden
+<?php
+
+namespace MailjetWp;
+
+// Silence is golden

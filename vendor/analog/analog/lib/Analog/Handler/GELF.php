@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Send the log message to a Graylog2 server (http://graylog2.org/).
@@ -23,26 +23,25 @@ namespace Analog\Handler;
  *     // Send an ordinary message
  *     Analog::log ('An error message');
  */
-class GELF {
-	public static function init ($host = '127.0.0.1', $port = \GELFMessagePublisher::GRAYLOG2_DEFAULT_PORT) {
-		$publisher = new \GELFMessagePublisher ($host, $port);
-
-		return function ($info) use ($publisher) {
-			$message = new \GELFMessage ();
-			$message->setHost ($info['machine']);
-			$message->setLevel ($info['level']);
-
-			if (is_array ($info['message'])) {
-				$message->setShortMessage ($info['message'][0]);
-				$message->setFullMessage ($info['message'][0]);
-				$message->setFile ($info['message'][1]);
-				$message->setLine ($info['message'][2]);
-			} else {
-				$message->setShortMessage ($info['message']);
-				$message->setFullMessage ($info['message']);
-			}
-
-			$publisher->publish ($message);
-		};
-	}
+class GELF
+{
+    public static function init($host = '127.0.0.1', $port = \MailjetWp\GELFMessagePublisher::GRAYLOG2_DEFAULT_PORT)
+    {
+        $publisher = new \MailjetWp\GELFMessagePublisher($host, $port);
+        return function ($info) use($publisher) {
+            $message = new \MailjetWp\GELFMessage();
+            $message->setHost($info['machine']);
+            $message->setLevel($info['level']);
+            if (\is_array($info['message'])) {
+                $message->setShortMessage($info['message'][0]);
+                $message->setFullMessage($info['message'][0]);
+                $message->setFile($info['message'][1]);
+                $message->setLine($info['message'][2]);
+            } else {
+                $message->setShortMessage($info['message']);
+                $message->setFullMessage($info['message']);
+            }
+            $publisher->publish($message);
+        };
+    }
 }

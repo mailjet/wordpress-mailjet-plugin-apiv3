@@ -1,12 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class PrestashopInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'module' => 'modules/{$name}/',
-        'theme'  => 'themes/{$name}/',
-    );
+    protected $locations = array('module' => 'modules/{$name}/', 'theme' => 'themes/{$name}/');
 }

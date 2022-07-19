@@ -26,8 +26,8 @@
             "type": "library",
             "installation-source": "dist",
             "autoload": {
-                "psr-0": {
-                    "Analog": "lib/"
+                "psr-4": {
+                    "MailjetWp\\Analog\\": "lib/Analog/"
                 }
             },
             "license": [
@@ -57,6 +57,67 @@
                 "issues": "https://github.com/jbroadway/analog/issues"
             },
             "install-path": "../analog/analog"
+        },
+        {
+            "name": "bamarni/composer-bin-plugin",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bamarni/composer-bin-plugin.git",
+                "reference": "24764700027bcd3cb072e5f8005d4a150fe714fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bamarni/composer-bin-plugin/zipball/24764700027bcd3cb072e5f8005d4a150fe714fe",
+                "reference": "24764700027bcd3cb072e5f8005d4a150fe714fe",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": "^7.2.5 || ^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "ext-json": "*",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "symfony/console": "^5.4.7 || ^6.0.7",
+                "symfony/finder": "^5.4.7 || ^6.0.7",
+                "symfony/process": "^5.4.7 || ^6.0.7"
+            },
+            "time": "2022-07-14T10:29:51+00:00",
+            "default-branch": true,
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Bamarni\\Composer\\Bin\\BamarniBinPlugin"
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "MailjetWp\\Bamarni\\Composer\\Bin\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "No conflicts for your bin dependencies",
+            "keywords": [
+                "composer",
+                "conflict",
+                "dependency",
+                "executable",
+                "isolation",
+                "tool"
+            ],
+            "support": {
+                "issues": "https://github.com/bamarni/composer-bin-plugin/issues",
+                "source": "https://github.com/bamarni/composer-bin-plugin/tree/1.8.0"
+            },
+            "install-path": "../bamarni/composer-bin-plugin"
         },
         {
             "name": "composer/installers",
@@ -98,7 +159,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Composer\\Installers\\": "src/Composer/Installers"
+                    "MailjetWp\\Composer\\Installers\\": "src/Composer/Installers"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -258,7 +319,7 @@
                     "src/functions_include.php"
                 ],
                 "psr-4": {
-                    "GuzzleHttp\\": "src/"
+                    "MailjetWp\\GuzzleHttp\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -369,7 +430,7 @@
                     "src/functions_include.php"
                 ],
                 "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
+                    "MailjetWp\\GuzzleHttp\\Promise\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -466,7 +527,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
+                    "MailjetWp\\GuzzleHttp\\Psr7\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -571,8 +632,8 @@
             "type": "library",
             "installation-source": "dist",
             "autoload": {
-                "psr-0": {
-                    "Mailjet": "src/"
+                "psr-4": {
+                    "MailjetWp\\Mailjet\\": "src/Mailjet/"
                 }
             },
             "license": [
@@ -630,7 +691,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Psr\\Http\\Client\\": "src/"
+                    "MailjetWp\\Psr\\Http\\Client\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -686,7 +747,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
+                    "MailjetWp\\Psr\\Http\\Message\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -743,7 +804,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
+                    "MailjetWp\\Psr\\Http\\Message\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -796,7 +857,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                    "MailjetWp\\Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -890,8 +951,8 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Sepia\\PoParser\\": "src/",
-                    "Sepia\\Test\\": "tests/"
+                    "MailjetWp\\Sepia\\PoParser\\": "src/",
+                    "MailjetWp\\Sepia\\Test\\": "tests/"
                 }
             },
             "license": [
@@ -1019,7 +1080,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
+                    "MailjetWp\\Symfony\\Polyfill\\Mbstring\\": ""
                 },
                 "files": [
                     "bootstrap.php"
@@ -1052,5 +1113,7 @@
         }
     ],
     "dev": true,
-    "dev-package-names": []
+    "dev-package-names": [
+        "bamarni/composer-bin-plugin"
+    ]
 }

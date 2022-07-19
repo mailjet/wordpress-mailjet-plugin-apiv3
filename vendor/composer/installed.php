@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'caa014770ead779c498126bc32b5962beb546a4f',
+        'reference' => '506cc0645c10a3d6658d33fde7bea62c4e8bb61a',
         'name' => 'mailjet/wp-mailjet-plugin',
         'dev' => true,
     ),
@@ -18,6 +18,17 @@
             'aliases' => array(),
             'reference' => '718ac1dad4577a15cadadab01b79d1923f5a9c6d',
             'dev_requirement' => false,
+        ),
+        'bamarni/composer-bin-plugin' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../bamarni/composer-bin-plugin',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '24764700027bcd3cb072e5f8005d4a150fe714fe',
+            'dev_requirement' => true,
         ),
         'composer/installers' => array(
             'pretty_version' => 'dev-main',
@@ -78,7 +89,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'caa014770ead779c498126bc32b5962beb546a4f',
+            'reference' => '506cc0645c10a3d6658d33fde7bea62c4e8bb61a',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(

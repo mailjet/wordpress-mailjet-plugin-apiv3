@@ -1,6 +1,6 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 /**
  * An installer to handle MODX specifics when installing packages.
@@ -8,7 +8,5 @@ namespace Composer\Installers;
 class ModxInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'extra' => 'core/packages/{$name}/'
-    );
+    protected $locations = array('extra' => 'core/packages/{$name}/');
 }

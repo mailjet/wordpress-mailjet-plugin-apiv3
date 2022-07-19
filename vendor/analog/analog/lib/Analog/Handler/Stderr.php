@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Send the output to STDERR.
@@ -13,12 +13,12 @@ namespace Analog\Handler;
  *
  * Note: Uses Analog::$format for the appending format.
  */
-class Stderr {
-	public static function init () {
-		return function ($info, $buffered = false) {
-			file_put_contents ('php://stderr', ($buffered)
-				? $info
-				: vsprintf (\Analog\Analog::$format, $info));
-		};
-	}
+class Stderr
+{
+    public static function init()
+    {
+        return function ($info, $buffered = \false) {
+            \file_put_contents('php://stderr', $buffered ? $info : \vsprintf(\MailjetWp\Analog\Analog::$format, $info));
+        };
+    }
 }

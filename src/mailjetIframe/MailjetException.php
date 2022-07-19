@@ -1,9 +1,8 @@
 <?php
 
-namespace MailjetIframe;
+namespace MailjetWp\MailjetIframe;
 
 use Exception;
-
 /**
  *
  *
@@ -11,4 +10,3 @@ use Exception;
 class MailjetException extends Exception
 {
 }
-

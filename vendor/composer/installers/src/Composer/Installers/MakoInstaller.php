@@ -1,11 +1,9 @@
 <?php
 
-namespace Composer\Installers;
+namespace MailjetWp\Composer\Installers;
 
 class MakoInstaller extends BaseInstaller
 {
     /** @var array<string, string> */
-    protected $locations = array(
-        'package' => 'app/packages/{$name}/',
-    );
+    protected $locations = array('package' => 'app/packages/{$name}/');
 }

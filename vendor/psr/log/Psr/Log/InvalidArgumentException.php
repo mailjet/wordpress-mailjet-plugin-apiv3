@@ -1,6 +1,6 @@
 <?php
 
-namespace Psr\Log;
+namespace MailjetWp\Psr\Log;
 
 class InvalidArgumentException extends \InvalidArgumentException
 {

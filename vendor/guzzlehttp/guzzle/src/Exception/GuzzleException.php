@@ -1,9 +1,8 @@
 <?php
 
-namespace GuzzleHttp\Exception;
+namespace MailjetWp\GuzzleHttp\Exception;
 
-use Psr\Http\Client\ClientExceptionInterface;
-
+use MailjetWp\Psr\Http\Client\ClientExceptionInterface;
 interface GuzzleException extends ClientExceptionInterface
 {
 }

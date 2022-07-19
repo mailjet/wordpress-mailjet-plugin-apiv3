@@ -1,9 +1,8 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 require_once __DIR__ . '/../../ChromePhp.php';
-
 /**
  * Log to the [Chrome Logger](http://craig.is/writing/chrome-logger).
  * Based on the [ChromePhp library](https://github.com/ccampbell/chromephp).
@@ -18,27 +17,29 @@ require_once __DIR__ . '/../../ChromePhp.php';
  *     // send an ordinary message
  *     Analog::info ('An error message');
  */
-class ChromeLogger {
-	public static function init () {
-		return function ($info) {
-			switch ($info['level']) {
-				case \Analog\Analog::DEBUG:
-					\ChromePhp::log ($info['message']);
-					break;
-				case \Analog\Analog::INFO:
-				case \Analog\Analog::NOTICE:
-					\ChromePhp::info ($info['message']);
-					break;
-				case \Analog\Analog::WARNING:
-					\ChromePhp::warn ($info['message']);
-					break;
-				case \Analog\Analog::ERROR:
-				case \Analog\Analog::CRITICAL:
-				case \Analog\Analog::ALERT:
-				case \Analog\Analog::URGENT:
-					\ChromePhp::error ($info['message']);
-					break;
-			}
-		};
-	}
+class ChromeLogger
+{
+    public static function init()
+    {
+        return function ($info) {
+            switch ($info['level']) {
+                case \MailjetWp\Analog\Analog::DEBUG:
+                    \MailjetWp\ChromePhp::log($info['message']);
+                    break;
+                case \MailjetWp\Analog\Analog::INFO:
+                case \MailjetWp\Analog\Analog::NOTICE:
+                    \MailjetWp\ChromePhp::info($info['message']);
+                    break;
+                case \MailjetWp\Analog\Analog::WARNING:
+                    \MailjetWp\ChromePhp::warn($info['message']);
+                    break;
+                case \MailjetWp\Analog\Analog::ERROR:
+                case \MailjetWp\Analog\Analog::CRITICAL:
+                case \MailjetWp\Analog\Analog::ALERT:
+                case \MailjetWp\Analog\Analog::URGENT:
+                    \MailjetWp\ChromePhp::error($info['message']);
+                    break;
+            }
+        };
+    }
 }

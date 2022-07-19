@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Sends messages to one or more of the other handlers based on its
@@ -31,25 +31,24 @@ namespace Analog\Handler;
  *     // will trigger an email notice
  *     Analog::log ('Uh oh...', Analog::ERROR);
  */
-class Multi {
-	public static function init ($handlers) {
-		return function ($info) use ($handlers) {
-			$level = is_numeric ($info['level']) ? $info['level'] : 3;
-			while ($level <= 7) {
-				if ( isset ( $handlers[ $level ] ) ) {
-
-					if ( ! is_array( $handlers[ $level ] ) ) {
-						$handlers[ $level ] = array( $handlers[ $level ] );
-					}
-
-					foreach ( $handlers[ $level ] as $handler ) {
-						$handler( $info );
-					}
-
-					return;
-				}
-				$level++;
-			}
-		};
-	}
+class Multi
+{
+    public static function init($handlers)
+    {
+        return function ($info) use($handlers) {
+            $level = \is_numeric($info['level']) ? $info['level'] : 3;
+            while ($level <= 7) {
+                if (isset($handlers[$level])) {
+                    if (!\is_array($handlers[$level])) {
+                        $handlers[$level] = array($handlers[$level]);
+                    }
+                    foreach ($handlers[$level] as $handler) {
+                        $handler($info);
+                    }
+                    return;
+                }
+                $level++;
+            }
+        };
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Analog\Handler;
+namespace MailjetWp\Analog\Handler;
 
 /**
  * Send the output to the apprise command line tool (https://github.com/caronc/apprise).
@@ -18,23 +18,18 @@ namespace Analog\Handler;
  * - $service may also be an array of services.
  * - Uses Analog::$format for the appending format.
  */
-class Apprise {
-	public static function init ($command, $service) {
-		return function ($info) use ($command, $service) {
-			if (is_array ($service)) {
-				$service = array_map ('escapeshellarg', $service);
-				$service = join (' ', $service);
-			} else {
-				$service = escapeshellarg ($service);
-			}
-
-			exec (
-				sprintf ('%s -b %s %s',
-					$command,
-					escapeshellarg (vsprintf (\Analog\Analog::$format, $info)),
-					$service
-				)
-			);
-		};
-	}
+class Apprise
+{
+    public static function init($command, $service)
+    {
+        return function ($info) use($command, $service) {
+            if (\is_array($service)) {
+                $service = \array_map('escapeshellarg', $service);
+                $service = \join(' ', $service);
+            } else {
+                $service = \escapeshellarg($service);
+            }
+            \exec(\sprintf('%s -b %s %s', $command, \escapeshellarg(\vsprintf(\MailjetWp\Analog\Analog::$format, $info)), $service));
+        };
+    }
 }

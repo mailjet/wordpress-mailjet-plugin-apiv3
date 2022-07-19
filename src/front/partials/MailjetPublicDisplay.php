@@ -1,6 +1,6 @@
 <?php
 
-namespace MailjetPlugin\Front;
+namespace MailjetWp\MailjetPlugin\Front;
 
 /**
  * Provide a public-facing view for the plugin
@@ -16,3 +16,4 @@ namespace MailjetPlugin\Front;
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<?php 

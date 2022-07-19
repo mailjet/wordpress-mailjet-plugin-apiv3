@@ -3,8 +3,8 @@
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
-Tested up to: 6.0
-Stable tag: 5.2.20
+Tested up to: 6.0.1
+Stable tag: 5.2.21
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -196,6 +196,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 == Upgrade notice ==
+= 5.2.21 =
+* Fix issue with guzzle namespace conflict
+
 = 5.2.20 =
 * Moved Iframe library from own repo to main plugin repo
 * Small code cleanup
@@ -226,6 +229,8 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Removed Bootstrap dependency
 
 == Changelog ==
+= 5.2.21 =
+* Fix issue with guzzle namespace conflict
 
 = 5.2.16 =
 * Fixed issue with sending subscribed contact to selected mail list

@@ -34,20 +34,21 @@
     },
     "autoload": {
         "psr-4": {
-            "MailjetPlugin\\": "src/",
-            "MailjetPlugin\\Includes\\": "src/includes/",
-            "MailjetPlugin\\Includes\\SettingsPages\\": "src/includes/SettingsPages/",
-            "MailjetPlugin\\Admin\\": "src/admin/",
-            "MailjetPlugin\\Admin\\Partials\\": "src/admin/partials/",
-            "MailjetPlugin\\Front\\": "src/front/",
-            "MailjetPlugin\\Widget\\": "src/widget/",
-            "MailjetIframe\\": "src/mailjetIframe"
+            "MailjetWp\\MailjetPlugin\\": "src/",
+            "MailjetWp\\MailjetPlugin\\Includes\\": "src/includes/",
+            "MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\": "src/includes/SettingsPages/",
+            "MailjetWp\\MailjetPlugin\\Admin\\": "src/admin/",
+            "MailjetWp\\MailjetPlugin\\Admin\\Partials\\": "src/admin/partials/",
+            "MailjetWp\\MailjetPlugin\\Front\\": "src/front/",
+            "MailjetWp\\MailjetPlugin\\Widget\\": "src/widget/",
+            "MailjetWp\\MailjetIframe\\": "src/mailjetIframe"
         }
     },
     "config": {
         "preferred-install": "dist",
         "allow-plugins": {
-            "composer/installers": true
+            "composer/installers": true,
+            "bamarni/composer-bin-plugin": true
         }
     },
     "scripts": {
@@ -60,5 +61,8 @@
         "post-update-cmd": [
             "@clearComposerCache"
         ]
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "dev-master"
     }
 }

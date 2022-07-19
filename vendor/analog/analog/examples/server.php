@@ -1,5 +1,7 @@
 <?php
 
+namespace MailjetWp;
+
 /**
  * This works with test_post.php to verify sent data.
  * Run me via:
@@ -8,6 +10,4 @@
  *
  * Note: Requires PHP 5.4+
  */
-file_put_contents ('php://stdout', 'Logged: ' . join (' - ', $_POST) . "\n");
-
-?>
+\file_put_contents('php://stdout', 'Logged: ' . \join(' - ', $_POST) . "\n");

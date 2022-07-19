@@ -1,20 +1,17 @@
 <?php
 
-namespace Sepia\PoParser;
+namespace MailjetWp\Sepia\PoParser;
 
-use Sepia\PoParser\Catalog\Catalog;
-use Sepia\PoParser\Catalog\Entry;
-use Sepia\PoParser\Catalog\Header;
-
+use MailjetWp\Sepia\PoParser\Catalog\Catalog;
+use MailjetWp\Sepia\PoParser\Catalog\Entry;
+use MailjetWp\Sepia\PoParser\Catalog\Header;
 class PoCompiler
 {
     const TOKEN_OBSOLETE = '#~ ';
     /** @var int */
     protected $wrappingColumn;
-
     /** @var string */
     protected $lineEnding;
-
     /**
      * PoCompiler constructor.
      *
@@ -26,7 +23,6 @@ class PoCompiler
         $this->wrappingColumn = $wrappingColumn;
         $this->lineEnding = $lineEnding;
     }
-
     /**
      * Compiles entries into a string
      *
@@ -39,49 +35,39 @@ class PoCompiler
     public function compile(Catalog $catalog)
     {
         $output = '';
-
-        if (count($catalog->getHeaders()) > 0) {
-            $output .= 'msgid ""'.$this->eol();
-            $output .= 'msgstr ""'.$this->eol();
+        if (\count($catalog->getHeaders()) > 0) {
+            $output .= 'msgid ""' . $this->eol();
+            $output .= 'msgstr ""' . $this->eol();
             foreach ($catalog->getHeaders() as $header) {
-                $output .= '"'.$header.'\n"'.$this->eol();
+                $output .= '"' . $header . '\\n"' . $this->eol();
             }
             $output .= $this->eol();
         }
-
-
-        $entriesCount = count($catalog->getEntries());
+        $entriesCount = \count($catalog->getEntries());
         $counter = 0;
         foreach ($catalog->getEntries() as $entry) {
-            if ($entry->isObsolete() === false) {
+            if ($entry->isObsolete() === \false) {
                 $output .= $this->buildPreviousEntry($entry);
                 $output .= $this->buildTranslatorComment($entry);
                 $output .= $this->buildDeveloperComment($entry);
                 $output .= $this->buildReference($entry);
             }
-
             $output .= $this->buildFlags($entry);
-
-//            if (isset($entry['@'])) {
-//                $output .= "#@ ".$entry['@'].$this->eol();
-//            }
-
+            //            if (isset($entry['@'])) {
+            //                $output .= "#@ ".$entry['@'].$this->eol();
+            //            }
             $output .= $this->buildContext($entry);
             $output .= $this->buildMsgId($entry);
             $output .= $this->buildMsgIdPlural($entry);
             $output .= $this->buildMsgStr($entry, $catalog->getHeader());
-
-
             $counter++;
             // Avoid inserting an extra newline at end of file
             if ($counter < $entriesCount) {
                 $output .= $this->eol();
             }
         }
-
         return $output;
     }
-
     /**
      * @return string
      */
@@ -89,7 +75,6 @@ class PoCompiler
     {
         return $this->lineEnding;
     }
-
     /**
      * @param $entry
      *
@@ -101,10 +86,8 @@ class PoCompiler
         if ($previous === null) {
             return '';
         }
-
-        return '#| msgid '.$this->cleanExport($previous->getMsgId()).$this->eol();
+        return '#| msgid ' . $this->cleanExport($previous->getMsgId()) . $this->eol();
     }
-
     /**
      * @param $entry
      *
@@ -115,100 +98,78 @@ class PoCompiler
         if ($entry->getTranslatorComments() === null) {
             return '';
         }
-
         $output = '';
         foreach ($entry->getTranslatorComments() as $comment) {
-            $output .= '# '.$comment.$this->eol();
+            $output .= '# ' . $comment . $this->eol();
         }
-
         return $output;
     }
-
     protected function buildDeveloperComment(Entry $entry)
     {
         if ($entry->getDeveloperComments() === null) {
             return '';
         }
-
         $output = '';
         foreach ($entry->getDeveloperComments() as $comment) {
-            $output .= '#. '.$comment.$this->eol();
+            $output .= '#. ' . $comment . $this->eol();
         }
-
         return $output;
     }
-
     protected function buildReference(Entry $entry)
     {
         $reference = $entry->getReference();
-        if ($reference === null || count($reference) === 0) {
+        if ($reference === null || \count($reference) === 0) {
             return '';
         }
-
         $output = '';
         foreach ($reference as $ref) {
-            $output .= '#: '.$ref.$this->eol();
+            $output .= '#: ' . $ref . $this->eol();
         }
-
         return $output;
     }
-
     protected function buildFlags(Entry $entry)
     {
         $flags = $entry->getFlags();
-        if ($flags === null || count($flags) === 0) {
+        if ($flags === null || \count($flags) === 0) {
             return '';
         }
-
-        return '#, '.implode(', ', $flags).$this->eol();
+        return '#, ' . \implode(', ', $flags) . $this->eol();
     }
-
     protected function buildContext(Entry $entry)
     {
         if ($entry->getMsgCtxt() === null) {
             return '';
         }
-
-        return
-            ($entry->isObsolete() ? '#~ ' : '').
-            'msgctxt '.$this->cleanExport($entry->getMsgCtxt()).$this->eol();
+        return ($entry->isObsolete() ? '#~ ' : '') . 'msgctxt ' . $this->cleanExport($entry->getMsgCtxt()) . $this->eol();
     }
-
     protected function buildMsgId(Entry $entry)
     {
         if ($entry->getMsgId() === null) {
             return '';
         }
-
         return $this->buildProperty('msgid', $entry->getMsgId(), $entry->isObsolete());
     }
-
     protected function buildMsgStr(Entry $entry, Header $headers)
     {
         $value = $entry->getMsgStr();
         $plurals = $entry->getMsgStrPlurals();
-
         if ($value === null && $plurals === null) {
             return '';
         }
-
         if ($entry->isPlural()) {
             $output = '';
             $nPlurals = $headers->getPluralFormsCount();
-            $pluralsFound = count($plurals);
-            $maxIterations = max($nPlurals, $pluralsFound);
+            $pluralsFound = \count($plurals);
+            $maxIterations = \max($nPlurals, $pluralsFound);
             for ($i = 0; $i < $maxIterations; $i++) {
                 $value = isset($plurals[$i]) ? $plurals[$i] : '';
                 $output .= $entry->isObsolete() ? self::TOKEN_OBSOLETE : '';
-                $output .= 'msgstr['.$i.'] '.$this->cleanExport($value).$this->eol();
+                $output .= 'msgstr[' . $i . '] ' . $this->cleanExport($value) . $this->eol();
             }
-
             return $output;
         }
-
         return $this->buildProperty('msgstr', $value, $entry->isObsolete());
     }
-
     /**
      * @param Entry $entry
      *
@@ -220,31 +181,25 @@ class PoCompiler
         if ($value === null) {
             return '';
         }
-
         $output = '';
         $output .= $entry->isObsolete() ? self::TOKEN_OBSOLETE : '';
-        $output .= 'msgid_plural '.$this->cleanExport($value).$this->eol();
+        $output .= 'msgid_plural ' . $this->cleanExport($value) . $this->eol();
         return $output;
     }
-
-    protected function buildProperty($property, $value, $obsolete = false)
+    protected function buildProperty($property, $value, $obsolete = \false)
     {
         $tokens = $this->wrapString($value);
-
         $output = '';
-        if (count($tokens) > 1) {
-            array_unshift($tokens, '');
+        if (\count($tokens) > 1) {
+            \array_unshift($tokens, '');
         }
-
         foreach ($tokens as $i => $token) {
             $output .= $obsolete ? self::TOKEN_OBSOLETE : '';
-            $output .= ($i === 0) ? $property.' ' : '';
-            $output .= $this->cleanExport($token).$this->eol();
+            $output .= $i === 0 ? $property . ' ' : '';
+            $output .= $this->cleanExport($token) . $this->eol();
         }
-
         return $output;
     }
-
     /**
      * Prepares a string to be outputed into a file.
      *
@@ -254,26 +209,22 @@ class PoCompiler
      */
     protected function cleanExport($string)
     {
-        $quote   = '"';
-        $slash   = '\\';
+        $quote = '"';
+        $slash = '\\';
         $newline = "\n";
-
         // escape qoutes that are not allready escaped
-        $string = preg_replace('#(?<!\\\)"#', "$slash$quote", $string);
-
+        $string = \preg_replace('#(?<!\\\\)"#', "{$slash}{$quote}", $string);
         // remove empty strings
-        $string = str_replace("$newline$quote$quote", '', $string);
-
-        return "$quote$string$quote";
+        $string = \str_replace("{$newline}{$quote}{$quote}", '', $string);
+        return "{$quote}{$string}{$quote}";
     }
-
     /**
      * @param string $value
      * @return array
      */
     private function wrapString($value)
     {
-        $wrapped = wordwrap($value, $this->wrappingColumn, " \n");
-        return explode("\n", $wrapped);
+        $wrapped = \wordwrap($value, $this->wrappingColumn, " \n");
+        return \explode("\n", $wrapped);
     }
 }

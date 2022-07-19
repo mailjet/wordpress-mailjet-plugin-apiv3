@@ -1,6 +1,6 @@
 <?php
 
-namespace Sepia\PoParser\SourceHandler;
+namespace MailjetWp\Sepia\PoParser\SourceHandler;
 
 /**
  *    Copyright (c) 2012 Raúl Ferràs raul.ferras@gmail.com
@@ -36,41 +36,34 @@ class StringSource implements SourceHandler
 {
     /** @var string[] */
     protected $strings;
-
     /** @var int */
     protected $line;
-
     /** @var int */
     protected $total;
-
     public function __construct($string)
     {
         $this->line = 0;
-        $this->strings = explode("\n",$string);
-        $this->total = count($this->strings);
+        $this->strings = \explode("\n", $string);
+        $this->total = \count($this->strings);
     }
-
     public function getNextLine()
     {
         if (isset($this->strings[$this->line])) {
             $result = $this->strings[$this->line];
             $this->line++;
         } else {
-            $result = false;
+            $result = \false;
         }
         return $result;
     }
-
     public function ended()
     {
-        return ($this->line>=$this->total);
+        return $this->line >= $this->total;
     }
-
     public function close()
     {
         $this->line = 0;
     }
-
     public function save($ignore)
     {
     }

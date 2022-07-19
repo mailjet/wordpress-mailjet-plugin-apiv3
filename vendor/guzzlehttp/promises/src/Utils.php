@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Promise;
+namespace MailjetWp\GuzzleHttp\Promise;
 
 final class Utils
 {
@@ -24,16 +24,13 @@ final class Utils
     public static function queue(TaskQueueInterface $assign = null)
     {
         static $queue;
-
         if ($assign) {
             $queue = $assign;
         } elseif (!$queue) {
             $queue = new TaskQueue();
         }
-
         return $queue;
     }
-
     /**
      * Adds a function to run in the task queue when it is next `run()` and
      * returns a promise that is fulfilled or rejected with the result.
@@ -46,7 +43,7 @@ final class Utils
     {
         $queue = self::queue();
         $promise = new Promise([$queue, 'run']);
-        $queue->add(function () use ($task, $promise) {
+        $queue->add(function () use($task, $promise) {
             try {
                 if (Is::pending($promise)) {
                     $promise->resolve($task());
@@ -57,10 +54,8 @@ final class Utils
                 $promise->reject($e);
             }
         });
-
         return $promise;
     }
-
     /**
      * Synchronously waits on a promise to resolve and returns an inspection
      * state array.
@@ -78,10 +73,7 @@ final class Utils
     public static function inspect(PromiseInterface $promise)
     {
         try {
-            return [
-                'state' => PromiseInterface::FULFILLED,
-                'value' => $promise->wait()
-            ];
+            return ['state' => PromiseInterface::FULFILLED, 'value' => $promise->wait()];
         } catch (RejectionException $e) {
             return ['state' => PromiseInterface::REJECTED, 'reason' => $e->getReason()];
         } catch (\Throwable $e) {
@@ -90,7 +82,6 @@ final class Utils
             return ['state' => PromiseInterface::REJECTED, 'reason' => $e];
         }
     }
-
     /**
      * Waits on all of the provided promises, but does not unwrap rejected
      * promises as thrown exception.
@@ -109,10 +100,8 @@ final class Utils
         foreach ($promises as $key => $promise) {
             $results[$key] = inspect($promise);
         }
-
         return $results;
     }
-
     /**
      * Waits on all of the provided promises and returns the fulfilled values.
      *
@@ -133,10 +122,8 @@ final class Utils
         foreach ($promises as $key => $promise) {
             $results[$key] = $promise->wait();
         }
-
         return $results;
     }
-
     /**
      * Given an array of promises, return a promise that is fulfilled when all
      * the items in the array are fulfilled.
@@ -150,24 +137,19 @@ final class Utils
      *
      * @return PromiseInterface
      */
-    public static function all($promises, $recursive = false)
+    public static function all($promises, $recursive = \false)
     {
         $results = [];
-        $promise = Each::of(
-            $promises,
-            function ($value, $idx) use (&$results) {
-                $results[$idx] = $value;
-            },
-            function ($reason, $idx, Promise $aggregate) {
-                $aggregate->reject($reason);
-            }
-        )->then(function () use (&$results) {
-            ksort($results);
+        $promise = Each::of($promises, function ($value, $idx) use(&$results) {
+            $results[$idx] = $value;
+        }, function ($reason, $idx, Promise $aggregate) {
+            $aggregate->reject($reason);
+        })->then(function () use(&$results) {
+            \ksort($results);
             return $results;
         });
-
-        if (true === $recursive) {
-            $promise = $promise->then(function ($results) use ($recursive, &$promises) {
+        if (\true === $recursive) {
+            $promise = $promise->then(function ($results) use($recursive, &$promises) {
                 foreach ($promises as $promise) {
                     if (Is::pending($promise)) {
                         return self::all($promises, $recursive);
@@ -176,10 +158,8 @@ final class Utils
                 return $results;
             });
         }
-
         return $promise;
     }
-
     /**
      * Initiate a competitive race between multiple promises or values (values
      * will become immediately fulfilled promises).
@@ -200,35 +180,24 @@ final class Utils
     {
         $results = [];
         $rejections = [];
-
-        return Each::of(
-            $promises,
-            function ($value, $idx, PromiseInterface $p) use (&$results, $count) {
-                if (Is::settled($p)) {
-                    return;
-                }
-                $results[$idx] = $value;
-                if (count($results) >= $count) {
-                    $p->resolve(null);
-                }
-            },
-            function ($reason) use (&$rejections) {
-                $rejections[] = $reason;
+        return Each::of($promises, function ($value, $idx, PromiseInterface $p) use(&$results, $count) {
+            if (Is::settled($p)) {
+                return;
             }
-        )->then(
-            function () use (&$results, &$rejections, $count) {
-                if (count($results) !== $count) {
-                    throw new AggregateException(
-                        'Not enough promises to fulfill count',
-                        $rejections
-                    );
-                }
-                ksort($results);
-                return array_values($results);
+            $results[$idx] = $value;
+            if (\count($results) >= $count) {
+                $p->resolve(null);
             }
-        );
+        }, function ($reason) use(&$rejections) {
+            $rejections[] = $reason;
+        })->then(function () use(&$results, &$rejections, $count) {
+            if (\count($results) !== $count) {
+                throw new AggregateException('Not enough promises to fulfill count', $rejections);
+            }
+            \ksort($results);
+            return \array_values($results);
+        });
     }
-
     /**
      * Like some(), with 1 as count. However, if the promise fulfills, the
      * fulfillment value is not an array of 1 but the value directly.
@@ -243,7 +212,6 @@ final class Utils
             return $values[0];
         });
     }
-
     /**
      * Returns a promise that is fulfilled when all of the provided promises have
      * been fulfilled or rejected.
@@ -259,17 +227,12 @@ final class Utils
     public static function settle($promises)
     {
         $results = [];
-
-        return Each::of(
-            $promises,
-            function ($value, $idx) use (&$results) {
-                $results[$idx] = ['state' => PromiseInterface::FULFILLED, 'value' => $value];
-            },
-            function ($reason, $idx) use (&$results) {
-                $results[$idx] = ['state' => PromiseInterface::REJECTED, 'reason' => $reason];
-            }
-        )->then(function () use (&$results) {
-            ksort($results);
+        return Each::of($promises, function ($value, $idx) use(&$results) {
+            $results[$idx] = ['state' => PromiseInterface::FULFILLED, 'value' => $value];
+        }, function ($reason, $idx) use(&$results) {
+            $results[$idx] = ['state' => PromiseInterface::REJECTED, 'reason' => $reason];
+        })->then(function () use(&$results) {
+            \ksort($results);
             return $results;
         });
     }
