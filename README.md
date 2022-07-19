@@ -205,6 +205,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
+##### 5.2.21
+* Fix issue with guzzle namespace conflict
+
 ##### 5.2.20
 * Moved Iframe library from own repo to main plugin repo
 * Small code cleanup
