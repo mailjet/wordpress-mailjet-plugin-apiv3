@@ -25,7 +25,7 @@ class IntegrationsSettings
     {
         $wooCommerceNotInstalled = \false;
         // One can also check for `if (defined('WC_VERSION')) { // WooCommerce installed }`
-        if (!\class_exists('MailjetWp\\WooCommerce')) {
+        if (!\class_exists('WooCommerce')) {
             delete_option('activate_mailjet_woo_integration');
             delete_option('mailjet_woo_edata_sync');
             delete_option('mailjet_woo_checkout_checkbox');
@@ -283,8 +283,8 @@ class IntegrationsSettings
     }
     private function cf7Integration($mailjetContactLists)
     {
-        $isCF7Installed = \class_exists('MailjetWp\\WPCF7');
-        if ($isCF7Installed === \false) {
+        $isCF7Installed = \class_exists('WPCF7');
+        if ($isCF7Installed === false) {
             delete_option('activate_mailjet_cf7_integration');
             delete_option('mailjet_cf7_list');
             delete_option('cf7_email');
@@ -305,7 +305,7 @@ class IntegrationsSettings
         echo $mailjetCF7IntegrationActivated === '1' ? 'checked="checked"' : '';
         ?>
                        <?php 
-        echo $isCF7Installed === \false ? ' disabled="disabled"' : '';
+        echo $isCF7Installed === false ? ' disabled="disabled"' : '';
         ?>
                 >
                 <span class="mj-slider mj-round"></span>

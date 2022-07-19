@@ -75,7 +75,7 @@ class WooCommerceSettings
                 $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, $contactList);
             }
             if (!$contactAlreadySubscribedToList) {
-                if (!\function_exists('MailjetWp\\woocommerce_form_field')) {
+                if (!\function_exists('woocommerce_form_field')) {
                     return;
                 }
                 $boxMsg = \stripslashes(get_option('mailjet_woo_checkout_box_text')) ?: __('Subscribe to our newsletter', 'mailjet-for-wordpress');
@@ -1104,16 +1104,16 @@ class WooCommerceSettings
         if ($userRoles[0] === 'customer') {
             $args = array('customer_id' => $userId, 'orderby' => 'date', 'order' => 'ASC', 'type' => 'shop_order', 'limit' => -1);
             $orders = wc_get_orders($args);
-            $customer = new \MailjetWp\WC_Customer($userId);
+            $customer = new \WC_Customer($userId);
             $customerProperties[SubscriptionOptionsSettings::PROP_USER_FIRSTNAME] = $userData->first_name;
             $customerProperties[SubscriptionOptionsSettings::PROP_USER_LASTNAME] = $userData->last_name;
             $customerProperties[SubscriptionOptionsSettings::WP_PROP_USER_ROLE] = 'customer';
-            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = get_gmt_from_date($customer->get_date_created(), 'MailjetWp\\Y-m-d\\TH:i:s\\Z');
+            $customerProperties[self::WOO_PROP_ACCOUNT_CREATION_DATE] = get_gmt_from_date($customer->get_date_created(), 'Y-m-d\TH:i:s\Z');
             $customerProperties[self::WOO_PROP_TOTAL_ORDERS] = 0;
             $customerProperties[self::WOO_PROP_TOTAL_SPENT] = 0;
             foreach ($orders as $order) {
                 if ($order->get_status() === 'completed') {
-                    $date = get_gmt_from_date($order->get_date_completed(), 'MailjetWp\\Y-m-d\\TH:i:s\\Z');
+                    $date = get_gmt_from_date($order->get_date_completed(), 'Y-m-d\TH:i:s\Z');
                     $customerProperties[self::WOO_PROP_TOTAL_ORDERS]++;
                     $customerProperties[self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
                     if (!isset($customerProperties[self::WOO_PROP_LAST_ORDER_DATE]) || $date > $customerProperties[self::WOO_PROP_LAST_ORDER_DATE]) {
@@ -1145,7 +1145,7 @@ class WooCommerceSettings
                 $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] = 0;
             }
             if ($order->get_status() === 'completed') {
-                $date = get_gmt_from_date($order->get_date_completed(), 'MailjetWp\\Y-m-d\\TH:i:s\\Z');
+                $date = get_gmt_from_date($order->get_date_completed(), 'Y-m-d\TH:i:s\Z');
                 $guestProperties[$email][self::WOO_PROP_TOTAL_ORDERS]++;
                 $guestProperties[$email][self::WOO_PROP_TOTAL_SPENT] += $order->get_total();
                 if (!isset($guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) || $date > $guestProperties[$email][self::WOO_PROP_LAST_ORDER_DATE]) {

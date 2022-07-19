@@ -13,6 +13,11 @@ use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 class ContactForm7Settings
 {
     const MAILJET_CHECKBOX = 'mailjet-opt-in';
+
+    /**
+     * @param $contactForm
+     * @return false
+     */
     public function sendConfirmationEmail($contactForm)
     {
         $locale = Mailjeti18n::getLocale();
@@ -20,7 +25,7 @@ class ContactForm7Settings
         if (isset($contactForm->posted_data)) {
             $formdata = $contactForm->posted_data;
         } else {
-            $submission = \MailjetWp\WPCF7_Submission::get_instance();
+            $submission = \WPCF7_Submission::get_instance();
             if ($submission) {
                 $formdata = $submission->get_posted_data();
             }
@@ -35,8 +40,9 @@ class ContactForm7Settings
         $mailjetCheckbox = $formdata[self::MAILJET_CHECKBOX];
         if ($mailjetCheckbox[0] != '') {
             $cf7Email = \trim(\stripslashes(get_option('cf7_email')), '[]');
+
             if (!isset($formdata[$cf7Email])) {
-                return \false;
+                return false;
             }
             $email = $formdata[$cf7Email];
             $cf7name = \stripslashes(get_option('cf7_fromname', ''));
@@ -66,6 +72,7 @@ class ContactForm7Settings
                 $contact['Properties']['name'] = $formdata[$cf7name];
                 MailjetApi::createMailjetContactProperty('name');
             }
+            var_dump($contact, $mailjetCF7List);
             MailjetApi::syncMailjetContact($mailjetCF7List, $contact);
             $email_subject = Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
             add_filter('wp_mail_content_type', array(SubscriptionOptionsSettings::getInstance(), 'set_html_content_type'));
