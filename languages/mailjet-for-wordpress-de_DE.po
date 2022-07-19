@@ -1575,7 +1575,7 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "46828"
+msgstr ""
 
 msgid "propertyDataType0"
 msgstr "0"
