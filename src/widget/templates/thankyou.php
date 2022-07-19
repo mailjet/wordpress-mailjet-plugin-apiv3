@@ -22,8 +22,7 @@
             }
         </style>
 
-        <?php 
-namespace MailjetWp;
+        <?php
 
 wp_print_styles();
 ?>
