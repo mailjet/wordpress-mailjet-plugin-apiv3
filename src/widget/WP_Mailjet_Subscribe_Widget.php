@@ -8,6 +8,9 @@ use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 
+/**
+ * Plugin Name: Mailjet Subscription Plugin
+ */
 class WP_Mailjet_Subscribe_Widget extends \WP_Widget
 {
     const WIDGET_OPTIONS_NAME = 'mailjet_widget_options';

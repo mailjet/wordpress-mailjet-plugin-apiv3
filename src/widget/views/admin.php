@@ -138,9 +138,7 @@ _e('Advanced form customization', 'mailjet-for-wordpress');
 ?></span>
     </div>
 
-    <div id="modal-<?php 
-echo $this->id;
-?>" class="mj-modal">
+    <div id="modal-<?php echo $this->id; ?>" class="mj-modal mj-hide">
         <div class="mj-modal-dialog" role="document">
             <div class="mj-pluginPage mj-modal-content">
                 <div class="mj-modal-header">

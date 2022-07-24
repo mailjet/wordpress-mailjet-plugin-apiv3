@@ -285,8 +285,6 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     margin-left: 0;
-    opacity: 0;
-    visibility: hidden;
     transition: visibility 0s, lineaer 0.1s, opacity 0.3s ease;
 }
 

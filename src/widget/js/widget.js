@@ -1,10 +1,8 @@
-console.log('HEEEELOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 (function ($) {
     'use strict';
     $(function () {
 
         $(document).on('widget-updated', function (event, widget) {
-            console.log('TEST 1');
             showCheckedLanguages();
             eventOpenAdvancedFormModal();
             eventCloseAdvancedFormModal();
@@ -16,7 +14,6 @@ console.log('HEEEELOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
         // Toggle(show/hide) hidden language elements(title, contactList)
         $(document).on('change', '.language_checkbox', function () {
-            console.log('TEST 2');
             var removeLanguage = !$(this).prop('checked');
             // Uncheck the language checkbox
             if (removeLanguage) {
@@ -186,8 +183,17 @@ console.log('HEEEELOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             }
         });
 
+
+        $(document).on('click', $('span.advanced-form-link'), function (event) {
+            var dataAttr = event.target.getAttribute('data-target');
+            if (dataAttr !== null && typeof dataAttr !== null) {
+                console.log('SDSSD')
+                $('#modal-' + dataAttr).removeClass('mj-hide');
+            }
+        });
+
         // Fires when property value is changed
-        $(document).on('change', '.propertyDataType', function () {
+        $(document).on('change', '.propertyDataType', function (event) {
             var optionValue = event.target.value;
             var defaultPlaceholder = 'Field label in';
             var hiddenPlaceholder = 'Value for';
