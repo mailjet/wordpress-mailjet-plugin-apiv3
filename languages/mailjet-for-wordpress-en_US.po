@@ -1110,13 +1110,13 @@ msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "My custom form2"
 
 msgid "list"
-msgstr "0"
+msgstr "21908"
 
 msgid "language_mandatory_email"
 msgstr ""
@@ -1158,7 +1158,7 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "46827"
+msgstr ""
 
 msgid "propertyDataType0"
 msgstr "0"

@@ -1,8 +1,10 @@
+console.log('HEEEELOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 (function ($) {
-    "use strict";
+    'use strict';
     $(function () {
 
         $(document).on('widget-updated', function (event, widget) {
+            console.log('TEST 1');
             showCheckedLanguages();
             eventOpenAdvancedFormModal();
             eventCloseAdvancedFormModal();
@@ -14,6 +16,7 @@
 
         // Toggle(show/hide) hidden language elements(title, contactList)
         $(document).on('change', '.language_checkbox', function () {
+            console.log('TEST 2');
             var removeLanguage = !$(this).prop('checked');
             // Uncheck the language checkbox
             if (removeLanguage) {
@@ -22,7 +25,7 @@
                 mjShow($(this).parent().find('div.mj-modal-language-config')[0]);
                 // Add specific language
                 var languageListId = $(this).parent().find('.language-select-list').val();
-                if (languageListId === "0") {
+                if (languageListId === '0') {
                     $(this).parent().find('.language-select-list').css({'border': '1px solid red'});
                 }
             }
@@ -30,8 +33,9 @@
         });
 
         $(document).on('change', '.language-select-list', function (event) {
+            console.log('TEST 3');
             var languageListId = event.target.value;
-            if (languageListId === "0") {
+            if (languageListId === '0') {
                 // No contact list is selected
                 $(this).parent().find('.language-select-list').css({'border': '1px solid red'});
             } else {
@@ -53,10 +57,14 @@
 
             // ajax request to create the new property
             jQuery.ajax({
-                type: "post",
-                dataType: "json",
+                type: 'post',
+                dataType: 'json',
                 url: myAjax.ajaxurl,
-                data: {action: "mailjet_add_contact_property", propertyName: newPropertyName, propertyType: newPropertyType},
+                data: {
+                    action: 'mailjet_add_contact_property',
+                    propertyName: newPropertyName,
+                    propertyType: newPropertyType
+                },
                 success: function (response) {
                     if (response !== null && response[0] !== undefined && response[0].ID !== undefined) {
 
@@ -167,14 +175,14 @@
         });
 
         // Show/hide advnaced form link depends on Save button
-        $(document).on('change', $("input[name='savewidget']"), function () {
-            var isSaveButtonDisabled = $(this).is(":disabled");
+        $(document).on('change', $('input[name=\'savewidget\']'), function () {
+            var isSaveButtonDisabled = $(this).is(':disabled');
             if (isSaveButtonDisabled) {
-                $(".disabled-advanced-link").addClass('hidden_default');
-                $(".advanced-form-link-wrap").removeClass('hidden_default');
+                $('.disabled-advanced-link').addClass('hidden_default');
+                $('.advanced-form-link-wrap').removeClass('hidden_default');
             } else {
-                $(".disabled-advanced-link").removeClass('hidden_default');
-                $(".advanced-form-link-wrap").addClass('hidden_default');
+                $('.disabled-advanced-link').removeClass('hidden_default');
+                $('.advanced-form-link-wrap').addClass('hidden_default');
             }
         });
 
@@ -204,9 +212,9 @@
         function replaceLanguagePlaceholder(element, searchStr, replaceStr) {
             element.parent().parent().parent().find('.languageInput input').each(function (env) {
                 if (!$(this).val()) {
-                    var str = $(this).attr("placeholder");
+                    var str = $(this).attr('placeholder');
                     var res = str.replace(searchStr, replaceStr);
-                    $(this).attr("placeholder", res);
+                    $(this).attr('placeholder', res);
                 }
             });
         }
@@ -233,14 +241,14 @@
         function showCheckedLanguages() {
             $('.language_checkbox').each(function (index, value) {
                 if (value.checked === true) {
-					mjShow($(this).parent().find('div.mj-modal-language-config')[0]);
+                    mjShow($(this).parent().find('div.mj-modal-language-config')[0]);
                 }
             });
         }
 
         function eventOpenAdvancedFormModal() {
             const modalTriggers = document.querySelectorAll('.advanced-form-link');
-            modalTriggers.forEach(function(trigger) {
+            modalTriggers.forEach(function (trigger) {
                 trigger.addEventListener('click', function () {
                     const widgetId = this.getAttribute('data-target');
                     const modalWindow = document.getElementById('modal-' + widgetId);
@@ -251,9 +259,9 @@
 
         function eventCloseAdvancedFormModal() {
             const modals = document.querySelectorAll('.mj-modal');
-            modals.forEach(function(modal) {
+            modals.forEach(function (modal) {
                 const closeModalTriggers = modal.querySelectorAll('.mj-modal-header .close, .cancelMailjetAdvancedForm');
-                closeModalTriggers.forEach(function(trigger) {
+                closeModalTriggers.forEach(function (trigger) {
                     trigger.addEventListener('click', function () {
                         modal.classList.remove('open');
                     });
@@ -263,10 +271,10 @@
 
         function eventChangeAdvancedFormTab() {
             const tabsTriggersContainers = document.querySelectorAll('.mj-nav-tabs');
-            tabsTriggersContainers.forEach(function(tabsTriggersContainer) {
+            tabsTriggersContainers.forEach(function (tabsTriggersContainer) {
                 const modalId = '#modal-' + tabsTriggersContainer.getAttribute('data-target');
                 const tabsTriggers = tabsTriggersContainer.querySelectorAll('.mj-tab');
-                tabsTriggers.forEach(function(trigger) {
+                tabsTriggers.forEach(function (trigger) {
                     trigger.addEventListener('click', function (event) {
                         const currentActiveTrigger = document.querySelector(modalId + ' .mj-tab.active');
                         if (currentActiveTrigger !== null) {
