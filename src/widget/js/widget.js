@@ -187,9 +187,9 @@
         $(document).on('click', $('span.advanced-form-link'), function (event) {
             var dataAttr = event.target.getAttribute('data-target');
             if (dataAttr !== null && typeof dataAttr !== null) {
-                console.log('SDSSD')
-                $('#modal-' + dataAttr).removeClass('mj-hide');
+                $('#modal-' + dataAttr).slideToggle('slow');
             }
+            eventChangeAdvancedFormTab();
         });
 
         // Fires when property value is changed

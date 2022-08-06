@@ -138,12 +138,12 @@ _e('Advanced form customization', 'mailjet-for-wordpress');
 ?></span>
     </div>
 
-    <div id="modal-<?php echo $this->id; ?>" class="mj-modal mj-hide">
+    <div id="modal-<?php echo $this->id; ?>" style="display: none;">
         <div class="mj-modal-dialog" role="document">
             <div class="mj-pluginPage mj-modal-content">
                 <div class="mj-modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="mj-modal-title"><?php 
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+-->                    <h4 class="mj-modal-title"><?php
 _e('Customize your subscription form', 'mailjet-for-wordpress');
 ?></h4>
                 </div>

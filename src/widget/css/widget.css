@@ -296,8 +296,12 @@
 
 .mj-modal-dialog {
     position: relative;
-    width: 90%;
+    width: 100%;
     margin: auto;
+}
+
+.editor-styles-wrapper ul {
+    list-style: none!important;
 }
 
 @media (min-width: 782px) {
@@ -306,9 +310,9 @@
         width: calc(100% - 36px);
     }
 
-    .mj-modal-dialog {
+   /* .mj-modal-dialog {
         width: 600px;
-    }
+    }*/
 }
 
 @media (min-width: 960px) {
@@ -317,9 +321,9 @@
         width: calc(100% - 160px);
     }
 
-    .mj-modal-dialog {
+   /* .mj-modal-dialog {
         width: 800px;
-    }
+    }*/
 }
 
 .mj-modal-content{
@@ -331,6 +335,7 @@
     border-bottom: 1px solid #e5e5e5;
     background-color: #fcfcfc;
     padding: 15px;
+    text-align: center;
 }
 
 .mj-modal-header h4{
