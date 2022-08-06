@@ -196,6 +196,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 == Upgrade notice ==
+= 5.2.23 =
+* Fix issue with php8.1 and classes namespace
+
 = 5.2.21 =
 * Fix issue with guzzle namespace conflict
 
@@ -229,6 +232,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Removed Bootstrap dependency
 
 == Changelog ==
+= 5.2.23 =
+* Fix issue with php8.1 and classes namespace
+
 = 5.2.21 =
 * Fix issue with guzzle namespace conflict
 
