@@ -7,8 +7,9 @@ use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
 
 <!-- This file is used to markup the public-facing widget. -->
 <div class="mailjet_widget_front_container">
-    <?php 
-\extract($args);
+    <?php
+
+extract($args);
 $locale = Mailjeti18n::getLocale();
 // Check if selected locale checkbox is not set
 if (!(isset($instance[$locale], $instance[$locale]['language_checkbox']) && $instance[$locale]['language_checkbox'])) {
@@ -53,78 +54,80 @@ echo $locale;
             <input type="hidden" name="action" value="send_mailjet_subscription_form">
         </div>
         <?php 
-// Check for the additional properties from the admin advanced settings
-for ($i = 0; $i < 5; $i++) {
-    if (!isset($instance[$locale])) {
-        continue;
-    }
-    // Property id - '0' there is no selected property
-    $contactPropertyId = (int) $instance[$locale]['contactProperties' . $i];
-    // Skip if this property is not added in admin part
-    if (empty($contactPropertyId) || empty($this->propertyData[$contactPropertyId])) {
-        continue;
-    }
-    $propertyDataType = $this->propertyData[$contactPropertyId]['Datatype'];
-    // Mailjet property type
-    $labelValue = $instance[$locale][$language . 'Label' . $i];
-    $propertyType = (int) $instance[$locale]['propertyDataType' . $i];
-    // '0' - optional, '1' - mandatory, '2' - hidden
-    $isHidden = $propertyType === 2;
-    $isMandatory = $propertyType === 1;
-    $inputProperties = $this->getInputProperties($propertyDataType, $labelValue, $isHidden, $isMandatory);
-    if ('bool' === $inputProperties['type']) {
-        $required = isset($inputProperties['required']) ? $inputProperties['required'] : '';
+
+            for ($i = 0; $i < 5; $i++) {
+                if (!isset($instance[$locale])) {
+                    continue;
+                }
+                // Property id - '0' there is no selected property
+                $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
+
+                // Skip if this property is not added in admin part
+                if (empty($contactPropertyId) || empty($this->propertyData[$contactPropertyId])) {
+                    continue;
+                }
+
+                $propertyDataType = $this->propertyData[$contactPropertyId]['Datatype'];
+                // Mailjet property type
+                $labelValue = $instance[$locale][$language . 'Label' . $i];
+                $propertyType = (int)$instance[$locale]['propertyDataType' . $i];
+                // '0' - optional, '1' - mandatory, '2' - hidden
+                $isHidden = $propertyType === 2;
+                $isMandatory = $propertyType === 1;
+                $inputProperties = $this->getInputProperties($propertyDataType, $labelValue, $isHidden, $isMandatory);
+                if ('bool' === $inputProperties['type']) {
+                    $required = isset($inputProperties['required']) ? $inputProperties['required'] : '';
+                    ?>
+                    <div class="mailjet-widget-form-group">
+                        <input class="mj_form_property" type="checkbox" <?php
+                        echo $required;
+                        ?> name="properties[<?php
+                        echo $contactPropertyId;
+                        ?>]" id="mailjet_property_<?php
+                        echo $i;
+                        ?>"/>
+                        <label for="mailjet_property_<?php
+                        echo $i;
+                        ?>" class="mailjet-widget-label">
+                            <?php
+                            echo $inputProperties['placeholder'];
+                            ?>
+                        </label>
+                    </div>
+                    <?php
+                } else {
+                    $inputPropertiesString = '';
+                    foreach ($inputProperties as $propKey => $propValue) {
+                        $inputPropertiesString .= "{$propKey}=\"{$propValue}\"";
+                    }
+                    $additionalDivClass = 'date' === $inputProperties['type'] ? 'mailjet-widget-form-date' : '';
+                    ?>
+                    <div class="mailjet-widget-form-group <?php
+                    echo $additionalDivClass;
+                    ?>">
+                        <?php
+                        if ('date' === $inputProperties['type']) {
+                            ?>
+                            <label for="mailjet_property_<?php
+                            echo $i;
+                            ?>" class="mailjet-widget-label mj-widget-label-date">
+                                <?php
+                                echo $inputProperties['placeholder'];
+                                ?>
+                            </label>
+                            <?php
+                        }
+                        ?>
+                        <input class="mj_form_property" name="properties[<?php
+                        echo $contactPropertyId;
+                        ?>]" <?php
+                        echo $inputPropertiesString;
+                        ?>>
+                    </div>
+                    <?php
+                }
+            }
         ?>
-                <div class="mailjet-widget-form-group">
-                    <input class="mj_form_property" type="checkbox" <?php 
-        echo $required;
-        ?> name="properties[<?php 
-        echo $contactPropertyId;
-        ?>]" id="mailjet_property_<?php 
-        echo $i;
-        ?>" />
-                    <label for="mailjet_property_<?php 
-        echo $i;
-        ?>" class="mailjet-widget-label">
-                        <?php 
-        echo $inputProperties['placeholder'];
-        ?>
-                    </label>
-                </div>
-                <?php 
-    } else {
-        $inputPropertiesString = '';
-        foreach ($inputProperties as $propKey => $propValue) {
-            $inputPropertiesString .= "{$propKey}=\"{$propValue}\"";
-        }
-        $additionalDivClass = 'date' === $inputProperties['type'] ? 'mailjet-widget-form-date' : '';
-        ?>
-                <div class="mailjet-widget-form-group <?php 
-        echo $additionalDivClass;
-        ?>">
-                    <?php 
-        if ('date' === $inputProperties['type']) {
-            ?>
-                    <label for="mailjet_property_<?php 
-            echo $i;
-            ?>" class="mailjet-widget-label mj-widget-label-date">
-                        <?php 
-            echo $inputProperties['placeholder'];
-            ?>
-                    </label>
-                    <?php 
-        }
-        ?>
-                    <input class="mj_form_property" name="properties[<?php 
-        echo $contactPropertyId;
-        ?>]" <?php 
-        echo $inputPropertiesString;
-        ?>>
-                </div>
-                <?php 
-    }
-}
-?>
         <input type="hidden" name="widget_id" value="<?php 
 echo $widget_id;
 ?>">

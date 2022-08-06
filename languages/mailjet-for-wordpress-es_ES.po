@@ -1579,13 +1579,13 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "46828"
+msgstr "46827"
 
 msgid "propertyDataType0"
 msgstr "0"
 
 msgid "EnglishLabel0"
-msgstr ""
+msgstr "First Name"
 
 msgid "FrenchLabel0"
 msgstr ""

@@ -1119,13 +1119,13 @@ msgid "list"
 msgstr "21908"
 
 msgid "language_mandatory_email"
-msgstr ""
+msgstr "test@gmail.com"
 
 msgid "language_mandatory_button"
 msgstr ""
 
 msgid "confirmation_email_message_input"
-msgstr ""
+msgstr "test1"
 
 msgid "subscription_confirmed_message_input"
 msgstr ""
@@ -1137,34 +1137,34 @@ msgid "already_subscribed_message_input"
 msgstr ""
 
 msgid "invalid_data_format_message_input"
-msgstr ""
+msgstr "sss"
 
 msgid "generic_technical_error_message_input"
-msgstr ""
+msgstr "ss"
 
 msgid "email_subject"
-msgstr ""
+msgstr "my subject"
 
 msgid "email_content_title"
-msgstr ""
+msgstr "please, please"
 
 msgid "email_content_main_text"
-msgstr ""
+msgstr "main tet"
 
 msgid "email_content_confirm_button"
-msgstr ""
+msgstr "hello moto"
 
 msgid "email_content_after_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr "46828"
+msgstr "46827"
 
 msgid "propertyDataType0"
 msgstr "0"
 
 msgid "EnglishLabel0"
-msgstr ""
+msgstr "First Name"
 
 msgid "FrenchLabel0"
 msgstr ""

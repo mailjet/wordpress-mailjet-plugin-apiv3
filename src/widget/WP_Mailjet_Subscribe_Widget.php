@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Widget;
 
+use Exception;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
@@ -35,17 +36,17 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         parent::__construct($this->get_widget_slug(), __('Mailjet Subscription Widget', 'mailjet-for-wordpress'), $widget_options);
         // Register site styles and scripts
         add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
-        if (is_active_widget(\false, \false, $this->id_base)) {
-            add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
-            add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
-        }
+
         // Refreshing the widget's cached output with each new post
         add_action('save_post', array($this, 'flush_widget_cache'));
         add_action('deleted_post', array($this, 'flush_widget_cache'));
         add_action('switch_theme', array($this, 'flush_widget_cache'));
         add_action('wp_ajax_mailjet_add_contact_property', array($this, 'wp_ajax_mailjet_add_contact_property'));
+        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
+        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
         add_action('wp_ajax_send_mailjet_subscription_form', array($this, 'sendSubscriptionEmail'));
         add_action('wp_ajax_nopriv_send_mailjet_subscription_form', array($this, 'sendSubscriptionEmail'));
+        $this->propertyData = get_site_transient('propertyData');
         // Subscribe user
         $this->activateConfirmSubscriptionUrl();
     }
@@ -55,9 +56,9 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      *
      * @since    5.0.0
      *
-     * @return    Plugin slug variable.
+     * @return string
      */
-    public function get_widget_slug()
+    public function get_widget_slug(): string
     {
         return $this->widget_slug;
     }
@@ -68,6 +69,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
      */
     public function sendSubscriptionEmail()
     {
+        file_put_contents(__DIR__ . '/test.txt', print_r($_POST, true));
         $subscriptionOptionsSettings = $this->getSubscriptionOptionsSettings();
         $instances = get_option(self::WIDGETS_OPTIONS_NAME);
         $locale = Mailjeti18n::getLocale();
@@ -594,7 +596,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             try {
                 $this->mailjetContactProperties = MailjetApi::getContactProperties();
             } catch (Exception $ex) {
-                return \false;
+                return false;
             }
         }
         return $this->mailjetContactProperties;

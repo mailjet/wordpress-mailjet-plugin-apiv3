@@ -2,6 +2,8 @@
     'use strict';
     $(function () {
 
+        var mjInitTabs = false;
+
         $(document).on('widget-updated', function (event, widget) {
             showCheckedLanguages();
             eventOpenAdvancedFormModal();
@@ -30,7 +32,6 @@
         });
 
         $(document).on('change', '.language-select-list', function (event) {
-            console.log('TEST 3');
             var languageListId = event.target.value;
             if (languageListId === '0') {
                 // No contact list is selected
@@ -189,7 +190,9 @@
             if (dataAttr !== null && typeof dataAttr !== null) {
                 $('#modal-' + dataAttr).slideToggle('slow');
             }
-            eventChangeAdvancedFormTab();
+            if (!mjInitTabs) {
+                eventChangeAdvancedFormTab();
+            }
         });
 
         // Fires when property value is changed
@@ -277,6 +280,9 @@
 
         function eventChangeAdvancedFormTab() {
             const tabsTriggersContainers = document.querySelectorAll('.mj-nav-tabs');
+            if (typeof tabsTriggersContainers !== 'undefined' && tabsTriggersContainers.length > 0) {
+                mjInitTabs = true;
+            }
             tabsTriggersContainers.forEach(function (tabsTriggersContainer) {
                 const modalId = '#modal-' + tabsTriggersContainer.getAttribute('data-target');
                 const tabsTriggers = tabsTriggersContainer.querySelectorAll('.mj-tab');
