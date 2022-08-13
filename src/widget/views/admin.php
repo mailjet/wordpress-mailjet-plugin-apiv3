@@ -784,14 +784,14 @@ foreach ($activeLanguages as $language => $locale) {
                     </div>
                 </div>
 
-                <div class="mj-modal-footer">
-                    <button type="button" class="mj-btnSecondary cancelMailjetAdvancedForm"><?php 
+                <!--<div class="mj-modal-footer">
+                    <button type="button" class="mj-btnSecondary cancelMailjetAdvancedForm"><?php /*
 _e('Cancel', 'mailjet-for-wordpress');
-?></button>
-                    <button type="button" class="mj-btn btnPrimary saveMailjetAdvancedForm"><?php 
+*/?></button>
+                    <button type="button" class="mj-btn btnPrimary saveMailjetAdvancedForm"><?php /*
 _e('Save', 'mailjet-for-wordpress');
-?></button>
-                </div>
+*/?></button>
+                </div>-->
             </div>
         </div>
     </div>

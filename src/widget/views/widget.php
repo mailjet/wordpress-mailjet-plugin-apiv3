@@ -53,15 +53,13 @@ echo $locale;
 ?>">
             <input type="hidden" name="action" value="send_mailjet_subscription_form">
         </div>
-        <?php 
-
+        <?php
             for ($i = 0; $i < 5; $i++) {
                 if (!isset($instance[$locale])) {
                     continue;
                 }
                 // Property id - '0' there is no selected property
                 $contactPropertyId = (int)$instance[$locale]['contactProperties' . $i];
-
                 // Skip if this property is not added in admin part
                 if (empty($contactPropertyId) || empty($this->propertyData[$contactPropertyId])) {
                     continue;

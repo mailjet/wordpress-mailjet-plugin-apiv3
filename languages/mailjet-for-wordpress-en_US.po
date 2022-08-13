@@ -1113,19 +1113,19 @@ msgid "language_checkbox"
 msgstr "1"
 
 msgid "title"
-msgstr "My custom form22"
+msgstr "My custom form"
 
 msgid "list"
-msgstr "21908"
+msgstr "21933"
 
 msgid "language_mandatory_email"
-msgstr "test@gmail.com"
+msgstr "email here 1"
 
 msgid "language_mandatory_button"
-msgstr ""
+msgstr "Send"
 
 msgid "confirmation_email_message_input"
-msgstr "test1"
+msgstr ""
 
 msgid "subscription_confirmed_message_input"
 msgstr ""
@@ -1137,22 +1137,22 @@ msgid "already_subscribed_message_input"
 msgstr ""
 
 msgid "invalid_data_format_message_input"
-msgstr "sss"
+msgstr ""
 
 msgid "generic_technical_error_message_input"
-msgstr "ss"
+msgstr ""
 
 msgid "email_subject"
-msgstr "my subject"
+msgstr ""
 
 msgid "email_content_title"
-msgstr "please, please"
+msgstr ""
 
 msgid "email_content_main_text"
-msgstr "main tet"
+msgstr ""
 
 msgid "email_content_confirm_button"
-msgstr "hello moto"
+msgstr ""
 
 msgid "email_content_after_button"
 msgstr ""
@@ -1161,10 +1161,10 @@ msgid "contactProperties0"
 msgstr "46827"
 
 msgid "propertyDataType0"
-msgstr "0"
+msgstr "1"
 
 msgid "EnglishLabel0"
-msgstr "First Name"
+msgstr "Set your name"
 
 msgid "FrenchLabel0"
 msgstr ""
@@ -1179,13 +1179,13 @@ msgid "ItalianLabel0"
 msgstr ""
 
 msgid "contactProperties1"
-msgstr ""
+msgstr "67144"
 
 msgid "propertyDataType1"
 msgstr "0"
 
 msgid "EnglishLabel1"
-msgstr ""
+msgstr "Custom prop"
 
 msgid "FrenchLabel1"
 msgstr ""
@@ -1200,13 +1200,13 @@ msgid "ItalianLabel1"
 msgstr ""
 
 msgid "contactProperties2"
-msgstr ""
+msgstr "46829"
 
 msgid "propertyDataType2"
-msgstr "0"
+msgstr "1"
 
 msgid "EnglishLabel2"
-msgstr ""
+msgstr "COUNTRY"
 
 msgid "FrenchLabel2"
 msgstr ""

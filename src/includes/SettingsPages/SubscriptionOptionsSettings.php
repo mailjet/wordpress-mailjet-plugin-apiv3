@@ -358,7 +358,7 @@ class SubscriptionOptionsSettings
             $params['widget_id'] = $widgetId;
         }
         $params = http_build_query($params);
-        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(dirname(dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
+        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(__FILE__, 3) . '/templates/confirm-subscription-email.php');
         $message = file_get_contents($subscriptionTemplate);
         $permalinkStructure = get_option('permalink_structure');
         if (!$thankYouPageId) {
@@ -378,7 +378,7 @@ class SubscriptionOptionsSettings
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
         foreach ($emailParams as $key => $value) {
-            $message = \str_replace($key, $value, $message);
+            $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         return wp_mail($subscription_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
