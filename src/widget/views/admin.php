@@ -138,14 +138,12 @@ _e('Advanced form customization', 'mailjet-for-wordpress');
 ?></span>
     </div>
 
-    <div id="modal-<?php 
-echo $this->id;
-?>" class="mj-modal">
+    <div id="modal-<?php echo $this->id; ?>" style="display: none;">
         <div class="mj-modal-dialog" role="document">
             <div class="mj-pluginPage mj-modal-content">
                 <div class="mj-modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="mj-modal-title"><?php 
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+-->                    <h4 class="mj-modal-title"><?php
 _e('Customize your subscription form', 'mailjet-for-wordpress');
 ?></h4>
                 </div>
@@ -786,14 +784,14 @@ foreach ($activeLanguages as $language => $locale) {
                     </div>
                 </div>
 
-                <div class="mj-modal-footer">
-                    <button type="button" class="mj-btnSecondary cancelMailjetAdvancedForm"><?php 
+                <!--<div class="mj-modal-footer">
+                    <button type="button" class="mj-btnSecondary cancelMailjetAdvancedForm"><?php /*
 _e('Cancel', 'mailjet-for-wordpress');
-?></button>
-                    <button type="button" class="mj-btn btnPrimary saveMailjetAdvancedForm"><?php 
+*/?></button>
+                    <button type="button" class="mj-btn btnPrimary saveMailjetAdvancedForm"><?php /*
 _e('Save', 'mailjet-for-wordpress');
-?></button>
-                </div>
+*/?></button>
+                </div>-->
             </div>
         </div>
     </div>

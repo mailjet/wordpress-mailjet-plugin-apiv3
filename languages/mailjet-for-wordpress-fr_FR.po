@@ -1593,13 +1593,13 @@ msgid "email_content_after_button"
 msgstr ""
 
 msgid "contactProperties0"
-msgstr ""
+msgstr "46827"
 
 msgid "propertyDataType0"
-msgstr "0"
+msgstr "1"
 
 msgid "EnglishLabel0"
-msgstr ""
+msgstr "Set your name"
 
 msgid "FrenchLabel0"
 msgstr ""
@@ -1614,13 +1614,13 @@ msgid "ItalianLabel0"
 msgstr ""
 
 msgid "contactProperties1"
-msgstr ""
+msgstr "67144"
 
 msgid "propertyDataType1"
 msgstr "0"
 
 msgid "EnglishLabel1"
-msgstr ""
+msgstr "Custom prop"
 
 msgid "FrenchLabel1"
 msgstr ""
@@ -1635,13 +1635,13 @@ msgid "ItalianLabel1"
 msgstr ""
 
 msgid "contactProperties2"
-msgstr ""
+msgstr "46829"
 
 msgid "propertyDataType2"
-msgstr "0"
+msgstr "1"
 
 msgid "EnglishLabel2"
-msgstr ""
+msgstr "COUNTRY"
 
 msgid "FrenchLabel2"
 msgstr ""

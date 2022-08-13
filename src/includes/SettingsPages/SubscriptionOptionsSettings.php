@@ -320,14 +320,22 @@ class SubscriptionOptionsSettings
                 $contactProperties[WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE] = $user->user_registered;
             }
             // Add the user to a contact list
-            if (\false === self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action, $contactProperties)) {
-                return \false;
+            if (false === self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action, $contactProperties)) {
+                return false;
             } else {
-                return \true;
+                return true;
             }
         }
     }
-    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale, $widgetId = \false)
+
+    /**
+     * @param $subscription_email
+     * @param $instance
+     * @param $subscription_locale
+     * @param $widgetId
+     * @return bool|mixed|void
+     */
+    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale, $widgetId = false)
     {
         $homeUrl = get_home_url();
         $language = Mailjeti18n::getCurrentUserLanguage();
@@ -340,9 +348,8 @@ class SubscriptionOptionsSettings
         $email_subject = !empty($instance[$locale]['email_subject']) ? apply_filters('widget_email_subject', $instance[$locale]['email_subject']) : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
         $email_title = !empty($instance[$locale]['email_content_title']) ? apply_filters('widget_email_content_title', $instance[$locale]['email_content_title']) : Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription');
         $email_button_value = !empty($instance[$locale]['email_content_confirm_button']) ? apply_filters('widget_email_content_confirm_button', $instance[$locale]['email_content_confirm_button']) : Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list');
-        $wpUrl = \sprintf('<a href="%s" target="_blank">%s</a>', $homeUrl, $homeUrl);
-        $test = \sprintf(Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), $wpUrl);
-        //        $test = sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl);
+        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', $homeUrl, $homeUrl);
+        $test = sprintf(Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), $wpUrl);
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', \sprintf($instance[$locale]['email_content_main_text'], get_option('blogname'))) : $test;
         $email_content_after_button = !empty($instance[$locale]['email_content_after_button']) ? $instance[$locale]['email_content_after_button'] : Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.');
         $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
@@ -350,9 +357,9 @@ class SubscriptionOptionsSettings
         if ($widgetId) {
             $params['widget_id'] = $widgetId;
         }
-        $params = \http_build_query($params);
-        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', \dirname(\dirname(\dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
-        $message = \file_get_contents($subscriptionTemplate);
+        $params = http_build_query($params);
+        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(__FILE__, 3) . '/templates/confirm-subscription-email.php');
+        $message = file_get_contents($subscriptionTemplate);
         $permalinkStructure = get_option('permalink_structure');
         if (!$thankYouPageId) {
             $qm = '?';
@@ -363,7 +370,7 @@ class SubscriptionOptionsSettings
             '__EMAIL_TITLE__' => $email_title,
             '__EMAIL_HEADER__' => $email_main_text,
             '__WP_URL__' => $homeUrl,
-            '__CONFIRM_URL__' => $thankYouURI . $qm . $params . '&mj_sub_token=' . \sha1($params . MailjetSettings::getCryptoHash()),
+            '__CONFIRM_URL__' => $thankYouURI . $qm . $params . '&mj_sub_token=' . sha1($params . MailjetSettings::getCryptoHash()),
             '__CLICK_HERE__' => $email_button_value,
             '__FROM_NAME__' => $homeUrl,
             //get_option('blogname'),
@@ -371,12 +378,10 @@ class SubscriptionOptionsSettings
         );
         $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
         foreach ($emailParams as $key => $value) {
-            $message = \str_replace($key, $value, $message);
+            $message = str_replace($key, $value, $message);
         }
         add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
         return wp_mail($subscription_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
-        //        echo '<p class="success">' . __('Subscription confirmation email sent. Please check your inbox and confirm the subscription.', 'mailjet-for-wordpress') . '</p>';
-        //        die;
     }
     public function getContactListsMenu()
     {

@@ -1110,19 +1110,19 @@ msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "My custom form"
 
 msgid "list"
-msgstr "0"
+msgstr "21933"
 
 msgid "language_mandatory_email"
-msgstr ""
+msgstr "email here 1"
 
 msgid "language_mandatory_button"
-msgstr ""
+msgstr "Send"
 
 msgid "confirmation_email_message_input"
 msgstr ""
@@ -1161,10 +1161,10 @@ msgid "contactProperties0"
 msgstr "46827"
 
 msgid "propertyDataType0"
-msgstr "0"
+msgstr "1"
 
 msgid "EnglishLabel0"
-msgstr ""
+msgstr "Set your name"
 
 msgid "FrenchLabel0"
 msgstr ""
@@ -1179,13 +1179,13 @@ msgid "ItalianLabel0"
 msgstr ""
 
 msgid "contactProperties1"
-msgstr ""
+msgstr "67144"
 
 msgid "propertyDataType1"
 msgstr "0"
 
 msgid "EnglishLabel1"
-msgstr ""
+msgstr "Custom prop"
 
 msgid "FrenchLabel1"
 msgstr ""
@@ -1200,13 +1200,13 @@ msgid "ItalianLabel1"
 msgstr ""
 
 msgid "contactProperties2"
-msgstr ""
+msgstr "46829"
 
 msgid "propertyDataType2"
-msgstr "0"
+msgstr "1"
 
 msgid "EnglishLabel2"
-msgstr ""
+msgstr "COUNTRY"
 
 msgid "FrenchLabel2"
 msgstr ""
