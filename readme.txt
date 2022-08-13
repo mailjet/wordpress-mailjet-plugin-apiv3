@@ -196,6 +196,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 == Upgrade notice ==
+= 5.2.25 =
+* Removed var_dump from the code because off error
+
 = 5.2.24 =
 * Fix bug with widget for WP 6+ version
 
@@ -235,6 +238,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 * Removed Bootstrap dependency
 
 == Changelog ==
+= 5.2.25 =
+* Removed var_dump from the code because off error
+
 = 5.2.24 =
 * Fix bug with widget for WP 6+ version
 
