@@ -3,7 +3,7 @@
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
-Tested up to: 6.0.1
+Tested up to: 6.1
 Stable tag: 5.2.21
 Requires PHP: 5.6
 License: GPLv2 or later
