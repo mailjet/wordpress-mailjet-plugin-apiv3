@@ -35,7 +35,7 @@ wp_print_styles();
             <div style="display: table-cell; vertical-align: middle;">
                 <div class="mj-confirmation-page-title paint-area paint-area--text" style="font-family:Ubuntu, Helvetica; display: inline-block; text-align: center; font-size: 20px; color: #333333;">
                     <?php 
-echo $newsletterRegistration;
+echo esc_html($newsletterRegistration);
 ?>
                 </div>
             </div>
@@ -47,7 +47,7 @@ echo $newsletterRegistration;
             <div style="display: table-cell; vertical-align: middle;">
                 <div class="mj-confirmation-page-text paint-area paint-area--text" style="color: #aab6bd; font-family: Ubuntu, Helvetica; font-size: 22px; display: inline-block;">
                     <b class="medium-b"><?php 
-echo $congratsSubscribed;
+echo esc_html($congratsSubscribed);
 ?></b>
                 </div>
             </div>
