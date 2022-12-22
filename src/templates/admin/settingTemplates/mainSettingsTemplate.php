@@ -49,7 +49,7 @@ do_settings_sections('mailjet_subscription_options_page');
 $saveButton = __('Save', 'mailjet-for-wordpress');
 ?>
 						<button type="submit" id="subscriptionOptionsSubmit" onclick="sanitizeInput()" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php 
-echo $saveButton;
+echo esc_textarea($saveButton);
 ?></button>
 						<!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?php 
 echo __('Cancel', 'mailjet-for-wordpress');

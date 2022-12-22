@@ -80,8 +80,8 @@ class MailjetSettings
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
         $this->addMailjetActions();
         $this->addSubscriptionConfirmations();
-        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
-        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
+        $currentPage = !empty($_REQUEST['page']) ? sanitize_text_field($_REQUEST['page']) : null;
+        $fromPage = !empty($_REQUEST['from']) ? sanitize_text_field($_REQUEST['from']) : null;
         if (\in_array($currentPage, array('mailjet_allsetup_page', 'mailjet_dashboard_page', 'mailjet_user_access_page', 'mailjet_integrations_page', 'mailjet_subscription_options_page', 'mailjet_sending_settings_page', 'mailjet_connect_account_page', 'mailjet_initial_contact_lists_page', 'mailjet_settings_page'))) {
             $apiCredentialsOk = get_option('api_credentials_ok');
             if (!($fromPage == 'plugins') && !empty($apiCredentialsOk) && '1' != $apiCredentialsOk) {
@@ -156,7 +156,7 @@ class MailjetSettings
         }
         // Add a Link to Mailjet settings page next to the activate/deactivate links in WP Plugins page
         add_filter('plugin_action_links', array($this, 'mailjet_settings_link'), 10, 2);
-        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
+        $currentPage = !empty($_REQUEST['page']) ? sanitize_text_field($_REQUEST['page']) : null;
         if (\in_array($currentPage, array('mailjet_initial_contact_lists_page', 'mailjet_sending_settings_page', 'mailjet_subscription_options_page'))) {
             if (!MailjetApi::isValidAPICredentials()) {
                 add_action('admin_notices', array($this, 'apiCredentialsInvalid'));

@@ -8,10 +8,10 @@ $btnLabel = get_query_var('btnLabel');
 ?>
 <div class="mj-front-container">
         <span id="mj-subscription-text"><?php 
-echo $text;
+echo esc_textarea($text);
 ?></span>
         <button class="mj-subscribe-btn" data-order="<?php 
-echo $order;
+echo esc_textarea($order);
 ?>" onclick="subscribeMe(this)"><?php 
 _e($btnLabel, 'mailjet-for-wordpress');
 ?></button>

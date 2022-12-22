@@ -32,7 +32,7 @@ $buttonLabel = !empty($instance[$locale]['language_mandatory_button']) ? apply_f
     <div id="mailjet-widget-title-wrap">
             <?php 
 do_action('before_title_widget_mailjet');
-echo $before_title . $title . $after_title;
+echo $before_title . esc_html($title) . $after_title;
 do_action('after_title_widget_mailjet');
 ?>
     </div>
@@ -40,16 +40,16 @@ do_action('after_title_widget_mailjet');
 
     <!--Widget form-->
     <form method="post" action="" id="mailjetSubscriptionForm" name="<?php 
-echo $widget_id;
+echo esc_html($widget_id);
 ?>">
 
         <!--Subscription email input(mandatory)-->
         <div class="mailjet-widget-form-group">
             <input type="email" name="subscription_email" id="mailjet_widget_email" required="required" placeholder="* <?php 
-echo $emailLabel;
+echo esc_html($emailLabel);
 ?>">
             <input type="hidden" name="subscription_locale" id="mailjet_widget_locale" value="<?php 
-echo $locale;
+echo esc_html($locale);
 ?>">
             <input type="hidden" name="action" value="send_mailjet_subscription_form">
         </div>
@@ -78,17 +78,17 @@ echo $locale;
                     ?>
                     <div class="mailjet-widget-form-group">
                         <input class="mj_form_property" type="checkbox" <?php
-                        echo $required;
+                        echo esc_html($required);
                         ?> name="properties[<?php
-                        echo $contactPropertyId;
+                        echo esc_html($contactPropertyId);
                         ?>]" id="mailjet_property_<?php
-                        echo $i;
+                        echo esc_html($i);
                         ?>"/>
                         <label for="mailjet_property_<?php
-                        echo $i;
+                        echo esc_html($i);
                         ?>" class="mailjet-widget-label">
                             <?php
-                            echo $inputProperties['placeholder'];
+                            echo esc_html($inputProperties['placeholder']);
                             ?>
                         </label>
                     </div>
@@ -101,13 +101,13 @@ echo $locale;
                     $additionalDivClass = 'date' === $inputProperties['type'] ? 'mailjet-widget-form-date' : '';
                     ?>
                     <div class="mailjet-widget-form-group <?php
-                    echo $additionalDivClass;
+                    echo esc_html($additionalDivClass);
                     ?>">
                         <?php
                         if ('date' === $inputProperties['type']) {
                             ?>
                             <label for="mailjet_property_<?php
-                            echo $i;
+                            echo esc_html($i);
                             ?>" class="mailjet-widget-label mj-widget-label-date">
                                 <?php
                                 echo $inputProperties['placeholder'];
@@ -117,9 +117,9 @@ echo $locale;
                         }
                         ?>
                         <input class="mj_form_property" name="properties[<?php
-                        echo $contactPropertyId;
+                        echo esc_html($contactPropertyId);
                         ?>]" <?php
-                        echo $inputPropertiesString;
+                        echo esc_html($inputPropertiesString);
                         ?>>
                     </div>
                     <?php
@@ -127,10 +127,10 @@ echo $locale;
             }
         ?>
         <input type="hidden" name="widget_id" value="<?php 
-echo $widget_id;
+echo esc_html($widget_id);
 ?>">
         <input type="submit" value="<?php 
-echo $buttonLabel;
+echo esc_html($buttonLabel);
 ?>">
     </form>
     <span class="mailjet_widget_form_message"></span>

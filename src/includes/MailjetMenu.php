@@ -119,7 +119,7 @@ class MailjetMenu
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(MailjetIframe::PAGE_CAMPAIGNS);
             echo '<div id="initialSettingsHead">
-                    <img src="' . plugin_dir_url(\dirname(\dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
+                    <img src="' . plugin_dir_url(dirname(__FILE__, 2)) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
@@ -143,7 +143,7 @@ class MailjetMenu
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(MailjetIframe::PAGE_STATS);
             echo '<div id="initialSettingsHead">
-                    <img src="' . plugin_dir_url(\dirname(\dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
+                    <img src="' . plugin_dir_url(dirname(__FILE__, 2)) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
@@ -166,7 +166,7 @@ class MailjetMenu
             $mailjetIframe = $this->getMailjetIframe();
             $mailjetIframe->setInitialPage(MailjetIframe::PAGE_CONTACTS);
             echo '<div id="initialSettingsHead">
-                    <img src="' . plugin_dir_url(\dirname(\dirname(__FILE__))) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
+                    <img src="' . plugin_dir_url(dirname(__FILE__, 2)) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
             echo $mailjetIframe->getHtml();
