@@ -69,7 +69,7 @@ foreach ($languages as $language => $locale) {
                 </p>
                 <p>
                     <label class="language-title-label" for="<?php 
-    echo esc_attr($this->get_field_id($locale . '[list]')_;
+    echo esc_attr($this->get_field_id($locale . '[list]'));
     ?>"><?php 
     _e('Add email addresses to:', 'mailjet-for-wordpress');
     ?></label>
