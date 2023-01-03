@@ -51,14 +51,14 @@ class ConnectAccountSettings
         _e('<b>Api Key</b>', 'mailjet-for-wordpress');
         ?></label>
             <span style="font-size: 14px;"><?php 
-        echo $mailjetApikey;
+        echo esc_attr($mailjetApikey);
         ?></span>
 
             <label class="mj-label" for="mailjet_apisecret" style="margin-top:16px!important;"><?php 
         _e('<b>Secret Key</b>', 'mailjet-for-wordpress');
         ?></label>
             <span class=""><?php 
-        echo $mailjetApiSecret;
+        echo esc_attr($mailjetApiSecret);
         ?></span>
         </fieldset>
         <?php 
@@ -94,16 +94,13 @@ class ConnectAccountSettings
             // Validate Mailjet API credentials
             $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (\false == $isValidAPICredentials) {
-                //                ailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             } else {
-                //            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
                 // Update From Email and Name
                 add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));
                 add_filter('wp_mail_from_name', array(new MailjetMail(), 'wp_sender_name'));
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet-for-wordpress'), 'updated');
-                //            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
         // show error/update messages

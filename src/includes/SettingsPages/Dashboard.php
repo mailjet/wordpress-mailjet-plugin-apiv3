@@ -96,7 +96,7 @@ class Dashboard
             _e('Order notification emails', 'mailjet-for-wordpress');
             ?></h3>
                                 <img alt="asd" class="mj-woo-logo-small" src="<?php 
-            echo $iconDir;
+            echo esc_attr($iconDir);
             ?>"/>
                             </div>
                             <p class="blockText"><?php 
@@ -147,7 +147,7 @@ class Dashboard
             _e('Abandoned cart email', 'mailjet-for-wordpress');
             ?></h3>
                                 <img alt="asd" class="mj-woo-logo-small" src="<?php 
-            echo $iconDir;
+            echo esc_attr($iconDir);
             ?>"/>
                             </div>
                             <p class="blockText"><?php 

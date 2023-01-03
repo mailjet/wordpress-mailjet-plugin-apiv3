@@ -67,23 +67,16 @@ class InitialSettings
         _e('<b>Api Key</b>', 'mailjet-for-wordpress');
         ?></label>
             <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php 
-        echo $mailjetApikey;
+        echo esc_attr($mailjetApikey);
         ?>" class="mailjet_apikey" required="required">
             <label class="mj-label" for="mailjet_apisecret"><?php 
         _e('<b>Secret Key</b>', 'mailjet-for-wordpress');
         ?></label>
             <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php 
-        echo $mailjetApiSecret;
+        echo esc_attr($mailjetApiSecret);
         ?>" class="mailjet_apisecret" required="required">
         </fieldset>
 
-        <!--        <br />-->
-        <!--        <label for="mailjet_activate_logger">-->
-        <!--            <input name="mailjet_activate_logger" type="checkbox" id="mailjet_activate_logger" value="1" --><?//=($mailjetActivateLogger == 1 ? ' checked="checked"' : '') ?><!-- >-->
-        <!--            --><?php 
-        //echo __('Also activate Mailjet plugin logger, to track your expirience', 'mailjet-for-wordpress');
-        ?><!--</label>-->
-        <!--        <br />-->
         <?php 
     }
     /**
@@ -92,7 +85,7 @@ class InitialSettings
      */
     public function mailjet_initial_settings_page_html()
     {
-        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
+        $fromPage = !empty($_REQUEST['from']) ? sanitize_text_field($_REQUEST['from']) : null;
         // check user capabilities
         if (!current_user_can('read')) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \\`manage_options\\` permission ]');
@@ -136,13 +129,12 @@ class InitialSettings
                     // Update the flag for passed API credentials check
                     update_option('api_credentials_ok', 1);
                     // Redirect to the next page
-                    MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page' . (!empty($_REQUEST['from']) ? '&from=' . $_REQUEST['from'] : '')));
+                    MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page' . (!empty($_REQUEST['from']) ? '&from=' . sanitize_text_field($_REQUEST['from']) : '')));
                 }
-                //MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings saved successfully ]');
             }
         }
         $api_credentials_ok = get_option('api_credentials_ok');
-        if (!($fromPage == 'plugins') && (!empty($api_credentials_ok) && '1' == $api_credentials_ok)) {
+        if (!($fromPage === 'plugins') && (!empty($api_credentials_ok) && '1' == $api_credentials_ok)) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
         }
         //// show error/update messages
@@ -150,7 +142,7 @@ class InitialSettings
         ?>
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img src="<?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+        echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
         ?>" alt="Mailjet Logo" /></div>
             <div class="mainContainer">
 
@@ -178,14 +170,9 @@ class InitialSettings
         do_settings_sections('mailjet_initial_settings_page');
         // output save settings button
         $connectYourAccount = __('Connect your account', 'mailjet-for-wordpress');
-        /* No Next btn on Initial API settings page - we redirect automatically
-            if (MailjetApi::isValidAPICredentials() && get_option('settings_step') == 'initial_step') { ?>
-            <input name="nextBtn" class="nextBtn" type="button" id="nextBtn" style="width: 311px;" onclick="location.href = 'admin.php?page=mailjet_initial_contact_lists_page<?php echo !empty($_REQUEST['from']) ? '&from='.$_REQUEST['from'] : null; ?>'" value="<?=__('Next', 'mailjet-for-wordpress')?>">
-            <?php }
-           */
         ?>
         <button type="submit" id="initialSettingsSubmit" class="mj-btn btnPrimary" name="submit"><?php 
-        echo $connectYourAccount;
+        echo esc_attr($connectYourAccount);
         ?></button>
                             <p class="dont_have_account">
                             <?php 

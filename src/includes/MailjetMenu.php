@@ -122,7 +122,15 @@ class MailjetMenu
                     <img src="' . plugin_dir_url(dirname(__FILE__, 2)) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
-            echo $mailjetIframe->getHtml();
+            echo wp_kses($mailjetIframe->getHtml(), [
+                'iframe' => [
+                    'src'             => true,
+                    'height'          => true,
+                    'width'           => true,
+                    'frameborder'     => true,
+                    'allowfullscreen' => true,
+                ]
+            ]);
             echo '</div>';
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
@@ -133,11 +141,9 @@ class MailjetMenu
         }
         MailjetAdminDisplay::renderBottomLinks();
         echo '</div>';
-        //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Campaigns page displayed ]');
     }
     public function show_stats_page()
     {
-        //    MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page requested ]');
         echo '<div class="mj-pluginPage iframePage">';
         try {
             $mailjetIframe = $this->getMailjetIframe();
@@ -146,7 +152,15 @@ class MailjetMenu
                     <img src="' . plugin_dir_url(dirname(__FILE__, 2)) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
-            echo $mailjetIframe->getHtml();
+            echo wp_kses($mailjetIframe->getHtml(), [
+                'iframe' => [
+                    'src'             => true,
+                    'height'          => true,
+                    'width'           => true,
+                    'frameborder'     => true,
+                    'allowfullscreen' => true,
+                ]
+            ]);
             echo '</div>';
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
@@ -157,7 +171,6 @@ class MailjetMenu
         }
         MailjetAdminDisplay::renderBottomLinks();
         echo '</div>';
-        //  MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Iframe Stats page displayed ]');
     }
     public function show_contacts_page()
     {
@@ -169,7 +182,15 @@ class MailjetMenu
                     <img src="' . plugin_dir_url(dirname(__FILE__, 2)) . 'src/admin/images/LogoMJ_White_RVB.svg" alt="Mailjet Logo" />
                 </div>
                 <div class="mainContainer">';
-            echo $mailjetIframe->getHtml();
+            echo wp_kses($mailjetIframe->getHtml(), [
+                'iframe' => [
+                    'src'             => true,
+                    'height'          => true,
+                    'width'           => true,
+                    'frameborder'     => true,
+                    'allowfullscreen' => true,
+                ]
+            ]);
             echo '</div>';
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
@@ -199,7 +220,7 @@ class MailjetMenu
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
         }
-        switch ($_GET['backto']) {
+        switch (sanitize_text_field($_GET['backto'])) {
             case 'ordernotif':
                 $backButtonText = __('Back to order notification emails', 'mailjet-for-wordpress');
                 $backButtonLink = 'admin.php?page=mailjet_order_notifications_page';

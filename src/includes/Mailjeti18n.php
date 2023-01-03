@@ -138,7 +138,6 @@ class Mailjeti18n
     }
     /**
      * Get user locale depends on polylang cookie
-     * @param str $pll
      */
     public static function getLocaleByPll()
     {
@@ -146,7 +145,7 @@ class Mailjeti18n
             // The user language is not changed via polylang
             return self::getLocale();
         }
-        $pll = $_COOKIE['pll_language'];
+        $pll = sanitize_text_field($_COOKIE['pll_language']);
         switch ($pll) {
             case 'en':
                 $locale = 'en_US';
@@ -221,12 +220,12 @@ class Mailjeti18n
         $customFIleInfo = new \SplFileInfo(self::CUSTOM_LANGUAGE_DIR . $filename);
         if ($customFIleInfo->isFile() && $customFIleInfo->isWritable()) {
             return $customFIleInfo->getRealPath();
-        } else {
-            $defaultFileInfo = new \SplFileInfo(self::DEFAULT_LANGUAGE_DIR . $filename);
-            if ($defaultFileInfo->isFile() && $defaultFileInfo->isWritable()) {
-                return $defaultFileInfo->getRealPath();
-            }
         }
-        return \false;
+
+        $defaultFileInfo = new \SplFileInfo(self::DEFAULT_LANGUAGE_DIR . $filename);
+        if ($defaultFileInfo->isFile() && $defaultFileInfo->isWritable()) {
+            return $defaultFileInfo->getRealPath();
+        }
+        return false;
     }
 }

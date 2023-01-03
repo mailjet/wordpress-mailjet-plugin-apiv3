@@ -49,12 +49,12 @@ class WooCommerceSettings
         if (isset($_GET['mj_action'])) {
             $action_name = sanitize_text_field($_GET['mj_action']);
         }
-        if ($action_name == 'track_cart') {
+        if ($action_name === 'track_cart') {
             $emailId = sanitize_text_field($_GET['email_id']);
             $key = sanitize_text_field($_GET['key']);
             $this->retrieve_cart($emailId, $key);
         } else {
-            if ($action_name == 'to_cart') {
+            if ($action_name === 'to_cart') {
                 if (is_user_logged_in()) {
                     wp_safe_redirect(get_permalink(wc_get_page_id('cart')));
                 }
@@ -610,7 +610,7 @@ class WooCommerceSettings
             update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
             wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
         }
-        if (isset($data['submitAction']) && $data['submitAction'] === 'stop') {
+        if (isset($data['submitAction']) && sanitize_text_field($data['submitAction']) === 'stop') {
             $activeHooks = [];
             $data['mailjet_wc_active_hooks'] = [];
         } else {
@@ -650,12 +650,12 @@ class WooCommerceSettings
         }
         $wasActivated = \false;
         if (isset($data['activate_ac'])) {
-            update_option('mailjet_woo_abandoned_cart_activate', $data['activate_ac']);
-            $wasActivated = $data['activate_ac'] === '1';
+            update_option('mailjet_woo_abandoned_cart_activate', sanitize_text_field($data['activate_ac']));
+            $wasActivated = sanitize_text_field($data['activate_ac']) === '1';
             $this->toggleAbandonedCart();
         }
         if (isset($data['abandonedCartTimeScale']) && isset($data['abandonedCartSendingTime']) && \is_numeric($data['abandonedCartSendingTime'])) {
-            if ($data['abandonedCartTimeScale'] === 'HOURS') {
+            if (sanitize_text_field($data['abandonedCartTimeScale']) === 'HOURS') {
                 $sendingTimeInSeconds = (int) $data['abandonedCartSendingTime'] * 3600;
                 // 1h == 3600s
             } else {

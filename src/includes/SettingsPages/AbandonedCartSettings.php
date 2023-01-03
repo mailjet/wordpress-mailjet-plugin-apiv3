@@ -154,19 +154,19 @@ class AbandonedCartSettings
                         </h2>
                         <div class="mj-time-setting">
                             <div id="sendingTimeInputs" <?php 
-        echo $isAbandonedCartActivated ? 'class="hidden"' : '';
+        echo esc_attr($isAbandonedCartActivated) ? 'class="hidden"' : '';
         ?>>
                                 <input type="number" id="timeInput" name="abandonedCartSendingTime" value="<?php 
-        echo $sendingTimeScaled;
+        echo esc_attr($sendingTimeScaled);
         ?>" />
                                 <select id="abandonedCartTimeScale" name="abandonedCartTimeScale">
                                     <option value="MINUTES" <?php 
-        echo $sendingTimeScaleInMinutes ? 'selected' : '';
+        echo esc_attr($sendingTimeScaleInMinutes) ? 'selected' : '';
         ?>><?php 
         _e('minutes', 'mailjet-for-wordpress');
         ?></option>
                                     <option value="HOURS" <?php 
-        echo $sendingTimeScaleInMinutes ? '' : 'selected';
+        echo esc_attr($sendingTimeScaleInMinutes) ? '' : 'selected';
         ?>><?php 
         _e('hours', 'mailjet-for-wordpress');
         ?></option>
@@ -174,16 +174,16 @@ class AbandonedCartSettings
                             </div>
                             <p>
                                 <strong id="abandonedCartTimeScaleTxt" <?php 
-        echo !$isAbandonedCartActivated ? 'class="hidden"' : '';
+        echo esc_attr(!$isAbandonedCartActivated) ? 'class="hidden"' : '';
         ?>><?php 
-        echo $sendingTimeScaled . ' ' . ($sendingTimeScaleInMinutes ? __('minutes') : __('hours'));
+        echo esc_attr($sendingTimeScaled . ' ' . ($sendingTimeScaleInMinutes ? __('minutes') : __('hours')));
         ?></strong>
                                 <?php 
         _e('after cart abandonment.', 'mailjet-for-wordpress');
         ?>
                             </p>
                             <span id="linkSendingTimeSetting" <?php 
-        echo !$isAbandonedCartActivated ? 'class="hidden"' : '';
+        echo esc_attr(!$isAbandonedCartActivated) ? 'class="hidden"' : '';
         ?>><a href="#" onclick="toggleTimeSettings(true)"><?php 
         _e('Edit sending time', 'mailjet-for-wordpress');
         ?></a></span>
@@ -241,7 +241,7 @@ class AbandonedCartSettings
                 </div>
                 <input type="hidden" name="action" value="abandoned_cart_settings_custom_hook">
                 <input type="hidden" name="custom_nonce" value="<?php 
-        echo $nonce;
+        echo esc_attr($nonce);
         ?>">
             </form>
         </div>
@@ -282,10 +282,10 @@ class AbandonedCartSettings
                     document.getElementById("sendingTimeInputs").classList.add("hidden");
                     // reset values in case of form submit after cancel
                     timeField.value = <?php 
-        echo $sendingTimeScaled;
+        echo esc_attr($sendingTimeScaled);
         ?>;
                     timeScaleSelect.value = <?php 
-        echo $sendingTimeScaleInMinutes ? '"MINUTES"' : '"HOURS"';
+        echo esc_attr($sendingTimeScaleInMinutes) ? '"MINUTES"' : '"HOURS"';
         ?>;
                 }
             }

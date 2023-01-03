@@ -162,7 +162,7 @@ class OrderNotificationsSettings
                         <div style="width: fit-content">
                             <?php 
         if ($post_update) {
-            echo $this->displayMessage($post_update);
+            echo esc_attr($this->displayMessage($post_update));
         }
         ?>
                         </div>
@@ -237,7 +237,7 @@ class OrderNotificationsSettings
                     </div>
                     <input type="hidden" name="action" value="order_notification_settings_custom_hook">
                     <input type="hidden" name="custom_nonce" value="<?php 
-        echo $nonce;
+        echo esc_attr($nonce);
         ?>">
                 </form>
             </div>
