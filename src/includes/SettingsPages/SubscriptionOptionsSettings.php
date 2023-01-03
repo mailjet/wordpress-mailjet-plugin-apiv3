@@ -353,7 +353,20 @@ class SubscriptionOptionsSettings
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', \sprintf($instance[$locale]['email_content_main_text'], get_option('blogname'))) : $test;
         $email_content_after_button = !empty($instance[$locale]['email_content_after_button']) ? $instance[$locale]['email_content_after_button'] : Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.');
         $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
-        $params = array('subscription_email' => $subscription_email, 'subscription_locale' => $subscription_locale, 'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '', 'thanks_id' => isset($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : '', 'properties' => $properties);
+        $preparedProperties = [];
+        if (!empty($properties)) {
+            foreach ($properties as $key => $val) {
+                $preparedProperties[sanitize_text_field($key)] = sanitize_text_field($val);
+            }
+        }
+
+        $params = array(
+            'subscription_email' => $subscription_email,
+            'subscription_locale' => $subscription_locale,
+            'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '',
+            'thanks_id' => isset($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : '',
+            'properties' => $preparedProperties
+        );
         if ($widgetId) {
             $params['widget_id'] = $widgetId;
         }

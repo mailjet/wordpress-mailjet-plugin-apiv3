@@ -170,16 +170,16 @@ class MailjetSettings
         $technicalIssue = Mailjeti18n::getTranslationsFromFile($locale, 'A technical issue has prevented your subscription. Please try again later.');
         $contactForm7Settings = new ContactForm7Settings();
         add_action('wpcf7_mail_sent', array($contactForm7Settings, 'sendConfirmationEmail'), 10, 2);
-        if (!empty($_GET['cf7list']) && $_GET['cf7list'] === $contactListId) {
+        if (!empty($_GET['cf7list']) && sanitize_text_field($_GET['cf7list']) === $contactListId) {
             if (empty($_GET['email'])) {
-                echo $technicalIssue;
+                echo esc_attr($technicalIssue);
                 MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscription failed ]');
                 die;
             }
             $email = sanitize_email($_GET['email']);
             $name = sanitize_text_field($_GET['prop']);
             $params = \http_build_query(array('cf7list' => $contactListId, 'email' => $email, 'prop' => $name));
-            if (\sha1($params . MailjetSettings::getCryptoHash()) !== $_GET['token']) {
+            if (\sha1($params . MailjetSettings::getCryptoHash()) !== sanitize_text_field($_GET['token'])) {
                 return \false;
             }
             // Hardcode this in order to pass the check inside `$this->>subsctiptionConfirmationAdminNoticeSuccess()`
@@ -190,7 +190,7 @@ class MailjetSettings
             MailjetApi::createMailjetContactProperty('name');
             $syncSingleContactEmailToMailjetList = MailjetApi::syncMailjetContact($contactListId, $contact);
             if (\false === $syncSingleContactEmailToMailjetList) {
-                echo $technicalIssue;
+                echo esc_attr($technicalIssue);
             } else {
                 $this->subsctiptionConfirmationAdminNoticeSuccess();
             }
@@ -235,14 +235,14 @@ class MailjetSettings
         $activate_mailjet_woo_integration = get_option('activate_mailjet_woo_integration');
         if (!empty($activate_mailjet_woo_integration) && !empty($_GET['mj_sub_woo_token'])) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
-            $mj_sub_woo_token = $_GET['mj_sub_woo_token'];
+            $mj_sub_woo_token = sanitize_text_field($_GET['mj_sub_woo_token']);
             $firstName = sanitize_text_field($_GET['first_name']);
             $lastName = sanitize_text_field($_GET['last_name']);
             $tokenCheck = \sha1($subscribeParam . \str_ireplace(' ', '+', $subscriptionEmail) . $firstName . $lastName . self::getCryptoHash());
             if ($mj_sub_woo_token === $tokenCheck) {
                 $wooCommerceSettings = WooCommerceSettings::getInstance();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
-                $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list($_GET['subscribe'], \str_ireplace(' ', '+', $subscriptionEmail), $firstName, $lastName);
+                $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list(sanitize_text_field($_GET['subscribe']), \str_ireplace(' ', '+', $subscriptionEmail), $firstName, $lastName);
                 if (\false === $syncSingleContactEmailToMailjetList) {
                     $this->subsctiptionConfirmationAdminNoticeFailed();
                 } else {
@@ -304,7 +304,7 @@ class MailjetSettings
         ?>
         <script type="text/javascript">
             window.location.href = '<?php 
-        echo $urlToRedirect;
+        echo esc_attr($urlToRedirect);
         ?>';
         </script>
         <?php 

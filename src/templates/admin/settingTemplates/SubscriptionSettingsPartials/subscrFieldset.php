@@ -21,7 +21,7 @@ _e('Automatically add WordPress users to a Mailjet list', 'mailjet-for-wordpress
 ?></label>
 	<label class="checkboxLabel">
 		<input name="activate_mailjet_sync" type="checkbox" id="activate_mailjet_sync" value="1" <?php 
-echo $mailjetSyncActivated == 1 ? ' checked="checked"' : '';
+echo esc_attr($mailjetSyncActivated) == 1 ? ' checked="checked"' : '';
 ?>  autocomplete="off">
 		<span><?php 
 _e('Automatically add WordPress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress');
@@ -29,23 +29,23 @@ _e('Automatically add WordPress users to a Mailjet list. Each user’s email add
 	</label>
 
 	<div id="activate_mailjet_sync_form" class="<?php 
-echo $mailjetSyncActivated == 1 ? 'mj-show' : 'mj-hide';
+echo esc_attr($mailjetSyncActivated) == 1 ? 'mj-show' : 'mj-hide';
 ?>">
 		<div class="mailjet_sync_options_div">
 			<div id="contact_list" class="mailjet_sync_woo_div">
 				<div id="div-for-ajax" class="mj-woocommerce-contacts <?php 
-echo $displaySyncListChoice ? 'mj-hide' : 'mj-show';
+echo esc_attr($displaySyncListChoice) ? 'mj-hide' : 'mj-show';
 ?>">
 					<?php 
-echo $mailjetSyncContactListName;
+echo esc_attr($mailjetSyncContactListName);
 ?>  <span><?php 
-echo $resyncBtn;
+echo esc_attr($resyncBtn);
 ?>&nbsp&nbsp<a href="#" onclick="displaySyncListChoice()"><?php 
-echo $changeList;
+echo esc_attr($changeList);
 ?></a></span>
 				</div>
                 <div id="changeSyncList" <?php 
-echo !$displaySyncListChoice ? 'class="mj-hide"' : '';
+echo (bool)esc_attr(!$displaySyncListChoice) ? 'class="mj-hide"' : '';
 ?>>
                     <label for="mailjet_sync_list" class="mj-wp-sync-label"><?php 
 _e('Mailjet contact lists', 'mailjet-for-wordpress');
@@ -58,14 +58,14 @@ foreach ($mailjetContactLists as $mailjetContactList) {
     }
     ?>
                             <option value="<?php 
-    echo $mailjetContactList['ID'];
+    echo esc_attr($mailjetContactList['ID']);
     ?>" <?php 
-    echo $mailjetSyncContactListId == $mailjetContactList['ID'] ? 'selected="selected"' : '';
+    echo esc_attr($mailjetSyncContactListId == $mailjetContactList['ID']) ? 'selected="selected"' : '';
     ?> > <?php 
-    echo $mailjetContactList['Name'];
+    echo esc_attr($mailjetContactList['Name']);
     ?>
                                 (<?php 
-    echo $mailjetContactList['SubscriberCount'];
+    echo esc_attr($mailjetContactList['SubscriberCount']);
     ?>)
                             </option>
                         <?php 
@@ -87,14 +87,14 @@ _e('Opt-in inside « Leave a reply » form', 'mailjet-for-wordpress');
 ?></label>
 	<label class="checkboxLabel">
 		<input name="activate_mailjet_comment_authors_sync" type="checkbox" id="activate_mailjet_comment_authors_sync" value="1" <?php 
-echo $mailjetCommentAuthorsSyncActivated == 1 ? ' checked="checked"' : '';
+echo esc_attr($mailjetCommentAuthorsSyncActivated) == 1 ? ' checked="checked"' : '';
 ?> autocomplete="off">
 		<span><?php 
 _e('Display "Subscribe to our mailjet list" checkbox in the "Leave a reply" form to allow comment authors to join a specific contact list', 'mailjet-for-wordpress');
 ?></span>
 	</label>
     <div id="comment_authors_contact_list" class="mailjet_sync_woo_div <?php 
-echo $mailjetCommentAuthorsSyncActivated == 1 ? 'mj-show' : 'mj-hide';
+echo esc_attr($mailjetCommentAuthorsSyncActivated) == 1 ? 'mj-show' : 'mj-hide';
 ?>">
         <div class="mailjet_sync_options_div">
             <label for="mailjet_comment_authors_list" class="mj-wp-sync-label"><?php 
@@ -108,14 +108,14 @@ foreach ($mailjetContactLists as $mailjetContactList) {
     }
     ?>
                     <option value="<?php 
-    echo $mailjetContactList['ID'];
+    echo esc_attr($mailjetContactList['ID']);
     ?>" <?php 
-    echo $mailjetCommentAuthorsList == $mailjetContactList['ID'] ? 'selected="selected"' : '';
+    echo esc_attr($mailjetCommentAuthorsList == $mailjetContactList['ID']) ? 'selected="selected"' : '';
     ?> > <?php 
-    echo $mailjetContactList['Name'];
+    echo esc_attr($mailjetContactList['Name']);
     ?>
                         (<?php 
-    echo $mailjetContactList['SubscriberCount'];
+    echo esc_attr($mailjetContactList['SubscriberCount']);
     ?>)
                     </option>
                 <?php 

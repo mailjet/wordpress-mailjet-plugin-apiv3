@@ -176,7 +176,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             }
             if ($isValueTypeIncorrect) {
                 $incorrectTypeValueMessage = !empty($instance[$locale]['invalid_data_format_message_input']) ? $instance[$locale]['invalid_data_format_message_input'] : Mailjeti18n::getTranslationsFromFile($locale, 'The value you entered is not in the correct format.');
-                echo $incorrectTypeValueMessage;
+                echo esc_attr($incorrectTypeValueMessage);
                 wp_die();
             }
         }
@@ -223,7 +223,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             $params['widget_id'] = $widget_id;
         }
         $params = http_build_query($params);
-        if ($_GET['mj_sub_token'] !== sha1($params . MailjetSettings::getCryptoHash())) {
+        if (sanitize_text_field($_GET['mj_sub_token']) !== sha1($params . MailjetSettings::getCryptoHash())) {
             // Invalid token
             _e('Invalid token', 'mailjet-for-wordpress');
             die;
@@ -242,8 +242,8 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             foreach ($this->mailjetContactProperties as $property) {
                 $propertyName = $property['Name'];
                 if (!empty($properties[$property['ID']])) {
-                    $propertyValue = $properties[$property['ID']];
-                    $dataType = $property['Datatype'];
+                    $propertyValue = sanitize_text_field($properties[$property['ID']]);
+                    $dataType = sanitize_text_field($property['Datatype']);
                     switch ($dataType) {
                         case 'datetime':
                             $datetime = DateTime::createFromFormat('Y-m-d', $propertyValue);
@@ -275,7 +275,6 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
         }
         $contact = array(
             'Email' => $subscription_email,
-            //                'Name' => $contactProperties['first_name'] . ' ' . $contactProperties['last_name'],
             'Properties' => $dataProperties,
         );
         $isActiveList = MailjetApi::isContactListActive($contactListId);

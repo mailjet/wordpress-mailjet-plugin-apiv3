@@ -69,14 +69,14 @@ foreach ($languages as $language => $locale) {
                 </p>
                 <p>
                     <label class="language-title-label" for="<?php 
-    echo $this->get_field_id($locale . '[list]');
+    echo esc_attr($this->get_field_id($locale . '[list]')_;
     ?>"><?php 
     _e('Add email addresses to:', 'mailjet-for-wordpress');
     ?></label>
                     <select name="<?php 
-    echo $this->get_field_name($locale . '[list]');
+    echo esc_attr($this->get_field_name($locale . '[list]'));
     ?>" id="<?php 
-    echo $this->get_field_id($locale . '[list]');
+    echo esc_attr($this->get_field_id($locale . '[list]'));
     ?>" class="widefat dropdown-list language-select-list">
                         <?php 
     $options = array(0 => __('Choose a list', 'mailjet-for-wordpress'));
@@ -87,7 +87,7 @@ foreach ($languages as $language => $locale) {
     }
     // Loop through options and add each one to the select dropdown
     foreach ($options as $key => $name) {
-        echo '<option  value="' . esc_attr($key) . '" ' . selected($list, $key, \false) . '>' . $name . '</option>';
+        echo wp_kses_post('<option  value="' . esc_attr($key) . '" ' . selected($list, $key, \false) . '>' . $name . '</option>');
     }
     ?>
                     </select>
@@ -122,10 +122,10 @@ _e('Add more fields to your form (ex: First name, Last name, Birthday...) and cu
 ?>
     </p>
     <div class="advanced-form-link-wrap <?php 
-echo $hideAdvancedLinkClass;
+echo esc_attr($hideAdvancedLinkClass);
 ?>">
         <span class="advanced-form-link" data-target="<?php 
-echo $this->id;
+echo esc_attr($this->id);
 ?>"><?php 
 _e('Advanced form customization', 'mailjet-for-wordpress');
 ?></span>
@@ -138,12 +138,11 @@ _e('Advanced form customization', 'mailjet-for-wordpress');
 ?></span>
     </div>
 
-    <div id="modal-<?php echo $this->id; ?>" style="display: none;">
+    <div id="modal-<?php echo esc_attr($this->id); ?>" style="display: none;">
         <div class="mj-modal-dialog" role="document">
             <div class="mj-pluginPage mj-modal-content">
                 <div class="mj-modal-header">
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
--->                    <h4 class="mj-modal-title"><?php
+                    <h4 class="mj-modal-title"><?php
 _e('Customize your subscription form', 'mailjet-for-wordpress');
 ?></h4>
                 </div>
@@ -151,7 +150,7 @@ _e('Customize your subscription form', 'mailjet-for-wordpress');
                 <div class="mj-modal-body">
                     <!-- Nav tabs -->
                     <ul class="mj-nav-tabs advanced-form-navs" role="tablist" data-target="<?php 
-echo $this->id;
+echo esc_attr($this->id);
 ?>">
                         <li data-tab="advanced-form-fields" aria-controls="advanced-form-fields" role="tab" class="mj-tab active"><span><?php 
 _e('Form fields', 'mailjet-for-wordpress');
@@ -194,7 +193,7 @@ for ($row = 0; $row <= 4; $row++) {
     }
     ?>
                                 <div class="property<?php 
-    echo $additionalPropertyClass;
+    echo esc_attr($additionalPropertyClass);
     ?>">
                                         <?php 
     $setLabelStyle = '';
@@ -203,11 +202,11 @@ for ($row = 0; $row <= 4; $row++) {
     }
     ?>
                                         <span class="floatLeft propertyLabel" style="<?php 
-    echo $setLabelStyle;
+    echo esc_attr($setLabelStyle);
     ?>"><?php 
     _e('Property', 'mailjet-for-wordpress');
     ?> #<?php 
-    echo $row + 1;
+    echo esc_textarea($row + 1);
     ?></span>
                                     <!--Select property-->
                                     <div class="propertySelect floatLeft form-group">
@@ -223,9 +222,9 @@ for ($row = 0; $row <= 4; $row++) {
     }
     ?>
                                         <select class="selectProperty" name="<?php 
-    echo $this->get_field_name($admin_locale . '[contactProperties' . $row . ']');
+    echo esc_attr($this->get_field_name($admin_locale . '[contactProperties' . $row . ']'));
     ?>" id="<?php 
-    echo $this->get_field_id($admin_locale . '[contactProperties' . $row . ']');
+    echo esc_attr($this->get_field_id($admin_locale . '[contactProperties' . $row . ']'));
     ?>">
                                             <option disabled selected value="0"><?php 
     _e('Select a property', 'mailjet-for-wordpress');
@@ -234,7 +233,7 @@ for ($row = 0; $row <= 4; $row++) {
     _e('Create new', 'mailjet-for-wordpress');
     ?></option>
                                             <option disabled value="0"><?php 
-    echo \str_repeat('-', 16);
+    echo esc_textarea(str_repeat('-', 16));
     ?></option>
                                             <?php 
     $options = array();
@@ -245,7 +244,7 @@ for ($row = 0; $row <= 4; $row++) {
     }
     // Loop through options and add each one to the select dropdown
     foreach ($options as $key => $name) {
-        echo '<option value="' . esc_attr($key) . '" id="mjContactProperty_' . esc_attr($key) . '" ' . selected($contactPropertiesN, $key, \false) . '>' . $name . '</option>';
+        echo wp_kses_post('<option value="' . esc_attr($key) . '" id="mjContactProperty_' . esc_attr($key) . '" ' . selected($contactPropertiesN, $key, \false) . '>' . $name . '</option>');
     }
     ?>
                                         </select>
@@ -299,19 +298,19 @@ for ($row = 0; $row <= 4; $row++) {
     }
     ?>
                                         <button class="mj-btnSecondary floatLeft cancelNewPropertyButton" style="<?php 
-    echo $styleSaveCancel;
+    echo esc_attr($styleSaveCancel);
     ?>"><?php 
     _e('Cancel', 'mailjet-for-wordpress');
     ?></button>
                                         <button class="mj-btn btnPrimary floatLeft saveNewPropertyButton" style="<?php 
-    echo $styleSaveCancel;
+    echo esc_attr($styleSaveCancel);
     ?>" ><?php 
     _e('Save', 'mailjet-for-wordpress');
     ?></button>
                                     </div>
                                     <!--Display only if there is a selected option-->
                                     <div class="hiddenProperties <?php 
-    echo $contactPropertiesN ? 'mj-show' : 'mj-hide';
+    echo esc_attr($contactPropertiesN) ? 'mj-show' : 'mj-hide';
     ?>">
                                         <!--Select property DataType-->
                                         <div class="typeSelect floatLeft form-group">
@@ -319,7 +318,7 @@ for ($row = 0; $row <= 4; $row++) {
     if ($row == 0) {
         ?>
                                             <label class="mj-label" for="<?php 
-        echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']');
+        echo esc_attr($this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'));
         ?>"><?php 
         _e('Type', 'mailjet-for-wordpress');
         ?></label>
@@ -327,14 +326,14 @@ for ($row = 0; $row <= 4; $row++) {
     }
     ?>
                                             <select class="propertyDataType" name="<?php 
-    echo $this->get_field_name($admin_locale . '[propertyDataType' . $row . ']');
+    echo esc_attr($this->get_field_name($admin_locale . '[propertyDataType' . $row . ']'));
     ?>" id="<?php 
-    echo $this->get_field_id($admin_locale . '[propertyDataType' . $row . ']');
+    echo esc_attr($this->get_field_id($admin_locale . '[propertyDataType' . $row . ']'));
     ?>">
                                                 <?php 
     $dataTypeOptions = array(__('Optional', 'mailjet-for-wordpress'), __('Mandatory', 'mailjet-for-wordpress'), __('Hidden', 'mailjet-for-wordpress'));
     foreach ($dataTypeOptions as $key => $name) {
-        echo '<option value="' . esc_attr($key) . '" id="mjPropertyDataType_' . esc_attr($key) . '" ' . selected($propertyDataTypeN, $key, \false) . '>' . $name . '</option>';
+        echo wp_kses_post('<option value="' . esc_attr($key) . '" id="mjPropertyDataType_' . esc_attr($key) . '" ' . selected($propertyDataTypeN, $key, \false) . '>' . $name . '</option>');
     }
     ?>
                                             </select>
@@ -345,13 +344,13 @@ for ($row = 0; $row <= 4; $row++) {
         ?>
                                             <!--Languages label-->
                                             <div class="languageInput floatLeft" style="width: <?php 
-        echo $percent . '%';
+        echo esc_attr($percent) . '%';
         ?>">
                                                 <?php 
         if ($row == 0) {
             ?>
                                                     <label class="mj-label" for="<?php 
-            echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']');
+            echo esc_attr($this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'));
             ?>"><?php 
             _e($language, 'mailjet-for-wordpress');
             ?></label>
@@ -359,13 +358,13 @@ for ($row = 0; $row <= 4; $row++) {
         }
         ?>
                                                 <input type="text" value="<?php 
-        echo ${$language . 'LabelN'};
+        echo esc_attr(${$language . 'LabelN'});
         ?>"  name="<?php 
-        echo $this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']');
+        echo esc_attr($this->get_field_name($admin_locale . '[' . $language . 'Label' . $row . ']'));
         ?>" id="<?php 
-        echo $this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']');
+        echo esc_attr($this->get_field_id($admin_locale . '[' . $language . 'Label' . $row . ']'));
         ?>" placeholder="<?php 
-        echo $propertyDataTypeN != 2 ? $defaultPlaceholder . $language : $hiddenPlaceholder . $language;
+        echo esc_attr($propertyDataTypeN != 2 ? $defaultPlaceholder . $language : $hiddenPlaceholder . $language);
         ?>" />
                                             </div>
                                         <?php 
@@ -376,10 +375,10 @@ for ($row = 0; $row <= 4; $row++) {
     }
     ?>
                                         <div class="deleteProperty floatLeft <?php 
-    echo $displayDelete;
+    echo esc_textarea($displayDelete);
     ?>">
                                             <i class="fa fa-trash-o" style="<?php 
-    echo $setDeleteLabelStyle;
+    echo esc_attr($setDeleteLabelStyle);
     ?>"></i>
                                         </div>
                                     </div>
@@ -401,7 +400,7 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryEmailLanguageInput floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <label class="mj-label" for="<?php 
     echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]'));
@@ -409,13 +408,13 @@ foreach ($activeLanguages as $language => $locale) {
     _e($language, 'mailjet-for-wordpress');
     ?></label>
                                         <input type="text" value="<?php 
-    echo $language_mandatory_email;
+    echo esc_attr($language_mandatory_email);
     ?>"  name="<?php 
     echo esc_attr($this->get_field_name($locale . '[language_mandatory_email]'));
     ?>" id="<?php 
     echo esc_attr($this->get_field_id($locale . '[language_mandatory_email]'));
     ?>" placeholder="<?php 
-    echo $yourEmailTranslation;
+    echo esc_attr($yourEmailTranslation);
     ?>" />
                                     </div>
                                 <?php 
@@ -434,7 +433,7 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="mandatoryButtonLanguage floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <label class="mj-label" for="<?php 
     echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]'));
@@ -442,13 +441,13 @@ foreach ($activeLanguages as $language => $locale) {
     _e($language, 'mailjet-for-wordpress');
     ?></label>
                                         <input type="text" title=""  value="<?php 
-    echo $language_mandatory_button;
+    echo esc_attr($language_mandatory_button);
     ?>"  name="<?php 
     echo esc_attr($this->get_field_name($locale . '[language_mandatory_button]'));
     ?>" id="<?php 
     echo esc_attr($this->get_field_id($locale . '[language_mandatory_button]'));
     ?>" placeholder="<?php 
-    echo $subscribeTranslation;
+    echo esc_attr($subscribeTranslation);
     ?>" />
                                     </div>
                                 <?php 
@@ -487,7 +486,7 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                             <label class="mj-label" for="<?php 
     echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]'));
@@ -499,7 +498,7 @@ foreach ($activeLanguages as $language => $locale) {
     ?>" id="<?php 
     echo esc_attr($this->get_field_id($locale . '[confirmation_email_message_input]'));
     ?>" placeholder="<?php 
-    echo $subscriptionConfirmationEmailSent;
+    echo esc_attr($subscriptionConfirmationEmailSent);
     ?>"><?php 
     echo esc_attr($confirmation_email_message_input);
     ?></textarea>
@@ -521,14 +520,14 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                             <textarea class="form-validation-invalid-data" name="<?php 
     echo esc_attr($this->get_field_name($locale . '[invalid_data_format_message_input]'));
     ?>" id="<?php 
     echo esc_attr($this->get_field_id($locale . '[invalid_data_format_message_input]'));
     ?>" placeholder="<?php 
-    echo $incorectValue;
+    echo esc_attr($incorectValue);
     ?>"><?php 
     echo esc_attr($invalid_data_format_message_input);
     ?></textarea>
@@ -551,14 +550,14 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                         <!--Languages label-->
                                         <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                             <textarea class="form-validation-generic-error" name="<?php 
     echo esc_attr($this->get_field_name($locale . '[generic_technical_error_message_input]'));
     ?>" id="<?php 
     echo esc_attr($this->get_field_id($locale . '[generic_technical_error_message_input]'));
     ?>" placeholder="<?php 
-    echo $technicalIssue;
+    echo esc_attr($technicalIssue);
     ?>"><?php 
     echo esc_attr($generic_technical_error_message_input);
     ?></textarea>
@@ -596,7 +595,7 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <label class="mj-label" for="<?php 
     echo esc_attr($this->get_field_id($locale . '[email_subject]'));
@@ -608,7 +607,7 @@ foreach ($activeLanguages as $language => $locale) {
     ?>" id="<?php 
     echo esc_attr($this->get_field_id($locale . '[email_subject]'));
     ?>" placeholder="<?php 
-    echo $subscriptionConfirmation;
+    echo esc_attr($subscriptionConfirmation);
     ?>"><?php 
     echo esc_attr($email_subject);
     ?></textarea>
@@ -631,10 +630,10 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <textarea placeholder="<?php 
-    echo $confirmYourSubscription;
+    echo esc_attr($confirmYourSubscription);
     ?>" name="<?php 
     echo esc_attr($this->get_field_name($locale . '[email_content_title]'));
     ?>" id="<?php 
@@ -661,10 +660,10 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <textarea placeholder="<?php 
-    echo $toReceiveNewslettersFrom;
+    echo esc_attr($toReceiveNewslettersFrom);
     ?>" name="<?php 
     echo esc_attr($this->get_field_name($locale . '[email_content_main_text]'));
     ?>" id="<?php 
@@ -690,10 +689,10 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <textarea placeholder="<?php 
-    echo $yesSubscribeMe;
+    echo esc_attr($yesSubscribeMe);
     ?>" name="<?php 
     echo esc_attr($this->get_field_name($locale . '[email_content_confirm_button]'));
     ?>" id="<?php 
@@ -719,10 +718,10 @@ foreach ($activeLanguages as $language => $locale) {
     ?>
                                     <!--Languages label-->
                                     <div class="floatLeft form-group" style="width: <?php 
-    echo $percent . '%';
+    echo esc_attr($percent) . '%';
     ?>">
                                         <textarea placeholder="<?php 
-    echo $ignoreMessage;
+    echo esc_attr($ignoreMessage);
     ?>" name="<?php 
     echo esc_attr($this->get_field_name($locale . '[email_content_after_button]'));
     ?>" id="<?php 
@@ -755,7 +754,7 @@ foreach ($activeLanguages as $language => $locale) {
                                     <select class="thankYou_select" id="<?php 
     echo esc_attr($this->get_field_id($language . '[thank_you]'));
     ?>" name="<?php 
-    echo $this->get_field_name($language . '[thank_you]');
+    echo esc_attr($this->get_field_name($language . '[thank_you]'));
     ?>">
                                         <option value="0"><?php 
     _e('Default page', 'mailjet-for-wordpress');
@@ -764,13 +763,13 @@ foreach ($activeLanguages as $language => $locale) {
     foreach ($pages as $page) {
         ?>
                                             <option value="<?php 
-        echo $page->ID;
+        echo esc_attr($page->ID);
         ?>" id="thankYouOption_<?php 
-        echo $page->ID;
+        echo esc_attr($page->ID);
         ?>" <?php 
-        echo selected($thank_you, $page->ID, \false);
+        echo esc_attr(selected($thank_you, $page->ID, \false));
         ?> > <?php 
-        echo $page->post_title;
+        echo esc_attr($page->post_title);
         ?></option>
                                         <?php 
     }
@@ -783,38 +782,29 @@ foreach ($activeLanguages as $language => $locale) {
                         </div>
                     </div>
                 </div>
-
-                <!--<div class="mj-modal-footer">
-                    <button type="button" class="mj-btnSecondary cancelMailjetAdvancedForm"><?php /*
-_e('Cancel', 'mailjet-for-wordpress');
-*/?></button>
-                    <button type="button" class="mj-btn btnPrimary saveMailjetAdvancedForm"><?php /*
-_e('Save', 'mailjet-for-wordpress');
-*/?></button>
-                </div>-->
             </div>
         </div>
     </div>
 
     <!--SHORTCODE-->
     <div class="some-space <?php 
-echo $hideShortCodeSectionClass;
+echo esc_attr($hideShortCodeSectionClass);
 ?>" style="background: #fbfbfb;border: 1px solid #c8d1d4;border-radius: 4px;">
         <span class="span_mailjet_subscribe_shortcode"><?php 
 _e('Add the following shortcode anywhere in your Posts or Pages to display the widget', 'mailjet-for-wordpress');
 ?></span>
         <div class="mj-copy-wrapper mailjet_subscribe_shortcode-copy-wrapper">
             <input class="mailjet_subscribe_shortcode" name="mailjet_subscribe_shortcode_<?php 
-echo $this->id;
+echo esc_attr($this->id);
 ?>" id="mailjet_subscribe_shortcode_<?php 
-echo $this->id;
+echo esc_attr($this->id);
 ?>" value='[mailjet_subscribe widget_id="<?php 
-echo \substr($this->id, \strpos($this->id, '-') + 1);
+echo esc_attr(\substr($this->id, \strpos($this->id, '-') + 1));
 ?>"]' class="widefat" disabled="disabled"/>
             <i class="copy_mailjet_shortcode fa fa-copy mj-copy-icon" data-input_id="mailjet_subscribe_shortcode_<?php 
-echo $this->id;
+echo esc_attr($this->id);
 ?>" id="copy_mailjet_shortcode_<?php 
-echo $this->id;
+echo esc_attr($this->id);
 ?>" style="width:12px;" ></i>
         </div>
     </div>

@@ -31,7 +31,15 @@ echo __('Edit template', 'mailjet-for-wordpress');
 ?></h1>
         <div class="iframeContainer">
             <?php 
-echo $iframeHtml;
+echo wp_kses($iframeHtml, [
+    'iframe' => [
+        'src'             => true,
+        'height'          => true,
+        'width'           => true,
+        'frameborder'     => true,
+        'allowfullscreen' => true,
+    ]
+]);
 ?>
         </div>
     </div>

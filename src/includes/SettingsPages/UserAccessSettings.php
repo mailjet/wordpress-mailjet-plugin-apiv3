@@ -56,8 +56,8 @@ class UserAccessSettings
             ?>" type="checkbox" id="<?php 
             echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey;
             ?>" value="1" <?php 
-            echo $hasAccess ? ' checked="checked"' : '';
-            echo $roleKey === 'administrator' ? 'disabled' : '';
+            echo esc_attr($hasAccess) ? ' checked="checked"' : '';
+            echo esc_attr($roleKey) === 'administrator' ? 'disabled' : '';
             ?> >
                     <span><?php 
             _e($role['name'], 'mailjet-for-wordpress');
@@ -138,7 +138,7 @@ class UserAccessSettings
 
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img src="<?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+        echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
         ?>" alt="Mailjet Logo" /></div>
             <div class="mainContainer">
 
@@ -179,11 +179,11 @@ class UserAccessSettings
         $saveButton = __('Save', 'mailjet-for-wordpress');
         ?>
                                 <button type="submit" id="userAccessSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php 
-        echo $saveButton;
+        echo esc_attr($saveButton);
         ?></button>
                                 <input type="hidden" name="action" value="user_access_settings_custom_hook">
                                 <input type="hidden" name="custom_nonce" value="<?php 
-        echo $nonce;
+        echo esc_attr($nonce);
         ?>">
                             </form>
                         </div>

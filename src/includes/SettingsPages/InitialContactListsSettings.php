@@ -97,14 +97,14 @@ class InitialContactListsSettings
             }
             ?>
                                 <option value="<?php 
-            echo $mailjetContactList['ID'];
+            echo esc_attr($mailjetContactList['ID']);
             ?>" <?php 
-            echo $mailjetSyncList == $mailjetContactList['ID'] ? 'selected="selected"' : '';
+            echo esc_attr($mailjetSyncList) == esc_attr($mailjetContactList['ID']) ? 'selected="selected"' : '';
             ?> > <?php 
-            echo $mailjetContactList['Name'];
+            echo esc_attr($mailjetContactList['Name']);
             ?>
                                     (<?php 
-            echo $mailjetContactList['SubscriberCount'];
+            echo esc_attr($mailjetContactList['SubscriberCount']);
             ?>)
                                 </option>
                                 <?php 
@@ -113,7 +113,7 @@ class InitialContactListsSettings
                         </select>
                         <a id="create_contact_list" class="mj-toggleBtn" data-target="create_contact_list_popup">
                             <img width="16" id="createContactListImg" src=" <?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/create_contact_list.svg';
+        echo esc_attr(plugin_dir_url(dirname(__FILE__, 2))) . '/admin/images/create_contact_list.svg';
         ?>" alt="<?php 
         echo __('Create a new list', 'mailjet-for-wordpress');
         ?>" />
@@ -139,7 +139,7 @@ class InitialContactListsSettings
                         </div>
                         <label class="checkboxLabel" for="activate_mailjet_initial_sync" style="margin-bottom: 157px!important;">
                             <input name="activate_mailjet_initial_sync" type="checkbox" id="activate_mailjet_initial_sync" value="1" <?php 
-        echo $mailjetInitialSyncActivated == 1 ? ' checked="checked"' : '';
+        echo esc_attr($mailjetInitialSyncActivated) == 1 ? ' checked="checked"' : '';
         ?> >
                             <span><?php 
         echo \sprintf(__('Also, add existing <b>%s WordPress users</b> (initial synchronization)', 'mailjet-for-wordpress'), $wpUsersCount);
@@ -164,7 +164,7 @@ class InitialContactListsSettings
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
         }
         $applyAndContinueBtnClicked = \false;
-        $fromPage = !empty($_REQUEST['from']) ? $_REQUEST['from'] : null;
+        $fromPage = !empty($_REQUEST['from']) ? sanitize_text_field($_REQUEST['from']) : null;
         // register a new section in the "mailjet" page
         add_settings_section('mailjet_initial_contact_lists_settings', null, array($this, 'mailjet_section_initial_contact_lists_cb'), 'mailjet_initial_contact_lists_page');
         // register a new field in the "mailjet_section_developers" section, inside the "mailjet" page
@@ -193,7 +193,7 @@ class InitialContactListsSettings
             $create_contact_list_btn = get_option('create_contact_list_btn');
             $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
             $mailjet_sync_list = get_option('mailjet_sync_list');
-            if (empty($create_contact_list_btn) && !empty($activate_mailjet_initial_sync) && \intval($mailjet_sync_list) > 0) {
+            if (empty($create_contact_list_btn) && !empty($activate_mailjet_initial_sync) && (int)$mailjet_sync_list > 0) {
                 $syncResponse = SubscriptionOptionsSettings::syncAllWpUsers();
                 if (\false === $syncResponse) {
                     $executionError = \true;

@@ -20,7 +20,7 @@ class MailjetAdminDisplay
     private static $bottomLinksFile = '/bottomLinks.php';
     public static function getSettingsLeftMenu()
     {
-        $currentPage = !empty($_REQUEST['page']) ? $_REQUEST['page'] : null;
+        $currentPage = !empty($_REQUEST['page']) ? sanitize_text_field($_REQUEST['page']) : null;
         set_query_var('currentPage', $currentPage);
         load_template(MAILJET_ADMIN_TAMPLATE_DIR . self::$leftMenuFile);
     }

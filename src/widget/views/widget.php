@@ -32,7 +32,7 @@ $buttonLabel = !empty($instance[$locale]['language_mandatory_button']) ? apply_f
     <div id="mailjet-widget-title-wrap">
             <?php 
 do_action('before_title_widget_mailjet');
-echo $before_title . esc_html($title) . $after_title;
+echo esc_attr($before_title) . esc_html($title) . $after_title;
 do_action('after_title_widget_mailjet');
 ?>
     </div>
@@ -110,7 +110,7 @@ echo esc_html($locale);
                             echo esc_html($i);
                             ?>" class="mailjet-widget-label mj-widget-label-date">
                                 <?php
-                                echo $inputProperties['placeholder'];
+                                echo esc_attr($inputProperties['placeholder']);
                                 ?>
                             </label>
                             <?php

@@ -779,7 +779,7 @@ class MailjetApi
         $this->_debugErrorHtml .= '</table>';
         $this->_debugErrorHtml .= '</div>';
         if ($this->_debugEcho) {
-            echo $this->_debugErrorHtml;
+            echo esc_attr($this->_debugErrorHtml);
         }
     }
 }

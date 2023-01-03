@@ -48,21 +48,21 @@ class EnableSendingSettings
         <fieldset class="settingsSendingFldset">
             <label class="checkboxLabel" for="mailjet_enabled">
                 <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?php 
-        echo $mailjetEnabled == 1 ? ' checked="checked"' : '';
+        echo esc_attr($mailjetEnabled) == 1 ? ' checked="checked"' : '';
         ?> autocomplete="off">
                 <span><?php 
         _e('Enable sending emails through <b>Mailjet</b>', 'mailjet-for-wordpress');
         ?></span>
             </label>
             <div id="enable_mj_emails" class="sending_options_div <?php 
-        echo $mailjetEnabled ? 'mj-show' : 'mj-hide';
+        echo esc_attr($mailjetEnabled) ? 'mj-show' : 'mj-hide';
         ?>">
                 <div>
                     <label class="mj-label" for="mailjet_from_name"><b><?php 
         _e('From: Name', 'mailjet-for-wordpress');
         ?></b></label>
                     <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php 
-        echo $mailjetFromName;
+        echo esc_attr($mailjetFromName);
         ?>" class="regular-text code">
                 </div>
                 <div id="mailjet_from_email_fields" class="fromFld">
@@ -83,11 +83,11 @@ class EnableSendingSettings
             }
             ?>
                             <option value="<?php 
-            echo $mailjetSender['Email'];
+            echo esc_attr($mailjetSender['Email']);
             ?>" <?php 
-            echo $mailjetFromEmail == $mailjetSender['Email'] ? 'selected="selected"' : '';
+            echo esc_attr($mailjetFromEmail == $mailjetSender['Email']) ? 'selected="selected"' : '';
             ?> > <?php 
-            echo $mailjetSender['Email'];
+            echo esc_attr($mailjetSender['Email']);
             ?> </option>
                         <?php 
         }
@@ -110,26 +110,26 @@ class EnableSendingSettings
         ?></b></label>
                     <select class="mj-select" name="mailjet_port" id="mailjet_port" type="select">
                         <option value="25" <?php 
-        echo $mailjetPort == 25 ? 'selected="selected"' : '';
+        echo esc_attr($mailjetPort) == 25 ? 'selected="selected"' : '';
         ?> > 25 </option>
                         <option value="465" <?php 
-        echo $mailjetPort == 465 ? 'selected="selected"' : '';
+        echo esc_attr($mailjetPort) == 465 ? 'selected="selected"' : '';
         ?> > 465 </option>
                         <option value="587" <?php 
-        echo $mailjetPort == 587 ? 'selected="selected"' : '';
+        echo esc_attr($mailjetPort) == 587 ? 'selected="selected"' : '';
         ?> > 587 </option>
                         <option value="588" <?php 
-        echo $mailjetPort == 588 ? 'selected="selected"' : '';
+        echo esc_attr($mailjetPort) == 588 ? 'selected="selected"' : '';
         ?> > 588 </option>
                         <option value="80" <?php 
-        echo $mailjetPort == 80 ? 'selected="selected"' : '';
+        echo esc_attr($mailjetPort) == 80 ? 'selected="selected"' : '';
         ?> > 80 </option>
                     </select>
                 </div>
                 <div class="sslFld">
                     <label class="checkboxLabel" for="mailjet_ssl">
                         <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?php 
-        echo $mailjetSsl == 'ssl' || $mailjetSsl == 'tls' ? ' checked="checked"' : '';
+        echo esc_attr($mailjetSsl) === 'ssl' || esc_attr($mailjetSsl) === 'tls' ? ' checked="checked"' : '';
         ?> autocomplete="off">
                         <span><?php 
         echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet-for-wordpress');
@@ -211,11 +211,9 @@ class EnableSendingSettings
                     // Send a test email
                     $testSent = MailjetMail::sendTestEmail();
                     if (\false === $testSent) {
-                        //MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was NOT sent, please review your settings ]');
                         $executionError = \true;
                         add_settings_error('mailjet_messages', 'mailjet_message', __('The test email could not be sent. Please make sure your server doesn\'t block the SMTP ports. Also double check that you are using correct API and Secret keys and a valid sending address from your Mailjet account.', 'mailjet-for-wordpress'), 'error');
                     } else {
-                        // MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Your test message was sent succesfully ]');
                         add_settings_error('mailjet_messages', 'mailjet_message', __('Your test email has been successfully sent', 'mailjet-for-wordpress'), 'updated');
                     }
                 }
@@ -273,7 +271,7 @@ class EnableSendingSettings
         $saveButton = __('Save', 'mailjet-for-wordpress');
         ?>
                                 <button type="submit" id="enableSendingSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php 
-        echo $saveButton;
+        echo esc_attr($saveButton);
         ?></button>
                                 <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?php 
         echo __('Cancel', 'mailjet-for-wordpress');
