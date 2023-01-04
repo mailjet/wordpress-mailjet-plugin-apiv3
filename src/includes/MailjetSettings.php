@@ -308,7 +308,7 @@ class MailjetSettings
         ?>';
         </script>
         <?php 
-        echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $urlToRedirect . '">';
+        echo esc_attr('<META HTTP-EQUIV="refresh" content="0;URL=' . $urlToRedirect . '">');
         exit;
     }
     public static function getCryptoHash()

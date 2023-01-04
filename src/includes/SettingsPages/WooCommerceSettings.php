@@ -605,7 +605,7 @@ class WooCommerceSettings
     }
     public function orders_automation_settings_post()
     {
-        $data = $_POST;
+        $data = array_map('sanitize_text_field', $_POST);
         if (!wp_verify_nonce($data['custom_nonce'], 'mailjet_order_notifications_settings_page_html')) {
             update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
             wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
@@ -643,7 +643,7 @@ class WooCommerceSettings
     }
     public function abandoned_cart_settings_post()
     {
-        $data = $_POST;
+        $data = array_map('sanitize_text_field', $_POST);
         if (!wp_verify_nonce($data['custom_nonce'], 'mailjet_order_notifications_settings_page_html')) {
             update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
             wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
@@ -812,7 +812,7 @@ class WooCommerceSettings
     }
     public function subscribeViaAjax()
     {
-        $post = $_POST;
+        $post = array_map('sanitize_text_field', $_POST);
         if (isset($post['orderId'])) {
             $orderId = sanitize_text_field($post['orderId']);
             $order = wc_get_order($orderId);
