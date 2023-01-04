@@ -352,7 +352,7 @@ class SubscriptionOptionsSettings
         $test = sprintf(Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), $wpUrl);
         $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', \sprintf($instance[$locale]['email_content_main_text'], get_option('blogname'))) : $test;
         $email_content_after_button = !empty($instance[$locale]['email_content_after_button']) ? $instance[$locale]['email_content_after_button'] : Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.');
-        $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
+        $properties = array_map('sanitize_text_field', $_POST['properties'] ?? []);
         $preparedProperties = [];
         if (!empty($properties)) {
             foreach ($properties as $key => $val) {

@@ -132,7 +132,7 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
             echo wp_json_encode(['prop_errors' => $errors]);
             wp_die();
         }
-        $properties = isset($_POST['properties']) ? $_POST['properties'] : array();
+        $properties = array_map('sanitize_text_field', $_POST['properties'] ?? []);
         $isValueTypeIncorrect = false;
         if (!empty($properties) && is_array($this->mailjetContactProperties) && !empty($this->mailjetContactProperties)) {
             foreach ($properties as $propertyId => $propertyValue) {

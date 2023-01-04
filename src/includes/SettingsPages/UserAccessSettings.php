@@ -49,12 +49,12 @@ class UserAccessSettings
             $hasAccess = isset($role['capabilities'][self::ACCESS_CAP_NAME]) && $role['capabilities'][self::ACCESS_CAP_NAME];
             ?>
                 <label class="checkboxLabel" for="<?php 
-            echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey;
+            echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
             ?>">
                     <input name="<?php 
-            echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey;
+            echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
             ?>" type="checkbox" id="<?php 
-            echo self::PREFIX_ACCESS_INPUT_NAME . $roleKey;
+            echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
             ?>" value="1" <?php 
             echo esc_attr($hasAccess) ? ' checked="checked"' : '';
             echo esc_attr($roleKey) === 'administrator' ? 'disabled' : '';
@@ -74,7 +74,7 @@ class UserAccessSettings
     }
     public function user_access_post_handler()
     {
-        $postData = $_POST;
+        $postData = array_map('sanitize_text_field', $_POST);
         if (!isset($postData['custom_nonce']) || !wp_verify_nonce($postData['custom_nonce'], 'mailjet_user_access_page_html')) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Your permissions don\'t match! Please refresh your session and if the problem persists, contact our support team.', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
