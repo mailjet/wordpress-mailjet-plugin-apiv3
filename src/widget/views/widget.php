@@ -32,7 +32,7 @@ $buttonLabel = !empty($instance[$locale]['language_mandatory_button']) ? apply_f
     <div id="mailjet-widget-title-wrap">
             <?php 
 do_action('before_title_widget_mailjet');
-echo esc_attr($before_title) . esc_html($title) . $after_title;
+echo wp_kses_post($before_title . $title . $after_title);
 do_action('after_title_widget_mailjet');
 ?>
     </div>
