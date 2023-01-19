@@ -25,7 +25,7 @@ class Dashboard
      */
     public function mailjet_dashboard_page_html()
     {
-        $iconDir = plugin_dir_url(\dirname(\dirname(__FILE__))) . 'admin/images/woo.svg';
+        $iconDir = plugin_dir_url(dirname(__FILE__, 2)) . 'admin/images/woo.svg';
         $wooCommerceIntegActivated = get_option('activate_mailjet_woo_integration') === '1';
         if (!MailjetApi::isValidAPICredentials()) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
@@ -40,7 +40,7 @@ class Dashboard
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img
                         src="<?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+        echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
         ?>"
                         alt="Mailjet Logo"/></div>
             <div class="mainContainer dashboard">

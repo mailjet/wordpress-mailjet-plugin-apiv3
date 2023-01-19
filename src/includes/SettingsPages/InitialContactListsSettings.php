@@ -160,10 +160,10 @@ class InitialContactListsSettings
      */
     public function mailjet_initial_contact_lists_page_html()
     {
-        if (MailjetApi::getContactProperties() === \false) {
+        if (MailjetApi::getContactProperties() === false) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
         }
-        $applyAndContinueBtnClicked = \false;
+        $applyAndContinueBtnClicked = false;
         $fromPage = !empty($_REQUEST['from']) ? sanitize_text_field($_REQUEST['from']) : null;
         // register a new section in the "mailjet" page
         add_settings_section('mailjet_initial_contact_lists_settings', null, array($this, 'mailjet_section_initial_contact_lists_cb'), 'mailjet_initial_contact_lists_page');
@@ -187,15 +187,15 @@ class InitialContactListsSettings
         // check if the user have submitted the settings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
-            $executionError = \false;
-            $applyAndContinueBtnClicked = \false;
+            $executionError = false;
+            $applyAndContinueBtnClicked = false;
             // Initial sync WP users to Mailjet - when the 'create_contact_list_btn' button is not the one that submits the form
             $create_contact_list_btn = get_option('create_contact_list_btn');
             $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
             $mailjet_sync_list = get_option('mailjet_sync_list');
             if (empty($create_contact_list_btn) && !empty($activate_mailjet_initial_sync) && (int)$mailjet_sync_list > 0) {
                 $syncResponse = SubscriptionOptionsSettings::syncAllWpUsers();
-                if (\false === $syncResponse) {
+                if (false === $syncResponse) {
                     $executionError = \true;
                     update_option('contacts_list_ok', 0);
                     add_settings_error('mailjet_messages', 'mailjet_message', __('The settings could not be saved. Please try again or in case the problem persists contact Mailjet support.', 'mailjet-for-wordpress'), 'error');
@@ -228,12 +228,12 @@ class InitialContactListsSettings
             } else {
                 $applyAndContinueBtnClicked = \true;
             }
-            if (\false === $executionError) {
+            if (false === $executionError) {
                 update_option('contacts_list_ok', 1);
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet-for-wordpress'), 'updated');
                 $contacts_list_ok = get_option('contacts_list_ok');
-                if (!($fromPage == 'plugins') || !empty($contacts_list_ok) && '1' == $contacts_list_ok) {
+                if (!($fromPage === 'plugins') || !empty($contacts_list_ok) && '1' == $contacts_list_ok) {
                     // Redirect if the create contact button is not set
                     if (empty($create_contact_list_btn)) {
                         MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
@@ -243,7 +243,7 @@ class InitialContactListsSettings
         }
         $contacts_list_ok = get_option('contacts_list_ok');
         $skipped = get_option('skip_mailjet_list');
-        if (!($fromPage == 'plugins') && (!empty($contacts_list_ok) && '1' == $contacts_list_ok) && $skipped !== '') {
+        if (!($fromPage === 'plugins') && (!empty($contacts_list_ok) && '1' == $contacts_list_ok) && $skipped !== '') {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_dashboard_page'));
         }
         // show error/update messages
@@ -253,7 +253,7 @@ class InitialContactListsSettings
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img
                         src="<?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+        echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
         ?>"
                         alt="Mailjet Logo"/></div>
             <div class="mainContainer">
