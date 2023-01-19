@@ -87,7 +87,15 @@ foreach ($languages as $language => $locale) {
     }
     // Loop through options and add each one to the select dropdown
     foreach ($options as $key => $name) {
-        echo wp_kses_post('<option  value="' . esc_attr($key) . '" ' . selected($list, $key, \false) . '>' . $name . '</option>');
+        echo wp_kses(
+                '<option  value="' . esc_attr($key) . '" ' . selected($list, $key, \false) . '>' . $name . '</option>',
+            [
+                'option' => [
+                    'value' => [],
+                    'selected' => [],
+                ],
+            ]
+        );
     }
     ?>
                     </select>

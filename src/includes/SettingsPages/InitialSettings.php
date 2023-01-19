@@ -108,16 +108,14 @@ class InitialSettings
         // check if the user have submitted the settings
         // wordpress will add the "settings-updated" $_GET parameter to the url
         if (isset($_GET['settings-updated'])) {
-            $executionError = \false;
+            $executionError = false;
             // Validate Mailjet API credentials
             $isValidAPICredentials = MailjetApi::isValidAPICredentials();
-            if (\false == $isValidAPICredentials) {
+            if (false == $isValidAPICredentials) {
                 update_option('api_credentials_ok', 0);
-                $executionError = \true;
-                //                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Invalid Mailjet API credentials ]');
+                $executionError = true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
             } else {
-                //            MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Initial settings form submitted ]');
                 // Update From Email and Name
                 add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));
                 add_filter('wp_mail_from_name', array(new MailjetMail(), 'wp_sender_name'));
@@ -125,7 +123,7 @@ class InitialSettings
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet-for-wordpress'), 'updated');
                 $executionError = \false;
                 // Automatically redirect to the next step - we use javascript to prevent the WP issue when using `wp_redirect` method and headers already sent
-                if (\false === $executionError) {
+                if (false === $executionError) {
                     // Update the flag for passed API credentials check
                     update_option('api_credentials_ok', 1);
                     // Redirect to the next page

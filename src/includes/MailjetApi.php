@@ -2,10 +2,12 @@
 
 namespace MailjetWp\MailjetPlugin\Includes;
 
-//use Exception;
+use MailjetWp\GuzzleHttp\Exception\RequestException;
 use MailjetWp\Mailjet\Client;
 use MailjetWp\Mailjet\Resources;
 use MailjetWp\GuzzleHttp\Exception\ConnectException;
+use MailjetWp\Mailjet\Response;
+
 /**
  * Define the internationalization functionality.
  *
@@ -48,6 +50,10 @@ class MailjetApi
         self::$mjApiClient = $mjClient;
         return self::$mjApiClient;
     }
+
+    /**
+     * @return array|false
+     */
     public static function getMailjetContactLists()
     {
         try {
@@ -63,11 +69,15 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            //return $response->getStatus();
-            return \false;
         }
+
+        return false;
     }
+
+    /**
+     * @param $listName
+     * @return false|Response
+     */
     public static function createMailjetContactList($listName)
     {
         if (empty($listName)) {
@@ -86,6 +96,11 @@ class MailjetApi
         }
         return $response;
     }
+
+    /**
+     * @param $contactListId
+     * @return bool
+     */
     public static function isContactListActive($contactListId)
     {
         if (!$contactListId) {
@@ -111,6 +126,11 @@ class MailjetApi
         }
         return \false;
     }
+
+    /**
+     * @param $contactListId
+     * @return array|false
+     */
     public static function getContactListByID($contactListId)
     {
         if (!$contactListId || empty($contactListId)) {
@@ -132,6 +152,11 @@ class MailjetApi
         }
         return \false;
     }
+
+    /**
+     * @param $contactListId
+     * @return array|false
+     */
     public static function getSubscribersFromList($contactListId)
     {
         if (!$contactListId || empty($contactListId)) {
@@ -161,6 +186,10 @@ class MailjetApi
         } while ($response->getCount() >= $limit);
         return \array_merge(...$dataArray);
     }
+
+    /**
+     * @return array|false
+     */
     public static function getContactProperties()
     {
         try {
@@ -176,11 +205,11 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            return \false;
-            //            return $response->getStatus();
         }
+
+        return false;
     }
+
     public static function getPropertyIdByName($name)
     {
         if (!$name) {
@@ -217,11 +246,11 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            return \false;
-            //            return $response->getStatus();
         }
+
+        return false;
     }
+
     public static function getMailjetSegments()
     {
         try {
@@ -282,26 +311,33 @@ class MailjetApi
             return \false;
         }
     }
+
+    /**
+     * @return bool
+     */
     public static function isValidAPICredentials()
     {
         try {
             $mjApiClient = self::getApiClient();
+            if ($mjApiClient === null) {
+                return false;
+            }
         } catch (\Exception $e) {
-            return \false;
+            return false;
         }
         $filters = ['Limit' => '1'];
         try {
             $response = $mjApiClient->get(Resources::$Contactmetadata, ['filters' => $filters]);
         } catch (ConnectException $e) {
-            return \false;
+            return false;
+        } catch (RequestException $exception) {
+            return false;
         }
         if ($response->success()) {
-            return \true;
-            // return $response->getData();
-        } else {
-            return \false;
-            // return $response->getStatus();
+            return true;
         }
+
+        return false;
     }
     /**
      * Add or Remove a contact to a Mailjet contact list - It can process many or single contact at once
