@@ -228,6 +228,11 @@ class SubscriptionOptionsSettings
             update_user_meta($user->ID, 'mailjet_subscribe_ok', $subscribed ? '1' : '');
         }
     }
+
+    /**
+     * @param $userId
+     * @return void
+     */
     public function mailjet_register_user($userId)
     {
         $activate_mailjet_sync = get_option('activate_mailjet_sync');
@@ -248,9 +253,13 @@ class SubscriptionOptionsSettings
                 return;
             }
             if ($contactId > 0) {
-                $data = array(array('Name' => self::WP_PROP_USER_ROLE, 'Value' => $role), array('Name' => self::PROP_USER_FIRSTNAME, 'Value' => $firstname), array('Name' => self::PROP_USER_LASTNAME, 'Value' => $lastname));
+                $data = [
+                    ['Name' => self::WP_PROP_USER_ROLE, 'Value' => $role],
+                    ['Name' => self::PROP_USER_FIRSTNAME, 'Value' => $firstname],
+                    ['Name' => self::PROP_USER_LASTNAME, 'Value' => $lastname]
+                ];
                 if (isset($registration_date)) {
-                    $data[] = array('Name' => WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE, 'Value' => $registration_date);
+                    $data[] = ['Name' => WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE, 'Value' => $registration_date];
                 }
                 try {
                     MailjetApi::updateContactData($email, $data);
@@ -259,12 +268,16 @@ class SubscriptionOptionsSettings
                     return;
                 }
             } else {
-                $properties = array(self::WP_PROP_USER_ROLE => $role, self::PROP_USER_FIRSTNAME => $firstname, self::PROP_USER_LASTNAME => $lastname);
+                $properties = [
+                    self::WP_PROP_USER_ROLE => $role,
+                    self::PROP_USER_FIRSTNAME => $firstname,
+                    self::PROP_USER_LASTNAME => $lastname
+                ];
                 if (isset($registration_date)) {
                     $properties[WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE] = $registration_date;
                 }
-                $contact = array('Email' => $email, 'Properties' => $properties);
-                MailjetApi::syncMailjetContact($mailjet_sync_list, $contact, 'unsub');
+                $contact = ['Email' => $email, 'Properties' => $properties];
+                MailjetApi::syncMailjetContact($mailjet_sync_list, $contact, 'addnoforce');
             }
         }
     }

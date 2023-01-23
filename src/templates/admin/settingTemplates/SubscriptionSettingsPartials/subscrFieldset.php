@@ -39,7 +39,7 @@ echo esc_attr($displaySyncListChoice) ? 'mj-hide' : 'mj-show';
 					<?php 
 echo esc_attr($mailjetSyncContactListName);
 ?>  <span><?php 
-echo esc_attr($resyncBtn);
+echo htmlspecialchars_decode(wp_kses_post($resyncBtn));
 ?>&nbsp&nbsp<a href="#" onclick="displaySyncListChoice()"><?php 
 echo esc_attr($changeList);
 ?></a></span>

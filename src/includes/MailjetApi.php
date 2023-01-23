@@ -377,7 +377,7 @@ class MailjetApi
         } catch (\Exception $e) {
             return \false;
         }
-        $name = isset($contact['Properties']['firstname']) ? $contact['Properties']['firstname'] : '';
+        $name = $contact['Properties']['firstname'] ?? '';
         $body = ['Name' => $name, 'Action' => $action, 'Email' => $contact['Email'], 'Properties' => $contact['Properties']];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagecontact, ['id' => $contactListId, 'body' => $body]);
@@ -386,9 +386,9 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            return \false;
         }
+
+        return \false;
     }
     /**
      * Return TRUE if a contact already subscribed to the list and FALSE if it is not, or is added to the list but Unsubscribed
@@ -461,8 +461,7 @@ class MailjetApi
     {
         $mjApiClient = self::getApiClient();
         $body = ['Data' => $data];
-        $response = $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
-        return $response;
+        return $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
     }
     public static function getProfileName()
     {
