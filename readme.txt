@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
 Tested up to: 6.1.1
-Stable tag: 5.3.4
+Stable tag: 5.3.5
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -196,6 +196,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 == Upgrade notice ==
+
+= 5.3.5 =
+* Fixed error when new user in WP was unsubscribed in the contact list
+
 = 5.3.4 =
 * Fixed issues with uncaught exception and wrong sanitizing for <option> in the widget
 
