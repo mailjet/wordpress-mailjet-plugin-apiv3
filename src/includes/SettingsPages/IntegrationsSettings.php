@@ -455,7 +455,7 @@ class IntegrationsSettings
                     <div class="right">
                         <?php 
         if ($post_update) {
-            echo esc_attr($this->displayMessage($post_update));
+            echo wp_kses_data($this->displayMessage($post_update));
         }
         ?>
                         <div class="centered">

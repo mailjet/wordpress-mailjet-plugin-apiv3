@@ -72,7 +72,7 @@ class ContactForm7Settings
                 $contact['Properties']['name'] = $formdata[$cf7name];
                 MailjetApi::createMailjetContactProperty('name');
             }
-            MailjetApi::syncMailjetContact($mailjetCF7List, $contact);
+            MailjetApi::syncMailjetContact($mailjetCF7List, $contact, 'unsub');
             $email_subject = Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
             add_filter('wp_mail_content_type', array(SubscriptionOptionsSettings::getInstance(), 'set_html_content_type'));
             wp_mail($email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
