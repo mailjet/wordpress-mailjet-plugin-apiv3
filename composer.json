@@ -41,6 +41,7 @@
             "MailjetWp\\MailjetPlugin\\Admin\\Partials\\": "src/admin/partials/",
             "MailjetWp\\MailjetPlugin\\Front\\": "src/front/",
             "MailjetWp\\MailjetPlugin\\Widget\\": "src/widget/",
+            "MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\": "src/widgetformbuilder/",
             "MailjetWp\\MailjetIframe\\": "src/mailjetIframe"
         }
     },

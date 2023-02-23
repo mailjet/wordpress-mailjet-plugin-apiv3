@@ -25,6 +25,7 @@ class ComposerStaticInite89278bbb96320ad952008582b3ddfbc
             'MailjetWp\\Psr\\Http\\Client\\' => 26,
             'MailjetWp\\Mailjet\\' => 18,
             'MailjetWp\\MailjetPlugin\\Widget\\' => 31,
+            'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' => 42,
             'MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\' => 47,
             'MailjetWp\\MailjetPlugin\\Includes\\' => 33,
             'MailjetWp\\MailjetPlugin\\Front\\' => 30,
@@ -75,6 +76,10 @@ class ComposerStaticInite89278bbb96320ad952008582b3ddfbc
         array (
             0 => __DIR__ . '/../..' . '/src/widget',
         ),
+        'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' =>
+            array (
+                0 => __DIR__ . '/../..' . '/src/widgetformbuilder',
+            ),
         'MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/includes/SettingsPages',
