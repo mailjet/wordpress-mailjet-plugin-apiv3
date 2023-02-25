@@ -111,10 +111,13 @@ class Mailjet
      */
     public static function display_mailjet_form_builder_widget(array $attr = [], string $tag = '')
     {
-        extract(shortcode_atts(['widget_id' => null], $attr, $tag));
+        var_dump('HERE');
+        \extract(shortcode_atts(['widget_id' => null], $attr, $tag));
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
         $instance = get_option('mailjet_form_builder_widget_options');
-        // In case we don't have 'widget_id' attribute in the shrotcode defined by user - we use the first widget id from the collection
+
+        var_dump($instance);
+        // In case we don't have 'widget_id' attribute in the shortcode defined by user - we use the first widget id from the collection
         if (empty($widget_id)) {
             $widgetIds = [];
             foreach (array_keys($instance) as $key) {
