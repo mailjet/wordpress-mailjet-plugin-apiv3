@@ -31,14 +31,6 @@
     cursor: pointer;
 }
 
-#mailjetSubscriptionForm{
-    
-}
-
-#mailjet_widget_email{
-    
-}
-
 .mailjet_widget_front_container input[type=date] {
     width: fit-content;
 }

@@ -111,9 +111,9 @@ class Mailjet
      */
     public static function display_mailjet_form_builder_widget(array $attr = [], string $tag = '')
     {
-        \extract(shortcode_atts(['widget_id' => null], $attr, $tag));
+        extract(shortcode_atts(['widget_id' => null], $attr, $tag));
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
-        $instance = get_option('widget_wp_mailjet_form_builder_widget');
+        $instance = get_option('mailjet_form_builder_widget_options');
         // In case we don't have 'widget_id' attribute in the shrotcode defined by user - we use the first widget id from the collection
         if (empty($widget_id)) {
             $widgetIds = [];
@@ -126,7 +126,7 @@ class Mailjet
         }
         ob_start();
         the_widget('MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\WP_Mailjet_FormBuilder_Widget', $instance[(int)$widget_id]);
-        return \ob_get_clean();
+        return ob_get_clean();
     }
 
     /**
@@ -216,11 +216,11 @@ class Mailjet
         $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
     }
 
+    /**
+     * @return void
+     */
     public function wp_mailjet_register_widgets()
     {
-        // It works only for wp >= 4.6.0
-        // $widget = new WP_Mailjet_Subscribe_Widget()
-        // This works for wp function < 4.6
         $widget = 'MailjetWp\\MailjetPlugin\\Widget\\WP_Mailjet_Subscribe_Widget';
         register_widget($widget);
 

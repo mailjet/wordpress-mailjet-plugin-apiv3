@@ -1110,13 +1110,13 @@ msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
 
 msgid "language_checkbox"
-msgstr ""
+msgstr "1"
 
 msgid "title"
-msgstr ""
+msgstr "test1"
 
 msgid "list"
-msgstr "0"
+msgstr "39182"
 
 msgid "language_mandatory_email"
 msgstr ""
