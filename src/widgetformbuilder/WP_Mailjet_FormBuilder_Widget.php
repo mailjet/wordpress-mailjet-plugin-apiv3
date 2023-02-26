@@ -99,9 +99,31 @@ class WP_Mailjet_FormBuilder_Widget extends \WP_Widget
     {
         // Here is where you update your widget's old values with the new, incoming values
         $instance = $old_instance;
-        //$instance['form_builder_code'] = isset($new_instance['form_builder_code']) ? wp_kses_post($new_instance['form_builder_code']) : '';
-        $instance['form_builder_code'] = $new_instance['form_builder_code'] ?? '';
-        //TODO MAKE CORRECT VALIDATING
+        $instance['form_builder_code'] = wp_kses($new_instance['form_builder_code'] ?? '', [
+            'iframe' => [
+                'align' => true,
+                'width' => true,
+                'height' => true,
+                'frameborder' => true,
+                'name' => true,
+                'src' => true,
+                'id' => true,
+                'class' => true,
+                'style' => true,
+                'scrolling' => true,
+                'marginwidth' => true,
+                'marginheight' => true,
+                'data' => true,
+                'data-w-type' => true,
+                'data-w-token' => true,
+            ],
+            'script' => [
+                'type' => true,
+                'src' => true,
+                'height' => true,
+                'width' => true,
+            ]
+        ]);
         update_option(self::WIDGET_OPTIONS_NAME, $instance);
         return $instance;
     }
@@ -126,8 +148,6 @@ class WP_Mailjet_FormBuilder_Widget extends \WP_Widget
         $languages = Mailjeti18n::getSupportedLocales();
         $pages = get_pages();
         $instance = wp_parse_args((array) $instance);
-       /* update_option('widget_wp_mailjet_subscribe_widget', $data);
-        $instance = get_option('widget_wp_mailjet_subscribe_widget');*/
 
         include plugin_dir_path(__FILE__) . 'views' . DIRECTORY_SEPARATOR . 'admin.php';
     }
