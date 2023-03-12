@@ -62,7 +62,7 @@ class Mailjet
         if (\defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '5.2.25';
+            $this->version = '5.3.7';
         }
         $this->plugin_name = 'mailjet';
         $this->load_dependencies();
@@ -183,7 +183,9 @@ class Mailjet
         if (get_option('activate_mailjet_woo_integration') === '1') {
             $this->addWoocommerceActions();
         }
+        $this->loader->add_action('admin_notices', $plugin_admin, 'mailjetPluginNotification');
     }
+
     /**
      * Register all of the hooks related to the public-facing functionality
      * of the plugin.
