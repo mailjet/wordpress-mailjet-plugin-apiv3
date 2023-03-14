@@ -1,0 +1,145 @@
+.form-control{
+    border-radius: 0px!important;
+    background-color: #FFF !important;
+    border: 1px solid #888 !important;
+}
+
+.language_checkbox{
+    height: 17px;
+    width: 17px;
+    border: 1px solid #979797;
+    background-color: #FFFFFF;
+    margin-top: 1px!important;
+}
+
+.propertiesInfo{
+    clear: left!important;
+    font-weight: bold!important;
+    margin: 5px 0 10px 0!important;
+}
+
+.mailjet_widget_admin_container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*background-color: #00a0d2;*/
+}
+
+#chooseLangLabelWrap {
+    margin: 20px 0 20px 0;
+}
+
+#chooseLangLabel {
+    font-weight: bold;
+    font-size: small;
+}
+
+.hidden_default {
+    display: none!important;
+}
+
+.some-space{
+    margin: 20px 0 20px 0;
+}
+
+.newPropertyFields{
+    display: none;
+}
+
+.properties-label-header{
+    margin-bottom: 10px;
+
+}
+.floatLeft{
+    float: left;
+    margin-left: 12px;
+}
+
+.propertyLabel{
+    margin: 9px 0;
+
+}
+
+.mj-tab-panel {
+    display: none;
+}
+
+.mj-tab-panel.active {
+    display: block;
+}
+
+.mj-modal .mj-label {
+    font-weight: bold;
+}
+
+.redInput{
+    border: 1px solid red!important;
+}
+
+.advanced-form-fields{
+    overflow-y: scroll;
+    height: 502px;
+}
+
+/* width */
+.tab-pane::-webkit-scrollbar {
+    width: 11px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* Handle */
+.tab-pane::-webkit-scrollbar-thumb {
+    background: #D8D8D8;
+    border-radius: 7.5px;
+}
+
+/* Handle on hover */
+.tab-pane::-webkit-scrollbar-thumb:hover {
+    background: #D3D3D3;
+}
+
+/* SCROLL BAR TEXTAREAS */
+
+/* width */
+.tab-pane textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+.tab-pan textarea::-webkit-scrollbar-track {
+    background: #F6F6F6;
+}
+
+/* Handle */
+.tab-pane textarea::-webkit-scrollbar-thumb {
+    background: #D9D9D9;
+}
+
+/* Handle on hover */
+.tab-pane textarea::-webkit-scrollbar-thumb:hover {
+    background: #D3D3D3;
+}
+
+.modal-content label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.mailjet_widget_admin_container span {
+    font-size: 14px;
+}
+
+.modal-content{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+}
+.form_builder_text_area {
+    width: 100%;
+    min-height: 200px;
+}

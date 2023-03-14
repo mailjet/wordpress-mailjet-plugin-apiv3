@@ -14,6 +14,7 @@ return array(
     'MailjetWp\\Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'MailjetWp\\Mailjet\\' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src/Mailjet'),
     'MailjetWp\\MailjetPlugin\\Widget\\' => array($baseDir . '/src/widget'),
+    'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' => array($baseDir . '/src/widgetformbuilder'),
     'MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\' => array($baseDir . '/src/includes/SettingsPages'),
     'MailjetWp\\MailjetPlugin\\Includes\\' => array($baseDir . '/src/includes'),
     'MailjetWp\\MailjetPlugin\\Front\\' => array($baseDir . '/src/front'),

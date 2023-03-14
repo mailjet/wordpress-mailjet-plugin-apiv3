@@ -195,7 +195,11 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Enable order notifications for WooCommerce
 7. Configure abandoned cart notifications for WooCommerce
 
-== Upgrade notice ==
+== Upgrade Notice ==
+
+= 5.4.0 =
+* New widget for Form Builder
+
 = 5.3.7 =
 * Added notice about updating plugin in the future (new Form Builder widget)
 

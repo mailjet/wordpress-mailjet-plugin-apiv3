@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.1.1
-- Stable tag: 5.3.7
+- Stable tag: 5.4.0
 - Requires PHP: 5.6
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +15,7 @@ Includes WooCommerce automated and order emails. Design, send and track engaging
 * Full **WooCommerce support** - use Mailjet's drag and drop email builder to create responsive *Order Notification* and *Abandoned cart reminder* emails and engage with your customers at the right moment. Add newsletter subscribers from the "Check out" and the "Thank you" pages. Sync order data to Mailjet and use our powerful *Segmentation* and *Automation* features to target specific customer groups.
 * **Shortcode support** - add the subscription widget in any page or post using shortcode.
 * Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
+* Support new widget for Form Builder
 
 ## Description
 
@@ -205,6 +206,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
+
+##### 5.4.0
+* New widget for Form Builder
+
 ##### 5.3.7
 * Added notice about updating plugin in the future (new Form Builder widget)
 
