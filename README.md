@@ -208,6 +208,7 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 ## Changelog
 ##### 5.4.1
 * Added new translations for notice message
+* Fix deactivate function to not throw an error
 
 ##### 5.4.0
 * New widget for Form Builder
