@@ -49,6 +49,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/vendor/scoper-autoload.php';
 
 use MailjetWp\MailjetPlugin\Includes\Mailjet;
+use MailjetWp\MailjetPlugin\Includes\MailjetDeactivator;
 use MailjetWp\MailjetPlugin\Includes\MailjetUpdate;
 use MailjetWp\MailjetPlugin\Includes\MailjetActivator;
 
@@ -87,11 +88,11 @@ function run_mailjet()
 
 
 $activator = new MailjetActivator();
-register_activation_hook( __FILE__, array($activator, 'activation_check'));
-register_activation_hook( __FILE__, array($activator, 'activation_settings'));
+register_activation_hook( __FILE__, [$activator, 'activation_check']);
+register_activation_hook( __FILE__, [$activator, 'activation_settings']);
 
-
-register_deactivation_hook( __FILE__, array( 'MailjetPlugin\Includes\MailjetDeactivator', 'deactivate' ) );
+$deactivator = new MailjetDeactivator();
+register_deactivation_hook( __FILE__, [$deactivator, 'deactivate']);
 
 run_mailjet();
 

@@ -13,7 +13,10 @@ namespace MailjetWp\MailjetPlugin\Includes;
  */
 class MailjetDeactivator
 {
-    public static function deactivate()
+    /**
+     * @return void
+     */
+    public function deactivate()
     {
         $timestamp = wp_next_scheduled('bl_cron_hook');
         wp_unschedule_event($timestamp, 'bl_cron_hook');
