@@ -94,7 +94,7 @@ class MailjetAdmin
                     $currentScreen->id === 'admin_page_mailjet_connect_account_page'
                 )
             ) {
-                echo sprintf('<div class="notice notice-warning"><p>%s</p></div>', $this->getWarningTranslation(Mailjeti18n::getLocale()));
+                echo sprintf('<div class="notice notice-warning"><p>%s</p></div>', $this->getWarningTranslation(get_locale()));
             }
         }
     }
@@ -109,13 +109,23 @@ class MailjetAdmin
             case 'en_US':
                 return 'Mailjet\'s Subscription Widget is on its way out, but a new way to integrate your forms is coming shortly. Stay tuned!';
             case 'fr_FR':
-                return 'Le widget d\'inscription de Mailjet tire bientôt sa révérence, mais une nouvelle méthode d\'intégration des formulaires va prendre sa relève. Restez à l\'écoute!';
+                return 'Le widget d\'inscription de Mailjet tire bientôt sa révérence, mais une nouvelle méthode d\'intégration des formulaires est disponible. Découvrez-le !';
             case 'de_DE':
-                return 'Das Abonnement-Widget von Mailjet wird nicht mehr weiterentwickelt, aber eine neue Möglichkeit zur Integration Ihrer Formulare kommt in Kürze. Wir halten Sie auf dem Laufenden.';
+                return 'Wir haben die Weiterentwicklung unseres Abonnement-Widget eingestellt. Von nun an bieten wir unseren Nutzern jedoch eine Alternative, um Formulare zu integrieren. Probieren Sie es aus!';
             case 'es_ES':
                 return 'El Widget de suscripción de Mailjet está a punto de despedirse, así que tendrás formas nuevas de integrar tus formularios. No te las pierdas.';
             case 'it_IT':
-                return 'Il widget di iscrizione di Mailjet è in fase di dismissione, ma è in arrivo un nuovo modo per integrare i moduli. Non perderti gli aggiornamenti!';
+                return 'Il widget di iscrizione di Mailjet è in fase di dismissione, ma è disponibile un nuovo modo per integrare i vostri moduli. Scopritelo!';
+            case 'da_DK':
+                return 'Mailjets tilmeldingswidget er ved at blive udfaset, men der er en ny måde at integrere dine formularer på. Tjek det ud!';
+            case 'nl_NL':
+                return 'De abonnementswidget van Mailjet verdwijnt, maar er is een nieuwe manier om je formulieren te integreren. Probeer het uit!';
+            case 'pt_BR':
+                return 'O Widget de Assinatura do Mailjet está sendo descontinuado, mas uma nova maneira de integrar os seus formulários chegará está disponível. Confira!';
+            case 'pt_PT':
+                return 'O widget de subscrição da Mailjet está a caminho, mas uma nova forma de integrar os seus formulários está disponível. Veja!';
+            case 'sv_SE':
+                return 'Mailjets prenumerationswidget är på väg ut, men det finns ett nytt sätt att integrera dina formulär. Kolla in det!';
             default:
                 return 'Mailjet\'s Subscription Widget is on its way out, but a new way to integrate your forms is coming shortly. Stay tuned!';
         }
