@@ -31,22 +31,22 @@ class WP_Mailjet_Subscribe_Widget extends \WP_Widget
     public function __construct()
     {
         // load plugin text domain
-        add_action('init', array($this, 'widget_textdomain'));
+        add_action('init', [$this, 'widget_textdomain']);
         // Build widget
-        $widget_options = array('classname' => 'WP_Mailjet_Subscribe_Widget', 'description' => __('Allows your visitors to subscribe to one of your lists', 'mailjet-for-wordpress'));
+        $widget_options = ['classname' => 'WP_Mailjet_Subscribe_Widget', 'description' => __('Allows your visitors to subscribe to one of your lists', 'mailjet-for-wordpress')];
         parent::__construct($this->get_widget_slug(), __('Mailjet Subscription Widget', 'mailjet-for-wordpress'), $widget_options);
         // Register site styles and scripts
-        add_action('admin_enqueue_scripts', array($this, 'register_widget_scripts'));
+        add_action('admin_enqueue_scripts', [$this, 'register_widget_scripts']);
 
         // Refreshing the widget's cached output with each new post
-        add_action('save_post', array($this, 'flush_widget_cache'));
-        add_action('deleted_post', array($this, 'flush_widget_cache'));
-        add_action('switch_theme', array($this, 'flush_widget_cache'));
-        add_action('wp_ajax_mailjet_add_contact_property', array($this, 'wp_ajax_mailjet_add_contact_property'));
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_styles'));
-        add_action('wp_enqueue_scripts', array($this, 'register_widget_front_scripts'));
-        add_action('wp_ajax_send_mailjet_subscription_form', array($this, 'sendSubscriptionEmail'));
-        add_action('wp_ajax_nopriv_send_mailjet_subscription_form', array($this, 'sendSubscriptionEmail'));
+        add_action('save_post', [$this, 'flush_widget_cache']);
+        add_action('deleted_post', [$this, 'flush_widget_cache']);
+        add_action('switch_theme', [$this, 'flush_widget_cache']);
+        add_action('wp_ajax_mailjet_add_contact_property', [$this, 'wp_ajax_mailjet_add_contact_property']);
+        add_action('wp_enqueue_scripts', [$this, 'register_widget_front_styles']);
+        add_action('wp_enqueue_scripts', [$this, 'register_widget_front_scripts']);
+        add_action('wp_ajax_send_mailjet_subscription_form', [$this, 'sendSubscriptionEmail']);
+        add_action('wp_ajax_nopriv_send_mailjet_subscription_form', [$this, 'sendSubscriptionEmail']);
         if (!$this->propertyData) {
             $this->initPropertyData();
         }
