@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
 Tested up to: 6.1.1
-Stable tag: 5.4.2
+Stable tag: 5.4.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -196,6 +196,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 5.4.3 =
+* Fixed bug with infinite redirect when you go from plugin page to Mailjet settings page
 
 = 5.4.2 =
 * Fixed error in integration with Woocommerce. When you try to place an order

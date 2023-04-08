@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Includes;
 
+use Exception;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\ContactForm7Settings;
@@ -75,6 +76,10 @@ class MailjetSettings
         register_setting('mailjet_integrations_page', 'cf7_fromname');
         register_setting('mailjet_integrations_page', 'settings_step');
     }
+
+    /**
+     * @return void
+     */
     public function mailjet_settings_init()
     {
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init Start]');
@@ -164,6 +169,12 @@ class MailjetSettings
         }
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Adding some custom mailjet logic to WP actions - End ]');
     }
+
+    /**
+     * @param $contactListId
+     * @return false|void
+     * @throws Exception
+     */
     private function activateCf7Url($contactListId)
     {
         $locale = Mailjeti18n::getLocale();
@@ -261,13 +272,25 @@ class MailjetSettings
      */
     public function mailjet_settings_link($links, $file)
     {
-        if ($file != plugin_basename(\dirname(\dirname(\dirname(__FILE__)))) . '/wp-mailjet.php') {
+        if ($file != plugin_basename(dirname(__FILE__, 3)) . '/wp-mailjet.php') {
             return $links;
         }
-        $settings_link = '<a href="admin.php?page=mailjet_settings_page&from=plugins">' . __('Setup account', 'mailjet-for-wordpress') . '</a>';
-        \array_unshift($links, $settings_link);
+        $mailjetApikey = get_option('mailjet_apikey');
+        $mailjetApiSecret = get_option('mailjet_apisecret');
+
+        $pluginLink = 'admin.php?page=mailjet_settings_page';
+        if (!$mailjetApikey || !$mailjetApiSecret ) {
+            $pluginLink .= '&from=plugins';
+        }
+
+        $settings_link = '<a href="'. $pluginLink .'">' . __('Setup account', 'mailjet-for-wordpress') . '</a>';
+        array_unshift($links, $settings_link);
         return $links;
     }
+
+    /**
+     * @return void
+     */
     public function subsctiptionConfirmationAdminNoticeSuccess()
     {
         if ((int) sanitize_text_field($_GET['subscribe']) > 0) {
@@ -285,6 +308,10 @@ class MailjetSettings
         die;
         //We die here to not continue loading rest of the WP home page
     }
+
+    /**
+     * @return void
+     */
     public function subsctiptionConfirmationAdminNoticeFailed()
     {
         echo '<div class="notice notice-error is-dismissible" style="padding-right: 38px; position: relative; display: block; background: #fff; border-left: 4px solid #dc3232; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); margin: 5px 15px 2px; padding: 1px 12px;">' . __('Something went wrong with adding a contact to Mailjet contact list', 'mailjet-for-wordpress') . '</div>';
@@ -311,6 +338,11 @@ class MailjetSettings
         echo esc_attr('<META HTTP-EQUIV="refresh" content="0;URL=' . $urlToRedirect . '">');
         exit;
     }
+
+    /**
+     * @return false|mixed|null
+     * @throws \Exception
+     */
     public static function getCryptoHash()
     {
         $hash = get_option('crypto_hash');
