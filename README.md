@@ -207,6 +207,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 ## Changelog
 
+##### 5.4.3
+* Fixed bug with infinite redirect when you go from plugin page to Mailjet settings page
+
 ##### 5.4.2
 * Fixed error in integration with Woocommerce. When you try to place an order
 * Fixed changelog and readme file structure

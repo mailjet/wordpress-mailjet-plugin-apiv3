@@ -233,7 +233,7 @@ class InitialContactListsSettings
                 // add settings saved message with the class of "updated"
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Settings Saved', 'mailjet-for-wordpress'), 'updated');
                 $contacts_list_ok = get_option('contacts_list_ok');
-                if (!($fromPage === 'plugins') || !empty($contacts_list_ok) && '1' == $contacts_list_ok) {
+                if (!($fromPage === 'plugins') || (!empty($contacts_list_ok) && '1' == $contacts_list_ok)) {
                     // Redirect if the create contact button is not set
                     if (empty($create_contact_list_btn)) {
                         MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_allsetup_page'));
