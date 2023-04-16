@@ -62,7 +62,7 @@ class Mailjet
         if (\defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '5.4.3';
+            $this->version = '5.4.4';
         }
         $this->plugin_name = 'mailjet';
         $this->load_dependencies();
@@ -74,34 +74,7 @@ class Mailjet
         $this->addMailjetPHPMailer();
         $this->registerMailjetWidget();
 
-        add_shortcode('mailjet_subscribe', array($this, 'display_mailjet_widget'));
         add_shortcode('mailjet_form_builder', array($this, 'display_mailjet_form_builder_widget'));
-    }
-
-    /**
-     * @param $atts
-     * @param $content
-     * @param $tag
-     * @return false|string
-     */
-    public static function display_mailjet_widget($atts = [], $content = null, $tag = '')
-    {
-        \extract(shortcode_atts(['widget_id' => null], $atts, $tag));
-        // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
-        $instance = get_option('widget_wp_mailjet_subscribe_widget');
-        // In case we don't have 'widget_id' attribute in the shrotcode defined by user - we use the first widget id from the collection
-        if (empty($widget_id)) {
-            $widgetIds = [];
-            foreach (\array_keys($instance) as $key) {
-                if (\is_integer($key)) {
-                    $widgetIds[] = $key;
-                }
-            }
-            $widget_id = \min($widgetIds);
-        }
-        ob_start();
-        the_widget('MailjetWp\\MailjetPlugin\\Widget\\WP_Mailjet_Subscribe_Widget', $instance[(int)$widget_id]);
-        return \ob_get_clean();
     }
 
     /**
@@ -183,7 +156,6 @@ class Mailjet
         if (get_option('activate_mailjet_woo_integration') === '1') {
             $this->addWoocommerceActions();
         }
-        $this->loader->add_action('admin_notices', $plugin_admin, 'mailjetPluginNotification');
     }
 
     /**
@@ -226,9 +198,6 @@ class Mailjet
      */
     public function wp_mailjet_register_widgets()
     {
-        $widget = 'MailjetWp\\MailjetPlugin\\Widget\\WP_Mailjet_Subscribe_Widget';
-        register_widget($widget);
-
         $widgetFormBuilder = 'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\WP_Mailjet_FormBuilder_Widget';
         register_widget($widgetFormBuilder);
     }

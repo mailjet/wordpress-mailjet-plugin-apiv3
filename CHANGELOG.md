@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 5.4.4
+* Removed deprecated subscription widget.
+
 ##### 5.4.3
 * Fixed bug with infinite redirect when you go from plugin page to Mailjet settings page
 
