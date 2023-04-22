@@ -9,15 +9,13 @@ class MailjetUpdate
         $apikey = get_option('mailjet_apikey');
         $apisecret = get_option('mailjet_apisecret');
         // Check if transition from v4 to v5 is already done
-        if ($apikey != \FALSE && $apisecret != \FALSE) {
-            return \true;
+        if ($apikey != false && $apisecret != false) {
+            return true;
         }
         $username = get_option('mailjet_username');
         add_option('mailjet_apikey', $username);
         $password = get_option('mailjet_password');
         add_option('mailjet_apisecret', $password);
-        $mailjet_widget = get_option('widget_wp_mailjet_subscribe_widget');
-        add_option('widget_mailjet', $mailjet_widget);
         $initSyncListId = get_option('mailjet_initial_sync_list_id');
         add_option('mailjet_sync_list', $initSyncListId);
         $commentAuthorsListId = get_option('mailjet_comment_authors_list_id');
