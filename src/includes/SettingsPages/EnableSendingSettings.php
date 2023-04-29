@@ -31,6 +31,11 @@ class EnableSendingSettings
         </p>
         <?php 
     }
+
+    /**
+     * @param array $args
+     * @return void
+     */
     public function mailjet_enable_sending_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
@@ -41,8 +46,7 @@ class EnableSendingSettings
         $mailjetSsl = get_option('mailjet_ssl');
         $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
         $mailjetSenders = MailjetApi::getMailjetSenders();
-        $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : array();
-        // output the field
+        $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : [];
         ?>
 
         <fieldset class="settingsSendingFldset">
@@ -69,15 +73,24 @@ class EnableSendingSettings
                     <label class="mj-label" for="mailjet_from_email"><b><?php 
         _e('From: name@email.com', 'mailjet-for-wordpress');
         ?></b></label>
+                    <?php if (!$mailjetSenders) : ?>
+                        <div class="fromFldGroup">
+                            <label style="color: #FEAD0D">
+                                <?php _e('If you do not have senders. Read an article, please', 'mailjet-for-wordpress'); ?>
+                                <a target="_blank" href="https://documentation.mailjet.com/hc/en-us/articles/360042759253-How-to-add-a-sender-address-">Read more</a>
+
+                            </label>
+                        </div>
+                    <?php endif;?>
                     <div class="fromFldGroup">
                         <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
                         <?php 
         foreach ($mailjetSenders as $mailjetSender) {
-            if ($mailjetSender['Status'] != 'Active') {
+            if ($mailjetSender['Status'] !== 'Active') {
                 continue;
             }
             if (!empty($mailjet_from_email_extra)) {
-                if (\stristr($mailjetSender['Email'], '*') && \stristr($mailjetFromEmail, \str_ireplace('*', '', $mailjetSender['Email']))) {
+                if (stripos($mailjetSender['Email'], '*') !== false && stripos($mailjetFromEmail, str_ireplace('*', '', $mailjetSender['Email'])) !== false) {
                     $mailjetFromEmail = $mailjetSender['Email'];
                 }
             }
