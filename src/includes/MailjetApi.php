@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Includes;
 
+use Exception;
 use MailjetWp\GuzzleHttp\Exception\RequestException;
 use MailjetWp\Mailjet\Client;
 use MailjetWp\Mailjet\Resources;
@@ -22,6 +23,11 @@ use MailjetWp\Mailjet\Response;
 class MailjetApi
 {
     private static $mjApiClient = null;
+
+    /**
+     * @return Client|null
+     * @throws Exception
+     */
     public static function getApiClient()
     {
         if (self::$mjApiClient instanceof Client) {
@@ -30,7 +36,7 @@ class MailjetApi
         $mailjetApikey = get_option('mailjet_apikey');
         $mailjetApiSecret = get_option('mailjet_apisecret');
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
-            throw new \Exception('Missing Mailjet API credentials');
+            throw new Exception('Missing Mailjet API credentials');
         }
         $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
         $mjClient->addRequestOption(\CURLOPT_USERAGENT, 'wordpress-' . MAILJET_VERSION);
@@ -58,7 +64,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $filters = ['Limit' => '0', 'Sort' => 'Name ASC'];
@@ -85,7 +91,7 @@ class MailjetApi
         }
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $body = ['Name' => $listName];
@@ -108,7 +114,7 @@ class MailjetApi
         }
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $filters = array('ID' => $contactListId);
@@ -138,7 +144,7 @@ class MailjetApi
         }
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $filters = array('ID' => $contactListId);
@@ -164,7 +170,7 @@ class MailjetApi
         }
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $limit = 1000;
@@ -194,7 +200,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $filters = array('limit' => 0, 'Sort' => 'Name ASC');
@@ -232,7 +238,7 @@ class MailjetApi
         }
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         //      Name: the name of the custom data field
@@ -251,11 +257,14 @@ class MailjetApi
         return false;
     }
 
+    /**
+     * @return array|false
+     */
     public static function getMailjetSegments()
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {
@@ -265,10 +274,17 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            return \false;
         }
+
+        return false;
     }
+
+    /**
+     * @param $name
+     * @param $expression
+     * @param $description
+     * @return array|false
+     */
     public static function createMailjetSegment($name, $expression, $description = '')
     {
         if (empty($name) || empty($expression)) {
@@ -276,7 +292,7 @@ class MailjetApi
         }
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $body = ['Description' => $description, 'Expression' => $expression, 'Name' => $name];
@@ -287,29 +303,32 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            return \false;
         }
+
+        return false;
     }
+
+    /**
+     * @return array|bool
+     */
     public static function getMailjetSenders()
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
-            return \false;
+        } catch (Exception $e) {
+            return false;
         }
         $filters = ['Limit' => '0', 'Sort' => 'ID DESC'];
         try {
             $response = $mjApiClient->get(Resources::$Sender, ['filters' => $filters]);
         } catch (ConnectException $e) {
-            return \false;
+            return false;
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            //return $response->getStatus();
-            return \false;
         }
+
+        return false;
     }
 
     /**
@@ -322,7 +341,7 @@ class MailjetApi
             if ($mjApiClient === null) {
                 return false;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
         $filters = ['Limit' => '1'];
@@ -351,7 +370,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $body = ['Action' => $action, 'Contacts' => $contacts];
@@ -362,10 +381,9 @@ class MailjetApi
         }
         if ($response->success()) {
             return $response->getData();
-        } else {
-            return \false;
-            //            return $response->getStatus();
         }
+
+        return false;
     }
     /**
      * Add a contact to a Mailjet contact list
@@ -374,7 +392,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $name = $contact['Properties']['firstname'] ?? '';
@@ -403,7 +421,7 @@ class MailjetApi
         $existsAndSubscribed = \false;
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $filters = ['ContactEmail' => $email, 'ContactsList' => $listId];
@@ -425,7 +443,7 @@ class MailjetApi
         return $exists && $existsAndSubscribed;
     }
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function isContactInList($email, $listId, $getContactId = \false)
     {
@@ -445,7 +463,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         $response = $mjApiClient->get(['contactdata', $contactEmail], []);
@@ -455,7 +473,7 @@ class MailjetApi
         return \false;
     }
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function updateContactData($contactEmail, $data)
     {
@@ -467,7 +485,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {
@@ -488,7 +506,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {
@@ -506,7 +524,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {
@@ -524,7 +542,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {
@@ -546,7 +564,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {
@@ -563,7 +581,7 @@ class MailjetApi
     {
         try {
             $mjApiClient = self::getApiClient();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return \false;
         }
         try {

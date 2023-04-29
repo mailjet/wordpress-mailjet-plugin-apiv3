@@ -1367,3 +1367,6 @@ msgstr ""
 #: src/widget/WP_Mailjet_Subscribe_Widget.php:288
 msgid "Congratulations, you have successfully subscribed!"
 msgstr ""
+
+msgid "If you do not have senders. Read an article, please"
+msgstr ""

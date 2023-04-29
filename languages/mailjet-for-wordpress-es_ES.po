@@ -1682,3 +1682,6 @@ msgstr ""
 
 msgid "ItalianLabel4"
 msgstr ""
+
+msgid "If you do not have senders. Read an article, please"
+msgstr "Si iu para no tener remitentes. Edite un artículo, por favor"

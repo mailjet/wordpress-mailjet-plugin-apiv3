@@ -1134,3 +1134,6 @@ msgstr "Default page"
 #: src/widget/views/designforfailure.php:6
 msgid "Could not connect to mailjet api, please try again later!"
 msgstr "Could not connect to mailjet api, please try again later!"
+
+msgid "If you do not have senders. Read an article, please"
+msgstr "If you do not have senders. Read an article, please"
