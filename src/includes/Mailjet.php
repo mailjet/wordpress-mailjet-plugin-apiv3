@@ -84,7 +84,6 @@ class Mailjet
      */
     public static function display_mailjet_form_builder_widget(array $attr = [], string $tag = '')
     {
-        var_dump('HERE');
         \extract(shortcode_atts(['widget_id' => null], $attr, $tag));
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
         $instance = get_option('mailjet_form_builder_widget_options');
@@ -153,7 +152,7 @@ class Mailjet
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_post_user_access_settings_custom_hook', new UserAccessSettings(), 'user_access_post_handler');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
-        if (get_option('activate_mailjet_woo_integration') === '1') {
+        if (get_option('activate_mailjet_woo_integration') == '1') {
             $this->addWoocommerceActions();
         }
     }
@@ -241,10 +240,14 @@ class Mailjet
     {
         return $this->version;
     }
+
+    /**
+     * @return void
+     */
     private function addWoocommerceActions()
     {
         $wooCommerceSettings = WooCommerceSettings::getInstance();
-        $this->loader->add_action('admin_post_order_notification_settings_custom_hook', $wooCommerceSettings, 'orders_automation_settings_post');
+        $wooCommerceSettings->orders_automation_settings_post();
         $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
         if (get_option('mailjet_woo_edata_sync') === '1') {
             $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);

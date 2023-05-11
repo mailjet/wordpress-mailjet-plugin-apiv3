@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
@@ -31,6 +32,7 @@ class WooCommerceSettings
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueFrontScripts']);
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
+        add_action('admin_post_order_notification_settings_custom_hook', [$this, 'orders_automation_settings_post']);
         // cron settings for abandoned cart feature
         add_filter('cron_schedules', [$this, 'add_cron_schedule']);
         add_filter('template_include', [$this, 'manage_action']);
@@ -314,12 +316,12 @@ class WooCommerceSettings
                 $setting = $wooSettings;
                 $setting['enabled'] = 'yes';
             }
-            if (\in_array($key, $hooks)) {
+            if (in_array($key, $hooks)) {
                 $setting['enabled'] = 'no';
             }
             update_option($hook, $setting);
         }
-        return \true;
+        return true;
     }
 
     /**
@@ -739,38 +741,53 @@ class WooCommerceSettings
     public function orders_automation_settings_post()
     {
         $data = array_map('sanitize_text_field', $_POST);
-        if (!wp_verify_nonce($data['custom_nonce'], 'mailjet_order_notifications_settings_page_html')) {
-            update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
-            wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
+        if (!$data) {
+            return;
         }
+        $activeHooksData = [];
+        if (array_key_exists('mailjet_wc_active_hooks', $_POST)) {
+            $activeHooksData = array_map('sanitize_text_field', $_POST['mailjet_wc_active_hooks']);
+        }
+
         if (isset($data['submitAction']) && sanitize_text_field($data['submitAction']) === 'stop') {
             $activeHooks = [];
-            $data['mailjet_wc_active_hooks'] = [];
+            $activeHooksData = [];
         } else {
-            $activeHooks = $this->prepareAutomationHooks($data);
+            $activeHooks = $this->prepareAutomationHooks($activeHooksData);
             $this->createTemplates(\false, \true);
         }
         $this->toggleWooSettings($activeHooks);
-        $notifications = isset($data['mailjet_wc_active_hooks']) ? $data['mailjet_wc_active_hooks'] : [];
+        $notifications = isset($activeHooksData) ? $activeHooksData : [];
         update_option('mailjet_wc_active_hooks', $activeHooks);
         update_option('mailjet_order_notifications', $notifications);
         update_option('mailjet_post_update_message', ['success' => \true, 'message' => __('Automation settings updated!', 'mailjet-for-wordpress'), 'mj_order_notif_activate' => !empty($activeHooks)]);
-        wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
 
     /**
      * @param $data
      * @return array
      */
-    private function prepareAutomationHooks($data)
+    private function prepareAutomationHooks($automatedHooks)
     {
-        if (!isset($data['mailjet_wc_active_hooks'])) {
+        if (!isset($automatedHooks)) {
             return [];
         }
-        $actions = ['mailjet_order_confirmation' => [['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing_once'], ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'], ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque']], 'mailjet_shipping_confirmation' => [['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed']], 'mailjet_refund_confirmation' => [['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']]];
+        $actions = [
+            'mailjet_order_confirmation' => [
+                ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing_once'],
+                ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque'],
+            ],
+            'mailjet_shipping_confirmation' => [
+                ['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed'],
+            ],
+            'mailjet_refund_confirmation' => [
+                ['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded'],
+            ],
+        ];
         $returnedHooks = [];
-        foreach ($data['mailjet_wc_active_hooks'] as $key => $val) {
-            if ($val === '1') {
+        foreach ($automatedHooks as $key => $val) {
+            if ((int)$val === 1) {
                 $hooks = $actions[$key];
                 foreach ($hooks as $hookInfo) {
                     $returnedHooks[] = $hookInfo;
