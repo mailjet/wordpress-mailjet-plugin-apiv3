@@ -88,7 +88,6 @@ class Mailjet
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
         $instance = get_option('mailjet_form_builder_widget_options');
 
-        var_dump($instance);
         // In case we don't have 'widget_id' attribute in the shortcode defined by user - we use the first widget id from the collection
         if (empty($widget_id)) {
             $widgetIds = [];
@@ -247,7 +246,9 @@ class Mailjet
     private function addWoocommerceActions()
     {
         $wooCommerceSettings = WooCommerceSettings::getInstance();
-        $wooCommerceSettings->orders_automation_settings_post();
+        if (isset($_POST['action']) && $_POST['action'] === 'order_notification_settings_custom_hook') {
+            $wooCommerceSettings->orders_automation_settings_post();
+        }
         $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
         if (get_option('mailjet_woo_edata_sync') === '1') {
             $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);

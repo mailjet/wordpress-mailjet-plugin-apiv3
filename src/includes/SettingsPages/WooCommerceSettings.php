@@ -32,7 +32,6 @@ class WooCommerceSettings
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueFrontScripts']);
         add_action('wp_ajax_get_contact_lists', [$this, 'subscribeViaAjax']);
-        add_action('admin_post_order_notification_settings_custom_hook', [$this, 'orders_automation_settings_post']);
         // cron settings for abandoned cart feature
         add_filter('cron_schedules', [$this, 'add_cron_schedule']);
         add_filter('template_include', [$this, 'manage_action']);
@@ -533,6 +532,7 @@ class WooCommerceSettings
         $vars = ['first_name' => $order->get_billing_first_name(), 'order_number' => $orderId, 'order_subtotal' => wc_price($order->get_subtotal()), 'order_discount_total' => wc_price($order->get_discount_total()), 'order_total_tax' => wc_price($order->get_tax_totals()), 'order_shipping_total' => wc_price($order->get_shipping_total()), 'order_shipping_address' => $order->get_formatted_shipping_address(), 'order_billing_address' => $order->get_formatted_billing_address(), 'order_total' => $order->get_formatted_order_total(), 'order_link' => $order->get_view_order_url(), 'store_email' => get_option('mailjet_from_email'), 'store_name' => get_bloginfo(), 'store_address' => get_option('woocommerce_store_address'), 'products' => $products];
         $data = $this->getFormattedEmailData($this->getOrderRecipients($order, $vars), $templateId);
         $response = MailjetApi::sendEmail($data);
+
         if ($response === \false) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . \json_encode($data));
             return;
@@ -803,10 +803,7 @@ class WooCommerceSettings
     public function abandoned_cart_settings_post()
     {
         $data = array_map('sanitize_text_field', $_POST);
-        if (!wp_verify_nonce($data['custom_nonce'], 'mailjet_order_notifications_settings_page_html')) {
-            update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
-            wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
-        }
+
         $wasActivated = \false;
         if (isset($data['activate_ac'])) {
             update_option('mailjet_woo_abandoned_cart_activate', sanitize_text_field($data['activate_ac']));
@@ -823,7 +820,6 @@ class WooCommerceSettings
             update_option('mailjet_woo_abandoned_cart_sending_time', $sendingTimeInSeconds);
         }
         update_option('mailjet_post_update_message', ['success' => \true, 'message' => 'Abandoned cart settings updated!', 'mjACWasActivated' => $wasActivated]);
-        wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
     }
 
     /**
@@ -920,8 +916,15 @@ class WooCommerceSettings
      */
     private function getOrderRecipients($order, $vars)
     {
-        $recipients = ['Email' => $order->get_billing_email(), 'Name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(), 'Vars' => $vars];
-        return $recipients;
+        return [
+            'To' => [
+                [
+                    'Email' => $order->get_billing_email(),
+                    'Name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+                ],
+            ],
+            'Vars' => $vars,
+        ];
     }
 
     /**
@@ -937,8 +940,14 @@ class WooCommerceSettings
             $data['FromEmail'] = $template['Headers']['SenderEmail'];
             $data['FromName'] = $template['Headers']['SenderName'];
         }
+        $data['From'] = [
+            'Email' => $data['FromEmail'],
+            'Name' => $data['FromName'],
+        ];
         $data['Recipients'][] = $recipients;
-        $data['Mj-TemplateID'] = $templateId;
+        $data['To'] = $recipients['To'];
+        $data['Mj-TemplateID'] = (int)$templateId;
+        $data['TemplateID'] = (int)$templateId;
         $data['Mj-TemplateLanguage'] = \true;
         $data['Mj-TemplateErrorReporting'] = get_option('woocommerce_email_from_email');
         $data['Mj-TemplateErrorDeliver'] = \true;
