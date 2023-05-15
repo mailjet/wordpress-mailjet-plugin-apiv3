@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 5.4.5
+* Fixed bug with activating Woocommerce email notification templates.
+
 ##### 5.4.4
 * Removed deprecated subscription widget.
 

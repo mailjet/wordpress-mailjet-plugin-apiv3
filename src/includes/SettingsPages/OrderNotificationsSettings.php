@@ -8,6 +8,9 @@ use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 class OrderNotificationsSettings
 {
+    /**
+     * @return void
+     */
     public function mailjet_order_notifications_settings_page_html()
     {
         $wooCommerceActivated = get_option('activate_mailjet_woo_integration') === '1' ? \true : \false;
@@ -124,7 +127,7 @@ class OrderNotificationsSettings
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img
                         src="<?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+        echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
         ?>"
                         alt="Mailjet Logo"/></div>
             <div class="mainContainer dashboard">
@@ -138,9 +141,7 @@ class OrderNotificationsSettings
         ?>
                     </a>
                 </div>
-                <form action="<?php 
-        echo esc_url(admin_url('admin-post.php'));
-        ?>" method="post" id="order-notification-form">
+                <form action="<?php echo esc_url(admin_url('admin.php?page=mailjet_order_notifications_page'));?>" method="post" name="test" id="order-notification-form">
                     <fieldset class="mj-form-content">
                         <div id="mj-top_bar">
                             <h1><?php 
@@ -162,7 +163,7 @@ class OrderNotificationsSettings
                         <div style="width: fit-content">
                             <?php 
         if ($post_update) {
-            echo esc_attr($this->displayMessage($post_update));
+            echo $this->displayMessage($post_update);
         }
         ?>
                         </div>
@@ -172,7 +173,7 @@ class OrderNotificationsSettings
         set_query_var('isNotificationActive', $isOrderConfirmationActive);
         set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_order_confirmation]');
         set_query_var('checkboxId', 'order_confirmation');
-        set_query_var('templateFrom', \sprintf('%s &lt%s&gt', $orderConfTemplate['Headers']['SenderName'] ?: '', $orderConfTemplate['Headers']['SenderEmail']));
+        set_query_var('templateFrom', \sprintf('%s <%s>', $orderConfTemplate['Headers']['SenderName'] ?: '', $orderConfTemplate['Headers']['SenderEmail'] ?: ''));
         set_query_var('templateSubject', $orderConfTemplate['Headers']['Subject']);
         set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $orderConfTemplate['Headers']['ID']);
         load_template($templateRowTemplate, \false);
@@ -183,7 +184,7 @@ class OrderNotificationsSettings
         set_query_var('isNotificationActive', $isShippingConfirmationActive);
         set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_shipping_confirmation]');
         set_query_var('checkboxId', 'shipping_confirmation');
-        set_query_var('templateFrom', \sprintf('%s &lt%s&gt', $shippingTemplate['Headers']['SenderName'] ?: '', $shippingTemplate['Headers']['SenderEmail']));
+        set_query_var('templateFrom', \sprintf('%s <%s>', $shippingTemplate['Headers']['SenderName'] ?: '', $shippingTemplate['Headers']['SenderEmail']));
         set_query_var('templateSubject', $shippingTemplate['Headers']['Subject']);
         set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $shippingTemplate['Headers']['ID']);
         load_template($templateRowTemplate, \false);
@@ -194,7 +195,7 @@ class OrderNotificationsSettings
         set_query_var('isNotificationActive', $isRefundConfirmationActive);
         set_query_var('checkboxName', 'mailjet_wc_active_hooks[mailjet_refund_confirmation]');
         set_query_var('checkboxId', 'refund_confirmation');
-        set_query_var('templateFrom', \sprintf('%s &lt%s&gt', $refundTemplate['Headers']['SenderName'] ?: '', $refundTemplate['Headers']['SenderEmail']));
+        set_query_var('templateFrom', \sprintf('%s <%s>', $refundTemplate['Headers']['SenderName'] ?: '', $refundTemplate['Headers']['SenderEmail']));
         set_query_var('templateSubject', $refundTemplate['Headers']['Subject']);
         set_query_var('templateLink', 'admin.php?page=mailjet_template&backto=ordernotif&id=' . $refundTemplate['Headers']['ID']);
         load_template($templateRowTemplate, \false);

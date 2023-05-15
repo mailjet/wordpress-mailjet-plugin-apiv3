@@ -577,6 +577,11 @@ class MailjetApi
         }
         return \false;
     }
+
+    /**
+     * @param $content
+     * @return array|false
+     */
     public static function sendEmail($content)
     {
         try {
@@ -584,8 +589,10 @@ class MailjetApi
         } catch (Exception $e) {
             return \false;
         }
+        $body = ['Messages' => [$content]];
+
         try {
-            $response = $mjApiClient->post(Resources::$Email, $content);
+            $response = $mjApiClient->post(Resources::$Email, ['body' => $body], ['version' => 'v3.1']);
         } catch (ConnectException $e) {
             return \false;
         }

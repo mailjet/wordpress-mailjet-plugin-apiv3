@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
@@ -314,12 +315,12 @@ class WooCommerceSettings
                 $setting = $wooSettings;
                 $setting['enabled'] = 'yes';
             }
-            if (\in_array($key, $hooks)) {
+            if (in_array($key, $hooks)) {
                 $setting['enabled'] = 'no';
             }
             update_option($hook, $setting);
         }
-        return \true;
+        return true;
     }
 
     /**
@@ -531,6 +532,7 @@ class WooCommerceSettings
         $vars = ['first_name' => $order->get_billing_first_name(), 'order_number' => $orderId, 'order_subtotal' => wc_price($order->get_subtotal()), 'order_discount_total' => wc_price($order->get_discount_total()), 'order_total_tax' => wc_price($order->get_tax_totals()), 'order_shipping_total' => wc_price($order->get_shipping_total()), 'order_shipping_address' => $order->get_formatted_shipping_address(), 'order_billing_address' => $order->get_formatted_billing_address(), 'order_total' => $order->get_formatted_order_total(), 'order_link' => $order->get_view_order_url(), 'store_email' => get_option('mailjet_from_email'), 'store_name' => get_bloginfo(), 'store_address' => get_option('woocommerce_store_address'), 'products' => $products];
         $data = $this->getFormattedEmailData($this->getOrderRecipients($order, $vars), $templateId);
         $response = MailjetApi::sendEmail($data);
+
         if ($response === \false) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . \json_encode($data));
             return;
@@ -739,38 +741,53 @@ class WooCommerceSettings
     public function orders_automation_settings_post()
     {
         $data = array_map('sanitize_text_field', $_POST);
-        if (!wp_verify_nonce($data['custom_nonce'], 'mailjet_order_notifications_settings_page_html')) {
-            update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
-            wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
+        if (!$data) {
+            return;
         }
+        $activeHooksData = [];
+        if (array_key_exists('mailjet_wc_active_hooks', $_POST)) {
+            $activeHooksData = array_map('sanitize_text_field', $_POST['mailjet_wc_active_hooks']);
+        }
+
         if (isset($data['submitAction']) && sanitize_text_field($data['submitAction']) === 'stop') {
             $activeHooks = [];
-            $data['mailjet_wc_active_hooks'] = [];
+            $activeHooksData = [];
         } else {
-            $activeHooks = $this->prepareAutomationHooks($data);
+            $activeHooks = $this->prepareAutomationHooks($activeHooksData);
             $this->createTemplates(\false, \true);
         }
         $this->toggleWooSettings($activeHooks);
-        $notifications = isset($data['mailjet_wc_active_hooks']) ? $data['mailjet_wc_active_hooks'] : [];
+        $notifications = isset($activeHooksData) ? $activeHooksData : [];
         update_option('mailjet_wc_active_hooks', $activeHooks);
         update_option('mailjet_order_notifications', $notifications);
         update_option('mailjet_post_update_message', ['success' => \true, 'message' => __('Automation settings updated!', 'mailjet-for-wordpress'), 'mj_order_notif_activate' => !empty($activeHooks)]);
-        wp_redirect(add_query_arg(array('page' => 'mailjet_order_notifications_page'), admin_url('admin.php')));
     }
 
     /**
      * @param $data
      * @return array
      */
-    private function prepareAutomationHooks($data)
+    private function prepareAutomationHooks($automatedHooks)
     {
-        if (!isset($data['mailjet_wc_active_hooks'])) {
+        if (!isset($automatedHooks)) {
             return [];
         }
-        $actions = ['mailjet_order_confirmation' => [['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing_once'], ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'], ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque']], 'mailjet_shipping_confirmation' => [['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed']], 'mailjet_refund_confirmation' => [['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded']]];
+        $actions = [
+            'mailjet_order_confirmation' => [
+                ['hook' => 'woocommerce_order_status_processing', 'callable' => 'send_order_status_processing_once'],
+                ['hook' => 'woocommerce_before_resend_order_emails', 'callable' => 'send_order_status_processing'],
+                ['hook' => 'woocommerce_cheque_process_payment_order_status', 'callable' => 'send_order_processing_paid_by_cheque'],
+            ],
+            'mailjet_shipping_confirmation' => [
+                ['hook' => 'woocommerce_order_status_completed', 'callable' => 'send_order_status_completed'],
+            ],
+            'mailjet_refund_confirmation' => [
+                ['hook' => 'woocommerce_order_status_refunded', 'callable' => 'send_order_status_refunded'],
+            ],
+        ];
         $returnedHooks = [];
-        foreach ($data['mailjet_wc_active_hooks'] as $key => $val) {
-            if ($val === '1') {
+        foreach ($automatedHooks as $key => $val) {
+            if ((int)$val === 1) {
                 $hooks = $actions[$key];
                 foreach ($hooks as $hookInfo) {
                     $returnedHooks[] = $hookInfo;
@@ -786,10 +803,7 @@ class WooCommerceSettings
     public function abandoned_cart_settings_post()
     {
         $data = array_map('sanitize_text_field', $_POST);
-        if (!wp_verify_nonce($data['custom_nonce'], 'mailjet_order_notifications_settings_page_html')) {
-            update_option('mailjet_post_update_message', ['success' => \false, 'message' => 'Invalid credentials!']);
-            wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
-        }
+
         $wasActivated = \false;
         if (isset($data['activate_ac'])) {
             update_option('mailjet_woo_abandoned_cart_activate', sanitize_text_field($data['activate_ac']));
@@ -806,7 +820,6 @@ class WooCommerceSettings
             update_option('mailjet_woo_abandoned_cart_sending_time', $sendingTimeInSeconds);
         }
         update_option('mailjet_post_update_message', ['success' => \true, 'message' => 'Abandoned cart settings updated!', 'mjACWasActivated' => $wasActivated]);
-        wp_redirect(add_query_arg(array('page' => 'mailjet_abandoned_cart_page'), admin_url('admin.php')));
     }
 
     /**
@@ -903,8 +916,15 @@ class WooCommerceSettings
      */
     private function getOrderRecipients($order, $vars)
     {
-        $recipients = ['Email' => $order->get_billing_email(), 'Name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(), 'Vars' => $vars];
-        return $recipients;
+        return [
+            'To' => [
+                [
+                    'Email' => $order->get_billing_email(),
+                    'Name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+                ],
+            ],
+            'Vars' => $vars,
+        ];
     }
 
     /**
@@ -920,8 +940,14 @@ class WooCommerceSettings
             $data['FromEmail'] = $template['Headers']['SenderEmail'];
             $data['FromName'] = $template['Headers']['SenderName'];
         }
+        $data['From'] = [
+            'Email' => $data['FromEmail'],
+            'Name' => $data['FromName'],
+        ];
         $data['Recipients'][] = $recipients;
-        $data['Mj-TemplateID'] = $templateId;
+        $data['To'] = $recipients['To'];
+        $data['Mj-TemplateID'] = (int)$templateId;
+        $data['TemplateID'] = (int)$templateId;
         $data['Mj-TemplateLanguage'] = \true;
         $data['Mj-TemplateErrorReporting'] = get_option('woocommerce_email_from_email');
         $data['Mj-TemplateErrorDeliver'] = \true;
