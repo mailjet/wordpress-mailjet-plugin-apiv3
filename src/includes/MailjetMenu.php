@@ -124,11 +124,18 @@ class MailjetMenu
                 <div class="mainContainer">';
             echo wp_kses($mailjetIframe->getHtml(), [
                 'iframe' => [
-                    'src'             => true,
-                    'height'          => true,
-                    'width'           => true,
-                    'frameborder'     => true,
-                    'allowfullscreen' => true,
+                    'align' => true,
+                    'width' => true,
+                    'height' => true,
+                    'frameborder' => true,
+                    'name' => true,
+                    'src' => true,
+                    'id' => true,
+                    'class' => true,
+                    'style' => true,
+                    'scrolling' => true,
+                    'marginwidth' => true,
+                    'marginheight' => true,
                 ]
             ]);
             echo '</div>';
