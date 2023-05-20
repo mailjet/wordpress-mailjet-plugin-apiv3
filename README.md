@@ -17,7 +17,7 @@ Includes WooCommerce automated and order emails. Design, send and track engaging
 * Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
 * Support new widget for Form Builder
 
-## DescriptionFixed bug with activating Woocommerce email notification templates.
+## Description
 
 Mailjet's official plugin on WordPress gives you access to:
 
