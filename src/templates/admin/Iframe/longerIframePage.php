@@ -33,11 +33,18 @@ echo __('Edit template', 'mailjet-for-wordpress');
             <?php 
 echo wp_kses($iframeHtml, [
     'iframe' => [
-        'src'             => true,
-        'height'          => true,
-        'width'           => true,
-        'frameborder'     => true,
-        'allowfullscreen' => true,
+        'align' => true,
+        'width' => true,
+        'height' => true,
+        'frameborder' => true,
+        'name' => true,
+        'src' => true,
+        'id' => true,
+        'class' => true,
+        'style' => true,
+        'scrolling' => true,
+        'marginwidth' => true,
+        'marginheight' => true,
     ]
 ]);
 ?>

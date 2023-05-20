@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 5.4.6
+* Fixed bug with error during editing email templates in iframe.
+
 ##### 5.4.5
 * Fixed bug with activating Woocommerce email notification templates.
 

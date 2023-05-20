@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.1.1
-- Stable tag: 5.4.5
+- Stable tag: 5.4.6
 - Requires PHP: 5.6
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,7 +17,7 @@ Includes WooCommerce automated and order emails. Design, send and track engaging
 * Integration with **Contact Form 7** - add a "Subscribe to our newsletter" checkbox to any Contact Form 7 form and easily add subscribers to your contact lists
 * Support new widget for Form Builder
 
-## Description
+## DescriptionFixed bug with activating Woocommerce email notification templates.
 
 Mailjet's official plugin on WordPress gives you access to:
 
@@ -206,6 +206,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
+
+##### 5.4.6
+* Fixed bug with error during editing email templates in iframe.
 
 ##### 5.4.5
 * Fixed bug with activating Woocommerce email notification templates.
