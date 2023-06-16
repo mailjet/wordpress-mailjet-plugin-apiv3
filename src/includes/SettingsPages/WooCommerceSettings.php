@@ -948,9 +948,10 @@ class WooCommerceSettings
         $data['To'] = $recipients['To'];
         $data['Mj-TemplateID'] = (int)$templateId;
         $data['TemplateID'] = (int)$templateId;
-        $data['Mj-TemplateLanguage'] = \true;
+        $data['Mj-TemplateLanguage'] = 1;
+        $data['TemplateLanguage'] = 1;
         $data['Mj-TemplateErrorReporting'] = get_option('woocommerce_email_from_email');
-        $data['Mj-TemplateErrorDeliver'] = \true;
+        $data['Mj-TemplateErrorDeliver'] = true;
         $data['body'] = $data;
         return $data;
     }
