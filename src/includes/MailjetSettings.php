@@ -90,7 +90,7 @@ class MailjetSettings
         if (\in_array($currentPage, array('mailjet_allsetup_page', 'mailjet_dashboard_page', 'mailjet_user_access_page', 'mailjet_integrations_page', 'mailjet_subscription_options_page', 'mailjet_sending_settings_page', 'mailjet_connect_account_page', 'mailjet_initial_contact_lists_page', 'mailjet_settings_page'))) {
             $apiCredentialsOk = get_option('api_credentials_ok');
             if (!($fromPage == 'plugins') && !empty($apiCredentialsOk) && '1' != $apiCredentialsOk) {
-                MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
+                self::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
             }
         }
         MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Settings Init End ]');
