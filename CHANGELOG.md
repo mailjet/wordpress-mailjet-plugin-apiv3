@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 5.4.8
+* Fixed bug with redirect problem during initialization of plugin.
+
 ##### 5.4.6
 * Fixed bug with error during editing email templates in iframe.
 
