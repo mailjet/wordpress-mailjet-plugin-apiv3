@@ -128,7 +128,7 @@ class MailjetMenu
             echo '</div>';
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/apikeys">https://app.mailjet.com/account/apikeys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
@@ -159,7 +159,7 @@ class MailjetMenu
             echo '</div>';
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/apikeys">https://app.mailjet.com/account/apikeys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
@@ -190,7 +190,7 @@ class MailjetMenu
             echo '</div>';
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/apikeys">https://app.mailjet.com/account/apikeys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
@@ -212,7 +212,7 @@ class MailjetMenu
             $iframeHtml = $mailjetIframe->getHtml(\true);
         } catch (MailjetException $e) {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ ' . $e->getMessage() . ' ]');
-            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+            add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/apikeys">https://app.mailjet.com/account/apikeys</a>', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             update_option('api_credentials_ok', 0);
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));

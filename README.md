@@ -73,7 +73,7 @@ Mailjet's official plugin on WordPress gives you access to:
 Yes. You can [create one for free](https://app.mailjet.com/signup?aff=wordpressmj): it's easy and it only takes a few minutes.
 
 ##### How to get started with this plugin?
-Once you have a Mailjet account, grab your [Mailjet API credentials](https://app.mailjet.com/account/api_keys) and activate the plugin. An installation wizard will guide you through. 
+Once you have a Mailjet account, grab your [Mailjet API credentials](https://app.mailjet.com/account/apikeys) and activate the plugin. An installation wizard will guide you through. 
 For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj).
 
 ##### How do I create a signup form or use the contact widget?
