@@ -35,6 +35,7 @@ class MailjetMenu
     public function display_menu()
     {
         if (current_user_can(UserAccessSettings::ACCESS_CAP_NAME)) {
+            //TODO WORK HERE
             add_menu_page(__('Connect your Mailjet account to get started', 'mailjet-for-wordpress'), 'Mailjet', 'read', 'mailjet_settings_page', [new InitialSettings(), 'mailjet_initial_settings_page_html'], plugin_dir_url(\dirname(__FILE__)) . 'admin/images/mj_logo_small.png');
             if (\function_exists('add_submenu_page')) {
                 add_submenu_page('', __('Manage your Mailjet lists', 'mailjet-for-wordpress'), __('Lists', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_contacts_menu', [$this, 'show_contacts_page']);

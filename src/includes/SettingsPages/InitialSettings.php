@@ -131,10 +131,7 @@ class InitialSettings
                 }
             }
         }
-        $api_credentials_ok = get_option('api_credentials_ok');
-        if (!($fromPage === 'plugins') && (!empty($api_credentials_ok) && '1' == $api_credentials_ok)) {
-            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
-        }
+
         //// show error/update messages
         settings_errors('mailjet_messages');
         ?>
