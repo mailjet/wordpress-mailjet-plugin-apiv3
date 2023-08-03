@@ -1,5 +1,9 @@
 ## Changelog
 
+##### 5.5.0
+* Fixed bug with redirect problem during initial step
+* Fixed links in the readme file and in the plugin
+
 ##### 5.4.8
 * Fixed bug with redirect problem during initialization of plugin.
 
