@@ -3,8 +3,8 @@
 Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
-Tested up to: 6.1.1
-Stable tag: 5.4.7
+Tested up to: 6.2.2
+Stable tag: 5.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -61,7 +61,7 @@ Because you want to make sure your emails get delivered to the inbox!
 Yes. You can [create one for free](https://app.mailjet.com/signup?aff=wordpressmj): it's easy and it only takes a few minutes.
 
 = How to get started with this plugin? =
-Once you have a Mailjet account, grab your [Mailjet API credentials](https://app.mailjet.com/account/api_keys) and activate the plugin. An installation wizard will guide you through. 
+Once you have a Mailjet account, grab your [Mailjet API credentials](https://app.mailjet.com/account/apikeys) and activate the plugin. An installation wizard will guide you through.
 For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj).
 
 = How do I create a signup form or use the contact widget? =
@@ -196,6 +196,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 7. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 5.5.0 =
+* Fixed bug with redirect problem during initial step
+* Fixed links in the readme file and in the plugin
 
 = 5.4.6 =
 * Fixed bug with error during editing email templates in iframe.

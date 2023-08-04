@@ -94,7 +94,7 @@ class ConnectAccountSettings
             // Validate Mailjet API credentials
             $isValidAPICredentials = MailjetApi::isValidAPICredentials();
             if (\false == $isValidAPICredentials) {
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/apikeys">https://app.mailjet.com/account/apikeys</a>', 'mailjet-for-wordpress'), 'error');
             } else {
                 // Update From Email and Name
                 add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));

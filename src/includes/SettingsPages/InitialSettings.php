@@ -35,7 +35,7 @@ class InitialSettings
         echo esc_attr($args['id']);
         ?>">
             <?php
-            echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/api_keys">My Account > API Keys</a> and paste your credentials below', 'mailjet-for-wordpress');
+            echo __('If you already have a Mailjet account, go to <a class="greenLink" target="_blank" href="https://app.mailjet.com/account/apikeys">My Account > API Keys</a> and paste your credentials below', 'mailjet-for-wordpress');
             ?>
         </p>
         <?php
@@ -114,7 +114,7 @@ class InitialSettings
             if (false == $isValidAPICredentials) {
                 update_option('api_credentials_ok', 0);
                 $executionError = true;
-                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/api_keys">https://app.mailjet.com/account/api_keys</a>', 'mailjet-for-wordpress'), 'error');
+                add_settings_error('mailjet_messages', 'mailjet_message', __('Please make sure that you are using the correct API key and Secret key associated to your Mailjet account: <a href="https://app.mailjet.com/account/apikeys">https://app.mailjet.com/account/apikeys</a>', 'mailjet-for-wordpress'), 'error');
             } else {
                 // Update From Email and Name
                 add_filter('wp_mail_from', [new MailjetMail(), 'wp_sender_email']);
@@ -131,10 +131,7 @@ class InitialSettings
                 }
             }
         }
-        $api_credentials_ok = get_option('api_credentials_ok');
-        if (!($fromPage === 'plugins') && (!empty($api_credentials_ok) && '1' == $api_credentials_ok)) {
-            MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_initial_contact_lists_page'));
-        }
+
         //// show error/update messages
         settings_errors('mailjet_messages');
         ?>
