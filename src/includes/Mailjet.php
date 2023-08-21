@@ -7,6 +7,7 @@ use MailjetWp\MailjetPlugin\Front\MailjetPublic;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\IntegrationsSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
+
 /**
  * The core plugin class.
  *

@@ -7,6 +7,7 @@ use MailjetWp\MailjetPlugin\Includes\SettingsPages\SubscriptionOptionsSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\ContactForm7Settings;
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\CommentAuthorsSettings;
+
 /**
  * Register all actions and filters for the plugin.
  *
@@ -279,11 +280,11 @@ class MailjetSettings
         $mailjetApiSecret = get_option('mailjet_apisecret');
 
         $pluginLink = 'admin.php?page=mailjet_settings_page';
-        if (!$mailjetApikey || !$mailjetApiSecret ) {
+        if (!$mailjetApikey || !$mailjetApiSecret) {
             $pluginLink .= '&from=plugins';
         }
 
-        $settings_link = '<a href="'. $pluginLink .'">' . __('Setup account', 'mailjet-for-wordpress') . '</a>';
+        $settings_link = '<a href="' . $pluginLink . '">' . __('Setup account', 'mailjet-for-wordpress') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }
@@ -330,11 +331,11 @@ class MailjetSettings
         }
         ?>
         <script type="text/javascript">
-            window.location.href = '<?php 
-        echo esc_attr($urlToRedirect);
-        ?>';
+            window.location.href = '<?php
+            echo esc_attr($urlToRedirect);
+            ?>';
         </script>
-        <?php 
+        <?php
         echo esc_attr('<META HTTP-EQUIV="refresh" content="0;URL=' . $urlToRedirect . '">');
         exit;
     }

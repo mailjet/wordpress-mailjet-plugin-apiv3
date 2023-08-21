@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes;
 
 use MailjetWp\MailjetPlugin\Includes\SettingsPages\UserAccessSettings;
+
 /**
  * Triggered on mailjet plugin activation
  * Check if server php version is higher enough

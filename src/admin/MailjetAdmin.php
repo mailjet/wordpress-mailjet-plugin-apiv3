@@ -2,7 +2,9 @@
 
 namespace MailjetWp\MailjetPlugin\Admin;
 
-use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;/**
+use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
+
+/**
  * The admin-specific functionality of the plugin.
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.

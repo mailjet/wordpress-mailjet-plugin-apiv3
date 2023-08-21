@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Admin\Partials;
 
 use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
+
 /**
  * Provide a admin area view for the plugin
  *

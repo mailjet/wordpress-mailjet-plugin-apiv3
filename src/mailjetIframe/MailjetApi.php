@@ -99,21 +99,21 @@ class MailjetApi
      * @access    private
      * @var        resource $_curl_handle
      */
-    private $_curl_handle = NULL;
+    private $_curl_handle = null;
     /**
      * Singleton pattern : Current instance
      *
      * @access    private
      * @var        resource $_instance
      */
-    private static $_instance = NULL;
+    private static $_instance = null;
     /**
      * Response of the API
      *
      * @access    private
      * @var        mixed $_response
      */
-    private $_response = NULL;
+    private $_response = null;
     /**
      * Response code of the API
      *
@@ -188,7 +188,7 @@ class MailjetApi
      * @uses      Mailjet::Api::$_instance
      *
      */
-    public static function getInstance() : ?MailjetApi
+    public static function getInstance(): ?MailjetApi
     {
         if (!self::$_instance instanceof self) {
             self::$_instance = new self();
@@ -229,7 +229,7 @@ class MailjetApi
             case 'GET':
                 \curl_setopt($this->_curl_handle, \CURLOPT_CUSTOMREQUEST, 'GET');
                 \curl_setopt($this->_curl_handle, \CURLOPT_HTTPGET, \TRUE);
-                \curl_setopt($this->_curl_handle, \CURLOPT_POSTFIELDS, NULL);
+                \curl_setopt($this->_curl_handle, \CURLOPT_POSTFIELDS, null);
                 $this->_request_post = \FALSE;
                 break;
             case 'POST':
@@ -310,7 +310,7 @@ class MailjetApi
      * @uses      Mailjet::Api::$_apiKey
      *
      */
-    public function getAPIKey() : string
+    public function getAPIKey(): string
     {
         return $this->_apiKey;
     }
@@ -359,7 +359,7 @@ class MailjetApi
      * @return string last Error as a HTML table
      * @uses      Mailjet::Api::$_debugErrorHtml
      */
-    public function getErrorHtml() : string
+    public function getErrorHtml(): string
     {
         return $this->_debugErrorHtml;
     }
@@ -380,7 +380,7 @@ class MailjetApi
      *
      * @return string API output format
      */
-    public function getOutput() : string
+    public function getOutput(): string
     {
         return $this->_output;
     }
@@ -403,7 +403,7 @@ class MailjetApi
      *
      * @return int Debug flag
      */
-    public function getDebugFlag() : int
+    public function getDebugFlag(): int
     {
         return $this->_debug;
     }
@@ -428,7 +428,7 @@ class MailjetApi
      * @uses      Mailjet::Api::$_cache
      *
      */
-    public function getCachePeriod() : int
+    public function getCachePeriod(): int
     {
         return $this->_cache;
     }
@@ -441,7 +441,7 @@ class MailjetApi
      * @return bool TRUE if the path is successfully set, FALSE otherwise
      * @uses      Mailjet::Api::$_cache_path
      */
-    public function setCachePath(string $cache_path) : bool
+    public function setCachePath(string $cache_path): bool
     {
         @\mkdir($cache_path);
         if (\is_dir($cache_path)) {
@@ -458,7 +458,7 @@ class MailjetApi
      * @uses      Mailjet::Api::$_cache_path
      *
      */
-    public function getCachePath() : string
+    public function getCachePath(): string
     {
         return $this->_cache_path;
     }
@@ -639,7 +639,7 @@ class MailjetApi
             case 'GET':
                 \curl_setopt($this->_curl_handle, \CURLOPT_CUSTOMREQUEST, 'GET');
                 \curl_setopt($this->_curl_handle, \CURLOPT_HTTPGET, \TRUE);
-                \curl_setopt($this->_curl_handle, \CURLOPT_POSTFIELDS, NULL);
+                \curl_setopt($this->_curl_handle, \CURLOPT_POSTFIELDS, null);
                 $this->_request_post = \FALSE;
                 break;
             case 'POST':

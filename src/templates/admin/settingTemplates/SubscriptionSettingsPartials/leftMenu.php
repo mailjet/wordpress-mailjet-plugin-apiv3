@@ -30,7 +30,7 @@ $currentPage = get_query_var('currentPage');
             </svg>
             <span><?php
                 echo esc_textarea(__('Connect your Mailjet account', 'mailjet-for-wordpress'));
-                ?></span>
+            ?></span>
             </a>
         </div>
     </li>
@@ -45,7 +45,7 @@ $currentPage = get_query_var('currentPage');
             </svg>
             <span><?php
                 echo __('Sending settings', 'mailjet-for-wordpress');
-                ?></span>
+            ?></span>
             </a>
         </div>
     </li>
@@ -62,7 +62,7 @@ $currentPage = get_query_var('currentPage');
             </svg>
             <span><?php
                 echo esc_textarea(__('Subscription options', 'mailjet-for-wordpress'));
-                ?></span>
+            ?></span>
             </a>
         </div>
     </li>
@@ -80,7 +80,7 @@ $currentPage = get_query_var('currentPage');
             </svg>
             <span><?php
                 echo esc_textarea(__('User access', 'mailjet-for-wordpress'));
-                ?></span>
+            ?></span>
             </a>
         </div>
     </li>
@@ -96,7 +96,7 @@ $currentPage = get_query_var('currentPage');
             </svg>
             <span><?php
                 echo esc_textarea(__('Integrations', 'mailjet-for-wordpress'));
-                ?></span>
+            ?></span>
             </a>
         </div>
     </li>

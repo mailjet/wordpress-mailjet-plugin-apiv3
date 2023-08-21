@@ -6,6 +6,7 @@ use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetMail;
+
 /**
  * Register all actions and filters for the plugin.
  *
@@ -22,14 +23,14 @@ class EnableSendingSettings
     public function mailjet_section_enable_sending_cb($args)
     {
         ?>
-        <p id="<?php 
+        <p id="<?php
         echo esc_attr($args['id']);
         ?>">
-            <?php 
-        echo __('Enable or disable the sending of your emails through your Mailjet account', 'mailjet-for-wordpress');
-        ?>
+            <?php
+            echo __('Enable or disable the sending of your emails through your Mailjet account', 'mailjet-for-wordpress');
+            ?>
         </p>
-        <?php 
+        <?php
     }
 
     /**
@@ -51,28 +52,28 @@ class EnableSendingSettings
 
         <fieldset class="settingsSendingFldset">
             <label class="checkboxLabel" for="mailjet_enabled">
-                <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?php 
-        echo esc_attr($mailjetEnabled) == 1 ? ' checked="checked"' : '';
-        ?> autocomplete="off">
-                <span><?php 
-        _e('Enable sending emails through <b>Mailjet</b>', 'mailjet-for-wordpress');
-        ?></span>
+                <input name="mailjet_enabled" type="checkbox" id="mailjet_enabled" value="1" <?php
+                echo esc_attr($mailjetEnabled) == 1 ? ' checked="checked"' : '';
+                ?> autocomplete="off">
+                <span><?php
+                _e('Enable sending emails through <b>Mailjet</b>', 'mailjet-for-wordpress');
+                ?></span>
             </label>
-            <div id="enable_mj_emails" class="sending_options_div <?php 
-        echo esc_attr($mailjetEnabled) ? 'mj-show' : 'mj-hide';
-        ?>">
+            <div id="enable_mj_emails" class="sending_options_div <?php
+            echo esc_attr($mailjetEnabled) ? 'mj-show' : 'mj-hide';
+            ?>">
                 <div>
-                    <label class="mj-label" for="mailjet_from_name"><b><?php 
-        _e('From: Name', 'mailjet-for-wordpress');
-        ?></b></label>
-                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php 
-        echo esc_attr($mailjetFromName);
-        ?>" class="regular-text code">
+                    <label class="mj-label" for="mailjet_from_name"><b><?php
+                    _e('From: Name', 'mailjet-for-wordpress');
+                    ?></b></label>
+                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php
+                    echo esc_attr($mailjetFromName);
+                    ?>" class="regular-text code">
                 </div>
                 <div id="mailjet_from_email_fields" class="fromFld">
-                    <label class="mj-label" for="mailjet_from_email"><b><?php 
-        _e('From: name@email.com', 'mailjet-for-wordpress');
-        ?></b></label>
+                    <label class="mj-label" for="mailjet_from_email"><b><?php
+                    _e('From: name@email.com', 'mailjet-for-wordpress');
+                    ?></b></label>
                     <?php if (!$mailjetSenders) : ?>
                         <div class="fromFldGroup">
                             <label style="color: #FEAD0D">
@@ -84,84 +85,84 @@ class EnableSendingSettings
                     <?php endif;?>
                     <div class="fromFldGroup">
                         <select class="mj-select" name="mailjet_from_email" id="mailjet_from_email" type="select" style="display: inline;">
-                        <?php 
-        foreach ($mailjetSenders as $mailjetSender) {
-            if ($mailjetSender['Status'] !== 'Active') {
-                continue;
-            }
-            if (!empty($mailjet_from_email_extra)) {
-                if (stripos($mailjetSender['Email'], '*') !== false && stripos($mailjetFromEmail, str_ireplace('*', '', $mailjetSender['Email'])) !== false) {
-                    $mailjetFromEmail = $mailjetSender['Email'];
-                }
-            }
-            ?>
-                            <option value="<?php 
-            echo esc_attr($mailjetSender['Email']);
-            ?>" <?php 
+                        <?php
+                        foreach ($mailjetSenders as $mailjetSender) {
+                            if ($mailjetSender['Status'] !== 'Active') {
+                                continue;
+                            }
+                            if (!empty($mailjet_from_email_extra)) {
+                                if (stripos($mailjetSender['Email'], '*') !== false && stripos($mailjetFromEmail, str_ireplace('*', '', $mailjetSender['Email'])) !== false) {
+                                    $mailjetFromEmail = $mailjetSender['Email'];
+                                }
+                            }
+                            ?>
+                            <option value="<?php
+                            echo esc_attr($mailjetSender['Email']);
+                            ?>" <?php
             echo esc_attr($mailjetFromEmail == $mailjetSender['Email']) ? 'selected="selected"' : '';
-            ?> > <?php 
+?> > <?php
             echo esc_attr($mailjetSender['Email']);
-            ?> </option>
-                        <?php 
-        }
-        ?>
+?> </option>
+                            <?php
+                        }
+                        ?>
                         </select>
                     </div>
                 </div>
-                <?php 
-        if (!empty($mailjet_from_email_extra)) {
-            ?>
-                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?php 
-            _e($mailjet_from_email_extra);
-            ?>">
-                <?php 
-        }
-        ?>
+                <?php
+                if (!empty($mailjet_from_email_extra)) {
+                    ?>
+                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?php
+                        _e($mailjet_from_email_extra);
+                        ?>">
+                    <?php
+                }
+                ?>
                 <div class="smtpFld">
-                    <label class="mj-label" for="mailjet_port"><b><?php 
-        _e('Port to use for SMTP communication', 'mailjet-for-wordpress');
-        ?></b></label>
+                    <label class="mj-label" for="mailjet_port"><b><?php
+                    _e('Port to use for SMTP communication', 'mailjet-for-wordpress');
+                    ?></b></label>
                     <select class="mj-select" name="mailjet_port" id="mailjet_port" type="select">
-                        <option value="25" <?php 
-        echo esc_attr($mailjetPort) == 25 ? 'selected="selected"' : '';
-        ?> > 25 </option>
-                        <option value="465" <?php 
-        echo esc_attr($mailjetPort) == 465 ? 'selected="selected"' : '';
-        ?> > 465 </option>
-                        <option value="587" <?php 
-        echo esc_attr($mailjetPort) == 587 ? 'selected="selected"' : '';
-        ?> > 587 </option>
-                        <option value="588" <?php 
-        echo esc_attr($mailjetPort) == 588 ? 'selected="selected"' : '';
-        ?> > 588 </option>
-                        <option value="80" <?php 
-        echo esc_attr($mailjetPort) == 80 ? 'selected="selected"' : '';
-        ?> > 80 </option>
+                        <option value="25" <?php
+                        echo esc_attr($mailjetPort) == 25 ? 'selected="selected"' : '';
+                        ?> > 25 </option>
+                        <option value="465" <?php
+                        echo esc_attr($mailjetPort) == 465 ? 'selected="selected"' : '';
+                        ?> > 465 </option>
+                        <option value="587" <?php
+                        echo esc_attr($mailjetPort) == 587 ? 'selected="selected"' : '';
+                        ?> > 587 </option>
+                        <option value="588" <?php
+                        echo esc_attr($mailjetPort) == 588 ? 'selected="selected"' : '';
+                        ?> > 588 </option>
+                        <option value="80" <?php
+                        echo esc_attr($mailjetPort) == 80 ? 'selected="selected"' : '';
+                        ?> > 80 </option>
                     </select>
                 </div>
                 <div class="sslFld">
                     <label class="checkboxLabel" for="mailjet_ssl">
-                        <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?php 
-        echo esc_attr($mailjetSsl) === 'ssl' || esc_attr($mailjetSsl) === 'tls' ? ' checked="checked"' : '';
-        ?> autocomplete="off">
-                        <span><?php 
-        echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet-for-wordpress');
-        ?></span>
+                        <input name="mailjet_ssl"  type="checkbox" id="mailjet_ssl" value="ssl" <?php
+                        echo esc_attr($mailjetSsl) === 'ssl' || esc_attr($mailjetSsl) === 'tls' ? ' checked="checked"' : '';
+                        ?> autocomplete="off">
+                        <span><?php
+                        echo __('Enable SSL communication with mailjet.com (only available with port 465)', 'mailjet-for-wordpress');
+                        ?></span>
                     </label>
                 </div>
                 <div id="testEmail">
-                    <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php 
-        _e('Send a test', 'mailjet-for-wordpress');
-        ?></button>
+                    <button type="button" id="mailjet_test" class="sendTestEmailBtn mj-toggleBtn" data-target="test_email_collapsible"><?php
+                    _e('Send a test', 'mailjet-for-wordpress');
+                    ?></button>
                     <div id="test_email_collapsible" class="mj-hide test_email_collapsible">
-                        <label class="mj-label" for="mailjet_test_address"><b><?php 
-        _e('Recipient of the test email', 'mailjet-for-wordpress');
-        ?></b></label>
+                        <label class="mj-label" for="mailjet_test_address"><b><?php
+                        _e('Recipient of the test email', 'mailjet-for-wordpress');
+                        ?></b></label>
                         <div class="test_email_fields_group">
                             <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                            <input type="submit" value="<?php 
-        _e('Send', 'mailjet-for-wordpress');
-        ?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
+                            <input type="submit" value="<?php
+                            _e('Send', 'mailjet-for-wordpress');
+                            ?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
                         </div>
                     </div>
                 </div>
@@ -169,7 +170,7 @@ class EnableSendingSettings
 
             <input name="settings_step" type="hidden" id="settings_step" value="enable_sending_step">
         </fieldset>
-        <?php 
+        <?php
     }
     /**
      * top level menu:
@@ -241,66 +242,66 @@ class EnableSendingSettings
         ?>
 
         <div class="mj-pluginPage">
-            <div id="initialSettingsHead"><img src="<?php 
-        echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
-        ?>" alt="Mailjet Logo" /></div>
+            <div id="initialSettingsHead"><img src="<?php
+            echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+            ?>" alt="Mailjet Logo" /></div>
             <div class="mainContainer">
                 
             <div class="backToDashboard">
                     <a class="mj-btn btnCancel" href="admin.php?page=mailjet_dashboard_page">
                     <svg width="8" height="8" viewBox="0 0 16 16"><path d="M7.89 11.047L4.933 7.881H16V5.119H4.934l2.955-3.166L6.067 0 0 6.5 6.067 13z"/></svg>
-                    <?php 
-        _e('Back to dashboard', 'mailjet-for-wordpress');
-        ?>
+                    <?php
+                    _e('Back to dashboard', 'mailjet-for-wordpress');
+                    ?>
                     </a>
                 </div>
 
-                <h1 class="page_top_title"><?php 
-        _e('Settings', 'mailjet-for-wordpress');
-        ?></h1>
+                <h1 class="page_top_title"><?php
+                _e('Settings', 'mailjet-for-wordpress');
+                ?></h1>
                 <div class="mjSettings">
                     <div class="left">
-                        <?php 
-        MailjetAdminDisplay::getSettingsLeftMenu();
-        ?>
+                        <?php
+                        MailjetAdminDisplay::getSettingsLeftMenu();
+                        ?>
                     </div>
 
                     <div class="right">
                         <div class="centered"  style="width:650px;">
-                            <!--                    <h1>--><?php 
+                            <!--                    <h1>--><?php
         //echo esc_html(get_admin_page_title());
-        ?><!--</h1>-->
-                            <h2 class="section_inner_title"><?php 
-        _e('Sending settings', 'mailjet-for-wordpress');
-        ?></h2>
+                            ?><!--</h1>-->
+                            <h2 class="section_inner_title"><?php
+                            _e('Sending settings', 'mailjet-for-wordpress');
+                            ?></h2>
                             <form action="options.php" method="post">
-                                <?php 
+                                <?php
         // output security fields for the registered setting "mailjet"
-        settings_fields('mailjet_sending_settings_page');
+                                settings_fields('mailjet_sending_settings_page');
         // output setting sections and their fields
         // (sections are registered for "mailjet", each field is registered to a specific section)
-        do_settings_sections('mailjet_sending_settings_page');
+                                do_settings_sections('mailjet_sending_settings_page');
         // output save settings button
-        $saveButton = __('Save', 'mailjet-for-wordpress');
-        ?>
-                                <button type="submit" id="enableSendingSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php 
-        echo esc_attr($saveButton);
-        ?></button>
-                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?php 
-        echo __('Cancel', 'mailjet-for-wordpress');
-        ?>"> -->
+                                $saveButton = __('Save', 'mailjet-for-wordpress');
+                                ?>
+                                <button type="submit" id="enableSendingSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php
+                                echo esc_attr($saveButton);
+                                ?></button>
+                                <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?php
+                                echo __('Cancel', 'mailjet-for-wordpress');
+                                ?>"> -->
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <?php 
-        MailjetAdminDisplay::renderBottomLinks();
-        ?>
+            <?php
+            MailjetAdminDisplay::renderBottomLinks();
+            ?>
         </div>
 
-        <?php 
+        <?php
     }
     private function checkConnection()
     {

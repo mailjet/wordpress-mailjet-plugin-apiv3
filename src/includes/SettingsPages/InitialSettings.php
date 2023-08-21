@@ -58,19 +58,19 @@ class InitialSettings
         <fieldset>
             <legend class="screen-reader-text"><span><b><?php
                         _e('Connect your Mailjet account to get started', 'mailjet-for-wordpress');
-                        ?></b></span></legend>
+            ?></b></span></legend>
 
             <input name="settings_step" type="hidden" id="settings_step" value="initial_step">
 
             <label class="mj-label" for="mailjet_apikey"><?php
                 _e('<b>Api Key</b>', 'mailjet-for-wordpress');
-                ?></label>
+            ?></label>
             <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php
             echo esc_attr($mailjetApikey);
             ?>" class="mailjet_apikey" required="required">
             <label class="mj-label" for="mailjet_apisecret"><?php
                 _e('<b>Secret Key</b>', 'mailjet-for-wordpress');
-                ?></label>
+            ?></label>
             <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php
             echo esc_attr($mailjetApiSecret);
             ?>" class="mailjet_apisecret" required="required">
@@ -138,13 +138,13 @@ class InitialSettings
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img src="<?php
                 echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
-                ?>" alt="Mailjet Logo"/></div>
+            ?>" alt="Mailjet Logo"/></div>
             <div class="mainContainer">
 
                 <div>
                     <h1 class="page_top_title"><?php
                         _e('Welcome to the Mailjet plugin for WordPress', 'mailjet-for-wordpress');
-                        ?> </h1>
+                    ?> </h1>
                     <p class="page_top_subtitle">
                         <?php
                         _e('Mailjet is an email service provider. With this plugin, easily send newsletters to your website users, directly from WordPress.', 'mailjet-for-wordpress');
@@ -155,7 +155,7 @@ class InitialSettings
                     <div id="initialSettingsForm">
                         <h2 class="section_inner_title"><?php
                             echo esc_html(get_admin_page_title());
-                            ?></h2>
+                        ?></h2>
                         <form action="options.php" method="post">
                             <?php
                             // output security fields for the registered setting "mailjet"
@@ -168,8 +168,8 @@ class InitialSettings
                             ?>
                             <button type="submit" id="initialSettingsSubmit" class="mj-btn btnPrimary"
                                     name="submit"><?php
-                                echo esc_attr($connectYourAccount);
-                                ?></button>
+                                    echo esc_attr($connectYourAccount);
+                                    ?></button>
                             <p class="dont_have_account">
                                 <?php
                                 esc_html_e('You don\'t have a Mailjet account yet?', 'mailjet-for-wordpress');
@@ -187,32 +187,32 @@ class InitialSettings
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php
                                     echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/initial_screen_image1.png';
-                                    ?>" alt="Welcome to the Mailjet"/></div>
+                                ?>" alt="Welcome to the Mailjet"/></div>
                                 <p class="initialSettingsTextCell"><b><?php
                                         _e('Collect email addresses...', 'mailjet-for-wordpress');
-                                        ?></b><?php
+                                ?></b><?php
                                     _e('Email addresses are collected from your website', 'mailjet-for-wordpress');
-                                    ?></p>
+?></p>
                             </div>
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php
                                     echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/initial_screen_image2.png';
-                                    ?>" alt="Welcome to the Mailjet"/></div>
+                                ?>" alt="Welcome to the Mailjet"/></div>
                                 <p class="initialSettingsTextCell"><b><?php
                                         _e('...and add them automatically to a contact list', 'mailjet-for-wordpress');
-                                        ?></b><?php
+                                ?></b><?php
                                     _e('Email are added to your contact list', 'mailjet-for-wordpress');
-                                    ?></p>
+?></p>
                             </div>
                             <div class="initialSettingsDescriptionRow">
                                 <div class="initialSettingsImageCell"><img width="96" src="<?php
                                     echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/initial_screen_image3.png';
-                                    ?>" alt="Welcome to the Mailjet"/></div>
+                                ?>" alt="Welcome to the Mailjet"/></div>
                                 <p class="initialSettingsTextCell"><b><?php
                                         _e('We will take care of delivering your newsletter', 'mailjet-for-wordpress');
-                                        ?></b><?php
+                                ?></b><?php
                                     _e('Easily create and send newsletters to your subscribers from WordPress. Mailjet will deliver them!', 'mailjet-for-wordpress');
-                                    ?></p>
+?></p>
                             </div>
                         </div>
                     </div>

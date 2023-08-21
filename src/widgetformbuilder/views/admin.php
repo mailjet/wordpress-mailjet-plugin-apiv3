@@ -16,7 +16,7 @@ extract(wp_parse_args($instance, $defaults), EXTR_OVERWRITE);
             <textarea
                     placeholder="Form Builder HTML code"
                     class="form_builder_text_area"
-                    name="<?php echo $this->get_field_name('form_builder_code'); ?>"><?php echo esc_attr( $form_builder_code ); ?></textarea>
+                    name="<?php echo $this->get_field_name('form_builder_code'); ?>"><?php echo esc_attr($form_builder_code); ?></textarea>
         </div>
     </div>
     <!--SHORTCODE-->
@@ -44,4 +44,4 @@ extract(wp_parse_args($instance, $defaults), EXTR_OVERWRITE);
 </div>
 
 
-<?php 
+<?php
