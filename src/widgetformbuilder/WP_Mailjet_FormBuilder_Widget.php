@@ -137,7 +137,7 @@ class WP_Mailjet_FormBuilder_Widget extends \WP_Widget
     {
         wp_enqueue_style(
             $this->get_widget_slug() . '-widget-styles',
-            plugins_url('css/widget.css',__FILE__),
+            plugins_url('css/widget.css', __FILE__),
             [],
             MAILJET_VERSION,
             'all'
@@ -171,7 +171,8 @@ class WP_Mailjet_FormBuilder_Widget extends \WP_Widget
             plugins_url('css/front-widget.css', __FILE__),
             [],
             MAILJET_VERSION,
-            'all');
+            'all'
+        );
     }
     /**
      * Registers and enqueues widget-specific scripts.

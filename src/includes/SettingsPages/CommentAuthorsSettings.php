@@ -4,6 +4,7 @@ namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
+
 /**
  * Register all actions and filters for the plugin.
  *
@@ -28,11 +29,11 @@ class CommentAuthorsSettings
                 <label class="mj-label" for="mailjet_comment_authors_subscribe_ok">
                     <input type="checkbox" name="mailjet_comment_authors_subscribe_ok"
                            id="mailjet_comment_authors_subscribe_ok" value="1" class="checkbox"/>
-                    <?php 
-                _e('Subscribe to our newsletter', 'mailjet-for-wordpress');
-                ?>
+                    <?php
+                    _e('Subscribe to our newsletter', 'mailjet-for-wordpress');
+                    ?>
                 </label>
-                <?php 
+                <?php
             }
         }
     }

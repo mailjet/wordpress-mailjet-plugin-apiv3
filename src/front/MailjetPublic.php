@@ -60,7 +60,7 @@ class MailjetPublic
          * between the defined hooks and the functions defined in this
          * class.
          */
-        //		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mailjet-public.css', array(), $this->version, 'all' );
+        //      wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mailjet-public.css', array(), $this->version, 'all' );
     }
     /**
      * Register the JavaScript for the public-facing side of the site.
@@ -80,7 +80,7 @@ class MailjetPublic
          * between the defined hooks and the functions defined in this
          * class.
          */
-        //		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mailjet-public.js', array( 'jquery' ), $this->version, false );
+        //      wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mailjet-public.js', array( 'jquery' ), $this->version, false );
         if (get_option('activate_mailjet_woo_integration') === '1' && get_option('mailjet_woo_abandoned_cart_activate') === '1') {
             global $wp;
             $currentUrl = \trim(home_url(add_query_arg(array(), $wp->request)), '/ ');

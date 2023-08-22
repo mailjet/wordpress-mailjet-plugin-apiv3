@@ -6,6 +6,7 @@ use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
+
 /**
  * Register all actions and filters for the plugin.
  *
@@ -41,14 +42,14 @@ class SubscriptionOptionsSettings
     public function mailjet_section_subscription_options_cb($args)
     {
         ?>
-<!--        <p id="--><?php 
+<!--        <p id="--><?php
         //echo esc_attr( $args['id'] );
-        ?><!--">-->
-<!--            --><?php 
+?><!--">-->
+<!--            --><?php
         //esc_html_e( 'Automatically add WordPress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress' );
-        ?>
+?>
 <!--        </p>-->
-        <?php 
+        <?php
     }
     public function mailjet_subscription_options_cb($args)
     {

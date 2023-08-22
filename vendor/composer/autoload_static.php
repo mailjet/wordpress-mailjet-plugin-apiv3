@@ -76,10 +76,10 @@ class ComposerStaticInite89278bbb96320ad952008582b3ddfbc
         array (
             0 => __DIR__ . '/../..' . '/src/widget',
         ),
-        'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' =>
-            array (
-                0 => __DIR__ . '/../..' . '/src/widgetformbuilder',
-            ),
+        'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/widgetformbuilder',
+        ),
         'MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/includes/SettingsPages',

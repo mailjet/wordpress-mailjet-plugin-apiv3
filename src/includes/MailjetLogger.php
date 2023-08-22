@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes;
 
 use MailjetWp\Analog\Analog;
+
 class MailjetLogger
 {
     public static function log($message, $level = null)

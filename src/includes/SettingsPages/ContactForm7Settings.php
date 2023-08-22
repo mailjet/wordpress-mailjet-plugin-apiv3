@@ -5,6 +5,7 @@ namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
+
 /**
  * Description of ContactForm7Settings
  *
