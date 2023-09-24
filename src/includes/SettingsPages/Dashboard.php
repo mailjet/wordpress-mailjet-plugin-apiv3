@@ -31,11 +31,6 @@ class Dashboard
         if (!MailjetApi::isValidAPICredentials()) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
         }
-        // check user capabilities
-        if (!current_user_can('read')) {
-            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \\`manage_options\\` permission ]');
-            return;
-        }
         ?>
 
         <div class="mj-pluginPage">

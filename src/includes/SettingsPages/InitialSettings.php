@@ -86,11 +86,6 @@ class InitialSettings
     public function mailjet_initial_settings_page_html()
     {
         $fromPage = !empty($_REQUEST['from']) ? sanitize_text_field($_REQUEST['from']) : null;
-        // check user capabilities
-        if (!current_user_can('read')) {
-            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \\`manage_options\\` permission ]');
-            return;
-        }
         // register a new section in the "mailjet" page
         add_settings_section('mailjet_section_initial_settings', null, [$this, 'mailjet_section_initial_settings_cb'], 'mailjet_initial_settings_page');
         // register a new field in the "mailjet_section_developers" section, inside the "mailjet" page

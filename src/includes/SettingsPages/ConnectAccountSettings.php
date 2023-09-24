@@ -70,11 +70,6 @@ class ConnectAccountSettings
      */
     public function mailjet_connect_account_page_html()
     {
-        // check user capabilities
-        if (!current_user_can('read')) {
-            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \\`manage_options\\` permission ]');
-            return;
-        }
         // register a new section in the "mailjet" page
         add_settings_section('mailjet_section_connect_account_settings', null, array($this, 'mailjet_section_connect_account_cb'), 'mailjet_connect_account_page');
         // register a new field in the "mailjet_section_developers" section, inside the "mailjet" page

@@ -56,7 +56,7 @@ use MailjetWp\MailjetPlugin\Includes\MailjetActivator;
 /**
  * Mailjet plugin version.
  */
-define('MAILJET_VERSION', '5.5.0');
+define('MAILJET_VERSION', '5.5.1');
 
 /**
  * Mailjet Plugid dir.
