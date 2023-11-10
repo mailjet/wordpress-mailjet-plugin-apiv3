@@ -4,7 +4,7 @@ Contributors: Mailjet
 Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 Requires at least: 4.4
 Tested up to: 6.2.2
-Stable tag: 5.5.1
+Stable tag: 5.5.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -189,11 +189,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 1. The initial setup wizard will guide you through the quick steps to get started
 2. Access all features from the plugin dashboard
-3. Create and send beautiful email campaigns
-4. Configure a subscription widget to collect subscribers from your site
-5. Activate and configure WooCommerce and Contact Form 7 integrations
-6. Enable order notifications for WooCommerce
-7. Configure abandoned cart notifications for WooCommerce
+3. Configure a subscription widget to collect subscribers from your site
+4. Activate and configure WooCommerce and Contact Form 7 integrations
+5. Enable order notifications for WooCommerce
+6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
 
