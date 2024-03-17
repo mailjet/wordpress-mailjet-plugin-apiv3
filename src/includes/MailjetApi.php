@@ -395,8 +395,11 @@ class MailjetApi
         } catch (Exception $e) {
             return \false;
         }
-        $name = $contact['Properties']['firstname'] ?? '';
-        $body = ['Name' => $name, 'Action' => $action, 'Email' => $contact['Email'], 'Properties' => $contact['Properties']];
+        $name = '';
+        if (isset($contact['Properties'])) {
+            $name = $contact['Properties']['firstname'] ?? '';
+        }
+        $body = ['Name' => $name, 'Action' => $action, 'Email' => $contact['Email'], 'Properties' => $contact['Properties'] ?? []];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagecontact, ['id' => $contactListId, 'body' => $body]);
         } catch (ConnectException $e) {
@@ -408,11 +411,12 @@ class MailjetApi
 
         return \false;
     }
+
     /**
      * Return TRUE if a contact already subscribed to the list and FALSE if it is not, or is added to the list but Unsubscribed
-     *
      * @param $email
      * @param $listId
+     * @param bool $getContactId
      * @return bool
      */
     public static function checkContactSubscribedToList($email, $listId, $getContactId = \false)
@@ -432,8 +436,8 @@ class MailjetApi
         }
         if ($response->success() && $response->getCount() > 0) {
             $data = $response->getData();
-            $exists = \true;
-            if (isset($data[0]['IsUnsubscribed']) && \false == $data[0]['IsUnsubscribed']) {
+            $exists = true;
+            if (isset($data[0]['IsUnsubscribed']) && !$data[0]['IsUnsubscribed']) {
                 $existsAndSubscribed = \true;
             }
             if ($getContactId && $exists && $existsAndSubscribed) {
