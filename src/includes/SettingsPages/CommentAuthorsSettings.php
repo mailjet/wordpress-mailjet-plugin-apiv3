@@ -4,6 +4,7 @@ namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
+use function filter_var;
 
 /**
  * Register all actions and filters for the plugin.
@@ -18,10 +19,13 @@ use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
  */
 class CommentAuthorsSettings
 {
+    /**
+     * @return void
+     */
     public function mailjet_show_extra_comment_fields()
     {
-        $commentAuthorsListId = (int) get_option('mailjet_comment_authors_list');
-        if ((int) get_option('activate_mailjet_comment_authors_sync') === 1 && $commentAuthorsListId > 0) {
+        $commentAuthorsListId = (int)get_option('mailjet_comment_authors_list');
+        if ((int)get_option('activate_mailjet_comment_authors_sync') === 1 && $commentAuthorsListId > 0) {
             $user = wp_get_current_user();
             // Display the checkbox for NOT-logged in or unsubscribed users
             if (empty($user->data->user_email) || !MailjetApi::checkContactSubscribedToList($user->data->user_email, $commentAuthorsListId)) {
@@ -37,12 +41,20 @@ class CommentAuthorsSettings
             }
         }
     }
+
+    /**
+     * @param $id
+     * @return void
+     */
     public function mailjet_subscribe_comment_author($id)
     {
-        $subscribe = \filter_var($_POST['mailjet_comment_authors_subscribe_ok'], \FILTER_SANITIZE_NUMBER_INT);
+        if (!isset($_POST['mailjet_comment_authors_subscribe_ok'])) {
+            return;
+        }
+        $subscribe = filter_var($_POST['mailjet_comment_authors_subscribe_ok'], \FILTER_SANITIZE_NUMBER_INT);
         if ($subscribe === '1') {
             $comment = get_comment($id);
-            $authorEmail = \filter_var($comment->comment_author_email, \FILTER_SANITIZE_EMAIL);
+            $authorEmail = filter_var($comment->comment_author_email, \FILTER_SANITIZE_EMAIL);
             // We return if there is no provided email on a new comment - which is the case for WooCommerce - it adds a post and comment when making an order
             if (empty($authorEmail)) {
                 return;

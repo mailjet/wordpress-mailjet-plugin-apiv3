@@ -35,8 +35,7 @@ class MailjetMenu
     public function display_menu()
     {
         if (current_user_can(UserAccessSettings::ACCESS_CAP_NAME)) {
-            //TODO WORK HERE
-            add_menu_page(__('Connect your Mailjet account to get started', 'mailjet-for-wordpress'), 'Mailjet', 'read', 'mailjet_settings_page', [new InitialSettings(), 'mailjet_initial_settings_page_html'], plugin_dir_url(\dirname(__FILE__)) . 'admin/images/mj_logo_small.png');
+            add_menu_page(__('Connect your Mailjet account to get started', 'mailjet-for-wordpress'), 'Mailjet', 'read', 'mailjet_settings_page', [new InitialSettings(), 'mailjet_initial_settings_page_html'], plugin_dir_url(__DIR__) . 'admin/images/mj_logo_small.png');
             if (\function_exists('add_submenu_page')) {
                 add_submenu_page('', __('Manage your Mailjet lists', 'mailjet-for-wordpress'), __('Lists', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_contacts_menu', [$this, 'show_contacts_page']);
                 add_submenu_page('', __('Manage your Mailjet campaigns', 'mailjet-for-wordpress'), __('Campaigns', 'mailjet-for-wordpress'), 'read', 'mailjet_settings_campaigns_menu', [$this, 'show_campaigns_page']);
@@ -59,7 +58,6 @@ class MailjetMenu
                 add_submenu_page('', __('User access', 'mailjet-for-wordpress'), null, 'read', 'mailjet_user_access_page', [new UserAccessSettings(), 'mailjet_user_access_page_html']);
                 add_submenu_page('', __('Integrations', 'mailjet-for-wordpress'), null, 'read', 'mailjet_integrations_page', [new IntegrationsSettings(), 'mailjet_integrations_page_html']);
                 // Add old initial page to fix settings link after update
-                //add_submenu_page(null, 'Temporary page', null, 'read', 'wp_mailjet_options_top_menu', array($this, 'wp_mailjet_options_top'));
             }
         } else {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have required permissions to see Mailjet plugin ]');
@@ -204,7 +202,7 @@ class MailjetMenu
     {
         try {
             $mailjetIframe = $this->getMailjetIframe();
-            $templateId = sanitize_text_field($_GET['id']);
+            $templateId = sanitize_text_field($_GET['id'] ?? '');
             if (isset($templateId)) {
                 $mailjetIframe->setInitialPage(MailjetIframe::PAGE_EDIT_TEMPLATE, $templateId);
             } else {
@@ -232,7 +230,7 @@ class MailjetMenu
                 $backButtonLink = 'admin.php?page=mailjet_dashboard_page';
                 break;
         }
-        set_query_var('iframeHtml', $iframeHtml);
+        set_query_var('iframeHtml', $iframeHtml ?? '');
         set_query_var('backButtonLink', $backButtonLink);
         set_query_var('backButtonText', $backButtonText);
         load_template(MAILJET_ADMIN_TAMPLATE_DIR . '/Iframe/longerIframePage.php');

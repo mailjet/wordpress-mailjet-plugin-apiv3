@@ -11,10 +11,8 @@ use MailjetWp\Mailjet\Response;
 
 /**
  * Define the internationalization functionality.
- *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
- *
  * @since      5.0.0
  * @package    Mailjet
  * @subpackage Mailjet/includes
@@ -117,9 +115,9 @@ class MailjetApi
         } catch (Exception $e) {
             return \false;
         }
-        $filters = array('ID' => $contactListId);
+        $filters = ['ID' => $contactListId];
         try {
-            $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
+            $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
         } catch (ConnectException $e) {
             return \false;
         }
@@ -147,9 +145,9 @@ class MailjetApi
         } catch (Exception $e) {
             return \false;
         }
-        $filters = array('ID' => $contactListId);
+        $filters = ['ID' => $contactListId];
         try {
-            $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
+            $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
         } catch (ConnectException $e) {
             return \false;
         }
@@ -174,17 +172,17 @@ class MailjetApi
             return \false;
         }
         $limit = 1000;
-        $dataArray = array();
+        $dataArray = [];
         $offset = 0;
         do {
-            $filters = array('ContactsList' => $contactListId, 'Unsub' => \false, 'Offset' => $offset, 'Limit' => $limit, 'Style' => 'Full');
+            $filters = ['ContactsList' => $contactListId, 'Unsub' => \false, 'Offset' => $offset, 'Limit' => $limit, 'Style' => 'Full'];
             try {
-                $response = $mjApiClient->get(Resources::$Listrecipient, array('filters' => $filters));
+                $response = $mjApiClient->get(Resources::$Listrecipient, ['filters' => $filters]);
             } catch (ConnectException $e) {
                 return \false;
             }
             if ($response->success()) {
-                \array_push($dataArray, $response->getData());
+                $dataArray[] = $response->getData();
             } else {
                 return \false;
             }
@@ -203,9 +201,9 @@ class MailjetApi
         } catch (Exception $e) {
             return \false;
         }
-        $filters = array('limit' => 0, 'Sort' => 'Name ASC');
+        $filters = ['limit' => 0, 'Sort' => 'Name ASC'];
         try {
-            $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
+            $response = $mjApiClient->get(Resources::$Contactmetadata, ['filters' => $filters]);
         } catch (ConnectException $e) {
             return \false;
         }
@@ -231,6 +229,7 @@ class MailjetApi
         }
         return \false;
     }
+
     public static function createMailjetContactProperty($name, $type = "str")
     {
         if (empty($name)) {
@@ -358,9 +357,9 @@ class MailjetApi
 
         return false;
     }
+
     /**
      * Add or Remove a contact to a Mailjet contact list - It can process many or single contact at once
-     *
      * @param $contactListId - int - ID of the contact list to sync contacts
      * @param $contacts - array('Email' => ContactEmail, 'Name' => ContactName, 'Properties' => array(propertyName1 => propertyValue1, ...));
      * @param string $action - 'addforce', 'adnoforce', 'remove'
@@ -385,6 +384,7 @@ class MailjetApi
 
         return false;
     }
+
     /**
      * Add a contact to a Mailjet contact list
      */
@@ -395,8 +395,11 @@ class MailjetApi
         } catch (Exception $e) {
             return \false;
         }
-        $name = $contact['Properties']['firstname'] ?? '';
-        $body = ['Name' => $name, 'Action' => $action, 'Email' => $contact['Email'], 'Properties' => $contact['Properties']];
+        $name = '';
+        if (isset($contact['Properties'])) {
+            $name = $contact['Properties']['firstname'] ?? '';
+        }
+        $body = ['Name' => $name, 'Action' => $action, 'Email' => $contact['Email'], 'Properties' => $contact['Properties'] ?? []];
         try {
             $response = $mjApiClient->post(Resources::$ContactslistManagecontact, ['id' => $contactListId, 'body' => $body]);
         } catch (ConnectException $e) {
@@ -408,11 +411,12 @@ class MailjetApi
 
         return \false;
     }
+
     /**
      * Return TRUE if a contact already subscribed to the list and FALSE if it is not, or is added to the list but Unsubscribed
-     *
      * @param $email
      * @param $listId
+     * @param bool $getContactId
      * @return bool
      */
     public static function checkContactSubscribedToList($email, $listId, $getContactId = \false)
@@ -432,8 +436,8 @@ class MailjetApi
         }
         if ($response->success() && $response->getCount() > 0) {
             $data = $response->getData();
-            $exists = \true;
-            if (isset($data[0]['IsUnsubscribed']) && \false == $data[0]['IsUnsubscribed']) {
+            $exists = true;
+            if (isset($data[0]['IsUnsubscribed']) && !$data[0]['IsUnsubscribed']) {
                 $existsAndSubscribed = \true;
             }
             if ($getContactId && $exists && $existsAndSubscribed) {
@@ -442,6 +446,7 @@ class MailjetApi
         }
         return $exists && $existsAndSubscribed;
     }
+
     /**
      * @throws Exception
      */
@@ -459,6 +464,7 @@ class MailjetApi
         }
         return \true;
     }
+
     public static function getContactDataByEmail($contactEmail)
     {
         try {
@@ -472,15 +478,17 @@ class MailjetApi
         }
         return \false;
     }
+
     /**
      * @throws Exception
      */
     public static function updateContactData($contactEmail, $data)
     {
         $mjApiClient = self::getApiClient();
-        $body = ['Data' => $data];
+        $body = ['Data' => $data ?? []];
         return $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
     }
+
     public static function getProfileName()
     {
         try {
@@ -502,6 +510,7 @@ class MailjetApi
         }
         return $name;
     }
+
     public static function getTemplateByName($templateName)
     {
         try {
@@ -520,6 +529,7 @@ class MailjetApi
             return \false;
         }
     }
+
     public static function getTemplateDetails($id)
     {
         try {
@@ -538,6 +548,7 @@ class MailjetApi
         }
         return \false;
     }
+
     public static function createTemplate(array $arguments)
     {
         try {
@@ -560,6 +571,7 @@ class MailjetApi
         }
         return \false;
     }
+
     public static function createTemplateContent(array $content)
     {
         try {

@@ -90,7 +90,7 @@ class MailjetSettings
         $fromPage = !empty($_REQUEST['from']) ? sanitize_text_field($_REQUEST['from']) : null;
         if (\in_array($currentPage, array('mailjet_allsetup_page', 'mailjet_dashboard_page', 'mailjet_user_access_page', 'mailjet_integrations_page', 'mailjet_subscription_options_page', 'mailjet_sending_settings_page', 'mailjet_connect_account_page', 'mailjet_initial_contact_lists_page', 'mailjet_settings_page'))) {
             $apiCredentialsOk = get_option('api_credentials_ok');
-            if (!($fromPage == 'plugins') && !empty($apiCredentialsOk) && '1' != $apiCredentialsOk) {
+            if (!($fromPage === 'plugins') && !empty($apiCredentialsOk) && '1' != $apiCredentialsOk) {
                 self::redirectJs(admin_url('/admin.php?page=mailjet_settings_page'));
             }
         }
@@ -107,30 +107,30 @@ class MailjetSettings
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             $subscriptionOptionsSettings = SubscriptionOptionsSettings::getInstance();
             // Check after login if the user is subscribed to the contact list
-            add_action('wp_login', array($subscriptionOptionsSettings, 'checkUserSubscription'), 10, 2);
+            add_action('wp_login', [$subscriptionOptionsSettings, 'checkUserSubscription'], 10, 2);
             // When user is viewing another users profile page (not their own).
-            add_action('edit_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            add_action('edit_user_profile', [$subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields']);
             // - If you want to apply your hook to ALL profile pages (including the current user) then you also need to use this one.
-            add_action('show_user_profile', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            add_action('show_user_profile', [$subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields']);
             // Runs just before the end of the new user registration form.
             if (get_option('activate_mailjet_woo_integration') === '1') {
-                add_action('woocommerce_edit_account_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+                add_action('woocommerce_edit_account_form', [$subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields']);
             }
             // Runs just before the end of the new user registration form.
-            add_action('register_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            add_action('register_form', [$subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields']);
             // Runs near the end of the "Add New" user screen.
-            add_action('user_new_form', array($subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields'));
+            add_action('user_new_form', [$subscriptionOptionsSettings, 'mailjet_show_extra_profile_fields']);
             // Runs when a user's profile is updated. Action function argument: user ID.
-            add_action('profile_update', array($subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields'));
+            add_action('profile_update', [$subscriptionOptionsSettings, 'mailjet_save_extra_profile_fields']);
             // Runs immediately after the new user is added to the database.
-            add_action('user_register', array($subscriptionOptionsSettings, 'mailjet_register_user'));
+            add_action('user_register', [$subscriptionOptionsSettings, 'mailjet_register_user']);
         }
         /* Add custom field to comment form and process it on form submit */
         $activate_mailjet_comment_authors_sync = (int) get_option('activate_mailjet_comment_authors_sync');
         $mailjet_comment_authors_list = (int) get_option('mailjet_comment_authors_list');
         if ($activate_mailjet_comment_authors_sync === 1 && $mailjet_comment_authors_list > 1) {
             $commentAuthorsSettings = new CommentAuthorsSettings();
-            if (wp_get_current_user()->exists()) {
+            if (null !== wp_get_current_user() && wp_get_current_user()->exists()) {
                 add_action('comment_form', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));
             } else {
                 add_action('comment_form_after_fields', array($commentAuthorsSettings, 'mailjet_show_extra_comment_fields'));

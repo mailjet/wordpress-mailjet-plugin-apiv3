@@ -10,7 +10,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::log($message, $level);
     }
@@ -18,7 +18,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::urgent($message);
     }
@@ -26,7 +26,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::alert($message);
     }
@@ -34,7 +34,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::error($message);
     }
@@ -42,7 +42,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::warning($message);
     }
@@ -50,7 +50,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::notice($message);
     }
@@ -58,7 +58,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::info($message);
     }
@@ -66,7 +66,7 @@ class MailjetLogger
     {
         $mailjetActivateLogger = get_option('mailjet_activate_logger');
         if (empty($mailjetActivateLogger) || $mailjetActivateLogger != 1) {
-            return;
+            return '';
         }
         return Analog::debug($message);
     }
