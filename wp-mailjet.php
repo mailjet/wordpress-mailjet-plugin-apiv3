@@ -14,7 +14,7 @@ namespace MailjetPlugin;
  * Plugin Name:       Mailjet for WordPress
  * Plugin URI:        https://www.mailjet.com/partners/wordpress/
  * Description:       The Best WordPress Plugin For Email Newsletters.
- * Version:           5.5.3
+ * Version:           5.5.4
  * Tested up to:      6.4.3
  * Author:            Mailjet SAS
  * Author URI:        http://mailjet.com
