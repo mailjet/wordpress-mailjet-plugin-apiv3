@@ -51,10 +51,15 @@ class SubscriptionOptionsSettings
 <!--        </p>-->
         <?php
     }
-    public function mailjet_subscription_options_cb($args)
+
+    /**
+     * @param $args
+     * @return void
+     */
+    public function mailjet_subscription_options_cb($args): void
     {
         // get the value of the setting we've registered with register_setting()
-        $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
+        $allWpUsers = get_users(['fields' => ['ID', 'user_email']]);
         $wpUsersCount = \count($allWpUsers);
         $mailjetSyncContactLists = MailjetApi::getMailjetContactLists();
         $mailjetSyncContactList = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
