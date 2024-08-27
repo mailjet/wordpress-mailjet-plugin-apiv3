@@ -23,95 +23,104 @@ class MailjetIframe
      *
      * @var MailjetApi
      */
-    private $mailjetApi;
+    private MailjetApi $mailjetApi;
     /**
      *
      * @var array
      */
-    private $locales = array('fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES', 'it_IT');
+    private array $locales = ['fr_FR', 'en_US', 'en_GB', 'en_EU', 'de_DE', 'es_ES', 'it_IT'];
     /**
      *
      * @var array
      */
-    private $allowedPages = array(self::PAGE_STATS, self::PAGE_CONTACTS, self::PAGE_CAMPAIGNS, self::PAGE_AUTOMATION, self::PAGE_WIDGET, self::PAGE_TEMPLATES, self::PAGE_EDIT_TEMPLATE);
+    private array $allowedPages = [
+        self::PAGE_STATS,
+        self::PAGE_CONTACTS,
+        self::PAGE_CAMPAIGNS,
+        self::PAGE_AUTOMATION,
+        self::PAGE_WIDGET,
+        self::PAGE_TEMPLATES,
+        self::PAGE_EDIT_TEMPLATE
+    ];
+
     /**
      *
      * @var string
      */
-    private $url = 'https://app.mailjet.com/';
+    private string $url = 'https://app.mailjet.com/';
     /**
      *
      * @var string
      */
-    private $callback = '';
+    private string $callback = '';
     /**
      *
      * @var string
      */
-    private $locale = 'fr_FR';
+    private string $locale = 'fr_FR';
     /**
      *
      * @var integer
      */
-    private $sessionExpiration = 3600;
+    private int $sessionExpiration = 3600;
     /**
      *
      * @var array
      */
-    private $tokenAccessAvailable = array('campaigns', 'contacts', 'stats', 'email_automation', 'widget', 'transactional');
+    private array $tokenAccessAvailable = ['campaigns', 'contacts', 'stats', 'email_automation', 'widget', 'transactional'];
     /**
      *
      * @var string
      */
-    private $tokenAccess = '';
+    private string $tokenAccess = '';
     /**
      *
      * @var string
      */
-    private $documentationProperties = self::ON;
+    private string $documentationProperties = self::ON;
     /**
      *
      * @var string
      */
-    private $newContactListCreation = self::ON;
+    private string $newContactListCreation = self::ON;
     /**
      *
      * @var string
      */
-    private $menu = self::ON;
+    private string $menu = self::ON;
     /**
      * Flag to mark if to display the black campaign name title bar in the iframe
      *
      * @access  private
      * @var string 'on'/'off'
      */
-    private $showBar = self::ON;
+    private string $showBar = self::ON;
     /**
      * Flag to mark if "create campaign" button in the campaign page should be displayed
      *
      * @access  private
      * @var string 'on'/'off'
      */
-    private $crc = self::OFF;
+    private string $crc = self::OFF;
     /**
      * Flag to mark if MJ sending policy should be removed or not
      *
      * @access  private
      * @var string 'on'/'off'
      */
-    private $sp = self::OFF;
+    private string $sp = self::OFF;
     /**
      *
      * @var string
      */
-    private $initialPage = self::PAGE_STATS;
+    private string $initialPage = self::PAGE_STATS;
     /**
      * Flag to mark if footer should be displayed
      *
      * @access  private
-     * @var     boolean $_showFooter
+     * @var     string $_showFooter
      */
-    private $showFooter = self::ON;
+    private string $showFooter = self::ON;
     /**
      *
      * @param string $apiKey
@@ -180,12 +189,13 @@ class MailjetIframe
         $this->locale = $locale;
         return $this;
     }
+
     /**
-     *
      * @param array $access
      * @return MailjetIframe
+     * @throws MailjetException
      */
-    public function setTokenAccess(array $access = array()): MailjetIframe
+    public function setTokenAccess(array $access = []): MailjetIframe
     {
         foreach ($access as $value) {
             if (!\in_array($value, $this->tokenAccessAvailable)) {
@@ -196,12 +206,11 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $flag
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnDocumentationProperties($flag = self::ON): MailjetIframe
+    public function turnDocumentationProperties(string $flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException("Documentation properties requires a valid on/off parameter.");
@@ -210,12 +219,11 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $flag
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnNewContactListCreation($flag = self::ON): MailjetIframe
+    public function turnNewContactListCreation(string $flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException("New contact list creation requires a valid on/off parameter.");
@@ -224,12 +232,11 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $flag
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnMenu($flag = self::ON): MailjetIframe
+    public function turnMenu(string $flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException("Menu requires a valid on/off parameter.");
@@ -238,12 +245,11 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $flag
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnBar($flag = self::ON): MailjetIframe
+    public function turnBar(string $flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException("Bar requires a valid on/off parameter.");
@@ -252,12 +258,11 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $flag
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnCreateCampaignButton($flag = self::ON): MailjetIframe
+    public function turnCreateCampaignButton(string $flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException("Create campaign requires a valid on/off parameter.");
@@ -266,12 +271,11 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $flag
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function turnSendingPolicy($flag = self::ON): MailjetIframe
+    public function turnSendingPolicy(string $flag = self::ON): MailjetIframe
     {
         if (!$this->isAllowedOnOffParameter($flag)) {
             throw new MailjetException("Sending policy requires a valid on/off parameter.");
@@ -280,13 +284,12 @@ class MailjetIframe
         return $this;
     }
     /**
-     *
      * @param string $page
      * @param string $param
      * @return MailjetIframe
      * @throws MailjetException
      */
-    public function setInitialPage($page = self::PAGE_STATS, $param = null): MailjetIframe
+    public function setInitialPage(string $page = self::PAGE_STATS, $param = null): MailjetIframe
     {
         if (!\in_array($page, $this->allowedPages)) {
             throw new MailjetException("{$page} is unknown.");
@@ -356,7 +359,7 @@ HTML;
      */
     private function generateToken()
     {
-        $params = array('method' => 'JSON', 'AllowedAccess' => $this->tokenAccess, 'IsActive' => 'true', 'TokenType' => 'iframe', 'APIKeyALT' => $this->mailjetApi->getAPIKey(), 'ValidFor' => $this->sessionExpiration);
+        $params = ['method' => 'JSON', 'AllowedAccess' => $this->tokenAccess, 'IsActive' => 'true', 'TokenType' => 'iframe', 'APIKeyALT' => $this->mailjetApi->getAPIKey(), 'ValidFor' => $this->sessionExpiration];
         // get the response
         $response = $this->mailjetApi->apitoken($params)->getResponse();
         if (!$response) {
@@ -420,12 +423,12 @@ HTML;
      */
     private function isSessionStarted(): bool
     {
-        if (\php_sapi_name() !== 'cli') {
-            if (\version_compare(\phpversion(), '5.4.0', '>=')) {
-                return \session_status() === \PHP_SESSION_ACTIVE ? \true : \false;
-            } else {
-                return \session_id() === '' ? \false : \true;
+        if (php_sapi_name() !== 'cli') {
+            if (\version_compare(\phpversion(), '7.4', '>=')) {
+                return \session_status() === \PHP_SESSION_ACTIVE;
             }
+
+            return !(session_id() === '');
         }
         return \false;
     }

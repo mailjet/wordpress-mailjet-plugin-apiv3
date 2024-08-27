@@ -1,5 +1,10 @@
 ## Changelog
 
+##### 6.0
+* Minimum PHP version required is 7.4
+* Code cleanup and improvements
+* In previous versions were fixed issues with infinite redirect, error during editing email templates in iframe. Warning issues according to SESSION
+
 ##### 5.5.4
 * Code improvements. Fix possible warnings and notices.
 

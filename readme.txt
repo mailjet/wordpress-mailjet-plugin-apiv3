@@ -1,13 +1,13 @@
 === Mailjet Email Marketing ===
 
-Contributors: Mailjet
-Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
-Requires at least: 4.4
-Tested up to: 6.4.3
-Stable tag: 5.5.4
-Requires PHP: 7.4
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+- Contributors: Mailjet
+- Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
+- Requires at least: 4.4
+- Tested up to: 6.6.1
+- Stable tag: 6.0
+- Requires PHP: 7.4
+- License: GPLv2 or later
+- License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Includes WooCommerce automated and order emails. Design, send and track engaging marketing and transactional emails from your WordPress admin.
 
@@ -195,6 +195,11 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.0 =
+* Minimum PHP version required is 7.4
+* Code cleanup and improvements
+* In previous versions were fixed issues with infinite redirect, error during editing email templates in iframe. Warning issues according to SESSION
 
 = 5.5.0 =
 * Fixed bug with redirect problem during initial step
