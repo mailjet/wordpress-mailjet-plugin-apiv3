@@ -102,24 +102,18 @@ echo esc_attr($changeList);
             ?></label>
             <select id="mailjet_comment_authors_list" class="mj-select" name="mailjet_comment_authors_list">
                 <?php
-                foreach ($mailjetContactLists as $mailjetContactList) {
-                    if ($mailjetContactList["IsDeleted"] == \true) {
-                        continue;
-                    }
+                    foreach ($mailjetContactLists as $mailjetContactList) {
+                        if ($mailjetContactList["IsDeleted"] == true) {
+                            continue;
+                        }
                     ?>
-                    <option value="<?php
-                    echo esc_attr($mailjetContactList['ID']);
-                    ?>" <?php
-    echo esc_attr($mailjetCommentAuthorsList == $mailjetContactList['ID']) ? 'selected="selected"' : '';
-?> > <?php
-    echo esc_attr($mailjetContactList['Name']);
-?>
-                        (<?php
-                        echo esc_attr($mailjetContactList['SubscriberCount']);
-                        ?>)
-                    </option>
-                    <?php
-                }
+                        <option
+                            value="<?php echo esc_attr($mailjetContactList['ID']); ?>"
+                            <?php echo esc_attr($mailjetCommentAuthorsList == $mailjetContactList['ID']) ? 'selected="selected"' : ''; ?>>
+                            <?php echo esc_attr($mailjetContactList['Name']); ?> (<?php echo esc_attr($mailjetContactList['SubscriberCount']); ?>)
+                        </option>
+                <?php
+                    }
                 ?>
             </select>
         </div>

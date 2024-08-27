@@ -63,7 +63,7 @@ class MailjetApi
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
-            return \false;
+            return false;
         }
         $filters = ['Limit' => '0', 'Sort' => 'Name ASC'];
         try {
@@ -103,58 +103,28 @@ class MailjetApi
 
     /**
      * @param $contactListId
-     * @return bool
-     */
-    public static function isContactListActive($contactListId)
-    {
-        if (!$contactListId) {
-            return \false;
-        }
-        try {
-            $mjApiClient = self::getApiClient();
-        } catch (Exception $e) {
-            return \false;
-        }
-        $filters = ['ID' => $contactListId];
-        try {
-            $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
-        } catch (ConnectException $e) {
-            return \false;
-        }
-        if ($response->success()) {
-            $data = $response->getData();
-            if (isset($data[0]['IsDeleted'])) {
-                // Return true if the list is not deleted
-                return !$data[0]['IsDeleted'];
-            }
-        }
-        return \false;
-    }
-
-    /**
-     * @param $contactListId
      * @return array|false
      */
     public static function getContactListByID($contactListId)
     {
-        if (!$contactListId || empty($contactListId)) {
-            return \false;
+        if (empty($contactListId)) {
+            return false;
         }
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
-            return \false;
+            return false;
         }
         $filters = ['ID' => $contactListId];
         try {
             $response = $mjApiClient->get(Resources::$Contactslist, ['filters' => $filters]);
         } catch (ConnectException $e) {
-            return \false;
+            return false;
         }
         if ($response->success()) {
             return $response->getData();
         }
-        return \false;
+        return false;
     }
 
     /**
@@ -163,7 +133,7 @@ class MailjetApi
      */
     public static function getSubscribersFromList($contactListId)
     {
-        if (!$contactListId || empty($contactListId)) {
+        if (empty($contactListId)) {
             return \false;
         }
         try {
@@ -214,23 +184,12 @@ class MailjetApi
         return false;
     }
 
-    public static function getPropertyIdByName($name)
-    {
-        if (!$name) {
-            return \false;
-        }
-        $contactProperties = self::getContactProperties();
-        if ($contactProperties) {
-            foreach ($contactProperties as $property) {
-                if ($property['Name'] === $name) {
-                    return $property['ID'];
-                }
-            }
-        }
-        return \false;
-    }
-
-    public static function createMailjetContactProperty($name, $type = "str")
+    /**
+     * @param $name
+     * @param string $type
+     * @return array|false
+     */
+    public static function createMailjetContactProperty($name, string $type = "str")
     {
         if (empty($name)) {
             return \false;
@@ -281,10 +240,10 @@ class MailjetApi
     /**
      * @param $name
      * @param $expression
-     * @param $description
+     * @param string $description
      * @return array|false
      */
-    public static function createMailjetSegment($name, $expression, $description = '')
+    public static function createMailjetSegment($name, $expression, string $description = '')
     {
         if (empty($name) || empty($expression)) {
             return \false;
@@ -333,7 +292,7 @@ class MailjetApi
     /**
      * @return bool
      */
-    public static function isValidAPICredentials()
+    public static function isValidAPICredentials(): bool
     {
         try {
             $mjApiClient = self::getApiClient();
@@ -465,20 +424,6 @@ class MailjetApi
         return \true;
     }
 
-    public static function getContactDataByEmail($contactEmail)
-    {
-        try {
-            $mjApiClient = self::getApiClient();
-        } catch (Exception $e) {
-            return \false;
-        }
-        $response = $mjApiClient->get(['contactdata', $contactEmail], []);
-        if ($response->success() && $response->getCount() > 0) {
-            return $response->getData();
-        }
-        return \false;
-    }
-
     /**
      * @throws Exception
      */
@@ -489,6 +434,9 @@ class MailjetApi
         return $mjApiClient->put(['contactdata', $contactEmail], ['body' => $body]);
     }
 
+    /**
+     * @return false|string
+     */
     public static function getProfileName()
     {
         try {
@@ -511,25 +459,33 @@ class MailjetApi
         return $name;
     }
 
+    /**
+     * @param $templateName
+     * @return false|mixed
+     */
     public static function getTemplateByName($templateName)
     {
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
-            return \false;
+            return false;
         }
         try {
             $response = $mjApiClient->get(Resources::$Template, ['id' => 'apikey|' . $templateName]);
         } catch (ConnectException $e) {
-            return \false;
+            return false;
         }
         if ($response->success() && $response->getCount() > 0) {
             return $response->getData()[0];
-        } else {
-            return \false;
         }
+
+        return false;
     }
 
+    /**
+     * @param $id
+     * @return false|mixed
+     */
     public static function getTemplateDetails($id)
     {
         try {
@@ -549,6 +505,10 @@ class MailjetApi
         return \false;
     }
 
+    /**
+     * @param array $arguments
+     * @return false|mixed
+     */
     public static function createTemplate(array $arguments)
     {
         try {
@@ -564,14 +524,18 @@ class MailjetApi
         $data = $response->getData();
         if ($response->success() && $response->getCount() > 0) {
             return $data[0];
-        } else {
-            if ($data['ErrorCode'] === 'ps-0015') {
-                return self::getTemplateByName($arguments['body']['Name']);
-            }
+        }
+
+        if ($data['ErrorCode'] === 'ps-0015') {
+            return self::getTemplateByName($arguments['body']['Name']);
         }
         return \false;
     }
 
+    /**
+     * @param array $content
+     * @return array|false
+     */
     public static function createTemplateContent(array $content)
     {
         try {

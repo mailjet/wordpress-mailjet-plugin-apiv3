@@ -170,24 +170,40 @@ class Mailjet
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
     }
-    private function addMailjetMenu()
+
+    /**
+     * @return void
+     */
+    private function addMailjetMenu(): void
     {
         $plugin_menu = new MailjetMenu();
         $this->loader->add_action('admin_menu', $plugin_menu, 'display_menu');
     }
-    private function addMailjetSettings()
+
+    /**
+     * @return void
+     */
+    private function addMailjetSettings(): void
     {
         $plugin_settings = new MailjetSettings();
         $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_admin_init');
         $this->loader->add_action('init', $plugin_settings, 'mailjet_settings_init');
     }
-    private function addMailjetPHPMailer()
+
+    /**
+     * @return void
+     */
+    private function addMailjetPHPMailer(): void
     {
         $plugin_mails = new MailjetMail();
         $this->loader->add_action('phpmailer_init', $plugin_mails, 'phpmailer_init_smtp');
         $this->loader->add_action('wp_mail_failed', $plugin_mails, 'wp_mail_failed_cb');
     }
-    private function registerMailjetWidget()
+
+    /**
+     * @return void
+     */
+    private function registerMailjetWidget(): void
     {
         $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
     }
@@ -205,7 +221,7 @@ class Mailjet
      *
      * @since    5.0.0
      */
-    public function run()
+    public function run(): void
     {
         $this->loader->run();
     }
@@ -216,7 +232,7 @@ class Mailjet
      * @since     1.0.0
      * @return    string    The name of the plugin.
      */
-    public function get_plugin_name()
+    public function get_plugin_name(): string
     {
         return $this->plugin_name;
     }
@@ -236,7 +252,7 @@ class Mailjet
      * @since     5.0.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version()
+    public function get_version(): string
     {
         return $this->version;
     }
@@ -244,7 +260,7 @@ class Mailjet
     /**
      * @return void
      */
-    private function addWoocommerceActions()
+    private function addWoocommerceActions(): void
     {
         $wooCommerceSettings = WooCommerceSettings::getInstance();
         if (isset($_POST['action']) && $_POST['action'] === 'order_notification_settings_custom_hook') {

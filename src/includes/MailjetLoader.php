@@ -2,8 +2,6 @@
 
 namespace MailjetWp\MailjetPlugin\Includes;
 
-use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
-
 /**
  * Register all actions and filters for the plugin.
  *
@@ -40,8 +38,8 @@ class MailjetLoader
      */
     public function __construct()
     {
-        $this->actions = array();
-        $this->filters = array();
+        $this->actions = [];
+        $this->filters = [];
     }
     /**
      * Add a new action to the collection to be registered with WordPress.
