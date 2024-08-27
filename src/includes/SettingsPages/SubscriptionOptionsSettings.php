@@ -3,9 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
-use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
-use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 
 /**
  * Register all actions and filters for the plugin.
@@ -20,18 +18,22 @@ use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
  */
 class SubscriptionOptionsSettings
 {
-    const PROP_USER_FIRSTNAME = 'firstname';
-    const PROP_USER_LASTNAME = 'lastname';
-    const WP_PROP_USER_ROLE = 'wp_user_role';
-    private static $instance;
-    private $subscrFieldset = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
-    private $profileFields = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
+    public const PROP_USER_FIRSTNAME = 'firstname';
+    public const PROP_USER_LASTNAME = 'lastname';
+    public const WP_PROP_USER_ROLE = 'wp_user_role';
+    private static SubscriptionOptionsSettings $instance;
+    private string $subscrFieldset = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
+    private string $profileFields = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
     private function __construct()
     {
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
         add_action('wp_ajax_resync_mailjet', [$this, 'ajaxResync']);
         add_action('wp_ajax_get_contact_lists_menu', [$this, 'getContactListsMenu']);
     }
+
+    /**
+     * @return SubscriptionOptionsSettings
+     */
     public static function getInstance()
     {
         if (\is_null(self::$instance)) {
@@ -39,17 +41,14 @@ class SubscriptionOptionsSettings
         }
         return self::$instance;
     }
+
+    /**
+     * @param $args
+     * @return void
+     */
     public function mailjet_section_subscription_options_cb($args)
     {
-        ?>
-<!--        <p id="--><?php
-        //echo esc_attr( $args['id'] );
-?><!--">-->
-<!--            --><?php
-        //esc_html_e( 'Automatically add WordPress users to a Mailjet list. Each user’s email address and role (subscriber, administrator, author, …) is synchronized to the list and available for use inside Mailjet.', 'mailjet-for-wordpress' );
-?>
-<!--        </p>-->
-        <?php
+        return;
     }
 
     /**
@@ -91,14 +90,14 @@ class SubscriptionOptionsSettings
             return;
         }
         // register a new section in the "mailjet" page
-        add_settings_section('mailjet_subscription_options_settings', null, array($this, 'mailjet_section_subscription_options_cb'), 'mailjet_subscription_options_page');
+        add_settings_section('mailjet_subscription_options_settings', null, [$this, 'mailjet_section_subscription_options_cb'], 'mailjet_subscription_options_page');
         // register a new field in the "mailjet_section_developers" section, inside the "mailjet" page
         add_settings_field(
             'mailjet_subscription_options',
             // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
             __('Subscription Options', 'mailjet-for-wordpress'),
-            array($this, 'mailjet_subscription_options_cb'),
+            [$this, 'mailjet_subscription_options_cb'],
             'mailjet_subscription_options_page',
             'mailjet_subscription_options_settings',
             ['label_for' => 'mailjet_subscription_options', 'class' => 'mailjet_row', 'mailjet_custom_data' => 'custom']
@@ -348,97 +347,44 @@ class SubscriptionOptionsSettings
     }
 
     /**
-     * @param $subscription_email
-     * @param $instance
-     * @param $subscription_locale
-     * @param $widgetId
-     * @return bool|mixed|void
+     * @return void
      */
-    public function mailjet_subscribe_confirmation_from_widget($subscription_email, $instance, $subscription_locale, $widgetId = false)
+    public function getContactListsMenu(): void
     {
-        $homeUrl = get_home_url();
-        $language = Mailjeti18n::getCurrentUserLanguage();
-        $thankYouPageId = !empty($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : \false;
-        $thankYouURI = $homeUrl;
-        if ($thankYouPageId) {
-            $thankYouURI = get_page_link($thankYouPageId);
-        }
-        $locale = Mailjeti18n::getLocale();
-        $email_subject = !empty($instance[$locale]['email_subject']) ? apply_filters('widget_email_subject', $instance[$locale]['email_subject']) : Mailjeti18n::getTranslationsFromFile($locale, 'Subscription Confirmation');
-        $email_title = !empty($instance[$locale]['email_content_title']) ? apply_filters('widget_email_content_title', $instance[$locale]['email_content_title']) : Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription');
-        $email_button_value = !empty($instance[$locale]['email_content_confirm_button']) ? apply_filters('widget_email_content_confirm_button', $instance[$locale]['email_content_confirm_button']) : Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list');
-        $wpUrl = sprintf('<a href="%s" target="_blank">%s</a>', $homeUrl, $homeUrl);
-        $test = sprintf(Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), $wpUrl);
-        $email_main_text = !empty($instance[$locale]['email_content_main_text']) ? apply_filters('widget_email_content_main_text', \sprintf($instance[$locale]['email_content_main_text'], get_option('blogname'))) : $test;
-        $email_content_after_button = !empty($instance[$locale]['email_content_after_button']) ? $instance[$locale]['email_content_after_button'] : Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.');
-        $properties = array_map('sanitize_text_field', $_POST['properties'] ?? []);
-        $preparedProperties = [];
-        if (!empty($properties)) {
-            foreach ($properties as $key => $val) {
-                $preparedProperties[sanitize_text_field($key)] = sanitize_text_field($val);
-            }
-        }
-
-        $params = array(
-            'subscription_email' => $subscription_email,
-            'subscription_locale' => $subscription_locale,
-            'list_id' => isset($instance[$subscription_locale]['list']) ? $instance[$subscription_locale]['list'] : '',
-            'thanks_id' => isset($instance[$language]['thank_you']) ? $instance[$language]['thank_you'] : '',
-            'properties' => $preparedProperties
-        );
-        if ($widgetId) {
-            $params['widget_id'] = $widgetId;
-        }
-        $params = http_build_query($params);
-        $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', dirname(__FILE__, 3) . '/templates/confirm-subscription-email.php');
-        $message = file_get_contents($subscriptionTemplate);
-        $permalinkStructure = get_option('permalink_structure');
-        if (!$thankYouPageId) {
-            $qm = '?';
-        } else {
-            $qm = "" === $permalinkStructure ? '&' : '?';
-        }
-        $emailData = array(
-            '__EMAIL_TITLE__' => $email_title,
-            '__EMAIL_HEADER__' => $email_main_text,
-            '__WP_URL__' => $homeUrl,
-            '__CONFIRM_URL__' => $thankYouURI . $qm . $params . '&mj_sub_token=' . sha1($params . MailjetSettings::getCryptoHash()),
-            '__CLICK_HERE__' => $email_button_value,
-            '__FROM_NAME__' => $homeUrl,
-            //get_option('blogname'),
-            '__IGNORE__' => $email_content_after_button,
-        );
-        $emailParams = apply_filters('mailjet_subscription_widget_email_params', $emailData);
-        foreach ($emailParams as $key => $value) {
-            $message = str_replace($key, $value, $message);
-        }
-        add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
-        return wp_mail($subscription_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
-    }
-    public function getContactListsMenu()
-    {
-        $allWpUsers = get_users(array('fields' => array('ID', 'user_email')));
+        $allWpUsers = get_users(['fields' => ['ID', 'user_email']]);
         $wpUsersCount = \count($allWpUsers);
         $mailjetSyncList = (int) get_option('mailjet_sync_list');
         $mailjetContactLists = MailjetApi::getMailjetContactLists();
-        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : array();
+        $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : [];
         $mailjetSyncActivated = get_option('activate_mailjet_sync');
         wp_send_json_success(['wpUsersCount' => $wpUsersCount, 'mailjetContactLists' => $mailjetContactLists, 'mailjetSyncActivated' => $mailjetSyncActivated, 'mailjetSyncList' => $mailjetSyncList]);
     }
-    public function set_html_content_type()
+
+    /**
+     * @return string
+     */
+    public function set_html_content_type(): string
     {
         return 'text/html';
     }
-    public function ajaxResync()
+
+    /**
+     * @return void
+     */
+    public function ajaxResync(): void
     {
-        if ($this->syncAllWpUsers()) {
+        if (self::syncAllWpUsers()) {
             $response = ['message' => __('Contact list resync has started. You can check the progress inside the Mailjet %s', 'mailjet-for-wordpress'), 'url' => admin_url('admin.php') . '?page=mailjet_settings_contacts_menu', 'url_string' => __('contact list page', 'mailjet-for-wordpress')];
             wp_send_json_success($response);
         } else {
             wp_send_json_error();
         }
     }
-    public function enqueueAdminScripts()
+
+    /**
+     * @return void
+     */
+    public function enqueueAdminScripts(): void
     {
         wp_enqueue_script('mailjet-ajax', plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src'));
     }
