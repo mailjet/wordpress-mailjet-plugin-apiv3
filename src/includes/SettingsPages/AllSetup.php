@@ -32,7 +32,7 @@ class AllSetup
         ?>
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img src="<?php
-            echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
+            echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
             ?>" alt="Mailjet Logo" /></div>
             <div class="mainContainer allsetup">
                 <!--            <h1>--><?php
