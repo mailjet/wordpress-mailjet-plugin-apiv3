@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.6.1
-- Stable tag: 6.0
+- Stable tag: 6.0.1
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -84,50 +84,6 @@ The Mailjet Plugin is available in English, Spanish, French, German and Italian.
 Need help? Our multilingual support team is here to answer your questions in any of these languages, any day of the week, at any time via our [online helpdesk](https://app.mailjet.com/support).
 
 #### Using filters ####
-##### Customize the subscription confirmation email template
-Add the following code to your template functions.php file. Uncomment the messages that you would like to replace.
-<pre><code>
-/**
- * Override subscription confirmation email texts
- * @param array $emailData -default Mailjet email template parameters
- * @return string
- */
-
-function updateMailjetSubscriptionEmailParameters($emailData) {
-add_filter( 'mailjet_subscription_widget_email_params', 'updateMailjetSubscriptionEmailParameters' );
-
-    // Some custom parameters used from custom template added via `mailjet_confirmation_email_filename`
-    // $emailData['TITLE'] = 'Custom title';
-    // $emailData['SOME_HEADER'] = 'Custom header';
-    // $emailData['CONFIRM'] = 'Custom confirm';
-    // $emailData['SOME_FOOTER'] = 'Custom footer';
-
-    // Override default mailjet parameters
-    // $emailData['__EMAIL_TITLE__'] = 'Please confirm your subscription';
-    // $emailData['__EMAIL_HEADER__'] = 'To receive newsletters from __WP_URL__ please confirm your subscription by clicking the following button:';
-    // $emailData['__CLICK_HERE__'] = 'Yes, subscribe me to this list';
-    // $emailData['__COPY_PASTE_LINK__'] = 'You may copy/paste this link into your browser:';
-    // $emailData['__IGNORE__'] = 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.';
-    // $emailData['__THANKS__'] = 'Thanks,';
-    // $emailData['__FROM_NAME__'] = 'The Mailjet Team';
-    return $emailData;
-}
-</code></pre>
-
-##### Replace the email confirmation template with your own file
-You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
-<pre><code>
-/**
- * Replace default Mailjet template path with a your own
- * @param string $templatePath - the path of the default mailjet template
- * @return string
- */
-
-add_filter( 'mailjet_confirmation_email_filename', 'useCustomConfirmationEmail' );
-function useCustomConfirmationEmail($templatePath) {
-    return './custom_subscription_path.php';
-}
-</code></pre>
 
 ##### Set your own Thank You page
 You need to have a php file with your custom template uploaded to your WordPress server. Then add the following code to your template functions.php file.
@@ -205,6 +161,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
+
+##### 6.0.1
+* Removed old widget filter function `mailjet_subscription_widget_email_params`. It was deprecated and unsupported since we have Form Builder widget
 
 ##### 6.0
 * Minimum PHP version required is 7.4

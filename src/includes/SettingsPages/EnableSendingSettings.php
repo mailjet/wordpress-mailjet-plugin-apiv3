@@ -20,6 +20,10 @@ use MailjetWp\MailjetPlugin\Includes\MailjetMail;
  */
 class EnableSendingSettings
 {
+    /**
+     * @param $args
+     * @return void
+     */
     public function mailjet_section_enable_sending_cb($args)
     {
         ?>

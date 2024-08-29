@@ -18,8 +18,13 @@ use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
  */
 class UserAccessSettings
 {
-    const PREFIX_ACCESS_INPUT_NAME = 'mailjet_access_';
-    const ACCESS_CAP_NAME = 'mailjet_plugin_access';
+    public const PREFIX_ACCESS_INPUT_NAME = 'mailjet_access_';
+    public const ACCESS_CAP_NAME = 'mailjet_plugin_access';
+
+    /**
+     * @param $args
+     * @return void
+     */
     public function mailjet_section_user_access_cb($args)
     {
         ?>
@@ -32,10 +37,19 @@ class UserAccessSettings
         </p>
         <?php
     }
+
+    /**
+     * @return array[]
+     */
     private function getRoles()
     {
         return get_editable_roles();
     }
+
+    /**
+     * @param $args
+     * @return void
+     */
     public function mailjet_user_access_cb($args)
     {
         $roles = $this->getRoles();

@@ -22,6 +22,11 @@ class IntegrationsSettings
     public function mailjet_section_integrations_cb($args)
     {
     }
+
+    /**
+     * @param $mailjetSyncContactList
+     * @return void
+     */
     private function wooIntegration($mailjetSyncContactList)
     {
         $wooCommerceNotInstalled = \false;

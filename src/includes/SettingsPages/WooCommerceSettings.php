@@ -20,10 +20,10 @@ use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
  */
 class WooCommerceSettings
 {
-    const WOO_PROP_TOTAL_ORDERS = 'woo_total_orders_count';
-    const WOO_PROP_TOTAL_SPENT = 'woo_total_spent';
-    const WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
-    const WOO_PROP_ACCOUNT_CREATION_DATE = 'woo_account_creation_date';
+    public const WOO_PROP_TOTAL_ORDERS = 'woo_total_orders_count';
+    public const WOO_PROP_TOTAL_SPENT = 'woo_total_spent';
+    public const WOO_PROP_LAST_ORDER_DATE = 'woo_last_order_date';
+    public const WOO_PROP_ACCOUNT_CREATION_DATE = 'woo_account_creation_date';
     private static $instance;
 
     /**

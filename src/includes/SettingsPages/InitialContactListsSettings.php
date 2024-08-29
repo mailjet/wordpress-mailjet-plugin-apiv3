@@ -45,12 +45,21 @@ class InitialContactListsSettings
             update_option('mj_profile_name', $newProfileName);
         }
     }
+
+    /**
+     * @return void
+     */
     private function createMailjetContactPropertiesThatWpSync()
     {
         MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::PROP_USER_FIRSTNAME);
         MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::PROP_USER_LASTNAME);
         MailjetApi::createMailjetContactProperty(SubscriptionOptionsSettings::WP_PROP_USER_ROLE);
     }
+
+    /**
+     * @param $args
+     * @return void
+     */
     public function mailjet_initial_contact_lists_cb($args)
     {
         $this->updateMailjetProfileName();
@@ -174,7 +183,7 @@ class InitialContactListsSettings
             // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
             __('Enable sending emails through Mailjet', 'mailjet-for-wordpress'),
-            array($this, 'mailjet_initial_contact_lists_cb'),
+            [$this, 'mailjet_initial_contact_lists_cb'],
             'mailjet_initial_contact_lists_page',
             'mailjet_initial_contact_lists_settings',
             ['label_for' => 'mailjet_initial_contact_lists', 'class' => 'mailjet_row', 'mailjet_custom_data' => 'custom']

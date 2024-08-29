@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 6.0.1
+* Removed old widget filter function `mailjet_subscription_widget_email_params`. It was deprecated and unsupported since we have Form Builder widget
+
 ##### 6.0
 * Minimum PHP version required is 7.4
 * Code cleanup and improvements

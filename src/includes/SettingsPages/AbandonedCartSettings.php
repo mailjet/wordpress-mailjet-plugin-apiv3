@@ -9,6 +9,9 @@ use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 
 class AbandonedCartSettings
 {
+    /**
+     * @return void
+     */
     public function mailjet_abandoned_cart_settings_page_html()
     {
         $nonce = wp_create_nonce('mailjet_abandoned_cart_settings_page_html');
