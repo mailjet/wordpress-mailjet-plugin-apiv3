@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.6.1
-- Stable tag: 6.0
+- Stable tag: 6.0.1
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -151,6 +151,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.0.1 =
+* Removed old widget filter function `mailjet_subscription_widget_email_params`. It was deprecated and unsupported since we have Form Builder widget
 
 = 6.0 =
 * Minimum PHP version required is 7.4
