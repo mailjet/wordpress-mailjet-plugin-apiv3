@@ -284,4 +284,28 @@ class Mailjet
             }
         }
     }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public static function getOption(string $key)
+    {
+        if (!is_multisite()) {
+            return get_option($key);
+        }
+
+        $mainSiteId = get_main_network_id();
+        switch_to_blog($mainSiteId);
+
+        //If main site has multisite support enabled, we should use the main site options
+        if (get_option('mailjet_multisite_support') === 'on') {
+            return get_option($key);
+        }
+        //If main site has multisite support disabled, we should use the current site options
+        restore_current_blog();
+
+        return get_option($key);
+    }
+
 }

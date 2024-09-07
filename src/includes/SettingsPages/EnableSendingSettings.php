@@ -49,6 +49,7 @@ class EnableSendingSettings
         $mailjetFromEmail = get_option('mailjet_from_email');
         $mailjetPort = get_option('mailjet_port');
         $mailjetSsl = get_option('mailjet_ssl');
+        $mailjetMultisiteSupport = get_option('mailjet_multisite_support');
         $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
         $mailjetSenders = MailjetApi::getMailjetSenders();
         $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : [];
@@ -169,6 +170,17 @@ class EnableSendingSettings
                             ?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
                         </div>
                     </div>
+                </div>
+
+                <div class="use-multisite-block">
+                    <label class="checkboxLabel" for="mailjet_multisite_support">
+                        <input name="mailjet_multisite_support"  type="checkbox" id="mailjet_multisite_support" value="on" <?php echo esc_attr($mailjetMultisiteSupport) === 'on' ? ' checked="checked"' : ''; ?> autocomplete="off">
+                        <span>
+                            <?php echo __('Use settings from Main website across multisites (Beta)', 'mailjet-for-wordpress'); ?>
+                        </span>
+                    </label>
+                    <span class="text-muted"><?php echo __('This setting allow to use all settings from main site across all setup sub-domains (support multisite created by Wordpress Network Tool)', 'mailjet-for-wordpress'); ?></span>
+
                 </div>
             </div>
 

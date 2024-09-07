@@ -47,6 +47,7 @@ class MailjetSettings
         register_setting('mailjet_sending_settings_page', 'mailjet_from_email');
         register_setting('mailjet_sending_settings_page', 'mailjet_port');
         register_setting('mailjet_sending_settings_page', 'mailjet_ssl');
+        register_setting('mailjet_sending_settings_page', 'mailjet_multisite_support');
         register_setting('mailjet_sending_settings_page', 'mailjet_from_email_extra');
         register_setting('mailjet_sending_settings_page', 'mailjet_from_email_extra_hidden');
         register_setting('mailjet_sending_settings_page', 'mailjet_test_address');
