@@ -31,8 +31,9 @@ class MailjetApi
         if (self::$mjApiClient instanceof Client) {
             return self::$mjApiClient;
         }
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
+        $mailjetApikey = Mailjet::getOption('mailjet_apikey');
+        $mailjetApiSecret = Mailjet::getOption('mailjet_apisecret');
+
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
             throw new Exception('Missing Mailjet API credentials');
         }

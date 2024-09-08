@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\WidgetFormBuilder;
 
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\Mailjeti18n;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 
@@ -56,7 +57,7 @@ class WP_Mailjet_FormBuilder_Widget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-        if (get_option(self::WIDGET_OPTIONS_NAME) === false) {
+        if (Mailjet::getOption(self::WIDGET_OPTIONS_NAME) === false) {
             add_option(self::WIDGET_OPTIONS_NAME, $instance);
         }
         // Check if there is a cached output

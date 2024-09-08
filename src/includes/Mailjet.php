@@ -63,7 +63,7 @@ class Mailjet
         if (\defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '6.0.1';
+            $this->version = '6.1';
         }
         $this->plugin_name = 'mailjet';
         $this->load_dependencies();
@@ -87,7 +87,7 @@ class Mailjet
     {
         \extract(shortcode_atts(['widget_id' => null], $attr, $tag));
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
-        $instance = get_option('mailjet_form_builder_widget_options');
+        $instance = Mailjet::getOption('mailjet_form_builder_widget_options');
 
         // In case we don't have 'widget_id' attribute in the shortcode defined by user - we use the first widget id from the collection
         if (empty($widget_id)) {
@@ -152,7 +152,7 @@ class Mailjet
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_post_user_access_settings_custom_hook', new UserAccessSettings(), 'user_access_post_handler');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
-        if (get_option('activate_mailjet_woo_integration') == '1') {
+        if (Mailjet::getOption('activate_mailjet_woo_integration') == '1') {
             $this->addWoocommerceActions();
         }
     }
@@ -267,12 +267,12 @@ class Mailjet
             $wooCommerceSettings->orders_automation_settings_post();
         }
         $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
-        if (get_option('mailjet_woo_edata_sync') === '1') {
+        if (Mailjet::getOption('mailjet_woo_edata_sync') === '1') {
             $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);
             $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $wooCommerceSettings, 'paid_by_cheque_order_edata_sync', 10, 2);
         }
-        $activeActions = get_option('mailjet_wc_active_hooks');
-        $abandonedCartActiveActions = get_option('mailjet_wc_abandoned_cart_active_hooks');
+        $activeActions = Mailjet::getOption('mailjet_wc_active_hooks');
+        $abandonedCartActiveActions = Mailjet::getOption('mailjet_wc_abandoned_cart_active_hooks');
         if ($activeActions && !empty($activeActions)) {
             foreach ($activeActions as $action) {
                 $this->loader->add_action($action['hook'], $wooCommerceSettings, $action['callable'], 10, 2);
@@ -284,4 +284,28 @@ class Mailjet
             }
         }
     }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public static function getOption(string $key)
+    {
+        if (!is_multisite()) {
+            return get_option($key);
+        }
+
+        $mainSiteId = get_main_network_id();
+        switch_to_blog($mainSiteId);
+
+        //If main site has multisite support enabled, we should use the main site options
+        if (get_option('mailjet_multisite_support') === 'on') {
+            return get_option($key);
+        }
+        //If main site has multisite support disabled, we should use the current site options
+        restore_current_blog();
+
+        return get_option($key);
+    }
+
 }

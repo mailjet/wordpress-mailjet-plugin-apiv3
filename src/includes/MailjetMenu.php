@@ -76,8 +76,8 @@ class MailjetMenu
      */
     private function getMailjetIframe(): MailjetIframe
     {
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
+        $mailjetApikey = Mailjet::getOption('mailjet_apikey');
+        $mailjetApiSecret = Mailjet::getOption('mailjet_apisecret');
         $mailjetIframe = new MailjetIframe($mailjetApikey, $mailjetApiSecret, \false);
         $mailjetIframe->setCallback('')->setTokenExpiration(600)->setLocale($this->get_locale())->setTokenAccess(['campaigns', 'contacts', 'stats', 'transactional'])->turnDocumentationProperties(MailjetIframe::OFF)->turnNewContactListCreation(MailjetIframe::ON)->turnMenu(MailjetIframe::ON)->turnFooter(MailjetIframe::ON)->turnBar(MailjetIframe::ON)->turnCreateCampaignButton(MailjetIframe::ON)->turnSendingPolicy(MailjetIframe::ON);
         return $mailjetIframe;

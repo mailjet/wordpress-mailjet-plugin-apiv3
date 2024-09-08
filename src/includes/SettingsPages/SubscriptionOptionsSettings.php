@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 
@@ -61,11 +62,11 @@ class SubscriptionOptionsSettings
         $allWpUsers = get_users(['fields' => ['ID', 'user_email']]);
         $wpUsersCount = \count($allWpUsers);
         $mailjetSyncContactLists = MailjetApi::getMailjetContactLists();
-        $mailjetSyncContactList = MailjetApi::getContactListByID(get_option('mailjet_sync_list'));
-        $mailjetSyncActivated = get_option('activate_mailjet_sync');
-        $mailjetInitialSyncActivated = get_option('activate_mailjet_initial_sync');
-        $mailjetCommentAuthorsList = get_option('mailjet_comment_authors_list');
-        $mailjetCommentAuthorsSyncActivated = get_option('activate_mailjet_comment_authors_sync');
+        $mailjetSyncContactList = MailjetApi::getContactListByID(Mailjet::getOption('mailjet_sync_list'));
+        $mailjetSyncActivated = Mailjet::getOption('activate_mailjet_sync');
+        $mailjetInitialSyncActivated = Mailjet::getOption('activate_mailjet_initial_sync');
+        $mailjetCommentAuthorsList = Mailjet::getOption('mailjet_comment_authors_list');
+        $mailjetCommentAuthorsSyncActivated = Mailjet::getOption('activate_mailjet_comment_authors_sync');
         $mailjetSyncContactListId = !empty($mailjetSyncContactList) ? $mailjetSyncContactList[0]['ID'] : -1;
         $mailjetSyncContactListName = !empty($mailjetSyncContactList) ? $mailjetSyncContactList[0]['Name'] . ' (' . $mailjetSyncContactList[0]['SubscriberCount'] . ')' : 'No list selected';
         set_query_var('wpUsersCount', $wpUsersCount);
@@ -108,8 +109,8 @@ class SubscriptionOptionsSettings
         if (isset($_GET['settings-updated'])) {
             $executionError = \false;
             // Initial sync WP users to Mailjet
-            $activate_mailjet_initial_sync = get_option('activate_mailjet_initial_sync');
-            $mailjet_sync_list = get_option('mailjet_sync_list');
+            $activate_mailjet_initial_sync = Mailjet::getOption('activate_mailjet_initial_sync');
+            $mailjet_sync_list = Mailjet::getOption('mailjet_sync_list');
             if ((int) $activate_mailjet_initial_sync === 1 && (int) $mailjet_sync_list > 0) {
                 $syncResponse = self::syncAllWpUsers();
                 if (\false === $syncResponse) {
@@ -138,7 +139,7 @@ class SubscriptionOptionsSettings
      */
     public static function syncAllWpUsers()
     {
-        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $mailjet_sync_list = Mailjet::getOption('mailjet_sync_list');
         if ((int) $mailjet_sync_list <= 0) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Please select a contact list.', 'mailjet-for-wordpress'), 'error');
             return \false;
@@ -244,8 +245,8 @@ class SubscriptionOptionsSettings
      */
     public function checkUserSubscription($userLogin, $user)
     {
-        $activate_mailjet_sync = get_option('activate_mailjet_sync');
-        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $activate_mailjet_sync = Mailjet::getOption('activate_mailjet_sync');
+        $mailjet_sync_list = Mailjet::getOption('mailjet_sync_list');
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             $subscribed = MailjetApi::checkContactSubscribedToList($user->user_email, $mailjet_sync_list);
             update_user_meta($user->ID, 'mailjet_subscribe_ok', $subscribed ? '1' : '');
@@ -258,15 +259,15 @@ class SubscriptionOptionsSettings
      */
     public function mailjet_register_user($userId)
     {
-        $activate_mailjet_sync = get_option('activate_mailjet_sync');
-        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $activate_mailjet_sync = Mailjet::getOption('activate_mailjet_sync');
+        $mailjet_sync_list = Mailjet::getOption('mailjet_sync_list');
         $user = get_userdata($userId);
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list) && !empty($user)) {
             $email = $user->user_email;
             $role = $user->roles[0];
             $firstname = $user->first_name;
             $lastname = $user->last_name;
-            if ((int) get_option('mailjet_woo_edata_sync') === 1) {
+            if ((int) Mailjet::getOption('mailjet_woo_edata_sync') === 1) {
                 $registration_date = $user->user_registered;
             }
             try {
@@ -310,8 +311,8 @@ class SubscriptionOptionsSettings
     public function mailjet_show_extra_profile_fields($user)
     {
         // If contact list is not selected, then do not show the extra fields
-        $activate_mailjet_sync = get_option('activate_mailjet_sync');
-        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $activate_mailjet_sync = Mailjet::getOption('activate_mailjet_sync');
+        $mailjet_sync_list = Mailjet::getOption('mailjet_sync_list');
         if (!empty($activate_mailjet_sync) && !empty($mailjet_sync_list)) {
             if (empty($user)) {
                 $user = wp_get_current_user();
@@ -338,7 +339,7 @@ class SubscriptionOptionsSettings
      */
     public function mailjet_subscribe_unsub_user_to_list($subscribe, $user_id)
     {
-        $mailjet_sync_list = get_option('mailjet_sync_list');
+        $mailjet_sync_list = Mailjet::getOption('mailjet_sync_list');
         if (!empty($mailjet_sync_list)) {
             $user = get_userdata($user_id);
             $action = (int) $subscribe === 1 ? 'addforce' : 'unsub';
@@ -352,11 +353,11 @@ class SubscriptionOptionsSettings
             if (!empty($user->roles[0])) {
                 $contactProperties[self::WP_PROP_USER_ROLE] = $user->roles[0];
             }
-            if (!empty($user->user_registered) && (int) get_option('mailjet_woo_edata_sync') === 1) {
+            if (!empty($user->user_registered) && (int) Mailjet::getOption('mailjet_woo_edata_sync') === 1) {
                 $contactProperties[WooCommerceSettings::WOO_PROP_ACCOUNT_CREATION_DATE] = $user->user_registered;
             }
             // Add the user to a contact list
-            return false !== self::syncSingleContactEmailToMailjetList(get_option('mailjet_sync_list'), $user->user_email, $action, $contactProperties);
+            return false !== self::syncSingleContactEmailToMailjetList(Mailjet::getOption('mailjet_sync_list'), $user->user_email, $action, $contactProperties);
         }
     }
 
@@ -367,10 +368,10 @@ class SubscriptionOptionsSettings
     {
         $allWpUsers = get_users(['fields' => ['ID', 'user_email']]);
         $wpUsersCount = \count($allWpUsers);
-        $mailjetSyncList = (int) get_option('mailjet_sync_list');
+        $mailjetSyncList = (int) Mailjet::getOption('mailjet_sync_list');
         $mailjetContactLists = MailjetApi::getMailjetContactLists();
         $mailjetContactLists = !empty($mailjetContactLists) ? $mailjetContactLists : [];
-        $mailjetSyncActivated = get_option('activate_mailjet_sync');
+        $mailjetSyncActivated = Mailjet::getOption('activate_mailjet_sync');
         wp_send_json_success(['wpUsersCount' => $wpUsersCount, 'mailjetContactLists' => $mailjetContactLists, 'mailjetSyncActivated' => $mailjetSyncActivated, 'mailjetSyncList' => $mailjetSyncList]);
     }
 

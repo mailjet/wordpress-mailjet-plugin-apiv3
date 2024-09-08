@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetMail;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
@@ -50,9 +51,9 @@ class InitialSettings
     public function mailjet_initial_settings_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
-        $mailjetActivateLogger = get_option('mailjet_activate_logger');
+        $mailjetApikey = Mailjet::getOption('mailjet_apikey');
+        $mailjetApiSecret = Mailjet::getOption('mailjet_apisecret');
+        $mailjetActivateLogger = Mailjet::getOption('mailjet_activate_logger');
         // output the field
         ?>
         <fieldset>

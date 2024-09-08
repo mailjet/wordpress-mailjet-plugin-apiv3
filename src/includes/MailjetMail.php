@@ -29,26 +29,26 @@ class MailjetMail
     }
     public function phpmailer_init_smtp($phpmailer)
     {
-        if (!get_option('mailjet_enabled') || 0 === (int)get_option('mailjet_enabled')) {
+        if (!Mailjet::getOption('mailjet_enabled') || 0 === (int)Mailjet::getOption('mailjet_enabled')) {
             return;
         }
         $phpmailer->Mailer = 'smtp';
-        $phpmailer->SMTPSecure = get_option('mailjet_ssl');
+        $phpmailer->SMTPSecure = Mailjet::getOption('mailjet_ssl');
         $phpmailer->Host = self::MJ_HOST;
-        $phpmailer->Port = get_option('mailjet_port');
+        $phpmailer->Port = Mailjet::getOption('mailjet_port');
         $phpmailer->SMTPAuth = \TRUE;
-        $phpmailer->Username = get_option('mailjet_apikey');
-        $phpmailer->Password = get_option('mailjet_apisecret');
-        $from_email = get_option('mailjet_from_email') ? get_option('mailjet_from_email') : get_option('admin_email');
+        $phpmailer->Username = Mailjet::getOption('mailjet_apikey');
+        $phpmailer->Password = Mailjet::getOption('mailjet_apisecret');
+        $from_email = Mailjet::getOption('mailjet_from_email') ? Mailjet::getOption('mailjet_from_email') : Mailjet::getOption('admin_email');
         $phpmailer->From = $from_email;
         $phpmailer->Sender = $from_email;
-        $phpmailer->FromName = get_option('mailjet_from_name') ? get_option('mailjet_from_name') : get_bloginfo('name');
+        $phpmailer->FromName = Mailjet::getOption('mailjet_from_name') ? Mailjet::getOption('mailjet_from_name') : get_bloginfo('name');
         $phpmailer->AddCustomHeader(self::MJ_MAILER);
     }
     public function wp_mail_failed_cb($wpError)
     {
         add_action('admin_notices', array($this, 'wp_mail_failed_admin_notice'));
-        if (!get_option('mailjet_enabled')) {
+        if (!Mailjet::getOption('mailjet_enabled')) {
             return \false;
         }
         if (\function_exists('MailjetWp\\add_settings_error')) {
@@ -68,15 +68,15 @@ class MailjetMail
     public static function sendTestEmail()
     {
         $testSent = \false;
-        $mailjetTestAddress = get_option('mailjet_test_address');
+        $mailjetTestAddress = Mailjet::getOption('mailjet_test_address');
         if (empty($mailjetTestAddress)) {
             return $testSent;
         }
         // Send a test mail
         add_filter('wp_mail_content_type', ['MailjetWp\\MailjetPlugin\\Includes\\MailjetMail', 'set_html_content_type']);
         $subject = __('Your test mail from Mailjet', 'mailjet-for-wordpress');
-        $message = \sprintf(__('Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port: %s', 'mailjet-for-wordpress'), get_home_url(), get_option('mailjet_ssl') ? 'On' : 'Off', get_option('mailjet_port'));
-        return wp_mail(get_option('mailjet_test_address'), $subject, $message);
+        $message = \sprintf(__('Your Mailjet configuration is ok! <br /> Site URL: %s <br /> SSL: %s <br /> Port: %s', 'mailjet-for-wordpress'), get_home_url(), Mailjet::getOption('mailjet_ssl') ? 'On' : 'Off', Mailjet::getOption('mailjet_port'));
+        return wp_mail(Mailjet::getOption('mailjet_test_address'), $subject, $message);
     }
     public static function set_html_content_type()
     {
@@ -84,10 +84,10 @@ class MailjetMail
     }
     public function wp_sender_email($original_email_address)
     {
-        return get_option('mailjet_from_email');
+        return Mailjet::getOption('mailjet_from_email');
     }
     public function wp_sender_name($original_email_from)
     {
-        return get_option('mailjet_from_name');
+        return Mailjet::getOption('mailjet_from_name');
     }
 }

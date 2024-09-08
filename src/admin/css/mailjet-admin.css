@@ -456,6 +456,9 @@
     border-radius: 3px;
     box-shadow: none;
 }
+.mj-pluginPage .form-table td .text-muted {
+    color: #888;
+}
 
 .mailjet_row input[type="checkbox"]:disabled {
     background-color: #dddddd;

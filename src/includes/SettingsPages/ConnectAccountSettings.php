@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetMail;
@@ -22,7 +23,7 @@ class ConnectAccountSettings
 {
     public function mailjet_section_connect_account_cb($args)
     {
-        $profileName = get_option('mj_profile_name');
+        $profileName = Mailjet::getOption('mj_profile_name');
         if (!$profileName) {
             $profileName = MailjetApi::getProfileName();
             add_option('mj_profile_name', $profileName);
@@ -41,8 +42,8 @@ class ConnectAccountSettings
     public function mailjet_connect_account_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
-        $mailjetApikey = get_option('mailjet_apikey');
-        $mailjetApiSecret = get_option('mailjet_apisecret');
+        $mailjetApikey = Mailjet::getOption('mailjet_apikey');
+        $mailjetApiSecret = Mailjet::getOption('mailjet_apisecret');
         // output the field
         ?>
         <fieldset class="settingsConnectFldset">

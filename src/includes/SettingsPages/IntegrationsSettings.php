@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 
@@ -45,25 +46,25 @@ class IntegrationsSettings
             delete_option('mailjet_woo_abandoned_cart_sending_time');
             $wooCommerceNotInstalled = \true;
         }
-        $mailjetWooSyncActivated = get_option('mailjet_woo_edata_sync');
-        $mailjetWooIntegrationActivated = get_option('activate_mailjet_woo_integration');
-        $checkoutCheckbox = get_option('mailjet_woo_checkout_checkbox');
+        $mailjetWooSyncActivated = Mailjet::getOption('mailjet_woo_edata_sync');
+        $mailjetWooIntegrationActivated = Mailjet::getOption('activate_mailjet_woo_integration');
+        $checkoutCheckbox = Mailjet::getOption('mailjet_woo_checkout_checkbox');
         if ($checkoutCheckbox !== '1') {
             delete_option('mailjet_woo_checkout_box_text');
         }
-        $checkoutCheckboxText = \stripslashes(get_option('mailjet_woo_checkout_box_text'));
-        $registerCheckbox = get_option('mailjet_woo_register_checkbox');
+        $checkoutCheckboxText = \stripslashes(Mailjet::getOption('mailjet_woo_checkout_box_text'));
+        $registerCheckbox = Mailjet::getOption('mailjet_woo_register_checkbox');
         if ($registerCheckbox !== '1') {
             delete_option('mailjet_woo_register_box_text');
         }
-        $registerCheckboxText = \stripslashes(get_option('mailjet_woo_register_box_text'));
-        $bannerCheckbox = get_option('mailjet_woo_banner_checkbox');
+        $registerCheckboxText = \stripslashes(Mailjet::getOption('mailjet_woo_register_box_text'));
+        $bannerCheckbox = Mailjet::getOption('mailjet_woo_banner_checkbox');
         if ($bannerCheckbox !== '1') {
             delete_option('mailjet_woo_banner_text');
             delete_option('mailjet_woo_banner_label');
         }
-        $bannerText = \stripslashes(get_option('mailjet_woo_banner_text'));
-        $bannerLabel = \stripslashes(get_option('mailjet_woo_banner_label'));
+        $bannerText = \stripslashes(Mailjet::getOption('mailjet_woo_banner_text'));
+        $bannerLabel = \stripslashes(Mailjet::getOption('mailjet_woo_banner_label'));
         $isSyncListSelected = !empty($mailjetSyncContactList);
         $mailjetSyncContactListName = $isSyncListSelected ? $mailjetSyncContactList['Name'] . '(' . $mailjetSyncContactList['SubscriberCount'] . ')' : 'No list selected';
         $syncNotActivatedTooltipMessage = __('To use this option you need to select a contact list', 'mailjet-for-wordpress');
@@ -278,7 +279,7 @@ class IntegrationsSettings
     public function mailjet_integrations_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
-        $mailjetListId = get_option('mailjet_sync_list');
+        $mailjetListId = Mailjet::getOption('mailjet_sync_list');
         $wooContactList = MailjetApi::getContactListByID($mailjetListId);
         $wooContactList = !empty($wooContactList) ? $wooContactList[0] : array();
         $cf7ContactLists = MailjetApi::getMailjetContactLists();
@@ -296,10 +297,10 @@ class IntegrationsSettings
             delete_option('cf7_email');
             delete_option('cf7_fromname');
         }
-        $mailjetCF7IntegrationActivated = get_option('activate_mailjet_cf7_integration');
-        $mailjetCF7List = get_option('mailjet_cf7_list');
-        $email = \stripslashes(get_option('cf7_email'));
-        $from = \stripslashes(get_option('cf7_fromname'));
+        $mailjetCF7IntegrationActivated = Mailjet::getOption('activate_mailjet_cf7_integration');
+        $mailjetCF7List = Mailjet::getOption('mailjet_cf7_list');
+        $email = \stripslashes(Mailjet::getOption('cf7_email'));
+        $from = \stripslashes(Mailjet::getOption('cf7_fromname'));
         ?>
         <fieldset class="settingsSubscrFldset">
             <span class="mj-integrations-label"><?php
@@ -424,7 +425,7 @@ class IntegrationsSettings
         // show error/update messages
         settings_errors('mailjet_messages');
         $nonce = wp_create_nonce('mailjet_integrations_page_html');
-        $post_update = get_option('mailjet_post_update_message');
+        $post_update = Mailjet::getOption('mailjet_post_update_message');
         if ($post_update) {
             update_option('mailjet_post_update_message', '');
         }
