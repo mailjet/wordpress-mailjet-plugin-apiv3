@@ -6,21 +6,21 @@ class MailjetUpdate
 {
     public static function updateToV5()
     {
-        $apikey = get_option('mailjet_apikey');
-        $apisecret = get_option('mailjet_apisecret');
+        $apikey = Mailjet::getOption('mailjet_apikey');
+        $apisecret = Mailjet::getOption('mailjet_apisecret');
         // Check if transition from v4 to v5 is already done
         if ($apikey != false && $apisecret != false) {
             return true;
         }
-        $username = get_option('mailjet_username');
+        $username = Mailjet::getOption('mailjet_username');
         add_option('mailjet_apikey', $username);
-        $password = get_option('mailjet_password');
+        $password = Mailjet::getOption('mailjet_password');
         add_option('mailjet_apisecret', $password);
-        $initSyncListId = get_option('mailjet_initial_sync_list_id');
+        $initSyncListId = Mailjet::getOption('mailjet_initial_sync_list_id');
         add_option('mailjet_sync_list', $initSyncListId);
-        $commentAuthorsListId = get_option('mailjet_comment_authors_list_id');
+        $commentAuthorsListId = Mailjet::getOption('mailjet_comment_authors_list_id');
         add_option('mailjet_comment_authors_list', $commentAuthorsListId);
-        $autoSubscribeListId = get_option('mailjet_auto_subscribe_list_id');
+        $autoSubscribeListId = Mailjet::getOption('mailjet_auto_subscribe_list_id');
         // Default settings
         add_option('mailjet_activate_logger', 0);
         add_option('settings_step', 'user_access_step');
@@ -45,7 +45,7 @@ class MailjetUpdate
     }
     public static function updateToV5_2()
     {
-        $activateMailjetWooSync = get_option('activate_mailjet_woo_sync');
+        $activateMailjetWooSync = Mailjet::getOption('activate_mailjet_woo_sync');
         if (empty($activateMailjetWooSync)) {
             return;
         }
@@ -55,7 +55,7 @@ class MailjetUpdate
     }
     public static function updateToV5_2_1()
     {
-        $pluginVersion = get_option('mailjet_plugin_version');
+        $pluginVersion = Mailjet::getOption('mailjet_plugin_version');
         if (!empty($pluginVersion)) {
             return;
         }

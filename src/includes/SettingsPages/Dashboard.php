@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
@@ -27,7 +28,7 @@ class Dashboard
     public function mailjet_dashboard_page_html()
     {
         $iconDir = plugin_dir_url(dirname(__FILE__, 2)) . 'admin/images/woo.svg';
-        $wooCommerceIntegActivated = get_option('activate_mailjet_woo_integration') === '1';
+        $wooCommerceIntegActivated = Mailjet::getOption('activate_mailjet_woo_integration') === '1';
         if (!MailjetApi::isValidAPICredentials()) {
             MailjetSettings::redirectJs(admin_url('/admin.php?page=mailjet_settings_page&from=plugins'));
         }

@@ -81,7 +81,7 @@ class MailjetPublic
          * class.
          */
         //      wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mailjet-public.js', array( 'jquery' ), $this->version, false );
-        if (get_option('activate_mailjet_woo_integration') === '1' && get_option('mailjet_woo_abandoned_cart_activate') === '1') {
+        if (Mailjet::getOption('activate_mailjet_woo_integration') === '1' && Mailjet::getOption('mailjet_woo_abandoned_cart_activate') === '1') {
             global $wp;
             $currentUrl = \trim(home_url(add_query_arg(array(), $wp->request)), '/ ');
             // check current page is wc checkout page

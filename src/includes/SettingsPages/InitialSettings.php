@@ -53,7 +53,7 @@ class InitialSettings
         // get the value of the setting we've registered with register_setting()
         $mailjetApikey = Mailjet::getOption('mailjet_apikey');
         $mailjetApiSecret = Mailjet::getOption('mailjet_apisecret');
-        $mailjetActivateLogger = get_option('mailjet_activate_logger');
+        $mailjetActivateLogger = Mailjet::getOption('mailjet_activate_logger');
         // output the field
         ?>
         <fieldset>

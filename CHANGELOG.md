@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 6.1
+- Added support Multisite settings across all sites. Now, you can use plugin settings from the main site on all your subdomains.
+
 ##### 6.0.1
 * Removed old widget filter function `mailjet_subscription_widget_email_params`. It was deprecated and unsupported since we have Form Builder widget
 

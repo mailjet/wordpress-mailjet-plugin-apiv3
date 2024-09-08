@@ -2,6 +2,7 @@
 
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 use function filter_var;
@@ -24,8 +25,8 @@ class CommentAuthorsSettings
      */
     public function mailjet_show_extra_comment_fields()
     {
-        $commentAuthorsListId = (int)get_option('mailjet_comment_authors_list');
-        if ((int)get_option('activate_mailjet_comment_authors_sync') === 1 && $commentAuthorsListId > 0) {
+        $commentAuthorsListId = (int)Mailjet::getOption('mailjet_comment_authors_list');
+        if ((int)Mailjet::getOption('activate_mailjet_comment_authors_sync') === 1 && $commentAuthorsListId > 0) {
             $user = wp_get_current_user();
             // Display the checkbox for NOT-logged in or unsubscribed users
             if (empty($user->data->user_email) || !MailjetApi::checkContactSubscribedToList($user->data->user_email, $commentAuthorsListId)) {
@@ -73,7 +74,7 @@ class CommentAuthorsSettings
     {
         $action = \intval($subscribe) === 1 ? 'addforce' : 'remove';
         // Add the user to a contact list
-        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(get_option('mailjet_comment_authors_list'), $user_email, $action);
+        return SubscriptionOptionsSettings::syncSingleContactEmailToMailjetList(Mailjet::getOption('mailjet_comment_authors_list'), $user_email, $action);
     }
     /**
      * Email the collected widget data to the customer with a verification token
@@ -98,12 +99,12 @@ class CommentAuthorsSettings
         $wpUrl = \sprintf('<a href="%s" target="_blank">%s</a>', get_home_url(), get_home_url());
         $subscriptionTemplate = apply_filters('mailjet_confirmation_email_filename', \dirname(\dirname(\dirname(__FILE__))) . '/templates/confirm-subscription-email.php');
         $message = \file_get_contents($subscriptionTemplate);
-        $emailParams = array('__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'), '__EMAIL_HEADER__' => \sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl), '__WP_URL__' => $wpUrl, '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . \sha1($subscribe . $user_email . MailjetSettings::getCryptoHash()), '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'), '__FROM_NAME__' => get_option('blogname'), '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'));
+        $emailParams = array('__EMAIL_TITLE__' => __('Please confirm your subscription', 'mailjet-for-wordpress'), '__EMAIL_HEADER__' => \sprintf(__('To receive newsletters from %s please confirm your subscription by clicking the following button:', 'mailjet-for-wordpress'), $wpUrl), '__WP_URL__' => $wpUrl, '__CONFIRM_URL__' => get_home_url() . '?subscribe=' . $subscribe . '&user_email=' . $user_email . '&mj_sub_comment_author_token=' . \sha1($subscribe . $user_email . MailjetSettings::getCryptoHash()), '__CLICK_HERE__' => __('Yes, subscribe me to this list', 'mailjet-for-wordpress'), '__FROM_NAME__' => Mailjet::getOption('blogname'), '__IGNORE__' => __('If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.', 'mailjet-for-wordpress'));
         foreach ($emailParams as $key => $value) {
             $message = \str_replace($key, $value, $message);
         }
         $email_subject = __('Subscription Confirmation', 'mailjet-for-wordpress');
         add_filter('wp_mail_content_type', array(SubscriptionOptionsSettings::getInstance(), 'set_html_content_type'));
-        wp_mail($user_email, $email_subject, $message, array('From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>'));
+        wp_mail($user_email, $email_subject, $message, array('From: ' . Mailjet::getOption('blogname') . ' <' . Mailjet::getOption('admin_email') . '>'));
     }
 }

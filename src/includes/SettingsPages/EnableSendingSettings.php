@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetMail;
@@ -44,13 +45,13 @@ class EnableSendingSettings
     public function mailjet_enable_sending_cb($args)
     {
         // get the value of the setting we've registered with register_setting()
-        $mailjetEnabled = get_option('mailjet_enabled');
-        $mailjetFromName = get_option('mailjet_from_name');
-        $mailjetFromEmail = get_option('mailjet_from_email');
-        $mailjetPort = get_option('mailjet_port');
-        $mailjetSsl = get_option('mailjet_ssl');
-        $mailjetMultisiteSupport = get_option('mailjet_multisite_support');
-        $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
+        $mailjetEnabled = Mailjet::getOption('mailjet_enabled');
+        $mailjetFromName = Mailjet::getOption('mailjet_from_name');
+        $mailjetFromEmail = Mailjet::getOption('mailjet_from_email');
+        $mailjetPort = Mailjet::getOption('mailjet_port');
+        $mailjetSsl = Mailjet::getOption('mailjet_ssl');
+        $mailjetMultisiteSupport = Mailjet::getOption('mailjet_multisite_support');
+        $mailjet_from_email_extra = Mailjet::getOption('mailjet_from_email_extra');
         $mailjetSenders = MailjetApi::getMailjetSenders();
         $mailjetSenders = !empty($mailjetSenders) ? $mailjetSenders : [];
         ?>
@@ -219,9 +220,9 @@ class EnableSendingSettings
             $executionError = \false;
             $testSent = \false;
             // If whitelisted domain is selected then we add the extra email name to that domain
-            $mailjet_from_email_extra = get_option('mailjet_from_email_extra');
+            $mailjet_from_email_extra = Mailjet::getOption('mailjet_from_email_extra');
             if (!empty($mailjet_from_email_extra)) {
-                update_option('mailjet_from_email', \str_replace('*', '', $mailjet_from_email_extra . get_option('mailjet_from_email')));
+                update_option('mailjet_from_email', \str_replace('*', '', $mailjet_from_email_extra . Mailjet::getOption('mailjet_from_email')));
             }
             // Update From Email and Name
             add_filter('wp_mail_from', array(new MailjetMail(), 'wp_sender_email'));
@@ -231,8 +232,8 @@ class EnableSendingSettings
                 $executionError = \true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Can not connect to Mailjet with the selected settings. Check if a firewall is blocking connections to the Mailjet ports.', 'mailjet-for-wordpress'), 'error');
             }
-            $send_test_email_btn = get_option('send_test_email_btn');
-            $mailjet_test_address = get_option('mailjet_test_address');
+            $send_test_email_btn = Mailjet::getOption('send_test_email_btn');
+            $mailjet_test_address = Mailjet::getOption('mailjet_test_address');
             if (!empty($send_test_email_btn) && empty($mailjet_test_address)) {
                 $executionError = \true;
                 add_settings_error('mailjet_messages', 'mailjet_message', __('Please provide a valid email address', 'mailjet-for-wordpress'), 'error');
@@ -326,17 +327,17 @@ class EnableSendingSettings
         $connected = \FALSE;
         $protocol = '';
         $encryption = '';
-        if (get_option('mailjet_ssl') && get_option('mailjet_port') == 465) {
+        if (Mailjet::getOption('mailjet_ssl') && Mailjet::getOption('mailjet_port') == 465) {
             $encryption = 'ssl';
             $protocol = 'ssl://';
         } else {
-            if (get_option('mailjet_ssl')) {
+            if (Mailjet::getOption('mailjet_ssl')) {
                 $protocol = 'tls://';
                 $encryption = 'tls';
             }
         }
         if ($encryption == 'ssl' || $encryption == '') {
-            $soc = @\fsockopen($protocol . MailjetMail::MJ_HOST, get_option('mailjet_port'), $errno, $errstr, 5);
+            $soc = @\fsockopen($protocol . MailjetMail::MJ_HOST, Mailjet::getOption('mailjet_port'), $errno, $errstr, 5);
         } else {
             if ($encryption == 'tls') {
                 $remote_socket = MailjetMail::MJ_HOST . ":587";
@@ -346,8 +347,8 @@ class EnableSendingSettings
         }
         if ($soc) {
             $connected = \TRUE;
-            $port = get_option('mailjet_port');
-            $ssl = get_option('mailjet_ssl');
+            $port = Mailjet::getOption('mailjet_port');
+            $ssl = Mailjet::getOption('mailjet_ssl');
         } else {
             for ($i = 0; $i < \count($configs); ++$i) {
                 if ($configs[$i][0]) {

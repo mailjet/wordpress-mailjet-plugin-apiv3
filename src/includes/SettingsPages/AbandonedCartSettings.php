@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
@@ -15,8 +16,8 @@ class AbandonedCartSettings
     public function mailjet_abandoned_cart_settings_page_html()
     {
         $nonce = wp_create_nonce('mailjet_abandoned_cart_settings_page_html');
-        $isAbandonedCartActivated = get_option('mailjet_woo_abandoned_cart_activate') === '1';
-        $sendingTime = get_option('mailjet_woo_abandoned_cart_sending_time');
+        $isAbandonedCartActivated = Mailjet::getOption('mailjet_woo_abandoned_cart_activate') === '1';
+        $sendingTime = Mailjet::getOption('mailjet_woo_abandoned_cart_sending_time');
         // time in seconds
         $sendingTimeScaleInMinutes = $sendingTime <= 3600;
         // scale in minutes if time <= 1h (60 * 60)
@@ -29,10 +30,10 @@ class AbandonedCartSettings
                 $abandonedCartTemplate = $templates['mailjet_woocommerce_abandoned_cart'];
             }
         }
-        $postUpdateMsg = get_option('mailjet_post_update_message');
+        $postUpdateMsg = Mailjet::getOption('mailjet_post_update_message');
         $wasActivated = \false;
         if (\is_array($postUpdateMsg) && !\is_null($postUpdateMsg['mjACWasActivated'])) {
-            $wasActivated = get_option('mailjet_post_update_message')['mjACWasActivated'];
+            $wasActivated = Mailjet::getOption('mailjet_post_update_message')['mjACWasActivated'];
             if ($wasActivated) {
                 update_option('mailjet_post_update_message', '');
             }

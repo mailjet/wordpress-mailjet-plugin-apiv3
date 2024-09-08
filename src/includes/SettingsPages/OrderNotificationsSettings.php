@@ -3,6 +3,7 @@
 namespace MailjetWp\MailjetPlugin\Includes\SettingsPages;
 
 use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
 use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
@@ -14,8 +15,8 @@ class OrderNotificationsSettings
      */
     public function mailjet_order_notifications_settings_page_html()
     {
-        $wooCommerceActivated = get_option('activate_mailjet_woo_integration') === '1' ? \true : \false;
-        $notifications = get_option('mailjet_order_notifications');
+        $wooCommerceActivated = Mailjet::getOption('activate_mailjet_woo_integration') === '1' ? \true : \false;
+        $notifications = Mailjet::getOption('mailjet_order_notifications');
         $isOrderConfirmationActive = isset($notifications['mailjet_order_confirmation']);
         // Processing Order
         $isShippingConfirmationActive = isset($notifications['mailjet_shipping_confirmation']);
@@ -45,7 +46,7 @@ class OrderNotificationsSettings
             return;
         }
         $showActivatePopup = \false;
-        $post_update = get_option('mailjet_post_update_message');
+        $post_update = Mailjet::getOption('mailjet_post_update_message');
         if ($post_update) {
             if (isset($post_update['mj_order_notif_activate']) && $post_update['mj_order_notif_activate']) {
                 $showActivatePopup = \true;
