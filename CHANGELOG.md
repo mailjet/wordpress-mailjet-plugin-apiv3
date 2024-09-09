@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 6.1.1
+- Fix PHP Fatal error:  Uncaught Error: Class 'MailjetWp\\MailjetPlugin\\Front\\Mailjet
+
 ##### 6.1
 - Added support Multisite settings across all sites. Now, you can use plugin settings from the main site on all your subdomains.
 
