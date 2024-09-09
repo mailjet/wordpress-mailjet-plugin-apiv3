@@ -2,6 +2,8 @@
 
 namespace MailjetWp\MailjetPlugin\Front;
 
+use MailjetWp\MailjetPlugin\Includes\Mailjet;
+
 /**
  * The public-facing functionality of the plugin.
  *
