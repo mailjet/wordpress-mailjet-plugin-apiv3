@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 6.1.2
+ - Fix possible error when code switch websites and could leave website in a broken state
+
 ##### 6.1.1
 - Fix PHP Fatal error:  Uncaught Error: Class 'MailjetWp\\MailjetPlugin\\Front\\Mailjet
 

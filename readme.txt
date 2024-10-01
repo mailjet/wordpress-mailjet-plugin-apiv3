@@ -3,8 +3,8 @@
 - Contributors: Mailjet
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
-- Tested up to: 6.6.1
-- Stable tag: 6.1.1
+- Tested up to: 6.6.2
+- Stable tag: 6.1.2
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -151,6 +151,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.1.2 =
+ - Fix possible error when code switch websites and could leave website in a broken state
 
 = 6.0.1 =
 * Removed old widget filter function `mailjet_subscription_widget_email_params`. It was deprecated and unsupported since we have Form Builder widget

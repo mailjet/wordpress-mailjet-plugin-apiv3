@@ -63,7 +63,7 @@ class Mailjet
         if (\defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
-            $this->version = '6.1.1';
+            $this->version = '6.1.2';
         }
         $this->plugin_name = 'mailjet';
         $this->load_dependencies();
@@ -300,7 +300,9 @@ class Mailjet
 
         //If main site has multisite support enabled, we should use the main site options
         if (get_option('mailjet_multisite_support') === 'on') {
-            return get_option($key);
+            $optionValue = get_option($key);
+            restore_current_blog();
+            return $optionValue;
         }
         //If main site has multisite support disabled, we should use the current site options
         restore_current_blog();
