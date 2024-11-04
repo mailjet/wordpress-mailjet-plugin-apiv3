@@ -23,19 +23,20 @@
 }
 
 .mj-pluginPage a {
-    text-decoration: none;
-    color: #19BC9C;
+    color:#195A6A;
+    text-decoration: underline;
 }
 
 .mj-pluginPage a:hover,
 .mj-pluginPage a:focus {
+    color:#377386;
     text-decoration: underline;
-    color: #33D6B6;
 }
 
 .mj-pluginPage a:focus {
-    outline: 0;
-    box-shadow: none;
+    color:#377386;
+    text-decoration: underline;
+    box-shadow: rgb(151, 192, 204) 0px 0px 1px 2px;
 }
 
 .mj-pluginPage a:visited {
@@ -66,7 +67,6 @@
 }
 
 .mj-pluginPage input[type="text"] {
-    /*width: 100%;*/
     max-width: 98%;
     height: 36px;
     margin-bottom: 16px;
@@ -86,7 +86,7 @@
 }
 
 .mj-pluginPage input[type="text"]:focus {
-    border-color: #19BC9C;
+    border-color:#195A6A;
 }
 
 ::-webkit-input-placeholder {
@@ -217,7 +217,7 @@
 }
 
 .mj-select-wrapper.mj-select-focus:before {
-    border-color: #19BC9C;
+    border-color:#195A6A;
 }
 
 .mj-select-wrapper select {
@@ -264,32 +264,31 @@
 .mj-pluginPage .btnPrimary:hover,
 .mj-pluginPage .button.btnPrimary,
 .mj-pluginPage .button.btnPrimary:hover {
-    border-color: transparent;
-    color: white;
-    background-color: #FEAD0D;
+    background-color:#195A6A;
+    color: #fff;
 }
 
 .mj-pluginPage .btnPrimary:hover,
 .mj-pluginPage .button.btnPrimary:hover {
-    background-color: #FFBA1A;
+    background-color:#2F6779;
 }
 
 .mj-pluginPage .btnPrimary:focus,
 .mj-pluginPage .btnPrimary:active,
 .mj-pluginPage .button.btnPrimary:focus,
 .mj-pluginPage .button.btnPrimary:active {
-    background-color: #F1A000;
+    background-color:#2F6779;
+    box-shadow: rgb(151, 192, 204) 0px 0px 1px 2px;
 }
 
 .mj-pluginPage .btnSecondary,
 .mj-pluginPage .button.btnSecondary {
-    color: #FEAD0D;
-    border-color: currentColor;
+    color: #195A6A;
 }
 
 .mj-pluginPage .btnSecondary:hover, .btnSecondary:active, .btnSecondary:focus,
 .mj-pluginPage .button.btnSecondary:hover, .button.btnSecondary:active, .button.btnSecondary:focus {
-    background-color: rgba(254, 173, 13, 0.1);
+    background-color:rgba(0,0,0,0.05);
 }
 
 .mj-pluginPage .btnCancel,
@@ -473,16 +472,14 @@
 }
 
 .mailjet_row input[type="checkbox"]:focus {
-    border: 1px solid #19BC9C;
+    border: 1px solid #195A6A;
     background: #FFFFFF;
     outline: none;
 }
 
 .mailjet_row input[type="checkbox"]:checked {
-    border: 1px solid #19BC9C;
-    background: #33D6B6;
-    text-align: center;
-    font-weight: bold;
+    background:#195A6A;
+    border: 1px solid #195A6A;
 }
 
 /*#wpbody-content {
@@ -665,7 +662,8 @@
     padding: 0;
     margin: 0;
     border: none;
-    color: #19BC9C;
+    color:#195A6A;
+    text-decoration: underline;
     background: transparent;
     outline: 0;
     cursor: pointer;
@@ -739,7 +737,8 @@
 
 .bottom_links a:hover,
 .bottom_links a:focus {
-    color: #33D6B6;
+    color:#377386;
+    text-decoration: underline;
 }
 
 .settingsMenuLink a {
@@ -747,10 +746,10 @@
     align-items: center;
     height: 40px;
     line-height: 24px;
-    /*padding: 8px;*/
     font-size: 16px;
     font-weight: 500;
     color: #555;
+    padding-left:8px;
 }
 
 .settingsMenuLink a svg {
@@ -762,8 +761,9 @@
 .settingsMenuLink a:active,
 .settingsMenuLink a:focus {
     text-decoration: none;
-    color: #555;
     outline: 0;
+    border-radius:3px;
+    color: #555555;
 }
 
 .settingsMenuLink a:not(.active):hover,
@@ -780,7 +780,7 @@
 }
 
 .settingsMenuLink a.active {
-    color: #19BC9C;
+    color:#2F6779;
 }
 
 #mailjet_subscription_options_settings {
@@ -835,7 +835,7 @@
     align-items: center;
     line-height: 20px;
     text-decoration: none;
-    color: #19BC9C;
+    color: #377386;
     cursor: pointer;
 }
 
@@ -861,7 +861,7 @@
 }
 
 .greenLink {
-    color: #19BC9C;
+    color: #377386;
     text-decoration: none;
 }
 
@@ -994,13 +994,13 @@
     height: 36px;
     border: 1px solid #c1c1c1;
     border-radius: 3px;
-    color: #FFF;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
     text-align: center;
     margin-left: 10px;
-    color: #FCB340;
+    text-decoration: none;
+    color:#555555;
 }
 
 .activate_mailjet_sync_field {
@@ -1217,11 +1217,7 @@
 }
 
 input:checked + .mj-slider {
-    background-color: #19BC9C;
-}
-
-input:focus + .mj-slider {
-    box-shadow: 0 0 1px #19BC9C;
+    background-color:#195A6A;
 }
 
 input:checked + .mj-slider:before {
@@ -1359,11 +1355,14 @@ input:checked + .mj-slider:before {
 
 #mj-settings_top_bar {
     margin-right: 35px;
-    color: #19BC9C;
+    color: #195A6A;
     cursor: pointer;
     display: flex;
     align-items: center;
     margin-left: auto;
+}
+#mj-settings_top_bar:hover {
+    color:#377386;
 }
 
 #mj-settings_top_bar i {
