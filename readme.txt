@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.6.2
-- Stable tag: 6.1.2
+- Stable tag: 6.1.3
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
