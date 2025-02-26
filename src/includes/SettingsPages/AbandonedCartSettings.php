@@ -8,31 +8,30 @@ use MailjetWp\MailjetPlugin\Includes\MailjetApi;
 use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
 use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
 
-class AbandonedCartSettings
-{
+class AbandonedCartSettings {
+
     /**
      * @return void
      */
-    public function mailjet_abandoned_cart_settings_page_html()
-    {
-        $nonce = wp_create_nonce('mailjet_abandoned_cart_settings_page_html');
+    public function mailjet_abandoned_cart_settings_page_html() {
+        $nonce                    = wp_create_nonce('mailjet_abandoned_cart_settings_page_html');
         $isAbandonedCartActivated = Mailjet::getOption('mailjet_woo_abandoned_cart_activate') === '1';
-        $sendingTime = Mailjet::getOption('mailjet_woo_abandoned_cart_sending_time');
+        $sendingTime              = Mailjet::getOption('mailjet_woo_abandoned_cart_sending_time');
         // time in seconds
         $sendingTimeScaleInMinutes = $sendingTime <= 3600;
         // scale in minutes if time <= 1h (60 * 60)
-        $sendingTimeScaled = $sendingTimeScaleInMinutes ? $sendingTime / 60 : $sendingTime / 3600;
+        $sendingTimeScaled     = $sendingTimeScaleInMinutes ? $sendingTime / 60 : $sendingTime / 3600;
         $abandonedCartTemplate = WooCommerceSettings::getWooTemplate('mailjet_woocommerce_abandoned_cart');
-        if (!$abandonedCartTemplate) {
+        if ( ! $abandonedCartTemplate) {
             $wooCommerceSettings = WooCommerceSettings::getInstance();
-            $templates = $wooCommerceSettings->createTemplates(\true, \false);
+            $templates           = $wooCommerceSettings->createTemplates(\true, \false);
             if ($templates) {
                 $abandonedCartTemplate = $templates['mailjet_woocommerce_abandoned_cart'];
             }
         }
         $postUpdateMsg = Mailjet::getOption('mailjet_post_update_message');
-        $wasActivated = \false;
-        if (\is_array($postUpdateMsg) && !\is_null($postUpdateMsg['mjACWasActivated'])) {
+        $wasActivated  = \false;
+        if (\is_array($postUpdateMsg) && ! \is_null($postUpdateMsg['mjACWasActivated'])) {
             $wasActivated = Mailjet::getOption('mailjet_post_update_message')['mjACWasActivated'];
             if ($wasActivated) {
                 update_option('mailjet_post_update_message', '');
@@ -47,23 +46,29 @@ class AbandonedCartSettings
     <div class="mj-pluginPage mj-mask-popup" id="mj-popup-confirm-ac">
         <div class="mj-popup">
             <div class="mj-popup-header">
-                <h1><?php
+                <h1>
+                <?php
                 _e('Sending active', 'mailjet-for-wordpress');
-                ?></h1><span> <a class="buttons-desktop-04-icon-01-def" id="mj-close" href="#" data-toggle="hide" onclick="togglePopup('mj-popup-confirm-ac')"><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 16 16" style="vertical-align: middle;"><g><path d="M14.4 0L8 6.4 1.601 0 0 1.6l6.4 6.399-6.4 6.4L1.601 16 8 9.6l6.4 6.4 1.6-1.601-6.4-6.4L16 1.6z"></path></g></svg></a></span>
+                ?>
+                </h1><span> <a class="buttons-desktop-04-icon-01-def" id="mj-close" href="#" data-toggle="hide" onclick="togglePopup('mj-popup-confirm-ac')"><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 16 16" style="vertical-align: middle;"><g><path d="M14.4 0L8 6.4 1.601 0 0 1.6l6.4 6.399-6.4 6.4L1.601 16 8 9.6l6.4 6.4 1.6-1.601-6.4-6.4L16 1.6z"></path></g></svg></a></span>
             </div>
             <hr>
             <div class="mj-popup-body">
                 <div class="mj-popup-message">
-                    <p><?php
+                    <p>
+                    <?php
                     _e('Abandoned cart emails have been enabled for sending. You can change and stop the sending at any time.', 'mailjet-for-wordpress');
-                    ?></p>
+                    ?>
+                    </p>
                 </div>
             </div>
             <hr>
             <div class="mj-popup-footer mailjet_row">
-                <button class="mj-btn btnPrimary" data-toggle="hide" onclick="togglePopup('mj-popup-confirm-ac')"><?php
+                <button class="mj-btn btnPrimary" data-toggle="hide" onclick="togglePopup('mj-popup-confirm-ac')">
+                <?php
                 _e('Close', 'mailjet-for-wordpress');
-                ?></button>
+                ?>
+                </button>
             </div>
         </div>
     </div>
@@ -76,26 +81,34 @@ class AbandonedCartSettings
     <div class="mj-pluginPage mj-mask-popup mj-hidden" id="mj-popup-stop-ac">
         <div class="mj-popup">
             <div class="mj-popup-header">
-                <h1><?php
+                <h1>
+                <?php
                 _e('Stop sending', 'mailjet-for-wordpress');
-                ?></h1><span> <a class="buttons-desktop-04-icon-01-def" id="mj-close" href="#" data-toggle="hide" onclick="togglePopup('mj-popup-stop-ac')"><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 16 16" style="vertical-align: middle;"><g><path d="M14.4 0L8 6.4 1.601 0 0 1.6l6.4 6.399-6.4 6.4L1.601 16 8 9.6l6.4 6.4 1.6-1.601-6.4-6.4L16 1.6z"></path></g></svg></a></span>
+                ?>
+                </h1><span> <a class="buttons-desktop-04-icon-01-def" id="mj-close" href="#" data-toggle="hide" onclick="togglePopup('mj-popup-stop-ac')"><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 16 16" style="vertical-align: middle;"><g><path d="M14.4 0L8 6.4 1.601 0 0 1.6l6.4 6.399-6.4 6.4L1.601 16 8 9.6l6.4 6.4 1.6-1.601-6.4-6.4L16 1.6z"></path></g></svg></a></span>
             </div>
             <hr>
             <div class="mj-popup-body">
                 <div class="mj-popup-message">
-                    <p><?php
+                    <p>
+                    <?php
                     _e('By stopping the sending of abandoned cart emails, your visitors will no more be notified of the items they left inside their cart. Do you wish to stop the sending?', 'mailjet-for-wordpress');
-                    ?></p>
+                    ?>
+                    </p>
                 </div>
             </div>
             <hr>
             <div class="mj-popup-footer mailjet_row">
-                <button id="mj-popup-stop-ac-btn" class="mj-btn btnPrimary" onclick=""><?php
+                <button id="mj-popup-stop-ac-btn" class="mj-btn btnPrimary" onclick="">
+                <?php
                 _e('Stop sending', 'mailjet-for-wordpress');
-                ?></button>
-                <button class="mj-btnSecondary" data-toggle="hide" onclick="togglePopup('mj-popup-stop-ac')"><?php
+                ?>
+                </button>
+                <button class="mj-btnSecondary" data-toggle="hide" onclick="togglePopup('mj-popup-stop-ac')">
+                <?php
                 _e('Cancel', 'mailjet-for-wordpress');
-                ?></button>
+                ?>
+                </button>
             </div>
         </div>
     </div>
@@ -104,9 +117,11 @@ class AbandonedCartSettings
         ?>
     <div class="mj-pluginPage">
         <div id="initialSettingsHead"><img
-                src="<?php
-                echo plugin_dir_url(\dirname(\dirname(__FILE__))) . '/admin/images/LogoMJ_White_RVB.svg';
-                ?>"
+                src="
+                <?php
+                echo plugin_dir_url(\dirname(__DIR__)) . '/admin/images/LogoMJ_White_RVB.svg';
+                ?>
+                "
                 alt="Mailjet Logo"/></div>
         <div class="mainContainer dashboard">
             <div class="backToDashboard">
@@ -119,36 +134,50 @@ class AbandonedCartSettings
                     ?>
                 </a>
             </div>
-            <form action="<?php
+            <form action="
+            <?php
             echo esc_url(admin_url('admin-post.php'));
-            ?>" method="post" id="abandoned-cart-form">
+            ?>
+            " method="post" id="abandoned-cart-form">
                 <fieldset class="mj-form-content">
                     <div>
                         <div id="mj-top_bar">
-                            <h1 class="page_top_title mj-template-labels"><?php
+                            <h1 class="page_top_title mj-template-labels">
+                            <?php
                             _e('Abandoned cart', 'mailjet-for-wordpress');
-                            ?> </h1>
-                            <div class="mj-badge <?php
-                            echo !$isAbandonedCartActivated ? 'mj-hidden' : '';
-                            ?>"><p><?php
-        _e('Sending active', 'mailjet-for-wordpress');
-?></p></div>
+                            ?>
+                            </h1>
+                            <div class="mj-badge 
+                            <?php
+                            echo ! $isAbandonedCartActivated ? 'mj-hidden' : '';
+                            ?>
+                            "><p>
+                            <?php
+							_e('Sending active', 'mailjet-for-wordpress');
+							?>
+</p></div>
                         </div>
                         <p class="page_top_subtitle">
                             <?php
                             _e('Recover visitors and turn them into customers by reminding them what they left in their carts.', 'mailjet-for-wordpress');
                             ?>
                         </p>
-                        <button type="button" id="mj-ac-tip-btn" class="mj-toggleTextBtn mj-toggleBtn" data-target="mj-ac-tip-text"><?php
+                        <button type="button" id="mj-ac-tip-btn" class="mj-toggleTextBtn mj-toggleBtn" data-target="mj-ac-tip-text">
+                        <?php
                         _e('Who\'s going to receive this email?', 'mailjet-for-wordpress');
-                        ?></button>
+                        ?>
+                        </button>
                         <div id="mj-ac-tip-text" class="mj-hide mj-ac-tip-text">
-                            <p><?php
+                            <p>
+                            <?php
                             _e('This email will be automatically sent to those customers that have added at least one item to the cart and then have left you store without completing the purchase.', 'mailjet-for-wordpress');
-                            ?></p>
-                            <!--<p><?php
+                            ?>
+                            </p>
+                            <!--<p>
+                            <?php
                             _e('We will send abandoned cart emails only to those customers that have accepted marketing communication and that are active.', 'mailjet-for-wordpress');
-                            ?></p>-->
+                            ?>
+                            </p>-->
                         </div>
                     </div>
                     <div class="mailjet_row">
@@ -158,40 +187,60 @@ class AbandonedCartSettings
                             ?>
                         </h2>
                         <div class="mj-time-setting">
-                            <div id="sendingTimeInputs" <?php
+                            <div id="sendingTimeInputs" 
+                            <?php
                             echo esc_attr($isAbandonedCartActivated) ? 'class="hidden"' : '';
-                            ?>>
-                                <input type="number" id="timeInput" name="abandonedCartSendingTime" value="<?php
+                            ?>
+                            >
+                                <input type="number" id="timeInput" name="abandonedCartSendingTime" value="
+                                <?php
                                 echo esc_attr($sendingTimeScaled);
-                                ?>" />
+                                ?>
+                                " />
                                 <select id="abandonedCartTimeScale" name="abandonedCartTimeScale">
-                                    <option value="MINUTES" <?php
+                                    <option value="MINUTES" 
+                                    <?php
                                     echo esc_attr($sendingTimeScaleInMinutes) ? 'selected' : '';
-                                    ?>><?php
-        _e('minutes', 'mailjet-for-wordpress');
-?></option>
-                                    <option value="HOURS" <?php
+                                    ?>
+                                    >
+                                    <?php
+									_e('minutes', 'mailjet-for-wordpress');
+									?>
+</option>
+                                    <option value="HOURS" 
+                                    <?php
                                     echo esc_attr($sendingTimeScaleInMinutes) ? '' : 'selected';
-                                    ?>><?php
-        _e('hours', 'mailjet-for-wordpress');
-?></option>
+                                    ?>
+                                    >
+                                    <?php
+									_e('hours', 'mailjet-for-wordpress');
+									?>
+</option>
                                 </select>
                             </div>
                             <p>
-                                <strong id="abandonedCartTimeScaleTxt" <?php
-                                echo esc_attr(!$isAbandonedCartActivated) ? 'class="hidden"' : '';
-                                ?>><?php
-        echo esc_attr($sendingTimeScaled . ' ' . ($sendingTimeScaleInMinutes ? __('minutes') : __('hours')));
-?></strong>
+                                <strong id="abandonedCartTimeScaleTxt" 
+                                <?php
+                                echo esc_attr( ! $isAbandonedCartActivated) ? 'class="hidden"' : '';
+                                ?>
+                                >
+                                <?php
+								echo esc_attr($sendingTimeScaled . ' ' . ($sendingTimeScaleInMinutes ? __('minutes') : __('hours')));
+								?>
+</strong>
                                 <?php
                                 _e('after cart abandonment.', 'mailjet-for-wordpress');
                                 ?>
                             </p>
-                            <span id="linkSendingTimeSetting" <?php
-                            echo esc_attr(!$isAbandonedCartActivated) ? 'class="hidden"' : '';
-                            ?>><a href="#" onclick="toggleTimeSettings(true)"><?php
-        _e('Edit sending time', 'mailjet-for-wordpress');
-?></a></span>
+                            <span id="linkSendingTimeSetting" 
+                            <?php
+                            echo esc_attr( ! $isAbandonedCartActivated) ? 'class="hidden"' : '';
+                            ?>
+                            ><a href="#" onclick="toggleTimeSettings(true)">
+                            <?php
+							_e('Edit sending time', 'mailjet-for-wordpress');
+							?>
+</a></span>
                             <div id="sendingTimeButtons" class="hidden">
                                 <button id="mj-ac-edit-time" class="mj-btn btnPrimary">
                                     <?php
@@ -225,7 +274,7 @@ class AbandonedCartSettings
                 </fieldset>
                 <div class="mailjet_row mj-row-btn">
                     <?php
-                    if (!$isAbandonedCartActivated) {
+                    if ( ! $isAbandonedCartActivated) {
                         ?>
                         <button id="mj-activate-ac-submit" class="mj-btn btnPrimary" type="submit" name="activate_ac" value="1">
                             <?php
@@ -245,9 +294,11 @@ class AbandonedCartSettings
                     ?>
                 </div>
                 <input type="hidden" name="action" value="abandoned_cart_settings_custom_hook">
-                <input type="hidden" name="custom_nonce" value="<?php
+                <input type="hidden" name="custom_nonce" value="
+                <?php
                 echo esc_attr($nonce);
-                ?>">
+                ?>
+                ">
             </form>
         </div>
         <?php
@@ -286,12 +337,16 @@ class AbandonedCartSettings
                     document.getElementById("sendingTimeButtons").classList.add("hidden");
                     document.getElementById("sendingTimeInputs").classList.add("hidden");
                     // reset values in case of form submit after cancel
-                    timeField.value = <?php
+                    timeField.value = 
+                    <?php
                     echo esc_attr($sendingTimeScaled);
-                    ?>;
-                    timeScaleSelect.value = <?php
+                    ?>
+                    ;
+                    timeScaleSelect.value = 
+                    <?php
                     echo esc_attr($sendingTimeScaleInMinutes) ? '"MINUTES"' : '"HOURS"';
-                    ?>;
+                    ?>
+                    ;
                 }
             }
 

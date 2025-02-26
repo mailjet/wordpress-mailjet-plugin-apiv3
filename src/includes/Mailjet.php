@@ -22,8 +22,8 @@ use MailjetWp\MailjetPlugin\Includes\SettingsPages\WooCommerceSettings;
  * @subpackage Mailjet/includes
  * @author     Your Name <email@example.com>
  */
-class Mailjet
-{
+class Mailjet {
+
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
      * the plugin.
@@ -58,8 +58,7 @@ class Mailjet
      *
      * @since    5.0.0
      */
-    public function __construct()
-    {
+    public function __construct() {
         if (\defined('MAILJET_VERSION')) {
             $this->version = MAILJET_VERSION;
         } else {
@@ -75,23 +74,22 @@ class Mailjet
         $this->addMailjetPHPMailer();
         $this->registerMailjetWidget();
 
-        add_shortcode('mailjet_form_builder', [$this, 'display_mailjet_form_builder_widget']);
+        add_shortcode('mailjet_form_builder', array( $this, 'display_mailjet_form_builder_widget' ));
     }
 
     /**
-     * @param array $attr
+     * @param array  $attr
      * @param string $tag
      * @return false|string
      */
-    public static function display_mailjet_form_builder_widget(array $attr = [], string $tag = '')
-    {
-        \extract(shortcode_atts(['widget_id' => null], $attr, $tag));
+    public static function display_mailjet_form_builder_widget( array $attr = array(), string $tag = '' ) {
+        \extract(shortcode_atts(array( 'widget_id' => null ), $attr, $tag));
         // GET All Mailjet widgets - to find the one that user actually configured with the shortcode
-        $instance = Mailjet::getOption('mailjet_form_builder_widget_options');
+        $instance = self::getOption('mailjet_form_builder_widget_options');
 
         // In case we don't have 'widget_id' attribute in the shortcode defined by user - we use the first widget id from the collection
         if (empty($widget_id)) {
-            $widgetIds = [];
+            $widgetIds = array();
             foreach (array_keys($instance) as $key) {
                 if (is_int($key)) {
                     $widgetIds[] = $key;
@@ -99,9 +97,13 @@ class Mailjet
             }
             $widget_id = min($widgetIds);
         }
-        ob_start();
-        the_widget('MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\WP_Mailjet_FormBuilder_Widget', $instance[(int)$widget_id]);
-        return ob_get_clean();
+        if (isset($instance[ (int) $widget_id ])) {
+            ob_start();
+            the_widget('MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\WP_Mailjet_FormBuilder_Widget', $instance[ (int) $widget_id ]);
+            return ob_get_clean();
+        }
+
+        return false;
     }
 
     /**
@@ -120,8 +122,7 @@ class Mailjet
      * @since    5.0.0
      * @access   private
      */
-    private function load_dependencies()
-    {
+    private function load_dependencies() {
         $this->loader = new MailjetLoader();
     }
     /**
@@ -133,8 +134,7 @@ class Mailjet
      * @since    5.0.0
      * @access   private
      */
-    private function set_locale()
-    {
+    private function set_locale() {
         $plugin_i18n = new Mailjeti18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
@@ -145,14 +145,13 @@ class Mailjet
      * @since    1.0.0
      * @access   private
      */
-    private function define_admin_hooks()
-    {
+    private function define_admin_hooks() {
         $plugin_admin = new MailjetAdmin($this->get_plugin_name(), $this->get_version());
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
         $this->loader->add_action('admin_post_user_access_settings_custom_hook', new UserAccessSettings(), 'user_access_post_handler');
         $this->loader->add_action('admin_post_integrationsSettings_custom_hook', new IntegrationsSettings(), 'integrations_post_handler');
-        if (Mailjet::getOption('activate_mailjet_woo_integration') == '1') {
+        if (self::getOption('activate_mailjet_woo_integration') == '1') {
             $this->addWoocommerceActions();
         }
     }
@@ -164,8 +163,7 @@ class Mailjet
      * @since    5.0.0
      * @access   private
      */
-    private function define_public_hooks()
-    {
+    private function define_public_hooks() {
         $plugin_public = new MailjetPublic($this->get_plugin_name(), $this->get_version());
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
@@ -174,8 +172,7 @@ class Mailjet
     /**
      * @return void
      */
-    private function addMailjetMenu(): void
-    {
+    private function addMailjetMenu(): void {
         $plugin_menu = new MailjetMenu();
         $this->loader->add_action('admin_menu', $plugin_menu, 'display_menu');
     }
@@ -183,8 +180,7 @@ class Mailjet
     /**
      * @return void
      */
-    private function addMailjetSettings(): void
-    {
+    private function addMailjetSettings(): void {
         $plugin_settings = new MailjetSettings();
         $this->loader->add_action('admin_init', $plugin_settings, 'mailjet_settings_admin_init');
         $this->loader->add_action('init', $plugin_settings, 'mailjet_settings_init');
@@ -193,8 +189,7 @@ class Mailjet
     /**
      * @return void
      */
-    private function addMailjetPHPMailer(): void
-    {
+    private function addMailjetPHPMailer(): void {
         $plugin_mails = new MailjetMail();
         $this->loader->add_action('phpmailer_init', $plugin_mails, 'phpmailer_init_smtp');
         $this->loader->add_action('wp_mail_failed', $plugin_mails, 'wp_mail_failed_cb');
@@ -203,16 +198,14 @@ class Mailjet
     /**
      * @return void
      */
-    private function registerMailjetWidget(): void
-    {
+    private function registerMailjetWidget(): void {
         $this->loader->add_action('widgets_init', $this, 'wp_mailjet_register_widgets');
     }
 
     /**
      * @return void
      */
-    public function wp_mailjet_register_widgets()
-    {
+    public function wp_mailjet_register_widgets() {
         $widgetFormBuilder = 'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\WP_Mailjet_FormBuilder_Widget';
         register_widget($widgetFormBuilder);
     }
@@ -221,8 +214,7 @@ class Mailjet
      *
      * @since    5.0.0
      */
-    public function run(): void
-    {
+    public function run(): void {
         $this->loader->run();
     }
     /**
@@ -232,8 +224,7 @@ class Mailjet
      * @since     1.0.0
      * @return    string    The name of the plugin.
      */
-    public function get_plugin_name(): string
-    {
+    public function get_plugin_name(): string {
         return $this->plugin_name;
     }
     /**
@@ -242,8 +233,7 @@ class Mailjet
      * @since     5.0.0
      * @return    Mailjet_Loader    Orchestrates the hooks of the plugin.
      */
-    public function get_loader()
-    {
+    public function get_loader() {
         return $this->loader;
     }
     /**
@@ -252,33 +242,31 @@ class Mailjet
      * @since     5.0.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version(): string
-    {
+    public function get_version(): string {
         return $this->version;
     }
 
     /**
      * @return void
      */
-    private function addWoocommerceActions(): void
-    {
+    private function addWoocommerceActions(): void {
         $wooCommerceSettings = WooCommerceSettings::getInstance();
         if (isset($_POST['action']) && $_POST['action'] === 'order_notification_settings_custom_hook') {
             $wooCommerceSettings->orders_automation_settings_post();
         }
         $this->loader->add_action('admin_post_abandoned_cart_settings_custom_hook', $wooCommerceSettings, 'abandoned_cart_settings_post');
-        if (Mailjet::getOption('mailjet_woo_edata_sync') === '1') {
+        if (self::getOption('mailjet_woo_edata_sync') === '1') {
             $this->loader->add_action('woocommerce_order_status_changed', $wooCommerceSettings, 'order_edata_sync', 10, 1);
             $this->loader->add_action('woocommerce_cheque_process_payment_order_status', $wooCommerceSettings, 'paid_by_cheque_order_edata_sync', 10, 2);
         }
-        $activeActions = Mailjet::getOption('mailjet_wc_active_hooks');
-        $abandonedCartActiveActions = Mailjet::getOption('mailjet_wc_abandoned_cart_active_hooks');
-        if ($activeActions && !empty($activeActions)) {
+        $activeActions              = self::getOption('mailjet_wc_active_hooks');
+        $abandonedCartActiveActions = self::getOption('mailjet_wc_abandoned_cart_active_hooks');
+        if ($activeActions && ! empty($activeActions)) {
             foreach ($activeActions as $action) {
                 $this->loader->add_action($action['hook'], $wooCommerceSettings, $action['callable'], 10, 2);
             }
         }
-        if ($abandonedCartActiveActions && !empty($abandonedCartActiveActions)) {
+        if ($abandonedCartActiveActions && ! empty($abandonedCartActiveActions)) {
             foreach ($abandonedCartActiveActions as $action) {
                 $this->loader->add_action($action['hook'], $wooCommerceSettings, $action['callable'], 10, 2);
             }
@@ -289,25 +277,23 @@ class Mailjet
      * @param string $key
      * @return mixed
      */
-    public static function getOption(string $key)
-    {
-        if (!is_multisite()) {
+    public static function getOption( string $key ) {
+        if ( ! is_multisite()) {
             return get_option($key);
         }
 
         $mainSiteId = get_main_network_id();
         switch_to_blog($mainSiteId);
 
-        //If main site has multisite support enabled, we should use the main site options
+        // If main site has multisite support enabled, we should use the main site options
         if (get_option('mailjet_multisite_support') === 'on') {
             $optionValue = get_option($key);
             restore_current_blog();
             return $optionValue;
         }
-        //If main site has multisite support disabled, we should use the current site options
+        // If main site has multisite support disabled, we should use the current site options
         restore_current_blog();
 
         return get_option($key);
     }
-
 }

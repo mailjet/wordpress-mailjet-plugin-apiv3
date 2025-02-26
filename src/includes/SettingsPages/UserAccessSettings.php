@@ -16,21 +16,22 @@ use MailjetWp\MailjetPlugin\Includes\MailjetLogger;
  * @subpackage Mailjet/includes
  * @author     Your Name <email@example.com>
  */
-class UserAccessSettings
-{
+class UserAccessSettings {
+
     public const PREFIX_ACCESS_INPUT_NAME = 'mailjet_access_';
-    public const ACCESS_CAP_NAME = 'mailjet_plugin_access';
+    public const ACCESS_CAP_NAME          = 'mailjet_plugin_access';
 
     /**
      * @param $args
      * @return void
      */
-    public function mailjet_section_user_access_cb($args)
-    {
+    public function mailjet_section_user_access_cb( $args ) {
         ?>
-        <p id="<?php
+        <p id="
+        <?php
         echo esc_attr($args['id']);
-        ?>">
+        ?>
+        ">
             <?php
             echo __('Select which WordPress user roles (in addition to Administrator) will also have access to the Mailjet Plugin', 'mailjet-for-wordpress');
             ?>
@@ -41,8 +42,7 @@ class UserAccessSettings
     /**
      * @return array[]
      */
-    private function getRoles()
-    {
+    private function getRoles() {
         return get_editable_roles();
     }
 
@@ -50,33 +50,44 @@ class UserAccessSettings
      * @param $args
      * @return void
      */
-    public function mailjet_user_access_cb($args)
-    {
+    public function mailjet_user_access_cb( $args ) {
         $roles = $this->getRoles();
         ?>
 
         <fieldset class="settingsAccessFldset">
-            <legend class="screen-reader-text"><span><?php
+            <legend class="screen-reader-text"><span>
+            <?php
             _e('User Access', 'mailjet-for-wordpress');
-            ?></span></legend>
+            ?>
+            </span></legend>
             <?php
             foreach ($roles as $roleKey => $role) {
-                $hasAccess = isset($role['capabilities'][self::ACCESS_CAP_NAME]) && $role['capabilities'][self::ACCESS_CAP_NAME];
+                $hasAccess = isset($role['capabilities'][ self::ACCESS_CAP_NAME ]) && $role['capabilities'][ self::ACCESS_CAP_NAME ];
                 ?>
-                <label class="checkboxLabel" for="<?php
+                <label class="checkboxLabel" for="
+                <?php
                 echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
-                ?>">
-                    <input name="<?php
+                ?>
+                ">
+                    <input name="
+                    <?php
                     echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
-                    ?>" type="checkbox" id="<?php
-            echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
-?>" value="1" <?php
-            echo esc_attr($hasAccess) ? ' checked="checked"' : '';
-            echo esc_attr($roleKey) === 'administrator' ? 'disabled' : '';
-?> >
-                    <span><?php
+                    ?>
+                    " type="checkbox" id="
+                    <?php
+					echo esc_attr(self::PREFIX_ACCESS_INPUT_NAME . $roleKey);
+					?>
+" value="1" 
+				<?php
+				echo esc_attr($hasAccess) ? ' checked="checked"' : '';
+				echo esc_attr($roleKey) === 'administrator' ? 'disabled' : '';
+				?>
+>
+                    <span>
+                    <?php
                     _e($role['name'], 'mailjet-for-wordpress');
-                    ?></span>
+                    ?>
+                    </span>
                 </label>
                 <?php
             }
@@ -87,10 +98,9 @@ class UserAccessSettings
 
         <?php
     }
-    public function user_access_post_handler()
-    {
+    public function user_access_post_handler() {
         $postData = array_map('sanitize_text_field', $_POST);
-        if (!isset($postData['custom_nonce']) || !wp_verify_nonce($postData['custom_nonce'], 'mailjet_user_access_page_html')) {
+        if ( ! isset($postData['custom_nonce']) || ! wp_verify_nonce($postData['custom_nonce'], 'mailjet_user_access_page_html')) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Your permissions don\'t match! Please refresh your session and if the problem persists, contact our support team.', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             exit;
@@ -99,40 +109,41 @@ class UserAccessSettings
             if ($roleKey === 'administrator') {
                 continue;
             }
-            $hasAccess = isset($role['capabilities'][self::ACCESS_CAP_NAME]) && $role['capabilities'][self::ACCESS_CAP_NAME];
+            $hasAccess = isset($role['capabilities'][ self::ACCESS_CAP_NAME ]) && $role['capabilities'][ self::ACCESS_CAP_NAME ];
             $inputName = self::PREFIX_ACCESS_INPUT_NAME . $roleKey;
             if ($hasAccess) {
-                if (!isset($postData[$inputName])) {
+                if ( ! isset($postData[ $inputName ])) {
                     $role = get_role($roleKey);
                     $role->remove_cap(self::ACCESS_CAP_NAME);
                 }
-            } else {
-                if (isset($postData[$inputName])) {
+            } elseif (isset($postData[ $inputName ])) {
                     $role = get_role($roleKey);
                     $role->add_cap(self::ACCESS_CAP_NAME, \true);
-                }
             }
         }
-        wp_redirect(add_query_arg(array('page' => 'mailjet_user_access_page'), admin_url('admin.php')));
+        wp_redirect(add_query_arg(array( 'page' => 'mailjet_user_access_page' ), admin_url('admin.php')));
     }
     /**
      * top level menu:
      * callback functions
      */
-    public function mailjet_user_access_page_html()
-    {
+    public function mailjet_user_access_page_html() {
         // register a new section in the "mailjet" page
-        add_settings_section('mailjet_user_access_settings', null, array($this, 'mailjet_section_user_access_cb'), 'mailjet_user_access_page');
+        add_settings_section('mailjet_user_access_settings', null, array( $this, 'mailjet_section_user_access_cb' ), 'mailjet_user_access_page');
         // register a new field in the "mailjet_section_developers" section, inside the "mailjet" page
         add_settings_field(
             'mailjet_user_access',
             // as of WP 4.6 this value is used only internally
             // use $args' label_for to populate the id inside the callback
             __('User Access', 'mailjet-for-wordpress'),
-            array($this, 'mailjet_user_access_cb'),
+            array( $this, 'mailjet_user_access_cb' ),
             'mailjet_user_access_page',
             'mailjet_user_access_settings',
-            ['label_for' => 'mailjet_user_access', 'class' => 'mailjet_row', 'mailjet_custom_data' => 'custom']
+            array(
+				'label_for'           => 'mailjet_user_access',
+				'class'               => 'mailjet_row',
+				'mailjet_custom_data' => 'custom',
+			)
         );
         $nonce = wp_create_nonce('mailjet_user_access_page_html');
         // add error/update messages
@@ -147,9 +158,11 @@ class UserAccessSettings
         ?>
 
         <div class="mj-pluginPage">
-            <div id="initialSettingsHead"><img src="<?php
-            echo plugin_dir_url(dirname(__FILE__, 2)) . '/admin/images/LogoMJ_White_RVB.svg';
-            ?>" alt="Mailjet Logo" /></div>
+            <div id="initialSettingsHead"><img src="
+            <?php
+            echo plugin_dir_url(dirname(__DIR__, 1)) . '/admin/images/LogoMJ_White_RVB.svg';
+            ?>
+            " alt="Mailjet Logo" /></div>
             <div class="mainContainer">
 
                 <div class="backToDashboard">
@@ -161,9 +174,11 @@ class UserAccessSettings
                     </a>
                 </div>
 
-                <h1 class="page_top_title"><?php
+                <h1 class="page_top_title">
+                <?php
                 _e('Settings', 'mailjet-for-wordpress');
-                ?></h1>
+                ?>
+                </h1>
                 <div class="mjSettings">
                     <div class="left">
                         <?php
@@ -173,28 +188,36 @@ class UserAccessSettings
 
                     <div class="right">
                         <div class="centered">
-                            <h2 class="section_inner_title"><?php
+                            <h2 class="section_inner_title">
+                            <?php
                             _e('User access', 'mailjet-for-wordpress');
-                            ?></h2>
-                            <form action="<?php
+                            ?>
+                            </h2>
+                            <form action="
+                            <?php
                             echo esc_url(admin_url('admin-post.php'));
-                            ?>" method="POST">
+                            ?>
+                            " method="POST">
                                 <?php
-        // output security fields for the registered setting "mailjet"
+								// output security fields for the registered setting "mailjet"
                                 settings_fields('mailjet_user_access_page');
-        // output setting sections and their fields
-        // (sections are registered for "mailjet", each field is registered to a specific section)
+								// output setting sections and their fields
+								// (sections are registered for "mailjet", each field is registered to a specific section)
                                 do_settings_sections('mailjet_user_access_page');
-        // output save settings button
+								// output save settings button
                                 $saveButton = __('Save', 'mailjet-for-wordpress');
                                 ?>
-                                <button type="submit" id="userAccessSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php
+                                <button type="submit" id="userAccessSubmit" class="mj-btn btnPrimary MailjetSubmit" name="submit">
+                                <?php
                                 echo esc_attr($saveButton);
-                                ?></button>
+                                ?>
+                                </button>
                                 <input type="hidden" name="action" value="user_access_settings_custom_hook">
-                                <input type="hidden" name="custom_nonce" value="<?php
+                                <input type="hidden" name="custom_nonce" value="
+                                <?php
                                 echo esc_attr($nonce);
-                                ?>">
+                                ?>
+                                ">
                             </form>
                         </div>
                     </div>
@@ -211,8 +234,7 @@ class UserAccessSettings
      * Never call !
      * Useful to register the dynamic translations to the po files
      */
-    private function registerRoleTranslations()
-    {
+    private function registerRoleTranslations() {
         __('Administrator', 'mailjet-for-wordpress');
         __('Editor', 'mailjet-for-wordpress');
         __('Author', 'mailjet-for-wordpress');
