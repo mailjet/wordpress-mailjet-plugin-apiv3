@@ -328,11 +328,7 @@ class MailjetSettings {
         }
         ?>
         <script type="text/javascript">
-            window.location.href = '
-            <?php
-            echo esc_attr($urlToRedirect);
-            ?>
-            ';
+            window.location.href = '<?php echo esc_attr($urlToRedirect); ?> ';
         </script>
         <?php
         echo esc_attr('<META HTTP-EQUIV="refresh" content="0;URL=' . $urlToRedirect . '">');

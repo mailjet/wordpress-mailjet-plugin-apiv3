@@ -80,11 +80,7 @@ class EnableSendingSettings {
                     _e('From: Name', 'mailjet-for-wordpress');
                     ?>
                     </b></label>
-                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="
-                    <?php
-                    echo esc_attr($mailjetFromName);
-                    ?>
-                    " class="regular-text code">
+                    <input name="mailjet_from_name" type="text" id="mailjet_from_name" value="<?php echo esc_attr($mailjetFromName);?>" class="regular-text code">
                 </div>
                 <div id="mailjet_from_email_fields" class="fromFld">
                     <label class="mj-label" for="mailjet_from_email"><b>
@@ -114,11 +110,7 @@ class EnableSendingSettings {
                                 }
                             }
                             ?>
-                            <option value="
-                            <?php
-                            echo esc_attr($mailjetSender['Email']);
-                            ?>
-                            " 
+                            <option value="<?php echo esc_attr($mailjetSender['Email']);?>"
                             <?php
 							echo esc_attr($mailjetFromEmail == $mailjetSender['Email']) ? 'selected="selected"' : '';
 							?>
@@ -156,7 +148,7 @@ class EnableSendingSettings {
                         echo esc_attr($mailjetPort) == 25 ? 'selected="selected"' : '';
                         ?>
                         > 25 </option>
-                        <option value="465" 
+                        <option value="465"
                         <?php
                         echo esc_attr($mailjetPort) == 465 ? 'selected="selected"' : '';
                         ?>
@@ -206,11 +198,7 @@ class EnableSendingSettings {
                         </b></label>
                         <div class="test_email_fields_group">
                             <input type="text" size="30" name="mailjet_test_address" id="mailjet_test_address" />
-                            <input type="submit" value="
-                            <?php
-                            _e('Send', 'mailjet-for-wordpress');
-                            ?>
-                            " name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
+                            <input type="submit" value="<?php _e('Send', 'mailjet-for-wordpress');?>" name="send_test_email_btn" class="mj-btn btnSecondary MailjetSubmit" id="send_test_email_btn"/>
                         </div>
                     </div>
                 </div>

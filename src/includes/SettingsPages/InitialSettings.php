@@ -71,21 +71,13 @@ class InitialSettings {
                 _e('<b>Api Key</b>', 'mailjet-for-wordpress');
             ?>
             </label>
-            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="
-            <?php
-            echo esc_attr($mailjetApikey);
-            ?>
-            " class="mailjet_apikey" required="required">
+            <input name="mailjet_apikey" type="text" id="mailjet_apikey" value="<?php echo trim(esc_attr($mailjetApikey));?>" class="mailjet_apikey" required="required">
             <label class="mj-label" for="mailjet_apisecret">
             <?php
                 _e('<b>Secret Key</b>', 'mailjet-for-wordpress');
             ?>
             </label>
-            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="
-            <?php
-            echo esc_attr($mailjetApiSecret);
-            ?>
-            " class="mailjet_apisecret" required="required">
+            <input name="mailjet_apisecret" type="text" id="mailjet_apisecret" value="<?php echo trim(esc_attr($mailjetApiSecret));?>" class="mailjet_apisecret" required="required">
         </fieldset>
 
         <?php

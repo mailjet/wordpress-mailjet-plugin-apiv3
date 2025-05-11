@@ -216,11 +216,7 @@ class IntegrationsSettings {
                         echo __('Checkbox text', 'mailjet-for-wordpress');
                         ?>
                         </label>
-                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="
-                        <?php
-                        echo esc_attr($checkoutCheckboxText);
-                        ?>
-                        " class="mj-text-field" placeholder="
+                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?php echo esc_attr($checkoutCheckboxText);?>" class="mj-text-field" placeholder="
                         <?php
 						echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');
 						?>
