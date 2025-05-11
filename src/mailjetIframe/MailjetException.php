@@ -8,6 +8,6 @@ use Exception;
  *
  *
  */
-class MailjetException extends Exception
-{
+class MailjetException extends Exception {
+
 }

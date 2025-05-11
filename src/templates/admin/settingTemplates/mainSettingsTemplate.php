@@ -7,9 +7,11 @@ use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 ?>
 
 <div class="mj-pluginPage">
-    <div id="initialSettingsHead"><img src="<?php
+    <div id="initialSettingsHead"><img src="
+    <?php
     echo plugin_dir_url(\MAILJET_PLUGIN_DIR . '/src') . '/src/admin/images/LogoMJ_White_RVB.svg';
-    ?>" alt="Mailjet Logo" /></div>
+    ?>
+    " alt="Mailjet Logo" /></div>
     <div class="mainContainer">
 
         <div class="backToDashboard">
@@ -21,9 +23,11 @@ use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
             </a>
         </div>
 
-        <h1 class="page_top_title"><?php
+        <h1 class="page_top_title">
+        <?php
         _e('Settings', 'mailjet-for-wordpress');
-        ?></h1>
+        ?>
+        </h1>
         <div class="mjSettings">
             <div class="left">
                 <?php
@@ -33,28 +37,36 @@ use MailjetWp\MailjetPlugin\Admin\Partials\MailjetAdminDisplay;
 
             <div class="right">
                 <div class="centered">
-                    <!--                    <h1>--><?php
-//echo esc_html(get_admin_page_title());
-                    ?><!--</h1>-->
-                    <h2 class="section_inner_title"><?php
+                    <!--                    <h1>-->
+                    <?php
+					// echo esc_html(get_admin_page_title());
+                    ?>
+                    <!--</h1>-->
+                    <h2 class="section_inner_title">
+                    <?php
                     echo __('Subscription options', 'mailjet-for-wordpress');
-                    ?></h2>
+                    ?>
+                    </h2>
                     <form action="options.php" method="post">
                         <?php
-// output security fields for the registered setting "mailjet"
+						// output security fields for the registered setting "mailjet"
                         settings_fields('mailjet_subscription_options_page');
-// output setting sections and their fields
-// (sections are registered for "mailjet", each field is registered to a specific section)
+						// output setting sections and their fields
+						// (sections are registered for "mailjet", each field is registered to a specific section)
                         do_settings_sections('mailjet_subscription_options_page');
-// output save settings button
+						// output save settings button
                         $saveButton = __('Save', 'mailjet-for-wordpress');
                         ?>
-                        <button type="submit" id="subscriptionOptionsSubmit" onclick="sanitizeInput()" class="mj-btn btnPrimary MailjetSubmit" name="submit"><?php
+                        <button type="submit" id="subscriptionOptionsSubmit" onclick="sanitizeInput()" class="mj-btn btnPrimary MailjetSubmit" name="submit">
+                        <?php
                         echo esc_textarea($saveButton);
-                        ?></button>
-                        <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="<?php
+                        ?>
+                        </button>
+                        <!-- <input name="cancelBtn" class="mj-btn btnCancel" type="button" id="cancelBtn" onClick="location.href=location.href" value="
+                        <?php
                         echo __('Cancel', 'mailjet-for-wordpress');
-                        ?>"> -->
+                        ?>
+                        "> -->
                     </form>
                 </div>
             </div>

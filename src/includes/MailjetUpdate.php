@@ -2,11 +2,10 @@
 
 namespace MailjetWp\MailjetPlugin\Includes;
 
-class MailjetUpdate
-{
-    public static function updateToV5()
-    {
-        $apikey = Mailjet::getOption('mailjet_apikey');
+class MailjetUpdate {
+
+    public static function updateToV5() {
+        $apikey    = Mailjet::getOption('mailjet_apikey');
         $apisecret = Mailjet::getOption('mailjet_apisecret');
         // Check if transition from v4 to v5 is already done
         if ($apikey != false && $apisecret != false) {
@@ -38,13 +37,12 @@ class MailjetUpdate
         $authorSync = $commentAuthorsListId > 0 ? 1 : '';
         add_option('activate_mailjet_comment_authors_sync', $authorSync);
         // Delete unused options
-        $deleteOptions = array('mailjet_username', 'mailjet_password', 'mailjet_initial_sync_list_id', 'mailjet_comment_authors_list_id', 'mailjet_initial_sync_last_date', 'mailjet_comment_authors_list_date', 'mailjet_auto_subscribe_list_id', 'mailjet_user_api_version');
+        $deleteOptions = array( 'mailjet_username', 'mailjet_password', 'mailjet_initial_sync_list_id', 'mailjet_comment_authors_list_id', 'mailjet_initial_sync_last_date', 'mailjet_comment_authors_list_date', 'mailjet_auto_subscribe_list_id', 'mailjet_user_api_version' );
         foreach ($deleteOptions as $option) {
             delete_option($option);
         }
     }
-    public static function updateToV5_2()
-    {
+    public static function updateToV5_2() {
         $activateMailjetWooSync = Mailjet::getOption('activate_mailjet_woo_sync');
         if (empty($activateMailjetWooSync)) {
             return;
@@ -53,10 +51,9 @@ class MailjetUpdate
         add_option('mailjet_woo_register_checkbox', $activateMailjetWooSync);
         delete_option('activate_mailjet_woo_sync');
     }
-    public static function updateToV5_2_1()
-    {
+    public static function updateToV5_2_1() {
         $pluginVersion = Mailjet::getOption('mailjet_plugin_version');
-        if (!empty($pluginVersion)) {
+        if ( ! empty($pluginVersion)) {
             return;
         }
         add_option('mailjet_plugin_version', '5.2.17');

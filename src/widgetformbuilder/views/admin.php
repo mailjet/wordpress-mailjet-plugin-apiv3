@@ -27,15 +27,15 @@ extract(wp_parse_args($instance, $defaults), EXTR_OVERWRITE);
         <div class="mj-copy-wrapper mailjet_subscribe_shortcode-copy-wrapper">
             <input
                     class="mailjet_subscribe_shortcode"
-                    name="mailjet_form_builder_shortcode_<?php echo esc_attr($this->id);?>"
-                    id="mailjet_form_builder_shortcode_<?php echo esc_attr($this->id);?>"
+                    name="mailjet_form_builder_shortcode_<?php echo esc_attr($this->id); ?>"
+                    id="mailjet_form_builder_shortcode_<?php echo esc_attr($this->id); ?>"
                     value='[mailjet_form_builder widget_id="<?php echo esc_attr(substr($this->id, strpos($this->id, '-') + 1)); ?>"]'
                     disabled="disabled"
             />
             <i class="copy_mailjet_shortcode fa fa-copy mj-copy-icon"
-               data-input_id="mailjet_form_builder_shortcode_<?php echo esc_attr($this->id); ?>"
-               id="copy_mailjet_shortcode_<?php echo esc_attr($this->id);?>"
-               style="width:12px;">
+                data-input_id="mailjet_form_builder_shortcode_<?php echo esc_attr($this->id); ?>"
+                id="copy_mailjet_shortcode_<?php echo esc_attr($this->id); ?>"
+                style="width:12px;">
 
             </i>
         </div>

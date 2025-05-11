@@ -46,9 +46,11 @@
         <div style="display: table; height: 70px; width: 100%;">
             <div style="display: table-cell; vertical-align: middle;">
                 <div class="mj-confirmation-page-text paint-area paint-area--text" style="color: #aab6bd; font-family: Ubuntu, Helvetica; font-size: 22px; display: inline-block;">
-                    <b class="medium-b"><?php
+                    <b class="medium-b">
+                    <?php
                     echo esc_html($congratsSubscribed);
-                    ?></b>
+                    ?>
+                    </b>
                 </div>
             </div>
         </div>

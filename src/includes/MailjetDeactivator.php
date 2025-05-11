@@ -11,13 +11,12 @@ namespace MailjetWp\MailjetPlugin\Includes;
  * @package    Mailjet
  * @subpackage Mailjet/includes
  */
-class MailjetDeactivator
-{
+class MailjetDeactivator {
+
     /**
      * @return void
      */
-    public function deactivate()
-    {
+    public function deactivate() {
         $timestamp = wp_next_scheduled('bl_cron_hook');
         wp_unschedule_event($timestamp, 'bl_cron_hook');
         update_option('mailjet_woo_abandoned_cart_activate', 0);
