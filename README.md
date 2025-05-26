@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 4.4
 - Tested up to: 6.8.1
-- Stable tag: 6.1.4
+- Stable tag: 6.1.5
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -161,6 +161,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 ## Changelog
+
+##### 6.1.5
+- Fixed issue with wrong permission check on integration page
 
 ##### 6.1.4
 - Fix issues in the input fields. Tested with new WP version
