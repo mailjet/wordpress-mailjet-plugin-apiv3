@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 6.1.5
+- Fixed issue with wrong permission check on integration page
+
 ##### 6.1.4
 - Fix issues in the input fields. Tested with new WP version
 
