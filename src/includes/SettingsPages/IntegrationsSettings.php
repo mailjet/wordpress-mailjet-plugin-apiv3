@@ -216,11 +216,7 @@ class IntegrationsSettings {
                         echo __('Checkbox text', 'mailjet-for-wordpress');
                         ?>
                         </label>
-                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?php echo esc_attr($checkoutCheckboxText);?>" class="mj-text-field" placeholder="
-                        <?php
-						echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');
-						?>
-">
+                        <input name="woocommerce[mailjet_woo_checkout_box_text]" id="sub_letter" type="text" value="<?php echo esc_attr($checkoutCheckboxText);?>" class="mj-text-field" placeholder="<?php echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');?>">
                     </div>
                     <label class="checkboxLabel">
                         <span 
@@ -269,14 +265,7 @@ class IntegrationsSettings {
                         echo __('Checkbox text', 'mailjet-for-wordpress');
                         ?>
                         </label>
-                        <input name="woocommerce[mailjet_woo_register_box_text]" id="sub_letter_register" type="text" value="
-                        <?php
-                        echo esc_attr($registerCheckboxText);
-                        ?>
-                        " class="mj-text-field" placeholder="
-                        <?php
-						echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');
-						?>
+                        <input name="woocommerce[mailjet_woo_register_box_text]" id="sub_letter_register" type="text" value="<?php echo esc_attr($registerCheckboxText); ?>" class="mj-text-field" placeholder="<?php echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');?>
 ">
                     </div>
                     <label class="checkboxLabel">
@@ -327,14 +316,7 @@ class IntegrationsSettings {
                             echo __('Banner text', 'mailjet-for-wordpress');
                             ?>
                             </label>
-                            <input name="woocommerce[mailjet_woo_banner_text]" id="banner_text" value="
-                            <?php
-                            echo esc_attr($bannerText);
-                            ?>
-                            " class="mj-text-field" type="text" placeholder="
-                            <?php
-							echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');
-							?>
+                            <input name="woocommerce[mailjet_woo_banner_text]" id="banner_text" value="<?php echo esc_attr($bannerText); ?>" class="mj-text-field" type="text" placeholder="<?php echo __('Subscribe to our newsletter', 'mailjet-for-wordpress'); ?>
 ">
                         </div>
                         <div class="mj-text-div" >
@@ -343,14 +325,7 @@ class IntegrationsSettings {
                             echo __('Button label', 'mailjet-for-wordpress');
                             ?>
                             </label>
-                            <input name="woocommerce[mailjet_woo_banner_label]" id="banner_label" value="
-                            <?php
-                            echo esc_attr($bannerLabel);
-                            ?>
-                            " class="mj-text-field" type="text" placeholder="
-                            <?php
-							echo __('Subscribe now', 'mailjet-for-wordpress');
-							?>
+                            <input name="woocommerce[mailjet_woo_banner_label]" id="banner_label" value="<?php echo esc_attr($bannerLabel); ?>" class="mj-text-field" type="text" placeholder="<?php echo __('Subscribe now', 'mailjet-for-wordpress');?>
 ">
                         </div>
                     </div>
@@ -460,16 +435,8 @@ class IntegrationsSettings {
                             _e('Email field tag', 'mailjet-for-wordpress');
                             ?>
                             </label>
-                    <input name="cf7[cf7_email]" id="cf7_email" value="
-                    <?php
-                    echo esc_attr($email);
-                    ?>
-                    "  type="text"
-                            placeholder="
-                            <?php
-                            _e('e.g. [your-email]', 'mailjet-for-wordpress');
-                            ?>
-                            "
+                    <input name="cf7[cf7_email]" id="cf7_email" value="<?php echo esc_attr($email);?>"  type="text"
+                            placeholder="<?php _e('e.g. [your-email]', 'mailjet-for-wordpress');?>"
                             class="mj-text-field"/>
                 </div>
                 <div>
@@ -479,16 +446,8 @@ class IntegrationsSettings {
                             _e('Name field tag (optional)', 'mailjet-for-wordpress');
                             ?>
                             </label>
-                    <input name="cf7[cf7_fromname]" id="cf7_fromname" value="
-                    <?php
-                    echo esc_attr($from);
-                    ?>
-                    "  type="text"
-                            placeholder="
-                            <?php
-                            _e('e.g. [your-name]', 'mailjet-for-wordpress');
-                            ?>
-                            "
+                    <input name="cf7[cf7_fromname]" id="cf7_fromname" value="<?php echo esc_attr($from); ?>" type="text"
+                            placeholder="<?php _e('e.g. [your-name]', 'mailjet-for-wordpress'); ?>"
                             class="mj-text-field"/>
                 </div>
                 <div>
@@ -501,11 +460,7 @@ class IntegrationsSettings {
                     </div>
                     <div class="mj-copy-wrapper">
                         <input name="cf7[cf7_contact_properties]" id="cf7_contact_properties"
-                                value='[checkbox mailjet-opt-in default:0 "
-                                <?php
-                                echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');
-                                ?>
-                                "]'
+                                value='[checkbox mailjet-opt-in default:0 "<?php echo __('Subscribe to our newsletter', 'mailjet-for-wordpress');?>"]'
                                 class="widefat cf7_input" disabled="disabled"/>
                         <i class="fa fa-copy mj-copy-icon" id="copy_properties"></i>
                     </div>
@@ -607,11 +562,7 @@ class IntegrationsSettings {
                             ?>
                             </p>
                             <hr>
-                            <form action="
-                            <?php
-                            echo esc_url(admin_url('admin-post.php'));
-                            ?>
-                            " method="POST">
+                            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
                                 <?php
 								// output security fields for the registered setting "mailjet"
                                 settings_fields('mailjet_integrations_page');
@@ -622,17 +573,10 @@ class IntegrationsSettings {
                                 $saveButton = __('Save', 'mailjet-for-wordpress');
                                 ?>
                                 <input type="hidden" name="action" value="integrationsSettings_custom_hook">
-                                <input type="hidden" name="custom_nonce" value="
-                                <?php
-                                echo esc_attr($nonce);
-                                ?>
-                                ">
+                                <input type="hidden" name="custom_nonce" value="<?php echo esc_attr($nonce); ?>">
                                 <button type="submit" id="integrationsSubmit" class="mj-btn btnPrimary MailjetSubmit"
-                                        name="submit">
-                                        <?php
-                                        echo esc_attr($saveButton);
-                                        ?>
-                                        </button>
+                                        name="submit"><?php echo esc_attr($saveButton);?>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -647,7 +591,7 @@ class IntegrationsSettings {
     }
     public function integrations_post_handler() {
         $postData = (object) $_POST;
-        if ( ! isset($postData->custom_nonce) || ! wp_verify_nonce($postData->custom_nonce, 'mailjet_integrations_page_html')) {
+        if ( ! isset($postData->custom_nonce) || !wp_verify_nonce($postData->custom_nonce, 'mailjet_integrations_page_html')) {
             add_settings_error('mailjet_messages', 'mailjet_message', __('Your permissions don\'t match! Please refresh your session and if the problem persists, contact our support team.', 'mailjet-for-wordpress'), 'error');
             settings_errors('mailjet_messages');
             exit;
