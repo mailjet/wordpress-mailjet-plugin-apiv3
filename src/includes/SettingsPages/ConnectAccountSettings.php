@@ -47,8 +47,6 @@ class ConnectAccountSettings {
         // output the field
         ?>
         <fieldset class="settingsConnectFldset">
-            <!--<input name="settings_step" type="hidden" id="settings_step" value="initial_step">-->
-
             <label class="mj-label" for="mailjet_apikey">
             <?php
             _e('<b>Api Key</b>', 'mailjet-for-wordpress');
@@ -116,10 +114,7 @@ class ConnectAccountSettings {
         ?>
 
         <div class="mj-pluginPage">
-            <div id="initialSettingsHead"><img src="
-            <?php
-            echo plugin_dir_url(dirname(__DIR__, 1)) . '/admin/images/LogoMJ_White_RVB.svg';
-            ?>
+            <div id="initialSettingsHead"><img src="<?php echo plugin_dir_url(dirname(__DIR__, 1)) . '/admin/images/LogoMJ_White_RVB.svg';?>
             " alt="Mailjet Logo" /></div>
             <div class="mainContainer">
             
@@ -146,11 +141,6 @@ class ConnectAccountSettings {
 
                     <div class="right">
                         <div class="centered">
-                            <!--                    <h1>-->
-                            <?php
-							// echo esc_html(get_admin_page_title());
-                            ?>
-                            <!--</h1>-->
                             <h2 class="section_inner_title">
                             <?php
                             echo __('Connect your Mailjet account', 'mailjet-for-wordpress');

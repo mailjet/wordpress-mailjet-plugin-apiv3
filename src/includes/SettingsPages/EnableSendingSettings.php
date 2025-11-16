@@ -128,11 +128,7 @@ class EnableSendingSettings {
                 <?php
                 if ( ! empty($mailjet_from_email_extra)) {
                     ?>
-                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="
-                        <?php
-                        _e($mailjet_from_email_extra);
-                        ?>
-                        ">
+                        <input name="mailjet_from_email_extra_hidden" type="hidden" id="mailjet_from_email_extra_hidden" value="<?php _e($mailjet_from_email_extra); ?> ">
                     <?php
                 }
                 ?>
@@ -290,11 +286,7 @@ class EnableSendingSettings {
         ?>
 
         <div class="mj-pluginPage">
-            <div id="initialSettingsHead"><img src="
-            <?php
-            echo plugin_dir_url(\dirname(__DIR__)) . '/admin/images/LogoMJ_White_RVB.svg';
-            ?>
-            " alt="Mailjet Logo" /></div>
+            <div id="initialSettingsHead"><img src=" <?php echo plugin_dir_url(\dirname(__DIR__)) . '/admin/images/LogoMJ_White_RVB.svg'; ?> " alt="Mailjet Logo" /></div>
             <div class="mainContainer">
                 
             <div class="backToDashboard">
@@ -320,11 +312,6 @@ class EnableSendingSettings {
 
                     <div class="right">
                         <div class="centered"  style="width:650px;">
-                            <!--                    <h1>-->
-                            <?php
-							// echo esc_html(get_admin_page_title());
-                            ?>
-                            <!--</h1>-->
                             <h2 class="section_inner_title">
                             <?php
                             _e('Sending settings', 'mailjet-for-wordpress');

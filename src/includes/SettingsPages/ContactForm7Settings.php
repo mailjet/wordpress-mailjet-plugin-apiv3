@@ -38,8 +38,8 @@ class ContactForm7Settings {
         if ( ! empty($invalidFields)) {
             return false;
         }
-        $mailjetCheckbox = $formdata[ self::MAILJET_CHECKBOX ];
-        if ($mailjetCheckbox[0] != '') {
+        $mailjetCheckbox = $formdata[ self::MAILJET_CHECKBOX ] ?? [];
+        if (isset($mailjetCheckbox[0]) && !empty($mailjetCheckbox[0])) {
             $cf7Email = trim(stripslashes(Mailjet::getOption('cf7_email')), '[]');
 
             if ( ! isset($formdata[ $cf7Email ])) {

@@ -35,12 +35,7 @@ class Dashboard {
 
         <div class="mj-pluginPage">
             <div id="initialSettingsHead"><img
-                        src="
-                        <?php
-                        echo plugin_dir_url(dirname(__DIR__, 1)) . '/admin/images/LogoMJ_White_RVB.svg';
-                        ?>
-                        "
-                        alt="Mailjet Logo"/></div>
+                        src="<?php echo plugin_dir_url(dirname(__DIR__, 1)) . '/admin/images/LogoMJ_White_RVB.svg';?>" alt="Mailjet Logo"/></div>
             <div class="mainContainer dashboard">
                 <div id="mj-top_bar">
                     <section
@@ -111,11 +106,7 @@ class Dashboard {
                                 _e('Order notification emails', 'mailjet-for-wordpress');
                                 ?>
                                 </h3>
-                                <img alt="asd" class="mj-woo-logo-small" src="
-                                <?php
-                                echo esc_attr($iconDir);
-                                ?>
-                                "/>
+                                <img alt="asd" class="mj-woo-logo-small" src="<?php echo esc_attr($iconDir); ?>"/>
                             </div>
                             <p class="blockText">
                             <?php
@@ -182,11 +173,7 @@ class Dashboard {
                                 _e('Abandoned cart email', 'mailjet-for-wordpress');
                                 ?>
                                 </h3>
-                                <img alt="asd" class="mj-woo-logo-small" src="
-                                <?php
-                                echo esc_attr($iconDir);
-                                ?>
-                                "/>
+                                <img alt="asd" class="mj-woo-logo-small" src="<?php echo esc_attr($iconDir);?> "/>
                             </div>
                             <p class="blockText">
                             <?php

@@ -151,6 +151,37 @@ Before pushing any new changes, make sure you run the following command. It will
 find vendor/ -type d -name ".git" -exec rm -rf {} \;
 </code></pre>
 
+## Hook for overriding the "From" details
+
+You can use the wp_mail_from_name filter in WordPress to dynamically set the "From Name" based on the form submission data. Below is a workaround function that checks if the email is being sent by Ninja Forms and sets the "From Name" to the name of the form submitter.
+Explanation:
+The function hooks into the wp_mail_from_name filter.
+It checks if the email is being sent by Ninja Forms by inspecting the $phpmailer global object.
+If the email is from Ninja Forms, it retrieves the submitter's name from the email headers or content.
+It sets the "From Name" dynamically.
+
+
+```php
+add_filter('wp_mail_from_name', function ($from_name) {
+    global $phpmailer;
+
+    // Check if PHPMailer is initialized
+    if (!isset($phpmailer) || !is_object($phpmailer)) {
+        return $from_name;
+    }
+
+    // Check if the email is from Ninja Forms
+    if (isset($phpmailer->Subject) && strpos($phpmailer->Subject, 'Ninja Forms') !== false) {
+        // Extract the submitter's name from the email headers or body
+        if (preg_match('/Name:\s*(.+)/i', $phpmailer->Body, $matches)) {
+            $from_name = trim($matches[1]);
+        }
+    }
+
+    return $from_name;
+});
+```
+
 ## Screenshots
 
 1. The initial setup wizard will guide you through the quick steps to get started
