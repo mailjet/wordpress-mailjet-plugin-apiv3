@@ -50,11 +50,7 @@ $isEditModeAvailable = isset($isEditModeAvailable) ? $isEditModeAvailable : \fal
             <?php
         }
         ?>
-        <button class="mj-btnSecondary mj-inrow" onclick="location.href='
-        <?php
-        echo esc_attr($templateLink);
-        ?>
-        '" type="button">
+        <button class="mj-btnSecondary mj-inrow" onclick="location.href='<?php echo esc_attr($templateLink); ?>'" type="button">
             <?php
             _e('Edit', 'mailjet-for-wordpress');
             ?>

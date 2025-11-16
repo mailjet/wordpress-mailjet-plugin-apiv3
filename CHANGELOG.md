@@ -1,5 +1,10 @@
 ## Changelog
 
+##### 6.1.6
+- Fixing code base
+- Fixed possible warning in the code
+- Added code example of From name workaround in the readme file
+
 ##### 6.1.5
 - Fixed issue with wrong permission check on integration page
 
