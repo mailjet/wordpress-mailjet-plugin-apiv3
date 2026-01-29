@@ -35,8 +35,8 @@ class MailjetMail {
         $phpmailer->Host       = self::MJ_HOST;
         $phpmailer->Port       = Mailjet::getOption('mailjet_port');
         $phpmailer->SMTPAuth   = \TRUE;
-        $phpmailer->Username   = Mailjet::getOption('mailjet_apikey');
-        $phpmailer->Password   = Mailjet::getOption('mailjet_apisecret');
+        $phpmailer->Username   = trim(Mailjet::getOption('mailjet_apikey'));
+        $phpmailer->Password   = trim(Mailjet::getOption('mailjet_apisecret'));
         $from_email            = Mailjet::getOption('mailjet_from_email') ? Mailjet::getOption('mailjet_from_email') : Mailjet::getOption('admin_email');
         $phpmailer->From       = $from_email;
         $phpmailer->Sender     = $from_email;
