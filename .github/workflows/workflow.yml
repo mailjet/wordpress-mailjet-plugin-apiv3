@@ -1,10 +1,10 @@
 name: Code Quality & Security Checks
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
-      - develop
+      - '**'        # matches every branch
+      - '!master'
 
 jobs:
   code-quality:
