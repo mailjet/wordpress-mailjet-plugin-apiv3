@@ -1,5 +1,19 @@
 ## Changelog
 
+##### 6.2.0
+- Enhanced API security with comprehensive validation and error handling
+- Added API key and secret format validation (regex pattern matching)
+- Improved HTTPS detection using WordPress native `is_ssl()` function
+- Added proxy configuration validation with port range checking (0-65535)
+- Implemented connection timeouts (30s request, 10s connect) to prevent hanging
+- Added comprehensive exception logging for ConnectException and RequestException
+- Enhanced contact sync methods with input validation and action parameter whitelist
+- Added detailed error logging with context information for debugging
+- Fixed GitHub Actions workflow with proper YAML structure and configuration
+- Added automated PR checks: PHPCS (code quality) and PHP Security Checker (dependencies)
+- Added AGENTS.md documentation guide for AI coding agents
+- Improved error messages and logging throughout API integration
+
 ##### 6.1.6
 - Fixing code base
 - Fixed possible warning in the code
