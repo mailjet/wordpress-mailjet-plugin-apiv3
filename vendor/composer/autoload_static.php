@@ -15,7 +15,7 @@ class ComposerStaticInite89278bbb96320ad952008582b3ddfbc
     );
 
     public static $prefixLengthsPsr4 = array (
-        'M' => 
+        'M' =>
         array (
             'MailjetWp\\Symfony\\Polyfill\\Mbstring\\' => 36,
             'MailjetWp\\Sepia\\Test\\' => 21,
@@ -43,92 +43,92 @@ class ComposerStaticInite89278bbb96320ad952008582b3ddfbc
     );
 
     public static $prefixDirsPsr4 = array (
-        'MailjetWp\\Symfony\\Polyfill\\Mbstring\\' => 
+        'MailjetWp\\Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'MailjetWp\\Sepia\\Test\\' => 
+        'MailjetWp\\Sepia\\Test\\' =>
         array (
             0 => __DIR__ . '/..' . '/sepia/po-parser/tests',
         ),
-        'MailjetWp\\Sepia\\PoParser\\' => 
+        'MailjetWp\\Sepia\\PoParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/sepia/po-parser/src',
         ),
-        'MailjetWp\\Psr\\Log\\' => 
+        'MailjetWp\\Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
-        'MailjetWp\\Psr\\Http\\Message\\' => 
+        'MailjetWp\\Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'MailjetWp\\Psr\\Http\\Client\\' => 
+        'MailjetWp\\Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'MailjetWp\\Mailjet\\' => 
+        'MailjetWp\\Mailjet\\' =>
         array (
             0 => __DIR__ . '/..' . '/mailjet/mailjet-apiv3-php/src/Mailjet',
         ),
-        'MailjetWp\\MailjetPlugin\\Widget\\' => 
+        'MailjetWp\\MailjetPlugin\\Widget\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/widget',
         ),
-        'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' => 
+        'MailjetWp\\MailjetPlugin\\WidgetFormBuilder\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/widgetformbuilder',
         ),
-        'MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\' => 
+        'MailjetWp\\MailjetPlugin\\Includes\\SettingsPages\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/includes/SettingsPages',
         ),
-        'MailjetWp\\MailjetPlugin\\Includes\\' => 
+        'MailjetWp\\MailjetPlugin\\Includes\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/includes',
         ),
-        'MailjetWp\\MailjetPlugin\\Front\\' => 
+        'MailjetWp\\MailjetPlugin\\Front\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/front',
         ),
-        'MailjetWp\\MailjetPlugin\\Admin\\Partials\\' => 
+        'MailjetWp\\MailjetPlugin\\Admin\\Partials\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/admin/partials',
         ),
-        'MailjetWp\\MailjetPlugin\\Admin\\' => 
+        'MailjetWp\\MailjetPlugin\\Admin\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/admin',
         ),
-        'MailjetWp\\MailjetPlugin\\' => 
+        'MailjetWp\\MailjetPlugin\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'MailjetWp\\MailjetIframe\\' => 
+        'MailjetWp\\MailjetIframe\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src/mailjetIframe',
         ),
-        'MailjetWp\\GuzzleHttp\\Psr7\\' => 
+        'MailjetWp\\GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'MailjetWp\\GuzzleHttp\\Promise\\' => 
+        'MailjetWp\\GuzzleHttp\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'MailjetWp\\GuzzleHttp\\' => 
+        'MailjetWp\\GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'MailjetWp\\Composer\\Installers\\' => 
+        'MailjetWp\\Composer\\Installers\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
-        'MailjetWp\\Bamarni\\Composer\\Bin\\' => 
+        'MailjetWp\\Bamarni\\Composer\\Bin\\' =>
         array (
             0 => __DIR__ . '/..' . '/bamarni/composer-bin-plugin/src',
         ),
-        'MailjetWp\\Analog\\' => 
+        'MailjetWp\\Analog\\' =>
         array (
             0 => __DIR__ . '/..' . '/analog/analog/lib/Analog',
         ),

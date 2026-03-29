@@ -25,6 +25,23 @@ class MailjetApi
     private static $mjApiClient = null;
 
     /**
+     * Safely handle API exceptions with logging
+     * @param Exception $e
+     * @param string $methodName Name of the method for logging context
+     */
+    private static function handleApiException(Exception $e, string $methodName): void
+    {
+        $errorMsg = $e->getMessage();
+        if ($e instanceof ConnectException) {
+            MailjetLogger::error("Mailjet API connection error ($methodName): $errorMsg");
+        } elseif ($e instanceof RequestException) {
+            MailjetLogger::error("Mailjet API request error ($methodName): $errorMsg");
+        } else {
+            MailjetLogger::error("Mailjet API error ($methodName): $errorMsg");
+        }
+    }
+
+    /**
      * @return Client
      * @throws Exception
      */
@@ -38,39 +55,91 @@ class MailjetApi
         $mailjetApiSecret = trim(Mailjet::getOption('mailjet_apisecret'));
 
         if (empty($mailjetApikey) || empty($mailjetApiSecret)) {
+            MailjetLogger::error('Mailjet API initialization failed: credentials missing');
             throw new \Exception('Mailjet API credentials are missing. Please provide both API key and secret.');
         }
 
-        $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
-        $mjClient->addRequestOption(\CURLOPT_USERAGENT, 'wordpress-' . MAILJET_VERSION);
-        $mjClient->addRequestOption('headers', ['User-Agent' => 'wordpress-' . MAILJET_VERSION]);
-
-        // Configure proxy if applicable
-        self::configureProxy($mjClient);
-
-        // Disable secure protocol if HTTPS is not supported
-        if (!self::isHttpsSupported()) {
-            $mjClient->setSecureProtocol(false);
+        // Validate API key format (should be alphanumeric, reasonable length)
+        if (!\preg_match('/^[a-zA-Z0-9]{20,}$/', $mailjetApikey)) {
+            MailjetLogger::error('Mailjet API key validation failed: invalid format');
+            throw new \Exception('Mailjet API key format is invalid. Please verify your credentials.');
         }
 
-        self::$mjApiClient = $mjClient;
-        return self::$mjApiClient;
+        // Validate API secret format (should be alphanumeric, reasonable length)
+        if (!\preg_match('/^[a-zA-Z0-9]{20,}$/', $mailjetApiSecret)) {
+            MailjetLogger::error('Mailjet API secret validation failed: invalid format');
+            throw new \Exception('Mailjet API secret format is invalid. Please verify your credentials.');
+        }
+
+        try {
+            $mjClient = new Client($mailjetApikey, $mailjetApiSecret);
+            $mjClient->addRequestOption(\CURLOPT_USERAGENT, 'wordpress-' . MAILJET_VERSION);
+            $mjClient->addRequestOption('headers', ['User-Agent' => 'wordpress-' . MAILJET_VERSION]);
+            
+            // Configure timeout to prevent hanging (30 seconds default)
+            $mjClient->addRequestOption(\CURLOPT_TIMEOUT, 30);
+            $mjClient->addRequestOption(\CURLOPT_CONNECTTIMEOUT, 10);
+
+            // Configure proxy if applicable
+            self::configureProxy($mjClient);
+
+            // Disable secure protocol if HTTPS is not supported
+            if (!self::isHttpsSupported()) {
+                $mjClient->setSecureProtocol(false);
+                MailjetLogger::notice('Mailjet API: HTTPS not supported, using insecure protocol');
+            }
+
+            self::$mjApiClient = $mjClient;
+            return self::$mjApiClient;
+        } catch (Exception $e) {
+            MailjetLogger::error('Mailjet API client initialization failed: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     private static function configureProxy(Client $mjClient): void
     {
-        if (\defined('WP_PROXY_HOST') && \defined('WP_PROXY_PORT') && \defined('WP_PROXY_USERNAME') && \defined('WP_PROXY_PASSWORD')) {
-            $mjClient->addRequestOption(\CURLOPT_HTTPPROXYTUNNEL, 1);
-            $mjClient->addRequestOption(\CURLOPT_PROXYAUTH, \CURLAUTH_BASIC);
-            $mjClient->addRequestOption(\CURLOPT_PROXY, WP_PROXY_HOST . ':' . WP_PROXY_PORT);
-            $mjClient->addRequestOption(\CURLOPT_PROXYPORT, WP_PROXY_PORT);
-            $mjClient->addRequestOption(\CURLOPT_PROXYUSERPWD, WP_PROXY_USERNAME . ':' . WP_PROXY_PASSWORD);
+        // Validate all proxy constants are defined before attempting to configure
+        $proxyRequired = [\defined('WP_PROXY_HOST'), \defined('WP_PROXY_PORT'), \defined('WP_PROXY_USERNAME'), \defined('WP_PROXY_PASSWORD')];
+        
+        if (\in_array(true, $proxyRequired, true) && !\in_array(false, $proxyRequired, true)) {
+            // All four proxy constants are defined
+            try {
+                $proxyHost = WP_PROXY_HOST ?? '';
+                $proxyPort = WP_PROXY_PORT ?? 0;
+                $proxyUsername = WP_PROXY_USERNAME ?? '';
+                $proxyPassword = WP_PROXY_PASSWORD ?? '';
+
+                // Validate proxy values before applying
+                if (!empty($proxyHost) && $proxyPort > 0 && $proxyPort < 65536) {
+                    $mjClient->addRequestOption(\CURLOPT_HTTPPROXYTUNNEL, 1);
+                    $mjClient->addRequestOption(\CURLOPT_PROXYAUTH, \CURLAUTH_BASIC);
+                    $mjClient->addRequestOption(\CURLOPT_PROXY, $proxyHost . ':' . $proxyPort);
+                    $mjClient->addRequestOption(\CURLOPT_PROXYPORT, $proxyPort);
+                    $mjClient->addRequestOption(\CURLOPT_PROXYUSERPWD, $proxyUsername . ':' . $proxyPassword);
+                    MailjetLogger::debug('Mailjet proxy configured: ' . $proxyHost . ':' . $proxyPort);
+                } else {
+                    MailjetLogger::warning('Mailjet proxy configuration invalid: host=' . $proxyHost . ', port=' . $proxyPort);
+                }
+            } catch (Exception $e) {
+                MailjetLogger::error('Mailjet proxy configuration failed: ' . $e->getMessage());
+            }
         }
     }
 
     private static function isHttpsSupported(): bool
     {
-        return !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' && $_SERVER['SERVER_PORT'] == 443;
+        // Use WordPress's native is_ssl() function for more reliable HTTPS detection
+        // Falls back to manual check if wp function not available
+        if (\function_exists('is_ssl')) {
+            return is_ssl();
+        }
+        
+        // Manual check: validate SERVER_PORT as integer (cast safety)
+        $serverPort = isset($_SERVER['SERVER_PORT']) ? (int) $_SERVER['SERVER_PORT'] : 0;
+        $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        
+        return $isHttps && $serverPort === 443;
     }
 
     /**
@@ -81,6 +150,7 @@ class MailjetApi
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
+            MailjetLogger::error('Mailjet contact lists fetch failed: ' . $e->getMessage());
             return false;
         }
         $filters = array(
@@ -90,12 +160,17 @@ class MailjetApi
         try {
             $response = $mjApiClient->get(Resources::$Contactslist, array('filters' => $filters));
         } catch (ConnectException $e) {
+            MailjetLogger::error('Mailjet API connection error (getMailjetContactLists): ' . $e->getMessage());
+            return \false;
+        } catch (RequestException $e) {
+            MailjetLogger::error('Mailjet API request error (getMailjetContactLists): ' . $e->getMessage());
             return \false;
         }
         if ($response->success()) {
             return $response->getData();
         }
 
+        MailjetLogger::warning('Mailjet API responded with failure status: ' . ($response->getStatus() ?? 'unknown'));
         return false;
     }
 
@@ -160,6 +235,7 @@ class MailjetApi
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
+            self::handleApiException($e, 'getSubscribersFromList');
             return \false;
         }
         $limit = 1000;
@@ -176,15 +252,24 @@ class MailjetApi
             try {
                 $response = $mjApiClient->get(Resources::$Listrecipient, array('filters' => $filters));
             } catch (ConnectException $e) {
+                MailjetLogger::error('Mailjet API connection error (getSubscribersFromList offset=' . $offset . '): ' . $e->getMessage());
+                return \false;
+            } catch (RequestException $e) {
+                MailjetLogger::error('Mailjet API request error (getSubscribersFromList offset=' . $offset . '): ' . $e->getMessage());
                 return \false;
             }
             if ($response->success()) {
                 $dataArray[] = $response->getData();
             } else {
+                MailjetLogger::error('Mailjet API error: failed to fetch subscribers (listId=' . $contactListId . ', offset=' . $offset . ')');
                 return \false;
             }
             $offset += $limit;
         } while ($response->getCount() >= $limit);
+        
+        if (empty($dataArray)) {
+            return array();
+        }
         return \array_merge(...$dataArray);
     }
 
@@ -338,24 +423,33 @@ class MailjetApi
         try {
             $mjApiClient = self::getApiClient();
             if ($mjApiClient === null) {
+                MailjetLogger::warning('Mailjet API client is null during validation');
                 return false;
             }
         } catch (Exception $e) {
+            self::handleApiException($e, 'isValidAPICredentials');
             return false;
         }
+        
         $filters = array('Limit' => '1');
         try {
             $response = $mjApiClient->get(Resources::$Contactmetadata, array('filters' => $filters));
+            if ($response->success()) {
+                MailjetLogger::notice('Mailjet API credentials validated successfully');
+                return true;
+            }
+            MailjetLogger::warning('Mailjet API validation failed: ' . ($response->getStatus() ?? 'unknown status'));
+            return false;
         } catch (ConnectException $e) {
+            self::handleApiException($e, 'isValidAPICredentials');
             return false;
-        } catch (RequestException $exception) {
+        } catch (RequestException $e) {
+            self::handleApiException($e, 'isValidAPICredentials');
+            return false;
+        } catch (Exception $e) {
+            self::handleApiException($e, 'isValidAPICredentials');
             return false;
         }
-        if ($response->success()) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -368,11 +462,26 @@ class MailjetApi
      */
     public static function syncMailjetContacts($contactListId, $contacts, $action = 'addforce')
     {
+        // Validate inputs
+        if (empty($contactListId) || !is_array($contacts) || empty($contacts)) {
+            MailjetLogger::warning('syncMailjetContacts: invalid input (listId=' . var_export($contactListId, true) . ', contactsCount=' . (is_array($contacts) ? count($contacts) : 'N/A') . ')');
+            return \false;
+        }
+        
+        // Validate action parameter
+        $validActions = ['addforce', 'addnoforce', 'remove', 'unsub'];
+        if (!\in_array($action, $validActions)) {
+            MailjetLogger::error('syncMailjetContacts: invalid action parameter: ' . $action);
+            return \false;
+        }
+        
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
+            self::handleApiException($e, 'syncMailjetContacts');
             return \false;
         }
+        
         $body = array(
             'Action' => $action,
             'Contacts' => $contacts,
@@ -386,12 +495,18 @@ class MailjetApi
                 )
             );
         } catch (ConnectException $e) {
+            MailjetLogger::error('Mailjet API connection error (syncMailjetContacts): ' . $e->getMessage());
+            return \false;
+        } catch (RequestException $e) {
+            MailjetLogger::error('Mailjet API request error (syncMailjetContacts): ' . $e->getMessage());
             return \false;
         }
+        
         if ($response->success()) {
             return $response->getData();
         }
 
+        MailjetLogger::warning('syncMailjetContacts failed: ' . ($response->getStatus() ?? 'unknown status'));
         return false;
     }
 
@@ -400,11 +515,26 @@ class MailjetApi
      */
     public static function syncMailjetContact($contactListId, $contact, $action = 'addforce')
     {
+        // Validate inputs
+        if (empty($contactListId) || !is_array($contact) || empty($contact['Email'])) {
+            MailjetLogger::warning('syncMailjetContact: invalid input (listId=' . var_export($contactListId, true) . ', email=' . ($contact['Email'] ?? 'missing') . ')');
+            return \false;
+        }
+        
+        // Validate action parameter
+        $validActions = ['addforce', 'addnoforce', 'remove', 'unsub'];
+        if (!\in_array($action, $validActions)) {
+            MailjetLogger::error('syncMailjetContact: invalid action parameter: ' . $action);
+            return \false;
+        }
+        
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
+            self::handleApiException($e, 'syncMailjetContact');
             return \false;
         }
+        
         $name = '';
         if (isset($contact['Properties'])) {
             $name = $contact['Properties']['firstname'] ?? '';
@@ -424,12 +554,18 @@ class MailjetApi
                 )
             );
         } catch (ConnectException $e) {
+            MailjetLogger::error('Mailjet API connection error (syncMailjetContact): ' . $e->getMessage());
+            return \false;
+        } catch (RequestException $e) {
+            MailjetLogger::error('Mailjet API request error (syncMailjetContact): ' . $e->getMessage());
             return \false;
         }
+        
         if ($response->success()) {
             return $response->getData();
         }
 
+        MailjetLogger::warning('syncMailjetContact failed: ' . ($response->getStatus() ?? 'unknown status'));
         return \false;
     }
 

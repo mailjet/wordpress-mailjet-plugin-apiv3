@@ -1,0 +1,26 @@
+name: Code Quality & Security Checks
+
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
+      - '!master'
+
+jobs:
+  code-quality:
+    name: Code Quality & Security
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: PHPCS Check with Annotations
+        uses: 10up/wpcs-action@v2.1.0
+        with:
+          paths: src
+
+      - name: PHP Security Checker
+        uses: symfonycorp/security-checker-action@v5
+        with:
+          lock: composer.lock

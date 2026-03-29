@@ -3,7 +3,7 @@
         'name' => 'mailjet/wp-mailjet-plugin',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2d6eea0ffc75c3f5a03b6f6f33965a2c19438e5c',
+        'reference' => 'f963dc148395ca2bb96e4a3dd1f5a6eb1bc8198f',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -86,7 +86,7 @@
         'mailjet/wp-mailjet-plugin' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2d6eea0ffc75c3f5a03b6f6f33965a2c19438e5c',
+            'reference' => 'f963dc148395ca2bb96e4a3dd1f5a6eb1bc8198f',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
