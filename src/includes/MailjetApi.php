@@ -25,6 +25,13 @@ class MailjetApi
     private static $mjApiClient = null;
 
     /**
+     * HTTP status code of the last sendEmail() call (null when the request could
+     * not be sent at all, e.g. missing credentials or a connection error).
+     * @var int|null
+     */
+    private static $lastSendStatus = null;
+
+    /**
      * Safely handle API exceptions with logging
      * @param Exception $e
      * @param string $methodName Name of the method for logging context
@@ -765,6 +772,8 @@ class MailjetApi
      */
     public static function sendEmail($content)
     {
+        self::$lastSendStatus = null;
+
         try {
             $mjApiClient = self::getApiClient();
         } catch (Exception $e) {
@@ -777,9 +786,19 @@ class MailjetApi
         } catch (ConnectException $e) {
             return \false;
         }
+        self::$lastSendStatus = $response->getStatus();
         if ($response->success()) {
             return $response->getData();
         }
+        MailjetLogger::error('[ Mailjet ] [ sendEmail ] Send API v3.1 responded with HTTP ' . (int) self::$lastSendStatus . ' - ' . \json_encode($response->getData()));
         return \false;
+    }
+
+    /**
+     * @return int|null HTTP status code of the last sendEmail() call, or null if the request was never sent.
+     */
+    public static function getLastSendStatus()
+    {
+        return self::$lastSendStatus;
     }
 }

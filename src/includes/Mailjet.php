@@ -142,7 +142,9 @@ class Mailjet {
     private function set_locale()
     {
         $plugin_i18n = new Mailjeti18n();
-        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+        // WordPress 6.7+ expects text domains to be loaded no earlier than `init`;
+        // loading on `plugins_loaded` triggers a "translation triggered too early" notice.
+        $this->loader->add_action('init', $plugin_i18n, 'load_plugin_textdomain');
     }
 
     /**

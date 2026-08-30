@@ -3,8 +3,8 @@
 - Contributors: Mailjet
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 5.6
-- Tested up to: 7.0
-- Stable tag: 6.2.2
+- Tested up to: 7.1
+- Stable tag: 6.2.3
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -151,6 +151,12 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.2.3 =
+- Fixed WooCommerce abandoned cart and order-notification emails failing with HTTP 400 (payload now uses Send API v3.1 format)
+- Fixed abandoned cart cron retrying failed sends every minute indefinitely; each cart is now emailed at most once, the batch is capped, and the run backs off on HTTP 429
+- Declared High-Performance Order Storage (HPOS) compatibility and moved order meta reads/writes onto the WooCommerce order API
+- Tested up to WordPress 7.1
 
 = 6.1.4 =
 - Fix issues in the input fields. Tested with new WP version

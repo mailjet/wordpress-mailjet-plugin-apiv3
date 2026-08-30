@@ -14,8 +14,10 @@ namespace MailjetPlugin;
  * Plugin Name:       Mailjet for WordPress
  * Plugin URI:        https://www.mailjet.com/partners/wordpress/
  * Description:       The Best WordPress Plugin For Email Newsletters.
- * Version:           6.2.0
- * Tested up to:      6.8.3
+ * Version:           6.2.3
+ * Requires at least: 5.6
+ * Requires PHP:      7.4
+ * Tested up to:      7.1
  * Author:            Mailjet SAS
  * Author URI:        http://mailjet.com
  * License:           GPL-2.0+
@@ -56,7 +58,7 @@ use MailjetWp\MailjetPlugin\Includes\MailjetActivator;
 /**
  * Mailjet plugin version.
  */
-define('MAILJET_VERSION', '6.2.1');
+define('MAILJET_VERSION', '6.2.3');
 
 /**
  * Mailjet Plugid dir.
@@ -70,6 +72,17 @@ define('MAILJET_FRONT_TEMPLATE_DIR', plugin_dir_path( __FILE__ ). 'src/templates
 MailjetUpdate::updateToV5();
 MailjetUpdate::updateToV5_2();
 MailjetUpdate::updateToV5_2_1();
+
+/**
+ * Declare compatibility with WooCommerce High-Performance Order Storage (HPOS).
+ * The plugin reads/writes order data exclusively through the WooCommerce order
+ * API, so it works with both the legacy post storage and custom order tables.
+ */
+add_action('before_woocommerce_init', function () {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
 /**
  * Begins execution of the plugin.

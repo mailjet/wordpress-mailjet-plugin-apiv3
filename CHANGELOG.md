@@ -1,5 +1,15 @@
 ## Changelog
 
+##### 6.2.3
+- Fixed WooCommerce abandoned cart and order-notification emails failing with HTTP 400: `getFormattedEmailData()` now builds a valid Send API v3.1 message (`From`/`To`/`TemplateID`/`TemplateLanguage`/`Variables`) instead of a legacy v3 body
+- Fixed abandoned cart cron retrying failed sends every minute forever: each cart is now emailed at most once, the batch is capped per run, and the run stops when the API returns HTTP 429
+- Abandoned cart cron now skips deleted products instead of fatally erroring, validates the recipient before creating a tracking row, caches the template lookup, and no-ops when the feature is disabled
+- Declared WooCommerce High-Performance Order Storage (HPOS) compatibility and moved the remaining `get_post_meta()`/`update_post_meta()` order calls onto the WooCommerce order API (`$order->get_meta()` / `$order->update_meta_data()`)
+- Text domain now loads on `init` instead of `plugins_loaded` to avoid the WordPress 6.7+ "translation triggered too early" notice
+- Removed deprecated `utf8_decode()` usage (removed in PHP 9) from the legacy iframe client
+- Synced version metadata across `wp-mailjet.php`, `MAILJET_VERSION`, `readme.txt` and `README.md`; tested up to WordPress 7.1
+- Corrected the activation PHP-version notice to state the real requirement (7.4)
+
 ##### 6.2.0
 - Enhanced API security with comprehensive validation and error handling
 - Added API key and secret format validation (regex pattern matching)

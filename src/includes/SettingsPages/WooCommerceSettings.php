@@ -20,6 +20,12 @@ use MailjetWp\MailjetPlugin\Includes\MailjetSettings;
  */
 class WooCommerceSettings {
 
+    /**
+     * Maximum number of abandoned-cart emails processed in a single cron run.
+     * Keeps one tick from firing an unbounded number of Send API requests.
+     */
+    public const ABANDONED_CART_BATCH_LIMIT = 50;
+
     public const WOO_PROP_TOTAL_ORDERS          = 'woo_total_orders_count';
     public const WOO_PROP_TOTAL_SPENT           = 'woo_total_spent';
     public const WOO_PROP_LAST_ORDER_DATE       = 'woo_last_order_date';
@@ -269,7 +275,7 @@ class WooCommerceSettings {
                 $contactAlreadySubscribedToList = MailjetApi::checkContactSubscribedToList($user->data->user_email, $contactList);
             }
             if ( ! $contactAlreadySubscribedToList) {
-                $subscribe = get_post_meta($order->get_id(), 'mailjet_woo_subscribe_ok', \true);
+                $subscribe = $order->get_meta('mailjet_woo_subscribe_ok');
                 if ( (int) $subscribe === 1) {
                     $str .= ' <br /><br /><i><b>' . __('We have sent the newsletter subscription confirmation link to you: ', 'mailjet-for-wordpress') . '<b>' . $order->get_billing_email() . '</b>. ' . __('To confirm your subscription you have to click on the provided link.', 'mailjet-for-wordpress') . '</i></b>';
                 } elseif (Mailjet::getOption('mailjet_woo_banner_checkbox') === '1') {
@@ -606,7 +612,8 @@ class WooCommerceSettings {
             MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Automation email fails ][Request:]' . \json_encode($data));
             return;
         }
-        update_post_meta($orderId, 'processing_email_sent', 'true');
+        $order->update_meta_data('processing_email_sent', 'true');
+        $order->save_meta_data();
     }
 
     /**
@@ -683,22 +690,59 @@ class WooCommerceSettings {
      */
     public function send_abandoned_cart_emails() {
         global $wpdb;
-        $sendingDelay = Mailjet::getOption('mailjet_woo_abandoned_cart_sending_time');
+
+        // Defensive guard: a stale cron event must not keep sending after the
+        // feature has been switched off.
+        if (Mailjet::getOption('mailjet_woo_abandoned_cart_activate') !== '1') {
+            return;
+        }
+
+        $sendingDelay = (int) Mailjet::getOption('mailjet_woo_abandoned_cart_sending_time');
         $compareTime  = current_time('timestamp') - $sendingDelay;
-        $query        = 'SELECT cart.*, wpuser.display_name as user_name, wpuser.user_email, wcguest.guest_name, wcguest.billing_email as guest_email  
-                  FROM `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts` AS cart 
-                  LEFT JOIN `' . $wpdb->prefix . 'users` AS wpuser ON cart.user_id = wpuser.id 
+
+        // Only pick carts we have never tried to email yet. A row in
+        // mailjet_wc_abandoned_cart_emails means an attempt was already made, so
+        // this guarantees at most one Send API request per abandoned cart even
+        // if the send fails.
+        $query   = 'SELECT cart.*, wpuser.display_name as user_name, wpuser.user_email, wcguest.guest_name, wcguest.billing_email as guest_email
+                  FROM `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts` AS cart
+                  LEFT JOIN `' . $wpdb->prefix . 'users` AS wpuser ON cart.user_id = wpuser.id
                   LEFT JOIN `' . $wpdb->prefix . 'mailjet_wc_guests` AS wcguest ON cart.user_id = wcguest.id
-                  WHERE cart_ignored = 0
-                  AND abandoned_cart_time < %d';
-        $results      = $wpdb->get_results($wpdb->prepare($query, $compareTime));
+                  LEFT JOIN `' . $wpdb->prefix . 'mailjet_wc_abandoned_cart_emails` AS sent ON sent.abandoned_cart_id = cart.id
+                  WHERE cart.cart_ignored = 0
+                  AND cart.abandoned_cart_time < %d
+                  AND sent.id IS NULL
+                  ORDER BY cart.id ASC
+                  LIMIT %d';
+        $results = $wpdb->get_results($wpdb->prepare($query, $compareTime, self::ABANDONED_CART_BATCH_LIMIT));
+
         foreach ($results as $cart) {
-            if ($this->send_abandoned_cart($cart)) {
-                $query_update = 'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts`
-                         SET cart_ignored = %d
-                         WHERE id  = %d';
-                $wpdb->query($wpdb->prepare($query_update, 1, $cart->id));
+            $sent = \false;
+            try {
+                $sent = $this->send_abandoned_cart($cart);
+            } catch (\Throwable $e) {
+                MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] cart #' . $cart->id . ' threw: ' . $e->getMessage());
             }
+            if ( ! $sent) {
+                MailjetLogger::notice('[ Mailjet ] [ ' . __METHOD__ . ' ] cart #' . $cart->id . ' not emailed (skipped or Send API error), will not be retried');
+            }
+
+            // Stop the whole batch when the API is rate limiting us instead of
+            // burning through the remaining carts (and quota) on 429s.
+            if (MailjetApi::getLastSendStatus() === 429) {
+                MailjetLogger::warning('[ Mailjet ] [ ' . __METHOD__ . ' ] rate limited (HTTP 429), stopping this run');
+                break;
+            }
+
+            // Mark the cart as handled regardless of the send result. The email
+            // row above already prevents re-selection; this keeps the working
+            // set small and covers carts that were skipped before any API call
+            // (missing template, deleted products, invalid recipient, ...).
+            $wpdb->query($wpdb->prepare(
+                'UPDATE `' . $wpdb->prefix . 'mailjet_wc_abandoned_carts` SET cart_ignored = %d WHERE id = %d',
+                1,
+                $cart->id
+            ));
         }
     }
 
@@ -734,21 +778,37 @@ class WooCommerceSettings {
         }
         $products = array();
         foreach ($cartProducts as $key => $cartProduct) {
-            $productDetails           = wc_get_product($cartProduct['product_id']);
+            if (empty($cartProduct['product_id'])) {
+                continue;
+            }
+            $productDetails = wc_get_product($cartProduct['product_id']);
+            if ( ! $productDetails) {
+                // Product was deleted since the cart was saved - skip it rather
+                // than fatally calling a method on null.
+                continue;
+            }
             $productImgUrl            = wp_get_attachment_url(get_post_thumbnail_id($cartProduct['product_id']));
             $product                  = array();
             $product['title']         = $productDetails->get_title();
             $product['variant_title'] = '';
             $product['image']         = $productImgUrl ?: '';
-            $product['quantity']      = $cartProduct['quantity'];
+            $product['quantity']      = isset($cartProduct['quantity']) ? $cartProduct['quantity'] : 1;
             $product['price']         = wc_price($productDetails->get_price());
             \array_push($products, $product);
+        }
+        if (empty($products)) {
+            return \false;
+        }
+        // Bail before creating a tracking row if we have nobody to send to.
+        $recipientEmail = $cart->user_type === 'REGISTERED' ? $cart->user_email : $cart->guest_email;
+        if (empty($recipientEmail) || ! is_email($recipientEmail)) {
+            return \false;
         }
         // generate a random string as security
         try {
             $securityKey = \bin2hex(\random_bytes(5));
         } catch (Exception $e) {
-            $securityKey = \mt_rand(99999);
+            $securityKey = (string) \mt_rand(10000, 99999);
         }
         $mailId              = $this->register_sent_email($cart, $securityKey);
         $abandoned_cart_link = get_permalink(wc_get_page_id('cart')) . '?mj_action=track_cart&email_id=' . $mailId . '&key=' . $securityKey;
@@ -1066,26 +1126,63 @@ class WooCommerceSettings {
      * @return array
      */
     private function getFormattedEmailData( $recipients, $templateId ) {
-        $template = MailjetApi::getTemplateDetails($templateId);
-        $data     = array();
-        if (isset($template['Headers'])) {
-            $data['FromEmail'] = $template['Headers']['SenderEmail'];
-            $data['FromName']  = $template['Headers']['SenderName'];
+        // Cache template details per request - this method is called once per cart
+        // on every cron run and the lookup is a full API round-trip.
+        static $templateCache = array();
+        if ( ! \array_key_exists($templateId, $templateCache)) {
+            $templateCache[ $templateId ] = MailjetApi::getTemplateDetails($templateId);
         }
-        $data['From']                      = array(
-            'Email' => $data['FromEmail'],
-            'Name'  => $data['FromName'],
+        $template = $templateCache[ $templateId ];
+
+        $fromEmail = '';
+        $fromName  = '';
+        if (isset($template['Headers']['SenderEmail'])) {
+            $fromEmail = $template['Headers']['SenderEmail'];
+            $fromName  = isset($template['Headers']['SenderName']) ? $template['Headers']['SenderName'] : '';
+        }
+        if (empty($fromEmail)) {
+            $sender    = $this->defaultSenderInfo();
+            $fromEmail = $sender['SenderEmail'];
+            $fromName  = $sender['SenderName'];
+        }
+
+        // Normalise the two recipient shapes used in this class
+        // (order notifications pass 'To', abandoned cart passes 'Email'/'Name') into
+        // the single "To" array that Send API v3.1 expects.
+        if (isset($recipients['To']) && \is_array($recipients['To'])) {
+            $to = $recipients['To'];
+        } elseif ( ! empty($recipients['Email'])) {
+            $to = array(
+                array(
+                    'Email' => $recipients['Email'],
+                    'Name'  => isset($recipients['Name']) ? $recipients['Name'] : '',
+                ),
+            );
+        } else {
+            $to = array();
+        }
+
+        $vars = isset($recipients['Vars']) && \is_array($recipients['Vars']) ? $recipients['Vars'] : array();
+
+        // Send API v3.1 message payload - MailjetApi::sendEmail() wraps this in {"Messages":[ ... ]}.
+        $message = array(
+            'From'             => array(
+                'Email' => $fromEmail,
+                'Name'  => $fromName,
+            ),
+            'To'               => $to,
+            'TemplateID'       => (int) $templateId,
+            'TemplateLanguage' => \true,
         );
-        $data['Recipients'][]              = $recipients;
-        $data['To']                        = $recipients['To'];
-        $data['Mj-TemplateID']             = (int) $templateId;
-        $data['TemplateID']                = (int) $templateId;
-        $data['Mj-TemplateLanguage']       = 1;
-        $data['TemplateLanguage']          = 1;
-        $data['Mj-TemplateErrorReporting'] = Mailjet::getOption('woocommerce_email_from_email');
-        $data['Mj-TemplateErrorDeliver']   = true;
-        $data['body']                      = $data;
-        return $data;
+        if ( ! empty($vars)) {
+            $message['Variables'] = $vars;
+        }
+        $errorReportingEmail = Mailjet::getOption('woocommerce_email_from_email');
+        if ( ! empty($errorReportingEmail) && is_email($errorReportingEmail)) {
+            $message['TemplateErrorReporting'] = array( 'Email' => $errorReportingEmail );
+            $message['TemplateErrorDeliver']   = \true;
+        }
+        return $message;
     }
 
     /**
