@@ -36,7 +36,7 @@ class MailjetActivator {
         if ( ! self::compatible_version()) {
             deactivate_plugins(plugin_basename(__FILE__));
             $phpVersion = \phpversion();
-            $message    = \sprintf(esc_html__('Mailjet for WordPress requires PHP 5.5 or later. Your server currently runs on PHP %s. Please upgrade your PHP and activate the plugin again.', 'mailjet-for-wordpress'), $phpVersion);
+            $message    = \sprintf(esc_html__('Mailjet for WordPress requires PHP 7.4 or later. Your server currently runs on PHP %s. Please upgrade your PHP and activate the plugin again.', 'mailjet-for-wordpress'), $phpVersion);
             wp_die($message);
         }
     }
@@ -58,7 +58,7 @@ class MailjetActivator {
 
     public function disabled_notice(): void {
         $phpVersion = \phpversion();
-        $message    = \sprintf(esc_html__('Mailjet for WordPress requires PHP 5.5 or later. Your server currently runs on PHP %s. Please upgrade your PHP and activate the plugin again.', 'mailjet-for-wordpress'), $phpVersion);
+        $message    = \sprintf(esc_html__('Mailjet for WordPress requires PHP 7.4 or later. Your server currently runs on PHP %s. Please upgrade your PHP and activate the plugin again.', 'mailjet-for-wordpress'), $phpVersion);
         echo '<strong>' . $message . '</strong>';
     }
 

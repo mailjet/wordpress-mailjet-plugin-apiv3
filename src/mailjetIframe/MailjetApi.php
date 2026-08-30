@@ -697,7 +697,7 @@ class MailjetApi {
                 $this->_debugErrorHtml .= '<tr class="Success"><th>Success</th><td></td></tr>';
                 $this->_debugErrorHtml .= '<tr><th>Status code</th><td>' . $this->_response_code . '</td></tr>';
                 if (isset($this->_response)) {
-                    $this->_debugErrorHtml .= '<tr><th>Response</th><td><pre>' . \utf8_decode(\print_r($this->_response, 1)) . '</pre></td></tr>';
+                    $this->_debugErrorHtml .= '<tr><th>Response</th><td><pre>' . \htmlspecialchars(\print_r($this->_response, 1)) . '</pre></td></tr>';
                 }
                 $this->_debugErrorHtml .= '</table>';
             } elseif ($this->_response_code == 304) {
