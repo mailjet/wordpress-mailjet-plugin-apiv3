@@ -341,9 +341,10 @@ class MailjetSettings {
         $hash = Mailjet::getOption('crypto_hash');
         if (empty($hash)) {
             try {
-                $hash = \bin2hex(\random_bytes(10));
+                $hash = \bin2hex(\random_bytes(32));
             } catch (Exception $e) {
-                $hash = (string) \mt_rand();
+                // Never fall back to mt_rand(): it is not a CSPRNG.
+                $hash = wp_generate_password(64, \false, \false);
             }
             update_option('crypto_hash', $hash);
         }
