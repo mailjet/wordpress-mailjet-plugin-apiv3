@@ -194,7 +194,7 @@ class MailjetSettings {
 					'prop'    => $name,
                 )
             );
-            if (\sha1($params . self::getCryptoHash()) !== sanitize_text_field($_GET['token'])) {
+            if ( ! self::isValidSubscriptionToken($params, sanitize_text_field($_GET['token']))) {
                 return \false;
             }
             // Hardcode this in order to pass the check inside `$this->>subsctiptionConfirmationAdminNoticeSuccess()`
@@ -231,8 +231,7 @@ class MailjetSettings {
         if ( ! empty($activate_mailjet_comment_authors_sync) && ! empty($mailjet_comment_authors_list) && ! empty($_GET['mj_sub_comment_author_token'])) {
             // Verify the token from the confirmation email link and subscribe the comment author to the Mailjet contacts list
             $mj_sub_comment_author_token = sanitize_text_field($_GET['mj_sub_comment_author_token']);
-            $tokenCheck                  = \sha1($subscribeParam . \str_ireplace(' ', '+', $subscriptionEmail) . self::getCryptoHash());
-            if ($mj_sub_comment_author_token === $tokenCheck) {
+            if (self::isValidSubscriptionToken($subscribeParam . \str_ireplace(' ', '+', $subscriptionEmail), $mj_sub_comment_author_token)) {
                 $commentAuthorsSettings = new CommentAuthorsSettings();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe Comment Author To List ]');
                 $syncSingleContactEmailToMailjetList = $commentAuthorsSettings->mailjet_subscribe_unsub_comment_author_to_list($subscribeParam, \str_ireplace(' ', '+', $subscriptionEmail));
@@ -251,8 +250,7 @@ class MailjetSettings {
             $mj_sub_woo_token = sanitize_text_field($_GET['mj_sub_woo_token']);
             $firstName        = sanitize_text_field($_GET['first_name']);
             $lastName         = sanitize_text_field($_GET['last_name']);
-            $tokenCheck       = \sha1($subscribeParam . \str_ireplace(' ', '+', $subscriptionEmail) . $firstName . $lastName . self::getCryptoHash());
-            if ($mj_sub_woo_token === $tokenCheck) {
+            if (self::isValidSubscriptionToken($subscribeParam . \str_ireplace(' ', '+', $subscriptionEmail) . $firstName . $lastName, $mj_sub_woo_token)) {
                 $wooCommerceSettings = WooCommerceSettings::getInstance();
                 MailjetLogger::info('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Subscribe/Unsubscribe WooCommerce user To List ]');
                 $syncSingleContactEmailToMailjetList = $wooCommerceSettings->mailjet_subscribe_unsub_woo_to_list(sanitize_text_field($_GET['subscribe']), \str_ireplace(' ', '+', $subscriptionEmail), $firstName, $lastName);
@@ -343,12 +341,39 @@ class MailjetSettings {
         $hash = Mailjet::getOption('crypto_hash');
         if (empty($hash)) {
             try {
-                $hash = \bin2hex(\random_bytes(10));
+                $hash = \bin2hex(\random_bytes(32));
             } catch (Exception $e) {
-                $hash = (string) \mt_rand();
+                // Never fall back to mt_rand(): it is not a CSPRNG.
+                $hash = wp_generate_password(64, \false, \false);
             }
             update_option('crypto_hash', $hash);
         }
         return Mailjet::getOption('crypto_hash');
+    }
+
+    /**
+     * Build a signed token for subscription confirmation links (HMAC-SHA256 keyed with the site secret).
+     *
+     * @param string $data
+     * @return string
+     * @throws \Exception
+     */
+    public static function generateSubscriptionToken($data) {
+        return \hash_hmac('sha256', (string) $data, (string) self::getCryptoHash());
+    }
+
+    /**
+     * Verify a subscription confirmation token in constant time.
+     *
+     * @param string $data
+     * @param string $token
+     * @return bool
+     * @throws \Exception
+     */
+    public static function isValidSubscriptionToken($data, $token) {
+        if ( ! \is_string($token) || $token === '') {
+            return \false;
+        }
+        return \hash_equals(self::generateSubscriptionToken($data), $token);
     }
 }

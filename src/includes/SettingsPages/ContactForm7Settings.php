@@ -73,7 +73,7 @@ class ContactForm7Settings {
 				'__EMAIL_TITLE__'  => Mailjeti18n::getTranslationsFromFile($locale, 'Please confirm your subscription'),
 				'__EMAIL_HEADER__' => sprintf(__(Mailjeti18n::getTranslationsFromFile($locale, 'To receive newsletters from %s please confirm your subscription by clicking the following button:'), 'mailjet-for-wordpress'), $wpUrl),
 				'__WP_URL__'       => $wpUrl,
-				'__CONFIRM_URL__'  => get_home_url() . '?' . $params . '&token=' . sha1($params . MailjetSettings::getCryptoHash()),
+				'__CONFIRM_URL__'  => get_home_url() . '?' . $params . '&token=' . MailjetSettings::generateSubscriptionToken($params),
 				'__CLICK_HERE__'   => Mailjeti18n::getTranslationsFromFile($locale, 'Yes, subscribe me to this list'),
 				'__FROM_NAME__'    => Mailjet::getOption('blogname'),
 				'__IGNORE__'       => Mailjeti18n::getTranslationsFromFile($locale, 'If you received this email by mistake or don\'t wish to subscribe anymore, simply ignore this message.'),
