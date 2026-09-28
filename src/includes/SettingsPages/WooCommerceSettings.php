@@ -806,9 +806,10 @@ class WooCommerceSettings {
         }
         // generate a random string as security
         try {
-            $securityKey = \bin2hex(\random_bytes(5));
-        } catch (Exception $e) {
-            $securityKey = (string) \mt_rand(10000, 99999);
+            $securityKey = \bin2hex(\random_bytes(16));
+        } catch (\Exception $e) {
+            // Never fall back to mt_rand(): it is not a CSPRNG.
+            $securityKey = wp_generate_password(32, \false, \false);
         }
         $mailId              = $this->register_sent_email($cart, $securityKey);
         $abandoned_cart_link = get_permalink(wc_get_page_id('cart')) . '?mj_action=track_cart&email_id=' . $mailId . '&key=' . $securityKey;
@@ -1384,7 +1385,7 @@ class WooCommerceSettings {
                     RIGHT JOIN `wp_mailjet_wc_abandoned_carts` AS cart ON email.abandoned_cart_id = cart.id
                     WHERE email.id = %d';
         $result = $wpdb->get_results($wpdb->prepare($query, $emailId));
-        if ($result && $result[0]->security_key === $key) {
+        if ($result && \is_string($key) && \hash_equals((string) $result[0]->security_key, $key)) {
             // check if the key corresponds to the one in DB
             $userId = $result[0]->user_id;
             if ($result[0]->user_type === 'REGISTERED') {
