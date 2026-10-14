@@ -1,5 +1,9 @@
 ## Changelog
 
+##### 6.2.4
+- Security (CVE-2026-39791): the `mj_ajax_subscribe` AJAX action no longer exposes customer data to unauthenticated visitors. It now requires a nonce and the WooCommerce order key (checked with `hash_equals`), answers a missing order and a wrong key identically, and no longer echoes the billing email in its response
+- Fixed the thank-you page "Subscribe now" button sending no request because the order ID attribute contained surrounding whitespace
+
 ##### 6.2.3
 - Fixed WooCommerce abandoned cart and order-notification emails failing with HTTP 400: `getFormattedEmailData()` now builds a valid Send API v3.1 message (`From`/`To`/`TemplateID`/`TemplateLanguage`/`Variables`) instead of a legacy v3 body
 - Fixed abandoned cart cron retrying failed sends every minute forever: each cart is now emailed at most once, the batch is capped per run, and the run stops when the API returns HTTP 429

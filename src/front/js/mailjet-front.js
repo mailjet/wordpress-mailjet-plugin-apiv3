@@ -1,9 +1,12 @@
 function subscribeMe(element) {
-    let id = jQuery(element).data('order');
-    if (Number.isInteger(id)) {
+    let id = parseInt(jQuery(element).attr('data-order'), 10);
+    let key = jQuery(element).attr('data-order-key');
+    if (Number.isInteger(id) && key) {
         let data = {
             'action': 'mj_ajax_subscribe',
             'orderId': id,
+            'orderKey': key,
+            'nonce': mailjet.nonce,
         };
         ajax("POST", data, subscriptionHandler);
     }
