@@ -3,6 +3,7 @@
 namespace MailjetWp;
 
 $order    = get_query_var('orderId');
+$orderKey = get_query_var('orderKey');
 $text     = get_query_var('text');
 $btnLabel = get_query_var('btnLabel');
 ?>
@@ -12,11 +13,7 @@ $btnLabel = get_query_var('btnLabel');
         echo esc_textarea($text);
         ?>
         </span>
-        <button class="mj-subscribe-btn" data-order="
-        <?php
-        echo esc_textarea($order);
-        ?>
-        " onclick="subscribeMe(this)">
+        <button class="mj-subscribe-btn" data-order="<?php echo esc_attr($order); ?>" data-order-key="<?php echo esc_attr($orderKey); ?>" onclick="subscribeMe(this)">
         <?php
 		_e($btnLabel, 'mailjet-for-wordpress');
 		?>
