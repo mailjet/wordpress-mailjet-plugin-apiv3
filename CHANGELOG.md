@@ -1,5 +1,9 @@
 ## Changelog
 
+##### 6.2.5
+- Security: the Mailjet API client always uses HTTPS. Removed the fallback that switched API calls (including credentials) to plain HTTP whenever the WordPress site itself was not served over HTTPS; the legacy iframe client's `secure(false)` is now ignored
+- Switched remaining `http://` links (Google Fonts stylesheet, plugin Author URI, readme links) to HTTPS
+
 ##### 6.2.4
 - Security (CVE-2026-39791): the `mj_ajax_subscribe` AJAX action no longer exposes customer data to unauthenticated visitors. It now requires a nonce and the WooCommerce order key (checked with `hash_equals`), answers a missing order and a wrong key identically, and no longer echoes the billing email in its response
 - Fixed the thank-you page "Subscribe now" button sending no request because the order ID attribute contained surrounding whitespace

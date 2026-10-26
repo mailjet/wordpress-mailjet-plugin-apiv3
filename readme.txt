@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 5.6
 - Tested up to: 7.1
-- Stable tag: 6.2.4
+- Stable tag: 6.2.5
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -47,7 +47,7 @@ You must have cURL extension enabled. PHP 5.6 or later version is required.
 ## Frequently Asked Questions
 
 = What is Mailjet? =
-[Mailjet](http://www.mailjet.com?aff=wordpressmj) is an all-in-one solution to send, track and deliver both marketing and transactional emails. Its cloud-based infrastructure is unique and highly scalable with a proprietary technology that optimizes email deliverability. Mailjet can be accessed either via an easy-to-use online drag-and-drop interface or via APIs that allow developers to integrate its features within their online app or service, or its sophisticated SMTP relay.
+[Mailjet](https://www.mailjet.com?aff=wordpressmj) is an all-in-one solution to send, track and deliver both marketing and transactional emails. Its cloud-based infrastructure is unique and highly scalable with a proprietary technology that optimizes email deliverability. Mailjet can be accessed either via an easy-to-use online drag-and-drop interface or via APIs that allow developers to integrate its features within their online app or service, or its sophisticated SMTP relay.
 
 = Why use Mailjet on WordPress? =
 Because you don't have time to build a global leading email infrastructure and have a product or service to build and grow
@@ -65,7 +65,7 @@ Once you have a Mailjet account, grab your [Mailjet API credentials](https://app
 For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj).
 
 = How do I create a signup form or use the contact widget? =
-Once your Mailjet plugin is installed and configured, click on "Appearance" in the left-side WordPress admin menu and then choose the "Widgets" section. Just drag the "Mailjet Subscription Widget" widget and drop it where you want it to appear (i.e. the sidebar). For more details, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
+Once your Mailjet plugin is installed and configured, click on "Appearance" in the left-side WordPress admin menu and then choose the "Widgets" section. Just drag the "Mailjet Subscription Widget" widget and drop it where you want it to appear (i.e. the sidebar). For more details, please visit the official help page [Adding Widgets](https://wordpress.com/support/widgets/#adding-widgets).
 
 = How do I synchronize my contact lists? =
 Synchronization is automatic, that's the beauty of this plugin! It doesn't matter whether your lists were updated on your WordPress interface or on your Mailjet account: they will always remain up-to-date on both sides.
@@ -151,6 +151,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.2.5 =
+- Security: Mailjet API calls (and API credentials) are always sent over HTTPS. Previously the plugin fell back to plain HTTP when the WordPress site itself was not served over HTTPS
+- Switched remaining http:// links (Google Fonts stylesheet, plugin Author URI) to HTTPS
 
 = 6.2.4 =
 - Security: fixed unauthenticated exposure of WooCommerce customer email addresses through the thank-you page newsletter subscription request (CVE-2026-39791)

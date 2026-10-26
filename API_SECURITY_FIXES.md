@@ -3,6 +3,11 @@
 ## Issues Found & Fixed
 
 ### ✅ Issue 1: Weak HTTPS Detection
+
+> **Superseded (DE-11282):** the HTTPS detection and the HTTP fallback were removed. `is_ssl()` only reflects how the
+> WordPress site itself is served, not whether outbound HTTPS works, so sites served over plain HTTP were sending API
+> credentials to Mailjet over HTTP. The Mailjet API is HTTPS-only, so the client now always uses HTTPS.
+
 **Problem**: Loose string comparison `$_SERVER['SERVER_PORT'] == 443` could fail with string port values
 ```php
 // BEFORE (Line 70)
@@ -301,7 +306,7 @@ Enable logging to see detailed API errors:
 ## Affected Methods (Enhanced)
 1. `getApiClient()` - API credential validation & timeout
 2. `configureProxy()` - Proxy validation & error logging
-3. `isHttpsSupported()` - WordPress-aware HTTPS detection
+3. ~~`isHttpsSupported()`~~ - removed, the API client always uses HTTPS (DE-11282)
 4. `isValidAPICredentials()` - Comprehensive exception handling
 5. `getMailjetContactLists()` - Connection & request error logging
 6. `getSubscribersFromList()` - Detailed pagination error logging

@@ -90,11 +90,8 @@ class MailjetApi
             // Configure proxy if applicable
             self::configureProxy($mjClient);
 
-            // Disable secure protocol if HTTPS is not supported
-            if (!self::isHttpsSupported()) {
-                $mjClient->setSecureProtocol(false);
-                MailjetLogger::notice('Mailjet API: HTTPS not supported, using insecure protocol');
-            }
+            // The Mailjet API is HTTPS-only: never fall back to plain HTTP
+            $mjClient->setSecureProtocol(true);
 
             self::$mjApiClient = $mjClient;
             return self::$mjApiClient;
@@ -132,21 +129,6 @@ class MailjetApi
                 MailjetLogger::error('Mailjet proxy configuration failed: ' . $e->getMessage());
             }
         }
-    }
-
-    private static function isHttpsSupported(): bool
-    {
-        // Use WordPress's native is_ssl() function for more reliable HTTPS detection
-        // Falls back to manual check if wp function not available
-        if (\function_exists('is_ssl')) {
-            return is_ssl();
-        }
-        
-        // Manual check: validate SERVER_PORT as integer (cast safety)
-        $serverPort = isset($_SERVER['SERVER_PORT']) ? (int) $_SERVER['SERVER_PORT'] : 0;
-        $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
-        
-        return $isHttps && $serverPort === 443;
     }
 
     /**
