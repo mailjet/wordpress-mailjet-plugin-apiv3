@@ -7,7 +7,7 @@ namespace MailjetWp\MailjetIframe;
  *
  * @package     API v3.0
  * @author      Mailjet
- * @link        http://dev.mailjet.com/
+ * @link        https://dev.mailjet.com/
  */
 class MailjetApi {
 
@@ -29,8 +29,7 @@ class MailjetApi {
      */
     private string $_secretKey = '';
     /**
-     * Secure flag to connect through https protocol
-     * You can edit directly
+     * Secure flag: always TRUE, the Mailjet API is HTTPS-only
      *
      * @access    private
      * @var        boolean $_secure
@@ -174,7 +173,7 @@ class MailjetApi {
         if ($secretKey) {
             $this->_secretKey = $secretKey;
         }
-        $this->_apiUrl = ($this->_secure ? 'https' : 'http') . '://api' . $this->env . 'mailjet.com/v3/' . $this->_version;
+        $this->_apiUrl = 'https://api' . $this->env . 'mailjet.com/v3/' . $this->_version;
     }
     /**
      * Singleton pattern :
@@ -207,7 +206,7 @@ class MailjetApi {
             $this->_debugMethod  = $method;
             $this->_debugRequest = $request;
         }
-        $this->_debugCallUrl = $this->_apiUrl = $url = ($this->_secure ? 'https' : 'http') . '://api' . $this->env . 'mailjet.com/v3/DATA/' . $method . '/' . $id . '/' . $type . '/' . $contType;
+        $this->_debugCallUrl = $this->_apiUrl = $url = 'https://api' . $this->env . 'mailjet.com/v3/DATA/' . $method . '/' . $id . '/' . $type . '/' . $contType;
         if (\is_null($this->_curl_handle)) {
             $this->_curl_handle = \curl_init();
         }
@@ -306,19 +305,16 @@ class MailjetApi {
         return $this->_apiKey;
     }
     /**
-     * Secure or not the transaction through https
+     * Kept for backward compatibility only.
+     * The Mailjet API is HTTPS-only: plain HTTP is not supported, so the transaction is always secured.
      *
      * @access    public
-     * @param boolean $secure TRUE to secure the transaction, FALSE otherwise
+     * @param boolean $secure Ignored, HTTPS is always used
      * @uses      Mailjet::Api::$_apiUrl
      */
     public function secure( bool $secure = \true ) {
-        $this->_secure = $secure;
-        $protocol      = 'http';
-        if ($secure) {
-            $protocol = 'https';
-        }
-        $this->_apiUrl = \preg_replace('/http(s)?:\\/\\//', $protocol . '://', $this->_apiUrl);
+        $this->_secure = \true;
+        $this->_apiUrl = \preg_replace('/^http:\\/\\//i', 'https://', $this->_apiUrl);
     }
     /**
      * Get the last Response HTTP Code
@@ -446,7 +442,7 @@ class MailjetApi {
      * @return void
      */
     public function resetRequest() {
-        $this->_apiUrl       = ($this->_secure ? 'https' : 'http') . '://api' . $this->env . 'mailjet.com/v3/' . $this->_version;
+        $this->_apiUrl       = 'https://api' . $this->env . 'mailjet.com/v3/' . $this->_version;
         $this->_request_post = \false;
     }
     /**

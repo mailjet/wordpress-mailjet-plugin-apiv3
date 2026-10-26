@@ -59,7 +59,7 @@ Mailjet's official plugin on WordPress gives you access to:
 ## Frequently Asked Questions
 
 ##### What is Mailjet?
-[Mailjet](http://www.mailjet.com?aff=wordpressmj) is an all-in-one solution to send, track and deliver both marketing and transactional emails. Its cloud-based infrastructure is unique and highly scalable with a proprietary technology that optimizes email deliverability. Mailjet can be accessed either via an easy-to-use online drag-and-drop interface or via APIs that allow developers to integrate its features within their online app or service, or its sophisticated SMTP relay.
+[Mailjet](https://www.mailjet.com?aff=wordpressmj) is an all-in-one solution to send, track and deliver both marketing and transactional emails. Its cloud-based infrastructure is unique and highly scalable with a proprietary technology that optimizes email deliverability. Mailjet can be accessed either via an easy-to-use online drag-and-drop interface or via APIs that allow developers to integrate its features within their online app or service, or its sophisticated SMTP relay.
 
 ##### Why use Mailjet on WordPress?
 - Because you don't have time to build a global leading email infrastructure and have a product or service to build and grow.
@@ -77,7 +77,7 @@ Once you have a Mailjet account, grab your [Mailjet API credentials](https://app
 For more help on setting up the Mailjet Plugin for WordPress, feel free to check out our [dedicated WordPress User Guide](https://www.mailjet.com/guides/wordpress-user-guide?aff=wordpressmj).
 
 ##### How do I create a signup form or use the contact widget?
-Once your Mailjet plugin is installed and configured, click on "Appearance" in the left-side WordPress admin menu and then choose the "Widgets" section. Drag the "Mailjet Subscription Widget" widget and drop it where you want it to appear (i.e. the sidebar). For more details, please visit the official help page [Adding Widgets](http://en.support.wordpress.com/widgets/#adding-widgets).
+Once your Mailjet plugin is installed and configured, click on "Appearance" in the left-side WordPress admin menu and then choose the "Widgets" section. Drag the "Mailjet Subscription Widget" widget and drop it where you want it to appear (i.e. the sidebar). For more details, please visit the official help page [Adding Widgets](https://wordpress.com/support/widgets/#adding-widgets).
 
 ##### In which languages is this plugin available?
 The Mailjet Plugin is available in English, Spanish, French, German and Italian.

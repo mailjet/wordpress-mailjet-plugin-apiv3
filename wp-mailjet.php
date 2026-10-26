@@ -19,7 +19,7 @@ namespace MailjetPlugin;
  * Requires PHP:      7.4
  * Tested up to:      7.1
  * Author:            Mailjet SAS
- * Author URI:        http://mailjet.com
+ * Author URI:        https://www.mailjet.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       mailjet-for-wordpress
