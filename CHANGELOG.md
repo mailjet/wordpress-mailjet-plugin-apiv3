@@ -1,6 +1,6 @@
 ## Changelog
 
-##### Unreleased
+##### 6.2.5
 - Security: the Mailjet API client always uses HTTPS. Removed the fallback that switched API calls (including credentials) to plain HTTP whenever the WordPress site itself was not served over HTTPS; the legacy iframe client's `secure(false)` is now ignored
 - Switched remaining `http://` links (Google Fonts stylesheet, plugin Author URI, readme links) to HTTPS
 

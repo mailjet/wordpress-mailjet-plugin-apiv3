@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 5.6
 - Tested up to: 7.1
-- Stable tag: 6.2.4
+- Stable tag: 6.2.5
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -151,6 +151,10 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.2.5 =
+- Security: Mailjet API calls (and API credentials) are always sent over HTTPS. Previously the plugin fell back to plain HTTP when the WordPress site itself was not served over HTTPS
+- Switched remaining http:// links (Google Fonts stylesheet, plugin Author URI) to HTTPS
 
 = 6.2.4 =
 - Security: fixed unauthenticated exposure of WooCommerce customer email addresses through the thank-you page newsletter subscription request (CVE-2026-39791)
