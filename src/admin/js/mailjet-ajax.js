@@ -1,6 +1,7 @@
 function ajaxResync() {
     const data = {
-        'action': 'resync_mailjet'
+        'action': 'resync_mailjet',
+        'nonce': (typeof mailjetAjax !== 'undefined') ? mailjetAjax.nonce : ''
     };
     const msgDiv =  jQuery('#div-for-ajax');
     jQuery.post(ajaxurl, data, function (response) {
