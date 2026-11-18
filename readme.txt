@@ -211,6 +211,15 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 
 == Upgrade Notice ==
 
+= 6.2.6 =
+* Security release: closes missing authorization checks in two admin AJAX actions (contact list resync and contact lists lookup) that any logged-in user could call. Update recommended for all sites.
+
+= 6.2.5 =
+* Security release: Mailjet API calls and credentials are always sent over HTTPS.
+
+= 6.2.4 =
+* Security release: fixes exposure of WooCommerce customer email addresses (CVE-2026-39791). Update recommended.
+
 = 5.4.2 =
 * Fixed error in integration with Woocommerce. When you try to place an order
 * Fixed changelog and readme file structure
