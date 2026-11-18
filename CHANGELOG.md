@@ -1,5 +1,8 @@
 ## Changelog
 
+##### 6.2.6
+- Security: the `resync_mailjet` and `get_contact_lists_menu` AJAX actions now require a nonce (`check_ajax_referer`) and the `mailjet_plugin_access` capability; they answer HTTP 403 otherwise. Previously any logged-in user (e.g. a Subscriber) could read the sync list ID, WP user count and Mailjet contact lists, or force a full resync of all WP users, and the resync was also exposed to CSRF
+
 ##### 6.2.5
 - Security: the Mailjet API client always uses HTTPS. Removed the fallback that switched API calls (including credentials) to plain HTTP whenever the WordPress site itself was not served over HTTPS; the legacy iframe client's `secure(false)` is now ignored
 - Switched remaining `http://` links (Google Fonts stylesheet, plugin Author URI, readme links) to HTTPS
