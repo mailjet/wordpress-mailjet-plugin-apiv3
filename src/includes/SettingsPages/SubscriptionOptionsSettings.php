@@ -22,6 +22,7 @@ class SubscriptionOptionsSettings {
     public const PROP_USER_FIRSTNAME                      = 'firstname';
     public const PROP_USER_LASTNAME                       = 'lastname';
     public const WP_PROP_USER_ROLE                        = 'wp_user_role';
+    public const AJAX_NONCE_ACTION                        = 'mailjet_subscription_options_ajax';
     private static ?SubscriptionOptionsSettings $instance = null;
     private string $subscrFieldset                        = '/settingTemplates/SubscriptionSettingsPartials/subscrFieldset.php';
     private string $profileFields                         = '/settingTemplates/SubscriptionSettingsPartials/profileFields.php';
@@ -375,6 +376,7 @@ class SubscriptionOptionsSettings {
      * @return void
      */
     public function getContactListsMenu(): void {
+        self::authorizeAjaxRequest();
         $allWpUsers           = get_users(array( 'fields' => array( 'ID', 'user_email' ) ));
         $wpUsersCount         = \count($allWpUsers);
         $mailjetSyncList      = (int) Mailjet::getOption('mailjet_sync_list');
@@ -402,6 +404,7 @@ class SubscriptionOptionsSettings {
      * @return void
      */
     public function ajaxResync(): void {
+        self::authorizeAjaxRequest();
         if (self::syncAllWpUsers()) {
             $response = array(
 				'message'    => __('Contact list resync has started. You can check the progress inside the Mailjet %s', 'mailjet-for-wordpress'),
@@ -415,9 +418,28 @@ class SubscriptionOptionsSettings {
     }
 
     /**
+     * Stops the request unless it carries a valid nonce and the current user has access to the Mailjet plugin.
+     * wp_ajax_* actions are reachable by every logged-in user, so both checks are needed (DE-11775).
+     *
+     * @return void
+     */
+    private static function authorizeAjaxRequest(): void {
+        if ( ! check_ajax_referer(self::AJAX_NONCE_ACTION, 'nonce', \false)) {
+            wp_send_json_error(array( 'message' => __('Invalid or expired request. Please reload the page and try again.', 'mailjet-for-wordpress') ), 403);
+        }
+        if ( ! current_user_can(UserAccessSettings::ACCESS_CAP_NAME)) {
+            MailjetLogger::error('[ Mailjet ] [ ' . __METHOD__ . ' ] [ Line #' . __LINE__ . ' ] [ Current user don\'t have \\`' . UserAccessSettings::ACCESS_CAP_NAME . '\\` permission ]');
+            wp_send_json_error(array( 'message' => __('You are not allowed to perform this action.', 'mailjet-for-wordpress') ), 403);
+        }
+    }
+
+    /**
      * @return void
      */
     public function enqueueAdminScripts(): void {
         wp_enqueue_script('mailjet-ajax', plugins_url('/src/admin/js/mailjet-ajax.js', MAILJET_PLUGIN_DIR . 'src'));
+        if (current_user_can(UserAccessSettings::ACCESS_CAP_NAME)) {
+            wp_localize_script('mailjet-ajax', 'mailjetAjax', array( 'nonce' => wp_create_nonce(self::AJAX_NONCE_ACTION) ));
+        }
     }
 }

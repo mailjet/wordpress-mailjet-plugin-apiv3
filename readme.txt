@@ -4,7 +4,7 @@
 - Tags: email, marketing, signup, newsletter, widget, smtp, woocommerce, contact form 7
 - Requires at least: 5.6
 - Tested up to: 7.1
-- Stable tag: 6.2.5
+- Stable tag: 6.2.6
 - Requires PHP: 7.4
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -151,6 +151,9 @@ find vendor/ -type d -name ".git" -exec rm -rf {} \;
 6. Configure abandoned cart notifications for WooCommerce
 
 == Changelog ==
+
+= 6.2.6 =
+- Security: the "Resync" contact list action and the contact lists AJAX request now require a valid nonce and Mailjet plugin access. Previously any logged-in user could call them
 
 = 6.2.5 =
 - Security: Mailjet API calls (and API credentials) are always sent over HTTPS. Previously the plugin fell back to plain HTTP when the WordPress site itself was not served over HTTPS
