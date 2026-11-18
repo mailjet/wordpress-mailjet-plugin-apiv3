@@ -193,6 +193,46 @@ add_filter('wp_mail_from_name', function ($from_name) {
 
 ## Changelog
 
+##### 6.2.6
+- Security: the `resync_mailjet` and `get_contact_lists_menu` AJAX actions now require a nonce (`check_ajax_referer`) and the `mailjet_plugin_access` capability; they answer HTTP 403 otherwise. Previously any logged-in user (e.g. a Subscriber) could read the sync list ID, WP user count and Mailjet contact lists, or force a full resync of all WP users, and the resync was also exposed to CSRF
+
+##### 6.2.5
+- Security: the Mailjet API client always uses HTTPS. Removed the fallback that switched API calls (including credentials) to plain HTTP whenever the WordPress site itself was not served over HTTPS; the legacy iframe client's `secure(false)` is now ignored
+- Switched remaining `http://` links (Google Fonts stylesheet, plugin Author URI, readme links) to HTTPS
+
+##### 6.2.4
+- Security (CVE-2026-39791): the `mj_ajax_subscribe` AJAX action no longer exposes customer data to unauthenticated visitors. It now requires a nonce and the WooCommerce order key (checked with `hash_equals`), answers a missing order and a wrong key identically, and no longer echoes the billing email in its response
+- Fixed the thank-you page "Subscribe now" button sending no request because the order ID attribute contained surrounding whitespace
+
+##### 6.2.3
+- Fixed WooCommerce abandoned cart and order-notification emails failing with HTTP 400: `getFormattedEmailData()` now builds a valid Send API v3.1 message (`From`/`To`/`TemplateID`/`TemplateLanguage`/`Variables`) instead of a legacy v3 body
+- Fixed abandoned cart cron retrying failed sends every minute forever: each cart is now emailed at most once, the batch is capped per run, and the run stops when the API returns HTTP 429
+- Abandoned cart cron now skips deleted products instead of fatally erroring, validates the recipient before creating a tracking row, caches the template lookup, and no-ops when the feature is disabled
+- Declared WooCommerce High-Performance Order Storage (HPOS) compatibility and moved the remaining `get_post_meta()`/`update_post_meta()` order calls onto the WooCommerce order API (`$order->get_meta()` / `$order->update_meta_data()`)
+- Text domain now loads on `init` instead of `plugins_loaded` to avoid the WordPress 6.7+ "translation triggered too early" notice
+- Removed deprecated `utf8_decode()` usage (removed in PHP 9) from the legacy iframe client
+- Synced version metadata across `wp-mailjet.php`, `MAILJET_VERSION`, `readme.txt` and `README.md`; tested up to WordPress 7.1
+- Corrected the activation PHP-version notice to state the real requirement (7.4)
+
+##### 6.2.0
+- Enhanced API security with comprehensive validation and error handling
+- Added API key and secret format validation (regex pattern matching)
+- Improved HTTPS detection using WordPress native `is_ssl()` function
+- Added proxy configuration validation with port range checking (0-65535)
+- Implemented connection timeouts (30s request, 10s connect) to prevent hanging
+- Added comprehensive exception logging for ConnectException and RequestException
+- Enhanced contact sync methods with input validation and action parameter whitelist
+- Added detailed error logging with context information for debugging
+- Fixed GitHub Actions workflow with proper YAML structure and configuration
+- Added automated PR checks: PHPCS (code quality) and PHP Security Checker (dependencies)
+- Added AGENTS.md documentation guide for AI coding agents
+- Improved error messages and logging throughout API integration
+
+##### 6.1.6
+- Fixing code base
+- Fixed possible warning in the code
+- Added code example of From name workaround in the readme file
+
 ##### 6.1.5
 - Fixed issue with wrong permission check on integration page
 
